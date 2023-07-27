@@ -3,5 +3,10 @@
 /workspace.xml
 /.idea
 /.venv
+/.env
 /.DS_Store
 __pycache__/
+/authentication/migrations/
+/activity/migrations/
+/category/migrations/
+/profiles/migrations/
