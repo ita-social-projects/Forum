@@ -126,25 +126,18 @@ $ bower install
 
 ## Contributing
 
-### Git flow
-> To get started...
-#### Step 1
 
-- **Option 1**
-    - 🍴 Fork this repo!
+### Project setup
+Start with our *wiki* (TBD) to set up the environment and deploy the project locally
+### Git Flow
+We are using simplest GitHub flow to organize our work:
+![Git Flow Ilustration](https://camo.githubusercontent.com/249bd600310c01188d4daf366519c24044e9883e/68747470733a2f2f7363696c6966656c61622e6769746875622e696f2f736f6674776172652d646576656c6f706d656e742f696d672f6769746875622d666c6f772e706e67)
 
-- **Option 2**
-    - 👯 Clone this repo to your local machine using `https://github.com/ita-social-projects/SOMEREPO.git`
+### Note! Contribution rules:
+1. All Pull Requests should start from prefix #xxx-yyy where xxx - task number and yyy - short description e.g. #020-CreateAdminPanel
+2. Pull requests should not contain any files not required by the task.
 
-#### Step 2
-
-- **HACK AWAY!** 🔨🔨🔨
-
-#### Step 3
-
-- 🔃 Create a new pull request using <a href="https://github.com/ita-social-projects/SOMEREPO/compare/" target="_blank">github.com/ita-social-projects/SOMEREPO</a>.
-
-### Issue flow
+In case of any violations, the pull request will be rejected.
 
 ---
 
