@@ -1,5 +1,5 @@
 from django.db import models
-from .serializers import ProfileSerializer, ActivitySerializer, CategotySerializer
+from .serializers import ProfileSerializer
 from PIL import Image
 
 REGIONS = ["east", "west", "north", "south"]
@@ -18,18 +18,14 @@ class Profile(models.Model):
         max_length=12,
         validators=[
             ProfileSerializer.validate_phone_number,
-            #RegexValidator(r"^\d+$", message="Phone number must contain only numbers."),
+            # RegexValidator(r"^\d+$", message="Phone number must contain only numbers."),
         ]
     )
-    comp_EDRPOU = models.IntegerField(
-        unique=True,
-        validators=[
-            ProfileSerializer.validate_edrpou,
-            #RegexValidator(r"^\d{8}$", message="EDRPOU must contain exactly 8 digits."),
-        ]
-
+    comp_EDRPOU = models.IntegerField(unique=True, validators=[ProfileSerializer.validate_edrpou])
+    comp_year_of_foundation = models.SmallIntegerField(
+        max_length=4,
+        validators=[ProfileSerializer.validate_foundation_year]
     )
-    comp_year_of_foundation = models.SmallIntegerField(max_length=4, validators=[ProfileSerializer.validate_foundation_year])
     comp_service_info = models.TextField()
     comp_product_info = models.TextField()
     comp_address = models.TextField()
@@ -39,7 +35,6 @@ class Profile(models.Model):
 
     person_name = models.CharField(max_length=50)
     person_surname = models.CharField(max_length=50)
-    #person_company = models.CharField(max_length=50)
     person_position = models.CharField(max_length=50)
     person_email = models.EmailField(
         max_length=50,
@@ -59,4 +54,3 @@ class Activity(models.Model):
 class Category(models.Model):
     category_id = models.IntegerField(primary_key=True)
     name = models.CharField()
-
