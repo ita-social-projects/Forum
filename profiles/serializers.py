@@ -3,8 +3,6 @@ from django.core.exceptions import ValidationError
 from PIL import Image
 from .models import Profile, Activity, Category
 
-REGIONS = ["east", "west", "north", "south"]
-
 
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:

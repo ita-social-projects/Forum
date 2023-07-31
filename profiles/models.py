@@ -1,6 +1,5 @@
 from django.db import models
 from .serializers import ProfileSerializer
-from PIL import Image
 
 REGIONS = ["east", "west", "north", "south"]
 
