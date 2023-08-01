@@ -110,7 +110,12 @@ $ bower install
 ### How to run local
 
 ### How to run Docker
-
+- install Docker
+- make sure you put your cradentials in .env
+- use command in terminal: docker-compose up -d --build
+- running your containers
+- follow the link
+- in some cases of mistakes you need to put line 30 in settings.py in comment and uncomment line 31, then delete containers and images and repeat 3, 4, 5 steps
 ---
 
 ## Usage
