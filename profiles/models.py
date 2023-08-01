@@ -4,16 +4,13 @@ from django.core.validators import RegexValidator
 from validation.validate_password import validate_password
 from validation.validate_phone_number import validate_phone_number_len, validate_phone_number_is_digit
 from validation.validate_edrpou import validate_edrpou
-from validation.validate_foundation_year import validate_foundation_year
+from validation.validate_foundation_year import validate_foundation_year_long, validate_foundation_year_is_valid
 from validation.validate_image import validate_image_size, validate_image_format
 
-<<<<<<< HEAD
-REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
 
-=======
 #REGIONS = ["east", "west", "north", "south"]
 REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
->>>>>>> 56283f56932a50fbaa281beb0044fa670cc029ec
+
 
 class Profile(models.Model):
 
@@ -33,7 +30,7 @@ class Profile(models.Model):
         ]
     )
     comp_EDRPOU = models.IntegerField(unique=True, validators=[validate_edrpou])
-    comp_year_of_foundation = models.SmallIntegerField(validators=[validate_foundation_year])
+    comp_year_of_foundation = models.SmallIntegerField(validators=[validate_foundation_year_long, validate_foundation_year_is_valid ])
     comp_service_info = models.TextField()
     comp_product_info = models.TextField()
     comp_address = models.TextField()
