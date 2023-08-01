@@ -10,3 +10,5 @@ __pycache__/
 /authentication/migrations/
 /profiles/migrations/
 /db.sqlite3
+/.sqlite3
+/*.sqlite3
