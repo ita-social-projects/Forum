@@ -7,7 +7,7 @@ from validation.validate_edrpou import validate_edrpou
 from validation.validate_foundation_year import validate_foundation_year
 from validation.validate_image import validate_image_size, validate_image_format
 
-REGIONS = ["east", "west", "north", "south"]
+REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
 
 
 class Profile(models.Model):
