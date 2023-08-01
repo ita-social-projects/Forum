@@ -2,6 +2,7 @@
 /shelf/
 /workspace.xml
 /.idea
+/venv
 /.venv
 /.env
 /.DS_Store
