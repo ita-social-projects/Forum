@@ -1,5 +1,5 @@
 import './LoginBanner.css';
-import {WhiteTripleEllipses} from "../ellipses/Ellipses";
+import Ellipses from "../ellipses/Ellipses";
 
 
 const MainLoginBanner = () => {
@@ -11,12 +11,12 @@ const MainLoginBanner = () => {
                 <img className="login-banner-group__image" src="/img/lb-img.jpeg" alt=""/>
                 <div className="login-banner-group__content__login-rectangle"/>
                 <div className="login-banner-group__content__ellipses">
-                    <WhiteTripleEllipses/>
-                    <WhiteTripleEllipses/>
-                    <WhiteTripleEllipses/>
-                    <WhiteTripleEllipses/>
-                    <WhiteTripleEllipses/>
-                    <WhiteTripleEllipses/>
+                    <Ellipses type="white" count={3} />
+                    <Ellipses type="white" count={3} />
+                    <Ellipses type="white" count={3} />
+                    <Ellipses type="white" count={3} />
+                    <Ellipses type="white" count={3} />
+                    <Ellipses type="white" count={3} />
                 </div>
                 <div className="login-banner-group__login-section-basic">
                   <div className="login-banner-group__login-section">

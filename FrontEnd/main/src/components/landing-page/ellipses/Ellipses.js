@@ -1,40 +1,14 @@
 import './Ellipses.css';
 
-export const GreenEllipses = () => {
-  return (
-    <div className="ellipses-main">
-      <div className="ellipses-main__green"/>
-      <div className="ellipses-main__green"/>
-      <div className="ellipses-main__green"/>
-      <div className="ellipses-main__green"/>
-      <div className="ellipses-main__green"/>
-      <div className="ellipses-main__green"/>
-      <div className="ellipses-main__green"/>
-    </div>
-  );
+
+const Ellipses = ({ type, count }) => {
+  const ellipseClass = `ellipses-main__${type}`;
+
+  const ellipses = Array.from({ length: count }, (_, index) => (
+    <div key={index} className={ellipseClass} />
+  ));
+
+  return <div className="ellipses-main">{ellipses}</div>;
 };
 
-
-export const WhiteEllipses = () => {
-  return (
-    <div className="ellipses-main">
-      <div className="ellipses-main__white"/>
-      <div className="ellipses-main__white"/>
-      <div className="ellipses-main__white"/>
-      <div className="ellipses-main__white"/>
-      <div className="ellipses-main__white"/>
-      <div className="ellipses-main__white"/>
-      <div className="ellipses-main__white"/>
-    </div>
-  );
-}
-
-export const WhiteTripleEllipses = () => {
-  return (
-    <div className="ellipses-main">
-      <div className="ellipses-main__white"/>
-      <div className="ellipses-main__white"/>
-      <div className="ellipses-main__white"/>
-    </div>
-  );
-}
+export default Ellipses;

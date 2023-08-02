@@ -1,5 +1,5 @@
 import './AboutText.css';
-import {GreenEllipses} from "../../ellipses/Ellipses";
+import Ellipses from "../../ellipses/Ellipses";
 
 const AboutSectionText = () => {
     return (
@@ -38,36 +38,36 @@ const AboutSectionText = () => {
             </div>
             <div className="about-us-text-section__ellipses-groups">
               <div className="about-us-text-section__first_ellipses-group">
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
               </div>
               <div className="about-us-text-section__second_ellipses-group">
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
               </div>
               <div className="about-us-text-section__third_ellipses-group">
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
               </div>
               <div className="about-us-text-section__fourse_ellipses-group">
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
-                <GreenEllipses/>
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
+                <Ellipses type="green" count={7} />
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import './Banner.css';
-import {GreenEllipses, WhiteEllipses} from "../ellipses/Ellipses";
+import Ellipses from "../ellipses/Ellipses";
 
 
 const MainBanner = () => {
@@ -8,12 +8,12 @@ const MainBanner = () => {
             <div className="main-banner-group__main-rectangle"/>
             <div className="main-banner-group__white-rectangle">
                 <div className="main-banner-group__green-ellipses">
-                    <GreenEllipses/>
-                    <GreenEllipses/>
-                    <GreenEllipses/>
-                    <GreenEllipses/>
-                    <GreenEllipses/>
-                    <GreenEllipses/>
+                    <Ellipses type="green" count={7} />
+                    <Ellipses type="green" count={7} />
+                    <Ellipses type="green" count={7} />
+                    <Ellipses type="green" count={7} />
+                    <Ellipses type="green" count={7} />
+                    <Ellipses type="green" count={7} />
                 </div>
             </div>
             <div className="main-banner-group__frame-rectangle9"/>
@@ -33,12 +33,12 @@ const MainBanner = () => {
                 </div>
             </div>
             <div className="main-banner-group__white-ellipses">
-              <WhiteEllipses/>
-              <WhiteEllipses/>
-              <WhiteEllipses/>
-              <WhiteEllipses/>
-              <WhiteEllipses/>
-              <WhiteEllipses/>
+                <Ellipses type="white" count={7} />
+                <Ellipses type="white" count={7} />
+                <Ellipses type="white" count={7} />
+                <Ellipses type="white" count={7} />
+                <Ellipses type="white" count={7} />
+                <Ellipses type="white" count={7} />
             </div>
             <img className="main-banner-group__banner-image1" src="/img/banner-img1.jpeg" alt=""/>
             <img className="main-banner-group__banner-image2" src="/img/banner-img2.jpeg" alt=""/>
