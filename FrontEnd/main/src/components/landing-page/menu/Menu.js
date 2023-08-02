@@ -1,6 +1,5 @@
 import {Component} from "react";
 import './Menu.css';
-import {MenuDivider} from "../divider/Divider";
 
 
 
@@ -47,7 +46,7 @@ class MainMenu extends Component {
                         <div className="block-main__menu__items">{menuItems.map(this.renderMenuItem)}</div>
                     </div>
                 </div>
-                <MenuDivider/>
+                <div className="divider"/>
             </div>
         );
     }
