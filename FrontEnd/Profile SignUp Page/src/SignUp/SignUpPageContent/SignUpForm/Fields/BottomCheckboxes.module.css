@@ -1,0 +1,66 @@
+.checkboxes-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.rules-agreement {
+    display: flex;
+    width: 328px;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.rules-agreement__content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rules-agreement__text {
+
+}
+
+.rules-agreement__text--required {
+    
+        color: var(--dust-red-5, #FF4D4F);
+        text-align: right;
+        font-family: SimSong;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22.001px;
+        /* 157.15% */
+    
+}
+
+.rules-agreement__text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--main-black-90, #292E32);
+    font-feature-settings: 'calt' off;
+
+    /* Text/Body/14-Regular */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    /* 142.857% */
+    letter-spacing: -0.14px;
+}
+
+.rules-agreement_link {
+    color: #00A3CF;
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+    text-decoration-line: underline;
+}
