@@ -1,10 +1,9 @@
 from django.db import models
 from django.core.validators import RegexValidator
-
-from validation.validate_password import validate_password
+from validation.validate_password import validate_password_long, validate_password_include_symbols
 from validation.validate_phone_number import validate_phone_number_len, validate_phone_number_is_digit
 from validation.validate_edrpou import validate_edrpou
-from validation.validate_foundation_year import validate_foundation_year_range, validate_foundation_year_is_valid
+from validation.validate_foundation_year import validate_foundation_year_range
 from validation.validate_image import validate_image_size, validate_image_format
 
 
@@ -30,7 +29,7 @@ class Profile(models.Model):
         ]
     )
     comp_EDRPOU = models.IntegerField(unique=True, validators=[validate_edrpou])
-    comp_year_of_foundation = models.SmallIntegerField(validators=[validate_foundation_year_range, validate_foundation_year_is_valid ])
+    comp_year_of_foundation = models.SmallIntegerField(validators=[validate_foundation_year_range])
     comp_service_info = models.TextField()
     comp_product_info = models.TextField()
     comp_address = models.TextField()
@@ -42,7 +41,7 @@ class Profile(models.Model):
     person_surname = models.CharField(max_length=50)
     person_position = models.CharField(max_length=50)
     person_email = models.EmailField(max_length=50, unique=True)
-    person_password = models.CharField(max_length=128, validators=[validate_password])
+    person_password = models.CharField(max_length=128, validators=[validate_password_long, validate_password_include_symbols])
 
     startup_idea = models.TextField()
 
