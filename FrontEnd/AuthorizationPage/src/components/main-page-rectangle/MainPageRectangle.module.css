@@ -1,0 +1,28 @@
+.rectangle {
+  display: flex;
+  width: 1512px;
+  height: 725px;
+  flex-shrink: 0;
+  background: #f1fff7;
+  margin-top: 50px;
+  margin-bottom: 125px;
+}
+
+
+.frame-img-left {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  margin: 382px 971px 210px 362px;
+  position: absolute;
+}
+
+.frame-img-right {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  margin: 113px 412px 462px 921px;
+  position: absolute;
+}
