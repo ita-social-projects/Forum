@@ -26,17 +26,14 @@ const LINKS = [
 function Footer() {
     return (
         <footer>
-            <div className={css['footer-content']}>
-                <div className={css["footer-logo-text"]}>forum</div>
-                <div className={css["footer-info"]}>
-                    <div className={css["footer-info-text"]}>Copyright 2022 Company name.</div>
-                    <div className={css["footer-links"]}>
-                        {LINKS.map( (element) => (
-                            <a className={css["footer-link"]} key={element.id} href={element.link}>{element.title}</a>
-                        ))}
-                    </div>
+            <div className={css["footer-logo__text"]}>forum</div>
+            <div className={css["footer-info"]}>
+                <div className={css["footer-info__text"]}>Copyright 2022 Company name.</div>
+                <div className={css["footer-links"]}>
+                    {LINKS.map( (element) => (
+                        <a className={css["footer-link__text"]} key={element.id} href={element.link}>{element.title}</a>
+                    ))}
                 </div>
-
             </div>
         </footer>
     )
