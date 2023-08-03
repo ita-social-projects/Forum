@@ -4,7 +4,7 @@
     gap: 12px;
 }
 
-.header-login-button {
+.header-login__button {
     display: flex;
     padding: 5px 15px;
     justify-content: center;
@@ -31,7 +31,7 @@
     letter-spacing: -0.16px;
 }
 
-.header-register-button {
+.header-register__button {
     display: flex;
     padding: 5px 15px;
     justify-content: center;
@@ -57,4 +57,14 @@
     font-weight: 600;
     line-height: 20px; /* 125% */
     letter-spacing: -0.16px;
+}
+
+.header-login__button:hover {
+    background: #FFF;
+    color: #1F9A7C;
+}
+
+.header-register__button:hover {
+    background: #1F9A7C;
+    color: #FFF;
 }
