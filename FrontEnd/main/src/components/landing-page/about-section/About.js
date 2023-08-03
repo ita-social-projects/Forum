@@ -16,7 +16,7 @@ const MainAboutSection = () => {
               <div className="about-us-section-content__smart-text">Це перший форум Західної України, цілями якого є популяризація українського виробника та представлення стартапів для розвитку галузі «Smart Craft&Food»</div>
               <div className="about-us-section-content__smart-text">Це перший форум Західної України, цілями якого є популяризація українського виробника та представлення стартапів для розвитку галузі «Smart Craft&Food»</div>
             </div>
-            <img className="about-us-section-content__image" src="/img/about.jpeg" alt=""/>
+            <img className="about-us-section-content__image" src={`${process.env.PUBLIC_URL}/img/about.jpeg`} alt=""/>
           </div></div>
         </div>
     )

@@ -8,7 +8,7 @@ const MainLoginBanner = () => {
             <div className="login-banner-group__rectangle"/>
             <div className="login-banner-group__content">
                 <div className="login-banner-group__content__rectangle"/>
-                <img className="login-banner-group__image" src="/img/lb-img.jpeg" alt=""/>
+                <img className="login-banner-group__image" src={`${process.env.PUBLIC_URL}/img/lb-img.jpeg`} alt=""/>
                 <div className="login-banner-group__content__login-rectangle"/>
                 <div className="login-banner-group__content__ellipses">
                     <Ellipses type="white" count={3} />

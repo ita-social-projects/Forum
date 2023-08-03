@@ -40,14 +40,14 @@ const MainBanner = () => {
                 <Ellipses type="white" count={7} />
                 <Ellipses type="white" count={7} />
             </div>
-            <img className="main-banner-group__banner-image1" src="/img/banner-img1.jpeg" alt=""/>
-            <img className="main-banner-group__banner-image2" src="/img/banner-img2.jpeg" alt=""/>
-            <img className="main-banner-group__banner-image3" src="/img/banner-img3.jpeg" alt=""/>
+            <img className="main-banner-group__banner-image1" src={`${process.env.PUBLIC_URL}/img/banner-img1.jpeg`} alt=""/>
+            <img className="main-banner-group__banner-image2" src={`${process.env.PUBLIC_URL}/img/banner-img2.jpeg`} alt=""/>
+            <img className="main-banner-group__banner-image3" src={`${process.env.PUBLIC_URL}/img/banner-img3.jpeg`} alt=""/>
           <div className="main-banner-wine">
             <div className="main-banner-group__frame">
               <div className="main-banner-wine__winemaking">
                 <div className="winemaking">
-                    <img src="/svg/winemaking.svg" alt=""/>
+                    <img src={`${process.env.PUBLIC_URL}/svg/winemaking.svg`} alt=""/>
                 </div>
               </div>
               <div className="main-banner-group__content">
@@ -64,14 +64,14 @@ const MainBanner = () => {
           </div>
           <div className="main-banner-cheese__cheese">
               <div className="cheese">
-                <img src="/svg/cheese.svg" alt=""/>
+                <img src={`${process.env.PUBLIC_URL}/svg/cheese.svg`} alt=""/>
               </div>
           </div>
           <div className="main-banner-delivery">
             <div className="main-banner-group__frame">
               <div className="main-banner-delivery__delivery">
                 <div className="delivery">
-                  <img src="/svg/delivery.svg" alt=""/>
+                  <img src={`${process.env.PUBLIC_URL}/svg/delivery.svg`} alt=""/>
                 </div>
               </div>
               <div className="main-banner-group__content">

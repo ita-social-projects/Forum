@@ -8,24 +8,24 @@ const MainCompanies = () => {
             name: '«Ace&W by Stakhovsky»',
             address: 'Київ, Київська обл, Закарпатська обл.',
             badges: ['15 років досвіду', 'експорт', 'мін. опт'],
-            logoSrc: '/companies-logos/1.png',
-            photoSrc: '/companies-images/1.jpeg'
+            logoSrc: `${process.env.PUBLIC_URL}/companies-logos/1.png`,
+            photoSrc: `${process.env.PUBLIC_URL}/companies-images/1.jpeg`
         },
         {
             category: 'Імпортер',
             name: 'Regno',
             address: 'Київ',
             badges: ['13 років досвіду', 'імпорт', 'великий опт'],
-            logoSrc: '/companies-logos/2.png',
-            photoSrc: '/companies-images/2.jpeg'
+            logoSrc: `${process.env.PUBLIC_URL}/companies-logos/2.png`,
+            photoSrc: `${process.env.PUBLIC_URL}/companies-images/2.jpeg`
         },
                 {
             category: 'Сироварня',
             name: 'Мукко',
             address: 'Львів, Львівська обл',
             badges: ['5 років досвіду', 'сімейне виробництво'],
-            logoSrc: '/companies-logos/33.jpeg',
-            photoSrc: '/companies-images/3.jpeg'
+            logoSrc: `${process.env.PUBLIC_URL}/companies-logos/33.jpeg`,
+            photoSrc: `${process.env.PUBLIC_URL}/companies-images/3.jpeg`
         },
     ];
     const companyDataListSecond = [
@@ -34,24 +34,24 @@ const MainCompanies = () => {
             name: 'АСОЦІАЦІЯ РІТЕЙЛЕРІВ УКРАЇНИ',
             address: 'Київ, Київська обл, Закарпатська обл.',
             badges: ['15 років досвіду'],
-            logoSrc: '/companies-logos/44.jpeg',
-            photoSrc: '/companies-images/4.jpeg'
+            logoSrc: `${process.env.PUBLIC_URL}/companies-logos/44.jpeg`,
+            photoSrc: `${process.env.PUBLIC_URL}/companies-images/4.jpeg`
         },
         {
             category: 'Виробник',
             name: 'МХП',
             address: 'Київ, Київська обл',
             badges: ['15 років досвіду'],
-            logoSrc: '/companies-logos/5.jpeg',
-            photoSrc: '/companies-images/5.jpeg'
+            logoSrc: `${process.env.PUBLIC_URL}/companies-logos/5.jpeg`,
+            photoSrc: `${process.env.PUBLIC_URL}/companies-images/5.jpeg`
         },
                 {
             category: 'Роздрібна торгівля',
             name: 'Сільпо',
             address: 'Київ, Київська обл',
             badges: ['9 років досвіду'],
-            logoSrc: '/companies-logos/66.png',
-            photoSrc: '/companies-images/6.jpeg'
+            logoSrc: `${process.env.PUBLIC_URL}/companies-logos/66.png`,
+            photoSrc: `${process.env.PUBLIC_URL}/companies-images/6.jpeg`
         },
     ];
 
