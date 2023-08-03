@@ -5,7 +5,7 @@ header {
     justify-content: space-between;
 }
 
-.header-logo-text {
+.header-logo__text {
     color: #292E32;
     font-feature-settings: 'calt' off;
     font-family: Geologica;
@@ -16,7 +16,7 @@ header {
     letter-spacing: -0.24px;
 }
 
-.header-right-part {
+.header-utility-bar {
     display: flex;
     gap: 24px;
 }

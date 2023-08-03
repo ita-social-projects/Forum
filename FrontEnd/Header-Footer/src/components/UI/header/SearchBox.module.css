@@ -17,7 +17,7 @@
     flex: 1 0 0;
 }
 
-.header-input {
+.header-search-form__input {
     display: flex;
     padding: 1px 0px;
     align-items: flex-start;
@@ -26,7 +26,7 @@
     border: none;
 }
 
-.header-input-addon {
+.header-search-form__addon {
     display: flex;
     padding: 9px;
     justify-content: center;

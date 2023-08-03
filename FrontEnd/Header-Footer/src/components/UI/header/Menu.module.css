@@ -13,7 +13,7 @@
     gap: 10px;
 }
 
-.header-menu-element-text {
+.header-menu-element__text {
     color: #292E32;
     font-feature-settings: 'calt' off;
 

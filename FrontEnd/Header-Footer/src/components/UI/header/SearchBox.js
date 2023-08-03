@@ -5,9 +5,9 @@ function SearchBox () {
     return (
         <div className={css["header-search-box"]}>
             <div className={css["header-search-form"]}>
-                <input className={css["header-input"]} placeholder="Пошук"></input>
+                <input className={css["header-search-form__input"]} placeholder="Пошук"></input>
             </div>
-            <span className={css["header-input-addon"]}><img src={icon_search} width="14" height="14" alt=""/></span>
+            <span className={css["header-search-form__addon"]}><img src={icon_search} width="14" height="14" alt=""/></span>
         </div>
     );
 };

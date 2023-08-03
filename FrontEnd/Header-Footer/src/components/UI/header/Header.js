@@ -5,11 +5,10 @@ import Profile from "./Profile";
 import SearchBox from "./SearchBox";
 
 function Header (props) {
-
     return (
         <header>
-            <div className={css["header-logo-text"]}>forum</div>
-            <div className={css["header-right-part"]}>
+            <div className={css["header-logo__text"]}>forum</div>
+            <div className={css["header-utility-bar"]}>
                 {props.isAuthorized === true && <Menu/>}
                 {props.page === "login" || props.page === "registration" ? (null):
                     (<SearchBox></SearchBox>)}
