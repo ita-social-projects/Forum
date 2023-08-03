@@ -2,18 +2,22 @@ import css from "./Footer.module.css"
 
 const LINKS = [
     {
+        id: "i0",
         title: "Privacy Policy",
         link: "google.com"
     },
     {
+        id: "i1",
         title: "Terms & Conditions",
         link: "google.com"
     },
     {
+        id: "i2",
         title: "Cookie Policy",
         link: "google.com"
     },
     {
+        id: "i3",
         title: "Contact",
         link: "google.com"
     }
@@ -28,7 +32,7 @@ function Footer() {
                     <div className={css["footer-info-text"]}>Copyright 2022 Company name.</div>
                     <div className={css["footer-links"]}>
                         {LINKS.map( (element) => (
-                            <a className={css["footer-link"]} href={element.link}>{element.title}</a>
+                            <a className={css["footer-link"]} key={element.id} href={element.link}>{element.title}</a>
                         ))}
                     </div>
                 </div>
