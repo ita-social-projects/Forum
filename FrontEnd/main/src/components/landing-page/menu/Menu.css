@@ -36,7 +36,7 @@
 .menu-text,
 .menu-text__active {
     font-feature-settings: 'calt' off;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
