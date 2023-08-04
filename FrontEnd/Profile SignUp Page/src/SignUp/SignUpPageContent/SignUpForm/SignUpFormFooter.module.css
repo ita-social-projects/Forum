@@ -1,0 +1,84 @@
+.sign-up-footer {
+    display: flex;
+    padding: 10px 16px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    background: var(--main-white, #FFF);
+
+    /* border & divider/divider ↑ */
+    box-shadow: 0px 1px 0px 0px #F0F0F0 inset;
+}
+
+.sign-up-footer__buttons {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.main-page__button {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--primary-green-80, #1F9A7C);
+    background: var(--main-white, #FFF);
+
+    /* drop-shadow/button-secondary */
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+
+    color: var(--primary-green-80, #1F9A7C);
+    text-align: center;
+    font-feature-settings: 'calt' off;
+
+    /* Text/Body/16-Semi bold */
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    /* 125% */
+    letter-spacing: -0.16px;
+}
+
+.main-page__button:hover {
+    border: 1px solid var(--primary-green-80, #1F9A7C);
+    background: var(--primary-green-80, #1F9A7C);
+    color: var(--main-white, #FFF);
+}
+
+.sign-up__button {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--primary-green-80, #1F9A7C);
+    background: var(--primary-green-80, #1F9A7C);
+
+    /* drop-shadow/button-primary */
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+    color: var(--main-white, #FFF);
+    text-align: center;
+    font-feature-settings: 'calt' off;
+
+    /* Text/Body/16-Semi bold */
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    /* 125% */
+    letter-spacing: -0.16px;
+}
+
+.sign-up__button:hover {
+    border: 1px solid var(--primary-green-80, #1F9A7C);
+    background: var(--main-white, #FFF);
+    color: var(--primary-green-80, #1F9A7C);
+}
+

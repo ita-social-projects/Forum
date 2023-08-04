@@ -1,0 +1,77 @@
+.signup-form {
+    display: flex;
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.signup-form__body {
+    display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+}
+
+.sign-up__controls {
+    display: flex;
+    width: 524px;
+    height: 84px;
+    padding-bottom: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sign-up__controls label {
+    display: flex;
+    padding-bottom: 0px;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+}
+
+.label__control {
+    display: flex;
+    padding-bottom: 0px;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+}
+
+.required-sign {
+    color: var(--dust-red-5, #FF4D4F);
+    text-align: right;
+    font-family: SimSong;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22.001px;
+    /* 157.15% */
+}
+
+.text__label {
+    flex: 1 0 0;
+    color: var(--main-black-90, #292E32);
+    font-feature-settings: 'calt' off;
+
+    /* Text/Body/14-Regular */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    /* 142.857% */
+    letter-spacing: -0.14px;
+}
+
+.input__control {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    flex-shrink: 0;
+    align-self: stretch;
+    border-radius: 2px;
+    border: 1px solid var(--neutral-5, #D9D9D9);
+    background: var(--main-white, #FFF);
+}
