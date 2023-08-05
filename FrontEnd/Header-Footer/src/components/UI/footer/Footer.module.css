@@ -12,6 +12,14 @@ footer {
     margin-top: auto;
 }
 
+.footer-logos {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+
 .footer-logo__text {
     color: #FFF;
     font-feature-settings: 'calt' off;

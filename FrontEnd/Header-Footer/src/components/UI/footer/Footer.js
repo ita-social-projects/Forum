@@ -1,4 +1,5 @@
 import css from "./Footer.module.css"
+import logo from "./logo.svg"
 
 const LINKS = [
     {
@@ -26,7 +27,10 @@ const LINKS = [
 function Footer() {
     return (
         <footer>
-            <div className={css["footer-logo__text"]}>forum</div>
+            <div className={css["footer-logos"]}>
+                <div className={css["footer-logo__text"]}>forum</div>
+                <img src={logo} height="30"/>
+            </div>
             <div className={css["footer-info"]}>
                 <div className={css["footer-info__text"]}>Copyright 2022 Company name.</div>
                 <div className={css["footer-links"]}>
