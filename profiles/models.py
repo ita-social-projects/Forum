@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.validators import RegexValidator
 from validation.validate_password import validate_password_long, validate_password_include_symbols
 from validation.validate_phone_number import validate_phone_number_len, validate_phone_number_is_digit
@@ -10,8 +11,25 @@ from validation.validate_image import validate_image_size, validate_image_format
 
 REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
 
+class ProfileManager(BaseUserManager):
 
-class Profile(models.Model):
+    def create_user(self, person_email, person_password, person_surname, person_name, comp_name, comp_category, comp_registered=None, comp_is_startup=None):
+        person_email = self.normalize_email(person_email)
+        user = self.model(person_email=person_email,
+                          person_surname=person_surname,
+                          person_name=person_name,
+                          comp_name=comp_name,
+                          comp_category=comp_category,
+                          comp_registered=comp_registered,
+                          comp_is_startup=comp_is_startup
+                          )
+        user.set_password(person_password)
+        user.save()
+        return user
+
+
+
+class Profile(AbstractBaseUser):
 
     profile_id = models.IntegerField(primary_key=True)
     comp_category = models.ManyToManyField("Category")
@@ -44,6 +62,12 @@ class Profile(models.Model):
     person_password = models.CharField(max_length=128, validators=[validate_password_long, validate_password_include_symbols])
 
     startup_idea = models.TextField()
+
+    USERNAME_FIELD = "person_email"
+    EMAIL_FIELD = "person_email"
+    REQUIRED_FIELDS = ["person_password", "person_surname", "person_name", "comp_name", "comp_category", "comp_registered", "comp_is_startup"]
+    objects = ProfileManager()
+
 
 
 class Activity(models.Model):
