@@ -143,8 +143,8 @@ DJOSER = {
     'LOGIN_FIELD': 'person_email',
     # 'USER_CREATE_PASSWORD_RETYPE': True,
     'SERIALIZERS': {
-        'user_create': 'forum.serializers.ProfileRegistrationSerializer',
-        'user': 'forum.serializers. ProfileSerializer ',
+        'user_create': 'profiles.serializers.ProfileRegistrationSerializer',
+        'user': 'profiles.serializers.ProfileSerializer',
     }
 }
 
