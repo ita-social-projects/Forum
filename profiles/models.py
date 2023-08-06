@@ -7,9 +7,8 @@ from validation.validate_edrpou import validate_edrpou
 from validation.validate_foundation_year import validate_foundation_year_range
 from validation.validate_image import validate_image_size, validate_image_format
 
-
-
 REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
+
 
 class ProfileManager(BaseUserManager):
 
@@ -26,7 +25,6 @@ class ProfileManager(BaseUserManager):
         user.set_password(person_password)
         user.save()
         return user
-
 
 
 class Profile(AbstractBaseUser):
@@ -67,7 +65,6 @@ class Profile(AbstractBaseUser):
     EMAIL_FIELD = "person_email"
     REQUIRED_FIELDS = ["person_password", "person_surname", "person_name", "comp_name", "comp_category", "comp_registered", "comp_is_startup"]
     objects = ProfileManager()
-
 
 
 class Activity(models.Model):

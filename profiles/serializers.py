@@ -1,10 +1,8 @@
-from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 
 from .models import Profile, Activity, Category
 
-Profile = get_user_model()
 
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
