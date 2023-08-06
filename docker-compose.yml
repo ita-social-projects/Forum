@@ -26,6 +26,17 @@ services:
       PGUSER: ${SQL_USER}
     ports:
       - 127.0.0.1:${SQL_PORT:-5431}:5431
-
+  pgadmin4:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com  # your email to login at http://localhost:5050/
+      PGADMIN_DEFAULT_PASSWORD: 1  # your password to login at http://localhost:5050/
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin/data
 volumes:
   db_data:
+  pgadmin-data:
