@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-from django.core.validators import RegexValidator
 from validation.validate_password import validate_password_long, validate_password_include_symbols
 from validation.validate_phone_number import validate_phone_number_len, validate_phone_number_is_digit
 from validation.validate_edrpou import validate_edrpou
@@ -14,14 +13,15 @@ class ProfileManager(BaseUserManager):
 
     def create_user(self, person_email, person_password, person_surname, person_name, comp_name, comp_category, comp_registered=None, comp_is_startup=None):
         person_email = self.normalize_email(person_email)
-        user = self.model(person_email=person_email,
-                          person_surname=person_surname,
-                          person_name=person_name,
-                          comp_name=comp_name,
-                          comp_category=comp_category,
-                          comp_registered=comp_registered,
-                          comp_is_startup=comp_is_startup
-                          )
+        user = self.model(
+            person_email=person_email,
+            person_surname=person_surname,
+            person_name=person_name,
+            comp_name=comp_name,
+            comp_category=comp_category,
+            comp_registered=comp_registered,
+            comp_is_startup=comp_is_startup
+        )
         user.set_password(person_password)
         user.save()
         return user
@@ -38,11 +38,7 @@ class Profile(AbstractBaseUser):
     comp_common_info = models.CharField(max_length=255)
     comp_phone_number = models.CharField(
         max_length=12,
-        validators=[
-            validate_phone_number_is_digit,
-            validate_phone_number_len,
-            RegexValidator(r"^\d+$", message="Phone number must contain only numbers."),
-        ]
+        validators=[validate_phone_number_is_digit, validate_phone_number_len]
     )
     comp_EDRPOU = models.IntegerField(unique=True, validators=[validate_edrpou])
     comp_year_of_foundation = models.SmallIntegerField(validators=[validate_foundation_year_range])
@@ -57,13 +53,24 @@ class Profile(AbstractBaseUser):
     person_surname = models.CharField(max_length=50)
     person_position = models.CharField(max_length=50)
     person_email = models.EmailField(max_length=50, unique=True)
-    person_password = models.CharField(max_length=128, validators=[validate_password_long, validate_password_include_symbols])
+    person_password = models.CharField(
+        max_length=128,
+        validators=[validate_password_long, validate_password_include_symbols]
+    )
 
     startup_idea = models.TextField()
 
     USERNAME_FIELD = "person_email"
     EMAIL_FIELD = "person_email"
-    REQUIRED_FIELDS = ["person_password", "person_surname", "person_name", "comp_name", "comp_category", "comp_registered", "comp_is_startup"]
+    REQUIRED_FIELDS = [
+        "person_password",
+        "person_surname",
+        "person_name",
+        "comp_name",
+        "comp_category",
+        "comp_registered",
+        "comp_is_startup",
+    ]
     objects = ProfileManager()
 
 

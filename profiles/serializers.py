@@ -22,16 +22,25 @@ class ProfileRegistrationSerializer(UserCreateSerializer):
 
     class Meta:
         model = Profile
-        fields = ["person_email", "person_password", "person_surname", "person_name", "comp_name", "comp_category", "comp_registered", "comp_is_startup"]
+        fields = [
+            "person_email",
+            "person_password",
+            "person_surname",
+            "person_name",
+            "comp_name",
+            "comp_category",
+            "comp_registered",
+            "comp_is_startup",
+        ]
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict):
         user = Profile.objects.create(**validated_data)
-        user.set_password(self.validated_data["person_password"])
-        user.comp_category.set(self.validated_data["comp_category"])
-        if self.validated_data["comp_registered"]:
-            user.company_registered = 1
-        if self.validated_data["comp_is_startup"]:
-            user.company_registered = 1
+        user.set_password(validated_data["person_password"])
+        user.comp_category.set(validated_data["comp_category"])
+        if validated_data["comp_registered"]:
+            user.company_registered = True
+        if validated_data["comp_is_startup"]:
+            user.company_registered = True
         user.save()
         return user
 
