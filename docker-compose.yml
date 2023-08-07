@@ -18,14 +18,14 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${SQL_USER}
-      POSTGRES_PASSWORD: ${SQL_PASSWORD}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
       POSTGRES_DB: db
       PGDATABASE: db
-      PGPASSWORD: ${SQL_PASSWORD}
-      PGUSER: ${SQL_USER}
+      PGPASSWORD: ${PG_PASSWORD}
+      PGUSER: ${PG_USER}
     ports:
-      - 127.0.0.1:${SQL_PORT:-5431}:5431
+      - 127.0.0.1:${DB_PORT}:5432
   pgadmin4:
     container_name: pgadmin4
     image: dpage/pgadmin4
