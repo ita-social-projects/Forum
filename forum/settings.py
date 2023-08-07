@@ -130,7 +130,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'profiles.Profile'
+AUTH_USER_MODEL = 'authentication.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -146,7 +146,7 @@ DJOSER = {
     'user_list': ['rest_framework.permissions.AllowAny'],
     },
     'SERIALIZERS': {
-        'user_create': 'profiles.serializers.ProfileRegistrationSerializer',
-        'user': 'profiles.serializers.ProfileRegistrationSerializer',
+        'user_create': 'authentication.serializers.UserRegistrationSerializer',
+        'user': 'authentication.serializers.UserSerializer',
     }
 }
