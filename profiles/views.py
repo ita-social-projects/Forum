@@ -7,6 +7,6 @@ class RegisterAPIView(generics.CreateAPIView):
     serializer_class = ProfileRegistrationSerializer
 
 
-class UsersAPI(viewsets.ModelViewSet):
+class UsersAPIView(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
