@@ -138,9 +138,10 @@ REST_FRAMEWORK = {
 
     ),
 }
+
 DJOSER = {
     'LOGIN_FIELD': 'person_email',
-    # 'USER_CREATE_PASSWORD_RETYPE': True,
+    'USER_CREATE_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
     'user': ['rest_framework.permissions.AllowAny'],
     'user_list': ['rest_framework.permissions.AllowAny'],

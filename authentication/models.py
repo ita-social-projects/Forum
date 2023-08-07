@@ -10,7 +10,7 @@ class CustomUserManager(BaseUserManager):
         person_email = self.normalize_email(person_email)
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_active', False)
+        extra_fields.setdefault('is_active', True)
         user = self.model(
             person_email=person_email, **extra_fields)
         user.set_password(password)
@@ -37,6 +37,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         comp_name = models.CharField(max_length=50)
         comp_registered = models.BooleanField(default=None, null=True)
         comp_is_startup = models.BooleanField(default=None, null=True)
+
+        is_active = models.BooleanField(default=False)
+        is_staff = models.BooleanField(default=False)
+        is_superuser = models.BooleanField(default=False)
 
         USERNAME_FIELD = "person_email"
         EMAIL_FIELD = "person_email"
