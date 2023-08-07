@@ -14,7 +14,6 @@ from pathlib import Path
 from decouple import config
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,14 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = os.environ.get('DEBUG')s
+# DEBUG = os.environ.get('DEBUG')s
 DEBUG = True
 
-#ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '0.0.0.0']
 
 # Application definition
@@ -143,8 +142,7 @@ DJOSER = {
     'LOGIN_FIELD': 'person_email',
     # 'USER_CREATE_PASSWORD_RETYPE': True,
     'SERIALIZERS': {
-        'user_create': 'forum.serializers.ProfileRegistrationSerializer',
-        'user': 'forum.serializers. ProfileSerializer ',
+        'user_create': 'profiles.serializers.ProfileRegistrationSerializer',
+        'user': 'profiles.serializers.ProfileSerializer',
     }
 }
-
