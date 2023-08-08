@@ -26,32 +26,30 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-        person_email = models.EmailField(max_length=50, unique=True)
-        person_name = models.CharField(max_length=50)
-        person_surname = models.CharField(max_length=50)
-        password = models.CharField(
-            max_length=128,
-            validators=[validate_password_long, validate_password_include_symbols]
-        )
-        
-        comp_name = models.CharField(max_length=50)
-        comp_registered = models.BooleanField(default=None, null=True)
-        comp_is_startup = models.BooleanField(default=None, null=True)
+    person_email = models.EmailField(max_length=50, unique=True)
+    person_name = models.CharField(max_length=50)
+    person_surname = models.CharField(max_length=50)
+    password = models.CharField(
+        max_length=128,
+        validators=[validate_password_long, validate_password_include_symbols]
+    )
 
-        is_active = models.BooleanField(default=False)
-        is_staff = models.BooleanField(default=False)
-        is_superuser = models.BooleanField(default=False)
+    comp_name = models.CharField(max_length=50)
+    comp_registered = models.BooleanField(default=None, null=True)
+    comp_is_startup = models.BooleanField(default=None, null=True)
 
-        USERNAME_FIELD = "person_email"
-        EMAIL_FIELD = "person_email"
-        REQUIRED_FIELDS = [
-                "password",
-                "person_surname",
-                "person_name",
-                "comp_name",
-                "comp_registered",
-                "comp_is_startup",
-            ]
+    is_active = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
-        objects = CustomUserManager()
-        
+    USERNAME_FIELD = "person_email"
+    EMAIL_FIELD = "person_email"
+    REQUIRED_FIELDS = [
+        "person_surname",
+        "person_name",
+        "comp_name",
+        "comp_registered",
+        "comp_is_startup",
+    ]
+
+    objects = CustomUserManager()

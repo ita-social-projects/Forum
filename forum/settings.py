@@ -140,14 +140,15 @@ REST_FRAMEWORK = {
 }
 
 DJOSER = {
+    'HIDE_USERS': False,
     'LOGIN_FIELD': 'person_email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
-    'user': ['rest_framework.permissions.AllowAny'],
-    'user_list': ['rest_framework.permissions.AllowAny'],
+        'user': ['rest_framework.permissions.AllowAny'],
+        'user_list': ['rest_framework.permissions.IsAuthenticated'],
     },
     'SERIALIZERS': {
         'user_create': 'authentication.serializers.UserRegistrationSerializer',
-        'user': 'authentication.serializers.UserSerializer',
+        'user': 'authentication.serializers.UserRegistrationSerializer',
     }
 }
