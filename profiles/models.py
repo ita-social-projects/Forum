@@ -6,10 +6,8 @@ from validation.validate_image import validate_image_size, validate_image_format
 
 from authentication.models import CustomUser
 
-
 REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
 
-    
 
 class Profile(models.Model):
 

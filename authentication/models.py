@@ -8,9 +8,9 @@ class CustomUserManager(BaseUserManager):
 
     def create_user(self, person_email, password=None, **extra_fields):
         person_email = self.normalize_email(person_email)
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault("is_staff", False)
+        extra_fields.setdefault("is_superuser", False)
+        extra_fields.setdefault("is_active", True)
         user = self.model(
             person_email=person_email, **extra_fields)
         user.set_password(password)
@@ -18,9 +18,9 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, person_email, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
 
         return self.create_user(person_email, password, **extra_fields)
 
