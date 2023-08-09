@@ -1,54 +1,54 @@
 .sign-up {
-    width: 1512px;
-    border-radius: 8px;
-    background: var(--wf-base-white, #FFF);
+  width: 1512px;
+  border-radius: 8px;
+  background: var(--wf-base-white, #fff);
 }
 
 .sign-up__body {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    height: 725px;
-    background: var(--primary-green-20, #F1FFF7);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 725px;
+  background: var(--primary-green-20, #f1fff7);
 }
 
 .container {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    position: absolute;
-    z-index: 2;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  position: absolute;
+  z-index: 2;
 }
 
 .sign-in-line {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .sign-in-line__text {
-    color: #000;
-    font-feature-settings: 'calt' off;
+  color: #000;
+  font-feature-settings: "calt" off;
 
-    /* Text/Body/14-Regular */
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.14px;
+  /* Text/Body/14-Regular */
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.14px;
 }
 
 .sign-in-line__link {
-    color: var(--accent-accelerate-1500, #00A3CF);
-    font-feature-settings: 'calt' off;
+  color: var(--accent-accelerate-1500, #00a3cf);
+  font-feature-settings: "calt" off;
 
-    /* Text/Body/14-Regular */
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.14px;
+  /* Text/Body/14-Regular */
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.14px;
 }
