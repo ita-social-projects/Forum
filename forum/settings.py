@@ -147,8 +147,10 @@ DJOSER = {
         'user': ['rest_framework.permissions.AllowAny'],
         'user_list': ['rest_framework.permissions.IsAuthenticated'],
     },
+
     'SERIALIZERS': {
         'user_create_password_retype': 'authentication.serializers.UserRegistrationSerializer',
-        'user': 'authentication.serializers.UserRegistrationSerializer',
+        'user': 'authentication.serializers.UserListSerializer',
+        'token_create': 'authentication.serializers.UserTokenCreateSerializer',
     }
 }

@@ -1,6 +1,7 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model
+from django.conf import settings
 from django.core.exceptions import ValidationError
-from djoser.serializers import UserSerializer as BaseUserSerializer, UserCreatePasswordRetypeSerializer
+from djoser.serializers import UserCreatePasswordRetypeSerializer, UserSerializer, TokenCreateSerializer
 from rest_framework import serializers
 
 from validation.validate_password import validate_password_long, validate_password_include_symbols
@@ -51,14 +52,53 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
         if not comp_registered and not comp_is_startup:
             raise serializers.ValidationError(
                 "You must choose either registered or is_startup")
+        if User.objects.filter(person_email=validated_data["person_email"]):
+            raise serializers.ValidationError(
+                {"error": "Email is already registered"})
         user = User.objects.create(**validated_data)
         user.set_password(validated_data["password"])
+        user.is_active = True
         user.save()
         return user
 
 
-class UserSerializer(BaseUserSerializer):
+class UserListSerializer(UserSerializer):
 
-    class Meta(BaseUserSerializer.Meta):
+    class Meta(UserSerializer.Meta):
         model = User
-        fields = "__all__"
+        fields = (
+            "id",
+            "person_email",
+            "person_name",
+            "person_surname",
+            "comp_name",
+            "comp_registered",
+            "comp_is_startup",
+        )
+
+
+class UserTokenCreateSerializer(TokenCreateSerializer):
+    password = serializers.CharField(
+        required=False, style={"input_type": "password"})
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = None
+        self.fields[settings.DJOSER["LOGIN_FIELD"]] = serializers.CharField(
+            required=False)
+
+    def validate(self, attrs):
+        password = attrs.get("password")
+        params = {settings.DJOSER["LOGIN_FIELD"]: attrs.get(settings.DJOSER["LOGIN_FIELD"])}
+        self.user = authenticate(
+            request=self.context.get("request"), **params, password=password
+        )
+        if not self.user:
+            self.user = User.objects.filter(**params).first()
+            if self.user and not self.user.check_password(password):
+                raise serializers.ValidationError({"error":
+                                                   "Email or password is incorrect"})
+        if self.user and self.user.is_active:
+            return attrs
+        raise serializers.ValidationError({"error":
+                                           "Email or password is incorrect"})
