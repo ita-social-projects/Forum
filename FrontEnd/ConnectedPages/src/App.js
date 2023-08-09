@@ -1,4 +1,5 @@
 //For authorization Page
+//Don't forget about npm install validator
 //import React from "react";
 //import MainPageRectangle from "./components/main-page-rectangle/MainPageRectangle";
 //
@@ -41,7 +42,7 @@
 //For Profile SignUp page
 //import logo from './logo.svg'; -Do we really need this string of code?
 //import './AppSignUpPage.css';
-//import SignUpPageComponent from '.components/SignUp/SignUpPage';
+//import SignUpPageComponent from './components/SignUp/SignUpPage';
 //
 //function App() {
 //  return (
