@@ -1,10 +1,39 @@
+.sign-up {
+    width: 1512px;
+    /* height: 900px; */
+    border-radius: 8px;
+    background: var(--wf-base-white, #FFF);
+    
+}
+
+.sign-up__body {
+    /* width: 1512px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 725px;
+    /* flex-shrink: 0; */
+    background: var(--primary-green-20, #F1FFF7);
+    
+}
+
+.container {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    position: absolute;
+    z-index: 2;
+}
+
 .sign-in-line {
     display: flex;
     align-items: flex-start;
     gap: 8px;
 }
 
-.sign-in-line__message {
+.sign-in-line__text {
     color: #000;
     font-feature-settings: 'calt' off;
 
