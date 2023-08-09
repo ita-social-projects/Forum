@@ -1,11 +1,10 @@
 import styles from './SignUpForm.module.css'
-import SignUpFormContentComponent from './signup-form/SignUpFormContent';
-
+import { SignUpFormContentComponent } from './signup-form/SignUpFormContent';
 
 export function SignUpFormComponent() {
     return <div className={styles['form__container']}>
         <div className={styles['form__header']}>Реєстрація</div>
-        <SignUpFormContentComponent/>
+        <SignUpFormContentComponent />
         <div className={styles['form__footer']}>
             <div className={styles['button-container']}>
                 <button className={styles['main-page__button']} type='button'>Головна</button>
