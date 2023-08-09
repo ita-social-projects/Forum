@@ -35,8 +35,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
 
     comp_name = models.CharField(max_length=50)
-    comp_registered = models.BooleanField(default=None, null=True)
-    comp_is_startup = models.BooleanField(default=None, null=True)
+    comp_registered = models.BooleanField()
+    comp_is_startup = models.BooleanField()
 
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
