@@ -70,3 +70,22 @@
 //
 //export default App;
 
+// For PrivacyPolicy page
+//import './AppPrivacyPolicy.css';
+//import Footer from './components/PrivacyPolicyPage/UI/footer/Footer';
+//import Header from './components/PrivacyPolicyPage/UI/header/Header';
+//import { PrivacyPolicy } from './components/PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
+//import ScrollToTopButton from './components/PrivacyPolicyPage/privacy/ScrollToTopButton';
+//
+//function App() {
+//  return (
+//    <div className="App">
+//      <Header isAuthorized={true} />
+//      <PrivacyPolicy />
+//      <Footer />
+//      <ScrollToTopButton />
+//    </div>
+//  );
+//}
+//
+//export default App;
