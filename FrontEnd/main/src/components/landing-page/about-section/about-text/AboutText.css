@@ -16,7 +16,7 @@
 .about-us-text-section__header-text {
     width: 971px;
     color: #292E32;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 32px;
     font-style: normal;
     font-weight: 700;
@@ -27,7 +27,7 @@
     height: 62px;
     color: #292E32;
     font-feature-settings: 'calt' off;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -48,7 +48,7 @@
     flex-shrink: 0;
     color: #292E32;
     font-feature-settings: 'calt' off;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -61,7 +61,7 @@
     flex-shrink: 0;
     color: #292E32;
     font-feature-settings: 'calt' off;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;

@@ -33,7 +33,7 @@
 }
 .about-us-section-content__header-text {
     color: #FFF;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 32px;
     font-style: normal;
     font-weight: 700;
@@ -43,7 +43,7 @@
     width: 567px;
     color: #FFF;
     font-feature-settings: 'calt' off;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

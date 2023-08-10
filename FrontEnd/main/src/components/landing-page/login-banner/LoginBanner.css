@@ -87,8 +87,8 @@
 .login-banner-group__banner-text {
     color: #FFF;
     text-shadow: 0 6px 6px 0 rgba(72, 72, 72, 0.25);
-    font-family: Inter, serif;
-    font-size: 36px;
+    font-family: Inter, sans-serif;
+    font-size: 32px;
     font-style: normal;
     font-weight: 700;
     line-height: 120%; /* 38.4px */
@@ -98,8 +98,8 @@
 }
 .login-banner-group__banner-shadow-text {
     color: #59636A;
-    font-family: Inter, serif;
-    font-size: 36px;
+    font-family: Inter, sans-serif;
+    font-size: 32px;
     font-style: normal;
     font-weight: 700;
     line-height: 120%; /* 38.4px */
@@ -132,7 +132,7 @@
     color: #FFF;
     text-align: center;
     font-feature-settings: 'calt' off;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -156,7 +156,7 @@
     color: #1F9A7C;
     text-align: center;
     font-feature-settings: 'calt' off;
-    font-family: Inter, serif;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
