@@ -5,8 +5,11 @@ import MainPartners from "./components/landing-page/partners/Partners";
 import MainCompanies from "./components/landing-page/companies/Companies";
 import MainLoginBanner from "./components/landing-page/login-banner/LoginBanner";
 import MainAboutSection from "./components/landing-page/about-section/About";
+import CookieMod from './components/cookieacception/CookieMod';
+import { useState } from 'react';
 
 function App() {
+  const [modalActive, setModalActive] = useState(true);
   return (
     <div className="main-app">
       <div className="main-app-header">
@@ -17,6 +20,12 @@ function App() {
             <MainCompanies/>
             <MainLoginBanner/>
             <MainAboutSection/>
+            <div className="App">
+            <CookieMod
+              active={modalActive}
+              setActive={setModalActive}
+            ></CookieMod>
+          </div>
         </div>
       </div>
     </div>

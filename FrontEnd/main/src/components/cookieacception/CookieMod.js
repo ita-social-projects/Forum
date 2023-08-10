@@ -1,0 +1,54 @@
+import { Cookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
+import styles from './CookieMod.module.css';
+import cookiesimage from './cookieimg/homecookies.png';
+
+const CookieMod = ({ active, setActive }) => {
+  const [cookies, setCookie, removeCookie] = useCookies();
+  console.log(cookies.first);
+  const accessCookie = () => {
+    let d = new Date();
+    d.setTime(d.getTime() + 30 * 24 * 60 * 60 * 1000);
+    setCookie('first', true, { expires: d, sameSite: 'lax' });
+    setActive(false);
+  };
+
+  const denyCookie = () => {
+    let d = new Date();
+    d.setTime(d.getTime() + 30 * 24 * 60 * 60 * 1000);
+    setCookie('first', false, { expires: d, sameSite: 'lax' });
+    setActive(false);
+  };
+  return cookies.first ? (
+    ''
+  ) : (
+    <div
+      className={`${styles['modal-window']} ${active && styles['active']}`}
+      onClick={() => setActive(false)}
+    >
+      <div
+        className={styles['modal-content']}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <p className={styles['cookie-text']}>
+          Наш веб-сайт використовує файли cookie, щоб покращити ваш досвід. Ви
+          можете відмовитися, якщо хочете. Дізнатися більше{' '}
+          {
+            <a href="/privacy" className={styles['cookie-link']}>
+              про кукі-файли
+            </a>
+          }
+        </p>
+        <img src={cookiesimage} alt="" className={styles['cookie-image']} />
+        <button className={styles['green-btn']} onClick={accessCookie}>
+          Погоджуюсь
+        </button>
+        <button className={styles['red-btn']} onClick={denyCookie}>
+          Відмовляюсь
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CookieMod;
