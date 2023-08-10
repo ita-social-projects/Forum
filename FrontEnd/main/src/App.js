@@ -20,7 +20,7 @@ function App() {
             <MainCompanies/>
             <MainLoginBanner/>
             <MainAboutSection/>
-            <div className="App">
+            <div>
             <CookieMod
               active={modalActive}
               setActive={setModalActive}
