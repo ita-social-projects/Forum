@@ -4,7 +4,7 @@ import styles from "./SignUpFormContent.module.css";
 export function SignUpFormContentComponent() {
   const errorMessageTemplates = {
     required: "Обов’язкове поле",
-    email: "invalid email, should contain @ and .xx",
+    email: "Email не відповідає вимогам",
     password: "Пароль не відповідає вимогам",
     confirmPassword: "Паролі не збігаються",
     checkboxes: "Будь ласка, оберіть кого ви представляєте",
