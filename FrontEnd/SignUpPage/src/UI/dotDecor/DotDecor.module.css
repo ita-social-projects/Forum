@@ -1,0 +1,24 @@
+.dot-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  position: absolute;
+  z-index: 1;
+}
+
+.dot-block.up-right {
+  top: 77px;
+  left: 971px;
+}
+
+.dot-block.down-left {
+  top: 467px;
+  left: 358px;
+}
+
+.dot-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
