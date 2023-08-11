@@ -47,6 +47,9 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
                 {"password": "Passwords don't match."})
 
     def create(self, validated_data: dict):
+        if User.objects.filter(person_email=validated_data["person_email"]):
+            raise serializers.ValidationError(
+                {"error": "Email is already registered"})
         comp_registered = validated_data.get("comp_registered")
         comp_is_startup = validated_data.get("comp_is_startup")
         if not comp_registered and not comp_is_startup:
@@ -55,9 +58,6 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
         if comp_registered and comp_is_startup:
             raise serializers.ValidationError({"error":
                                                "Please choose either registered or startup"})
-        if User.objects.filter(person_email=validated_data["person_email"]):
-            raise serializers.ValidationError(
-                {"error": "Email is already registered"})
         user = User.objects.create(**validated_data)
         user.set_password(validated_data["password"])
         user.is_active = True
