@@ -20,9 +20,7 @@ const CookieMod = ({ active, setActive }) => {
     setCookie('first', false, { expires: d, sameSite: 'lax' });
     setActive(false);
   };
-  return cookies.first ? (
-    ''
-  ) : (
+  return cookies.first ? null : (
     <div
       className={`${styles['modal-window']} ${active && styles['active']}`}
       onClick={() => setActive(false)}
