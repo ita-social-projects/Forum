@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
-from validation.validate_password import validate_password_long, validate_password_include_symbols
 
 
 class CustomUserManager(BaseUserManager):
@@ -26,11 +25,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     person_email = models.EmailField(max_length=50, unique=True)
     person_name = models.CharField(max_length=50)
     person_surname = models.CharField(max_length=50)
-    password = models.CharField(
-        max_length=128,
-        validators=[validate_password_long, validate_password_include_symbols]
-    )
-
+    
     comp_name = models.CharField(max_length=50)
     comp_registered = models.BooleanField()
     comp_is_startup = models.BooleanField()
