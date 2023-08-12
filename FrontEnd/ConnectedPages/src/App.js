@@ -54,8 +54,8 @@
 
 //For Header-Footer
 //import './AppHeaderFooter.css';
-//import Footer from "./components/UI/footer/Footer";
-//import Header from "./components/UI/header/Header";
+//import Footer from "./components/HeaderFooter/footer/Footer";
+//import Header from "./components/HeaderFooter/header/Header";
 //
 //
 //function App() {

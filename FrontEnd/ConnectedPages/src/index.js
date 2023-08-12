@@ -24,6 +24,7 @@
 //);
 
 //For Profile SignUp
+//Don't forget about 'npm install react-hook-form'
 //import React from 'react';
 //import ReactDOM from 'react-dom/client';
 //import './indexHeaderFooterSignUp.css';
