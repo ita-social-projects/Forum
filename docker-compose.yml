@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/Forum
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+  db:
+    image: postgres:14
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: db
+      PGDATABASE: db
+      PGPASSWORD: ${PG_PASSWORD}
+      PGUSER: ${PG_USER}
+    ports:
+      - 127.0.0.1:${DB_PORT}:5432
+  pgadmin4:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com  # your email to login at http://localhost:5050/
+      PGADMIN_DEFAULT_PASSWORD: 1  # your password to login at http://localhost:5050/
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin/data
+volumes:
+  db_data:
+  pgadmin-data:

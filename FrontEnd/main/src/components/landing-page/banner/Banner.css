@@ -1,0 +1,343 @@
+.main-banner-group {
+    width: 1512px;
+    height: 500px;
+    flex-shrink: 0;
+    position: relative;
+}
+.main-banner-group__main-rectangle {
+    width: 1512px;
+    height: 500px;
+    flex-shrink: 0;
+    background: #1F9A7C;
+    left: 0;
+    top: 0;
+    position: absolute;
+
+}
+.main-banner-group__white-rectangle {
+    width: 786px;
+    height: 500px;
+    flex-shrink: 0;
+    background: #FFF;
+    left: 0;
+    top: 0;
+    position: absolute;
+}
+
+.main-banner-group__frame-rectangle9 {
+    width: 199px;
+    height: 258px;
+    transform: rotate(-9.235deg);
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #FFF;
+    left: 845.59px;
+    top: 65.64px;
+    position: absolute;
+}
+
+.main-banner-group__frame-rectangle10 {
+    width: 199px;
+    height: 258px;
+    transform: rotate(-2.266deg);
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #FFF;
+    opacity: 0.30000001192092896;
+    left: 857.98px;
+    top: 67.04px;
+    position: absolute;
+}
+
+.main-banner-group__frame-rectangle11 {
+    width: 220px;
+    height: 179px;
+    transform: rotate(-2.266deg);
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #FFF;
+    opacity: 0.800000011920929;
+    left: 1072px;
+    top: 78.87px;
+    position: absolute;
+}
+.main-banner-group__frame-rectangle12 {
+    width: 210px;
+    height: 171px;
+    transform: rotate(-2.266deg);
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #FFF;
+    opacity: 0.800000011920929;
+    left: 1087.91px;
+    top: 310.49px;
+    position: absolute;
+}
+
+.main-banner-group__frame-rectangle13 {
+    width: 209.828px;
+    height: 170.787px;
+    transform: rotate(-2.266deg);
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #FFF;
+    opacity: 0.10000000149011612;
+    left: 1094px;
+    top: 293.30px;
+    position: absolute;
+}
+.main-banner-group__frame-description {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    width: 584px;
+    height: 264px;
+    left: 103px;
+    top: 112px;
+    position: absolute;
+}
+.main-banner-group__banner-text {
+    width: 584px;
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 48px */
+    letter-spacing: 0.4px;
+    position: absolute;
+}
+.main-banner-group__frame-login {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    position: absolute;
+}
+.main-banner-group__login-button {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    border: 1px solid #1F9A7C;
+    background: #1F9A7C;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+    top: 245px;
+    position: relative;
+}
+
+.main-banner-group__login-button-text {
+    color: #FFF;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 125% */
+    letter-spacing: -0.16px;
+}
+
+.main-banner-group__register-button {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    border: 1px solid #1F9A7C;
+    background: #FFF;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
+    top: 245px;
+    position: relative;
+}
+
+.main-banner-group__register-button-text {
+    color: #1F9A7C;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 125% */
+    letter-spacing: -0.16px;
+}
+.main-banner-group__white-ellipses {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    right: 10px;
+    top: 75px;
+    position: absolute;
+}
+.main-banner-group__banner-image1 {
+    width: 199px;
+    height: 258px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: lightgray 50% / cover no-repeat;
+    left: 849px;
+    top: 79px;
+    position: absolute;
+    object-fit: cover;
+}
+.main-banner-group__banner-image2 {
+    width: 220px;
+    height: 148px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: lightgray 50% / cover no-repeat;
+    left: 1064px;
+    top: 293px;
+    position: absolute;
+    object-fit: cover;
+}
+.main-banner-group__banner-image3 {
+    width: 212px;
+    height: 182px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: lightgray 50% / cover no-repeat;
+    left: 1064px;
+    top: 79px;
+    position: absolute;
+    object-fit: cover;
+}
+
+.main-banner-group__green-ellipses {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    right: -25px;
+    bottom: 3px;
+    position: absolute;
+}
+.main-banner-wine {
+    width: 123px;
+    height: 36px;
+    display: inline-flex;
+    padding: 6px 16px;
+    align-items: center;
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.20);
+    left: 840px;
+    top: 328px;
+    position: absolute;
+}
+
+.main-banner-group__frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.main-banner-wine__winemaking {
+    display: flex;
+    padding: 9px 10.5px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 16px;
+    background: #BE4F28;
+}
+.winemaking {
+    width: 15px;
+    height: 18px;
+    fill: #FFF;
+}
+.main-banner-group__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.main-banner-group__banner-item-text {
+    color: #292E32;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 160% */
+    text-transform: uppercase;
+}
+.main-banner-group__banner-item-counter {
+    color: #BE4F28;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 160% */
+    text-transform: uppercase;
+}
+.main-banner-cheese {
+    display: flex;
+    width: 180px;
+    padding: 6px 16px 6px 20px;
+    align-items: center;
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.20);
+    height: 16px;
+    left: 1055px;
+    top: 427px;
+    position: absolute;
+}
+.banner-cheese {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+.main-banner-cheese__cheese {
+    display: inline-flex;
+    padding: 8px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 16px;
+    background: #F0AB4E;
+    width: 20px;
+    height: 20px;
+    left: 1240px;
+    top: 301px;
+    position: absolute;
+}
+.cheese {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+.main-banner-delivery {
+    display: inline-flex;
+    padding: 6px 16px;
+    align-items: center;
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.20);
+    width: 101px;
+    height: 36px;
+    left: 1125px;
+    top: 237px;
+    position: absolute;
+}
+.main-banner-delivery__delivery {
+    display: flex;
+    padding: 8px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 16px;
+    background: #FFDEC6;
+}
+.delivery {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+
+
+

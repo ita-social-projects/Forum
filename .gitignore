@@ -2,3 +2,13 @@
 /shelf/
 /workspace.xml
 /.idea
+/venv
+/.venv
+/.env
+/.DS_Store
+__pycache__/
+/authentication/migrations/
+/profiles/migrations/
+/db.sqlite3
+/.sqlite3
+/*.sqlite3
