@@ -5,17 +5,18 @@ import cookiesimage from './cookieimg/homecookies.png';
 
 const CookieMod = ({ active, setActive }) => {
   const [cookies, setCookie, removeCookie] = useCookies();
-  console.log(cookies.first);
   const accessCookie = () => {
-    let d = new Date();
-    d.setTime(d.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const d = new Date();
+    const cookieLifeTime = 30 * 24 * 60 * 60 * 1000;
+    d.setTime(d.getTime() + cookieLifeTime);
     setCookie('first', true, { expires: d, sameSite: 'lax' });
     setActive(false);
   };
 
   const denyCookie = () => {
-    let d = new Date();
-    d.setTime(d.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const d = new Date();
+    const cookieLifeTime = 30 * 24 * 60 * 60 * 1000;
+    d.setTime(d.getTime() + cookieLifeTime);
     setCookie('first', false, { expires: d, sameSite: 'lax' });
     setActive(false);
   };
@@ -28,7 +29,6 @@ const CookieMod = ({ active, setActive }) => {
     >
       <div
         className={styles['modal-content']}
-        onClick={(e) => e.stopPropagation()}
       >
         <p className={styles['cookie-text']}>
           Наш веб-сайт використовує файли cookie, щоб покращити ваш досвід. Ви

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import "./App.css"
 import MainMenu from "./components/landing-page/menu/Menu";
 import MainBanner from "./components/landing-page/banner/Banner";
@@ -6,7 +7,7 @@ import MainCompanies from "./components/landing-page/companies/Companies";
 import MainLoginBanner from "./components/landing-page/login-banner/LoginBanner";
 import MainAboutSection from "./components/landing-page/about-section/About";
 import CookieMod from './components/cookieacception/CookieMod';
-import { useState } from 'react';
+
 
 function App() {
   const [modalActive, setModalActive] = useState(true);
