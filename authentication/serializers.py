@@ -55,7 +55,7 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
         if not comp_registered and not comp_is_startup:
             raise serializers.ValidationError({"error":
                                                "Please choose who you represent"})
-        if comp_registered and comp_is_startup:
+        elif comp_registered and comp_is_startup:
             raise serializers.ValidationError({"error":
                                                "Please choose either registered or startup"})
         user = User.objects.create(**validated_data)
