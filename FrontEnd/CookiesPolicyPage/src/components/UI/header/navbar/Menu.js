@@ -4,22 +4,22 @@ const MENU = [
     {
         id: "m0",
         title: "Головна",
-        link: ""
+        link: "#"
     },
     {
         id: "m1",
         title: "Компанії",
-        link: ""
+        link: "#"
     },
     {
         id: "m2",
         title: "Стартапи",
-        link: ""
+        link: "#"
     },
     {
         id: "m3",
         title: "Про нас",
-        link: ""
+        link: "#"
     },
 ]
 

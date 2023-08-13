@@ -1,18 +1,15 @@
 import css from "./Header.module.css"
-import Buttons from "./Buttons";
-import Menu from "./Menu";
-import Profile from "./Profile";
-import SearchBox from "./SearchBox";
+import HeaderMenu from "./menu/HeaderMenu";
+import Navbar from "./navbar/Navbar";
 
 function Header (props) {
     return (
         <header>
-            <div className={css["header-logo__text"]}>forum</div>
-            <div className={css["header-utility-bar"]}>
-                {props.isAuthorized === true && <Menu/>}
-                {props.page === "login" || props.page === "registration" ? (null):
-                    (<SearchBox></SearchBox>)}
-                {props.isAuthorized === true ? (<Profile/>) : (<Buttons/>)}
+            <div className={css["header-content"]}>
+                <Navbar isAuthorized={props.isAuthorized} page={props.page}></Navbar>
+                <div className={css["header-divider"]}></div>
+                {props.page === "login" || props.page === "registration" ? (null): (<HeaderMenu/>)}
+                <div className={css["header-divider"]}></div>
             </div>
         </header>
     );

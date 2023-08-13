@@ -7,6 +7,6 @@ function Buttons() {
             <button className={css["header-register__button"]} type="button">Зареєструватися</button>
         </div>
     );
-}
+};
 
-export default Buttons
+export default Buttons;

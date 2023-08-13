@@ -6,7 +6,7 @@ function Profile(props) {
         <div className={css["header-profile-section"]}>
             <img className={css["header-profile__avatar"]} src={avatar_image} alt=""/>
             <div className={css["header-profile-tab"]}>
-                <a href="profile">Профіль</a>
+                <a className={css["header-profile-link__text"]} href="profile">Профіль</a>
             </div>
         </div>
     );

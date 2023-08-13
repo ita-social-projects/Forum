@@ -16,6 +16,7 @@
 .header-menu-element__text {
     color: #292E32;
     font-feature-settings: 'calt' off;
+    text-decoration: none;
 
     font-family: Inter;
     font-size: 14px;

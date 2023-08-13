@@ -6,7 +6,7 @@ import ScrollButton from "./components/UI/scrollButton/ScrollButton";
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
         <Header isAuthorized={true}/>
         <CookiesPolicyComponent/>
         <ScrollButton/>
