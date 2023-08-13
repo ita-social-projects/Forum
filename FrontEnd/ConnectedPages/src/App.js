@@ -40,14 +40,10 @@
 //export default App;
 
 //For Profile SignUp page
-//import logo from './logo.svg'; -Do we really need this string of code?
-//import './AppSignUpPage.css';
-//import SignUpPageComponent from './components/SignUp/SignUpPage';
+//import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 //
 //function App() {
-//  return (
-//    <SignUpPageComponent />
-//  );
+//  return <SignUpPage />;
 //}
 //
 //export default App;
