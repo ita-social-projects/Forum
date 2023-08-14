@@ -156,9 +156,14 @@ const LoginContent = (props) => {
         </div>
         <div className={classes.loginfooter}>
           <div className={classes["loginfooter-buttons"]}>
-            <button className={classes["loginfooter-buttons__main"]}>
-              Головна
-            </button>
+          <a href="/">
+              <button
+                type="button"
+                className={classes["loginfooter-buttons__main"]}
+              >
+                Головна
+              </button>
+            </a>
             <button
               type="submit"
               className={classes["loginfooter-buttons__signin"]}
