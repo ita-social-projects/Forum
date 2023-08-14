@@ -1,6 +1,6 @@
 import css from "./Menu.module.css"
 
-const MENU = [
+const MENU_LINKS = [
     {
         id: "m0",
         title: "Головна",
@@ -26,7 +26,7 @@ const MENU = [
 function Menu () {
     return (
         <div className={css["header-menu-section"]}>
-            {MENU.map( (element) => (
+            {MENU_LINKS.map( (element) => (
                 <div className={css["header-menu-element"]}>
                     <a className={css["header-menu-element__text"]} key={element.id} href={element.link}>{element.title}</a>
                 </div>

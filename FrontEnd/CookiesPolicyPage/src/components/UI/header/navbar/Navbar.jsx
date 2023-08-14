@@ -1,5 +1,5 @@
 import css from "./Navbar.module.css";
-import Menu from "./Menu";
+import Menu from "./MENU_LINKS";
 import SearchBox from "./SearchBox";
 import Profile from "./Profile";
 import Buttons from "./Buttons";
