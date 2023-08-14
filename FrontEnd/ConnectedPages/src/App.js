@@ -12,6 +12,9 @@
 //export default App;
 
 //For main page
+//import { useState } from 'react';
+// import { Cookies } from 'react-cookie';
+// import { useCookies } from 'react-cookie';
 //import "./AppMain.css"
 //import MainMenu from "./components/landing-page/menu/Menu";
 //import MainBanner from "./components/landing-page/banner/Banner";
@@ -19,8 +22,11 @@
 //import MainCompanies from "./components/landing-page/companies/Companies";
 //import MainLoginBanner from "./components/landing-page/login-banner/LoginBanner";
 //import MainAboutSection from "./components/landing-page/about-section/About";
+// import cookieconsent from './components/cookieacception/CookieConsent';
+// import CookieMod from './components/cookieacception/CookieMod';
 //
 //function App() {
+//  const [modalActive, setModalActive] = useState(true);
 //  return (
 //    <div className="main-app">
 //      <div className="main-app-header">
@@ -31,6 +37,10 @@
 //            <MainCompanies/>
 //            <MainLoginBanner/>
 //            <MainAboutSection/>
+//            <div><CookieMod
+//               active={modalActive}
+//               setActive={setModalActive}
+//             ></CookieMod></div>
 //        </div>
 //      </div>
 //    </div>
