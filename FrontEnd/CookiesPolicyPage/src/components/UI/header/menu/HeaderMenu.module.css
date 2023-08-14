@@ -1,0 +1,40 @@
+.menu {
+    width: 1512px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-section{
+    display: flex;
+    padding: 8px 104px;
+    align-items: center;
+    gap: 983px;
+}
+
+.menu-section-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.menu-element {
+    display: flex;
+    padding: 6px 12px;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.menu-element__text {
+    color: var(--main-black-90, #292E32);
+    font-feature-settings: 'calt' off;
+    text-decoration: none;
+
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+}

@@ -1,0 +1,36 @@
+.header-profile-section {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.header-profile__avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    border-radius: 100px;
+    border: 1px solid #E2E5EB;
+    background: #FFF;
+}
+
+.header-profile-tab {
+    display: flex;
+    padding: 5px 0px;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-profile-link__text {
+    color: #3C4044;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    text-decoration: none;
+
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+}
