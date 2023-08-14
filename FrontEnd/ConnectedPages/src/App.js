@@ -48,7 +48,7 @@
 //
 //export default App;
 
-//For Header-Footer
+//For HeaderFooter
 //import './AppHeaderFooter.css';
 //import Footer from "./components/HeaderFooter/footer/Footer";
 //import Header from "./components/HeaderFooter/header/Header";

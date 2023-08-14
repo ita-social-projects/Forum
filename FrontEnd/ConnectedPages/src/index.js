@@ -42,7 +42,7 @@
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 //reportWebVitals();
 
-//For Header-Footer
+//For HeaderFooter
 //import React from 'react';
 //import ReactDOM from 'react-dom/client';
 //import './indexHeaderFooterSignUp.css';
