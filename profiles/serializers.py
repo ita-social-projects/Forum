@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from authentication.models import CustomUser
+
 from .models import Profile, Activity, Category
 
 
@@ -17,7 +19,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     activity = ActivitySerializer(many=True, read_only=True)
-    category = ActivitySerializer(many=True, read_only=True)
+    category = CategorySerializer(many=True, read_only=True)
+    person = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
 
     class Meta:
         model = Profile
