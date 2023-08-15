@@ -136,7 +136,17 @@ REST_FRAMEWORK = {
     ),
 }
 
+# SMTP
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
 DJOSER = {
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
     'HIDE_USERS': False,
     'LOGIN_FIELD': 'person_email',
     'USER_CREATE_PASSWORD_RETYPE': True,
