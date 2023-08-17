@@ -1,9 +1,8 @@
 from rest_framework.test import APITestCase, APIClient
-from profiles.models import Profile
 from authentication.models import CustomUser
+from profiles.models import Profile
 
 
-# Create your tests here.
 class TestProfileListDetailAPIView(APITestCase):
 
     @classmethod
