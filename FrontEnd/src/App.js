@@ -22,7 +22,7 @@ import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 import './AppHeaderFooter.css';
 import Footer from './components/HeaderFooter/footer/Footer';
 import Header from './components/HeaderFooter/header/Header';
-import { PrivacyPolicy } from './components/PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
+import PrivacyPolicy from './components/PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
 import ScrollToTopButton from './components/PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from './components/terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 
