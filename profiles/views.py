@@ -11,6 +11,17 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 
+class ProfileList(ListAPIView):
+    """
+    List all profiles depending on query parameters:
+     include_deleted: bool
+     include_all: bool.
+    """
+    serializer_class = ProfileSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
     """
     Retrieve or delete a profile instance.
