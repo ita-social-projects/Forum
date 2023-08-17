@@ -21,6 +21,15 @@ class ProfileList(ListAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        user_id = Token.objects.get(key=self.request.auth.key).user_id
+        include_deleted = self.request.query_params.get("include_deleted", False)
+        include_all = self.request.query_params.get("include_all", False)
+        if include_all:
+            return Profile.objects.all()
+        if include_deleted:
+            return Profile.objects.filter(person_id=user_id)
+        return Profile.objects.filter(is_deleted=False, person_id=user_id)
 
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
     """
