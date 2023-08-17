@@ -75,7 +75,7 @@ class ProfileList(ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user_id = Token.objects.get(key=self.request.auth.key).user_id
+        user_id = self.request.user.id
         include_deleted = self.request.query_params.get("include_deleted", False)
         include_all = self.request.query_params.get("include_all", False)
         if include_all:
@@ -90,19 +90,23 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     Retrieve or delete a profile instance.
     """
     serializer_class = ProfileSerializer
-    queryset = Profile.objects.filter(is_deleted=False)
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        user_id = self.request.user.id
+        foreign = self.request.query_params.get("foreign", default=False)
+        if foreign and self.request.method == 'GET':
+            return Profile.objects.filter(is_deleted=False)
+        return Profile.objects.filter(person_id=user_id, is_deleted=False)
+
     def retrieve(self, request, pk=None):
-        user_id = Token.objects.get(key=request.auth.key).user_id
-        profile = get_object_or_404(self.queryset, pk=pk, person_id=user_id)
+        profile = get_object_or_404(self.get_queryset(), pk=pk)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
     def destroy(self, request, pk=None):
-        user_id = Token.objects.get(key=request.auth.key).user_id
-        profile = get_object_or_404(self.queryset, pk=pk, person_id=user_id)
+        profile = get_object_or_404(self.get_queryset(), pk=pk)
         profile.is_deleted = True
         profile.save()
         serializer = ProfileSerializer(profile)
