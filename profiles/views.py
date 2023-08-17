@@ -1,14 +1,13 @@
+from django.shortcuts import get_object_or_404
+from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from .models import Profile
 from .serializers import ProfileSerializer
-
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import get_object_or_404
 
 
 class ProfileList(ListAPIView):
@@ -30,6 +29,7 @@ class ProfileList(ListAPIView):
         if include_deleted:
             return Profile.objects.filter(person_id=user_id)
         return Profile.objects.filter(is_deleted=False, person_id=user_id)
+
 
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
     """
