@@ -31,9 +31,7 @@ class Profile(models.Model):
 
     person = models.OneToOneField(CustomUser, on_delete=models.PROTECT)
     person_position = models.CharField(max_length=50, default=None, null=True)
-
     startup_idea = models.TextField(default=None, null=True)
-
     is_deleted = models.BooleanField(default=False)
 
 
