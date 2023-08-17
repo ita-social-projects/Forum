@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from .models import CompanySavedList
+from .models import SavedCompany
 from .serializers import CompanySavedListSerializer
 
 
@@ -11,7 +11,7 @@ class SavedCompaniesList(ListAPIView):
     """
     def get(self, request):
         user = request.user
-        saved_companies = CompanySavedList.objects.filter(user=user)
+        saved_companies = SavedCompany.objects.filter(user=user)
         serializer = CompanySavedListSerializer(saved_companies, many=True)
         return Response({'Companies': serializer.data})
 
@@ -25,7 +25,7 @@ class SavedCompaniesDetails(RetrieveUpdateDestroyAPIView):
         user = request.user
 
         # Check if the company is already in the user's saved list
-        if CompanySavedList.objects.filter(user=user, company_id=pk).exists():
+        if SavedCompany.objects.filter(user=user, company_id=pk).exists():
             return Response({'error': 'Company already in saved list'}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = CompanySavedListSerializer(data={'company': pk, 'user': user.id})
@@ -38,8 +38,8 @@ class SavedCompaniesDetails(RetrieveUpdateDestroyAPIView):
         user = request.user
 
         try:
-            saved_company = CompanySavedList.objects.get(company_id=pk, user=user)
-        except CompanySavedList.DoesNotExist:
+            saved_company = SavedCompany.objects.get(company_id=pk, user=user)
+        except SavedCompany.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         saved_company.delete()
