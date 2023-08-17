@@ -1,4 +1,7 @@
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -6,12 +9,8 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Profile
-from .serializers import ProfileSerializer
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
 from .models import CompanySavedList, Profile
+from .serializers import ProfileSerializer
 
 
 @login_required
@@ -65,8 +64,6 @@ def remove_from_saved_list(request, profile_id):
         return JsonResponse({'status': 'error', 'message': 'Item not found in saved list'})
 
 
-
-
 class ProfileList(ListAPIView):
     """
     List all profiles depending on query parameters:
@@ -76,9 +73,6 @@ class ProfileList(ListAPIView):
     serializer_class = ProfileSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-
-
-
 
     def get_queryset(self):
         user_id = Token.objects.get(key=self.request.auth.key).user_id

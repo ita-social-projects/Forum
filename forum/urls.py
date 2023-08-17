@@ -20,7 +20,7 @@ from profiles.views import add_to_saved_list, remove_from_saved_list, saved_list
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('authentication.urls', namespace='authentication')),
-    path('api/', include('profiles.urls', namespace='profiles'))
+    path('api/', include('profiles.urls', namespace='profiles')),
 
     path('saved-list/add/<int:profile_id>/', add_to_saved_list, name='add_to_saved_list'),
     path('saved-list/remove/<int:profile_id>/', remove_from_saved_list, name='remove_from_saved_list'),
