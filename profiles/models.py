@@ -45,7 +45,7 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
 
 
-class CompanySavedList(models.Model):
+class SavedCompany(models.Model):
     company = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='saved_list')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='saved_list_items')
     added_at = models.DateTimeField(auto_now_add=True)
