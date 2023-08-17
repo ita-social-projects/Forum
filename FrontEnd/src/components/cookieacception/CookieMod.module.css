@@ -19,7 +19,7 @@
   padding: 20px;
   border-radius: 12px;
   background-color: white;
-  height: 200px;
+  height: 230px;
   width: 300px;
 }
 
@@ -43,12 +43,13 @@
   font-size: 15px;
   border-radius: 4px;
   margin: 10px;
-  margin-left: 40px;
+  margin-left: 20px;
   padding: 4px;
 }
 
 .cookie-image {
-  margin-left: 100px;
+  margin-left: 55px;
+  margin-right: 50px;
   width: 100px;
   height: 70px;
 }
