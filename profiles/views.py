@@ -25,3 +25,11 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile = get_object_or_404(self.queryset, pk=pk, person_id=user_id)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        user_id = Token.objects.get(key=request.auth.key).user_id
+        profile = get_object_or_404(self.queryset, pk=pk, person_id=user_id)
+        profile.is_deleted = True
+        profile.save()
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
