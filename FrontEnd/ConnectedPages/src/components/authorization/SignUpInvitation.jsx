@@ -4,7 +4,7 @@ const SignUpInvitation = (props) => {
     return (
         <div className={classes["signup-invitation"]}>
             <p>Вперше на нашому сайті?</p>
-            <a href="#">Зареєструйтесь</a>
+            <a href="/">Зареєструйтесь</a>
         </div>
     );
 };
