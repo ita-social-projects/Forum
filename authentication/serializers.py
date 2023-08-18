@@ -60,7 +60,6 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
                                                "Please choose either registered or startup"})
         user = User.objects.create(**validated_data)
         user.set_password(validated_data["password"])
-        user.is_active = True
         user.save()
         return user
 
