@@ -10,7 +10,6 @@ REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
 
 
 class Profile(models.Model):
-
     profile_id = models.AutoField(primary_key=True)
     comp_category = models.ManyToManyField("Category")
     comp_activity = models.ManyToManyField("Activity")
@@ -23,7 +22,8 @@ class Profile(models.Model):
         default=None, null=True
     )
     comp_EDRPOU = models.IntegerField(unique=True, validators=[validate_edrpou], default=None, null=True)
-    comp_year_of_foundation = models.SmallIntegerField(validators=[validate_foundation_year_range], default=None, null=True)
+    comp_year_of_foundation = models.SmallIntegerField(validators=[validate_foundation_year_range], default=None,
+                                                       null=True)
     comp_service_info = models.TextField(default=None, null=True)
     comp_product_info = models.TextField(default=None, null=True)
     comp_address = models.TextField(default=None, null=True)
@@ -31,8 +31,8 @@ class Profile(models.Model):
 
     person = models.OneToOneField(CustomUser, on_delete=models.PROTECT)
     person_position = models.CharField(max_length=50, default=None, null=True)
- 
     startup_idea = models.TextField(default=None, null=True)
+    is_deleted = models.BooleanField(default=False)
 
 
 class Activity(models.Model):
