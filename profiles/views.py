@@ -14,7 +14,7 @@ class SavedCompaniesListCreate(ListCreateAPIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
+    def list(self, request):
         user = request.user
         saved_companies = SavedCompany.objects.filter(user=user)
         serializer = SavedCompanySerializer(saved_companies, many=True)
@@ -41,7 +41,7 @@ class SavedCompaniesDestroy(DestroyAPIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request, pk):
+    def destroy(self, request, pk):
         user = request.user
         saved_company = get_object_or_404(SavedCompany, company_id=pk, user=user)
         saved_company.delete()
