@@ -1,5 +1,6 @@
 from .models import SavedCompany
 from .serializers import SavedCompanySerializer
+from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView
 from rest_framework.response import Response
@@ -42,11 +43,6 @@ class SavedCompaniesDestroy(DestroyAPIView):
 
     def delete(self, request, pk):
         user = request.user
-
-        try:
-            saved_company = SavedCompany.objects.get(company_id=pk, user=user)
-        except SavedCompany.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
+        saved_company = get_object_or_404(SavedCompany, company_id=pk, user=user)
         saved_company.delete()
         return Response(f'Company {pk} deleted', status=status.HTTP_204_NO_CONTENT)
