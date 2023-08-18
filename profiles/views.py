@@ -5,11 +5,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import CompanySavedList, Profile
+from .permissions import UserIsCompanyOwner, RequestIsDelete
 from .serializers import ProfileSerializer
 
 
@@ -64,7 +65,7 @@ def remove_from_saved_list(request, profile_id):
         return JsonResponse({'status': 'error', 'message': 'Item not found in saved list'})
 
 
-class ProfileList(ListAPIView):
+class ProfileList(ListCreateAPIView):
     """
     List all profiles depending on query parameters:
      include_deleted: bool
@@ -78,6 +79,8 @@ class ProfileList(ListAPIView):
         user_id = self.request.user.id
         include_deleted = self.request.query_params.get("include_deleted", False)
         include_all = self.request.query_params.get("include_all", False)
+        if self.request.method == "POST":
+            return Profile.objects.filter(person_id=user_id)
         if include_all:
             return Profile.objects.all()
         if include_deleted:
@@ -91,14 +94,14 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     """
     serializer_class = ProfileSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.request.user.id
-        foreign = self.request.query_params.get("foreign", default=False)
-        if foreign and self.request.method == 'GET':
+        if self.request.method == "DELETE":
+            return Profile.objects.filter(person_id=user_id, is_deleted=False)
+        if self.request.method == 'GET':
             return Profile.objects.filter(is_deleted=False)
-        return Profile.objects.filter(person_id=user_id, is_deleted=False)
 
     def retrieve(self, request, pk=None):
         profile = get_object_or_404(self.get_queryset(), pk=pk)
@@ -110,4 +113,4 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile.is_deleted = True
         profile.save()
         serializer = ProfileSerializer(profile)
-        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.data,status=status.HTTP_204_NO_CONTENT)
