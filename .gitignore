@@ -7,8 +7,6 @@
 /.env
 /.DS_Store
 __pycache__/
-/authentication/migrations/
-/profiles/migrations/
 /node_modules
 package-lock.json
 package.json
