@@ -27,8 +27,8 @@ function Menu () {
     return (
         <div className={css["header-menu-section"]}>
             {MENU_LINKS.map( (element) => (
-                <div className={css["header-menu-element"]}>
-                    <a className={css["header-menu-element__text"]} key={element.id} href={element.link}>{element.title}</a>
+                <div className={css["header-menu-element"]} key={element.id}>
+                    <a className={css["header-menu-element__text"]} href={element.link}>{element.title}</a>
                 </div>
             ))}
         </div>
