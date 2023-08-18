@@ -1,10 +1,11 @@
-from .models import SavedCompany
-from .serializers import SavedCompanySerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListCreateAPIView, DestroyAPIView
+from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from .models import SavedCompany, CompanySavedList, Profile
+from .serializers import SavedCompanySerializer, ProfileSerializer
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -46,3 +47,54 @@ class SavedCompaniesDestroy(DestroyAPIView):
         saved_company = get_object_or_404(SavedCompany, company_id=pk, user=user)
         saved_company.delete()
         return Response(f'Company {pk} deleted', status=status.HTTP_204_NO_CONTENT)
+
+
+class ProfileList(ListCreateAPIView):
+    """
+    List all profiles depending on query parameters:
+     include_deleted: bool
+     include_all: bool.
+    """
+    serializer_class = ProfileSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        include_deleted = self.request.query_params.get("include_deleted", False)
+        include_all = self.request.query_params.get("include_all", False)
+        if self.request.method == "POST":
+            return Profile.objects.filter(person_id=user_id)
+        if include_all:
+            return Profile.objects.all()
+        if include_deleted:
+            return Profile.objects.filter(person_id=user_id)
+        return Profile.objects.filter(is_deleted=False, person_id=user_id)
+
+
+class ProfileDetail(RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve or delete a profile instance.
+    """
+    serializer_class = ProfileSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        if self.request.method == "DELETE":
+            return Profile.objects.filter(person_id=user_id, is_deleted=False)
+        if self.request.method == 'GET':
+            return Profile.objects.filter(is_deleted=False)
+
+    def retrieve(self, request, pk=None):
+        profile = get_object_or_404(self.get_queryset(), pk=pk)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        profile = get_object_or_404(self.get_queryset(), pk=pk)
+        profile.is_deleted = True
+        profile.save()
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
