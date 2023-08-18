@@ -27,7 +27,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class CompanySavedListSerializer(serializers.ModelSerializer):
+class SavedCompanySerializer(serializers.ModelSerializer):
     comp_official_name = serializers.ReadOnlyField(source='company.comp_official_name')
     comp_region = serializers.ReadOnlyField(source='company.comp_region')
     comp_common_info = serializers.ReadOnlyField(source='company.comp_common_info')
