@@ -4,13 +4,11 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import CompanySavedList, Profile
-from .permissions import UserIsCompanyOwner, RequestIsDelete
 from .serializers import ProfileSerializer
 
 
@@ -113,4 +111,4 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile.is_deleted = True
         profile.save()
         serializer = ProfileSerializer(profile)
-        return Response(serializer.data,status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
