@@ -1,10 +1,11 @@
 import css from "./Buttons.module.css"
+import { Link } from "react-router-dom"
 
 function Buttons() {
     return (
         <div className={css["header-buttons-section"]}>
-            <button className={css["header-login__button"]} type="button">Увійти</button>
-            <button className={css["header-register__button"]} type="button">Зареєструватися</button>
+            <Link className={css["header-login__button"]} to="/authorization">Увійти</Link>
+            <Link className={css["header-register__button"]} to="/SignUpPage">Зареєструватися</Link>
         </div>
     );
 };
