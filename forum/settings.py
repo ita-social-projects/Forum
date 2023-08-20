@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication',
     'profiles',
+    'search',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# if you use local_settings file, to do not change settings.py file
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass

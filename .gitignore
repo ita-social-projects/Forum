@@ -12,3 +12,4 @@ __pycache__/
 /db.sqlite3
 /.sqlite3
 /*.sqlite3
+/forum/local_settings.py

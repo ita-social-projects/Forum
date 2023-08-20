@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="GET">
+        <input type="text" name="search_field" placeholder="Назва компанії">
+        <button type="submit">Пошук</button>
+    </form>
+
+    {% if search_res or error %}
+        {% if error == '' %}
+            {% for item in search_res %}
+                <p>
+                    profile_id: {{item.profile_id}}
+                    comp_name: {{item.comp_name}}
+                    comp_common_info: {{item.comp_common_info}}
+                    comp_product_info: {{item.comp_product_info}}
+                </p>
+            {% endfor %}
+        {% elif error != ''%}
+            <p>{{ error }}</p>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
