@@ -18,11 +18,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    comp_activity = ActivitySerializer(many=True, read_only=True)
-    comp_category = CategorySerializer(many=True, read_only=True)
+    activity = ActivitySerializer(many=True, read_only=True)
+    category = CategorySerializer(many=True, read_only=True)
     person = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
-    is_startup = serializers.BooleanField(source="person.comp_is_startup")
-    is_company = serializers.BooleanField(source="person.comp_registered")
 
     class Meta:
         model = Profile
