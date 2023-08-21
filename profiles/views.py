@@ -70,7 +70,7 @@ class ProfileList(ListCreateAPIView):
         elif company_type == "company":
             return Profile.objects.filter(person__comp_registered=True)
         if activity_type in HEADER_ACTIVITIES:
-            return Profile.objects.filter(comp_activity_name=activity_type)
+            return Profile.objects.filter(comp_activity__name=activity_type)
 
         if self.request.method == "POST":
             return Profile.objects.filter(person_id=user_id)
