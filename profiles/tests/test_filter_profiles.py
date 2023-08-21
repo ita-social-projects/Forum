@@ -3,27 +3,6 @@ from authentication.models import CustomUser
 from profiles.models import Profile, Category, Activity
 
 
-def dump(response):
-    import json
-    """ Print DRF response data
-
-        Useful for debugging tests. Prints response code and indented JSON data
-
-    :param response: server response provided by DRF testing client (APIClient)
-    """
-    data = (
-        json.dumps(response.data, indent=4, ensure_ascii=False)
-        if hasattr(response, 'data') else None
-    )
-
-    print(
-        f"Status code:\n"
-        f"{response.status_code}\n\n"
-        f"Data:\n"
-        f"{data}\n"
-    )
-
-
 class TestProfileListAPIView(APITestCase):
     @classmethod
     def setUpTestData(cls):
