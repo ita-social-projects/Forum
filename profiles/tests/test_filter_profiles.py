@@ -51,6 +51,8 @@ class TestProfileListAPIView(APITestCase):
                     comp_registered=True,
                     comp_is_startup=False
                 )
+            test_person.is_active = True
+            test_person.save()
             test_persons.append(test_person)
 
         # setup profiles
