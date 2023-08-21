@@ -1,0 +1,67 @@
+.header-buttons-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.header-login__button {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 4px;
+    border: 1px solid #1F9A7C;
+    background: #1F9A7C;
+
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+
+    /* Button Text */
+    color: #FFF;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+}
+
+.header-register__button {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 4px;
+    border: 1px solid #1F9A7C;
+    background: #FFF;
+
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+
+    /* Button Text */
+    color: #1F9A7C;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+}
+
+.header-login__button:hover {
+    background: #FFF;
+    color: #1F9A7C;
+}
+
+.header-register__button:hover {
+    background: #1F9A7C;
+    color: #FFF;
+}

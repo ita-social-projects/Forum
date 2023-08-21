@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+from search.views import *
+
+app_name = 'search'
 
 urlpatterns = [
-    path('', views.show_companies, name='show_companies'),                      # localhost:8000/search/
+    path('search/', SearchCompanyView.as_view(), name='search-company'),                      # localhost:8000/search/
 ]
