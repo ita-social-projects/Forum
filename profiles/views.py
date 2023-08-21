@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -56,8 +56,7 @@ class ProfileList(ListCreateAPIView):
      include_all: bool.
     """
     serializer_class = ProfileSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_queryset(self):
         user_id = self.request.user.id
@@ -72,7 +71,8 @@ class ProfileList(ListCreateAPIView):
         if activity_type in HEADER_ACTIVITIES:
             return Profile.objects.filter(comp_activity__name=activity_type)
 
-        if self.request.method == "POST":
+        profile_exists = Profile.objects.filter(person_id=user_id).exists()
+        if self.request.method == "POST" and profile_exists:
             return Profile.objects.filter(person_id=user_id)
 
         return Profile.objects.filter(is_deleted=False)
@@ -83,7 +83,6 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     Retrieve or delete a profile instance.
     """
     serializer_class = ProfileSerializer
-    authentication_classes = [TokenAuthentication]
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
