@@ -4,17 +4,17 @@ from rest_framework.test import APITestCase
 from authentication.models import CustomUser
 
 
-class UserLoginAPITests(APITestCase):
-
-    def setUp(self):
-        self.test_user = CustomUser.objects.create_user(
+class UserLogoutAPITests(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_user = CustomUser.objects.create_user(
             person_email="test@test.com",
             password="Test1234",
             person_name="Test",
             person_surname="Test",
         )
-        self.test_user.is_active = True
-        self.test_user.save()
+        cls.test_user.is_active = True
+        cls.test_user.save()
 
     def test_logout_successful(self):
         self.test_user_token = self.client.post(
@@ -29,7 +29,7 @@ class UserLoginAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_204_NO_CONTENT)
 
-    def test_logout_not_loged_in(self):
+    def test_logout_not_logged_in(self):
         url = "/api/auth/token/logout/"
         response = self.client.post(url)
         self.assertEqual(response.status_code,

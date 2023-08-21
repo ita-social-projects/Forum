@@ -84,7 +84,6 @@ class UserListSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
         model = User
         fields = (
-            "person_email",
             "person_name",
             "person_surname",
         )

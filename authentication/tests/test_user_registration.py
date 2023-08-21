@@ -6,7 +6,6 @@ from profiles.models import Profile
 
 
 class UserRegistrationAPITests(APITestCase):
-
     @classmethod
     def setUpTestData(cls):
         CustomUser.objects.create_user(
@@ -31,7 +30,6 @@ class UserRegistrationAPITests(APITestCase):
             }
         }
         response = self.client.post(url, data, format="json")
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(
             {
@@ -40,7 +38,6 @@ class UserRegistrationAPITests(APITestCase):
             },
             response.json(),
         )
-
         self.assertEqual(Profile.objects.get().person.person_email, "jane@test.com")
         self.assertEqual(Profile.objects.get().comp_name, "My Company")
 
@@ -60,7 +57,6 @@ class UserRegistrationAPITests(APITestCase):
             }
         }
         response = self.client.post(url, data, format="json")
-
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -86,7 +82,6 @@ class UserRegistrationAPITests(APITestCase):
             }
         }
         response = self.client.post(url, data, format="json")
-
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -110,7 +105,6 @@ class UserRegistrationAPITests(APITestCase):
             }
         }
         response = self.client.post(url, data, format="json")
-
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -138,7 +132,6 @@ class UserRegistrationAPITests(APITestCase):
             }
         }
         response = self.client.post(url, data, format="json")
-
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -162,7 +155,6 @@ class UserRegistrationAPITests(APITestCase):
             }
         }
         response = self.client.post(url, data, format="json")
-
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {

@@ -5,17 +5,16 @@ from authentication.models import CustomUser
 
 
 class UserLoginAPITests(APITestCase):
-
     @classmethod
     def setUpTestData(cls):
-        test_user = CustomUser.objects.create_user(
+        cls.test_user = CustomUser.objects.create_user(
             person_email="test@test.com",
             password="Test1234",
             person_name="Test",
             person_surname="Test",
         )
-        test_user.is_active = True
-        test_user.save()
+        cls.test_user.is_active = True
+        cls.test_user.save()
 
     def test_login_successful(self):
         url = "/api/auth/token/login/"
@@ -35,7 +34,6 @@ class UserLoginAPITests(APITestCase):
             "password": "Test1234",
         }
         response = self.client.post(url, data)
-
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -53,7 +51,6 @@ class UserLoginAPITests(APITestCase):
             "password": "Test5678",
         }
         response = self.client.post(url, data)
-
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
