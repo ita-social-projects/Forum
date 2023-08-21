@@ -61,15 +61,19 @@ class ProfileList(ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.request.user.id
-        include_deleted = self.request.query_params.get("include_deleted", False)
-        include_all = self.request.query_params.get("include_all", False)
+        company_type = self.request.query_params.get("company_type")
+
+
+        if company_type == "startup":
+            return Profile.objects.filter(person__comp_is_startup=True)
+        elif company_type == "company":
+            return Profile.objects.filter(person__comp_registered=True)
+
+
         if self.request.method == "POST":
             return Profile.objects.filter(person_id=user_id)
-        if include_all:
-            return Profile.objects.all()
-        if include_deleted:
-            return Profile.objects.filter(person_id=user_id)
-        return Profile.objects.filter(is_deleted=False, person_id=user_id)
+
+        return Profile.objects.filter(is_deleted=False)
 
 
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
