@@ -62,13 +62,15 @@ class ProfileList(ListCreateAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         company_type = self.request.query_params.get("company_type")
-
+        activity_type = self.request.query_params.get("activity_type")
+        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORACE"]
 
         if company_type == "startup":
             return Profile.objects.filter(person__comp_is_startup=True)
         elif company_type == "company":
             return Profile.objects.filter(person__comp_registered=True)
-
+        if activity_type in HEADER_ACTIVITIES:
+            return Profile.objects.filter(comp_activity_name=activity_type)
 
         if self.request.method == "POST":
             return Profile.objects.filter(person_id=user_id)
