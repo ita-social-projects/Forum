@@ -36,12 +36,12 @@ class Profile(models.Model):
 
 
 class Activity(models.Model):
-    activity_id = models.IntegerField(primary_key=True)
+    activity_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
 
 
 class Category(models.Model):
-    category_id = models.IntegerField(primary_key=True)
+    category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
 
 
