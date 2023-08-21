@@ -161,3 +161,52 @@ class TestProfileListAPIView(APITestCase):
         response = self.client.get(self.base_url)
         self.assertEqual(200, response.status_code)
 
+    def test_get_all_profiles_unauthorized_filter_companies(self):
+        self.client.logout()
+        response = self.client.get(f"{self.base_url}?company_type=company")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(6, len(response.data))
+        # TODO: add check for types of the returned companied [has to be "registered"]
+
+    def test_get_all_profiles_unauthorized_filter_startups(self):
+        self.client.logout()
+        response = self.client.get(f"{self.base_url}?company_type=startup")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(6, len(response.data))
+        # TODO: add check for types of the returned companied [has to be "startup"]
+
+    def test_get_all_profiles_unauthorized_filter_activity_producer(self):
+        self.client.logout()
+        response = self.client.get(f"{self.base_url}?activity_type=producer")
+        filtered_len = len(response.data)
+        self.assertEqual(200, response.status_code)
+        response = self.client.get(self.base_url)
+        producer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 1 in response.data[i]["comp_activity"]]
+        self.assertEqual(len(producer_type), filtered_len)
+
+    def test_get_all_profiles_unauthorized_filter_activity_importer(self):
+        self.client.logout()
+        response = self.client.get(f"{self.base_url}?activity_type=importer")
+        filtered_len = len(response.data)
+        self.assertEqual(200, response.status_code)
+        response = self.client.get(self.base_url)
+        importer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 2 in response.data[i]["comp_activity"]]
+        self.assertEqual(len(importer_type), filtered_len)
+
+    def test_get_all_profiles_unauthorized_filter_activity_retail(self):
+        self.client.logout()
+        response = self.client.get(f"{self.base_url}?activity_type=retail")
+        filtered_len = len(response.data)
+        self.assertEqual(200, response.status_code)
+        response = self.client.get(self.base_url)
+        retail_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 3 in response.data[i]["comp_activity"]]
+        self.assertEqual(len(retail_type), filtered_len)
+
+    def test_get_all_profiles_unauthorized_filter_activity_HORACE(self):
+        self.client.logout()
+        response = self.client.get(f"{self.base_url}?activity_type=HORACE")
+        filtered_len = len(response.data)
+        self.assertEqual(200, response.status_code)
+        response = self.client.get(self.base_url)
+        horace_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 4 in response.data[i]["comp_activity"]]
+        self.assertEqual(len(horace_type), filtered_len)
