@@ -1,6 +1,4 @@
 import css from './ImageField.module.css';
-import scraper from './Vector.png';
-import trashBin from './Vectordelete.png';
 
 const ImageField = (props) => {
     return (
@@ -27,10 +25,12 @@ const ImageField = (props) => {
                 </label>
                 {props.value &&
                     <div className={css["upload-file__filename"]}>
-                        <img src={scraper} className={css["upload-file__icon"]} alt='' />
+                        <img
+                        src={`${process.env.PUBLIC_URL}/profilepage/Vector.png`}
+                        className={css["upload-file__icon"]} alt='' />
                         <div className={css["upload-file__filename--text"]}>{props.value}</div>
                         <span className={css["upload-file__filename--trashBin"]} onClick={() => (props.onDeleteImage(props.name))}>
-                            <img src={trashBin} alt='' />
+                            <img src={`${process.env.PUBLIC_URL}/profilepage/Vectordelete.png`} alt='' />
                         </span>
                     </div>
                 }

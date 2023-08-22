@@ -1,9 +1,4 @@
 import css from './DeleteProfileModal.module.css';
-
-import cancelButton from "./Vectorcancel.png";
-import see from './eye_icon.png';
-import unsee from './hidden_eye_icon.png';
-
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -54,7 +49,11 @@ const DeleteProfileModal = (props) => {
     return (
         <div>
             <div className={css['delete-header']}>Ви впевнені, що хочете видалити профіль?
-            <img  src={cancelButton} className={css['delete__cancelButton']} alt="" onClick={props.onCancel}/>
+            <img  
+            src={`${process.env.PUBLIC_URL}/profilepage/Vectorcancel.png`}
+            className={css['delete__cancelButton']} 
+            alt="" 
+            onClick={props.onCancel}/>
             </div>
             <div className={css['delete__description']}>
                 <p>Текст, який описує, що профіль буде видалено.</p>
@@ -84,7 +83,12 @@ const DeleteProfileModal = (props) => {
                         />
                         <span onClick={passwordVisisbilityHandler}>
                             <img 
-                            src={typePassword==='password' ? unsee : see} 
+                            src={typePassword==='password' 
+                            ?
+                            `${process.env.PUBLIC_URL}/profilepage/hidden_eye_icon.png`
+                            :
+                            `${process.env.PUBLIC_URL}/profilepage/eye_icon.png`
+                            } 
                             alt='' 
                             className={css['password__eye']}
                             />
@@ -101,3 +105,5 @@ const DeleteProfileModal = (props) => {
 };
 
 export default DeleteProfileModal;
+
+// src={`${process.env.PUBLIC_URL}/profilepage/Vector.png`}
