@@ -1,0 +1,16 @@
+.fields {
+    display: flex;
+    flex-direction: column;   
+    gap: 0px;    
+}
+
+.fields-groups {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.form__container {
+    word-wrap: break-word;
+    width: 530px;
+}

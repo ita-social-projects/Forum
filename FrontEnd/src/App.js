@@ -25,6 +25,7 @@ import Header from './components/HeaderFooter/header/Header';
 import PrivacyPolicy from './components/PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
 import ScrollToTopButton from './components/PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from './components/terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
+import ProfilePage from './components/ProfilePage/ProfilePage';
 
 function App() {
   const [modalActive, setModalActive] = useState(true);
@@ -56,6 +57,7 @@ function App() {
               </div>
             }
           />
+          <Route path="/profile/*" element={<ProfilePage />} />
           <Route path="/authorization" element={<MainPageRectangle />} />
           <Route path="/SignUpPage" element={<SignUpPage />} />
           <Route path="/PrivacyPolicyPage" element={<PrivacyPolicy />} />

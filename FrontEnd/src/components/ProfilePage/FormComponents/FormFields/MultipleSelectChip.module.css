@@ -1,0 +1,55 @@
+.fields__column {
+    display: flex;
+    padding: 0px 0px 15px 0px;
+    flex-direction: column;
+}
+
+.fields__label {
+    display: flex;
+    padding-bottom: 9px;
+    align-items: center;
+    gap: 4px;
+}
+
+.fields__label--required {
+    font-family: SimSong;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: right;
+    color: #FF4D4F;
+}
+
+.fields__field--notrequired {
+    padding-top: 2px;
+}
+
+.fields__label--text {
+    flex: 1 0 0;
+    font-feature-settings: 'calt' off;
+    font-style: normal;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    color: #292E32;
+}
+
+.error-message {
+    display: flex;
+    padding: 1px 0px;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    flex: 1 0 0;
+    color: var(--red-red-100, #F34444);
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
