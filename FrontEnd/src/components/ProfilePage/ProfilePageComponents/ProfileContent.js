@@ -50,11 +50,13 @@ const ProfileContent = (props) => {
             <Routes>
                 <Route path="/" element={<Navigate to="/profile/user-info" replace />} />
                 <Route path="/delete" element={<DeleteProfilePage user={props.user}/>} />
-                {INFOLINKS.map((el) => (
-                    <Route path={el.link} Component={() => <el.element user={props.user} onUpdate={props.onUpdate}/> }
-                    key={el.title}
-                    />
-                ))}
+
+                <Route path="/user-info" element={<UserInfo user={props.user} onUpdate={props.onUpdate}/>} />
+                <Route path="/general-info" element={<GeneralInfo user={props.user} onUpdate={props.onUpdate}/>} />
+                <Route path="/products-service-info" element={<ProductServiceInfo user={props.user} onUpdate={props.onUpdate}/>} />
+                <Route path="/additional-info" element={<AdditionalInfo user={props.user} onUpdate={props.onUpdate}/>} />
+                <Route path="/startup" element={<StartupInfo user={props.user} onUpdate={props.onUpdate}/>} />
+                <Route path="/contacts" element={<ContactsInfo user={props.user} onUpdate={props.onUpdate}/>} />
             </Routes>
         </div>
     );
