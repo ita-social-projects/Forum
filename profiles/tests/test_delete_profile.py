@@ -45,12 +45,6 @@ class TestProfileDetailAPIView(APITestCase):
                 "password": "Testing01"
             }).data["auth_token"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token1}")
-        self.token2 = self.client.post(
-            path="/api/auth/token/login/",
-            data={
-                "person_email": "test2@test.com",
-                "password": "Testing01"
-            }).data["auth_token"]
 
     def tearDown(self) -> None:
         self.client.logout()
