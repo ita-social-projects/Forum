@@ -7,7 +7,7 @@ from utils.dump_response import dump  # noqa
 class TestProfileListAPIView(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        from random import choice
+        from random import choice, sample
         test_persons = []
         test_activities = []
         test_categories = []
@@ -61,7 +61,7 @@ class TestProfileListAPIView(APITestCase):
                     comp_is_startup=False,
                     comp_registered=True
                 )
-            test_profile.comp_activity.add(choice(test_activities))
+            test_profile.comp_activity.set(sample(test_activities, 2))
             test_profile.comp_category.add(choice(test_categories))
             test_persons.append(test_person)
 
