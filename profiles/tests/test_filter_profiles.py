@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase, APIClient
 from authentication.models import CustomUser
 from profiles.models import Profile, Category, Activity
-from utils.dump_response import dump # noqa
+from utils.dump_response import dump  # noqa
 
 
 class TestProfileListAPIView(APITestCase):
@@ -34,42 +34,36 @@ class TestProfileListAPIView(APITestCase):
         for i in range(12):
             if i % 2 == 0:
                 test_person = CustomUser.objects.create_user(
-                    person_email=f"test{i+1}@test.com",
+                    person_email=f"test{i + 1}@test.com",
                     password="Testing01",
                     person_name="test",
                     person_surname="test",
-                    comp_name=f"test{i+1} startup",
-                    comp_registered=False,
-                    comp_is_startup=True
+                    is_active=True
                 )
+                test_profile = Profile.objects.create(
+                    person=test_person,
+                    comp_official_name=f"Startup {i}",
+                    comp_is_startup=True,
+                    comp_registered=False
+                )
+
             else:
                 test_person = CustomUser.objects.create_user(
                     person_email=f"test{i + 1}@test.com",
                     password="Testing01",
                     person_name="test",
                     person_surname="test",
-                    comp_name=f"test{i + 1} company",
-                    comp_registered=True,
-                    comp_is_startup=False
+                    is_active=True
                 )
-            test_person.is_active = True
-            test_person.save()
-            test_persons.append(test_person)
-
-        # setup profiles
-        for i in range(len(test_persons)):
-            if test_persons[i].comp_is_startup:
                 test_profile = Profile.objects.create(
-                    person=test_persons[i],
-                    comp_official_name=f"Startup {i}"
-                )
-            else:
-                test_profile = Profile.objects.create(
-                    person=test_persons[i],
-                    comp_official_name=f"Company {i}"
+                    person=test_person,
+                    comp_official_name=f"Company {i}",
+                    comp_is_startup=False,
+                    comp_registered=True
                 )
             test_profile.comp_activity.add(choice(test_activities))
             test_profile.comp_category.add(choice(test_categories))
+            test_persons.append(test_person)
 
     def setUp(self) -> None:
         self.client = APIClient()
@@ -83,8 +77,6 @@ class TestProfileListAPIView(APITestCase):
                 "password": "Testing01"
             }).data["auth_token"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token1}")
-        self.user1_id = self.client.get(
-            path="/api/auth/users/me/").data["id"]
 
     def tearDown(self) -> None:
         self.client.logout()
@@ -98,20 +90,25 @@ class TestProfileListAPIView(APITestCase):
         response = self.client.get(f"/api/profiles/?company_type=company")
         self.assertEqual(200, response.status_code)
         self.assertEqual(6, len(response.data))
-        # TODO: add check for types of the returned companied [has to be "registered"]
+        self.assertTrue(all(
+            response.data[i]["comp_is_startup"] is False and response.data[i]["comp_registered"] is True
+            for i in range(len(response.data))))
 
     def test_get_all_profiles_authorized_filter_startups(self):
         response = self.client.get(f"/api/profiles/?company_type=startup")
         self.assertEqual(200, response.status_code)
         self.assertEqual(6, len(response.data))
-        # TODO: add check for types of the returned companied [has to be "startup"]
+        self.assertTrue(all(
+            response.data[i]["comp_is_startup"] is True and response.data[i]["comp_registered"] is False
+            for i in range(len(response.data))))
 
     def test_get_all_profiles_authorized_filter_activity_producer(self):
         response = self.client.get(f"/api/profiles/?activity_type=producer")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        producer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 1 in response.data[i]["comp_activity"]]
+        producer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+                         1 in response.data[i]["comp_activity"]]
         self.assertEqual(len(producer_type), filtered_len)
 
     def test_get_all_profiles_authorized_filter_activity_importer(self):
@@ -119,7 +116,8 @@ class TestProfileListAPIView(APITestCase):
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        importer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 2 in response.data[i]["comp_activity"]]
+        importer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+                         2 in response.data[i]["comp_activity"]]
         self.assertEqual(len(importer_type), filtered_len)
 
     def test_get_all_profiles_authorized_filter_activity_retail(self):
@@ -127,7 +125,8 @@ class TestProfileListAPIView(APITestCase):
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        retail_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 3 in response.data[i]["comp_activity"]]
+        retail_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+                       3 in response.data[i]["comp_activity"]]
         self.assertEqual(len(retail_type), filtered_len)
 
     def test_get_all_profiles_authorized_filter_activity_HORACE(self):
@@ -135,7 +134,8 @@ class TestProfileListAPIView(APITestCase):
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        horace_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 4 in response.data[i]["comp_activity"]]
+        horace_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+                       4 in response.data[i]["comp_activity"]]
         self.assertEqual(len(horace_type), filtered_len)
 
     def test_get_all_profiles_unauthorized(self):
@@ -148,14 +148,18 @@ class TestProfileListAPIView(APITestCase):
         response = self.client.get(f"/api/profiles/?company_type=company")
         self.assertEqual(200, response.status_code)
         self.assertEqual(6, len(response.data))
-        # TODO: add check for types of the returned companied [has to be "registered"]
+        self.assertTrue(all(
+            response.data[i]["comp_is_startup"] is False and response.data[i]["comp_registered"] is True
+            for i in range(len(response.data))))
 
     def test_get_all_profiles_unauthorized_filter_startups(self):
         self.client.logout()
         response = self.client.get(f"/api/profiles/?company_type=startup")
         self.assertEqual(200, response.status_code)
         self.assertEqual(6, len(response.data))
-        # TODO: add check for types of the returned companied [has to be "startup"]
+        self.assertTrue(all(
+            response.data[i]["comp_is_startup"] is True and response.data[i]["comp_registered"] is False
+            for i in range(len(response.data))))
 
     def test_get_all_profiles_unauthorized_filter_activity_producer(self):
         self.client.logout()
@@ -163,7 +167,8 @@ class TestProfileListAPIView(APITestCase):
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        producer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 1 in response.data[i]["comp_activity"]]
+        producer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+                         1 in response.data[i]["comp_activity"]]
         self.assertEqual(len(producer_type), filtered_len)
 
     def test_get_all_profiles_unauthorized_filter_activity_importer(self):
@@ -172,7 +177,8 @@ class TestProfileListAPIView(APITestCase):
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        importer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 2 in response.data[i]["comp_activity"]]
+        importer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+                         2 in response.data[i]["comp_activity"]]
         self.assertEqual(len(importer_type), filtered_len)
 
     def test_get_all_profiles_unauthorized_filter_activity_retail(self):
@@ -181,7 +187,8 @@ class TestProfileListAPIView(APITestCase):
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        retail_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 3 in response.data[i]["comp_activity"]]
+        retail_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+                       3 in response.data[i]["comp_activity"]]
         self.assertEqual(len(retail_type), filtered_len)
 
     def test_get_all_profiles_unauthorized_filter_activity_HORACE(self):
@@ -190,5 +197,6 @@ class TestProfileListAPIView(APITestCase):
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        horace_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if 4 in response.data[i]["comp_activity"]]
+        horace_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+                       4 in response.data[i]["comp_activity"]]
         self.assertEqual(len(horace_type), filtered_len)
