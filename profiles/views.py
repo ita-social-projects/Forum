@@ -65,9 +65,9 @@ class ProfileList(ListCreateAPIView):
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORACE"]
 
         if company_type == "startup":
-            return Profile.objects.filter(person__comp_is_startup=True)
+            return Profile.objects.filter(comp_is_startup=True)
         elif company_type == "company":
-            return Profile.objects.filter(person__comp_registered=True)
+            return Profile.objects.filter(comp_registered=True)
         if activity_type in HEADER_ACTIVITIES:
             return Profile.objects.filter(comp_activity__name=activity_type)
 
