@@ -15,6 +15,7 @@ const USER = {
     'startupCheckbox': false,
     'rulesAgreement': true,
     'position': '',
+    'brend': '',
     'companyOfficialName': '',
     'edrpou': '',
     'activities': [],
@@ -64,7 +65,7 @@ const ProfilePage = () => {
     
     return (
         <div className={css['container']}>
-            <Description companyName={mainUser.companyName} />
+            <Description companyName={mainUser.companyName} brend={mainUser.brend}/>
             <ProfileContent user={mainUser} onUpdate={ProfileUpdateHandler}/>
         </div>
     );

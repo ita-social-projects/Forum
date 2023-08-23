@@ -12,6 +12,7 @@ import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
     'companyName': 'Назва компанії',
+    'brend': 'Бренд',
     'companyOfficialName': 'Юридична назва компанії',
     'edrpou': 'ЄДРПОУ',
     'regions': 'Регіон(и)',
@@ -77,7 +78,15 @@ const ERRORS = {
     companyName: {
         'error': false,
         'message': ''
-    }
+    },
+    categories: {
+        'error': false,
+        'message': ''
+    },  
+    activities: {
+        'error': false,
+        'message': ''
+    },      
 };
 
 const GeneralInfo = (props) => {
@@ -95,7 +104,7 @@ const GeneralInfo = (props) => {
         let isValid = true;
         const newFormState = {};
         for (const key in user) {
-            if (!user[key] && key in ERRORS) {
+            if ((!user[key] ||  (typeof user[key] === 'object' && user[key].length === 0)) && key in ERRORS) {
                 isValid = false;
                 newFormState[key] = {
                     'error': true,
@@ -214,7 +223,8 @@ const GeneralInfo = (props) => {
         <div className={css['form__container']}>
             <form onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
-                    <FullField
+                <div className={css['fields-groups']}>
+                    <HalfFormField
                         name='companyName'
                         label={LABELS.companyName}
                         updateHandler={onUpdateField}
@@ -222,6 +232,15 @@ const GeneralInfo = (props) => {
                         requredField={true}
                         value={user.companyName}
                     />
+                    <HalfFormField
+                        inputType='text'
+                        name='brend'
+                        label={LABELS.brend}
+                        updateHandler={onUpdateField}
+                        requredField={false}
+                        value={user.brend}
+                    />
+                    </div>
                     <FullField
                         name='companyOfficialName'
                         label={LABELS.companyOfficialName}
@@ -255,18 +274,20 @@ const GeneralInfo = (props) => {
                             options={ACTIVITIES}
                             label={LABELS.activities}
                             updateHandler={onUpdateSelectField}
-                            requredField={false}
+                            requredField={true}
                             value={selectedActivities}
                             defaultValue="Оберіть"
+                            error={formStateErr['activities']['error'] ? formStateErr['activities']['message'] : null}
                         />
                         <MultipleSelectChip
                             name='categories'
                             options={CATEGORIES}
                             label={LABELS.categories}
                             updateHandler={onUpdateSelectField}
-                            requredField={false}
+                            requredField={true}
                             value={selectedCategories}
                             defaultValue="Оберіть"
+                            error={formStateErr['categories']['error'] ? formStateErr['categories']['message'] : null}
                         />
                     </div>
                     <ImageField
