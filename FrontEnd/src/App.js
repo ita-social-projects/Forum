@@ -5,7 +5,7 @@
 //npm install react-cookie
 //npm install react-hook-form
 //npm install @mui/material @emotion/react @emotion/styled
-import React from 'react';
+import React, {useState} from 'react';
 import { Cookies } from 'react-cookie';
 import { useCookies } from 'react-cookie';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -19,6 +19,7 @@ import PrivacyPolicy from './components/PrivacyPolicyPage/privacy/PrivacyPolicyC
 import ScrollToTopButton from './components/PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from './components/terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import ProfilePage from './components/ProfilePage/ProfilePage';
+import MainPage from './components/landing-page/MainPage';
 
 function App() {
   const [modalActive, setModalActive] = useState(true);
