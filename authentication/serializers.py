@@ -1,3 +1,4 @@
+from collections import defaultdict
 from django.contrib.auth import authenticate, get_user_model
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -39,8 +40,7 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
         )
 
     def validate(self, value):
-        custom_errors = {"password": [],
-                         "comp_status": []}
+        custom_errors = defaultdict(list)
         self.fields.pop("re_password", None)
         re_password = value.pop("re_password")
         password = value.get("password")
@@ -63,10 +63,8 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
             custom_errors["password"].append(error.message)
         if value["password"] != re_password:
             custom_errors["password"].append("Passwords don't match.")
-        if any(custom_errors.values()):
-            filtered_errors = {key: value for key,
-                               value in custom_errors.items() if value}
-            raise serializers.ValidationError(filtered_errors)
+        if custom_errors:
+            raise serializers.ValidationError(custom_errors)
         return value
 
     def create(self, validated_data):
