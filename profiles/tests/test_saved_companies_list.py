@@ -157,3 +157,18 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.logout()
         response = self.client.get('/api/saved-list/')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_relike_user2_company_saved_list_item(self):
+        self.client.post('/api/saved-list/', data={'company_pk': 1, 'Authentication': self.token2})
+        self.client.post('/api/saved-list/', data={'company_pk': 2, 'Authentication': self.token2})
+        self.client.post('/api/saved-list/', data={'company_pk': 2, 'Authentication': self.token2})
+        self.client.post('/api/saved-list/', data={'company_pk': 1, 'Authentication': self.token2})
+
+        response = self.client.get('/api/saved-list/',
+            data={
+                'Authentication': self.token2
+            }
+        )
+        companies_info = response.data['Companies']
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(companies_info))
