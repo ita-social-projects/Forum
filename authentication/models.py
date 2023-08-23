@@ -26,11 +26,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     person_email = models.EmailField(max_length=50, unique=True)
     person_name = models.CharField(max_length=50)
     person_surname = models.CharField(max_length=50)
-    
-    comp_name = models.CharField(max_length=50)
-    comp_registered = models.BooleanField()
-    comp_is_startup = models.BooleanField()
-
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -40,9 +35,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = [
         "person_surname",
         "person_name",
-        "comp_name",
-        "comp_registered",
-        "comp_is_startup",
     ]
 
     objects = CustomUserManager()

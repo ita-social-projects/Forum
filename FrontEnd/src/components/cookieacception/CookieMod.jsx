@@ -1,4 +1,5 @@
-// import { Cookies } from 'react-cookie';
+
+import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import styles from './CookieMod.module.css';
 import cookiesimage from './cookieimg/homecookies.png';
@@ -30,9 +31,9 @@ const CookieMod = ({ active, setActive }) => {
           Наш веб-сайт використовує файли cookie, щоб покращити ваш досвід. Ви
           можете відмовитися, якщо хочете. Дізнатися більше{' '}
           {
-            <a href="/privacy" className={styles['cookie-link']}>
+            <Link to="/PrivacyPolicyPage" className={styles['cookie-link']}>
               про кукі-файли
-            </a>
+            </Link>
           }
         </p>
         <img src={cookiesimage} alt="" className={styles['cookie-image']} />

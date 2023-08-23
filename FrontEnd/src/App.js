@@ -6,19 +6,11 @@
 //npm install react-hook-form
 //npm install @mui/material @emotion/react @emotion/styled
 import React from 'react';
-import { useState } from 'react';
 import { Cookies } from 'react-cookie';
 import { useCookies } from 'react-cookie';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './AppMain.css';
 import MainPageRectangle from './components/main-page-rectangle/MainPageRectangle';
-import MainMenu from './components/landing-page/menu/Menu';
-import MainBanner from './components/landing-page/banner/Banner';
-import MainPartners from './components/landing-page/partners/Partners';
-import MainCompanies from './components/landing-page/companies/Companies';
-import MainLoginBanner from './components/landing-page/login-banner/LoginBanner';
-import MainAboutSection from './components/landing-page/about-section/About';
-import CookieMod from './components/cookieacception/CookieMod';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 import './AppHeaderFooter.css';
 import Footer from './components/HeaderFooter/footer/Footer';
@@ -35,34 +27,12 @@ function App() {
       <div className="App">
         <Header isAuthorized={true}></Header>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="main-app">
-                <div className="main-app-header">
-                  <MainMenu />
-                  <MainBanner />
-                  <div className="main-app-body">
-                    <MainPartners />
-                    <MainCompanies />
-                    <MainLoginBanner />
-                    <MainAboutSection />
-                    <div>
-                      <CookieMod
-                        active={modalActive}
-                        setActive={setModalActive}
-                      ></CookieMod>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            }
-          />
-          <Route path="/profile/*" element={<ProfilePage />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/authorization" element={<MainPageRectangle />} />
           <Route path="/SignUpPage" element={<SignUpPage />} />
           <Route path="/PrivacyPolicyPage" element={<PrivacyPolicy />} />
           <Route path="/TermsAndConditions" element={<TermsAndConditions />} />
+          <Route path="/profile/*" element={<ProfilePage />} />
         </Routes>
         <Footer />
         <ScrollToTopButton />
