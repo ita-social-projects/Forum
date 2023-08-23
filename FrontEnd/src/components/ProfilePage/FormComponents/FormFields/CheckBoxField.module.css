@@ -22,7 +22,7 @@
 }
 
 .representative__label--text {
-    font-family: Inter;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
@@ -59,7 +59,7 @@
     color: var(--main-black-90, #292E32);
     font-feature-settings: 'calt' off;
     text-align: start;
-    font-family: Inter;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

@@ -15,7 +15,7 @@
 }
 
 .fields__label--required {
-    font-family: SimSong;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -29,7 +29,7 @@
     color: var(--main-black-90, #292E32);
     font-feature-settings: 'calt' off;
     font-style: normal;
-    font-family: Inter;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -61,12 +61,12 @@
 
 .fields__field--input::placeholder {
     font-style: normal;
-    font-family: Inter;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
     letter-spacing: -0.01em;
-    text-align: left;   
+    text-align: left;
     color: #00000040;
 }
 
@@ -91,7 +91,7 @@
     z-index: -1;
     overflow: hidden;
     width: 0.4px;
-    height: 0.4px;    
+    height: 0.4px;
 }
 
 .upload-file__label {
@@ -106,7 +106,7 @@
 }
 
 .upload-file__text {
-    font-family: Inter;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -122,16 +122,16 @@
 }
 
 .upload-file__icon {
-width: 10.562520027160645px;
-height: 12.063282012939453px;
-top: 0.970703125px;
-left: 1.71875px;
-padding-top: 5px;
+    width: 10.562520027160645px;
+    height: 12.063282012939453px;
+    top: 0.970703125px;
+    left: 1.71875px;
+    padding-top: 5px;
 }
 
 .upload-file__filename--text {
     color: #1890FF;
-    font-family: Inter;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -141,7 +141,7 @@ padding-top: 5px;
 
 .upload-file__filename--trashBin {
     padding-top: 1px;
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 .fields__field--notrequired {

@@ -15,7 +15,7 @@
 }
 
 .fields__label--required {
-    font-family: SimSong;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -29,7 +29,7 @@
     color: var(--main-black-90, #292E32);
     font-feature-settings: 'calt' off;
     font-style: normal;
-    font-family: Inter;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -65,7 +65,7 @@
 
 .fields__field--input::placeholder {
     font-style: normal;
-    font-family: Inter;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;

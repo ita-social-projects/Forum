@@ -68,7 +68,7 @@ export default function MultipleSelectChip(props) {
               value={option.name}
               style={{
                 ...getStyles(option.name, props.value, theme),
-                fontFamily: 'Inter',
+                fontFamily: 'Inter, sans-serif',
                 fontSize: '14px',
                 fontWeight: 400,
                 lineHeight: '20px',

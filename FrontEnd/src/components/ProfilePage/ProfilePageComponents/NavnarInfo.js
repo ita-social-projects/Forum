@@ -12,7 +12,7 @@ const NavnarInfo = (props) => {
                 >{element.title}</NavLink>
             ))}
             <div className={css['divider']}></div>
-            <Link to='/profile/delete' className={`${css['infolink']} ${css['delete']}`}>Видалити акаунт</Link>
+            <Link to='/profile/delete' className={`${css['infolink']} ${css['delete']}`}>Видалити профіль</Link>
         </div>
     );
 };
