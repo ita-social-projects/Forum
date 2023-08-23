@@ -1,4 +1,4 @@
-import './App.css';
+import './search_page.css';
 import React, { useState} from 'react';
 import SearchBar from './search_field/SearchBar';
 import SearchResults from './search_field/SearchResults';
