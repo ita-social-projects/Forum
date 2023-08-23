@@ -153,13 +153,13 @@ DJOSER = {
     'LOGIN_FIELD': 'person_email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
-        'user': ['rest_framework.permissions.AllowAny'],
-        'user_list': ['rest_framework.permissions.IsAuthenticated'],
+        'user_delete': ['rest_framework.permissions.IsAdminUser'],
     },
 
     'SERIALIZERS': {
         'user_create_password_retype': 'authentication.serializers.UserRegistrationSerializer',
         'user': 'authentication.serializers.UserListSerializer',
+        'current_user': 'authentication.serializers.UserListSerializer',
         'token_create': 'authentication.serializers.UserTokenCreateSerializer',
     }
 }

@@ -1,10 +1,11 @@
 import css from "./Menu.module.css"
+import { Link } from 'react-router-dom'
 
 const MENU_LINKS = [
     {
         id: "m0",
         title: "Головна",
-        link: "#"
+        link: "/"
     },
     {
         id: "m1",
@@ -27,8 +28,8 @@ function Menu () {
     return (
         <div className={css["header-menu-section"]}>
             {MENU_LINKS.map( (element) => (
-                <div className={css["header-menu-element"]}>
-                    <a className={css["header-menu-element__text"]} key={element.id} href={element.link}>{element.title}</a>
+                <div className={css["header-menu-element"]} key={element.id}>
+                    <Link className={css["header-menu-element__text"]} to={element.link}>{element.title}</Link>
                 </div>
             ))}
         </div>

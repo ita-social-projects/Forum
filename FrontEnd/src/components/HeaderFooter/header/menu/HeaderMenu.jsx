@@ -34,9 +34,8 @@ function HeaderMenu() {
             <div className={css["menu-section"]}>
                 <div className={css["menu-section-content"]}>
                     {SERVICES_LINKS.map((element) => (
-                        <div className={css["menu-element"]}>
+                        <div className={css["menu-element"]} key={element.id}>
                             <a className={css["menu-element__text"]}
-                               key={element.id}
                                href={element.link}
                             >{element.title}</a>
                         </div>
