@@ -63,7 +63,6 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
     def setUp(self):
         self.client = APIClient()
-        self.url = '/api/saved-list/'
 
         # login users & get tokens
         self.token1 = self.client.post(
@@ -74,7 +73,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             }).data["auth_token"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token1}")
         self.user1_id = self.client.get(
-            path="http://127.0.0.1:8000/api/auth/users/me/").data["id"]
+            path="/api/auth/users/me/").data["id"]
 
         self.token2 = self.client.post(
             path="/api/auth/token/login/",
@@ -84,12 +83,11 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             }).data["auth_token"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token2}")
         self.user2_id = self.client.get(
-            path="http://127.0.0.1:8000/api/auth/users/me/").data["id"]
+            path="/api/auth/users/me/").data["id"]
 
 
     def test_add_test_company1_to_saved_list_by_test_user2(self):
-        response = self.client.post(
-            self.url,
+        response = self.client.post('/api/saved-list/',
             data={
                 'company_pk': 1,
                 'Authentication': self.token2
@@ -102,8 +100,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.assertEqual(company_added_info['company'], expected_company_value)
 
     def test_add_test_company2_to_saved_list_by_test_user2(self):
-        response = self.client.post(
-            self.url,
+        response = self.client.post('/api/saved-list/',
             data={
                 'company_pk': 2,
                 'Authentication': self.token2
@@ -117,9 +114,9 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
 
     def test_get_test_user2_company_saved_list(self):
-        self.client.post(self.url, data={'company_pk': 1, 'Authentication': self.token2})
-        self.client.post(self.url, data={'company_pk': 2, 'Authentication': self.token2})
-        response = self.client.get(self.url,
+        self.client.post('/api/saved-list/', data={'company_pk': 1, 'Authentication': self.token2})
+        self.client.post('/api/saved-list/', data={'company_pk': 2, 'Authentication': self.token2})
+        response = self.client.get('/api/saved-list/',
             data={
                 'Authentication': self.token2
             }
@@ -129,15 +126,15 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.assertEqual(2, len(companies_info))
 
     def test_delete_test_user2_company_saved_list_item(self):
-        self.client.post(self.url, data={'company_pk': 1, 'Authentication': self.token2})
-        self.client.post(self.url, data={'company_pk': 2, 'Authentication': self.token2})
-        response = self.client.delete(self.url + '2/',
+        self.client.post('/api/saved-list/', data={'company_pk': 1, 'Authentication': self.token2})
+        self.client.post('/api/saved-list/', data={'company_pk': 2, 'Authentication': self.token2})
+        response = self.client.delete('/api/saved-list/2/',
             data={
                 'Authentication': self.token2
             }
         )
         self.assertEqual(204, response.status_code)
-        response = self.client.get(self.url,
+        response = self.client.get('/api/saved-list/',
             data={
                 'Authentication': self.token2
             }
@@ -147,8 +144,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.assertEqual(1, len(companies_info))
 
     def test_add_non_existing_company_to_saved_list(self):
-        response = self.client.post(
-            self.url,
+        response = self.client.post('/api/saved-list/',
             data={
                 'company_pk': 999,
                 'Authentication': self.token1
@@ -159,5 +155,5 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
     def test_get_saved_companies_without_authentication(self):
         self.client.logout()
-        response = self.client.get(self.url)
+        response = self.client.get('/api/saved-list/')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
