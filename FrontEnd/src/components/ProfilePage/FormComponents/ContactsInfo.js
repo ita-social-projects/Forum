@@ -33,8 +33,8 @@ const ContactsInfo = (props) => {
         const parsedNumber = Number(receivedPhoneNumber);
         const isInteger = Number.isInteger(parsedNumber);
         if (isInteger) {
-            if (receivedPhoneNumber && receivedPhoneNumber.length !== 12) {
-                setPhoneNumberError('Номер повинен містити 12 цифр');
+            if (receivedPhoneNumber && receivedPhoneNumber.length !== 10) {
+                setPhoneNumberError('Номер повинен містити 10 цифр');
             } else {
                 setPhoneNumberError(null);
             }
@@ -48,7 +48,7 @@ const ContactsInfo = (props) => {
 
     const ValidateForm = () => {
         let isValid = true;
-        if (user.phoneNumber.length !== 12 ||  !Number.isInteger(Number(user.phoneNumber)) ) {
+        if (user.phoneNumber && (user.phoneNumber.length !== 10 ||  !Number.isInteger(Number(user.phoneNumber)) )) {
             isValid = false;
         }
         return isValid;
@@ -73,7 +73,7 @@ const ContactsInfo = (props) => {
                         <HalfFormField
                             inputType='tel'
                             name='phoneNumber'
-                            fieldPlaceholder='380'
+                            fieldPlaceholder='+38'
                             label={LABELS.phoneNumber}
                             updateHandler={onUpdatePhoneNumberField}
                             requredField={false}

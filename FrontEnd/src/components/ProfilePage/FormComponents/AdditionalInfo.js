@@ -36,24 +36,19 @@ const AdditionalInfo = (props) => {
         const year = Number(e.target.value);
         if ((1800 <= year && year <= currentYear) || !e.target.value) {
             setFoundationYearError(null);
-            setUser((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
-            });
         } else {
             setFoundationYearError(`Рік заснування не в діапазоні 1800-${currentYear}`);
-            if (e.target.value.length <= 4) {
-                setUser((prevState) => {
-                    return { ...prevState, [e.target.name]: e.target.value };
-                });
-            }
         }
+        setUser((prevState) => {
+            return { ...prevState, [e.target.name]: e.target.value };
+        });
     };
 
     const ValidateForm = () => {
         let isValid = true;
         const currentYear = new Date().getFullYear();
-        const year = Number(user.foundationYear);       
-        if ((1800 > year || year> currentYear) && user.foundationYear) {
+        const year = Number(user.foundationYear);
+        if ((1800 > year || year > currentYear) && user.foundationYear) {
             isValid = false;
         }
         return isValid;
