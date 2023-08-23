@@ -8,7 +8,7 @@ import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
     'phoneNumber': 'Телефон',
-    'email': 'Електронна пошта',
+    'companyEmail': 'Електронна пошта',
     'companySite': 'Сайт',
     'address': 'Адрес(и)',
     'Facebook': 'Facebook',
@@ -73,6 +73,7 @@ const ContactsInfo = (props) => {
                         <HalfFormField
                             inputType='tel'
                             name='phoneNumber'
+                            fieldPlaceholder='380'
                             label={LABELS.phoneNumber}
                             updateHandler={onUpdatePhoneNumberField}
                             requredField={false}
@@ -81,11 +82,11 @@ const ContactsInfo = (props) => {
                         />
                         <HalfFormField
                             inputType='text'
-                            name='email'
-                            label={LABELS.email}
+                            name='companyEmail'
+                            label={LABELS.companyEmail}
                             updateHandler={onUpdateField}
                             requredField={false}
-                            value={user.email}
+                            value={user.companyEmail}
                         />
                     </div>
                     <FullField

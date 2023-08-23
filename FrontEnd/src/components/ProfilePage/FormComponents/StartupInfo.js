@@ -26,7 +26,7 @@ const COOPERATION_GOALS = [
 
 const StartupInfo = (props) => {
     const [user, setUser] = useState(props.user);
-    const [selectedCooperationGoals, setSelectedCooperationGoals] = useState(props.user.cooperationGoals);    
+    const [selectedCooperationGoals, setSelectedCooperationGoals] = useState(props.user.cooperationGoals);
     const maxLength = 1000;
 
     const onUpdateField = e => {
@@ -72,8 +72,15 @@ const StartupInfo = (props) => {
                         requredField={false}
                         value={user.startupName}
                     />
-                    <div className={css['fields-groups']}>
-                    <HalfFormField
+                    <TextField
+                        name='startupIdea'
+                        label={LABELS.startupIdea}
+                        updateHandler={onUpdateTextAreaField}
+                        requredField={false}
+                        value={user.startupIdea}
+                        maxLength={maxLength}
+                    />
+                    <FullField
                         inputType='number'
                         name='investmentAmount'
                         label={LABELS.investmentAmount}
@@ -82,6 +89,7 @@ const StartupInfo = (props) => {
                         value={user.investmentAmount}
                     />
                     <MultipleSelectChip
+                        selectedWidth='530px'
                         name='cooperationGoals'
                         options={COOPERATION_GOALS}
                         label={LABELS.cooperationGoals}
@@ -90,7 +98,6 @@ const StartupInfo = (props) => {
                         value={selectedCooperationGoals}
                         defaultValue="Оберіть"
                     />
-                    </div>
                     <TextField
                         name='endResult'
                         label={LABELS.endResult}
@@ -121,14 +128,6 @@ const StartupInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.searchPartners}
-                        maxLength={maxLength}
-                    />
-                    <TextField
-                        name='startupIdea'
-                        label={LABELS.startupIdea}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.startupIdea}
                         maxLength={maxLength}
                     />
                 </div>

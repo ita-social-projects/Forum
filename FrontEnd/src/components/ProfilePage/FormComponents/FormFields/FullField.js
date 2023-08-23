@@ -13,7 +13,7 @@ const FullField = (props) => {
             </div>
             <div className={css['fields__field']}>
                 <input
-                    type={props.inputType==='number' ? 'number' : 'text'}
+                    type={props.inputType ? props.inputType : 'text'}
                     className={css['fields__field--input']}
                     name={props.name}
                     value={props.value}
@@ -23,7 +23,7 @@ const FullField = (props) => {
                     disabled={(props.name === 'email') ? "disabled" : ""}
                 />
             </div>
-            {props.requredField &&
+            {(props.requredField || props.error)  &&
                 <div className={css['error-message']}>
                     {props.error}
                 </div>

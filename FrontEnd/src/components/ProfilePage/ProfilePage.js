@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 const USER = {
     'email': 'ex@gmail.com',
+    'companyEmail': '',    
     'password': '12345678',
     'confirmPassword': '12345678',
     'surname': 'Василенко',
@@ -40,7 +41,7 @@ const USER = {
     'risks': '',
     'searchPartners': '',
     'startupIdea': '' ,
-    'phoneNumber': '380',
+    'phoneNumber': '',
     'companySite': '',
     'address': '',
     'Facebook': '',

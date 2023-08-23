@@ -7,6 +7,7 @@ const LABELS = {
     'surname': 'Прізвище',
     'name': 'Ім‘я',
     'position': 'Посада в компанії чи стартапі',
+    'email': 'Електронна пошта',
 };
 
 const ERRORS = {
@@ -41,7 +42,7 @@ const UserInfo = (props) => {
                 }
             }
         }
-        setFormStateErr({...formStateErr, ...newFormState});
+        setFormStateErr({ ...formStateErr, ...newFormState });
         return isValid;
     };
 
@@ -93,6 +94,13 @@ const UserInfo = (props) => {
                             updateHandler={onUpdateField}
                             requredField={false}
                             value={user.position}
+                        />
+                        <HalfFormField
+                            inputType='text'
+                            name='email'
+                            label={LABELS.email}
+                            requredField={true}
+                            value={user.email}
                         />
                     </div>
                 </div>

@@ -43,7 +43,7 @@ export default function MultipleSelectChip(props) {
           {props.label}
         </label>
       </div>
-      <FormControl sx={{ width: 257 }}>
+      <FormControl sx={{ width: props.selectedWidth ? props.selectedWidth : 257 }}>
         <InputLabel id="demo-multiple-chip-label">{props.defaultValue}</InputLabel>
         <Select
           name={props.name}

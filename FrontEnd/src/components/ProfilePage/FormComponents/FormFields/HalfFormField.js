@@ -17,7 +17,7 @@ const HalfFormField = (props) => {
                     className={`${css['fields__field--input']} ${props.name === 'email' && css['disabled__field']}`}
                     name={props.name}
                     value={props.value}
-                    placeholder={props.label}
+                    placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : props.label}
                     onChange={props.updateHandler}
                     required={(props.requredField) ? "required" : ""}
                     disabled={(props.name === 'email') ? "disabled" : ""}
