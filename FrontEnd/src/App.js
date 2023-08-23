@@ -7,7 +7,6 @@
 //npm install @mui/material @emotion/react @emotion/styled
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './AppMain.css';
 import MainPageRectangle from './components/main-page-rectangle/MainPageRectangle';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 import './AppHeaderFooter.css';
