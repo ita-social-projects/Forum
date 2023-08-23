@@ -5,9 +5,7 @@
 //npm install react-cookie
 //npm install react-hook-form
 //npm install @mui/material @emotion/react @emotion/styled
-import React, {useState} from 'react';
-import { Cookies } from 'react-cookie';
-import { useCookies } from 'react-cookie';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './AppMain.css';
 import MainPageRectangle from './components/main-page-rectangle/MainPageRectangle';
@@ -22,7 +20,6 @@ import ProfilePage from './components/ProfilePage/ProfilePage';
 import MainPage from './components/landing-page/MainPage';
 
 function App() {
-  const [modalActive, setModalActive] = useState(true);
   return (
     <BrowserRouter>
       <div className="App">
