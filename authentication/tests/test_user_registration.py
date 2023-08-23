@@ -6,8 +6,7 @@ from profiles.models import Profile
 
 
 class UserRegistrationAPITests(APITestCase):
-    @classmethod
-    def setUpTestData(cls):
+    def setUp(self):
         CustomUser.objects.create_user(
             person_email="test@test.com",
             password="Test1234",
@@ -16,20 +15,23 @@ class UserRegistrationAPITests(APITestCase):
         )
 
     def test_register_user_successful(self):
-        url = "/api/auth/users/"
-        data = {
-            "person_email": "jane@test.com",
-            "password": "Test1234",
-            "re_password": "Test1234",
-            "person_name": "Jane",
-            "person_surname": "Smith",
-            "company": {
-                "comp_name": "My Company",
-                "comp_registered": True,
-                "comp_is_startup": False,
-            }
-        }
-        response = self.client.post(url, data, format="json")
+        response = self.client.post(
+            "/api/auth/users/", 
+            data={
+                "person_email": "jane@test.com",
+                "password": "Test1234",
+                "re_password": "Test1234",
+                "person_name": "Jane",
+                "person_surname": "Smith",
+                "company": {
+                    "comp_name": "My Company",
+                    "comp_registered": True,
+                    "comp_is_startup": False,
+                }
+            },
+            format="json"
+        )
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(
             {
@@ -43,20 +45,22 @@ class UserRegistrationAPITests(APITestCase):
 
 
     def test_register_user_email_incorrect(self):
-        url = "/api/auth/users/"
-        data = {
-            "person_email": "jane@testcom",
-            "password": "Test1234",
-            "re_password": "Test1234",
-            "person_name": "Jane",
-            "person_surname": "Smith",
-            "company": {
-                "comp_name": "My Company",
-                "comp_registered": True,
-                "comp_is_startup": False,
-            }
-        }
-        response = self.client.post(url, data, format="json")
+        response = self.client.post(
+            "/api/auth/users/", 
+            data={
+                "person_email": "jane@testcom",
+                "password": "Test1234",
+                "re_password": "Test1234",
+                "person_name": "Jane",
+                "person_surname": "Smith",
+                "company": {
+                    "comp_name": "My Company",
+                    "comp_registered": True,
+                    "comp_is_startup": False,
+                }
+            },
+            format="json"
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -68,20 +72,22 @@ class UserRegistrationAPITests(APITestCase):
         )
 
     def test_register_user_email_exists(self):
-        url = "/api/auth/users/"
-        data = {
-            "person_email": "test@test.com",
-            "password": "Test1234",
-            "re_password": "Test1234",
-            "person_name": "Test",
-            "person_surname": "Test",
-            "company": {
-                "comp_name": "Test Company",
-                "comp_registered": True,
-                "comp_is_startup": False,
-            }
-        }
-        response = self.client.post(url, data, format="json")
+        response = self.client.post(
+            "/api/auth/users/", 
+            data={
+                "person_email": "test@test.com",
+                "password": "Test1234",
+                "re_password": "Test1234",
+                "person_name": "Test",
+                "person_surname": "Test",
+                "company": {
+                    "comp_name": "Test Company",
+                    "comp_registered": True,
+                    "comp_is_startup": False,
+                }
+            },
+            format="json"
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -91,20 +97,22 @@ class UserRegistrationAPITests(APITestCase):
         )
 
     def test_register_user_password_incorrect(self):
-        url = "/api/auth/users/"
-        data = {
-            "person_email": "jane@test.com",
-            "password": "test",
-            "re_password": "tess",
-            "person_name": "Jane",
-            "person_surname": "Smith",
-            "company": {
-                "comp_name": "My Company",
-                "comp_registered": True,
-                "comp_is_startup": False,
-            }
-        }
-        response = self.client.post(url, data, format="json")
+        response = self.client.post(
+            "/api/auth/users/", 
+            data={
+                "person_email": "jane@test.com",
+                "password": "test",
+                "re_password": "tess",
+                "person_name": "Jane",
+                "person_surname": "Smith",
+                "company": {
+                    "comp_name": "My Company",
+                    "comp_registered": True,
+                    "comp_is_startup": False,
+                }
+            },
+            format="json"
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -118,20 +126,22 @@ class UserRegistrationAPITests(APITestCase):
         )
 
     def test_register_user_who_represent_empty_fields(self):
-        url = "/api/auth/users/"
-        data = {
-            "person_email": "jane@test.com",
-            "password": "Test1234",
-            "re_password": "Test1234",
-            "person_name": "Jane",
-            "person_surname": "Smith",
-            "company": {
-                "comp_name": "My Company",
-                "comp_registered": False,
-                "comp_is_startup": False,
-            }
-        }
-        response = self.client.post(url, data, format="json")
+        response = self.client.post(
+            "/api/auth/users/", 
+            data={
+                "person_email": "jane@test.com",
+                "password": "Test1234",
+                "re_password": "Test1234",
+                "person_name": "Jane",
+                "person_surname": "Smith",
+                "company": {
+                    "comp_name": "My Company",
+                    "comp_registered": False,
+                    "comp_is_startup": False,
+                }
+            },
+            format="json"
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
@@ -141,20 +151,22 @@ class UserRegistrationAPITests(APITestCase):
         )
 
     def test_register_user_who_represent_both_choosen(self):
-        url = "/api/auth/users/"
-        data = {
-            "person_email": "jane@test.com",
-            "password": "Test1234",
-            "re_password": "Test1234",
-            "person_name": "Jane",
-            "person_surname": "Smith",
-            "company": {
-                "comp_name": "My Company",
-                "comp_registered": True,
-                "comp_is_startup": True,
-            }
-        }
-        response = self.client.post(url, data, format="json")
+        response = self.client.post(
+            "/api/auth/users/", 
+            data={
+                "person_email": "jane@test.com",
+                "password": "Test1234",
+                "re_password": "Test1234",
+                "person_name": "Jane",
+                "person_surname": "Smith",
+                "company": {
+                    "comp_name": "My Company",
+                    "comp_registered": True,
+                    "comp_is_startup": True,
+                }
+            },
+            format="json"
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
