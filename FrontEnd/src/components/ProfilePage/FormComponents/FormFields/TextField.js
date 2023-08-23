@@ -16,7 +16,7 @@ const TextField = (props) => {
                     className={css['fields__field--textarea']}
                     name={props.name}
                     value={props.value}
-                    placeholder={props.label}
+                    placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
                     onChange={props.updateHandler}
                     required={(props.requredField) ? "required" : ""}
                     disabled={(props.name === 'email') ? "disabled" : ""}
