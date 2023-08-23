@@ -6,10 +6,10 @@
 //npm install react-hook-form
 //npm install @mui/material @emotion/react @emotion/styled
 import React from 'react';
+import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPageRectangle from './components/main-page-rectangle/MainPageRectangle';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
-import './AppHeaderFooter.css';
 import Footer from './components/HeaderFooter/footer/Footer';
 import Header from './components/HeaderFooter/header/Header';
 import PrivacyPolicy from './components/PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
