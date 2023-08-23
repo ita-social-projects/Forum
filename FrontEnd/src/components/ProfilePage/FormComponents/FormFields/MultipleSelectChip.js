@@ -56,7 +56,7 @@ export default function MultipleSelectChip(props) {
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} />
+                <Chip key={value} label={value} sx={{color: '#1F9A7C', backgroundColor: 'white', border: '1px solid #1F9A7C'}}/>
               ))}
             </Box>
           )}
@@ -73,8 +73,7 @@ export default function MultipleSelectChip(props) {
                 fontWeight: 400,
                 lineHeight: '20px',
                 letterSpacing: '-0.01em',
-                backgroundColor: props.value.includes(option.name) && '#1890FF',
-                color: props.value.includes(option.name) && 'white',
+                backgroundColor: props.value.includes(option.name) && '#A3AAB0',
               }}
             >
               {option.name}

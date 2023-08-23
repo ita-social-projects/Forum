@@ -9,7 +9,10 @@ const Description = (props) => {
                 alt=""
             />
             <div className={css["description__content"]}>
-                <div className={css['companyName']}>{props.companyName.toUpperCase()} {props.brend}</div>
+                <div className={css['company__attributes']}>
+                    <div className={css['companyName']}>{props.companyName.toUpperCase()}</div>
+                    <div className={css['brend']}>{props.brend}</div>
+                </div>
                 <div className={css['description__text']}>Зробіть зміни для електронної пошти та особистиї інформації</div>
             </div>
         </div>

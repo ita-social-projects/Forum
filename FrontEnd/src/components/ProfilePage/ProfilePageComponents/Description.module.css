@@ -21,6 +21,12 @@
     align-items: flex-start;
 }
 
+.company__attributes {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;    
+}
+
 .companyName {
     font-family: "Inter", sans-serif;
     font-size: 16px;
@@ -28,7 +34,17 @@
     line-height: 20px;
     letter-spacing: 0em;
     text-align: left;
-    color: 25292C;
+    color: #25292C;
+}
+
+.brend {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    color: #25292C;
 }
 
 .description__text {
