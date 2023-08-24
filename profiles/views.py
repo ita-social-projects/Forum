@@ -92,9 +92,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
             return Profile.objects.filter(person_id=user_id, is_deleted=False)
         if self.request.method == 'GET':
             return Profile.objects.filter(is_deleted=False)
-        if self.request.method == 'PUT':
-            return Profile.objects.filter(profile_id=pk)
-        if self.request.method == 'PATCH':
+        if self.request.method in ['PUT', 'PATCH']:
             return Profile.objects.filter(profile_id=pk)
 
     def update(self, request, pk=None, **kwargs):
