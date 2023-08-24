@@ -10,7 +10,7 @@ import { Cookies } from 'react-cookie';
 import { useCookies } from 'react-cookie';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './AppMain.css';
-import MainPageRectangle from './components/main-page-rectangle/MainPageRectangle';
+import AuthorizationPage from './components/authorization/AuthorizationPage';
 import MainMenu from './components/landing-page/menu/Menu';
 import MainBanner from './components/landing-page/banner/Banner';
 import MainPartners from './components/landing-page/partners/Partners';
@@ -56,7 +56,7 @@ function App() {
               </div>
             }
           />
-          <Route path="/authorization" element={<MainPageRectangle />} />
+          <Route path="/authorization" element={<AuthorizationPage />} />
           <Route path="/SignUpPage" element={<SignUpPage />} />
           <Route path="/PrivacyPolicyPage" element={<PrivacyPolicy />} />
           <Route path="/TermsAndConditions" element={<TermsAndConditions />} />

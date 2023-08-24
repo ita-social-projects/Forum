@@ -1,0 +1,26 @@
+.auth-page {
+    display: flex;
+    width: 1512px;
+    height: 725px;
+    flex-shrink: 0;
+    background: #f1fff7;
+  }
+  
+  
+  .frame-img-left {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin: 422px 979px 153px 354px;
+    position: absolute;
+  }
+  
+  .frame-img-right {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin: 102px 354px 473px 979px;
+    position: absolute;
+  }

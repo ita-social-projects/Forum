@@ -2,7 +2,6 @@ import { useState } from "react";
 import validator from "validator";
 
 import EyeInvisible from "./EyeInvisible";
-import RememberMeCheckbox from "./RememberMeCheckbox";
 import classes from "./LoginContent.module.css";
 
 const LoginContent = (props) => {
@@ -20,7 +19,7 @@ const LoginContent = (props) => {
   const userValidationHandler = (event) => {
     event.preventDefault();
 
-    const emailErrorText = "Формат електронної пошти некоректний";
+    const emailErrorText = "Формат електронної адреси некоректний";
     const unspecifiedErrorText =
       "Електронна пошта чи пароль вказані некоректно";
     const emptyFieldErrorText = "Обов'язкове поле";
@@ -34,28 +33,20 @@ const LoginContent = (props) => {
         message: emailErrorText,
       });
       setEnteredEmail("");
-    } else if (
-      enteredEmail.trim().length === 0 &&
-      enteredPassword.trim().length === 0
-    ) {
-      errorMessage = emptyFieldErrorText;
-      setError({
-        errorType: "empty-fields",
-        message: emptyFieldErrorText,
-      });
     } else if (enteredEmail.trim().length === 0) {
       errorMessage = emptyFieldErrorText;
       setError({
-        errorType: "empty-email-field",
+        errorType: "required",
         message: emptyFieldErrorText,
       });
     } else if (enteredPassword.trim().length === 0) {
       errorMessage = emptyFieldErrorText;
       setError({
-        errorType: "empty-password-field",
+        errorType: "required",
         message: emptyFieldErrorText,
       });
     } else if (
+      // fake validation to show functionality
       enteredEmail.trim().length < 5 ||
       enteredPassword.trim().length < 8
     ) {
@@ -93,8 +84,7 @@ const LoginContent = (props) => {
             <div className={classes["login-content__item"]}>
               <label
                 className={`${
-                  error.errorType === "empty-email-field" ||
-                  error.errorType === "empty-fields"
+                  error.errorType === "required" && enteredEmail === ""
                     ? classes["error-dot"]
                     : ""
                 }`}
@@ -111,16 +101,15 @@ const LoginContent = (props) => {
                   value={enteredEmail}
                   onChange={emailChangeHandler}
                 />
-                <span className={classes["error-message"]}>
-                  {error.errorType === "email" && error.message}
-                </span>
               </div>
+              <span className={classes["error-message"]}>
+                  {error.errorType !== "wrong-data" && error.message}
+                </span>
             </div>
             <div className={classes["login-content__item"]}>
               <label
                 className={`${
-                  error.errorType === "empty-password-field" ||
-                  error.errorType === "empty-fields"
+                  error.errorType === "required"
                     ? classes["error-dot"]
                     : ""
                 }`}
@@ -138,35 +127,32 @@ const LoginContent = (props) => {
                     value={enteredPassword}
                     onChange={passwordChangeHandler}
                   />
-                  <button onClick={passwordVisisbilityHandler} type="button">
+                  <span className={classes["password-visibility"]} onClick={passwordVisisbilityHandler}>
                     <EyeInvisible />
-                  </button>
+                  </span>
                 </div>
-                <span className={classes["error-message"]}>
-                  {(error.errorType === "empty-password-field" ||
-                    error.errorType === "empty-email-field" ||
-                    error.errorType === "wrong-data" ||
-                    error.errorType === "empty-fields") &&
-                    error.message}
-                </span>
               </div>
+              <span className={classes["error-message"]}>
+                    {error.errorType !== "email" && error.message}
+                </span>
             </div>
+            <a href="/" className={classes["forget-password"]}>Забули пароль?</a>
           </div>
-          <RememberMeCheckbox />
+          
         </div>
-        <div className={classes.loginfooter}>
-          <div className={classes["loginfooter-buttons"]}>
+        <div className={classes["login-footer"]}>
+          <div className={classes["login-footer-buttons"]}>
           <a href="/">
               <button
                 type="button"
-                className={classes["loginfooter-buttons__main"]}
+                className={classes["login-footer-buttons__main"]}
               >
                 Головна
               </button>
             </a>
             <button
               type="submit"
-              className={classes["loginfooter-buttons__signin"]}
+              className={classes["login-footer-buttons__signin"]}
             >
               Увійти
             </button>
