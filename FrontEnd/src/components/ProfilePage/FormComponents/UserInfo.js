@@ -70,12 +70,10 @@ const UserInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
-             <UsePrompt
-        when={isBlocking}
-        message={(location) =>
-          `Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?`
-        }
-      />
+            <UsePrompt
+                when={isBlocking}
+                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
+            />
             <form onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>

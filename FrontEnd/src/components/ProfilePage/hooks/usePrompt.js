@@ -25,21 +25,21 @@ function useConfirmExit(confirmExit, when = true) {
 }
 
 export function UsePrompt({message, when}) {
-  useEffect(() => {
-    if (when) {
-      window.onbeforeunload = function () {
-        return message;
+    useEffect(() => {
+      if (when) {
+        window.onbeforeunload = function () {
+          return message;
+        };
+      }
+  
+      return () => {
+        window.onbeforeunload = null;
       };
-    }
-
-    return () => {
-      window.onbeforeunload = null;
-    };
-  }, [message, when]);
-
-  const confirmExit = useCallback(() => {
+    }, [message, when]);
+  
+    const confirmExit = useCallback(() => {
     const confirm = window.confirm(message);
     return confirm;
-  }, [message]);
-  useConfirmExit(confirmExit, when);
-}
+    }, [message]);
+    useConfirmExit(confirmExit, when);
+  }
