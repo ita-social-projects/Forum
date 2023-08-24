@@ -11,6 +11,9 @@ REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
 
 class Profile(models.Model):
     profile_id = models.AutoField(primary_key=True)
+    comp_name = models.CharField(max_length=50, default=None, null=True)
+    comp_registered = models.BooleanField(default=None, null=True)
+    comp_is_startup = models.BooleanField(default=None, null=True)
     comp_category = models.ManyToManyField("Category")
     comp_activity = models.ManyToManyField("Activity")
     comp_official_name = models.CharField(max_length=255, unique=True, default=None, null=True)
@@ -36,12 +39,12 @@ class Profile(models.Model):
 
 
 class Activity(models.Model):
-    activity_id = models.IntegerField(primary_key=True)
+    activity_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
 
 
 class Category(models.Model):
-    category_id = models.IntegerField(primary_key=True)
+    category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
 
 

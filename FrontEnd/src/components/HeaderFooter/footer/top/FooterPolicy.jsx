@@ -1,20 +1,21 @@
 import css from "./FooterPolicy.module.css";
+import { Link } from 'react-router-dom'
 
 const POLICY_LINKS = [
     {
         id: "i0",
         title: "Privacy Policy",
-        link: "#"
+        link: "PrivacyPolicyPage/"
     },
     {
         id: "i1",
         title: "Terms & Conditions",
-        link: "#"
+        link: "TermsAndConditions/"
     },
     {
         id: "i2",
         title: "Cookie Policy",
-        link: "#"
+        link: "CookiesPolicyPage/"
     },
     {
         id: "i3",
@@ -29,10 +30,12 @@ function FooterPolicy() {
             <div className={css["policy-content-logo"]}>forum</div>
             <div className={css["policy-content-links"]}>
                 {POLICY_LINKS.map((element) => (
-                    <a className={css["policy-content-links__text"]}
-                       key={element.id}
-                       href={element.link}
-                    >{element.title}</a>
+                    <Link
+                        className={css["policy-content-links__text"]}
+                        key={element.id}
+                        to={element.link}>
+                        {element.title}
+                    </Link>
                 ))}
             </div>
         </div>

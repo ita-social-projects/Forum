@@ -1,9 +1,8 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
 from .models import SavedCompany, Profile
 from .serializers import SavedCompanySerializer, ProfileSerializer
 
@@ -56,20 +55,26 @@ class ProfileList(ListCreateAPIView):
      include_all: bool.
     """
     serializer_class = ProfileSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_queryset(self):
         user_id = self.request.user.id
-        include_deleted = self.request.query_params.get("include_deleted", False)
-        include_all = self.request.query_params.get("include_all", False)
-        if self.request.method == "POST":
+        company_type = self.request.query_params.get("company_type")
+        activity_type = self.request.query_params.get("activity_type")
+        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORACE"]
+
+        if company_type == "startup":
+            return Profile.objects.filter(comp_is_startup=True)
+        elif company_type == "company":
+            return Profile.objects.filter(comp_registered=True)
+        if activity_type in HEADER_ACTIVITIES:
+            return Profile.objects.filter(comp_activity__name=activity_type)
+
+        profile_exists = Profile.objects.filter(person_id=user_id).exists()
+        if self.request.method == "POST" and profile_exists:
             return Profile.objects.filter(person_id=user_id)
-        if include_all:
-            return Profile.objects.all()
-        if include_deleted:
-            return Profile.objects.filter(person_id=user_id)
-        return Profile.objects.filter(is_deleted=False, person_id=user_id)
+
+        return Profile.objects.filter(is_deleted=False)
 
 
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
@@ -77,7 +82,6 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     Retrieve or delete a profile instance.
     """
     serializer_class = ProfileSerializer
-    authentication_classes = [TokenAuthentication]
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
