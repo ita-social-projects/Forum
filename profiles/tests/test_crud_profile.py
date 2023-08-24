@@ -47,7 +47,7 @@ class TestProfileDetailAPIView(APITestCase):
         )
 
         Category.objects.create(category_id=1,
-                                name='producer')
+                                name='cheese')
         Activity.objects.create(activity_id=1,
                                 name='importer')
 
