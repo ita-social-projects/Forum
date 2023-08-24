@@ -29,7 +29,7 @@ const UserInfo = (props) => {
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
-    }, [user, props.user]);
+    }, [user]);
 
     const checkRequiredFields = () => {
         let isValid = true;
@@ -70,7 +70,7 @@ const UserInfo = (props) => {
     };
 
     return (
-        <div className={css['form__container']}>
+        <div className={css['form__container']} style={{paddingBottom: '285px'}}>
             <ConfirmPrompt
                 when={isBlocking}
                 message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'

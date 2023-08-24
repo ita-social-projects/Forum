@@ -22,7 +22,7 @@ const AdditionalInfo = (props) => {
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
-    }, [user, props.user]);   
+    }, [user]);   
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= maxLength)

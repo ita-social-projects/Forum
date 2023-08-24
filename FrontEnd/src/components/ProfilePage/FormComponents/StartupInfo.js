@@ -31,7 +31,7 @@ const StartupInfo = (props) => {
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
-    }, [user, props.user]);
+    }, [user]);
 
     const onUpdateField = e => {
         setUser((prevState) => {
