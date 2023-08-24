@@ -1,3 +1,10 @@
+* {
+  /* outline: 1px solid red;                          */
+}
+
+
+
+
 .App {
   text-align: center;
 }
@@ -38,11 +45,47 @@
 }
 
 .main_block {
-  display: block;
-  margin: auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 80%;
-  /* outline: 1px solid red;                         /*change here */
+  position: relative;
+}
+
+.new-companies-search_count {
+  display: flex;
+  margin:auto;
+  padding-left: 7%;
+}
+
+.search_field_entered_value {
+  color: #0B6C61;
+  font: Inter;
+  font-weight: 600;
+  font-style: italic;
+  /* size: 24px;
+  line-height: 24px; */
+}
+
+.search_results_text {
+  font: Inter;
+  font-weight: 700;
+  /* size: 20px;
+  line-height: 24px; */
+
+}
+
+.search_result_error {
+  font-weight: 600;
+  color: #292E32;
+  font: Inter;
+  /* size: 16px;
+  line-height: 20px; */
+}
+
+.search_result_error_search_value {
+  color: #0B6C61;
+}
+
+.frame-img-right {
+  position: absolute;
+  top: 150px;
+  right: 0;
+  transform: translateY(-50%);
 }

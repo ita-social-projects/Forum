@@ -4,11 +4,12 @@
 //npm i react-router-dom@6.4.1
 //npm install react-cookie
 //npm install react-hook-form
-import React from 'react';
+import React, {useState} from 'react';
 import { Cookies } from 'react-cookie';
 import { useCookies } from 'react-cookie';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './AppMain.css';
+import MainPage from './components/landing-page/MainPage';
 import MainPageRectangle from './components/main-page-rectangle/MainPageRectangle';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 import './AppHeaderFooter.css';
