@@ -52,3 +52,11 @@ class SavedCompany(models.Model):
     company = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='saved_list')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='saved_list_items')
     added_at = models.DateTimeField(auto_now_add=True)
+
+
+class ViewedCompany(models.Model):
+    class Meta:
+        unique_together = (('user', 'company'), )
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    company = models.ForeignKey(Profile, on_delete=models.CASCADE)
