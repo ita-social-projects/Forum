@@ -1,9 +1,10 @@
 import css from './FormComponents.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 
+import ConfirmPrompt from '../hooks/usePrompt';
 import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
@@ -21,6 +22,11 @@ const LABELS = {
 const ContactsInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [phoneNumberError, setPhoneNumberError] = useState(null);
+    const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        setIsBlocking(user !== props.user);
+    }, [user]);
 
     const onUpdateField = e => {
         setUser((prevState) => {
@@ -48,7 +54,7 @@ const ContactsInfo = (props) => {
 
     const ValidateForm = () => {
         let isValid = true;
-        if (user.phoneNumber && (user.phoneNumber.length !== 10 ||  !Number.isInteger(Number(user.phoneNumber)) )) {
+        if (user.phoneNumber && (user.phoneNumber.length !== 10 || !Number.isInteger(Number(user.phoneNumber)))) {
             isValid = false;
         }
         return isValid;
@@ -67,6 +73,10 @@ const ContactsInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
+            <ConfirmPrompt
+                when={isBlocking}
+                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
+            />
             <form onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>

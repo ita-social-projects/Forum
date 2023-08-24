@@ -24,7 +24,7 @@ function useConfirmExit(confirmExit, when = true) {
   }, [navigator, confirmExit, when]);
 }
 
-export function UsePrompt({message, when}) {
+const ConfirmPrompt = ({message, when}) => {
     useEffect(() => {
       if (when) {
         window.onbeforeunload = function () {
@@ -42,4 +42,6 @@ export function UsePrompt({message, when}) {
     return confirm;
     }, [message]);
     useConfirmExit(confirmExit, when);
-  }
+  };
+
+  export default ConfirmPrompt;

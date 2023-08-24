@@ -2,7 +2,7 @@ import css from './FormComponents.module.css';
 import HalfFormField from './FormFields/HalfFormField';
 import Mybutton from '../UI/Mybutton/Mybutton';
 import { useState, useEffect } from 'react';
-import { UsePrompt } from '../hooks/usePrompt';
+import  ConfirmPrompt  from '../hooks/usePrompt';
 
 const LABELS = {
     'surname': 'Прізвище',
@@ -70,7 +70,7 @@ const UserInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
-            <UsePrompt
+            <ConfirmPrompt
                 when={isBlocking}
                 message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
             />

@@ -8,6 +8,7 @@ import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 
+import ConfirmPrompt from '../hooks/usePrompt';
 import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
@@ -82,11 +83,11 @@ const ERRORS = {
     categories: {
         'error': false,
         'message': ''
-    },  
+    },
     activities: {
         'error': false,
         'message': ''
-    },      
+    },
 };
 
 const GeneralInfo = (props) => {
@@ -99,12 +100,17 @@ const GeneralInfo = (props) => {
     const [imageBannerError, setImageBannerError] = useState(null);
     const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
+    const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        setIsBlocking(user !== props.user);
+    }, [user]);
 
     const checkRequiredFields = () => {
         let isValid = true;
         const newFormState = {};
         for (const key in user) {
-            if ((!user[key] ||  (typeof user[key] === 'object' && user[key].length === 0)) && key in ERRORS) {
+            if ((!user[key] || (typeof user[key] === 'object' && user[key].length === 0)) && key in ERRORS) {
                 isValid = false;
                 newFormState[key] = {
                     'error': true,
@@ -221,25 +227,29 @@ const GeneralInfo = (props) => {
     };
     return (
         <div className={css['form__container']}>
+            <ConfirmPrompt
+                when={isBlocking}
+                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
+            />
             <form onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
-                <div className={css['fields-groups']}>
-                    <HalfFormField
-                        name='companyName'
-                        label={LABELS.companyName}
-                        updateHandler={onUpdateField}
-                        error={formStateErr['companyName']['error'] ? formStateErr['companyName']['message'] : null}
-                        requredField={true}
-                        value={user.companyName}
-                    />
-                    <HalfFormField
-                        inputType='text'
-                        name='brend'
-                        label={LABELS.brend}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.brend}
-                    />
+                    <div className={css['fields-groups']}>
+                        <HalfFormField
+                            name='companyName'
+                            label={LABELS.companyName}
+                            updateHandler={onUpdateField}
+                            error={formStateErr['companyName']['error'] ? formStateErr['companyName']['message'] : null}
+                            requredField={true}
+                            value={user.companyName}
+                        />
+                        <HalfFormField
+                            inputType='text'
+                            name='brend'
+                            label={LABELS.brend}
+                            updateHandler={onUpdateField}
+                            requredField={false}
+                            value={user.brend}
+                        />
                     </div>
                     <FullField
                         name='companyOfficialName'

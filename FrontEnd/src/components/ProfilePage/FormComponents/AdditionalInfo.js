@@ -1,9 +1,10 @@
 import css from './FormComponents.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import HalfFormField from './FormFields/HalfFormField';
 import TextField from './FormFields/TextField';
 
+import ConfirmPrompt from '../hooks/usePrompt';
 import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
@@ -17,6 +18,11 @@ const AdditionalInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [foundationYearError, setFoundationYearError] = useState(null);
     const maxLength = 1000;
+    const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        setIsBlocking(user !== props.user);
+    }, [user]);   
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= maxLength)
@@ -67,6 +73,10 @@ const AdditionalInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
+            <ConfirmPrompt
+                when={isBlocking}
+                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
+            />
             <form onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>

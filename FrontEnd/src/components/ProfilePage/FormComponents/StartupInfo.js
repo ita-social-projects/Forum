@@ -2,10 +2,10 @@ import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
 
 import FullField from './FormFields/FullField';
-import HalfFormField from './FormFields/HalfFormField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 
+import ConfirmPrompt from '../hooks/usePrompt';
 import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
@@ -28,6 +28,11 @@ const StartupInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [selectedCooperationGoals, setSelectedCooperationGoals] = useState(props.user.cooperationGoals);
     const maxLength = 1000;
+    const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        setIsBlocking(user !== props.user);
+    }, [user]);
 
     const onUpdateField = e => {
         setUser((prevState) => {
@@ -63,6 +68,10 @@ const StartupInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
+            <ConfirmPrompt
+                when={isBlocking}
+                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
+            />
             <form onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <FullField
