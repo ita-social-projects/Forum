@@ -26,7 +26,6 @@ const COOPERATION_GOALS = [
 
 const StartupInfo = (props) => {
     const [user, setUser] = useState(props.user);
-    const [selectedCooperationGoals, setSelectedCooperationGoals] = useState(props.user.cooperationGoals);
     const maxLength = 1000;
     const [isBlocking, setIsBlocking] = useState(false);
 
@@ -49,16 +48,11 @@ const StartupInfo = (props) => {
 
     const onUpdateSelectField = e => {
         const selectName = e.target.name;
-        if (selectName === 'cooperationGoals') {
-            setSelectedCooperationGoals(Array.from(e.target.value, option => option));
-        }
-    };
-
-    useEffect(() => {
+        const selectedValues = Array.from(e.target.value, option => option);
         setUser((prevState) => {
-            return { ...prevState, 'cooperationGoals': selectedCooperationGoals };
+            return { ...prevState, [selectName]: selectedValues };
         });
-    }, [selectedCooperationGoals]);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -104,7 +98,7 @@ const StartupInfo = (props) => {
                         label={LABELS.cooperationGoals}
                         updateHandler={onUpdateSelectField}
                         requredField={false}
-                        value={selectedCooperationGoals}
+                        value={user.cooperationGoals}
                         defaultValue="Оберіть"
                     />
                     <TextField

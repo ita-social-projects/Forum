@@ -92,9 +92,6 @@ const ERRORS = {
 
 const GeneralInfo = (props) => {
     const [user, setUser] = useState(props.user);
-    const [selectedRegions, setSelectedRegions] = useState(props.user.regions);
-    const [selectedActivities, setSelectedActivities] = useState(props.user.activities);
-    const [selectedCategories, setSelectedCategories] = useState(props.user.categories);
     const maxLength = 1000;
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const [imageBannerError, setImageBannerError] = useState(null);
@@ -200,20 +197,11 @@ const GeneralInfo = (props) => {
 
     const onUpdateSelectField = e => {
         const selectName = e.target.name;
-        if (selectName === 'activities') {
-            setSelectedActivities(Array.from(e.target.value, option => option));
-        } else if (selectName === 'categories') {
-            setSelectedCategories(Array.from(e.target.value, option => option));
-        } else if (selectName === 'regions') {
-            setSelectedRegions(Array.from(e.target.value, option => option));
-        }
-    };
-
-    useEffect(() => {
+        const selectedValues = Array.from(e.target.value, option => option);
         setUser((prevState) => {
-            return { ...prevState, 'regions': selectedRegions, 'activities': selectedActivities, 'categories': selectedCategories };
+            return { ...prevState, [selectName]: selectedValues };
         });
-    }, [selectedRegions, selectedActivities, selectedCategories]);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -274,7 +262,7 @@ const GeneralInfo = (props) => {
                             label={LABELS.regions}
                             updateHandler={onUpdateSelectField}
                             requredField={false}
-                            value={selectedRegions}
+                            value={user.regions}
                             defaultValue="Оберіть"
                         />
                     </div>
@@ -285,7 +273,7 @@ const GeneralInfo = (props) => {
                             label={LABELS.activities}
                             updateHandler={onUpdateSelectField}
                             requredField={true}
-                            value={selectedActivities}
+                            value={user.activities}
                             defaultValue="Оберіть"
                             error={formStateErr['activities']['error'] ? formStateErr['activities']['message'] : null}
                         />
@@ -295,7 +283,7 @@ const GeneralInfo = (props) => {
                             label={LABELS.categories}
                             updateHandler={onUpdateSelectField}
                             requredField={true}
-                            value={selectedCategories}
+                            value={user.categories}
                             defaultValue="Оберіть"
                             error={formStateErr['categories']['error'] ? formStateErr['categories']['message'] : null}
                         />
