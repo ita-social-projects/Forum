@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from authentication.models import CustomUser
 
-from .models import Profile, Activity, Category, SavedCompany
+from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -41,3 +41,11 @@ class SavedCompanySerializer(serializers.ModelSerializer):
         model = SavedCompany
         fields = ('id', 'user', 'company', 'comp_official_name', 'comp_region', 'comp_common_info', 'comp_phone_number',
                   'comp_EDRPOU', 'comp_year_of_foundation', 'comp_address', 'startup_idea', 'added_at')
+
+
+class ViewedCompanySerializer(serializers.ModelSerializer):
+    # profile_id = ProfileSerializer()
+    # user_id =
+    class Meta:
+        model = ViewedCompany
+        fields = "__all__"
