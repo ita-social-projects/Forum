@@ -19,7 +19,7 @@ const LoginContent = (props) => {
   const userValidationHandler = (event) => {
     event.preventDefault();
 
-    const emailErrorText = "Формат електронної адреси некоректний";
+    const emailErrorText = "Формат електронної пошти некоректний";
     const unspecifiedErrorText =
       "Електронна пошта чи пароль вказані некоректно";
     const emptyFieldErrorText = "Обов'язкове поле";
@@ -103,13 +103,14 @@ const LoginContent = (props) => {
                 />
               </div>
               <span className={classes["error-message"]}>
-                  {error.errorType !== "wrong-data" && error.message}
+                {error.errorType === "email" && error.message}
+                {error.errorType === "required" && enteredEmail === "" && error.message}
                 </span>
             </div>
             <div className={classes["login-content__item"]}>
               <label
                 className={`${
-                  error.errorType === "required"
+                  error.errorType === "required" && enteredPassword === ""
                     ? classes["error-dot"]
                     : ""
                 }`}
@@ -133,7 +134,8 @@ const LoginContent = (props) => {
                 </div>
               </div>
               <span className={classes["error-message"]}>
-                    {error.errorType !== "email" && error.message}
+                    {error.errorType === "wrong-data" && error.message}
+                    {error.errorType === "required" && enteredPassword === "" && error.message}
                 </span>
             </div>
             <a href="/" className={classes["forget-password"]}>Забули пароль?</a>
