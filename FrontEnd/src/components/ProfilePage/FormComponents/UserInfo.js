@@ -1,7 +1,8 @@
 import css from './FormComponents.module.css';
 import HalfFormField from './FormFields/HalfFormField';
 import Mybutton from '../UI/Mybutton/Mybutton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { UsePrompt } from '../hooks/usePrompt';
 
 const LABELS = {
     'surname': 'Прізвище',
@@ -24,6 +25,11 @@ const ERRORS = {
 const UserInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
+    const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        setIsBlocking(user !== props.user);
+    }, [user]);
 
     const checkRequiredFields = () => {
         let isValid = true;
@@ -64,6 +70,12 @@ const UserInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
+             <UsePrompt
+        when={isBlocking}
+        message={(location) =>
+          `Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?`
+        }
+      />
             <form onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
