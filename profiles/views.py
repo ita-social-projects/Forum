@@ -3,8 +3,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import SavedCompany, Profile
-from .serializers import SavedCompanySerializer, ProfileSerializer
+from .models import SavedCompany, Profile, ViewedCompany
+from .serializers import SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -102,3 +102,26 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile.save()
         serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+
+
+class ViewedCompanyList(ListCreateAPIView):
+    queryset = ViewedCompany.objects.all()
+    serializer_class = ViewedCompanySerializer
+    permission_classes = (IsAuthenticated, )
+
+    def list(self, request, *args, **kwargs):
+        user_id = self.request.user.id
+        viewed_companies = ViewedCompany.objects.filter(user=user_id)
+        serializer = self.serializer_class(viewed_companies, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        user_id = self.request.user.id
+        company_id = request.data.get("profile_id")
+        company = get_object_or_404(Profile, profile_id=company_id)
+        if company.person.pk != user_id:
+            serializer = self.serializer_class(data={"user": user_id, "company": company_id})
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
