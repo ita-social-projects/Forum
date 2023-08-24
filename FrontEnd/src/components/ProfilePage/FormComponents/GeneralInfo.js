@@ -101,7 +101,7 @@ const GeneralInfo = (props) => {
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
-    }, [user]);
+    }, [user, props.user]);
 
     const checkRequiredFields = () => {
         let isValid = true;
@@ -207,6 +207,7 @@ const GeneralInfo = (props) => {
         event.preventDefault();
         if (checkRequiredFields()) {
             props.onUpdate(user);
+            setIsBlocking(false);
             // TODO something
         } else {
             console.log('error');

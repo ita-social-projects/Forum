@@ -26,7 +26,7 @@ const ContactsInfo = (props) => {
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
-    }, [user]);
+    }, [user, props.user]);
 
     const onUpdateField = e => {
         setUser((prevState) => {
@@ -64,6 +64,7 @@ const ContactsInfo = (props) => {
         event.preventDefault();
         if (ValidateForm()) {
             props.onUpdate(user);
+            setIsBlocking(false);
             // TODO something
         } else {
             console.log('error');

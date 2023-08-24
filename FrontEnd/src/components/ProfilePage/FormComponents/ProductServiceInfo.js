@@ -19,7 +19,7 @@ const ProductServiceInfo = (props) => {
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
-    }, [user]);
+    }, [user, props.user]);
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= maxLength)
@@ -31,6 +31,7 @@ const ProductServiceInfo = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         props.onUpdate(user);
+        setIsBlocking(false);
         // TODO something
     };
 

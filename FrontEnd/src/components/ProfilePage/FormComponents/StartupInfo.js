@@ -31,7 +31,7 @@ const StartupInfo = (props) => {
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
-    }, [user]);
+    }, [user, props.user]);
 
     const onUpdateField = e => {
         setUser((prevState) => {
@@ -57,6 +57,7 @@ const StartupInfo = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         props.onUpdate(user);
+        setIsBlocking(false);
         // TODO something
     };
 
