@@ -61,7 +61,7 @@ class ProfileList(ListCreateAPIView):
         user_id = self.request.user.id
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
-        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORACE"]
+        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORECA"]
 
         if company_type == "startup":
             return Profile.objects.filter(comp_is_startup=True)
