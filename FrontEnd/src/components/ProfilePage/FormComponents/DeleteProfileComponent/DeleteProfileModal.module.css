@@ -141,6 +141,13 @@
     background: var(--main-white, #FFF);
 }
 
+.fields__field--input:focus {
+    border-radius: 2px;
+    border: 1px solid #1f9a7c;
+    background: #fff;
+    outline: none;
+  }
+
 .password__eye {
     width:23px; 
     padding: 5px 3px 2px 3px; 
