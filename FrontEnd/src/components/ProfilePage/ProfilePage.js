@@ -54,6 +54,11 @@ const USER = {
 
 const ProfilePage = () => {
     const [mainUser, setMainUser] = useState(USER);
+    const [formName, setFormName] = useState('Delete');
+
+    const CurrentFormNameHandler = (currentName) => {
+        setFormName(currentName);
+    };
 
     const ProfileUpdateHandler = (myUser) => {
         console.log('in app');
@@ -65,8 +70,8 @@ const ProfilePage = () => {
     
     return (
         <div className={css['container']}>
-            <Description companyName={mainUser.companyName} brend={mainUser.brend}/>
-            <ProfileContent user={mainUser} onUpdate={ProfileUpdateHandler}/>
+            <Description companyName={mainUser.companyName} brend={mainUser.brend} formName={formName}/>
+            <ProfileContent user={mainUser} onUpdate={ProfileUpdateHandler} CurrentFormNameHandler={CurrentFormNameHandler} formName={formName}/>
         </div>
     );
 };

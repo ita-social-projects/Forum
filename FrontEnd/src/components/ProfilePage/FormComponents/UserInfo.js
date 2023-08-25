@@ -1,6 +1,5 @@
 import css from './FormComponents.module.css';
 import HalfFormField from './FormFields/HalfFormField';
-import Mybutton from '../UI/Mybutton/Mybutton';
 import { useState, useEffect } from 'react';
 import  ConfirmPrompt  from '../hooks/usePrompt';
 
@@ -26,6 +25,10 @@ const UserInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        props.CurrentFormNameHandler('UserInfo');
+    }, []);
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
@@ -70,12 +73,12 @@ const UserInfo = (props) => {
     };
 
     return (
-        <div className={css['form__container']} style={{paddingBottom: '285px'}}>
+        <div className={css['form__container']}>
             <ConfirmPrompt
                 when={isBlocking}
                 message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
             />
-            <form onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id='UserInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
                         <HalfFormField
@@ -115,7 +118,6 @@ const UserInfo = (props) => {
                         />
                     </div>
                 </div>
-                <Mybutton />
             </form>
         </div>
     );

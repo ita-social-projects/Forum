@@ -1,9 +1,16 @@
-.content {
+.content__container {
     margin-top: 40px;
     display: flex;
     align-items: flex-start;
     gap: 80px;  
+    flex-direction: column; 
+}
+
+.content {
     padding-left: 192px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
 }
 
 .info-links-profile {

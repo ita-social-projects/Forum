@@ -1,5 +1,12 @@
 import css from './Description.module.css';
 
+const DESCRIPTIONS = {
+    'UserInfo': 'Інформація про користувача платформи',
+    'Delete': 'Видалення профілю',
+};
+
+const generalDesc = 'Зробіть зміни для електронної пошти та особистиї інформації';
+
 const Description = (props) => {
     return (
         <div className={css["description__section"]}>
@@ -13,7 +20,7 @@ const Description = (props) => {
                     <div className={css['companyName']}>{props.companyName.toUpperCase()}</div>
                     <div className={css['brend']}>{props.brend}</div>
                 </div>
-                <div className={css['description__text']}>Зробіть зміни для електронної пошти та особистиї інформації</div>
+                <div className={css['description__text']}>{props.formName in DESCRIPTIONS ?  DESCRIPTIONS[props.formName] : generalDesc}</div>
             </div>
         </div>
     );

@@ -5,7 +5,6 @@ import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 
 import ConfirmPrompt from '../hooks/usePrompt';
-import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
     'phoneNumber': 'Телефон',
@@ -23,6 +22,10 @@ const ContactsInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [phoneNumberError, setPhoneNumberError] = useState(null);
     const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        props.CurrentFormNameHandler('ContactsInfo');
+    }, []);
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
@@ -78,7 +81,7 @@ const ContactsInfo = (props) => {
                 when={isBlocking}
                 message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
             />
-            <form onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id='ContactsInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
                         <HalfFormField
@@ -156,7 +159,6 @@ const ContactsInfo = (props) => {
                         fieldPlaceholder='Введіть URL'
                     />
                 </div>
-                <Mybutton />
             </form>
         </div>
     );

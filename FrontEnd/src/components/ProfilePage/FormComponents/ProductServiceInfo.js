@@ -1,6 +1,5 @@
 import ConfirmPrompt from '../hooks/usePrompt';
 import css from './FormComponents.module.css';
-import Mybutton from '../UI/Mybutton/Mybutton';
 import { useState, useEffect } from 'react';
 import TextField from './FormFields/TextField';
 
@@ -16,6 +15,10 @@ const ProductServiceInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const maxLength = 1000;
     const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        props.CurrentFormNameHandler('ProductServiceInfo');
+    }, []);
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
@@ -41,7 +44,7 @@ const ProductServiceInfo = (props) => {
                 when={isBlocking}
                 message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
             />
-            <form onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id='ProductServiceInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <TextField
                         name='productInfo'
@@ -84,7 +87,6 @@ const ProductServiceInfo = (props) => {
                         maxLength={maxLength}
                     />
                 </div>
-                <Mybutton />
             </form>
         </div>
     );

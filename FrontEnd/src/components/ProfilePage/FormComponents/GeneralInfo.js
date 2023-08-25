@@ -9,7 +9,6 @@ import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 
 import ConfirmPrompt from '../hooks/usePrompt';
-import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
     'companyName': 'Назва компанії',
@@ -98,6 +97,10 @@ const GeneralInfo = (props) => {
     const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
     const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        props.CurrentFormNameHandler('GeneralInfo');
+    }, []);
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
@@ -220,7 +223,7 @@ const GeneralInfo = (props) => {
                 when={isBlocking}
                 message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
             />
-            <form onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id='GeneralInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
                         <HalfFormField
@@ -332,11 +335,9 @@ const GeneralInfo = (props) => {
                         nameStartup='startupCheckbox'
                         valueStartup={user.startupCheckbox}
                         updateHandler={onChangeCheckbox}
-                        // error={formStateErr['companyName']['error'] ? formStateErr['companyName']['message'] : null}
                         requredField={true}
                     />
                 </div>
-                <Mybutton />
             </form>
         </div>
     );

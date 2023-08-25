@@ -5,7 +5,6 @@ import HalfFormField from './FormFields/HalfFormField';
 import TextField from './FormFields/TextField';
 
 import ConfirmPrompt from '../hooks/usePrompt';
-import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
     'foundationYear': 'Рік заснування',
@@ -19,6 +18,10 @@ const AdditionalInfo = (props) => {
     const [foundationYearError, setFoundationYearError] = useState(null);
     const maxLength = 1000;
     const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        props.CurrentFormNameHandler('AdditionalInfo');
+    }, []);
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
@@ -78,7 +81,7 @@ const AdditionalInfo = (props) => {
                 when={isBlocking}
                 message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
             />
-            <form onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id='AdditionalInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
                         <HalfFormField
@@ -116,7 +119,6 @@ const AdditionalInfo = (props) => {
                         maxLength={maxLength}
                     />
                 </div>
-                <Mybutton />
             </form>
         </div>
     );

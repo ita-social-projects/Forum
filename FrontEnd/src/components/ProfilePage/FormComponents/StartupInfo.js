@@ -6,7 +6,6 @@ import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 
 import ConfirmPrompt from '../hooks/usePrompt';
-import Mybutton from '../UI/Mybutton/Mybutton';
 
 const LABELS = {
     'startupName': 'Назва стартапу',
@@ -28,6 +27,10 @@ const StartupInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const maxLength = 1000;
     const [isBlocking, setIsBlocking] = useState(false);
+
+    useEffect(() => {
+        props.CurrentFormNameHandler('StartupInfo');
+    }, []);
 
     useEffect(() => {
         setIsBlocking(user !== props.user);
@@ -67,7 +70,7 @@ const StartupInfo = (props) => {
                 when={isBlocking}
                 message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
             />
-            <form onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id='StartupInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <FullField
                         name='startupName'
@@ -135,7 +138,6 @@ const StartupInfo = (props) => {
                         maxLength={maxLength}
                     />
                 </div>
-                <Mybutton />
             </form>
         </div>
     );

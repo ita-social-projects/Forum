@@ -2,9 +2,9 @@
     display: flex;
     align-items: flex-start;
     padding: 6px 0px;
-    /* background: #EFFFF6; */
+     background: #EFFFF6; 
     margin-top: 24px;
-
+    width: 1513px;
 }
 
 .sign-up__button {
@@ -31,4 +31,5 @@
     letter-spacing: -0.01em;
     text-align: center;
     cursor: pointer;
+    margin-left: 430px;
 }
