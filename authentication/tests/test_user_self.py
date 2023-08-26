@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from authentication.models import CustomUser
+from .unittest_helper import AnyInt
 
 
 class UserSelfAPITests(APITestCase):  
@@ -21,7 +22,8 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {
+            {   "id": AnyInt(),
+                "person_email": "test@test.com",
                 "person_name": "Test", 
                 "person_surname": "Test"
             }, 
@@ -44,6 +46,8 @@ class UserSelfAPITests(APITestCase):
         response = self.client.put(
             "/api/auth/users/me/", 
             data={
+                "id": AnyInt(),
+                "person_email": "test@test.com",
                 "person_name": "Ivan",
                 "person_surname": "Ivanenko",
             }
@@ -51,7 +55,8 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {
+            {   "id": AnyInt(),
+                "person_email": "test@test.com",
                 "person_name": "Ivan", 
                 "person_surname": "Ivanenko"
             }, 
@@ -69,7 +74,8 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {
+            {   "id": AnyInt(),
+                "person_email": "test@test.com",
                 "person_name": "Test", 
                 "person_surname": "Petrenko"
             }, 
