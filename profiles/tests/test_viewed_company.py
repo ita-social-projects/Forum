@@ -66,10 +66,12 @@ class TestViewedCompanyAPI(APITestCase):
         self.assertEqual(401, response.status_code)
 
     def test_get_viewed_companies_authorized(self):
+        from datetime import datetime
         self.client.force_authenticate(self.test_person)
         # add 2 companies to viewed
         self.client.post("/api/viewed-list/", data={"profile_id": self.test_profile2.profile_id})
         self.client.post("/api/viewed-list/", data={"profile_id": self.test_profile3.profile_id})
         response = self.client.get("/api/viewed-list/")
+
         self.assertEqual(200, response.status_code)
         self.assertEqual(2, len(response.data))
