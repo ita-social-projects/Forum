@@ -58,16 +58,12 @@
     background: #fff;
   }
 
-  /* .fields__field--input:focus {
-    border: 1px solid #1f9a7c;
-    background: #fff;
-    outline: none;
-  } */
-
-
-  /* .selected_item {
-    border: 1px solid #1F9A7C;
-    background: #1F9A7C;
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
-    color: white;
-  }  */
+.choose__placeholder {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    color: #00000040;
+}

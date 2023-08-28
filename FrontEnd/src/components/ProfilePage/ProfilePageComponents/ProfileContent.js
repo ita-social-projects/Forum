@@ -8,7 +8,7 @@ import GeneralInfo from '../FormComponents/GeneralInfo';
 import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
 import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
-import Mybutton from '../UI/Mybutton/Mybutton';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
 const INFOLINKS = [
     {
@@ -72,7 +72,7 @@ const ProfileContent = (props) => {
                 </Routes>
             </div>
 
-            {props.formName !== 'Delete' && <Mybutton formName={props.formName}/>}
+            {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName}/>}
         </div>
     );
 };

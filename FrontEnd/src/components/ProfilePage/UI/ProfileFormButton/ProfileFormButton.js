@@ -1,6 +1,6 @@
-import css from './Mybutton.module.css';
+import css from './ProfileFormButton.module.css';
 
-const Mybutton = (props) => {
+const ProfileFormButton = (props) => {
     return (
         <div className={css['sign-up-footer__buttons']}>
             <button
@@ -12,4 +12,4 @@ const Mybutton = (props) => {
     )
 };
 
-export default Mybutton;
+export default ProfileFormButton;

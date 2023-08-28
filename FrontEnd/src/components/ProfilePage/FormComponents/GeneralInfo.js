@@ -14,7 +14,7 @@ const LABELS = {
     'companyName': 'Назва компанії',
     'brend': 'Бренд',
     'companyOfficialName': 'Юридична назва компанії',
-    'edrpou': 'ЄДРПОУ',
+    'edrpou': 'ЄДРПОУ / ІПН',
     'regions': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',

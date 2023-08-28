@@ -2,6 +2,7 @@ import css from './ProfilePage.module.css';
 import Description from './ProfilePageComponents/Description';
 import ProfileContent from './ProfilePageComponents/ProfileContent';
 import { useState } from 'react';
+import ProfileNavbar from './ProfilePageComponents/ProfileNavbar';
 
 const USER = {
     'email': 'ex@gmail.com',
@@ -70,6 +71,7 @@ const ProfilePage = () => {
     
     return (
         <div className={css['container']}>
+            <ProfileNavbar/>
             <Description companyName={mainUser.companyName} brend={mainUser.brend} formName={formName}/>
             <ProfileContent user={mainUser} onUpdate={ProfileUpdateHandler} CurrentFormNameHandler={CurrentFormNameHandler} formName={formName}/>
         </div>
