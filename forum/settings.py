@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'authentication',
     'profiles',
     'search',
+    'administration',
 ]
 
 MIDDLEWARE = [
