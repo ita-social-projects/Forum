@@ -27,7 +27,7 @@
     width: 1304px;
     padding: 16px 8px;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     gap: 36px;
 }
 .new-companies-block__row {

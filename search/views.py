@@ -10,7 +10,7 @@ class SearchCompanyView(APIView):
     def get(self, request, *args, **kwargs):
         search_field = request.query_params.get('search_field', '').strip()                     # get data without space
         # print(search_field)
-        search_results = Profile.objects.filter(comp_name__icontains=search_field).order_by('comp_name')          # get all Progile objects wich contains search_field in comp_name
+        search_results = Profile.objects.filter(comp_name__icontains=search_field).order_by('comp_name')          # get all Profile objects wich contains search_field in comp_name
         print(search_results)
         serializer = CompanySerializers(search_results, many=True)                      # generate json data in serializer
         return Response(serializer.data)                                                # return data to React
@@ -21,7 +21,7 @@ class SearchCompanyView(APIView):
 #         search_field = request.query_params.get('search_field', '').strip()                     # get data without space
 #         # print(search_field)
 #         if search_field == '':     
-#             # print('Введіть будь ласка назву компанії для пошуку')                                                             # if we get emppty field
+#             # print('Введіть будь ласка назву компанії для пошуку')                             # if we get emppty field
 #             return Response({'error': 'Введіть будь ласка назву компанії для пошуку'})          # return empty field error
 #         else:                                                                                   # if not
 #             search_results = Profile.objects.filter(comp_name__icontains=search_field)          # get all Progile objects wich contains search_field in comp_name
@@ -31,21 +31,6 @@ class SearchCompanyView(APIView):
 #                 return Response(serializer.data)                                                # return data to React
 #             else:                                                                               # if Quert obj is empty
 #                 return Response({'error': 'За вашим запитом нічого не знайдено'})               # return empty resault error
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

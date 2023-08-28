@@ -36,17 +36,19 @@ const SearchResults = ({ results, searchTerm }) => {
                             ))}
                         </div>
                     </div>
-                    <div className="pagination">
-                        {Array.from({ length: totalPages }, (_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => handlePageChange(i + 1)}
-                                className={currentPage === i + 1 ? 'active' : ''}
-                            >
-                                {i + 1}
-                            </button>
-                        ))}
-                    </div>
+                    { totalItems > 6 && (
+                        <div className="pagination">
+                            {Array.from({ length: totalPages }, (_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => handlePageChange(i + 1)}
+                                    className={currentPage === i + 1 ? 'active' : ''}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                        </div>
+                    )}   
                 </>
             )}
         </div>

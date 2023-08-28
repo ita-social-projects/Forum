@@ -1,7 +1,8 @@
 // import 'src/components/landing-page/companies/Companies.css'
 import './CompaniesCards.css';
 import like_logo from './like_logo.svg';
-import wish_list_checklist from './wish_list_checklist.svg'
+import wish_list_checklist from './wish_list_checklist.svg';
+import { Link } from 'react-router-dom';
 
 const MainCompanies = ({ companyData }) => {
     const currentDate = new Date();
@@ -16,7 +17,10 @@ const MainCompanies = ({ companyData }) => {
                 <div className="product-card__text-block">
                     <div className="product-card__text-block__header">
                         <div className="product-card__category-text align_items_left">{companyData.comp_category.map(category => category.name).join(' ')}</div>
-                        <div className="product-card__name-text align_items_left">{companyData.comp_name}<br /></div>
+                        <div className="product-card__name-text align_items_left">
+                            <Link className='product-card__name-text_link' to={`/company/${companyData.profile_id}`}>{companyData.comp_name}</Link>
+                            <br />
+                        </div>
                     </div>
                     <div className="product-card__address-text align_items_left">{companyData.comp_address}</div>
                     <div className="product-card__badges-block">
@@ -27,7 +31,6 @@ const MainCompanies = ({ companyData }) => {
                         </div>
                     </div>
                     <div>
-                        <button className='product-card__buttons'><img src={like_logo} width="25" height="25" alt=""/></button>
                         <button className='product-card__buttons'><img src={wish_list_checklist} width="25" height="25" alt=""/></button>
                     </div>
                 </div>
