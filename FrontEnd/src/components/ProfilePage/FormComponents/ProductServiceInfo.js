@@ -1,4 +1,3 @@
-import ConfirmPrompt from '../hooks/usePrompt';
 import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
 import TextField from './FormFields/TextField';
@@ -14,15 +13,10 @@ const LABELS = {
 const ProductServiceInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const maxLength = 1000;
-    const [isBlocking, setIsBlocking] = useState(false);
 
     useEffect(() => {
         props.CurrentFormNameHandler('ProductServiceInfo');
     }, []);
-
-    useEffect(() => {
-        setIsBlocking(user !== props.user);
-    }, [user]);
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= maxLength)
@@ -34,16 +28,11 @@ const ProductServiceInfo = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         props.onUpdate(user);
-        setIsBlocking(false);
         // TODO something
     };
 
     return (
         <div className={css['form__container']}>
-            <ConfirmPrompt
-                when={isBlocking}
-                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
-            />
             <form id='ProductServiceInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <TextField

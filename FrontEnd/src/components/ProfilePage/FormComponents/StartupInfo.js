@@ -5,8 +5,6 @@ import FullField from './FormFields/FullField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 
-import ConfirmPrompt from '../hooks/usePrompt';
-
 const LABELS = {
     'startupName': 'Назва стартапу',
     'investmentAmount': 'Розмір інвестицій (в гривнях)',
@@ -26,15 +24,10 @@ const COOPERATION_GOALS = [
 const StartupInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const maxLength = 1000;
-    const [isBlocking, setIsBlocking] = useState(false);
 
     useEffect(() => {
         props.CurrentFormNameHandler('StartupInfo');
     }, []);
-
-    useEffect(() => {
-        setIsBlocking(user !== props.user);
-    }, [user]);
 
     const onUpdateField = e => {
         setUser((prevState) => {
@@ -60,16 +53,11 @@ const StartupInfo = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         props.onUpdate(user);
-        setIsBlocking(false);
         // TODO something
     };
 
     return (
         <div className={css['form__container']}>
-            <ConfirmPrompt
-                when={isBlocking}
-                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
-            />
             <form id='StartupInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <FullField

@@ -1,7 +1,6 @@
 import css from './FormComponents.module.css';
 import HalfFormField from './FormFields/HalfFormField';
 import { useState, useEffect } from 'react';
-import  ConfirmPrompt  from '../hooks/usePrompt';
 
 const LABELS = {
     'surname': 'Прізвище',
@@ -24,15 +23,10 @@ const ERRORS = {
 const UserInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
-    const [isBlocking, setIsBlocking] = useState(false);
 
     useEffect(() => {
         props.CurrentFormNameHandler('UserInfo');
     }, []);
-
-    useEffect(() => {
-        setIsBlocking(user !== props.user);
-    }, [user]);
 
     const checkRequiredFields = () => {
         let isValid = true;
@@ -65,7 +59,6 @@ const UserInfo = (props) => {
         event.preventDefault();
         if (checkRequiredFields()) {
             props.onUpdate(user);
-            setIsBlocking(false);
             // TODO something
         } else {
             // TODO something
@@ -74,10 +67,6 @@ const UserInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
-            <ConfirmPrompt
-                when={isBlocking}
-                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
-            />
             <form id='UserInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>

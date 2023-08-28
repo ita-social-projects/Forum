@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import HalfFormField from './FormFields/HalfFormField';
 import TextField from './FormFields/TextField';
 
-import ConfirmPrompt from '../hooks/usePrompt';
-
 const LABELS = {
     'foundationYear': 'Рік заснування',
     'companySize': 'Розмір компанії',
@@ -17,15 +15,10 @@ const AdditionalInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [foundationYearError, setFoundationYearError] = useState(null);
     const maxLength = 1000;
-    const [isBlocking, setIsBlocking] = useState(false);
 
     useEffect(() => {
         props.CurrentFormNameHandler('AdditionalInfo');
-    }, []);
-
-    useEffect(() => {
-        setIsBlocking(user !== props.user);
-    }, [user]);   
+    }, []); 
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= maxLength)
@@ -67,20 +60,14 @@ const AdditionalInfo = (props) => {
         event.preventDefault();
         if (ValidateForm()) {
             props.onUpdate(user);
-            setIsBlocking(false);
             // TODO something
         } else {
-            console.log('error');
             // TODO something
         }
     };
 
     return (
         <div className={css['form__container']}>
-            <ConfirmPrompt
-                when={isBlocking}
-                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
-            />
             <form id='AdditionalInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>

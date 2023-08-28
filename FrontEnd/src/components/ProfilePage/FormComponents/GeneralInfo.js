@@ -8,8 +8,6 @@ import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 
-import ConfirmPrompt from '../hooks/usePrompt';
-
 const LABELS = {
     'companyName': 'Назва компанії',
     'brend': 'Бренд',
@@ -96,15 +94,10 @@ const GeneralInfo = (props) => {
     const [imageBannerError, setImageBannerError] = useState(null);
     const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
-    const [isBlocking, setIsBlocking] = useState(false);
 
     useEffect(() => {
         props.CurrentFormNameHandler('GeneralInfo');
     }, []);
-
-    useEffect(() => {
-        setIsBlocking(user !== props.user);
-    }, [user]);
 
     const checkRequiredFields = () => {
         let isValid = true;
@@ -210,19 +203,13 @@ const GeneralInfo = (props) => {
         event.preventDefault();
         if (checkRequiredFields()) {
             props.onUpdate(user);
-            setIsBlocking(false);
             // TODO something
         } else {
-            console.log('error');
             // TODO something
         }
     };
     return (
         <div className={css['form__container']}>
-            <ConfirmPrompt
-                when={isBlocking}
-                message='Введені дані не є збережені, при переході на іншу сторінку, вони буду втрачені?'
-            />
             <form id='GeneralInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
