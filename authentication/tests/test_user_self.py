@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from authentication.models import CustomUser
+from .unittest_helper import AnyInt
 
 
 class UserSelfAPITests(APITestCase):
@@ -21,11 +22,12 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {
-                "person_name": "Test",
-                "person_surname": "Test"
-            },
-                response.json()
+            {"id": AnyInt(),
+             "person_email": "test@test.com",
+             "person_name": "Test",
+             "person_surname": "Test"
+             },
+            response.json()
         )
 
     def test_user_retreive_data_not_logged_in(self):
@@ -44,6 +46,8 @@ class UserSelfAPITests(APITestCase):
         response = self.client.put(
             "/api/auth/users/me/",
             data={
+                "id": AnyInt(),
+                "person_email": "test@test.com",
                 "person_name": "Ivan",
                 "person_surname": "Ivanenko",
             }
@@ -51,10 +55,11 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {
-                "person_name": "Ivan",
-                "person_surname": "Ivanenko"
-            },
+            {"id": AnyInt(),
+             "person_email": "test@test.com",
+             "person_name": "Ivan",
+             "person_surname": "Ivanenko"
+             },
             response.json()
         )
 
@@ -69,10 +74,11 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {
-                "person_name": "Test",
-                "person_surname": "Petrenko"
-            },
+            {"id": AnyInt(),
+             "person_email": "test@test.com",
+             "person_name": "Test",
+             "person_surname": "Petrenko"
+             },
             response.json()
         )
 
