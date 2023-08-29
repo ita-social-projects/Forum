@@ -26,7 +26,8 @@ class SavedCompaniesListCreate(ListCreateAPIView):
 
         # Check if the company is already in the user's saved list
         if SavedCompany.objects.filter(user=user, company_id=pk).exists():
-            return Response({'error': 'Company already in saved list'}, status=status.HTTP_400_BAD_REQUEST)
+            saved_company_destroyer = SavedCompaniesDestroy()
+            return saved_company_destroyer.destroy(request, pk)
 
         serializer = SavedCompanySerializer(data={'company': pk, 'user': user.id})
         if serializer.is_valid():
