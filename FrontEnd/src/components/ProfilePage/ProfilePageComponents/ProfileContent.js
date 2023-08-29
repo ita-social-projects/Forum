@@ -43,6 +43,16 @@ const INFOLINKS = [
     },
 ];
 
+const FORM_NAMES = [
+    'UserInfo',
+    'GeneralInfo',
+    'ContactsInfo',
+    'ProductServiceInfo',
+    'AdditionalInfo',
+    'StartupInfo',
+    'Delete'
+];
+
 const ProfileContent = (props) => {
     return (
         <div className={css['content__container']}>
@@ -61,18 +71,18 @@ const ProfileContent = (props) => {
 
                 <Routes>
                     <Route path="/" element={<Navigate to="/profile/user-info" replace />} />
-                    <Route path="/delete" element={<DeleteProfilePage user={props.user} CurrentFormNameHandler={props.CurrentFormNameHandler}/>} />
-
-                    <Route path="/user-info" element={<UserInfo user={props.user} onUpdate={props.onUpdate} CurrentFormNameHandler={props.CurrentFormNameHandler}/>}  />
-                    <Route path="/general-info" element={<GeneralInfo user={props.user} onUpdate={props.onUpdate} CurrentFormNameHandler={props.CurrentFormNameHandler}/>}/>
-                    <Route path="/products-service-info" element={<ProductServiceInfo user={props.user} onUpdate={props.onUpdate} CurrentFormNameHandler={props.CurrentFormNameHandler}/>}/>
-                    <Route path="/additional-info" element={<AdditionalInfo user={props.user} onUpdate={props.onUpdate} CurrentFormNameHandler={props.CurrentFormNameHandler}/>}/>
-                    <Route path="/startup" element={<StartupInfo user={props.user} onUpdate={props.onUpdate} CurrentFormNameHandler={props.CurrentFormNameHandler}/>}/>
-                    <Route path="/contacts" element={<ContactsInfo user={props.user} onUpdate={props.onUpdate} CurrentFormNameHandler={props.CurrentFormNameHandler}/>} />
+                    <Route path="/delete" element={<DeleteProfilePage user={props.user} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[6]} />} />
+                    {INFOLINKS.map((el, index) => (
+                        <Route
+                            path={el.link}
+                            Component={() => <el.element user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[index]}/>}
+                            key={el.title}
+                        />
+                    ))}
                 </Routes>
             </div>
 
-            {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName}/>}
+            {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} />}
         </div>
     );
 };

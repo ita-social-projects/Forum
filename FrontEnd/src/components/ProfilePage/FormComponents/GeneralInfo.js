@@ -87,16 +87,17 @@ const ERRORS = {
     },
 };
 
+const TEXT_AREA_MAX_LENGTH = 1000;
+
 const GeneralInfo = (props) => {
     const [user, setUser] = useState(props.user);
-    const maxLength = 1000;
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const [imageBannerError, setImageBannerError] = useState(null);
     const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
 
     useEffect(() => {
-        props.CurrentFormNameHandler('GeneralInfo');
+        props.currentFormNameHandler(props.curForm);
     }, []);
 
     const checkRequiredFields = () => {
@@ -185,7 +186,7 @@ const GeneralInfo = (props) => {
     };
 
     const onUpdateTextAreaField = e => {
-        if (e.target.value.length <= maxLength)
+        if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
             setUser((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
@@ -305,7 +306,7 @@ const GeneralInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.slogan}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='companyInfo'
@@ -313,7 +314,7 @@ const GeneralInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.companyInfo}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <CheckBoxField
                         name='companyType'

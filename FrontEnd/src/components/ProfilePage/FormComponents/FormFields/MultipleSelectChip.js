@@ -1,5 +1,4 @@
 import css from './MultipleSelectChip.module.css';
-
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import FormControl from '@mui/material/FormControl';
@@ -32,7 +31,6 @@ function getStyles(name, selectedOptions, theme) {
 
 export default function MultipleSelectChip(props) {
   const theme = useTheme();
-
   return (
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>

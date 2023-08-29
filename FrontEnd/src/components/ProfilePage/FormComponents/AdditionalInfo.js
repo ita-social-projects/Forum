@@ -11,17 +11,18 @@ const LABELS = {
     'passedAudit': 'Пройдений аудит',
 };
 
+const TEXT_AREA_MAX_LENGTH = 1000;
+
 const AdditionalInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [foundationYearError, setFoundationYearError] = useState(null);
-    const maxLength = 1000;
 
     useEffect(() => {
-        props.CurrentFormNameHandler('AdditionalInfo');
+        props.currentFormNameHandler(props.curForm);
     }, []); 
 
     const onUpdateTextAreaField = e => {
-        if (e.target.value.length <= maxLength)
+        if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
             setUser((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
@@ -46,7 +47,7 @@ const AdditionalInfo = (props) => {
         });
     };
 
-    const ValidateForm = () => {
+    const validateForm = () => {
         let isValid = true;
         const currentYear = new Date().getFullYear();
         const year = Number(user.foundationYear);
@@ -58,7 +59,7 @@ const AdditionalInfo = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (ValidateForm()) {
+        if (validateForm()) {
             props.onUpdate(user);
             // TODO something
         } else {
@@ -95,7 +96,7 @@ const AdditionalInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.topClients}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='passedAudit'
@@ -103,7 +104,7 @@ const AdditionalInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.passedAudit}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                 </div>
             </form>

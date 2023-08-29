@@ -2,7 +2,7 @@ import css from './ProfilePage.module.css';
 import Description from './ProfilePageComponents/Description';
 import ProfileContent from './ProfilePageComponents/ProfileContent';
 import { useState } from 'react';
-import ProfileNavbar from './ProfilePageComponents/ProfileNavbar';
+import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
 
 const USER = {
     'email': 'ex@gmail.com',
@@ -55,25 +55,23 @@ const USER = {
 
 const ProfilePage = () => {
     const [mainUser, setMainUser] = useState(USER);
-    const [formName, setFormName] = useState('Delete');
-
-    const CurrentFormNameHandler = (currentName) => {
+    const [formName, setFormName] = useState('');
+    const currentFormNameHandler = (currentName) => {
         setFormName(currentName);
     };
 
-    const ProfileUpdateHandler = (myUser) => {
+    const profileUpdateHandler = (myUser) => {
         console.log('in app');
         console.log(myUser);
         setMainUser((prev) => {
             return {...prev, ...myUser}
         });
     };
-    
     return (
         <div className={css['container']}>
-            <ProfileNavbar/>
+            <BreadCrumbs currentPage='Профіль'/>
             <Description companyName={mainUser.companyName} brend={mainUser.brend} formName={formName}/>
-            <ProfileContent user={mainUser} onUpdate={ProfileUpdateHandler} CurrentFormNameHandler={CurrentFormNameHandler} formName={formName}/>
+            <ProfileContent user={mainUser} onUpdate={profileUpdateHandler} currentFormNameHandler={currentFormNameHandler} formName={formName}/>
         </div>
     );
 };

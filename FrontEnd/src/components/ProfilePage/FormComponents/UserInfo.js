@@ -25,7 +25,7 @@ const UserInfo = (props) => {
     const [formStateErr, setFormStateErr] = useState(ERRORS);
 
     useEffect(() => {
-        props.CurrentFormNameHandler('UserInfo');
+        props.currentFormNameHandler(props.curForm);
     }, []);
 
     const checkRequiredFields = () => {

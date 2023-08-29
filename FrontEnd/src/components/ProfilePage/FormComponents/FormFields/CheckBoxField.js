@@ -1,7 +1,6 @@
 import css from './CheckBoxField.module.css';
 
 const CheckBoxField = (props) => {
-
     return (<div className={css['representative']}>
         <div className={css['representative__label']}>
             {props.requredField && <label className={css['representative__label--required']}>*</label>}

@@ -10,16 +10,17 @@ const LABELS = {
     'competitiveAdvantage': 'Конкурентна перевага',
 };
 
+const TEXT_AREA_MAX_LENGTH = 1000;
+
 const ProductServiceInfo = (props) => {
     const [user, setUser] = useState(props.user);
-    const maxLength = 1000;
 
     useEffect(() => {
-        props.CurrentFormNameHandler('ProductServiceInfo');
+        props.currentFormNameHandler(props.curForm);
     }, []);
 
     const onUpdateTextAreaField = e => {
-        if (e.target.value.length <= maxLength)
+        if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
             setUser((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
@@ -41,7 +42,7 @@ const ProductServiceInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.productInfo}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='serviceInfo'
@@ -49,7 +50,7 @@ const ProductServiceInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.serviceInfo}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='logisticProductService'
@@ -57,7 +58,7 @@ const ProductServiceInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.logisticProductService}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='cooperationFormat'
@@ -65,7 +66,7 @@ const ProductServiceInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.cooperationFormat}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='competitiveAdvantage'
@@ -73,7 +74,7 @@ const ProductServiceInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.competitiveAdvantage}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                 </div>
             </form>

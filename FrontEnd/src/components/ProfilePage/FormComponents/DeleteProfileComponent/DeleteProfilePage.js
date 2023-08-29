@@ -7,10 +7,10 @@ const DeleteProfilePage = (props) => {
     const [modal, setModal] = useState(false);
 
     useEffect(() => {
-        props.CurrentFormNameHandler('Delete');
+        props.currentFormNameHandler(props.curForm);
     }, []);
-
-    const CancelHandler = () => {
+    
+    const cancelHandler = () => {
         setModal(false);
     };
     return (
@@ -18,7 +18,7 @@ const DeleteProfilePage = (props) => {
             <div className={css['text__for__delete']}>Видалити акаунт</div>
             <button className={css['button__delete']}  onClick={() => setModal(true)}>Видалити</button>
             <MyModal visible={modal} setVisisble={setModal}>
-                <DeleteProfileModal onCancel={CancelHandler} user={props.user}/>
+                <DeleteProfileModal onCancel={cancelHandler} user={props.user}/>
             </MyModal>
         </div>
     );

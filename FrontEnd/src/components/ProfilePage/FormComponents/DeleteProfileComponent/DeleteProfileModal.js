@@ -9,14 +9,14 @@ const DeleteProfileModal = (props) => {
     const [isDisabled, setIsDisabled] = useState(true);
     const navigate = useNavigate();
 
-    const SubmitHandler = (event) => {
+    const submitHandler = (event) => {
         event.preventDefault();
         props.onCancel();
         // TODO logic of deleting
         navigate('/');
     };
 
-    const EmailChangeHandler = (e) => {
+    const emailChangeHandler = (e) => {
         if (e.target.value === props.user.email) {
             setIsCorrectEmail(true);
         } else {
@@ -24,7 +24,7 @@ const DeleteProfileModal = (props) => {
         }
     };
 
-    const PasswordChangeHandler = (e) => {
+    const passwordChangeHandler = (e) => {
         if (e.target.value === props.user.password) {
             setIsCorrectPassword(true);
         } else {
@@ -55,23 +55,23 @@ const DeleteProfileModal = (props) => {
             alt="" 
             onClick={props.onCancel}/>
             </div>
-            <div className={css['delete__description']}>
-                <p>Текст, який описує, що профіль буде видалено.</p>
-                <p>Також можуть бути перераховані способи відновити профіль.</p>
+            <div >
+                <div className={css['delete__description']}>Текст, який описує, що профіль буде видалено.</div>
+                <div className={css['delete__description']}>Також можуть бути перераховані способи відновити профіль.</div>
             </div>
-            <form onSubmit={SubmitHandler}>
+            <form onSubmit={submitHandler}>
                 <div className={css['form__body']}>
-                    <div className={css['fields__label']}><label >Електронна пошта</label></div>
+                    <div className={css['fields__label--text']}><label >Електронна пошта</label></div>
                     <div className={css['fields__field']}>
                         <input
                             type='text'
                             className={css['fields__field--input']}
                             name='email'
                             placeholder='Електронна пошта'
-                            onChange={EmailChangeHandler}
+                            onChange={emailChangeHandler}
                         />
                     </div>
-                    <div className={css['fields__label']}><label >Пароль</label></div>
+                    <div className={css['fields__label--text']}><label >Пароль</label></div>
                     <div className={css['fields__field']}>
                         <input
                             id='companyPassword'
@@ -79,7 +79,7 @@ const DeleteProfileModal = (props) => {
                             className={css['fields__field--input']}
                             name='password'
                             placeholder='Пароль'
-                            onChange={PasswordChangeHandler}
+                            onChange={passwordChangeHandler}
                         />
                         <span onClick={passwordVisisbilityHandler}>
                             <img 
@@ -105,5 +105,3 @@ const DeleteProfileModal = (props) => {
 };
 
 export default DeleteProfileModal;
-
-// src={`${process.env.PUBLIC_URL}/profilepage/Vector.png`}

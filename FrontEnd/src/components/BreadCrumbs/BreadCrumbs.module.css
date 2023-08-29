@@ -5,32 +5,6 @@
     margin-bottom: 32px;
 }
 
-.header-register__button {
-    display: flex;
-    padding: 5px 15px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-
-    border-radius: 4px;
-    border: 1px solid #1F9A7C;
-    background: #FFF;
-
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
-
-    /* Button Text */
-    color: #1F9A7C;
-    text-align: center;
-    font-feature-settings: 'calt' off;
-    text-decoration: none;
-    font-family: "Inter", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: -0.16px;
-}
-
 .main-page__button {
     font-family: "Inter", sans-serif;
     font-size: 16px;
@@ -42,7 +16,7 @@
     text-decoration: none;    
 }
 
-.profile__button {
+.current-page__button {
     font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 600;

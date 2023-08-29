@@ -21,12 +21,13 @@ const COOPERATION_GOALS = [
     { name: "Партнерство" },
 ];
 
+const TEXT_AREA_MAX_LENGTH = 1000;
+
 const StartupInfo = (props) => {
     const [user, setUser] = useState(props.user);
-    const maxLength = 1000;
 
     useEffect(() => {
-        props.CurrentFormNameHandler('StartupInfo');
+        props.currentFormNameHandler(props.curForm);
     }, []);
 
     const onUpdateField = e => {
@@ -36,7 +37,7 @@ const StartupInfo = (props) => {
     };
 
     const onUpdateTextAreaField = e => {
-        if (e.target.value.length <= maxLength)
+        if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
             setUser((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
@@ -73,7 +74,7 @@ const StartupInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.startupIdea}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <FullField
                         inputType='number'
@@ -99,7 +100,7 @@ const StartupInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.endResult}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='competitiveAdvantageIdea'
@@ -107,7 +108,7 @@ const StartupInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.competitiveAdvantageIdea}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='risks'
@@ -115,7 +116,7 @@ const StartupInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.risks}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
                         name='searchPartners'
@@ -123,7 +124,7 @@ const StartupInfo = (props) => {
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
                         value={user.searchPartners}
-                        maxLength={maxLength}
+                        maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                 </div>
             </form>

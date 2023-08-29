@@ -21,7 +21,7 @@ const ContactsInfo = (props) => {
     const [phoneNumberError, setPhoneNumberError] = useState(null);
 
     useEffect(() => {
-        props.CurrentFormNameHandler('ContactsInfo');
+        props.currentFormNameHandler(props.curForm);
     }, []);
 
     const onUpdateField = e => {
@@ -48,7 +48,7 @@ const ContactsInfo = (props) => {
         });
     };
 
-    const ValidateForm = () => {
+    const validateForm = () => {
         let isValid = true;
         if (user.phoneNumber && (user.phoneNumber.length !== 10 || !Number.isInteger(Number(user.phoneNumber)))) {
             isValid = false;
@@ -58,7 +58,7 @@ const ContactsInfo = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (ValidateForm()) {
+        if (validateForm()) {
             props.onUpdate(user);
             // TODO something
         } else {
