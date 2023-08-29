@@ -22,11 +22,11 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {"id": AnyInt(),
-             "person_email": "test@test.com",
-             "person_name": "Test",
-             "person_surname": "Test"
-             },
+            {   "id": AnyInt(),
+                "person_email": "test@test.com",
+                "person_name": "Test",
+                "person_surname": "Test"
+            },
             response.json()
         )
 
@@ -55,11 +55,11 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {"id": AnyInt(),
-             "person_email": "test@test.com",
-             "person_name": "Ivan",
-             "person_surname": "Ivanenko"
-             },
+            {   "id": AnyInt(),
+                "person_email": "test@test.com",
+                "person_name": "Ivan",
+                "person_surname": "Ivanenko"
+            },
             response.json()
         )
 
@@ -74,11 +74,11 @@ class UserSelfAPITests(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {"id": AnyInt(),
-             "person_email": "test@test.com",
-             "person_name": "Test",
-             "person_surname": "Petrenko"
-             },
+            {   "id": AnyInt(),
+                "person_email": "test@test.com",
+                "person_name": "Test",
+                "person_surname": "Petrenko"
+            },
             response.json()
         )
 
