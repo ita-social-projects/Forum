@@ -27,7 +27,7 @@ class UserSelfAPITests(APITestCase):
                 "person_name": "Test",
                 "person_surname": "Test"
             },
-            response.json()
+                response.json()
         )
 
     def test_user_retreive_data_not_logged_in(self):
