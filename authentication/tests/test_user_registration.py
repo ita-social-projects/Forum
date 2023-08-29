@@ -16,7 +16,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_successful(self):
         response = self.client.post(
-            "/api/auth/users/", 
+            "/api/auth/users/",
             data={
                 "person_email": "jane@test.com",
                 "password": "Test1234",
@@ -46,7 +46,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_email_incorrect(self):
         response = self.client.post(
-            "/api/auth/users/", 
+            "/api/auth/users/",
             data={
                 "person_email": "jane@testcom",
                 "password": "Test1234",
@@ -73,7 +73,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_email_exists(self):
         response = self.client.post(
-            "/api/auth/users/", 
+            "/api/auth/users/",
             data={
                 "person_email": "test@test.com",
                 "password": "Test1234",
@@ -98,7 +98,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_password_incorrect(self):
         response = self.client.post(
-            "/api/auth/users/", 
+            "/api/auth/users/",
             data={
                 "person_email": "jane@test.com",
                 "password": "test",
@@ -127,7 +127,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_who_represent_empty_fields(self):
         response = self.client.post(
-            "/api/auth/users/", 
+            "/api/auth/users/",
             data={
                 "person_email": "jane@test.com",
                 "password": "Test1234",
@@ -152,7 +152,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_who_represent_both_choosen(self):
         response = self.client.post(
-            "/api/auth/users/", 
+            "/api/auth/users/",
             data={
                 "person_email": "jane@test.com",
                 "password": "Test1234",

@@ -17,7 +17,7 @@ class UserLogoutAPITests(APITestCase):
 
     def test_logout_successful(self):
         self.test_user_token = self.client.post(
-            "/api/auth/token/login/", 
+            "/api/auth/token/login/",
             data={
                 "person_email": "test@test.com",
                 "password": "Test1234",

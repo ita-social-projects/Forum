@@ -70,11 +70,13 @@ class ProfileList(ListCreateAPIView):
         if activity_type in HEADER_ACTIVITIES:
             return Profile.objects.filter(comp_activity__name=activity_type)
 
-        profile_exists = Profile.objects.filter(person_id=user_id).exists()
-        if self.request.method == "POST" and profile_exists:
-            return Profile.objects.filter(person_id=user_id)
-
         return Profile.objects.filter(is_deleted=False)
+
+    def create(self, request):
+        profile = Profile.objects.filter(person_id=self.request.user)
+        if profile.exists():
+            return Response(status=409)
+        return super().create(request)
 
 
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
@@ -84,12 +86,25 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated,)
 
-    def get_queryset(self):
+    def get_queryset(self, pk=None):
         user_id = self.request.user.id
         if self.request.method == "DELETE":
             return Profile.objects.filter(person_id=user_id, is_deleted=False)
         if self.request.method == 'GET':
             return Profile.objects.filter(is_deleted=False)
+        if self.request.method in ['PUT', 'PATCH']:
+            return Profile.objects.filter(profile_id=pk)
+
+    def update(self, request, pk=None, **kwargs):
+        profile = get_object_or_404(self.get_queryset(pk=pk))
+        if self.request.method == 'PUT':
+            serializer = ProfileSerializer(profile, data=request.data)
+        elif self.request.method == 'PATCH':
+            serializer = ProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
         profile = get_object_or_404(self.get_queryset(), pk=pk)
