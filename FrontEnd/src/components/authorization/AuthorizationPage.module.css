@@ -5,8 +5,7 @@
     flex-shrink: 0;
     background: #f1fff7;
   }
-  
-  
+    
   .frame-img-left {
     display: inline-flex;
     flex-direction: column;
@@ -24,3 +23,4 @@
     margin: 102px 354px 473px 979px;
     position: absolute;
   }
+  

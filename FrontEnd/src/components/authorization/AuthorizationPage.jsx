@@ -6,7 +6,6 @@ import dots_decor from "./dots_decor.svg";
 
 const AuthorizationPage = (props) => {
   const [errorText, setErrorText] = useState("");
-
   
   return (
     <div className={classes["auth-page"]}>

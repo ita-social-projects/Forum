@@ -27,9 +27,9 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/authorization" element={<AuthorizationPage />} />
-          <Route path="/SignUpPage" element={<SignUpPage />} />
-          <Route path="/PrivacyPolicyPage" element={<PrivacyPolicy />} />
-          <Route path="/TermsAndConditions" element={<TermsAndConditions />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>
         <Footer />
         <ScrollToTopButton />
