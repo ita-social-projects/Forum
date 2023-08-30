@@ -8,7 +8,7 @@ from .pagination import UserListPagination
 
 
 class UsersListView(ListAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = CustomUser.objects.all().order_by('id')
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     pagination_class = UserListPagination
