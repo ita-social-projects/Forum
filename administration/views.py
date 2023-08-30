@@ -4,14 +4,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from authentication.models import CustomUser
 from .serializers import UserSerializer
-from rest_framework.pagination import PageNumberPagination
+from .pagination import UserListPagination
 
 
 class UsersListView(ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
-    
+    pagination_class = UserListPagination
 
 
 class UserUpdateDestroyDetailView(RetrieveUpdateDestroyAPIView):
@@ -35,7 +35,3 @@ class UserUpdateDestroyDetailView(RetrieveUpdateDestroyAPIView):
         user = CustomUser.objects.get(pk=pk)
         user.delete()
         return Response(f'User {pk} deleted', status=status.HTTP_204_NO_CONTENT)
-
-
-
-
