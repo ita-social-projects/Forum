@@ -1,4 +1,4 @@
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase
 from authentication.models import CustomUser
 from profiles.models import Profile
 from utils.dump_response import dump  # noqa
