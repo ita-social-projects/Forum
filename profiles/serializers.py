@@ -47,3 +47,10 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = ViewedCompany
         fields = ('id', 'user', 'company', 'date')
+
+    def validate(self, attrs):
+        user = attrs.get("user")
+        company = attrs.get("company")
+        if company.person == user:
+            raise serializers.ValidationError({"error": "You can not view your company."})
+        return attrs
