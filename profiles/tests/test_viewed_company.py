@@ -43,8 +43,6 @@ class TestViewedCompanyAPI(APITestCase):
             comp_is_startup=False
         )
 
-        self.client = APIClient()
-
     def test_create_viewed_company_unauthorized(self):
         response = self.client.post("/api/viewed-list/", data={"profile_id": self.test_profile.profile_id})
         self.assertEqual(401, response.status_code)
