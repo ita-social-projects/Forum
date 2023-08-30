@@ -3,8 +3,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import SavedCompany, Profile
-from .serializers import SavedCompanySerializer, ProfileSerializer
+from .models import SavedCompany, Profile, ViewedCompany
+from .serializers import SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -62,7 +62,7 @@ class ProfileList(ListCreateAPIView):
         user_id = self.request.user.id
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
-        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORACE"]
+        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORECA"]
 
         if company_type == "startup":
             return Profile.objects.filter(comp_is_startup=True)
@@ -118,3 +118,12 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile.save()
         serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+
+
+class ViewedCompanyList(ListCreateAPIView):
+    serializer_class = ViewedCompanySerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        return ViewedCompany.objects.filter(user=user_id)

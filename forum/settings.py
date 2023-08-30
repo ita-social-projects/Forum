@@ -75,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'forum.wsgi.application'
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -105,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -116,7 +114,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -163,3 +160,17 @@ DJOSER = {
         'token_create': 'authentication.serializers.UserTokenCreateSerializer',
     }
 }
+
+
+def running_tests():
+    import sys
+    """ Check if tests are executed """
+    return sys.argv[1:2] == ['test']
+
+
+if running_tests():
+    # For tests execution, the fastest password hasher is used
+    # (may increase execution speed ×10 and more)
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+    )
