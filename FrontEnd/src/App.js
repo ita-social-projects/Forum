@@ -9,7 +9,7 @@ import { Cookies } from 'react-cookie';
 import { useCookies } from 'react-cookie';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './AppMain.css';
-import MainPageRectangle from './components/main-page-rectangle/MainPageRectangle';
+import AuthorizationPage from './components/authorization/AuthorizationPage';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 import './AppHeaderFooter.css';
 import Footer from './components/HeaderFooter/footer/Footer';
@@ -27,10 +27,10 @@ function App() {
         <Header isAuthorized={true}></Header>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/authorization" element={<MainPageRectangle />} />
-          <Route path="/SignUpPage" element={<SignUpPage />} />
-          <Route path="/PrivacyPolicyPage" element={<PrivacyPolicy />} />
-          <Route path="/TermsAndConditions" element={<TermsAndConditions />} />
+          <Route path="/authorization" element={<AuthorizationPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>
         <Footer />
         <ScrollToTopButton />
