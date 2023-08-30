@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import MainMenu from './menu/Menu';
 import MainBanner from './banner/Banner';
 import MainPartners from './partners/Partners';
 import MainCompanies from './companies/Companies';
@@ -11,9 +10,8 @@ import css from './MainPage.module.css';
 const MainPage = () => {
   const [modalActive, setModalActive] = useState(true);
   return (
-    <div className={css["main-app"]}>
-      <div>
-        <MainMenu />
+    <div className="main-app">
+      <div className="main-app-header">
         <MainBanner />
         <div className={css["main-app-body"]}>
           <MainPartners />

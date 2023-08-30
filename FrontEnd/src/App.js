@@ -18,6 +18,7 @@ import TermsAndConditions from './components/terms-and-conditions-app/terms_cond
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import MainPage from './components/landing-page/MainPage';
 
+
 function App() {
   return (
     <BrowserRouter>
