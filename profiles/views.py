@@ -105,23 +105,9 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
 
 class ViewedCompanyList(ListCreateAPIView):
-    queryset = ViewedCompany.objects.all()
     serializer_class = ViewedCompanySerializer
     permission_classes = (IsAuthenticated, )
 
-    def list(self, request, *args, **kwargs):
+    def get_queryset(self):
         user_id = self.request.user.id
-        viewed_companies = ViewedCompany.objects.filter(user=user_id)
-        serializer = self.serializer_class(viewed_companies, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def create(self, request, *args, **kwargs):
-        user_id = self.request.user.id
-        company_id = request.data.get("profile_id")
-        company = get_object_or_404(Profile, profile_id=company_id)
-        if company.person.pk != user_id:
-            serializer = self.serializer_class(data={"user": user_id, "company": company_id})
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return ViewedCompany.objects.filter(user=user_id)
