@@ -17,6 +17,7 @@ import Header from './components/HeaderFooter/header/Header';
 import PrivacyPolicy from './components/PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
 import ScrollToTopButton from './components/PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from './components/terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
+import MainPage from "./components/landing-page/MainPage";
 
 function App() {
   const [modalActive, setModalActive] = useState(true);

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import MainMenu from './menu/Menu';
 import MainBanner from './banner/Banner';
 import MainPartners from './partners/Partners';
 import MainCompanies from './companies/Companies';
@@ -12,7 +11,6 @@ const MainPage = () => {
   return (
     <div className="main-app">
       <div className="main-app-header">
-        <MainMenu />
         <MainBanner />
         <div className="main-app-body">
           <MainPartners />
