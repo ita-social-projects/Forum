@@ -44,8 +44,6 @@ class SavedCompanySerializer(serializers.ModelSerializer):
 
 
 class ViewedCompanySerializer(serializers.ModelSerializer):
-    # profile_id = ProfileSerializer()
-    # user_id =
     class Meta:
         model = ViewedCompany
-        fields = "__all__"
+        fields = ('id', 'user', 'company', 'date')
