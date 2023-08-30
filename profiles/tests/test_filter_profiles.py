@@ -13,7 +13,7 @@ class TestProfileListAPIView(APITestCase):
         test_categories = []
 
         # setup activities
-        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORECA"]
+        HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
         for i in range(len(HEADER_ACTIVITIES)):
             test_activity = Activity.objects.create(
                 name=HEADER_ACTIVITIES[i]
@@ -66,8 +66,6 @@ class TestProfileListAPIView(APITestCase):
             test_persons.append(test_person)
 
     def setUp(self) -> None:
-        self.base_url = "/api/profiles/"
-
         # login user & get token
         self.token1 = self.client.post(
             path="/api/auth/token/login/",
@@ -83,7 +81,7 @@ class TestProfileListAPIView(APITestCase):
         self.assertEqual(12, len(response.data))
 
     def test_get_all_profiles_authorized_filter_companies(self):
-        response = self.client.get(f"/api/profiles/?company_type=company")
+        response = self.client.get("/api/profiles/?company_type=company")
         self.assertEqual(200, response.status_code)
         self.assertEqual(6, len(response.data))
         self.assertTrue(all(
@@ -91,7 +89,7 @@ class TestProfileListAPIView(APITestCase):
             for i in range(len(response.data))))
 
     def test_get_all_profiles_authorized_filter_startups(self):
-        response = self.client.get(f"/api/profiles/?company_type=startup")
+        response = self.client.get("/api/profiles/?company_type=startup")
         self.assertEqual(200, response.status_code)
         self.assertEqual(6, len(response.data))
         self.assertTrue(all(
@@ -99,7 +97,7 @@ class TestProfileListAPIView(APITestCase):
             for i in range(len(response.data))))
 
     def test_get_all_profiles_authorized_filter_activity_producer(self):
-        response = self.client.get(f"/api/profiles/?activity_type=producer")
+        response = self.client.get("/api/profiles/?activity_type=producer")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
@@ -108,7 +106,7 @@ class TestProfileListAPIView(APITestCase):
         self.assertEqual(len(producer_type), filtered_len)
 
     def test_get_all_profiles_authorized_filter_activity_importer(self):
-        response = self.client.get(f"/api/profiles/?activity_type=importer")
+        response = self.client.get("/api/profiles/?activity_type=importer")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
@@ -117,7 +115,7 @@ class TestProfileListAPIView(APITestCase):
         self.assertEqual(len(importer_type), filtered_len)
 
     def test_get_all_profiles_authorized_filter_activity_retail(self):
-        response = self.client.get(f"/api/profiles/?activity_type=retail")
+        response = self.client.get("/api/profiles/?activity_type=retail")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
@@ -125,14 +123,14 @@ class TestProfileListAPIView(APITestCase):
                        3 in response.data[i]["comp_activity"]]
         self.assertEqual(len(retail_type), filtered_len)
 
-    def test_get_all_profiles_authorized_filter_activity_HORECA(self):
-        response = self.client.get(f"/api/profiles/?activity_type=HORECA")
+    def test_get_all_profiles_authorized_filter_activity_horeca(self):
+        response = self.client.get("/api/profiles/?activity_type=horeca")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        HORECA_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+        horeca_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
                        4 in response.data[i]["comp_activity"]]
-        self.assertEqual(len(HORECA_type), filtered_len)
+        self.assertEqual(len(horeca_type), filtered_len)
 
     def test_get_all_profiles_unauthorized(self):
         self.client.logout()
@@ -141,7 +139,7 @@ class TestProfileListAPIView(APITestCase):
 
     def test_get_all_profiles_unauthorized_filter_companies(self):
         self.client.logout()
-        response = self.client.get(f"/api/profiles/?company_type=company")
+        response = self.client.get("/api/profiles/?company_type=company")
         self.assertEqual(200, response.status_code)
         self.assertEqual(6, len(response.data))
         self.assertTrue(all(
@@ -150,7 +148,7 @@ class TestProfileListAPIView(APITestCase):
 
     def test_get_all_profiles_unauthorized_filter_startups(self):
         self.client.logout()
-        response = self.client.get(f"/api/profiles/?company_type=startup")
+        response = self.client.get("/api/profiles/?company_type=startup")
         self.assertEqual(200, response.status_code)
         self.assertEqual(6, len(response.data))
         self.assertTrue(all(
@@ -159,7 +157,7 @@ class TestProfileListAPIView(APITestCase):
 
     def test_get_all_profiles_unauthorized_filter_activity_producer(self):
         self.client.logout()
-        response = self.client.get(f"/api/profiles/?activity_type=producer")
+        response = self.client.get("/api/profiles/?activity_type=producer")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
@@ -169,7 +167,7 @@ class TestProfileListAPIView(APITestCase):
 
     def test_get_all_profiles_unauthorized_filter_activity_importer(self):
         self.client.logout()
-        response = self.client.get(f"/api/profiles/?activity_type=importer")
+        response = self.client.get("/api/profiles/?activity_type=importer")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
@@ -179,7 +177,7 @@ class TestProfileListAPIView(APITestCase):
 
     def test_get_all_profiles_unauthorized_filter_activity_retail(self):
         self.client.logout()
-        response = self.client.get(f"/api/profiles/?activity_type=retail")
+        response = self.client.get("/api/profiles/?activity_type=retail")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
@@ -187,12 +185,12 @@ class TestProfileListAPIView(APITestCase):
                        3 in response.data[i]["comp_activity"]]
         self.assertEqual(len(retail_type), filtered_len)
 
-    def test_get_all_profiles_unauthorized_filter_activity_HORECA(self):
+    def test_get_all_profiles_unauthorized_filter_activity_horeca(self):
         self.client.logout()
-        response = self.client.get(f"/api/profiles/?activity_type=HORECA")
+        response = self.client.get("/api/profiles/?activity_type=horeca")
         filtered_len = len(response.data)
         self.assertEqual(200, response.status_code)
         response = self.client.get("/api/profiles/")
-        HORECA_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
+        horeca_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
                        4 in response.data[i]["comp_activity"]]
-        self.assertEqual(len(HORECA_type), filtered_len)
+        self.assertEqual(len(horeca_type), filtered_len)
