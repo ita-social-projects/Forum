@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase, APIClient
 from authentication.models import CustomUser
 from profiles.models import Profile
-from utils.dump_response import dump # noqa
+from utils.dump_response import dump  # noqa
 
 
 class TestViewedCompanyAPI(APITestCase):
@@ -44,31 +44,54 @@ class TestViewedCompanyAPI(APITestCase):
         )
 
     def test_create_viewed_company_unauthorized(self):
-        response = self.client.post("/api/viewed-list/", data={"profile_id": self.test_profile.profile_id})
+        response = self.client.post(
+            path="/api/viewed-list/",
+            data={
+                "company": self.test_profile.profile_id
+            })
         self.assertEqual(401, response.status_code)
 
     def test_create_viewed_company_authorized(self):
         self.client.force_authenticate(self.test_person)
-        response = self.client.post("/api/viewed-list/", data={"profile_id": self.test_profile2.profile_id})
+        response = self.client.post(
+            path="/api/viewed-list/",
+            data={
+                "user": self.test_person.id,
+                "company": self.test_profile2.profile_id
+            })
         self.assertEqual(201, response.status_code)
         self.assertEqual(self.test_person.id, response.data["user"])
         self.assertEqual(self.test_profile2.profile_id, response.data["company"])
 
     def test_create_viewed_company_authorized_own_company(self):
         self.client.force_authenticate(self.test_person)
-        response = self.client.post("/api/viewed-list/", data={"profile_id": self.test_profile.profile_id})
+        response = self.client.post(
+            path="/api/viewed-list/",
+            data={
+                "user": self.test_person.id,
+                "company": self.test_profile.profile_id
+            })
         self.assertEqual(400, response.status_code)
 
     def test_get_viewed_companies_unauthorized(self):
-        response = self.client.post("/api/viewed-list/")
+        response = self.client.post(path="/api/viewed-list/")
         self.assertEqual(401, response.status_code)
 
     def test_get_viewed_companies_authorized(self):
-        from datetime import datetime
         self.client.force_authenticate(self.test_person)
         # add 2 companies to viewed
-        self.client.post("/api/viewed-list/", data={"profile_id": self.test_profile2.profile_id})
-        self.client.post("/api/viewed-list/", data={"profile_id": self.test_profile3.profile_id})
+        self.client.post(
+            path="/api/viewed-list/",
+            data={
+                "user": self.test_person.id,
+                "company": self.test_profile2.profile_id
+            })
+        self.client.post(
+            path="/api/viewed-list/",
+            data={
+                "user": self.test_person.id,
+                "company": self.test_profile3.profile_id
+            })
         response = self.client.get("/api/viewed-list/")
 
         self.assertEqual(200, response.status_code)
