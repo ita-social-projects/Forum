@@ -66,7 +66,6 @@ class TestProfileListAPIView(APITestCase):
             test_persons.append(test_person)
 
     def setUp(self) -> None:
-        self.client = APIClient()
         self.base_url = "/api/profiles/"
 
         # login user & get token
@@ -77,9 +76,6 @@ class TestProfileListAPIView(APITestCase):
                 "password": "Testing01"
             }).data["auth_token"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token1}")
-
-    def tearDown(self) -> None:
-        self.client.logout()
 
     def test_get_all_profiles_authorized_no_filters(self):
         response = self.client.get("/api/profiles/")
