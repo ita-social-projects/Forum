@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 User = get_user_model()
 
 
-class UserSerializer(UserSerializer):
+class AdminUserSerializer(UserSerializer):
 
     phone_number = SerializerMethodField('get_phone_number')
 
