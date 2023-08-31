@@ -8,8 +8,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPageRectangle from './components/main-page-rectangle/MainPageRectangle';
-import './AppMain.css';
 import AuthorizationPage from './components/authorization/AuthorizationPage';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 import Footer from './components/HeaderFooter/footer/Footer';
