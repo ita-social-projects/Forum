@@ -1,5 +1,7 @@
 import styles from "./SignUpForm.module.css";
 import { SignUpFormContentComponent } from "./signup-form/SignUpFormContent";
+import { Link } from "react-router-dom"
+
 
 export function SignUpFormComponent() {
   return (
@@ -8,9 +10,9 @@ export function SignUpFormComponent() {
       <SignUpFormContentComponent />
       <div className={styles["form__footer"]}>
         <div className={styles["button-container"]}>
-          <button className={styles["main-page__button"]} type="button">
-            Головна
-          </button>
+          <Link className={styles["main-page__button"]} to="/">
+            Увійти
+            </Link>
           <button
             form="signUpForm"
             className={styles["sign-up__button"]}
