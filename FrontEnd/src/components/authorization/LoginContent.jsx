@@ -1,6 +1,6 @@
 import { useState } from "react";
 import validator from "validator";
-
+import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";
 import classes from "./LoginContent.module.css";
 
@@ -129,14 +129,14 @@ const LoginContent = (props) => {
                     onChange={passwordChangeHandler}
                   />
                   <span className={classes["password-visibility"]} onClick={passwordVisisbilityHandler}>
-                    <EyeInvisible />
+                    {typePassword === "password" ? <EyeInvisible /> : <EyeVisible />}
                   </span>
                 </div>
               </div>
               <span className={classes["error-message"]}>
                     {error.errorType === "wrong-data" && error.message}
                     {error.errorType === "required" && enteredPassword === "" && error.message}
-                </span>
+              </span>
             </div>
             <a href="/" className={classes["forget-password"]}>Забули пароль?</a>
           </div>
