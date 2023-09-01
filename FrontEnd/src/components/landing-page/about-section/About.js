@@ -11,7 +11,7 @@ const MainAboutSection = () => {
           <div className="about-us-section-content">
             <div className="about-us-rectangle">
             <div className="about-us-section-content__field"/>
-            <div className="about-us-section-content__text">
+            <div className="about-us-section-content__text" id="about-us">
               <div className="about-us-section-content__header-text">ХТО МИ</div>
               <div className="about-us-section-content__smart-text">Це перший форум Західної України, цілями якого є популяризація українського виробника та представлення стартапів для розвитку галузі «Smart Craft&Food»</div>
               <div className="about-us-section-content__smart-text">Це перший форум Західної України, цілями якого є популяризація українського виробника та представлення стартапів для розвитку галузі «Smart Craft&Food»</div>
