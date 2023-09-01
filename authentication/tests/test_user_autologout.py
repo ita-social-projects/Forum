@@ -67,5 +67,4 @@ class UserLogoutAPITests(APITestCase):
             }, 
                 response.json()
         )
-
-  
+ 

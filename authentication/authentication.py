@@ -17,3 +17,4 @@ class DjoserTokenAuthentication(TokenAuthentication):
             token.delete()
             raise AuthenticationFailed("Your session has expired. Please login again.")
         return token.user, token
+    
