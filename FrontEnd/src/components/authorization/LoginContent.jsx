@@ -1,19 +1,17 @@
 import { useState } from "react";
 import validator from "validator";
-
+import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";
 import classes from "./LoginContent.module.css";
 
 const LoginContent = (props) => {
-  const [typePassword, setTypePassword] = useState("password")
+  const [showPassword, setShowPassword] = useState(false)
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [error, setError] = useState("");
 
-  const passwordVisisbilityHandler = () => {
-    if (typePassword === "password") {
-      setTypePassword("text")
-    } else setTypePassword("password")
+  const togglePassword = () => {
+    setShowPassword(!showPassword)
   };
 
   const userValidationHandler = (event) => {
@@ -122,21 +120,21 @@ const LoginContent = (props) => {
                 <div className={classes["login-content__password__wrapper"]}>
                   <input
                     id="password"
-                    type={typePassword}
+                    type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     placeholder="Пароль"
                     value={enteredPassword}
                     onChange={passwordChangeHandler}
                   />
-                  <span className={classes["password-visibility"]} onClick={passwordVisisbilityHandler}>
-                    <EyeInvisible />
+                  <span className={classes["password-visibility"]} onClick={togglePassword}>
+                    {!showPassword ? <EyeInvisible /> : <EyeVisible />}
                   </span>
                 </div>
               </div>
               <span className={classes["error-message"]}>
                     {error.errorType === "wrong-data" && error.message}
                     {error.errorType === "required" && enteredPassword === "" && error.message}
-                </span>
+              </span>
             </div>
             <a href="/" className={classes["forget-password"]}>Забули пароль?</a>
           </div>

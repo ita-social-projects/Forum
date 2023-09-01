@@ -38,12 +38,13 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Regular */
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 142.857% */
   letter-spacing: -0.14px;
+  text-align: left;
 }
 
 .signup-form__label--password {
@@ -54,7 +55,8 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Regular */
-  font-family: Inter;
+  text-align: left;
+  font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -95,6 +97,35 @@
   background: var(--main-white, #fff);
 }
 
+.signup-form__field__password {
+  display: flex;
+  height: 22px;
+  padding: 5px 12px;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+  border-radius: 2px;
+  border: 1px solid var(--neutral-5, #D9D9D9);
+  background: var(--main-white, #FFF);
+}
+
+.signup-form__input__password {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 4px;
+  flex: 1 0 0;
+  border: none;
+}
+
+.signup-form__input__password:focus {
+  outline: none;
+} 
+
 .signup-form__input {
   display: flex;
   height: 22px;
@@ -108,7 +139,7 @@
   color: var(--character-title-85, rgba(0, 0, 0, 0.85));
 
   /* Body/regular */
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -128,7 +159,7 @@
   color: var(--red-red-100, #f34444);
 
   /* Body/regular */
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -167,7 +198,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Regular */
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -178,7 +209,7 @@
 .rules__line--link {
   color: #00a3cf;
   font-feature-settings: "calt" off;
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -210,7 +241,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Semi bold */
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -257,12 +288,13 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Regular */
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 142.857% */
   letter-spacing: -0.14px;
+  text-align: left;
 }
 
 .representative__error {
@@ -271,7 +303,7 @@
   color: var(--red-red-100, #f34444);
 
   /* Body/regular */
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -308,4 +340,8 @@ input[type="checkbox"]:checked::before {
   position: relative;
   bottom: 3px;
   color: #f0f0f0;
+}
+
+.password-visibility {
+  cursor: pointer;
 }
