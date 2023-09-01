@@ -3,7 +3,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authtoken.models import Token
 
-from forum import settings
+from django.conf import settings
 
 
 class DjoserTokenAuthentication(TokenAuthentication):

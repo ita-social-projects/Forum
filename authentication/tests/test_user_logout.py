@@ -11,10 +11,9 @@ class UserLogoutAPITests(APITestCase):
             password="Test1234",
             person_name="Test",
             person_surname="Test",
+            is_active = True
         )
-        self.test_user.is_active = True
-        self.test_user.save()
-
+       
     def test_logout_successful(self):
         self.test_user_token = self.client.post(
             "/api/auth/token/login/",

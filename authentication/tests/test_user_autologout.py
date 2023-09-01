@@ -14,9 +14,8 @@ class UserLogoutAPITests(APITestCase):
             password="Test1234",
             person_name="Test",
             person_surname="Test",
+            is_active = True
         )
-        self.test_user.is_active = True
-        self.test_user.save()
 
     def test_user_autologout_after_14_days(self):
         self.test_user_token = self.client.post(

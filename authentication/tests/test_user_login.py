@@ -12,9 +12,8 @@ class UserLoginAPITests(APITestCase):
             password="Test1234",
             person_name="Test",
             person_surname="Test",
+            is_active = True
         )
-        self.test_user.is_active = True
-        self.test_user.save()
 
     def test_login_successful(self):
         response = self.client.post(
