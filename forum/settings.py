@@ -130,12 +130,12 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'authentication.authentication.ExpiringTokenAuthentication',
+        'authentication.authentication.DjoserTokenAuthentication',
 
     ),
 }
 
-TOKEN_EXPIRE_TIME = timedelta(days=14)
+TOKEN_EXPIRATION_TIME = timedelta(days=14)
 
 # SMTP
 EMAIL_BACKEND = config('EMAIL_BACKEND')

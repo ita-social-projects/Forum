@@ -6,17 +6,14 @@ from rest_framework.authtoken.models import Token
 from forum import settings
 
 
-class ExpiringTokenAuthentication(TokenAuthentication):
+class DjoserTokenAuthentication(TokenAuthentication):
     def authenticate_credentials(self, key):
         try:
             token = Token.objects.get(key=key)
         except Token.DoesNotExist:
             raise AuthenticationFailed("Invalid token")
-        
-        if not token.user.is_active:
-            raise AuthenticationFailed("User doesn't exist") 
 
-        if token.created < now() - settings.TOKEN_EXPIRE_TIME:
+        if token.created <= now() - settings.TOKEN_EXPIRATION_TIME:
             token.delete()
             raise AuthenticationFailed("Your session has expired. Please login again.")
         return token.user, token
