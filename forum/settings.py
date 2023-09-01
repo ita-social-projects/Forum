@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 from decouple import config
 
@@ -129,10 +130,12 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'authentication.authentication.DjoserTokenAuthentication',
 
     ),
 }
+
+TOKEN_EXPIRATION_TIME = timedelta(days=14)
 
 # SMTP
 EMAIL_BACKEND = config('EMAIL_BACKEND')

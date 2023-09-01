@@ -12,9 +12,8 @@ class UserSelfAPITests(APITestCase):
             password="Test1234",
             person_name="Test",
             person_surname="Test",
+            is_active = True
         )
-        self.test_user.is_active = True
-        self.test_user.save()
 
     def test_user_retreive_data_successful(self):
         self.client.force_authenticate(self.test_user)
