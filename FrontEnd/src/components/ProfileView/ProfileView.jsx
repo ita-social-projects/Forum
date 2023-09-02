@@ -1,6 +1,7 @@
-import React from 'react';
 import classes from "./ProfileView.module.css";
 import { useLocation } from 'react-router-dom'
+import ProfileNavBar from "./ProfileNavBar/ProfileNavBar";
+import ProfileMenu from "./ProfileMenu/ProfileMenu";
 
 
 const ProfileView = () => {
@@ -8,7 +9,7 @@ const ProfileView = () => {
   const { data } = location.state
   const { category, name, address, logoSrc, photoSrc } = data;
 
-  const isProfileFilled = false;
+  const isProfileFilled = true;
   return (
     <div>
         {photoSrc ? (
@@ -71,7 +72,12 @@ const ProfileView = () => {
                 </div>
             </div>
         {isProfileFilled ? (
-            <div>Profile view in progress...</div>
+            <div className={classes["profile-view-title__empty"]}>
+                <div className={classes["profile-view-title-block__empty"]}>
+                    <ProfileNavBar />
+                </div>
+                <ProfileMenu />
+            </div>
         ) : (
             <div className={classes["profile-view-info__empty"]}>
                 <div className={classes["profile-view-info-content__empty"]}>
