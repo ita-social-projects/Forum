@@ -6,9 +6,11 @@ const AlertMessage = (props) => {
         props.setErrorMessage("")
     };
     
-  return (
+   return (
     <div className={classes["alert-message"]}>
-      <p className={classes["alert-message__content"]}>{props.errorMessage}</p>
+      <p className={classes["alert-message__content"]}>
+        {props.errorMessage.split('\n').map(line => (<p>{line}</p>))}
+      </p>
       <button className={classes["alert-message__icon"]} onClick={alertMessageHandler}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
