@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /*text-align: center; This style breaks all text on the main page. I propose to remove this*/
   /*for footer correct work*/
   /* min-height: 100vh;
   flex-direction: column;
