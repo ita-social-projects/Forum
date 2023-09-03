@@ -23,9 +23,14 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
         serializer = AdminUserSerializer(user)
         return Response({'User': serializer.data})
 
-    def update(self, request, pk):
+    def update(self, request, pk, **kwargs):
         user = CustomUser.objects.get(pk=pk)
-        serializer = AdminUserSerializer(user, data=request.data)
+
+        if self.request.method == 'PUT':
+            serializer = AdminUserSerializer(user, data=request.data)
+        elif self.request.method == 'PATCH':
+            serializer = AdminUserSerializer(user, data=request.data, partial=True)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
