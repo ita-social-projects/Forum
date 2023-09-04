@@ -211,7 +211,8 @@
 }
 
 
-.login-footer-buttons__signin {
+.login-footer-buttons__signin,
+.login-footer-buttons__signin__disabled {
   display: flex;
   padding: 5px 15px;
   justify-content: center;
@@ -232,6 +233,12 @@
   font-weight: 600;
   line-height: 20px;
   letter-spacing: -0.16px;
+}
+
+.login-footer-buttons__signin__disabled
+ {
+  opacity: 50%;
+  cursor: default;
 }
 
 .error-message {
