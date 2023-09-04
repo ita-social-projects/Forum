@@ -3,8 +3,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import SavedCompany, Profile
-from .serializers import SavedCompanySerializer, ProfileSerializer
+from .models import SavedCompany, Profile, ViewedCompany
+from .serializers import SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -26,7 +26,8 @@ class SavedCompaniesListCreate(ListCreateAPIView):
 
         # Check if the company is already in the user's saved list
         if SavedCompany.objects.filter(user=user, company_id=pk).exists():
-            return Response({'error': 'Company already in saved list'}, status=status.HTTP_400_BAD_REQUEST)
+            saved_company_destroyer = SavedCompaniesDestroy()
+            return saved_company_destroyer.destroy(request, pk)
 
         serializer = SavedCompanySerializer(data={'company': pk, 'user': user.id})
         if serializer.is_valid():
@@ -61,7 +62,7 @@ class ProfileList(ListCreateAPIView):
         user_id = self.request.user.id
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
-        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORACE"]
+        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORECA"]
 
         if company_type == "startup":
             return Profile.objects.filter(comp_is_startup=True)
@@ -70,11 +71,13 @@ class ProfileList(ListCreateAPIView):
         if activity_type in HEADER_ACTIVITIES:
             return Profile.objects.filter(comp_activity__name=activity_type)
 
-        profile_exists = Profile.objects.filter(person_id=user_id).exists()
-        if self.request.method == "POST" and profile_exists:
-            return Profile.objects.filter(person_id=user_id)
-
         return Profile.objects.filter(is_deleted=False)
+
+    def create(self, request):
+        profile = Profile.objects.filter(person_id=self.request.user)
+        if profile.exists():
+            return Response(status=409)
+        return super().create(request)
 
 
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
@@ -84,12 +87,25 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated,)
 
-    def get_queryset(self):
+    def get_queryset(self, pk=None):
         user_id = self.request.user.id
         if self.request.method == "DELETE":
             return Profile.objects.filter(person_id=user_id, is_deleted=False)
         if self.request.method == 'GET':
             return Profile.objects.filter(is_deleted=False)
+        if self.request.method in ['PUT', 'PATCH']:
+            return Profile.objects.filter(profile_id=pk)
+
+    def update(self, request, pk=None, **kwargs):
+        profile = get_object_or_404(self.get_queryset(pk=pk))
+        if self.request.method == 'PUT':
+            serializer = ProfileSerializer(profile, data=request.data)
+        elif self.request.method == 'PATCH':
+            serializer = ProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
         profile = get_object_or_404(self.get_queryset(), pk=pk)
@@ -102,3 +118,12 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile.save()
         serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+
+
+class ViewedCompanyList(ListCreateAPIView):
+    serializer_class = ViewedCompanySerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        return ViewedCompany.objects.filter(user=user_id)

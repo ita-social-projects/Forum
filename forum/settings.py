@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 from decouple import config
 
@@ -42,8 +43,8 @@ INSTALLED_APPS = [
     'djoser',
     'authentication',
     'profiles',
-    'search',
     'administration',
+    'search',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'forum.wsgi.application'
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -106,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -117,7 +116,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -133,10 +131,12 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'authentication.authentication.DjoserTokenAuthentication',
 
     ),
 }
+
+TOKEN_EXPIRATION_TIME = timedelta(days=14)
 
 # SMTP
 EMAIL_BACKEND = config('EMAIL_BACKEND')
@@ -165,8 +165,22 @@ DJOSER = {
     }
 }
 
-# if you use local_settings file, to do not change settings.py file
 
+def running_tests():
+    import sys
+    """ Check if tests are executed """
+    return sys.argv[1:2] == ['test']
+
+
+if running_tests():
+    # For tests execution, the fastest password hasher is used
+    # (may increase execution speed ×10 and more)
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+    )
+
+
+# if you use local_settings file, to do not change settings.py file
 try:
     from .local_settings import *
 except ImportError:

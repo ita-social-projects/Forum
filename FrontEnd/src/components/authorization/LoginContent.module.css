@@ -35,7 +35,6 @@
   padding: 24px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
   align-self: stretch;
 }
 
@@ -53,7 +52,6 @@
   padding-bottom: 24px;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 8px;
 }
 
 .login-content__item label {
@@ -130,7 +128,6 @@
   display: flex;
   padding: 1px 0px;
   align-items: flex-start;
-  gap: 130px;
   flex: 1 0 0;
 }
 
@@ -165,7 +162,7 @@
   outline: none;
 }
 
-.loginfooter {
+.login-footer {
   display: flex;
   padding: 10px 16px;
   justify-content: flex-end;
@@ -176,22 +173,22 @@
   box-shadow: 0px 1px 0px 0px #f0f0f0 inset;
 }
 
-.loginfooter-buttons {
+.login-footer-buttons {
   display: flex;
   align-items: flex-start;
   gap: 12px;
 }
 
-.loginfooter-buttons button:focus,
-.loginfooter-buttons a:focus {
+.login-footer-buttons button:focus,
+.login-footer-buttons a:focus {
   outline: none;
 }
 
-.loginfooter-buttons a {
+.login-footer-buttons a {
   text-decoration: none;
 }
 
-.loginfooter-buttons__main {
+.login-footer-buttons__main {
   display: flex;
   padding: 5px 15px;
   justify-content: center;
@@ -214,7 +211,7 @@
 }
 
 
-.loginfooter-buttons__signin {
+.login-footer-buttons__signin {
   display: flex;
   padding: 5px 15px;
   justify-content: center;
@@ -239,9 +236,8 @@
 
 .error-message {
   position: absolute;
-  margin-top: 30px;
+  margin-top: 62px;
   display: flex;
-
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
@@ -267,4 +263,25 @@
   font-style: normal;
   font-weight: 400;
   line-height: 22.001px;
+}
+
+.forget-password {
+  margin: 0;
+  text-decoration: none;
+  color: var(--accent-accelerate-1500, #00A3CF);
+  font-feature-settings: 'calt' off;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.14px;
+}
+
+.forget-password:focus {
+  outline: none;
+}
+
+.password-visibility {
+  cursor: pointer;
 }

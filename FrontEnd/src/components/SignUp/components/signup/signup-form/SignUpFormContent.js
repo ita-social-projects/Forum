@@ -1,7 +1,21 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import EyeInvisible from "../../../../authorization/EyeInvisible";
+import EyeVisible from "../../../../authorization/EyeVisible";
 import styles from "./SignUpFormContent.module.css";
 
 export function SignUpFormContentComponent() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  
+  const togglePassword = () => {
+    setShowPassword(!showPassword)
+  };
+
+  const toggleConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword)
+  };
+  
   const errorMessageTemplates = {
     required: "Обов’язкове поле",
     email: "Email не відповідає вимогам",
@@ -100,11 +114,11 @@ export function SignUpFormContentComponent() {
                 </label>
               </div>
             </div>
-            <div className={styles["signup-form__field"]}>
+            <div className={styles["signup-form__field__password"]}>
               <input
-                className={styles["signup-form__input"]}
+                className={styles["signup-form__input__password"]}
                 placeholder="Пароль"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 {...register("password", {
                   required: errorMessageTemplates.required,
                   pattern: {
@@ -113,6 +127,9 @@ export function SignUpFormContentComponent() {
                   },
                 })}
               />
+              <span className={styles["password-visibility"]} onClick={togglePassword}>
+                {!showPassword ? <EyeInvisible /> : <EyeVisible />}
+              </span>
             </div>
             <div className={styles["signup-form__error"]}>
               {errors.password && errors.password.message}
@@ -132,11 +149,11 @@ export function SignUpFormContentComponent() {
                 </label>
               </div>
             </div>
-            <div className={styles["signup-form__field"]}>
+            <div className={styles["signup-form__field__password"]}>
               <input
-                className={styles["signup-form__input"]}
+                className={styles["signup-form__input__password"]}
                 placeholder="Пароль"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 {...register("confirmPassword", {
                   required: errorMessageTemplates.required,
                   validate: (value) =>
@@ -144,6 +161,9 @@ export function SignUpFormContentComponent() {
                     errorMessageTemplates.confirmPassword,
                 })}
               />
+              <span className={styles["password-visibility"]} onClick={toggleConfirmPassword}>
+                {!showConfirmPassword ? <EyeInvisible /> : <EyeVisible />}
+              </span>
             </div>
             <div className={styles["signup-form__error"]}>
               {errors.confirmPassword && errors.confirmPassword.message}

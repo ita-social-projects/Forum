@@ -1,5 +1,5 @@
 import css from "./Menu.module.css"
-import { Link } from 'react-router-dom'
+import { HashLink } from 'react-router-hash-link';
 
 const MENU_LINKS = [
     {
@@ -10,17 +10,17 @@ const MENU_LINKS = [
     {
         id: "m1",
         title: "Компанії",
-        link: "#"
+        link: "/"
     },
     {
         id: "m2",
         title: "Стартапи",
-        link: "#"
+        link: "/"
     },
     {
         id: "m3",
         title: "Про нас",
-        link: "#"
+        link: "/#about-us"
     },
 ]
 
@@ -29,7 +29,7 @@ function Menu () {
         <div className={css["header-menu-section"]}>
             {MENU_LINKS.map( (element) => (
                 <div className={css["header-menu-element"]} key={element.id}>
-                    <Link className={css["header-menu-element__text"]} to={element.link}>{element.title}</Link>
+                    <HashLink className={css["header-menu-element__text"]} to={element.link}>{element.title}</HashLink>
                 </div>
             ))}
         </div>

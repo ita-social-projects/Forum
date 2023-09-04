@@ -3,14 +3,15 @@ from PIL import Image
 
 
 def validate_image_format(image: Image):
-    valid_formats = ["png", "jpeg", "jpg"]
+    valid_formats = ["PNG", "JPEG"]
     img = Image.open(image)
-    format_ = img.format.lower()
+    format_ = img.format
     if format_ not in valid_formats:
         raise ValidationError("Unsupported image format. Only PNG and JPEG are allowed.")
 
 
 def validate_image_size(image: Image):
-    max_size = 50 * 1024 * 1024  # 50MB in bytes
-    if image.size > max_size:
+    import sys
+    max_size = sys.getsizeof(image)
+    if max_size > 50:
         raise ValidationError("Image size exceeds the maximum allowed (50MB).")
