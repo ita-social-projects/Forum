@@ -15,7 +15,6 @@ const LoginContent = (props) => {
   const errorMessageTemplates = {
     required: "Обов’язкове поле",
     email: "Формат електронної пошти некоректний",
-    unspecified: "Електронна пошта чи пароль вказані некоректно",
   };
 
   const {
