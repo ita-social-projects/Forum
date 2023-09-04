@@ -9,7 +9,7 @@ const AlertMessage = (props) => {
    return (
     <div className={classes["alert-message"]}>
       <p className={classes["alert-message__content"]}>
-        {props.errorMessage.split('\n').map(line => (<p>{line}</p>))}
+        {props.errorMessage.split('\n').map((line) => (<span key={line}>{line}</span>))}
       </p>
       <button className={classes["alert-message__icon"]} onClick={alertMessageHandler}>
         <svg
