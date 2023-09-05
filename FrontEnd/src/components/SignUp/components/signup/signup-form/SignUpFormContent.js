@@ -1,8 +1,28 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from 'axios';
 import EyeInvisible from "../../../../authorization/EyeInvisible";
 import EyeVisible from "../../../../authorization/EyeVisible";
 import styles from "./SignUpFormContent.module.css";
+
+axios
+      .post('http://localhost:8000/api/auth/users/', {
+        person_email: 'testcase@email.com',
+        password: 'pASSWord123',
+        person_name: 'Jane',
+        person_surname: 'Doe',
+        company: {"comp_registered": "true","comp_is_startup": "false"},
+        comp_name: 'Test1',
+        re_password: 'pASSWord123'},
+        {withCredentials: true}
+        )
+      .then(function (response) {
+        console.log(response.data);
+        console.log(response.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
 export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false)

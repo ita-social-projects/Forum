@@ -1,6 +1,6 @@
 import css from './ProfileContent.module.css';
 import { Link, NavLink, Route, Routes, Navigate } from 'react-router-dom';
-
+import axios from 'axios';
 import AdditionalInfo from '../FormComponents/AdditionalInfo';
 import ContactsInfo from '../FormComponents/ContactsInfo';
 import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
@@ -9,6 +9,22 @@ import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
 import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
+
+if(sessionStorage.getItem("isAuthenticated")){
+const token  = "Token " + sessionStorage.getItem('auth_token');
+axios
+  .get('http://localhost:8000/api/getuserid/',
+  {withCredentials: true,
+  headers: {
+        'Authorization': token}})
+  .then(function (response) {
+    console.log(response.data);
+    console.log(response.status);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}
 
 const INFOLINKS = [
     {

@@ -23,7 +23,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header isAuthorized={true}></Header>
+        <Header isAuthorized={sessionStorage.getItem("isAuthenticated")}></Header>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/profile/*" element={<ProfilePage />} />
