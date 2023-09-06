@@ -9,4 +9,3 @@
 __pycache__/
 /authentication/migrations/
 /FrontEnd/node_modules
-/FrontEnd/package-lock.json

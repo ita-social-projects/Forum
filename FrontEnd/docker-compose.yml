@@ -1,12 +1,11 @@
-version: node:14 AS development
+version: "3.8"
 
 services:
-  frontend:
+  app:
     container_name: frontend
-    build: .
+    image: frontend
     ports:
-      - 3000:3000
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    command: npm start
+      - 80:80
+    build:
+      context: .
+      target: production

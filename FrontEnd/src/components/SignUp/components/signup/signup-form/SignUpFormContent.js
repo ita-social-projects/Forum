@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import EyeInvisible from "../../../../authorization/EyeInvisible";
 import EyeVisible from "../../../../authorization/EyeVisible";
 import styles from "./SignUpFormContent.module.css";
 
-export function SignUpFormContentComponent() {
+export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   
@@ -21,7 +21,6 @@ export function SignUpFormContentComponent() {
     email: "Email не відповідає вимогам",
     password: "Пароль не відповідає вимогам",
     confirmPassword: "Паролі не збігаються",
-    checkboxes: "Будь ласка, оберіть кого ви представляєте",
   };
 
   const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -32,9 +31,37 @@ export function SignUpFormContentComponent() {
     register,
     handleSubmit,
     watch,
-    getValues,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "all"
+  });
+
+  const [isChecked, setIsChecked] = useState({
+    startup: false,
+    company: false,
+  });
+
+  const onChangeCheckbox = (event) => {
+    if (event.target.name === "startup") {
+      setIsChecked({
+        startup: true,
+        company: false,
+      });
+    } else if (event.target.name === "company") {
+      setIsChecked({
+        startup: false,
+        company: true,
+      });
+    }
+  };
+
+  const { setIsValid } = props;
+
+  useEffect(() => {
+    const companyOrStartup = isChecked.company || isChecked.startup;
+    const formIsValid = companyOrStartup && isValid
+    setIsValid(formIsValid);
+    }, [isValid, setIsValid, isChecked.company, isChecked.startup])
 
   const onSubmit = (event) => {
     // TODO - add submission
@@ -157,8 +184,8 @@ export function SignUpFormContentComponent() {
                 {...register("confirmPassword", {
                   required: errorMessageTemplates.required,
                   validate: (value) =>
-                    watch("password") !== value &&
-                    errorMessageTemplates.confirmPassword,
+                    watch("password") !== value ?
+                    errorMessageTemplates.confirmPassword : null,
                 })}
               />
               <span className={styles["password-visibility"]} onClick={toggleConfirmPassword}>
@@ -233,11 +260,9 @@ export function SignUpFormContentComponent() {
                     >
                       <input
                         type="checkbox"
-                        {...register("company", {
-                          validate: (value) =>
-                            getValues("startup") === !value ||
-                            errorMessageTemplates.checkboxes,
-                        })}
+                        name="company"
+                        onChange={onChangeCheckbox}
+                        checked={isChecked.company}
                       />
                     </div>
                     <label className={styles["representative__label"]}>
@@ -252,11 +277,9 @@ export function SignUpFormContentComponent() {
                     >
                       <input
                         type="checkbox"
-                        {...register("startup", {
-                          validate: (value) =>
-                            getValues("company") === !value ||
-                            errorMessageTemplates.checkboxes,
-                        })}
+                        name="startup"
+                        onChange={onChangeCheckbox}
+                        checked={isChecked.startup}
                       />
                     </div>
                     <label className={styles["representative__label"]}>
@@ -265,9 +288,6 @@ export function SignUpFormContentComponent() {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className={styles["representative__error"]}>
-              {errors.company && errors.startup && errors.company.message}
             </div>
           </div>
           <div className={styles["signup-form__checkboxes-container--rules"]}>

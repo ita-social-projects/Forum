@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useState, useEffect} from "react";
 import validator from "validator";
 import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";
@@ -6,83 +7,61 @@ import classes from "./LoginContent.module.css";
 
 const LoginContent = (props) => {
   const [showPassword, setShowPassword] = useState(false)
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const [error, setError] = useState("");
 
   const togglePassword = () => {
     setShowPassword(!showPassword)
   };
 
-  const userValidationHandler = (event) => {
-    event.preventDefault();
+  const errorMessageTemplates = {
+    required: "Обов’язкове поле",
+    email: "Формат електронної пошти некоректний",
+  };
 
-    const emailErrorText = "Формат електронної пошти некоректний";
-    const unspecifiedErrorText =
-      "Електронна пошта чи пароль вказані некоректно";
-    const emptyFieldErrorText = "Обов'язкове поле";
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "all"
+  });
 
+  const onSubmit = (value) => {
+    // TODO - add submission
+  };
+
+  const { setErrorMessage } = props;
+
+  useEffect(() => {
     let errorMessage = "";
 
-    if (!validator.isEmail(enteredEmail) && enteredEmail.trim().length > 0) {
-      errorMessage = emailErrorText;
-      setError({
-        errorType: "email",
-        message: emailErrorText,
-      });
-      setEnteredEmail("");
-    } else if (enteredEmail.trim().length === 0) {
-      errorMessage = emptyFieldErrorText;
-      setError({
-        errorType: "required",
-        message: emptyFieldErrorText,
-      });
-    } else if (enteredPassword.trim().length === 0) {
-      errorMessage = emptyFieldErrorText;
-      setError({
-        errorType: "required",
-        message: emptyFieldErrorText,
-      });
-    } else if (
-      // fake validation to show functionality
-      enteredEmail.trim().length < 5 ||
-      enteredPassword.trim().length < 8
-    ) {
-      errorMessage = unspecifiedErrorText;
-      setError({
-        errorType: "wrong-data",
-        message: unspecifiedErrorText,
-      });
-      setEnteredEmail("");
-      setEnteredPassword("");
+    if (errors.email?.message && errors.password?.message) {
+      if (errors.email.message === errors.password.message) {
+        errorMessage = errors.email.message;
+      } else {
+        errorMessage = `${errors.email?.message || ""}\n${errors.password?.message || ""}`;
+      }
+    } else if (errors.email?.message) {
+      errorMessage = errors.email.message;
+    } else if (errors.password?.message) {
+      errorMessage = errors.password.message;
     }
-    props.setErrorMessage(errorMessage);
-  };
 
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-  };
-
-  const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
-  };
-
-  const errorHandler = () => {
-    setError("");
-  };
+    setErrorMessage(errorMessage);
+  }, [errors.email?.message, errors.password?.message, setErrorMessage]);
 
   return (
-    <div className={classes["login-basic"]} onClick={errorHandler}>
+    <div className={classes["login-basic"]}>
       <div className={classes["login-header"]}>
         <p>Вхід на платформу</p>
       </div>
-      <form onSubmit={userValidationHandler}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className={classes["login-content"]}>
           <div className={classes["login-content__items"]}>
             <div className={classes["login-content__item"]}>
               <label
                 className={`${
-                  error.errorType === "required" && enteredEmail === ""
+                  errors.email && getValues("email").trim().length === 0
                     ? classes["error-dot"]
                     : ""
                 }`}
@@ -93,22 +72,24 @@ const LoginContent = (props) => {
               <div className={classes["login-content__email"]}>
                 <input
                   id="email"
-                  type="text"
+                  type="email"
                   autoComplete="username"
                   placeholder="Електронна пошта"
-                  value={enteredEmail}
-                  onChange={emailChangeHandler}
+                  {...register("email", {
+                    required: errorMessageTemplates.required,
+                    validate: (value) => validator.isEmail(value) || errorMessageTemplates.email,
+                  })}
                 />
               </div>
               <span className={classes["error-message"]}>
-                {error.errorType === "email" && error.message}
-                {error.errorType === "required" && enteredEmail === "" && error.message}
+                {errors.email && errors.email.message}
+                {errors.required && errors.required.message}
                 </span>
             </div>
             <div className={classes["login-content__item"]}>
               <label
                 className={`${
-                  error.errorType === "required" && enteredPassword === ""
+                  errors.password && getValues("password").trim().length === 0
                     ? classes["error-dot"]
                     : ""
                 }`}
@@ -123,8 +104,9 @@ const LoginContent = (props) => {
                     type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     placeholder="Пароль"
-                    value={enteredPassword}
-                    onChange={passwordChangeHandler}
+                    {...register("password", {
+                      required: errorMessageTemplates.required,
+                    })}
                   />
                   <span className={classes["password-visibility"]} onClick={togglePassword}>
                     {!showPassword ? <EyeInvisible /> : <EyeVisible />}
@@ -132,8 +114,8 @@ const LoginContent = (props) => {
                 </div>
               </div>
               <span className={classes["error-message"]}>
-                    {error.errorType === "wrong-data" && error.message}
-                    {error.errorType === "required" && enteredPassword === "" && error.message}
+                    {errors.password && errors.password.message}
+                    {errors.required && errors.required.message}
               </span>
             </div>
             <a href="/" className={classes["forget-password"]}>Забули пароль?</a>
@@ -151,8 +133,9 @@ const LoginContent = (props) => {
               </button>
             </a>
             <button
+              disabled={!isValid}
               type="submit"
-              className={classes["login-footer-buttons__signin"]}
+              className={isValid ? classes["login-footer-buttons__signin"] : classes["login-footer-buttons__signin__disabled"]}
             >
               Увійти
             </button>
