@@ -146,24 +146,105 @@ class TestProfileDetailAPIView(APITestCase):
         if os.path.exists(self.wrong_image.name):
             os.remove(self.wrong_image.name)
 
+    def test_get_profile_nonexistent(self):
+        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=100000000000))
+        self.assertEqual(404, response.status_code)
+
     def test_get_profile_unauthorized(self):
-        response = self.client.get("/api/profiles/{pk}".format(pk=self.test_profile2.profile_id))
+        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id))
+        self.assertEqual(200, response.status_code, response.content)
+        self.assertIsNone(response.data.get("comp_phone_number"))
+        self.assertIsNone(response.data.get("email"))
+        self.assertEqual({
+            "comp_official_name": "Test 2 official name",
+            "comp_region": "E",
+            "comp_common_info": "Test 2 common info",
+            "comp_EDRPOU": 10000002,
+            "comp_year_of_foundation": 2020,
+            "comp_address": "Kyiv",
+            "startup_idea": "Test 2 start up idea",
+            "comp_name": "Test 2",
+            "comp_registered": True,
+            "comp_is_startup": False,
+            "comp_service_info": "Test 2 service info",
+            "comp_product_info": "Test 2 product info",
+            "comp_banner_image": None
+        }, response.data
+        )
+
+    def test_get_profile_authorized_not_owner(self):
+        self.client.force_authenticate(self.test_person_with_profile)
+        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id))
+        self.assertEqual(200, response.status_code, response.content)
+        self.assertIsNone(response.data.get("comp_phone_number"))
+        self.assertIsNone(response.data.get("email"))
+        self.assertEqual({
+            "comp_official_name": "Test 2 official name",
+            "comp_region": "E",
+            "comp_common_info": "Test 2 common info",
+            "comp_EDRPOU": 10000002,
+            "comp_year_of_foundation": 2020,
+            "comp_address": "Kyiv",
+            "startup_idea": "Test 2 start up idea",
+            "comp_name": "Test 2",
+            "comp_registered": True,
+            "comp_is_startup": False,
+            "comp_service_info": "Test 2 service info",
+            "comp_product_info": "Test 2 product info",
+            "comp_banner_image": None
+        }, response.data
+        )
+
+    def test_get_profile_authorized_owner(self):
+        self.client.force_authenticate(self.test_person_with_profile)
+        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id))
+        self.assertEqual(200, response.status_code, response.content)
+        self.assertEqual(
+            {
+                "profile_id": self.test_profile.profile_id,
+                "person": self.test_person_with_profile.id,
+                "comp_name": "Test 1",
+                "comp_registered": True,
+                "comp_is_startup": False,
+                "comp_official_name": "Test 1 official name",
+                "comp_region": "E",
+                "comp_common_info": "Test 1 common info",
+                "comp_phone_number": "380990102034",
+                "comp_EDRPOU": 10000001,
+                "comp_year_of_foundation": 2020,
+                "comp_service_info": "Test 1 service info",
+                "comp_product_info": "Test 1 product info",
+                "comp_address": "Lviv",
+                "comp_banner_image": None,
+                "person_position": None,
+                "startup_idea": "Test 1 start up idea",
+                "is_deleted": False,
+                "comp_category": [],
+                "comp_activity": []
+            }, response.data
+        )
+
+    def test_get_contact_info_unauthorized(self):
+        response = self.client.get("/api/profiles/{profile_id}?get_contacts=True".format(
+            profile_id=self.test_profile2.profile_id))
         self.assertEqual(401, response.status_code)
+
+    def test_get_contact_info_authorized(self):
+        self.client.force_authenticate(self.test_person_with_profile)
+        response = self.client.get("/api/profiles/{profile_id}?get_contacts=True".format(
+            profile_id=self.test_profile2.profile_id))
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(
+            {
+                "comp_phone_number": "380990102034",
+                "email": "test2@test.com"
+            },
+            response.data
+        )
 
     def test_delete_profile_unauthorized(self):
-        response = self.client.delete("/api/profiles/{user_id}".format(user_id=self.test_person_with_profile.id))
+        response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=self.test_person_with_profile.id))
         self.assertEqual(401, response.status_code)
-
-    def test_get_profile_authorized(self):
-        self.client.force_authenticate(self.test_person_with_profile)
-        response = self.client.get("/api/profiles/{pk}".format(pk=self.test_profile.profile_id))
-        self.assertEqual(200, response.status_code, response.content)
-        self.assertEqual(False, response.data["is_deleted"])
-
-    def test_get_profile_of_other_user(self):
-        self.client.force_authenticate(self.test_person_with_profile)
-        response = self.client.get("/api/profiles/{pk}".format(pk=self.test_profile2.profile_id))
-        self.assertEqual(200, response.status_code, response.content)
 
     def test_delete_profile_authorized(self):
         self.client.force_authenticate(self.test_person_with_profile)
