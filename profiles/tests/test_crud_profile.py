@@ -7,49 +7,7 @@ from PIL import Image
 import os
 
 
-
 class TestProfileDetailAPIView(APITestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.test_person = CustomUser.objects.create_user(
-            person_email="test@test.com",
-            password="Testing01",
-            person_name="test",
-            person_surname="test",
-            is_active=True
-        )
-        cls.test_person2 = CustomUser.objects.create_user(
-            person_email="test2@test.com",
-            password="Testing01",
-            person_name="test",
-            person_surname="test",
-            is_active=True
-        )
-
-        cls.test_person3 = CustomUser.objects.create_user(
-            person_email="test3@test.com",
-            password="Testing01",
-            person_name="test",
-            person_surname="test",
-            is_active=True
-        )
-
-        cls.test_profile = Profile.objects.create(
-            person=cls.test_person,
-            comp_is_startup=True,
-            comp_registered=False
-        )
-        cls.test_profile2 = Profile.objects.create(
-            person=cls.test_person2,
-            comp_registered=True,
-            comp_is_startup=False
-        )
-
-        Category.objects.create(category_id=1,
-                                name='cheese')
-        Activity.objects.create(activity_id=1,
-                                name='importer')
 
     @staticmethod
     def _generate_image(ext, size=(100, 100)):
@@ -63,6 +21,125 @@ class TestProfileDetailAPIView(APITestCase):
         return file
 
     def setUp(self) -> None:
+        self.test_person_with_profile = CustomUser.objects.create_user(
+            person_email="test1@test.com",
+            password="Testing01",
+            person_name="test1",
+            person_surname="test1",
+            is_active=True
+        )
+        self.test_person2_with_profile = CustomUser.objects.create_user(
+            person_email="test2@test.com",
+            password="Testing01",
+            person_name="test2",
+            person_surname="test2",
+            is_active=True
+        )
+
+        self.test_person_without_profile = CustomUser.objects.create_user(
+            person_email="test3@test.com",
+            password="Testing01",
+            person_name="test3",
+            person_surname="test3",
+            is_active=True
+        )
+
+        self.test_profile = Profile.objects.create(
+            person=self.test_person_with_profile,
+            comp_registered=True,
+            comp_is_startup=False,
+            comp_official_name="Test 1 official name",
+            comp_name="Test 1",
+            comp_region="E",
+            comp_common_info="Test 1 common info",
+            comp_phone_number=380990102034,
+            comp_EDRPOU=10000001,
+            comp_year_of_foundation=2020,
+            comp_service_info="Test 1 service info",
+            comp_product_info="Test 1 product info",
+            comp_address="Lviv",
+            startup_idea="Test 1 start up idea"
+        )
+        self.test_profile2 = Profile.objects.create(
+            person=self.test_person2_with_profile,
+            comp_registered=True,
+            comp_is_startup=False,
+            comp_official_name="Test 2 official name",
+            comp_name="Test 2",
+            comp_region="E",
+            comp_common_info="Test 2 common info",
+            comp_phone_number=380990102034,
+            comp_EDRPOU=10000002,
+            comp_year_of_foundation=2020,
+            comp_service_info="Test 2 service info",
+            comp_product_info="Test 2 product info",
+            comp_address="Kyiv",
+            startup_idea="Test 2 start up idea"
+        )
+        Category.objects.create(category_id=1,
+                                name='cheese')
+        Activity.objects.create(activity_id=1,
+                                name='importer')
+
+        self.right_image = self._generate_image('jpeg', (10, 10))
+        self.wrong_image = self._generate_image('png', (3000, 3000))
+
+        self.wrong_full_data_for_full_update = {
+            "profile_id": self.test_profile,
+            "person": self.test_person_with_profile,
+            "comp_official_name": "Jannifer",
+            "comp_region": 'Kyiv',
+            "comp_common_info": "Good Very",
+            "comp_phone_number": 167300044411,
+            "comp_EDRPOU": 12345678,
+            "comp_year_of_foundation": 2005,
+            "comp_service_info": 'very good service',
+            "comp_product_info": 'very good product',
+            "comp_address": 'Kyiv',
+            "startup_idea": 'very good idea',
+            "is_deleted": False,
+            "comp_category": [
+                2
+            ],
+            "comp_activity": [
+                2
+            ]
+        }
+        self.right_full_data_for_full_update = {
+            "profile_id": self.test_profile,
+            "person": self.test_person_with_profile.id,
+            "comp_official_name": "Jannifer",
+            "comp_region": 'E',
+            "comp_common_info": "Good Very",
+            "comp_phone_number": 123456789012,
+            "comp_EDRPOU": 12345678,
+            "comp_year_of_foundation": 2005,
+            "comp_service_info": 'very good service',
+            "comp_product_info": 'very good product',
+            "comp_address": 'Kyiv',
+            "comp_banner_image": self.wrong_image,
+            "person_position": 'director',
+            "startup_idea": 'very good idea',
+            "is_deleted": False,
+            "comp_category": [
+                1
+            ],
+            "comp_activity": [
+                1
+            ]
+        }
+
+        self.right_data_for_create = {
+            "person": self.test_person_without_profile.id,
+            "comp_category": [1],
+            "comp_activity": [1]
+        }
+        self.wrong_data_for_create = {
+            "person": self.test_person_without_profile,
+            "comp_category": 1,
+            "comp_activity": 2
+        }
+
         self.client = APIClient()
         self.base_url = "/api/profiles/"
         self.update_url = "/api/profiles/2"
