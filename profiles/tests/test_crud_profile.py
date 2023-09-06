@@ -253,13 +253,13 @@ class TestProfileDetailAPIView(APITestCase):
         profiles_len_before_del = len(response.data)
         user_profile = Profile.objects.get(person_id=self.test_person_with_profile.id)
         # del profile
-        response = self.client.delete(f"/api/profiles/{user_profile.profile_id}")
+        response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=user_profile.profile_id))
         self.assertEqual(204, response.status_code, response.content)
         # check the profile is deleted
         response = self.client.get("/api/profiles/")
-        persons = [response.data[i]["person"] for i in range(len(response.data))]
+        profile_id_list = [profile['profile_id'] for profile in response.data]
         self.assertEqual(profiles_len_before_del-1, len(response.data))
-        self.assertTrue(1 not in persons)
+        self.assertTrue(user_profile.profile_id not in profile_id_list)
         # try access deleted profile
         response = self.client.get("/api/profiles/{profile_id}".format(profile_id=user_profile.profile_id))
         self.assertEqual(404, response.status_code, response.content)
