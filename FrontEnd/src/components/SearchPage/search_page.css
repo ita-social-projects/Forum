@@ -1,3 +1,5 @@
+@import './search_field/companies/variables.css';
+
 .App {
   text-align: center;
 }
@@ -13,19 +15,23 @@
   }
 }
 
+.main_block_outer {
+  padding-top: 10px;
+}
+
 .App-header {
-  background-color: #282c34;
+  background-color: var(--text-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--white-color);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--link-color);
 }
 
 @keyframes App-logo-spin {
@@ -48,7 +54,7 @@
 }
 
 .search_field_entered_value {
-  color: #0B6C61;
+  color: var(----main-style-signs-color);
   font: Inter;
   font-weight: 600;
   font-style: italic;
@@ -57,23 +63,21 @@
 .search_results_text {
   font: Inter;
   font-weight: 700;
-
 }
 
 .search_result_error {
   font-weight: 600;
-  color: #292E32;
+  color: var(--text-color);
   font: Inter;
 }
 
 .search_result_error_search_value {
-  color: #0B6C61;
+  color: var(--main-style-signs-color);
 }
 
 .frame-img-right {
   position: absolute;
-  /* z-index: 0; */
-  top: 150px;
+  top: 30px;
   right: 0;
   transform: translateY(-50%);
 }
@@ -83,7 +87,7 @@
 }
 
 .pagination {
-  background-color: white;
+  background-color: var(--main_light-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,8 +106,8 @@
 
 .pagination button.active {
   background-color: none;
-  color: #1F9A7C;
-  border: 1px solid #1F9A7C;
+  color: var(--pagination-style-color);
+  border: 1px solid var(--pagination-style-color);
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
 }

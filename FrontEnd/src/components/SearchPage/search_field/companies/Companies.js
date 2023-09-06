@@ -27,9 +27,9 @@ const MainCompanies = ({ companyData }) => {
                                 <div className="product-card__badge-text">{currentYear - companyData.comp_year_of_foundation} років досвіду</div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <button className='product-card__buttons'><img src={wish_list_checklist} width="25" height="25" alt=""/></button>
+                        <div>
+                            <button className='product-card__buttons'><img src={wish_list_checklist} alt=""/></button>
+                        </div>
                     </div>
                 </div>
             </div>

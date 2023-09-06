@@ -14,8 +14,8 @@ const SearchResults = ({ results, displayedResults }) => {
                 <>
                     <div className="new-companies-block">
                         <div className="row">
-                            {displayedResults.map((result, index) => (
-                                <div key={index} className="col-md-4">
+                            {displayedResults.map((result, resultIndex) => (
+                                <div key={resultIndex} className="col-md-4">
                                     <MainCompanies companyData={result} />
                                 </div>
                             ))}

@@ -1,0 +1,11 @@
+:root {
+    --text-color: #292E32;
+    --main-style-signs-color: #0B6C61;
+    --main_light-color: white;
+    --pagination-style-color: #1F9A7C;
+    --link-color: #61dafb;
+    --companies-card-box-shadow: rgba(65, 64, 69, 0.20);
+    --companies-card-lover-text: #767F86;
+    --companies-card-address: #59636A;
+    --companies-card-button: green;
+}

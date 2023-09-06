@@ -89,7 +89,8 @@
   color: var(--main-white, #fff);
 }
 
-.sign-up__button {
+.sign-up__button,
+.sign-up__button__disabled {
   display: flex;
   padding: 5px 15px;
   justify-content: center;
@@ -115,6 +116,11 @@
   letter-spacing: -0.16px;
 
   cursor: pointer;
+}
+
+.sign-up__button__disabled {
+  opacity: 50%;
+  cursor: default;
 }
 
 .sign-up__button:hover {
