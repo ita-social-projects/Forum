@@ -42,6 +42,15 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
                             'comp_product_info', 'comp_banner_image')
 
 
+class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
+    email = serializers.ReadOnlyField(source='person.person_email')
+
+    class Meta:
+        model = Profile
+        fields = ('comp_phone_number', 'email',)
+        read_only_fields = ('comp_phone_number', 'email',)
+
+
 class SavedCompanySerializer(serializers.ModelSerializer):
     comp_official_name = serializers.ReadOnlyField(source='company.comp_official_name')
     comp_region = serializers.ReadOnlyField(source='company.comp_region')
