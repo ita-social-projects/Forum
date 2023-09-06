@@ -27,6 +27,21 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ProfileDetailSerializer(serializers.ModelSerializer):
+    activity = ActivitySerializer(many=True, read_only=True)
+    category = CategorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ('comp_official_name', 'comp_region', 'comp_common_info', 'comp_EDRPOU', 'comp_year_of_foundation',
+                  'comp_address', 'startup_idea', 'comp_name', 'comp_registered', 'comp_is_startup', 'category',
+                  'activity', 'comp_service_info', 'comp_product_info', 'comp_banner_image')
+        read_only_fields = ('comp_official_name', 'comp_region', 'comp_common_info', 'comp_EDRPOU',
+                            'comp_year_of_foundation', 'comp_address', 'startup_idea', 'comp_name',
+                            'comp_registered', 'comp_is_startup', 'category', 'activity', 'comp_service_info',
+                            'comp_product_info', 'comp_banner_image')
+
+
 class SavedCompanySerializer(serializers.ModelSerializer):
     comp_official_name = serializers.ReadOnlyField(source='company.comp_official_name')
     comp_region = serializers.ReadOnlyField(source='company.comp_region')
