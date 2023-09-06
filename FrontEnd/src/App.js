@@ -17,6 +17,7 @@ import ScrollToTopButton from './components/PrivacyPolicyPage/privacy/ScrollToTo
 import TermsAndConditions from './components/terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import MainPage from './components/landing-page/MainPage';
+import AdminPage from "./components/adminPage/AdminPage";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/admin/*" element={<AdminPage />} />
         </Routes>
         <Footer />
         <ScrollToTopButton />
