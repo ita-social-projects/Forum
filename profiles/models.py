@@ -6,8 +6,6 @@ from validation.validate_image import validate_image_size, validate_image_format
 
 from authentication.models import CustomUser
 
-REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
-
 
 class Profile(models.Model):
     profile_id = models.AutoField(primary_key=True)
@@ -17,7 +15,7 @@ class Profile(models.Model):
     comp_category = models.ManyToManyField("Category")
     comp_activity = models.ManyToManyField("Activity")
     comp_official_name = models.CharField(max_length=255, unique=True, default=None, null=True)
-    comp_region = models.CharField(max_length=128, choices=REGIONS, default=None, null=True)
+    comp_region = models.ManyToManyField("Region")
     comp_common_info = models.CharField(max_length=255, default=None, null=True)
     comp_phone_number = models.CharField(
         max_length=12,
@@ -61,3 +59,9 @@ class ViewedCompany(models.Model):
 
     class Meta:
         unique_together = (('user', 'company'),)
+
+
+class Region(models.Model):
+    region_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+
