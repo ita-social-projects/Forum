@@ -19,6 +19,10 @@
   padding-top: 10px;
 }
 
+.new-companies-main {
+  background-color: var(--new-companies-main);
+}
+
 .App-header {
   background-color: var(--text-color);
   min-height: 100vh;

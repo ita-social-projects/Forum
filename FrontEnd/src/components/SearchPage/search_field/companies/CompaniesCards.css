@@ -4,7 +4,6 @@
     width: 360px;
     display: block;
     align-items: center;
-    gap: -69px;
     box-shadow: 0 4px 8px 0 var(--companies-card-box-shadow);
     border-radius: 11px;
     transition: transform 0.2s ease;
@@ -68,7 +67,6 @@
 .product-card__name-text_link {
     text-decoration: none;              /* delete underline */
 }
-
 
 .product-card__name-text_link:visited {
     color: var(--text-color);

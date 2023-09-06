@@ -42,4 +42,4 @@ const MainCompanies = ({ companyData }) => {
     );
 };
 
-export {MainCompanies};
+export default MainCompanies;

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializers import CompanySerializers
 
+
 class SearchCompanyView(APIView):
     def get(self, request, *args, **kwargs):
         search_field = request.query_params.get('search_field', '').strip()                     # get data without space

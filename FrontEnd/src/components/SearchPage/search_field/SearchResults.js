@@ -1,4 +1,4 @@
-import {MainCompanies} from './companies/Companies';
+import MainCompanies from './companies/Companies';
 import './Text.css'
 
 const SearchResults = ({ results, displayedResults }) => {
