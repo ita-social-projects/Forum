@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from datetime import timedelta
+from os import nice
 from pathlib import Path
 from decouple import config
 
@@ -133,6 +134,7 @@ REST_FRAMEWORK = {
         'authentication.authentication.DjoserTokenAuthentication',
 
     ),
+    'DEFAULT_PAGINATION_CLASS': 'forum.pagination.ForumPagination',
 }
 
 TOKEN_EXPIRATION_TIME = timedelta(days=14)
