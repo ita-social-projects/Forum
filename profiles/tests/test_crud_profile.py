@@ -191,7 +191,7 @@ class TestProfileDetailAPIView(APITestCase):
     def test_partial_update_profile_authorized(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.patch(
-            path="/api/profiles/{pk}".format(pk=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data={
                 "comp_official_name": "Test_company",
                 "comp_year_of_foundation": 2005
@@ -201,7 +201,7 @@ class TestProfileDetailAPIView(APITestCase):
     def test_partial_update_profile_with_wrong_image(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.patch(
-            path="/api/profiles/{pk}".format(pk=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data={
                 "comp_banner_image": f'/Forum/{self.wrong_image}',
                 "comp_year_of_foundation": 2005
@@ -211,7 +211,7 @@ class TestProfileDetailAPIView(APITestCase):
     def test_partial_update_profile_unauthorized(self):
         self.client.logout()
         response = self.client.patch(
-            path="/api/profiles/{pk}".format(pk=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data={
                 "comp_official_name": "Test_company",
                 "comp_year_of_foundation": 2005
@@ -221,7 +221,7 @@ class TestProfileDetailAPIView(APITestCase):
     def test_partial_update_profile_not_exist(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.patch(
-            path="/api/profiles/{user_id}".format(user_id=1000000000000),
+            path="/api/profiles/{profile_id}".format(profile_id=1000000000000),
             data={
                 "comp_official_name": "Test_company",
                 "comp_year_of_foundation": 2005
@@ -231,7 +231,7 @@ class TestProfileDetailAPIView(APITestCase):
     def test_partial_update_profile_wrong_data(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.patch(
-            path="/api/profiles/{pk}".format(pk=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data={
                 "comp_official_name": 12345,
                 "comp_year_of_foundation": 'Jane'
@@ -241,34 +241,34 @@ class TestProfileDetailAPIView(APITestCase):
     def test_full_update_profile_authorized_with_partial_data(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.put(
-            path="/api/profiles/{pk}".format(pk=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data=self.wrong_full_data_for_full_update)
         self.assertEqual(400, response.status_code)
 
     def test_full_update_profile_authorized_with_full_data(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.put(
-            path="/api/profiles/{pk}".format(pk=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data=self.right_full_data_for_full_update)
         self.assertEqual(200, response.status_code, response.content)
 
     def test_full_update_profile_unauthorized(self):
         response = self.client.put(
-            path="/api/profiles/{pk}".format(pk=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data=self.right_full_data_for_full_update)
         self.assertEqual(401, response.status_code)
 
     def test_full_update_profile_not_exist(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.put(
-            path="/api/profiles/{user_id}".format(user_id=10000000000),
+            path="/api/profiles/{profile_id}".format(profile_id=10000000000),
             data=self.right_full_data_for_full_update)
         self.assertEqual(404, response.status_code)
 
     def test_full_update_profile_wrong_data(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.put(
-            path="/api/profiles/{pk}".format(pk=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data=self.wrong_full_data_for_full_update)
         self.assertEqual(400, response.status_code)
 
