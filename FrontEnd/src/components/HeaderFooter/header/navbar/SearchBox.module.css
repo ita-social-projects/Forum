@@ -28,7 +28,6 @@
 
 .header-search-form__addon {
     background-color: transparent;
-    border: none;
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.25);
 }

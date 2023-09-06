@@ -5,8 +5,9 @@
 //npm install react-cookie
 //npm install react-hook-form
 //npm install @mui/material @emotion/react @emotion/styled
+//npm install dotenv --save
+//npm install path-browserify os-browserify crypto-browserify --save-dev
 import React from 'react';
-import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AuthorizationPage from './components/authorization/AuthorizationPage';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
@@ -18,6 +19,7 @@ import TermsAndConditions from './components/terms-and-conditions-app/terms_cond
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import MainPage from './components/landing-page/MainPage';
 import { Search } from './components/SearchPage/Search';
+import './App.css';
 
 function App() {
   return (
