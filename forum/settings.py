@@ -60,6 +60,8 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
+    '0.0.0.0',
+    '127.0.0.1'
 )
 
 ROOT_URLCONF = 'forum.urls'
