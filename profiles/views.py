@@ -13,26 +13,26 @@ class SavedCompaniesListCreate(ListCreateAPIView):
     Add a company to the saved list.
     """
     permission_classes = [IsAuthenticated]
-
-    def list(self, request):
-        user = request.user
+    serializer_class = SavedCompanySerializer
+    
+    def get_queryset(self):
+        user = self.request.user
         saved_companies = SavedCompany.objects.filter(user=user)
-        serializer = SavedCompanySerializer(saved_companies, many=True)
-        return Response({'Companies': serializer.data})
+        return saved_companies
 
     def post(self, request):
         user = request.user
-        pk = request.data.get('company_pk')
+        pk = request.data.get("company_pk")
 
         # Check if the company is already in the user's saved list
         if SavedCompany.objects.filter(user=user, company_id=pk).exists():
             saved_company_destroyer = SavedCompaniesDestroy()
             return saved_company_destroyer.destroy(request, pk)
 
-        serializer = SavedCompanySerializer(data={'company': pk, 'user': user.id})
+        serializer = SavedCompanySerializer(data={"company": pk, "user": user.id})
         if serializer.is_valid():
             serializer.save()
-            return Response({'Company added': serializer.data})
+            return Response({"Company added": serializer.data})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -46,7 +46,7 @@ class SavedCompaniesDestroy(DestroyAPIView):
         user = request.user
         saved_company = get_object_or_404(SavedCompany, company_id=pk, user=user)
         saved_company.delete()
-        return Response(f'Company {pk} deleted', status=status.HTTP_204_NO_CONTENT)
+        return Response(f"Company {pk} deleted", status=status.HTTP_204_NO_CONTENT)
 
 
 class ProfileList(ListCreateAPIView):

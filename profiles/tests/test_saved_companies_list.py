@@ -90,7 +90,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
                                        'Authentication': self.token2
                                    }
                                    )
-        companies_info = response.data['Companies']
+        companies_info = response.data
         self.assertEqual(200, response.status_code)
         self.assertEqual(2, len(companies_info))
 
@@ -110,7 +110,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
                                        'Authentication': self.token2
                                    }
                                    )
-        companies_info = response.data['Companies']
+        companies_info = response.data
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(companies_info))
 
@@ -143,6 +143,6 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
                                        'Authentication': self.token2
                                    }
                                    )
-        companies_info = response.data['Companies']
+        companies_info = response.data
         self.assertEqual(200, response.status_code)
         self.assertEqual(0, len(companies_info))
