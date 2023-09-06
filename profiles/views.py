@@ -4,7 +4,8 @@ from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveU
 from rest_framework.response import Response
 from rest_framework import status
 from .models import SavedCompany, Profile, ViewedCompany
-from .serializers import SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer
+from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
+                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -59,7 +60,6 @@ class ProfileList(ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_queryset(self):
-        user_id = self.request.user.id
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORECA"]
@@ -84,8 +84,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     """
     Retrieve or delete a profile instance.
     """
-    serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_queryset(self, pk=None):
         user_id = self.request.user.id
@@ -96,33 +95,47 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         if self.request.method in ['PUT', 'PATCH']:
             return Profile.objects.filter(profile_id=pk)
 
+    def get_serializer_class(self):
+        get_contacts = self.request.query_params.get("get_contacts")
+        if self.request.method == 'GET':
+            return ProfileSensitiveDataROSerializer if get_contacts else ProfileDetailSerializer
+        else:
+            return ProfileSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if not request.user.is_authenticated and request.query_params.get("get_contacts"):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        if request.user.id == instance.person.id:
+            serializer = ProfileSerializer(instance)
+        else:
+            serializer = self.get_serializer(instance)
+
+        return Response(serializer.data)
+
     def update(self, request, pk=None, **kwargs):
         profile = get_object_or_404(self.get_queryset(pk=pk))
         if self.request.method == 'PUT':
-            serializer = ProfileSerializer(profile, data=request.data)
+            serializer = self.get_serializer(profile, data=request.data)
         elif self.request.method == 'PATCH':
-            serializer = ProfileSerializer(profile, data=request.data, partial=True)
+            serializer = self.get_serializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def retrieve(self, request, pk=None):
-        profile = get_object_or_404(self.get_queryset(), pk=pk)
-        serializer = ProfileSerializer(profile)
-        return Response(serializer.data)
-
     def destroy(self, request, pk=None):
         profile = get_object_or_404(self.get_queryset(), pk=pk)
         profile.is_deleted = True
         profile.save()
-        serializer = ProfileSerializer(profile)
+        serializer = self.get_serializer(profile)
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
 
 class ViewedCompanyList(ListCreateAPIView):
     serializer_class = ViewedCompanySerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.request.user.id
