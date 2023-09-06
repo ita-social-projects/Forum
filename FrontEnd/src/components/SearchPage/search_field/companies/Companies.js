@@ -1,6 +1,6 @@
-import './CompaniesCards.css';
-import wish_list_checklist from './wish_list_checklist.svg';
 import { Link } from 'react-router-dom';
+import wish_list_checklist from './wish_list_checklist.svg';
+import './CompaniesCards.css';
 
 const MainCompanies = ({ companyData }) => {
     const currentDate = new Date();
