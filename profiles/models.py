@@ -38,6 +38,10 @@ class Profile(models.Model):
     is_deleted = models.BooleanField(default=False)
 
 
+    class Meta:
+        ordering = ["profile_id"]
+
+
 class Activity(models.Model):
     activity_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -54,6 +58,10 @@ class SavedCompany(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
 
 
+    class Meta:
+        ordering = ["company_id"]
+
+
 class ViewedCompany(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -61,3 +69,4 @@ class ViewedCompany(models.Model):
 
     class Meta:
         unique_together = (('user', 'company'),)
+        ordering = ["company_id"]
