@@ -3,9 +3,9 @@ import os
 from PIL import Image
 from rest_framework.test import APITestCase, APIClient
 
-from utils.dump_response import dump # noqa
 from authentication.models import CustomUser
 from profiles.models import Profile, Category, Activity
+from utils.dump_response import dump # noqa
 
 
 

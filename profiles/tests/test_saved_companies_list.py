@@ -1,7 +1,8 @@
+from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
+
 from authentication.models import CustomUser
 from profiles.models import Profile
-from rest_framework import status
 
 
 class SavedCompaniesListCreateDestroyAPITest(APITestCase):
