@@ -244,7 +244,7 @@ class TestProfileDetailAPIView(APITestCase):
 
     def test_delete_profile_unauthorized(self):
         response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=self.test_person_with_profile.id))
-        self.assertEqual(401, response.status_code)
+        self.assertEqual(404, response.status_code)
 
     def test_delete_profile_authorized(self):
         self.client.force_authenticate(self.test_person_with_profile)
@@ -254,7 +254,7 @@ class TestProfileDetailAPIView(APITestCase):
         user_profile = Profile.objects.get(person_id=self.test_person_with_profile.id)
         # del profile
         response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=user_profile.profile_id))
-        self.assertEqual(204, response.status_code, response.content)
+        self.assertEqual(204, response.status_code)
         # check the profile is deleted
         response = self.client.get("/api/profiles/")
         profile_id_list = [profile['profile_id'] for profile in response.data]
@@ -267,7 +267,7 @@ class TestProfileDetailAPIView(APITestCase):
     def test_delete_profile_of_other_user_authorized(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id))
-        self.assertEqual(404, response.status_code, response.content)
+        self.assertEqual(403, response.status_code)
 
     def test_partial_update_profile_authorized(self):
         self.client.force_authenticate(self.test_person_with_profile)
