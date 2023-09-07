@@ -146,6 +146,7 @@ class TestProfileDetailAPIView(APITestCase):
         if os.path.exists(self.wrong_image.name):
             os.remove(self.wrong_image.name)
 
+    # GET requests section
     def test_get_profile_nonexistent(self):
         response = self.client.get("/api/profiles/{profile_id}".format(profile_id=100000000000))
         self.assertEqual(404, response.status_code)
@@ -242,6 +243,7 @@ class TestProfileDetailAPIView(APITestCase):
             response.data
         )
 
+    # DELETE requests section
     def test_delete_profile_unauthorized(self):
         response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=self.test_person_with_profile.id))
         self.assertEqual(404, response.status_code)
@@ -269,6 +271,7 @@ class TestProfileDetailAPIView(APITestCase):
         response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id))
         self.assertEqual(403, response.status_code)
 
+    # PATCH requests section
     def test_partial_update_profile_authorized(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.patch(
@@ -278,6 +281,16 @@ class TestProfileDetailAPIView(APITestCase):
                 "comp_year_of_foundation": 2005
             })
         self.assertEqual(200, response.status_code)
+
+    def test_partial_update_authorized_not_owner(self):
+        self.client.force_authenticate(self.test_person_with_profile)
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id),
+            data={
+                "comp_official_name": "Test_company",
+                "comp_year_of_foundation": 2005
+            })
+        self.assertEqual(403, response.status_code)
 
     def test_partial_update_profile_with_wrong_image(self):
         self.client.force_authenticate(self.test_person_with_profile)
@@ -290,7 +303,6 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(400, response.status_code)
 
     def test_partial_update_profile_unauthorized(self):
-        self.client.logout()
         response = self.client.patch(
             path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
             data={
@@ -319,6 +331,7 @@ class TestProfileDetailAPIView(APITestCase):
             })
         self.assertEqual(400, response.status_code)
 
+    # PUT requests section
     def test_full_update_profile_authorized_with_partial_data(self):
         self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.put(
@@ -353,6 +366,15 @@ class TestProfileDetailAPIView(APITestCase):
             data=self.wrong_full_data_for_full_update)
         self.assertEqual(400, response.status_code)
 
+    def test_full_update_authorized_not_owner(self):
+        self.client.force_authenticate(self.test_person_with_profile)
+        response = self.client.put(
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id),
+            data=self.right_full_data_for_full_update)
+        self.assertEqual(403, response.status_code, response.content)
+
+
+    # POST requests section
     def test_create_profile_authorized(self):
         self.client.force_authenticate(self.test_person_without_profile)
         response = self.client.post(
