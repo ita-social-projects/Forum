@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer
 
@@ -14,6 +15,7 @@ class SavedCompaniesListCreate(ListCreateAPIView):
     """
     permission_classes = [IsAuthenticated]
     serializer_class = SavedCompanySerializer
+    pagination_class = ForumPagination
     
     def get_queryset(self):
         user = self.request.user
@@ -57,6 +59,7 @@ class ProfileList(ListCreateAPIView):
     """
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, )
+    pagination_class = ForumPagination
 
     def get_queryset(self):
         user_id = self.request.user.id
@@ -123,6 +126,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 class ViewedCompanyList(ListCreateAPIView):
     serializer_class = ViewedCompanySerializer
     permission_classes = (IsAuthenticated, )
+    pagination_class = ForumPagination
 
     def get_queryset(self):
         user_id = self.request.user.id

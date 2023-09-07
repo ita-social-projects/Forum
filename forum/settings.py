@@ -134,7 +134,6 @@ REST_FRAMEWORK = {
         'authentication.authentication.DjoserTokenAuthentication',
 
     ),
-    'DEFAULT_PAGINATION_CLASS': 'forum.pagination.ForumPagination',
 }
 
 TOKEN_EXPIRATION_TIME = timedelta(days=14)
