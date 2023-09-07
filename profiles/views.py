@@ -6,7 +6,7 @@ from rest_framework import status
 from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
-from .permissions import UserIsProfileOwnerOrReadOnly, IsAllowedToViewContacts
+from .permissions import UserIsProfileOwnerOrReadOnly
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -86,12 +86,18 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     Retrieve or delete a profile instance.
     """
     queryset = Profile.objects.filter(is_deleted=False)
-    permission_classes = (UserIsProfileOwnerOrReadOnly,)
-    # TODO: add permission for GET contact request
+    permission_classes = [UserIsProfileOwnerOrReadOnly]
 
     def get_serializer_class(self):
         get_contacts = self.request.query_params.get("with_contacts")
+
+        profile_pk = self.kwargs.get('pk')
+        profile_instance = Profile.objects.filter(profile_id=profile_pk).first()
+        user_pk = self.request.user.id
+
         if self.request.method == 'GET':
+            if profile_instance.person.id == user_pk:
+                return ProfileSerializer
             return ProfileSensitiveDataROSerializer if get_contacts else ProfileDetailSerializer
         else:
             return ProfileSerializer
