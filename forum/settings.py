@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 from decouple import config
 from corsheaders.defaults import default_headers
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -58,11 +59,14 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = (
-#     'http://localhost:3000'
-    # 'http://0.0.0.0',
-    # 'http://127.0.0.1',
-# )
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST').split(',')
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Access-Control-Expose-Headers', 'Access-Control-Allow-Headers'
+]
 
 ROOT_URLCONF = 'forum.urls'
 
@@ -143,12 +147,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'Access-Control-Expose-Headers', 'Access-Control-Allow-Headers'
-]
 
 TOKEN_EXPIRATION_TIME = timedelta(days=14)
 
