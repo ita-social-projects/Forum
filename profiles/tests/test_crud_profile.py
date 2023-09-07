@@ -340,7 +340,7 @@ class TestProfileDetailAPIView(APITestCase):
             }
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual([1, 2], response.data.get('comp_category'))
+        self.assertEqual([self.test_category.category_id, self.test_category2.category_id], response.data.get('comp_category'))
 
     def test_partial_update_profile_activity(self):
         self.client.force_authenticate(self.test_person_with_profile)
@@ -351,7 +351,7 @@ class TestProfileDetailAPIView(APITestCase):
             }
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual([1, 2], response.data.get('comp_activity'))
+        self.assertEqual([self.test_activity.activity_id, self.test_activity2.activity_id], response.data.get('comp_activity'))
 
     # PUT requests section
     def test_full_update_profile_authorized_with_partial_data(self):
