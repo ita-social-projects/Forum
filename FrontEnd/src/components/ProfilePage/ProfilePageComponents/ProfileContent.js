@@ -19,14 +19,17 @@ const request_user = await axios.get('http://localhost:8000/api/auth/users/me/',
          'Authorization': token}})
     .then(response => {return response.data})
 
-const user_profile = await axios.get('http://localhost:8000/api/profiles?userid='+request_user.id,
+const own_profile_url = 'http://localhost:8000/api/profiles?userid='+request_user.id
+
+const user_profile = await axios.get(own_profile_url,
   {withCredentials: true,
    headers: {
          'Authorization': token}})
-    .then(response => {return response.data});
-return user_profile
-  }
-}
+    .then(response => {
+    console.log(response.data);
+    return response.data})
+    }}
+
 getUserID()
 
 const INFOLINKS = [
