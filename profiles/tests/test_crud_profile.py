@@ -125,7 +125,7 @@ class TestProfileDetailAPIView(APITestCase):
                 self.test_category.category_id
             ],
             "comp_activity": [
-                1
+                self.test_activity.activity_id
             ]
         }
 
