@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase, APIClient
 from authentication.models import CustomUser
 from profiles.models import Profile, Category, Activity
-from utils.dump_response import dump # noqa
+from utils.dump_response import dump  # noqa
 import io
 from PIL import Image
 import os
@@ -76,10 +76,10 @@ class TestProfileDetailAPIView(APITestCase):
             comp_address="Kyiv",
             startup_idea="Test 2 start up idea"
         )
-        Category.objects.create(category_id=1,
-                                name='cheese')
-        Activity.objects.create(activity_id=1,
-                                name='importer')
+        self.test_category = Category.objects.create(name='cheese')
+        self.test_category2 = Category.objects.create(name="honey")
+        self.test_activity = Activity.objects.create(name='importer')
+        self.test_activity2 = Activity.objects.create(name='producer')
 
         self.right_image = self._generate_image('jpeg', (10, 10))
         self.wrong_image = self._generate_image('png', (3000, 3000))
@@ -99,7 +99,7 @@ class TestProfileDetailAPIView(APITestCase):
             "startup_idea": 'very good idea',
             "is_deleted": False,
             "comp_category": [
-                2
+                1
             ],
             "comp_activity": [
                 2
@@ -122,7 +122,7 @@ class TestProfileDetailAPIView(APITestCase):
             "startup_idea": 'very good idea',
             "is_deleted": False,
             "comp_category": [
-                1
+                self.test_category.category_id
             ],
             "comp_activity": [
                 1
@@ -131,8 +131,8 @@ class TestProfileDetailAPIView(APITestCase):
 
         self.right_data_for_create = {
             "person": self.test_person_without_profile.id,
-            "comp_category": [1],
-            "comp_activity": [1]
+            "comp_category": [self.test_category.category_id],
+            "comp_activity": [self.test_activity.activity_id]
         }
         self.wrong_data_for_create = {
             "person": self.test_person_without_profile,
@@ -260,7 +260,7 @@ class TestProfileDetailAPIView(APITestCase):
         # check the profile is deleted
         response = self.client.get("/api/profiles/")
         profile_id_list = [profile['profile_id'] for profile in response.data]
-        self.assertEqual(profiles_len_before_del-1, len(response.data))
+        self.assertEqual(profiles_len_before_del - 1, len(response.data))
         self.assertTrue(user_profile.profile_id not in profile_id_list)
         # try access deleted profile
         response = self.client.get("/api/profiles/{profile_id}".format(profile_id=user_profile.profile_id))
@@ -331,6 +331,28 @@ class TestProfileDetailAPIView(APITestCase):
             })
         self.assertEqual(400, response.status_code)
 
+    def test_partial_update_profile_category(self):
+        self.client.force_authenticate(self.test_person_with_profile)
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
+            data={
+                "comp_category": [self.test_category.category_id, self.test_category2.category_id]
+            }
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual([1, 2], response.data.get('comp_category'))
+
+    def test_partial_update_profile_activity(self):
+        self.client.force_authenticate(self.test_person_with_profile)
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
+            data={
+                "comp_activity": [self.test_activity.activity_id, self.test_activity2.activity_id]
+            }
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual([1, 2], response.data.get('comp_activity'))
+
     # PUT requests section
     def test_full_update_profile_authorized_with_partial_data(self):
         self.client.force_authenticate(self.test_person_with_profile)
@@ -372,7 +394,6 @@ class TestProfileDetailAPIView(APITestCase):
             path="/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id),
             data=self.right_full_data_for_full_update)
         self.assertEqual(403, response.status_code, response.content)
-
 
     # POST requests section
     def test_create_profile_authorized(self):
