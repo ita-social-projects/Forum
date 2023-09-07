@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer
+from rest_framework.exceptions import ValidationError
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -64,6 +65,12 @@ class ProfileList(ListCreateAPIView):
         activity_type = self.request.query_params.get("activity_type")
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORECA"]
 
+        if self.request.query_params:
+            try:
+                userid = self.request.query_params.get('userid')
+                return Profile.objects.filter(person_id=userid)
+            except ValueError:
+                raise ValidationError(detail='Bad request')
         if company_type == "startup":
             return Profile.objects.filter(comp_is_startup=True)
         elif company_type == "company":
@@ -129,12 +136,4 @@ class ViewedCompanyList(ListCreateAPIView):
         return ViewedCompany.objects.filter(user=user_id)
 
 
-class GetUserId(ListAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticated,)
 
-    def list(self, request):
-        profile = Profile.objects.get(person_id=self.request.user)
-        serializer = ProfileSerializer(profile)
-        return Response(serializer.data)

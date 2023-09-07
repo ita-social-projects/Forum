@@ -10,21 +10,24 @@ import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
+async function getUserID(){
 if(sessionStorage.getItem("isAuthenticated")){
 const token  = "Token " + sessionStorage.getItem('auth_token');
-axios
-  .get('http://localhost:8000/api/getuserid/',
+const request_user = await axios.get('http://localhost:8000/api/auth/users/me/',
   {withCredentials: true,
-  headers: {
-        'Authorization': token}})
-  .then(function (response) {
-    console.log(response.data);
-    console.log(response.status);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+   headers: {
+         'Authorization': token}})
+    .then(response => {return response.data})
+
+const user_profile = await axios.get('http://localhost:8000/api/profiles?userid='+request_user.id,
+  {withCredentials: true,
+   headers: {
+         'Authorization': token}})
+    .then(response => {return response.data});
+return user_profile
+  }
 }
+getUserID()
 
 const INFOLINKS = [
     {

@@ -58,11 +58,11 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    '0.0.0.0',
-    '127.0.0.1'
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:3000'
+    # 'http://0.0.0.0',
+    # 'http://127.0.0.1',
+# )
 
 ROOT_URLCONF = 'forum.urls'
 
