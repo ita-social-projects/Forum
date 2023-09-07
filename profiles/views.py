@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
+
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer
@@ -65,7 +66,7 @@ class ProfileList(ListCreateAPIView):
         user_id = self.request.user.id
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
-        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORECA"]
+        HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
         if company_type == "startup":
             return Profile.objects.filter(comp_is_startup=True)
