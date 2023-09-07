@@ -83,7 +83,11 @@ class ProfileList(ListCreateAPIView):
 
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
     """
-    Retrieve or delete a profile instance.
+    Retrieve, update or delete a profile instance.
+    Retrieve:
+        If user is a person in the profile, full info returned.
+        Else profile info without sensitive data returned.
+        If user is authenticated, he can get sensitive data via query param 'with_contacts'.
     """
     queryset = Profile.objects.filter(is_deleted=False)
     permission_classes = [UserIsProfileOwnerOrReadOnly]
