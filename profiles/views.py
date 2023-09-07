@@ -96,7 +96,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
             return Profile.objects.filter(profile_id=pk)
 
     def get_serializer_class(self):
-        get_contacts = self.request.query_params.get("get_contacts")
+        get_contacts = self.request.query_params.get("with_contacts")
         if self.request.method == 'GET':
             return ProfileSensitiveDataROSerializer if get_contacts else ProfileDetailSerializer
         else:
@@ -104,7 +104,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        if not request.user.is_authenticated and request.query_params.get("get_contacts"):
+        if not request.user.is_authenticated and request.query_params.get("with_contacts"):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         if request.user.id == instance.person.id:

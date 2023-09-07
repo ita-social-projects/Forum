@@ -225,13 +225,13 @@ class TestProfileDetailAPIView(APITestCase):
         )
 
     def test_get_contact_info_unauthorized(self):
-        response = self.client.get("/api/profiles/{profile_id}?get_contacts=True".format(
+        response = self.client.get("/api/profiles/{profile_id}?with_contacts=True".format(
             profile_id=self.test_profile2.profile_id))
         self.assertEqual(401, response.status_code)
 
     def test_get_contact_info_authorized(self):
         self.client.force_authenticate(self.test_person_with_profile)
-        response = self.client.get("/api/profiles/{profile_id}?get_contacts=True".format(
+        response = self.client.get("/api/profiles/{profile_id}?with_contacts=True".format(
             profile_id=self.test_profile2.profile_id))
         self.assertEqual(200, response.status_code)
         self.assertEqual(
