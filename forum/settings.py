@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from datetime import timedelta
-from os import nice
 from pathlib import Path
 from decouple import config
 

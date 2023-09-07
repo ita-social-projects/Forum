@@ -20,7 +20,7 @@ class SavedCompaniesListCreate(ListCreateAPIView):
     
     def get_queryset(self):
         user = self.request.user
-        saved_companies = SavedCompany.objects.filter(user=user)
+        saved_companies = SavedCompany.objects.filter(user=user).order_by("company_id")
         return saved_companies
 
     def post(self, request):
@@ -69,13 +69,13 @@ class ProfileList(ListCreateAPIView):
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
         if company_type == "startup":
-            return Profile.objects.filter(comp_is_startup=True)
+            return Profile.objects.filter(comp_is_startup=True).order_by("profile_id")
         elif company_type == "company":
-            return Profile.objects.filter(comp_registered=True)
+            return Profile.objects.filter(comp_registered=True).order_by("profile_id")
         if activity_type in HEADER_ACTIVITIES:
-            return Profile.objects.filter(comp_activity__name=activity_type)
+            return Profile.objects.filter(comp_activity__name=activity_type).order_by("profile_id")
 
-        return Profile.objects.filter(is_deleted=False)
+        return Profile.objects.filter(is_deleted=False).order_by("profile_id")
 
     def create(self, request):
         profile = Profile.objects.filter(person_id=self.request.user)
@@ -131,4 +131,4 @@ class ViewedCompanyList(ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.request.user.id
-        return ViewedCompany.objects.filter(user=user_id)
+        return ViewedCompany.objects.filter(user=user_id).order_by("company_id")
