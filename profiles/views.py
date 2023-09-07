@@ -8,6 +8,7 @@ from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompa
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly, IsAllowedToViewContacts
 
+
 class SavedCompaniesListCreate(ListCreateAPIView):
     """
     List of saved companies.
@@ -57,7 +58,7 @@ class ProfileList(ListCreateAPIView):
      include_all: bool.
     """
     serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_queryset(self):
         company_type = self.request.query_params.get("company_type")
@@ -85,7 +86,8 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     Retrieve or delete a profile instance.
     """
     queryset = Profile.objects.filter(is_deleted=False)
-    permission_classes = (UserIsProfileOwnerOrReadOnly, )
+    permission_classes = (UserIsProfileOwnerOrReadOnly,)
+    # TODO: add permission for GET contact request
 
     def get_serializer_class(self):
         get_contacts = self.request.query_params.get("with_contacts")
@@ -94,22 +96,11 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         else:
             return ProfileSerializer
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        if not request.user.is_authenticated and request.query_params.get("with_contacts"):
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-        if request.user.id == instance.person.id:
-            serializer = ProfileSerializer(instance)
-        else:
-            serializer = self.get_serializer(instance)
-
-        return Response(serializer.data)
+    # TODO: return for the owner full info
 
     def perform_destroy(self, instance):
         instance.is_deleted = True
         instance.save()
-
 
 
 class ViewedCompanyList(ListCreateAPIView):
