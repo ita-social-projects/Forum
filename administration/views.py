@@ -8,35 +8,27 @@ from .pagination import UserListPagination
 
 
 class UsersListView(ListAPIView):
-    queryset = CustomUser.objects.filter(is_superuser=False).order_by('id')
+    """
+    List of users
+    """
     serializer_class = AdminUserSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     pagination_class = UserListPagination
 
+    def get_queryset(self):
+        return CustomUser.objects.filter(is_superuser=False).order_by('id')
+
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
+    """
 
+    """
     permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = AdminUserSerializer
 
-    def retrieve(self, request, pk):
-        user = CustomUser.objects.get(pk=pk)
-        serializer = AdminUserSerializer(user)
-        return Response({'User': serializer.data})
+    def get_queryset(self):
+        return CustomUser.objects.filter(is_superuser=False).order_by('id')
 
-    def update(self, request, pk, **kwargs):
-        user = CustomUser.objects.get(pk=pk)
 
-        if self.request.method == 'PUT':
-            serializer = AdminUserSerializer(user, data=request.data)
-        elif self.request.method == 'PATCH':
-            serializer = AdminUserSerializer(user, data=request.data, partial=True)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk):
-        user = CustomUser.objects.get(pk=pk)
-        user.delete()
-        return Response(f'User {pk} deleted', status=status.HTTP_204_NO_CONTENT)
