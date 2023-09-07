@@ -1,10 +1,11 @@
+import io
+import os
+from PIL import Image
 from rest_framework.test import APITestCase, APIClient
+
+from utils.dump_response import dump # noqa
 from authentication.models import CustomUser
 from profiles.models import Profile, Category, Activity
-from utils.dump_response import dump # noqa
-import io
-from PIL import Image
-import os
 
 
 
@@ -47,18 +48,18 @@ class TestProfileDetailAPIView(APITestCase):
         )
 
         Category.objects.create(category_id=1,
-                                name='cheese')
+                                name="cheese")
         Activity.objects.create(activity_id=1,
-                                name='importer')
+                                name="importer")
 
     @staticmethod
     def _generate_image(ext, size=(100, 100)):
         '''for mocking png and jpeg files'''
         file = io.BytesIO()
-        image = Image.new('RGB', size=size)
+        image = Image.new("RGB", size=size)
         formatext = ext.upper()
         image.save(file, formatext)
-        file.name = f'test.{formatext}'
+        file.name = f"test.{formatext}"
         file.seek(0)
         return file
 
@@ -77,8 +78,8 @@ class TestProfileDetailAPIView(APITestCase):
             }).data["auth_token"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token1}")
 
-        self.right_image = self._generate_image('jpeg', (10, 10))
-        self.wrong_image = self._generate_image('png', (3000, 3000))
+        self.right_image = self._generate_image("jpeg", (10, 10))
+        self.wrong_image = self._generate_image("png", (3000, 3000))
 
         self.wrong_full_data_for_full_update = {
             "profile_id": self.test_profile,
@@ -89,10 +90,10 @@ class TestProfileDetailAPIView(APITestCase):
             "comp_phone_number": 167300044411,
             "comp_EDRPOU": 12345678,
             "comp_year_of_foundation": 2005,
-            "comp_service_info": 'very good service',
-            "comp_product_info": 'very good product',
-            "comp_address": 'Kyiv',
-            "startup_idea": 'very good idea',
+            "comp_service_info": "very good service",
+            "comp_product_info": "very good product",
+            "comp_address": "Kyiv",
+            "startup_idea": "very good idea",
             "is_deleted": False,
             "comp_category": [
                 2
@@ -103,19 +104,19 @@ class TestProfileDetailAPIView(APITestCase):
         }
         self.right_full_data_for_full_update = {
             "profile_id": self.test_profile,
-            "person": self.test_person.id,
+            "person": self.test_person3.id,
             "comp_official_name": "Jannifer",
             "comp_region": 'E',
             "comp_common_info": "Good Very",
             "comp_phone_number": 123456789012,
             "comp_EDRPOU": 12345678,
             "comp_year_of_foundation": 2005,
-            "comp_service_info": 'very good service',
-            "comp_product_info": 'very good product',
-            "comp_address": 'Kyiv',
+            "comp_service_info": "very good service",
+            "comp_product_info": "very good product",
+            "comp_address": "Kyiv",
             "comp_banner_image": self.wrong_image,
-            "person_position": 'director',
-            "startup_idea": 'very good idea',
+            "person_position": "director",
+            "startup_idea": "very good idea",
             "is_deleted": False,
             "comp_category": [
                 1
@@ -165,15 +166,15 @@ class TestProfileDetailAPIView(APITestCase):
     def test_delete_profile_authorized(self):
         # get all before delete
         response = self.client.get("/api/profiles/")
-        profiles_len_before_del = len(response.data)
+        profiles_len_before_del = len(response.data["results"])
         pk = Profile.objects.get(person_id=self.test_person.id)
         # del profile
         response = self.client.delete(f"/api/profiles/{pk.profile_id}")
         self.assertEqual(204, response.status_code, response.content)
         # check the profile is deleted
         response = self.client.get("/api/profiles/")
-        persons = [response.data[i]["person"] for i in range(len(response.data))]
-        self.assertEqual(profiles_len_before_del-1, len(response.data))
+        persons = [response.data["results"][i]["person"] for i in range(len(response.data["results"]))]
+        self.assertEqual(profiles_len_before_del-1, len(response.data["results"]))
         self.assertTrue(1 not in persons)
         # try access deleted profile
         response = self.client.get(f"/api/profiles/{pk.profile_id}")
@@ -225,7 +226,7 @@ class TestProfileDetailAPIView(APITestCase):
             path=self.update_url,
             data={
                 "comp_official_name": 12345,
-                "comp_year_of_foundation": 'Jane'
+                "comp_year_of_foundation": "Jane"
             })
         self.assertEqual(400, response.status_code)
 
