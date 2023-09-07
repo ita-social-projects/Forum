@@ -102,8 +102,6 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         else:
             return ProfileSerializer
 
-    # TODO: return for the owner full info
-
     def perform_destroy(self, instance):
         instance.is_deleted = True
         instance.save()
