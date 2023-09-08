@@ -9,76 +9,19 @@ import './CompaniesCards.css';
 const MainCompanies = ({ companyData, isAuthorized }) => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
-    const [usersSavedList, setUsersSavedList] = useState([]);
 
-    const authToken = 'c1080bd82727ae99c40fba60c917e7bb85e1f069'                        // change login of getting authorization token
+    // those variables we would use for axios to get data from beckend
+    const usersSavedList = []
 
-    const serverAddress = process.env.REACT_APP_SERVER_ADDRESS;
-    const getSavedListUrl = process.env.REACT_APP_SAVED_LIST;
+    // get saved list code here
+    // add company to saved list code here
+    addToSavedList((profile_id) = {
 
-    // get saved list
+    })
+    // del company from saved list code here
+    delFromSavedList((profile_id) = {
 
-   
-    useEffect(() => {
-        if (isAuthorized === true) {
-            // Make an AJAX request to Django API to get saved list
-            axios.get(`${serverAddress}/${getSavedListUrl}`, {
-                token: 'c1080bd82727ae99c40fba60c917e7bb85e1f069'
-                // headers: {
-                //     Authorization: authToken
-                // }
-            })
-            .then(response => {
-                // renew list of saved companies
-                setUsersSavedList(response.data.map(item => item.id));
-            })
-            .catch(error => {
-                console.error('Error fetching saved list:', error);
-            });
-        }
-    }, []);
-
-    // add company to saved list
-
-    const addToSavedList = (profile_id) => {
-        
-        axios.post(`${serverAddress}/${getSavedListUrl}`, {profile_id}, {
-            headers: {
-                Authorization: authToken                                                                // token here
-            }
-        })
-        .then(response => {
-
-            // add profile_id to list
-            if (!usersSavedList.includes(profile_id)) {
-                usersSavedList.push(profile_id);
-            }
-        })
-        .catch(error => {
-            console.error('Error while company adding:', error);
-        });
-    }
-
-    // del from send list
-
-    const delFromSavedList = (profile_id) => {
-        
-        // Add authorization token HERE
-        const authToken = ''
-        axios.post(`${serverAddress}/${getSavedListUrl}/${profile_id}/`, {}, {
-            headers: {
-                Authorization: authToken                                                                   // token here
-            }
-        })
-        .then(response => {
-
-            // delete profile_id from list
-            usersSavedList = usersSavedList.filter(item => item !== profile_id);
-        })
-        .catch(error => {
-            console.error('Error while company deleting:', error);
-        });
-    }
+    })
     
     return (
         <div className="product-card">
@@ -110,7 +53,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                                     <>
                                         <div>
                                             {/* if company added - del from saved list */}
-                                            <button className='product-card__buttons' onClick={() => delFromSavedList(companyData.profile_id)}>
+                                            <button className='product-card__buttons'/* onClick={() => delFromSavedList(companyData.profile_id)}*/>
                                                 <img src={wish_list_checklist_added} alt=""/>
                                             </button>
                                         </div>
@@ -119,7 +62,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                                     <>
                                         <div>
                                             {/* if compony not added - add to saved list */}
-                                            <button className='product-card__buttons' onClick={() => addToSavedList(companyData.profile_id)}>
+                                            <button className='product-card__buttons'/* onClick={() => addToSavedList(companyData.profile_id)}*/>
                                                 <img src={wish_list_checklist} alt=""/>
                                             </button>
                                         </div>
