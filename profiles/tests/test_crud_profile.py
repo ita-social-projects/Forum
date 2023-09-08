@@ -71,10 +71,10 @@ class TestProfileDetailAPIView(APITestCase):
         )
 
     def test_get_profile_authorized_not_owner(self):
-        self.profile2 = ProfileCompanyFactory()
+        profile2 = ProfileCompanyFactory()
 
         self.client.force_authenticate(self.user)
-        response = self.client.get(path="/api/profiles/{profile_id}".format(profile_id=self.profile2.profile_id))
+        response = self.client.get(path="/api/profiles/{profile_id}".format(profile_id=profile2.profile_id))
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertIsNone(response.data.get("comp_phone_number"))
         self.assertIsNone(response.data.get("email"))
@@ -120,11 +120,11 @@ class TestProfileDetailAPIView(APITestCase):
 
         # check the profile is deleted
         response = self.client.get(path="/api/profiles/")
-        deleted_profile = Profile.objects.get(profile_id=self.profile.profile_id)
         self.assertEqual(0, len(response.data["results"]))
-        self.assertTrue(deleted_profile.is_deleted)
+        self.profile.refresh_from_db()
+        self.assertTrue(self.profile.is_deleted)
 
-        # # try access deleted profile
+        # try access deleted profile
         response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.profile.profile_id))
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
