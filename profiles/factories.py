@@ -52,13 +52,13 @@ class ProfileFactory(factory.django.DjangoModelFactory):
 
 
 class ProfileStartupFactory(ProfileFactory):
-    comp_official_name = "Test Official Startup"
+    comp_official_name = factory.Sequence(lambda n: f"Test Official Startup {n}")
     startup_idea = "Test startup idea"
     comp_registered = False
     comp_is_startup = True
 
 
 class ProfileCompanyFactory(ProfileFactory):
-    comp_official_name = "Test Official Company"
+    comp_official_name = factory.Sequence(lambda n: f"Test Official Company {n}")
     comp_registered = True
     comp_is_startup = False
