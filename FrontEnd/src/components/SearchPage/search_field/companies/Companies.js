@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import wish_list_checklist from './wish_list_checklist.svg';
-import wish_list_checklist_added from './wish_list_checklist_added.svg'
+import wish_list_checklist from './img/wish_list_checklist.svg';
+import wish_list_checklist_added from './img/wish_list_checklist_added.svg'
 import './CompaniesCards.css';
 
 
@@ -32,7 +30,9 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                 </div>
                 <div className="product-card__text-block">
                     <div className="product-card__text-block__header">
-                        <div className="product-card__category-text align_items_left">{companyData.comp_category.map(category => category.name).join(' ')}</div>
+                        <div className="product-card__category-text align_items_left">
+                            {companyData.comp_category.map(category => category.name).join(' ')}
+                        </div>
                         <div className="product-card__name-text align_items_left">
                             <Link className='product-card__name-text_link' to={`/profile/${companyData.profile_id}`}>{companyData.comp_name}</Link>
                             <br />
@@ -42,7 +42,9 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                     <div className="product-card__badges-block">
                         <div className="product-card__badges">
                             <div className="product-card__badge">
-                                <div className="product-card__badge-text">{currentYear - companyData.comp_year_of_foundation} років досвіду</div>
+                                <div className="product-card__badge-text">
+                                    {currentYear - companyData.comp_year_of_foundation} років досвіду
+                                </div>
                             </div>
                         </div>
 
@@ -54,7 +56,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                                     <>
                                         <div>
                                             {/* if company added - del from saved list */}
-                                            <button className='product-card__buttons'/* onClick={() => delFromSavedList(companyData.profile_id)}*/>
+                                            <button className='product-card__buttons' onClick={() => delFromSavedList(companyData.profile_id)}>
                                                 <img src={wish_list_checklist_added} alt=""/>
                                             </button>
                                         </div>
@@ -63,7 +65,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                                     <>
                                         <div>
                                             {/* if compony not added - add to saved list */}
-                                            <button className='product-card__buttons'/* onClick={() => addToSavedList(companyData.profile_id)}*/>
+                                            <button className='product-card__buttons' onClick={() => addToSavedList(companyData.profile_id)}>
                                                 <img src={wish_list_checklist} alt="Add to wish list"/>
                                             </button>
                                         </div>

@@ -154,11 +154,6 @@
     color: var(--companies-card-button);
     border: none;
     background-color: var(--main_light-color);
-    color: red
-}
-
-.product-card__buttons_added {
-    background-color: red;
 }
 
 .product-card__buttons:hover {
