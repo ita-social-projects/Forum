@@ -1,5 +1,6 @@
 import css from "./UserTable.module.css"
 import {useNavigate} from "react-router-dom";
+import PaginationButtons from "./PaginationButtons";
 
 const COLUMN_NAMES = ["ID", "ФІО", "Пошта", "Телефон"]
 
@@ -71,7 +72,9 @@ function UserTable() {
     }
 
     return (
-        <table  className={css["table-section"]}>
+        <div>
+            <PaginationButtons></PaginationButtons>
+            <table  className={css["table-section"]}>
             <thead>
                 <tr className={css["table-header"]}>
                     {COLUMN_NAMES.map((column) =>(
@@ -90,6 +93,8 @@ function UserTable() {
                 ))}
             </tbody>
         </table>
+        </div>
+
     );
 };
 

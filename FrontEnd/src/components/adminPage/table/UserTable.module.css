@@ -1,6 +1,7 @@
 .table-section {
     border-collapse: collapse;
-    margin: 25px 0;
+    margin-bottom: 25px;
+    margin-top: 10px;
     min-width: 1050px;
 }
 
@@ -14,6 +15,7 @@
     padding-left: 15px;
     padding-bottom: 20px;
     padding-top: 20px;
+    text-align: center;
 }
 
 .table-element {
