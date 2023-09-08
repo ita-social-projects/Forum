@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from authentication.models import CustomUser
 
-from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
+from .models import Profile, Activity, Category, SavedCompany, ViewedCompany, Region
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -78,3 +78,9 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
         if company.person == user:
             raise serializers.ValidationError({"error": "You can not view your company."})
         return attrs
+
+
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = "__all__"
