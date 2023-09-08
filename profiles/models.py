@@ -8,6 +8,34 @@ from authentication.models import CustomUser
 
 
 class Profile(models.Model):
+
+    class Region(models.TextChoices):
+        Kyiv = 'Kyiv', "Київська область"
+        Vinnytsia = 'Vinnytsia', "Вінницька область"
+        Volyn = 'Volyn', "Волинська область"
+        Dnipro = 'Dnipro', "Дніпропетровська область"
+        Donetsk = 'Donetsk', "Донецька область"
+        Zhytomyr = 'Zhytomyr', "Житомирська область"
+        Zakarpattia = 'Zakarpattia', "Закарпатська область"
+        Zaporizhzhia = 'Zaporizhzhia', "Запорізька область"
+        IvanoFrankivsk = 'IvanoFrankivsk', "Івано-Франківська область"
+        Kirovohrad = 'Kirovohrad', "Кіровоградська область"
+        Crimea = 'Crimea', "Крим"
+        Luhansk = 'Luhansk', "Луганська область"
+        Lviv = 'Lviv', "Львівська область"
+        Mykolaiv = 'Mykolaiv', "Миколаївська область"
+        Odesa = 'Odesa', "Одеська область"
+        Poltava = 'Poltava', "Полтавська область"
+        Rivne = 'Rivne', "Рівненська область"
+        Sumy = 'Sumy', "Сумська область"
+        Ternopil = 'Ternopil', "Тернопільська область"
+        Kharkiv = 'Kharkiv', "Харківська область"
+        Kherson = 'Kherson', "Херсонська область"
+        Khmelnytskyi = 'Khmelnytskyi', "Хмельницька область"
+        Cherkasy = 'Cherkasy', "Черкаська область"
+        Chernivtsi = 'Chernivtsi', "Чернівецька область"
+        Chernihiv = 'Chernihiv', "Чернігівська область"
+
     profile_id = models.AutoField(primary_key=True)
     comp_name = models.CharField(max_length=50, default=None, null=True)
     comp_registered = models.BooleanField(default=None, null=True)
@@ -15,7 +43,7 @@ class Profile(models.Model):
     comp_category = models.ManyToManyField("Category")
     comp_activity = models.ManyToManyField("Activity")
     comp_official_name = models.CharField(max_length=255, unique=True, default=None, null=True)
-    comp_region = models.ManyToManyField("Region")
+    comp_region = models.CharField(max_length=128, choices=Region.choices, default=None, null=True)
     comp_common_info = models.CharField(max_length=255, default=None, null=True)
     comp_phone_number = models.CharField(
         max_length=12,
@@ -59,9 +87,3 @@ class ViewedCompany(models.Model):
 
     class Meta:
         unique_together = (('user', 'company'),)
-
-
-class Region(models.Model):
-    region_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-
