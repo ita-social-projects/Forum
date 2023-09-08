@@ -1,22 +1,19 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from authentication.models import CustomUser
+from authentication.factories import UserFactory
+
 from profiles.models import Profile
+from utils.dump_response import dump # noqa
 
 
 class UserRegistrationAPITests(APITestCase):
     def setUp(self):
-        CustomUser.objects.create_user(
-            person_email="test@test.com",
-            password="Test1234",
-            person_name="Test",
-            person_surname="Test",
-        )
+        self.user = UserFactory(person_email="test@test.com")
 
     def test_register_user_successful(self):
         response = self.client.post(
-            "/api/auth/users/",
+            path="/api/auth/users/",
             data={
                 "person_email": "jane@test.com",
                 "password": "Test1234",
@@ -43,10 +40,9 @@ class UserRegistrationAPITests(APITestCase):
         self.assertEqual(Profile.objects.get().person.person_email, "jane@test.com")
         self.assertEqual(Profile.objects.get().comp_name, "My Company")
 
-
     def test_register_user_email_incorrect(self):
         response = self.client.post(
-            "/api/auth/users/",
+            path="/api/auth/users/",
             data={
                 "person_email": "jane@testcom",
                 "password": "Test1234",
@@ -73,7 +69,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_email_exists(self):
         response = self.client.post(
-            "/api/auth/users/",
+            path="/api/auth/users/",
             data={
                 "person_email": "test@test.com",
                 "password": "Test1234",
@@ -98,7 +94,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_password_incorrect(self):
         response = self.client.post(
-            "/api/auth/users/",
+            path="/api/auth/users/",
             data={
                 "person_email": "jane@test.com",
                 "password": "test",
@@ -127,7 +123,7 @@ class UserRegistrationAPITests(APITestCase):
 
     def test_register_user_who_represent_empty_fields(self):
         response = self.client.post(
-            "/api/auth/users/",
+            path="/api/auth/users/",
             data={
                 "person_email": "jane@test.com",
                 "password": "Test1234",
@@ -150,9 +146,9 @@ class UserRegistrationAPITests(APITestCase):
             response.json(),
         )
 
-    def test_register_user_who_represent_both_choosen(self):
+    def test_register_user_who_represent_both_chosen(self):
         response = self.client.post(
-            "/api/auth/users/",
+            path="/api/auth/users/",
             data={
                 "person_email": "jane@test.com",
                 "password": "Test1234",
