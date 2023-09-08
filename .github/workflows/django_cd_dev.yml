@@ -1,0 +1,31 @@
+name: Django CD DEV
+on: workflow_dispatch
+
+env:
+    DEBUG: ${{ vars.DEV_DEBUG }}
+    SECRET_KEY: ${{ secrets.DEV_SECRET_KEY }}
+    ENGINE: ${{ vars.ENGINE }}
+    HOST: ${{ vars.POSTGRES_HOST }}
+    PORT: ${{ vars.POSTGRES_PORT }}
+    DB: ${{ vars.DEV_DB }}
+    USER: ${{ vars.POSTGRES_USER }}
+    PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+    DATABASE: ${{ vars.POSTGRES_DB }}
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker compouse DOWN old containers
+        run:  docker compose -f docker-compose.dev.yml down -v
+      - name: Docker compouse UP new containers
+        run: docker compose -f docker-compose.dev.yml up -d --build
+      - name: Docker compouse MIGRATE models
+        run: docker compose -f docker-compose.dev.yml exec web-dev python manage.py migrate --noinput
+      - name: Clean up old docker resources 
+        run: |
+          docker container prune -f
+          docker image prune -f

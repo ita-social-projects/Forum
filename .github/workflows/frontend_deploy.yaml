@@ -1,0 +1,19 @@
+name: Frontend_Deploy
+on: workflow_dispatch
+
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker compouse DOWN old containers
+        run:  docker compose -f FrontEnd/docker-compose.yml down -v
+      - name: Docker compouse UP new containers
+        run: docker compose -f FrontEnd/docker-compose.yml up -d --build
+      - name: Clean up old docker resources 
+        run: |
+          docker container prune -f
+          docker image prune -f
