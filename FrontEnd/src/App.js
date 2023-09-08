@@ -18,24 +18,17 @@ import TermsAndConditions from './components/terms-and-conditions-app/terms_cond
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import MainPage from './components/landing-page/MainPage';
 import AdminPage from "./components/adminPage/AdminPage";
+import BasicPage from "./components/basicPage/BasicPage";
 
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header isAuthorized={true}></Header>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/profile/*" element={<ProfilePage />} />
-          <Route path="/authorization" element={<AuthorizationPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/*" element={<BasicPage />} />
           <Route path="/admin/*" element={<AdminPage />} />
         </Routes>
-        <Footer />
-        <ScrollToTopButton />
       </div>
     </BrowserRouter>
   );
