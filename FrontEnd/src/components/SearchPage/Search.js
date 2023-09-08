@@ -10,8 +10,8 @@ import './search_page.css';
 
 const ITEMS_PER_PAGE = 6;
 
-export function Search () {
-    
+export function Search (props) {
+  
     const [searchResults, setSearchResults] = useState([]);
     const [searchPerformed, setSearchPerformed] = useState(false);
     const [error, setError] = useState(null);
@@ -62,7 +62,7 @@ export function Search () {
                 <div className='new-companies-main'>
                     {!error && searchResults.length > 0 ? (
                         <>
-                            <SearchResults results={searchResults} searchPerformed={searchPerformed} displayedResults={displayedResults} />
+                            <SearchResults results={searchResults} searchPerformed={searchPerformed} displayedResults={displayedResults} isAuthorized={props.isAuthorized} />
                             <br/>
                         </>
                     ) : (

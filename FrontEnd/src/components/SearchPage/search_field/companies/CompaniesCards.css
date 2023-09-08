@@ -66,6 +66,7 @@
 
 .product-card__name-text_link {
     text-decoration: none;              /* delete underline */
+    color:var(--text-color);
 }
 
 .product-card__name-text_link:visited {
@@ -153,6 +154,11 @@
     color: var(--companies-card-button);
     border: none;
     background-color: var(--main_light-color);
+    color: red
+}
+
+.product-card__buttons_added {
+    background-color: red;
 }
 
 .product-card__buttons:hover {

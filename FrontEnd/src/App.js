@@ -7,7 +7,6 @@
 //npm install @mui/material @emotion/react @emotion/styled
 //npm install dotenv --save
 //npm install path-browserify os-browserify crypto-browserify --save-dev
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AuthorizationPage from './components/authorization/AuthorizationPage';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
@@ -33,7 +32,7 @@ function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/search" element={<Search isAuthorized={true}/>} />
         </Routes>
         <Footer />
         <ScrollToTopButton />

@@ -1,7 +1,7 @@
 import MainCompanies from './companies/Companies';
 import './Text.css'
 
-const SearchResults = ({ results, displayedResults }) => {
+const SearchResults = ({ results, displayedResults, isAuthorized }) => {
     let error = null;
 
     if (results && results.error) {
@@ -16,7 +16,7 @@ const SearchResults = ({ results, displayedResults }) => {
                         <div className="row">
                             {displayedResults.map((result, resultIndex) => (
                                 <div key={resultIndex} className="col-md-4">
-                                    <MainCompanies companyData={result} />
+                                    <MainCompanies companyData={result} isAuthorized={isAuthorized}/>
                                 </div>
                             ))}
                         </div>
