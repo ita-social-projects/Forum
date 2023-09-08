@@ -5,192 +5,203 @@ from utils.dump_response import dump  # noqa
 
 
 class TestProfileListAPIView(APITestCase):
-    @classmethod
-    def setUpTestData(cls):
-        from random import choice, sample
-        test_persons = []
-        test_activities = []
-        test_categories = []
-
-        # setup activities
-        HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
-        for i in range(len(HEADER_ACTIVITIES)):
-            test_activity = Activity.objects.create(
-                name=HEADER_ACTIVITIES[i]
-            )
-            test_activities.append(test_activity)
-        test_activity = Activity.objects.create(name="test")
-        test_activities.append(test_activity)
-
-        # setup categories
-        categories = ["cheese", "milk", "honey", "wood"]
-        for i in range(len(categories)):
-            test_category = Category.objects.create(
-                name=categories[i]
-            )
-            test_categories.append(test_category)
-
-        # setup persons
-        for i in range(12):
-            if i % 2 == 0:
-                test_person = CustomUser.objects.create_user(
-                    person_email=f"test{i + 1}@test.com",
-                    password="Testing01",
-                    person_name="test",
-                    person_surname="test",
-                    is_active=True
-                )
-                test_profile = Profile.objects.create(
-                    person=test_person,
-                    comp_official_name=f"Startup {i}",
-                    comp_is_startup=True,
-                    comp_registered=False
-                )
-
-            else:
-                test_person = CustomUser.objects.create_user(
-                    person_email=f"test{i + 1}@test.com",
-                    password="Testing01",
-                    person_name="test",
-                    person_surname="test",
-                    is_active=True
-                )
-                test_profile = Profile.objects.create(
-                    person=test_person,
-                    comp_official_name=f"Company {i}",
-                    comp_is_startup=False,
-                    comp_registered=True
-                )
-            test_profile.comp_activity.set(sample(test_activities, 2))
-            test_profile.comp_category.add(choice(test_categories))
-            test_persons.append(test_person)
 
     def setUp(self) -> None:
-        # login user & get token
-        self.token1 = self.client.post(
-            path="/api/auth/token/login/",
-            data={
-                "person_email": "test1@test.com",
-                "password": "Testing01"
-            }).data["auth_token"]
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token1}")
+        # setup activities
+        self.producer_activity = Activity.objects.create(name="producer")
+        self.importer_activity = Activity.objects.create(name="importer")
+        self.retail_activity = Activity.objects.create(name="retail")
+        self.horeca_activity = Activity.objects.create(name="horeca")
+
+        # setup category
+        self.category = Category.objects.create(name="cheese")
+
+        # setup persons & profiles
+        self.user = CustomUser.objects.create_user(
+            person_email="test1@test.com",
+            person_name="test",
+            person_surname="test",
+            is_active=True)
+        self.profile = Profile.objects.create(
+            person=self.user,
+            comp_official_name=f"Startup 1",
+            comp_is_startup=True,
+            comp_registered=False
+        )
+        self.profile.comp_activity.set((self.importer_activity, self.retail_activity, self.producer_activity))
+        self.profile.comp_category.add(self.category)
+
+        self.user2 = CustomUser.objects.create_user(
+            person_email="test2@test.com",
+            person_name="test",
+            person_surname="test",
+            is_active=True)
+        self.profile2 = Profile.objects.create(
+            person=self.user2,
+            comp_official_name=f"Startup 2",
+            comp_is_startup=True,
+            comp_registered=False
+        )
+        self.profile2.comp_activity.set((self.producer_activity, self.horeca_activity))
+        self.profile2.comp_category.add(self.category)
+
+        self.user3 = CustomUser.objects.create_user(
+            person_email="test3@test.com",
+            person_name="test",
+            person_surname="test",
+            is_active=True)
+        self.profile3 = Profile.objects.create(
+            person=self.user3,
+            comp_official_name=f"Company 3",
+            comp_is_startup=False,
+            comp_registered=True
+        )
+        self.profile3.comp_activity.add(self.horeca_activity)
+        self.profile3.comp_category.add(self.category)
+
+        self.user4 = CustomUser.objects.create_user(
+            person_email="test4@test.com",
+            person_name="test",
+            person_surname="test",
+            is_active=True)
+        self.profile4 = Profile.objects.create(
+            person=self.user4,
+            comp_official_name=f"Company 4",
+            comp_is_startup=False,
+            comp_registered=True
+        )
+        self.profile4.comp_activity.set((self.importer_activity, self.retail_activity))
+        self.profile4.comp_category.add(self.category)
 
     def test_get_all_profiles_authorized_no_filters(self):
+        self.client.force_authenticate(self.user)
+
         response = self.client.get("/api/profiles/?page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(12, len(response.data["results"]))
+        self.assertEqual(4, response.data["total_items"])
 
     def test_get_all_profiles_authorized_filter_companies(self):
+        self.client.force_authenticate(self.user)
+
         response = self.client.get("/api/profiles/?company_type=company&page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(6, len(response.data["results"]))
+        self.assertEqual(2, response.data["total_items"])
         self.assertTrue(all(
-            response.data["results"][i]["comp_is_startup"] is False and response.data["results"][i]["comp_registered"] is True
+            response.data["results"][i]["comp_is_startup"] is False and response.data["results"][i][
+                "comp_registered"] is True
             for i in range(len(response.data["results"]))))
 
     def test_get_all_profiles_authorized_filter_startups(self):
+        self.client.force_authenticate(self.user)
+
         response = self.client.get("/api/profiles/?company_type=startup&page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(6, len(response.data["results"]))
+        self.assertEqual(2, response.data["total_items"])
         self.assertTrue(all(
-            response.data["results"][i]["comp_is_startup"] is True and response.data["results"][i]["comp_registered"] is False
+            response.data["results"][i]["comp_is_startup"] is True and response.data["results"][i][
+                "comp_registered"] is False
             for i in range(len(response.data["results"]))))
 
     def test_get_all_profiles_authorized_filter_activity_producer(self):
+        self.client.force_authenticate(self.user)
+
         response = self.client.get("/api/profiles/?activity_type=producer&page=1&page_size=12")
-        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/?page=1&page_size=12")
-        producer_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
-                         1 in response.data["results"][i]["comp_activity"]]
-        self.assertEqual(len(producer_type), filtered_len)
+        self.assertEqual(2, response.data["total_items"])
+        producers = Profile.objects.filter(comp_activity=self.producer_activity, is_deleted=False)
+        self.assertTrue(all(
+            [producers[i].profile_id == response.data["results"][i]["profile_id"] for i in range(len(producers))]
+        ))
 
     def test_get_all_profiles_authorized_filter_activity_importer(self):
+        self.client.force_authenticate(self.user)
+
         response = self.client.get("/api/profiles/?activity_type=importer&page=1&page_size=12")
-        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/?page=1&page_size=12")
-        importer_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
-                         2 in response.data["results"][i]["comp_activity"]]
-        self.assertEqual(len(importer_type), filtered_len)
+        importers = Profile.objects.filter(comp_activity=self.importer_activity, is_deleted=False)
+        self.assertEqual(2, response.data["total_items"])
+        self.assertTrue(all(
+            [importers[i].profile_id == response.data["results"][i]["profile_id"] for i in range(len(importers))]
+        ))
 
     def test_get_all_profiles_authorized_filter_activity_retail(self):
+        self.client.force_authenticate(self.user)
+
         response = self.client.get("/api/profiles/?activity_type=retail&page=1&page_size=12")
-        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/?page=1&page_size=12")
-        retail_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
-                       3 in response.data["results"][i]["comp_activity"]]
-        self.assertEqual(len(retail_type), filtered_len)
+        retails = Profile.objects.filter(comp_activity=self.retail_activity, is_deleted=False)
+        self.assertEqual(2, response.data["total_items"])
+        self.assertTrue(all(
+            [retails[i].profile_id == response.data["results"][i]["profile_id"] for i in range(len(retails))]
+        ))
 
     def test_get_all_profiles_authorized_filter_activity_horeca(self):
+        self.client.force_authenticate(self.user)
+
         response = self.client.get("/api/profiles/?activity_type=horeca&page=1&page_size=12")
-        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/?page=1&page_size=12")
-        horeca_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
-                       4 in response.data["results"][i]["comp_activity"]]
-        self.assertEqual(len(horeca_type), filtered_len)
+        horeca = Profile.objects.filter(comp_activity=self.horeca_activity, is_deleted=False)
+        self.assertEqual(2, response.data["total_items"])
+        self.assertTrue(all(
+            [horeca[i].profile_id == response.data["results"][i]["profile_id"] for i in range(len(horeca))]
+        ))
 
     def test_get_all_profiles_unauthorized(self):
-        self.client.logout()
         response = self.client.get("/api/profiles/?page=1&page_size=12")
         self.assertEqual(200, response.status_code)
+        self.assertEqual(4, response.data["total_items"])
 
     def test_get_all_profiles_unauthorized_filter_companies(self):
-        self.client.logout()
         response = self.client.get("/api/profiles/?company_type=company&page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(6, len(response.data["results"]))
+        self.assertEqual(2, response.data["total_items"])
         self.assertTrue(all(
-            response.data["results"][i]["comp_is_startup"] is False and response.data["results"][i]["comp_registered"] is True
+            response.data["results"][i]["comp_is_startup"] is False and response.data["results"][i][
+                "comp_registered"] is True
             for i in range(len(response.data["results"]))))
 
     def test_get_all_profiles_unauthorized_filter_startups(self):
-        self.client.logout()
         response = self.client.get("/api/profiles/?company_type=startup&page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(6, len(response.data["results"]))
+        self.assertEqual(2, response.data["total_items"])
         self.assertTrue(all(
-            response.data["results"][i]["comp_is_startup"] is True and response.data["results"][i]["comp_registered"] is False
+            response.data["results"][i]["comp_is_startup"] is True and response.data["results"][i][
+                "comp_registered"] is False
             for i in range(len(response.data["results"]))))
 
     def test_get_all_profiles_unauthorized_filter_activity_producer(self):
-        self.client.logout()
         response = self.client.get("/api/profiles/?activity_type=producer&page=1&page_size=12")
-        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/?page=1&page_size=12")
-        producer_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
-                         1 in response.data["results"][i]["comp_activity"]]
-        self.assertEqual(len(producer_type), filtered_len)
+        self.assertEqual(2, response.data["total_items"])
+        producers = Profile.objects.filter(comp_activity=self.producer_activity, is_deleted=False)
+        self.assertTrue(all(
+            [producers[i].profile_id == response.data["results"][i]["profile_id"] for i in range(len(producers))]
+        ))
 
     def test_get_all_profiles_unauthorized_filter_activity_importer(self):
-        self.client.logout()
         response = self.client.get("/api/profiles/?activity_type=importer&page=1&page_size=12")
-        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/?page=1&page_size=12")
-        importer_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
-                         2 in response.data["results"][i]["comp_activity"]]
-        self.assertEqual(len(importer_type), filtered_len)
+        importers = Profile.objects.filter(comp_activity=self.importer_activity, is_deleted=False)
+        self.assertEqual(2, response.data["total_items"])
+        self.assertTrue(all(
+            [importers[i].profile_id == response.data["results"][i]["profile_id"] for i in range(len(importers))]
+        ))
+
 
     def test_get_all_profiles_unauthorized_filter_activity_retail(self):
-        self.client.logout()
         response = self.client.get("/api/profiles/?activity_type=retail&page=1&page_size=12")
-        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/?page=1&page_size=12")
-        retail_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
-                       3 in response.data["results"][i]["comp_activity"]]
-        self.assertEqual(len(retail_type), filtered_len)
+        retails = Profile.objects.filter(comp_activity=self.retail_activity, is_deleted=False)
+        self.assertEqual(2, response.data["total_items"])
+        self.assertTrue(all(
+            [retails[i].profile_id == response.data["results"][i]["profile_id"] for i in range(len(retails))]
+        ))
 
     def test_get_all_profiles_unauthorized_filter_activity_horeca(self):
-        self.client.logout()
         response = self.client.get("/api/profiles/?activity_type=horeca&page=1&page_size=12")
-        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/?page=1&page_size=12")
-        horeca_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
-                    4 in response.data["results"][i]["comp_activity"]]
-        self.assertEqual(len(horeca_type), filtered_len)
+        horeca = Profile.objects.filter(comp_activity=self.horeca_activity, is_deleted=False)
+        self.assertEqual(2, response.data["total_items"])
+        self.assertTrue(all(
+            [horeca[i].profile_id == response.data["results"][i]["profile_id"] for i in range(len(horeca))]
+        ))
