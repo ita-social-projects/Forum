@@ -1,9 +1,8 @@
 from django.utils.timezone import now
+from django.conf import settings
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authtoken.models import Token
-
-from django.conf import settings
 
 
 class DjoserTokenAuthentication(TokenAuthentication):
