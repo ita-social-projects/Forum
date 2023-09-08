@@ -61,4 +61,3 @@ class ViewedCompany(models.Model):
 
     class Meta:
         unique_together = (('user', 'company'),)
-        ordering = ["company_id"]
