@@ -11,17 +11,18 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
     const currentYear = currentDate.getFullYear();
 
     // those variables we would use for axios to get data from beckend
+    // get saved list code here
     const usersSavedList = []
 
-    // get saved list code here
     // add company to saved list code here
-    addToSavedList((profile_id) = {
+    const addToSavedList = (profile_id) => {
 
-    })
+    }
+
     // del company from saved list code here
-    delFromSavedList((profile_id) = {
+    const delFromSavedList = (profile_id) => {
 
-    })
+    }
     
     return (
         <div className="product-card">
@@ -63,7 +64,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                                         <div>
                                             {/* if compony not added - add to saved list */}
                                             <button className='product-card__buttons'/* onClick={() => addToSavedList(companyData.profile_id)}*/>
-                                                <img src={wish_list_checklist} alt=""/>
+                                                <img src={wish_list_checklist} alt="Add to wish list"/>
                                             </button>
                                         </div>
                                     </>
@@ -75,7 +76,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
             </div>
             <div className="product-card__logo">
                 <div className="product-card__logo-ellipse">
-                <img className="product-card__logo-image"  alt=""/>
+                    <img className="product-card__logo-image"  alt={`${companyData.comp_name} logo`}/>
                 </div>
             </div>
         </div>
