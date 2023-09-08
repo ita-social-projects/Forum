@@ -10,27 +10,6 @@ import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
-async function getUserID(){
-if(sessionStorage.getItem("isAuthenticated")){
-const token  = "Token " + sessionStorage.getItem('auth_token');
-const request_user = await axios.get('http://localhost:8000/api/auth/users/me/',
-  {withCredentials: true,
-   headers: {
-         'Authorization': token}})
-    .then(response => {return response.data})
-
-const own_profile_url = 'http://localhost:8000/api/profiles?userid='+request_user.id
-
-const user_profile = await axios.get(own_profile_url,
-  {withCredentials: true,
-   headers: {
-         'Authorization': token}})
-    .then(response => {
-    console.log(response.data);
-    return response.data})
-    }}
-
-getUserID()
 
 const INFOLINKS = [
     {

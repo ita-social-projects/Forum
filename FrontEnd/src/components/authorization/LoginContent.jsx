@@ -6,20 +6,6 @@ import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";
 import classes from "./LoginContent.module.css";
 
-axios
-      .post('http://localhost:8000/api/auth/token/login/', {
-      person_email: "testcase@email.com",
-      password: "pASSWord123"
-  },
-  {withCredentials: true}
-  )
-      .then(function (response) {
-       sessionStorage.setItem("auth_token", response.data.auth_token);
-       sessionStorage.setItem("isAuthenticated", true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 const LoginContent = (props) => {
   const [showPassword, setShowPassword] = useState(false)
 
