@@ -47,27 +47,14 @@ const USERS = [
         person_email: "user123123@user.com",
         phone_number: "+380997777778"
     },
-    {
-        id: 1,
-        name: "Lebron",
-        surname: "James",
-        person_email: "user123123@user.com",
-        phone_number: "+380997777778"
-    },
-    {
-        id: 1,
-        name: "Lebron",
-        surname: "James",
-        person_email: "user123123@user.com",
-        phone_number: "+380997777778"
-    },
+
 ]
 
 function UserTable() {
 
     let navigate = useNavigate();
     const routeChange = (id) =>{
-        let path = `/users/${id}`;
+        let path = `/admin/users/${id}`;
         navigate(path);
     }
 
