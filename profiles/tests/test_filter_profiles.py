@@ -13,9 +13,6 @@ class TestProfileListAPIView(APITestCase):
         self.retail_activity = Activity.objects.create(name="retail")
         self.horeca_activity = Activity.objects.create(name="horeca")
 
-        # setup category
-        self.category = Category.objects.create(name="cheese")
-
         # setup persons & profiles
         self.user = CustomUser.objects.create_user(
             person_email="test1@test.com",
@@ -24,12 +21,11 @@ class TestProfileListAPIView(APITestCase):
             is_active=True)
         self.profile = Profile.objects.create(
             person=self.user,
-            comp_official_name=f"Startup 1",
+            comp_official_name="Startup 1",
             comp_is_startup=True,
             comp_registered=False
         )
         self.profile.comp_activity.set((self.importer_activity, self.retail_activity, self.producer_activity))
-        self.profile.comp_category.add(self.category)
 
         self.user2 = CustomUser.objects.create_user(
             person_email="test2@test.com",
@@ -38,12 +34,11 @@ class TestProfileListAPIView(APITestCase):
             is_active=True)
         self.profile2 = Profile.objects.create(
             person=self.user2,
-            comp_official_name=f"Startup 2",
+            comp_official_name="Startup 2",
             comp_is_startup=True,
             comp_registered=False
         )
         self.profile2.comp_activity.set((self.producer_activity, self.horeca_activity))
-        self.profile2.comp_category.add(self.category)
 
         self.user3 = CustomUser.objects.create_user(
             person_email="test3@test.com",
@@ -52,12 +47,11 @@ class TestProfileListAPIView(APITestCase):
             is_active=True)
         self.profile3 = Profile.objects.create(
             person=self.user3,
-            comp_official_name=f"Company 3",
+            comp_official_name="Company 3",
             comp_is_startup=False,
             comp_registered=True
         )
         self.profile3.comp_activity.add(self.horeca_activity)
-        self.profile3.comp_category.add(self.category)
 
         self.user4 = CustomUser.objects.create_user(
             person_email="test4@test.com",
@@ -66,12 +60,11 @@ class TestProfileListAPIView(APITestCase):
             is_active=True)
         self.profile4 = Profile.objects.create(
             person=self.user4,
-            comp_official_name=f"Company 4",
+            comp_official_name="Company 4",
             comp_is_startup=False,
             comp_registered=True
         )
         self.profile4.comp_activity.set((self.importer_activity, self.retail_activity))
-        self.profile4.comp_category.add(self.category)
 
     def test_get_all_profiles_authorized_no_filters(self):
         self.client.force_authenticate(self.user)
