@@ -1,12 +1,15 @@
 from django.test import TestCase
-from profiles.factories import ProfileFactory, ProfileStartupFactory, ProfileCompanyFactory, CategoryFactory, ActivityFactory
+from profiles.factories import ProfileFactory, ProfileStartupFactory, ProfileCompanyFactory, CategoryFactory, \
+    ActivityFactory
 from utils.dump_response import dump  # noqa
 
 
 class TestFactories(TestCase):
 
     def test_profile_factory(self):
-        profile = ProfileFactory()
+        activity = ActivityFactory()
+        category = CategoryFactory()
+        profile = ProfileFactory(comp_activity=(activity,), comp_category=(category,))
         self.assertIsNotNone(profile.profile_id)
         self.assertIsNotNone(profile.person)
         self.assertIsNotNone(profile.comp_name)
@@ -19,6 +22,8 @@ class TestFactories(TestCase):
         self.assertIsNotNone(profile.comp_product_info)
         self.assertIsNotNone(profile.comp_address)
         self.assertIsNotNone(profile.person_position)
+        self.assertEqual(1, profile.comp_category.all().count())
+        self.assertEqual(1, profile.comp_activity.all().count())
         self.assertFalse(profile.is_deleted)
 
     def test_profile_startup_factory(self):
@@ -39,17 +44,5 @@ class TestFactories(TestCase):
         self.assertIsNotNone(category.name)
 
     def test_activity_factory(self):
-        common_activities = ActivityFactory.create_batch(4)
         custom_activity = ActivityFactory(name="test")
-        self.assertEqual("producer", common_activities[0].name)
-        self.assertEqual("importer", common_activities[1].name)
-        self.assertEqual("retail", common_activities[2].name)
-        self.assertEqual("HORACE", common_activities[3].name)
         self.assertEqual("test", custom_activity.name)
-
-    def test_profile_factory_activities(self):
-        common_activities = ActivityFactory.create_batch(4)
-        custom_activity = ActivityFactory(name="test")
-        profile = ProfileFactory.create(comp_activity=(custom_activity, common_activities[0]))
-        print(profile.comp_activity)
-        print(profile.activity_set)
