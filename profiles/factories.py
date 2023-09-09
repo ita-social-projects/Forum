@@ -1,6 +1,6 @@
 import factory.django
 from faker import Factory as FakerFactory
-from .models import Profile, Activity, Category
+from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
@@ -62,3 +62,19 @@ class ProfileCompanyFactory(ProfileFactory):
     comp_official_name = factory.Sequence(lambda n: f"Test Official Company {n}")
     comp_registered = True
     comp_is_startup = False
+
+
+class SavedCompanyFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = SavedCompany
+
+    company = factory.SubFactory(ProfileFactory)
+    user = factory.SubFactory("authentication.factories.UserFactory")
+
+
+class ViewedCompanyFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = ViewedCompany
+
+    company = factory.SubFactory(ProfileFactory)
+    user = factory.SubFactory("authentication.factories.UserFactory")
