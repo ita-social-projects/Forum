@@ -1,5 +1,6 @@
 import css from "./CompanyTable.module.css"
 import {useNavigate} from "react-router-dom";
+import PaginationButtons from "./PaginationButtons";
 
 const COLUMN_NAMES = ["ID", "Person", "Position", "Company", "Region", "Phone", "EDRPOU", "Adress", "IsDeleted"]
 
@@ -59,7 +60,9 @@ function CompanyTable() {
     }
 
     return (
-        <table  className={css["table-section"]}>
+        <div>
+            <PaginationButtons></PaginationButtons>
+            <table  className={css["table-section"]}>
             <thead>
                 <tr className={css["table-header"]}>
                     {COLUMN_NAMES.map((column) =>(
@@ -83,6 +86,7 @@ function CompanyTable() {
                 ))}
             </tbody>
         </table>
+        </div>
     );
 };
 

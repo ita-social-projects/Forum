@@ -1,5 +1,6 @@
 .table-section {
-    margin: 25px 0;
+    margin-bottom: 25px;
+    margin-top: 10px;
     min-width: 1050px;
     width: 60%;
     overflow: auto;

@@ -6,7 +6,7 @@ import UserTable from "./table/UserTable";
 import CompanyTable from "./table/CompanyTable";
 import CompanyDetail from "./detail-view/CompanyDetail";
 import css from "./AdminPage.module.css"
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 function AdminPage() {
     return (
@@ -21,6 +21,7 @@ function AdminPage() {
                             <Route path="/company/:id" element={<CompanyDetail />} />
                         </Routes>
                 </div>
+            <Footer page="admin"></Footer>
         </div>
 
     );
