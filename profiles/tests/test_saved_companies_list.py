@@ -1,149 +1,109 @@
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase
+from unittest import skip
 
-from authentication.models import CustomUser
-from profiles.models import Profile
+from profiles.factories import ProfileCompanyFactory, SavedCompanyFactory
+from authentication.factories import UserFactory
+from utils.dump_response import dump
 
 
 class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
-    @classmethod
-    def setUpTestData(cls):
-        test_user = CustomUser.objects.create_user(
-            person_email="testuser1@test.com",
-            password="testuser1",
-            person_name="testuser1",
-            person_surname="testuser1",
-            is_active=True
-        )
-
-        test_user2 = CustomUser.objects.create_user(
-            person_email="testuser2@test.com",
-            password="testuser2",
-            person_name="testuser2",
-            person_surname="testuser2",
-            is_active=True
-        )
-
-        test_company1 = Profile.objects.create(
-            person=test_user,
-            comp_is_startup=True,
-            comp_registered=False
-        )
-        test_company2 = Profile.objects.create(
-            person=test_user2,
-            comp_is_startup=True,
-            comp_registered=False
-        )
-
     def setUp(self):
-        self.client = APIClient()
+        self.user = UserFactory()
+        self.profile = ProfileCompanyFactory()
 
-        # login users & get tokens
-        self.token1 = self.client.post(
-            path="/api/auth/token/login/",
+    def test_add_company_to_saved_unauthenticated(self):
+        response = self.client.post(
+            path="/api/saved-list/",
             data={
-                "person_email": "testuser1@test.com",
-                "password": "testuser1"
-            }).data["auth_token"]
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token1}")
+                "company_pk": "{profile_id}".format(profile_id=self.profile.profile_id),
+                "user": self.user.id
+            }
+        )
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-        self.token2 = self.client.post(
-            path="/api/auth/token/login/",
+    def test_add_company_to_saved_authenticated(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            path="/api/saved-list/",
             data={
-                "person_email": "testuser2@test.com",
-                "password": "testuser2"
-            }).data["auth_token"]
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token2}")
-
-        self.company1_id = self.client.get("/api/profiles/").data["results"][0]["profile_id"]
-        self.company2_id = self.client.get("/api/profiles/").data["results"][1]["profile_id"]
-
-    def test_add_test_company1_to_saved_list_by_test_user2(self):
-        response = self.client.post("/api/saved-list/",
-                                    data={
-                                        "company_pk": "{company1_id}".format(company1_id=self.company1_id),
-                                        "Authentication": self.token2
-                                    }
-                                    )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+                "company_pk": "{profile_id}".format(profile_id=self.profile.profile_id),
+                "user": self.user.id
+            }
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
         company_added_info = response.data["Company added"]
-        self.assertEqual(company_added_info["company"], self.company1_id)
+        self.assertEqual(company_added_info["company"], self.profile.profile_id)
 
-    def test_add_test_company2_to_saved_list_by_test_user2(self):
-        response = self.client.post("/api/saved-list/",
-                                    data={
-                                        "company_pk": "{company2_id}".format(company2_id=self.company2_id),
-                                        "Authentication": self.token2
-                                    }
-                                    )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        company_added_info = response.data["Company added"]
-        self.assertEqual(company_added_info["company"], self.company2_id)
+    @skip("To be implemented")
+    def test_add_own_company_to_saved_authenticated(self):
+        own_profile = ProfileCompanyFactory(person=self.user)
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            path="/api/saved-list/",
+            data={
+                "company_pk": "{profile_id}".format(profile_id=own_profile.profile_id),
+                "user": self.user.id
+            }
+        )
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
-    def test_get_test_user2_company_saved_list(self):
-        self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
-                                                   "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company2_id}".format(company2_id=self.company2_id),
-                                                   "Authentication": self.token2})
-        response = self.client.get("/api/saved-list/",
-                                   data={
-                                       "Authentication": self.token2
-                                   }
-                                   )
-        companies_info = response.data["results"]
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(2, len(companies_info))
+    def test_add_non_existent_company_to_saved_authenticated(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            path="/api/saved-list/",
+            data={
+                "company_pk": 99999,
+                "user": self.user
+            }
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
-    def test_delete_test_user2_company_saved_list_item(self):
-        self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
-                                                   "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company2_id}".format(company2_id=self.company2_id),
-                                                   "Authentication": self.token2})
-        response = self.client.delete("/api/saved-list/{company2_id}/".format(company2_id=self.company2_id),
-                                      data={
-                                          "Authentication": self.token2
-                                      }
-                                      )
-        self.assertEqual(204, response.status_code)
-        response = self.client.get("/api/saved-list/",
-                                   data={
-                                       "Authentication": self.token2
-                                   }
-                                   )
-        companies_info = response.data["results"]
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(companies_info))
+    def test_get_saved_list_unauthenticated(self):
+        response = self.client.get(path="/api/saved-list/")
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-    def test_add_non_existing_company_to_saved_list(self):
-        response = self.client.post("/api/saved-list/",
-                                    data={
-                                        "company_pk": 99999,
-                                        "Authentication": self.token1
-                                    }
-                                    )
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    def test_get_saved_list_authenticated(self):
+        SavedCompanyFactory.create_batch(2, user=self.user)
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/saved-list/")
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(2, response.data["total_items"])
 
-    def test_get_saved_companies_without_authentication(self):
-        self.client.logout()
-        response = self.client.get("/api/saved-list/")
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    def test_delete_company_from_saved_authenticated(self):
+        self.client.force_authenticate(self.user)
+        saved_company = SavedCompanyFactory(user=self.user)
+        response = self.client.delete(
+            path="/api/saved-list/{profile_pk}/".format(profile_pk=saved_company.company.profile_id),
+            data={
+                "user": self.user
+            }
+        )
+        self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
 
-    def test_relike_user2_company_saved_list_item(self):
-        self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
-                                                   "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company2_id}".format(company2_id=self.company2_id),
-                                                   "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company2_id}".format(company2_id=self.company2_id),
-                                                   "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
-                                                   "Authentication": self.token2})
+        # check that deleted
+        response = self.client.get(
+            path="/api/saved-list/",
+            data={
+                "user": self.user
+            }
+        )
+        self.assertEqual(0, response.data["total_items"])
 
-        response = self.client.get("/api/saved-list/",
-                                   data={
-                                       "Authentication": self.token2
-                                   }
-                                   )
-        companies_info = response.data["results"]
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(companies_info))
+    def test_add_company_to_saved_twice_authenticated(self):
+        self.client.force_authenticate(self.user)
+        self.client.post(
+            path="/api/saved-list/",
+            data={"company_pk": "{profile_pk}".format(profile_pk=self.profile.profile_id),
+                  "user": self.user})
+        self.client.post(
+            path="/api/saved-list/",
+            data={"company_pk": "{profile_pk}".format(profile_pk=self.profile.profile_id),
+                  "user": self.user})
+        response = self.client.get(
+            path="/api/saved-list/",
+            data={"user": self.user}
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(0, response.data["total_items"])
