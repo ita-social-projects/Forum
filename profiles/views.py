@@ -8,7 +8,7 @@ from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
-from .permissions import UserIsProfileOwnerOrReadOnly
+from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -61,22 +61,26 @@ class ProfileList(ListCreateAPIView):
      include_all: bool.
     """
     serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = [IsAuthenticatedOrReadOnly & SavedCompaniesListPermission]
     pagination_class = ForumPagination
 
     def get_queryset(self):
+        companies = self.request.query_params.get("companies")
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
-        if company_type == "startup":
-            return Profile.objects.filter(comp_is_startup=True).order_by("profile_id")
-        elif company_type == "company":
-            return Profile.objects.filter(comp_registered=True).order_by("profile_id")
-        if activity_type in HEADER_ACTIVITIES:
-            return Profile.objects.filter(comp_activity__name=activity_type).order_by("profile_id")
+        queryset = Profile.objects.filter(is_deleted=False).order_by("profile_id")
 
-        return Profile.objects.filter(is_deleted=False).order_by("profile_id")
+        if company_type == "startup":
+            return queryset.filter(comp_is_startup=True)
+        elif company_type == "company":
+            return queryset.filter(comp_registered=True)
+        if activity_type in HEADER_ACTIVITIES:
+            return queryset.filter(comp_activity__name=activity_type)
+        if companies == "saved":
+            return queryset.filter(saved_list__user=self.request.user)
+        return queryset
 
     def create(self, request):
         profile = Profile.objects.filter(person_id=self.request.user)

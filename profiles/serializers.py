@@ -21,11 +21,19 @@ class ProfileSerializer(serializers.ModelSerializer):
     activity = ActivitySerializer(many=True, read_only=True)
     category = CategorySerializer(many=True, read_only=True)
     person = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
+    saved = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = "__all__"
 
+    def get_saved(self, obj):
+        user = self.context["request"].user
+        if user.is_authenticated:
+            saved_companies = obj.saved_list.filter(user=user)
+            return saved_companies.exists() 
+        return False
+    
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
     activity = ActivitySerializer(many=True, read_only=True)
