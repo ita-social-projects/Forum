@@ -9,12 +9,12 @@ env:
   DEBUG: ${{ vars.DEV_DEBUG }}
   SECRET_KEY: ${{ secrets.DEV_SECRET_KEY }}
   ENGINE: ${{ vars.ENGINE }}
-  HOST: 127.0.0.1
-  PORT: ${{ vars.POSTGRES_PORT }}
-  NAME: ${{ vars.DEV_DB }}
-  USER: ${{ vars.POSTGRES_USER }}
-  PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-  DB: db
+  DB_HOST: 127.0.0.1
+  DB_PORT: ${{ vars.POSTGRES_PORT }}
+  PG_DB: ${{ vars.DEV_DB }}
+  PG_USER: ${{ vars.POSTGRES_USER }}
+  PG_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+  POSTGRES_DB: ${{ vars.POSTGRES_DB }}
   
 jobs:
   build:
