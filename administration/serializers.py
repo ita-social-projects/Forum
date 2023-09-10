@@ -28,3 +28,4 @@ class AdminUserSerializer(UserSerializer):
             "is_active",
             "is_staff"
         )
+        read_only_fields = ("phone_number", )

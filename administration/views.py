@@ -9,7 +9,7 @@ from .pagination import UserListPagination
 
 class UsersListView(ListAPIView):
     """
-    List of users
+    List of users.
     """
     serializer_class = AdminUserSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
@@ -21,7 +21,7 @@ class UsersListView(ListAPIView):
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
     """
-
+    Retrieve, update or delete a user.
     """
     permission_classes = [IsAuthenticated, IsAdminUser]
     serializer_class = AdminUserSerializer
