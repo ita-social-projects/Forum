@@ -2,7 +2,7 @@ import css from "./CompanyTable.module.css"
 import {useNavigate} from "react-router-dom";
 import PaginationButtons from "./PaginationButtons";
 
-const COLUMN_NAMES = ["ID", "Person", "Position", "Company", "Region", "Phone", "EDRPOU", "Adress", "IsDeleted"]
+const COLUMN_NAMES = ["ID", "Person", "Position", "Company", "Region", "Phone", "EDRPOU", "Adress", "IsDeleted", "IsApproved"]
 
 const COMPANIES = [
     {
@@ -14,7 +14,8 @@ const COMPANIES = [
         comp_phone_number: "+380997777778",
         comp_EDRPOU: 459345389,
         comp_address: "st. Sadova 2A",
-        is_deleted: "false"
+        is_deleted: "false",
+        is_approved: "true"
     },
     {
         id: 2,
@@ -25,7 +26,8 @@ const COMPANIES = [
         comp_phone_number: "+380996667778",
         comp_EDRPOU: 559377389,
         comp_address: "st. Ugorska 3A",
-        is_deleted: "false"
+        is_deleted: "false",
+        is_approved: "true"
     },
     {
         id: 3,
@@ -36,7 +38,8 @@ const COMPANIES = [
         comp_phone_number: "+38098747778",
         comp_EDRPOU: 339366389,
         comp_address: "st. Pekarska 22",
-        is_deleted: "false"
+        is_deleted: "false",
+        is_approved: "true"
     },
     {
         id: 4,
@@ -47,7 +50,20 @@ const COMPANIES = [
         comp_phone_number: "+3809765478",
         comp_EDRPOU: 119977389,
         comp_address: "sq. Soborna 77",
-        is_deleted: "false"
+        is_deleted: "false",
+        is_approved: "true"
+    },
+    {
+        id: 5,
+        person: 5,
+        person_position: "CEO",
+        comp_name: "EveryMatrix",
+        comp_region: "Lviv",
+        comp_phone_number: "+3809543478",
+        comp_EDRPOU: 101077389,
+        comp_address: "sq. Petrushenicha 7",
+        is_deleted: "false",
+        is_approved: "true"
     },
 ]
 
@@ -55,7 +71,7 @@ function CompanyTable() {
 
     let navigate = useNavigate();
     const routeChange = (id) =>{
-        let path = `/company/${id}`;
+        let path = `/admin/company/${id}`;
         navigate(path);
     }
 
@@ -82,6 +98,7 @@ function CompanyTable() {
                         <td className={css["table-element__text"]}>{company.comp_EDRPOU}</td>
                         <td className={css["table-element__text"]}>{company.comp_address}</td>
                         <td className={css["table-element__text"]}>{company.is_deleted}</td>
+                        <td className={css["table-element__text"]}>{company.is_approved}</td>
                     </tr>
                 ))}
             </tbody>
