@@ -1,5 +1,5 @@
-import css from "./DetailCheckbox.module.css";
-function DetailCheckbox(props) {
+import css from "./Checkbox.module.css";
+function Checkbox(props) {
     return (
         <div className={css["user-detail-checkbox"]}>
             <label >
@@ -10,4 +10,4 @@ function DetailCheckbox(props) {
     );
 }
 
-export default DetailCheckbox;
+export default Checkbox;

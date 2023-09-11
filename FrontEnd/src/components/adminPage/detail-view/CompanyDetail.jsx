@@ -1,6 +1,6 @@
 import {useState} from "react";
 import DeleteModal from "./DeleteModal";
-import DetailCheckbox from "./DetailCheckbox";
+import Checkbox from "./Checkbox";
 import css from "./UserDetail.module.css";
 
 const FIELDS = [
@@ -63,8 +63,8 @@ function CompanyDetail(props) {
                         <input id={field.form_name} type="text" className={css["form-input"]}></input>
                     </div>
                 ))}
-                <DetailCheckbox id="is_deleted" title="Is Deleted"/>
-                <DetailCheckbox id="is_active" title="Активний користувач"/>
+                <Checkbox id="is_deleted" title="Is Deleted"/>
+                <Checkbox id="is_active" title="Активний користувач"/>
 
                 <button className={css['save-button']}>Зберегти зміни</button>
             </div>

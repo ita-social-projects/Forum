@@ -1,5 +1,5 @@
 import css from "./UserDetail.module.css";
-import DetailCheckbox from "./DetailCheckbox";
+import Checkbox from "./Checkbox";
 import {useState} from "react";
 import DeleteModal from "./DeleteModal";
 
@@ -48,7 +48,7 @@ function UserDetail(props) {
                         <input id={field.form_name} type="text" className={css["form-input"]}></input>
                     </div>
                 ))}
-                <DetailCheckbox id="is_active" title="Активний користувач"/>
+                <Checkbox id="is_active" title="Активний користувач"/>
 
                 <button className={css['save-button']}>Зберегти зміни</button>
             </div>
