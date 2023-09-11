@@ -206,7 +206,7 @@ class TestProfileDetailAPIView(APITestCase):
             {
                 "profile_id": self.test_profile.profile_id,
                 "person": self.test_person_with_profile.id,
-                "saved": False,
+                "is_saved": False,
                 "comp_name": "Test 1",
                 "comp_registered": True,
                 "comp_is_startup": False,

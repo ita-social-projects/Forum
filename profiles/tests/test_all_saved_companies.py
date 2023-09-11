@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
+
 from authentication.models import CustomUser
 from profiles.models import Profile, SavedCompany
 
@@ -56,14 +57,14 @@ class TestAllSavedCompaniesListAPIView(APITestCase):
 
     def test_get_saved_companies(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get("/api/profiles/?companies=saved")
+        response = self.client.get("/api/profiles/?filters=is_saved")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, response.data["total_items"])
         self.assertEqual(
             [{
                 "profile_id": self.profile2.profile_id,
                 "person": self.user2.id,
-                "saved": True,
+                "is_saved": True,
                 "comp_name": "Company 2",
                 "comp_registered": False,
                 "comp_is_startup": True,
@@ -86,7 +87,7 @@ class TestAllSavedCompaniesListAPIView(APITestCase):
             {
                 "profile_id": self.profile3.profile_id,
                 "person": self.user3.id,
-                "saved": True,
+                "is_saved": True,
                 "comp_name": "Company 3",
                 "comp_registered": True,
                 "comp_is_startup": False,
@@ -113,25 +114,25 @@ class TestAllSavedCompaniesListAPIView(APITestCase):
         response = self.client.get("/api/profiles/")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(3, response.data["total_items"])
-        self.assertEqual(2, len([i for i in response.data["results"] if i["saved"]]))
-        self.assertTrue(all(i["saved"] for i in response.data["results"] if i["profile_id"] in self.saved_companies_id))
+        self.assertEqual(2, len([i for i in response.data["results"] if i["is_saved"]]))
+        self.assertTrue(all(i["is_saved"] for i in response.data["results"] if i["profile_id"] in self.saved_companies_id))
 
     def test_get_registered_companies_and_saved_marked(self):
         self.client.force_authenticate(self.user)
         response = self.client.get("/api/profiles/?company_type=company")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(1, response.data["total_items"])
-        self.assertEqual(1, len([i for i in response.data["results"] if i["saved"]]))
-        self.assertTrue(all(i["saved"] for i in response.data["results"] if i["profile_id"] in self.saved_companies_id))
+        self.assertEqual(1, len([i for i in response.data["results"] if i["is_saved"]]))
+        self.assertTrue(all(i["is_saved"] for i in response.data["results"] if i["profile_id"] in self.saved_companies_id))
 
     def test_get_startup_companies_and_saved_marked(self):
         self.client.force_authenticate(self.user)
         response = self.client.get("/api/profiles/?company_type=startup")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, response.data["total_items"])
-        self.assertEqual(1, len([i for i in response.data["results"] if i["saved"]]))
-        self.assertTrue(all(i["saved"] for i in response.data["results"] if i["profile_id"] in self.saved_companies_id))
+        self.assertEqual(1, len([i for i in response.data["results"] if i["is_saved"]]))
+        self.assertTrue(all(i["is_saved"] for i in response.data["results"] if i["profile_id"] in self.saved_companies_id))
 
     def test_get_saved_companies_unauthorized(self):
-        response = self.client.get("/api/profiles/?companies=saved")
+        response = self.client.get("/api/profiles/?filters=is_saved")
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
