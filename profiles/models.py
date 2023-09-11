@@ -36,6 +36,7 @@ class Profile(models.Model):
     person_position = models.CharField(max_length=50, default=None, null=True)
     startup_idea = models.TextField(default=None, null=True)
     is_deleted = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
 
 
 class Activity(models.Model):
