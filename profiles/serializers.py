@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from authentication.models import CustomUser
-
 from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
 
 
@@ -21,13 +20,13 @@ class ProfileSerializer(serializers.ModelSerializer):
     activity = ActivitySerializer(many=True, read_only=True)
     category = CategorySerializer(many=True, read_only=True)
     person = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
-    saved = serializers.SerializerMethodField()
+    is_saved = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = "__all__"
 
-    def get_saved(self, obj):
+    def get_is_saved(self, obj):
         user = self.context["request"].user
         if user.is_authenticated:
             saved_companies = obj.saved_list.filter(user=user)
@@ -86,3 +85,6 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
         if company.person == user:
             raise serializers.ValidationError({"error": "You can not view your company."})
         return attrs
+
+class QueryParamSerializer(serializers.Serializer):
+    filters = serializers.CharField(required=True)
