@@ -1,7 +1,7 @@
-import css from "./UserDetail.module.css";
-import DetailCheckbox from "./DetailCheckbox";
 import {useState} from "react";
 import DeleteModal from "./DeleteModal";
+import DetailCheckbox from "./DetailCheckbox";
+import css from "./UserDetail.module.css";
 
 const FIELDS = [
     {
