@@ -12,13 +12,12 @@ class UserLoginAPITests(APITestCase):
             password="Test1234",
             person_name="Test",
             person_surname="Test",
+            is_active = True
         )
-        self.test_user.is_active = True
-        self.test_user.save()
 
     def test_login_successful(self):
         response = self.client.post(
-            "/api/auth/token/login/", 
+            "/api/auth/token/login/",
             data={
                 "person_email": "test@test.com",
                 "password": "Test1234",
@@ -29,14 +28,14 @@ class UserLoginAPITests(APITestCase):
         self.assertEqual(
             {
                 "auth_token": AnyStr()
-                }, 
+                },
             response.json()
         )
         self.assertContains(response, "auth_token")
 
     def test_login_email_incorrect(self):
         response = self.client.post(
-            "/api/auth/token/login/", 
+            "/api/auth/token/login/",
             data={
                 "person_email": "tost@test.com",
                 "password": "Test1234",
@@ -54,7 +53,7 @@ class UserLoginAPITests(APITestCase):
 
     def test_login_password_incorrect(self):
         response = self.client.post(
-            "/api/auth/token/login/", 
+            "/api/auth/token/login/",
             data={
                 "person_email": "test@test.com",
                 "password": "Test5678",
