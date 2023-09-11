@@ -55,7 +55,7 @@ function CompanyTable() {
 
     let navigate = useNavigate();
     const routeChange = (id) =>{
-        let path = `/company/${id}`;
+        let path = `/admin/company/${id}`;
         navigate(path);
     }
 
