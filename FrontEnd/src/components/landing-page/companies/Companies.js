@@ -1,5 +1,17 @@
+import axios from 'axios';
 import './Companies.css';
 import {ProductCard} from "./companies-product-cards/CompaniesProductCards";
+
+async function list_of_companies() {
+const companiesList = axios.get('http://localhost:8000/api/profiles/')
+
+    .then(function (response) {
+    return response.data;
+  })
+  .catch(error => {console.log(error)});
+return companiesList;
+}
+console.log(list_of_companies());
 
 const MainCompanies = () => {
     const companyDataList = [

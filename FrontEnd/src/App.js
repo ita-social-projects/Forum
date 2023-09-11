@@ -1,10 +1,3 @@
-//For authorization Page
-//Don't forget about
-//npm install validator
-//npm i react-router-dom@6.4.1
-//npm install react-cookie
-//npm install react-hook-form
-//npm install @mui/material @emotion/react @emotion/styled
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
