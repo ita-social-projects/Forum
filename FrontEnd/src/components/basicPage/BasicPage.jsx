@@ -6,7 +6,6 @@ import AuthorizationPage from "../authorization/AuthorizationPage";
 import {SignUpPage} from "../SignUp/pages/SignUpPage";
 import PrivacyPolicy from "../PrivacyPolicyPage/privacy/PrivacyPolicyComponent";
 import TermsAndConditions from "../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent";
-import AdminPage from "../adminPage/AdminPage";
 import Footer from "../HeaderFooter/footer/Footer";
 import ScrollToTopButton from "../PrivacyPolicyPage/privacy/ScrollToTopButton";
 import React from "react";
