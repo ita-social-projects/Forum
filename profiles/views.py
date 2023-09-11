@@ -3,8 +3,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import SavedCompany, Profile, ViewedCompany
 from rest_framework.exceptions import ValidationError
+
+from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly
@@ -125,6 +126,3 @@ class ViewedCompanyList(ListCreateAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         return ViewedCompany.objects.filter(user=user_id)
-
-
-
