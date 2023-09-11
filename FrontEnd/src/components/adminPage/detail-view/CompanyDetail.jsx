@@ -1,6 +1,6 @@
 import {useState} from "react";
 import DeleteModal from "./DeleteModal";
-import Checkbox from "./Checkbox";
+import Checkbox from "../../checkbox/Checkbox";
 import css from "./UserDetail.module.css";
 
 const FIELDS = [

@@ -1,5 +1,6 @@
-import css from "./mainPage.module.css"
 import {MAIN_PAGE_TEXT} from "./Text";
+import css from "./mainPage.module.css";
+
 
 function MainPage() {
     return (

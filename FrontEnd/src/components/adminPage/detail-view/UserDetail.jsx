@@ -1,5 +1,5 @@
 import css from "./UserDetail.module.css";
-import Checkbox from "./Checkbox";
+import Checkbox from "../../checkbox/Checkbox";
 import {useState} from "react";
 import DeleteModal from "./DeleteModal";
 
