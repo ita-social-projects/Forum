@@ -1,5 +1,6 @@
-from profiles.models import Profile
 from rest_framework.generics import ListAPIView
+
+from profiles.models import Profile
 from .serializers import CompanySerializers
 
 class SearchCompanyView(ListAPIView):
