@@ -1,8 +1,16 @@
 .table-section {
-    border-collapse: collapse;
-    margin-bottom: 25px;
-    margin-top: 10px;
+    margin-bottom: 162px;
+    margin-top: 20px;
     min-width: 1050px;
+    width: 100%;
+    overflow: auto;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    text-align: center; /* Вирівнюємо текст по центру в таблиці */
 }
 
 .table-header {
@@ -12,15 +20,17 @@
 }
 
 .table-header__text, .table-element__text {
-    padding-left: 15px;
-    padding-bottom: 20px;
-    padding-top: 20px;
+    padding: 20px 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
     text-align: center;
 }
 
 .table-element {
     transition: transform 0.2s ease;
-    border-bottom: 1px solid var(--main-black-20, #E2E5EB);
+    display: table-row;
 }
 
 .table-element:hover {
@@ -33,4 +43,10 @@
 
 .table-element:nth-child(even) {
     background: var(--blue-0, #ecefff);
+}
+
+.table-element td {
+    vertical-align: middle;
+    display: table-cell;
+    text-align: center; /* Вирівнюємо текст по центру в колонках */
 }
