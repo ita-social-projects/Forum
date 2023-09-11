@@ -95,4 +95,4 @@ class TestViewedCompanyAPI(APITestCase):
         response = self.client.get("/api/viewed-list/")
 
         self.assertEqual(200, response.status_code)
-        self.assertEqual(2, len(response.data))
+        self.assertEqual(2, len(response.data["results"]))
