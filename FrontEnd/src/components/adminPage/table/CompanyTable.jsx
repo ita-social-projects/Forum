@@ -1,4 +1,4 @@
-import css from "./CompanyTable.module.css"
+import css from "./Table.module.css"
 import {useNavigate} from "react-router-dom";
 import PaginationButtons from "./PaginationButtons";
 
