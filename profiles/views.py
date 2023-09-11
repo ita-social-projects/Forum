@@ -3,6 +3,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
@@ -16,26 +18,27 @@ class SavedCompaniesListCreate(ListCreateAPIView):
     Add a company to the saved list.
     """
     permission_classes = [IsAuthenticated]
-
-    def list(self, request):
-        user = request.user
-        saved_companies = SavedCompany.objects.filter(user=user)
-        serializer = SavedCompanySerializer(saved_companies, many=True)
-        return Response({'Companies': serializer.data})
+    serializer_class = SavedCompanySerializer
+    pagination_class = ForumPagination
+    
+    def get_queryset(self):
+        user = self.request.user
+        saved_companies = SavedCompany.objects.filter(user=user).order_by("company_id")
+        return saved_companies
 
     def post(self, request):
         user = request.user
-        pk = request.data.get('company_pk')
+        pk = request.data.get("company_pk")
 
         # Check if the company is already in the user's saved list
         if SavedCompany.objects.filter(user=user, company_id=pk).exists():
             saved_company_destroyer = SavedCompaniesDestroy()
             return saved_company_destroyer.destroy(request, pk)
 
-        serializer = SavedCompanySerializer(data={'company': pk, 'user': user.id})
+        serializer = SavedCompanySerializer(data={"company": pk, "user": user.id})
         if serializer.is_valid():
             serializer.save()
-            return Response({'Company added': serializer.data})
+            return Response({"Company added": serializer.data})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -49,7 +52,7 @@ class SavedCompaniesDestroy(DestroyAPIView):
         user = request.user
         saved_company = get_object_or_404(SavedCompany, company_id=pk, user=user)
         saved_company.delete()
-        return Response(f'Company {pk} deleted', status=status.HTTP_204_NO_CONTENT)
+        return Response(f"Company {pk} deleted", status=status.HTTP_204_NO_CONTENT)
 
 
 class ProfileList(ListCreateAPIView):
@@ -59,21 +62,22 @@ class ProfileList(ListCreateAPIView):
      include_all: bool.
     """
     serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    pagination_class = ForumPagination
 
     def get_queryset(self):
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
-        HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORECA"]
+        HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
         if company_type == "startup":
-            return Profile.objects.filter(comp_is_startup=True)
+            return Profile.objects.filter(comp_is_startup=True).order_by("profile_id")
         elif company_type == "company":
-            return Profile.objects.filter(comp_registered=True)
+            return Profile.objects.filter(comp_registered=True).order_by("profile_id")
         if activity_type in HEADER_ACTIVITIES:
-            return Profile.objects.filter(comp_activity__name=activity_type)
+            return Profile.objects.filter(comp_activity__name=activity_type).order_by("profile_id")
 
-        return Profile.objects.filter(is_deleted=False)
+        return Profile.objects.filter(is_deleted=False).order_by("profile_id")
 
     def create(self, request):
         profile = Profile.objects.filter(person_id=self.request.user)
@@ -114,11 +118,12 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
 class ViewedCompanyList(ListCreateAPIView):
     serializer_class = ViewedCompanySerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
+    pagination_class = ForumPagination
 
     def get_queryset(self):
         user_id = self.request.user.id
-        return ViewedCompany.objects.filter(user=user_id)
+        return ViewedCompany.objects.filter(user=user_id).order_by("company_id")
 
 
 def region_list(request):

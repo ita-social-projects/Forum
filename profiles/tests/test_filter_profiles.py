@@ -76,121 +76,121 @@ class TestProfileListAPIView(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token1}")
 
     def test_get_all_profiles_authorized_no_filters(self):
-        response = self.client.get("/api/profiles/")
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(12, len(response.data))
+        self.assertEqual(12, len(response.data["results"]))
 
     def test_get_all_profiles_authorized_filter_companies(self):
-        response = self.client.get("/api/profiles/?company_type=company")
+        response = self.client.get("/api/profiles/?company_type=company&page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(6, len(response.data))
+        self.assertEqual(6, len(response.data["results"]))
         self.assertTrue(all(
-            response.data[i]["comp_is_startup"] is False and response.data[i]["comp_registered"] is True
-            for i in range(len(response.data))))
+            response.data["results"][i]["comp_is_startup"] is False and response.data["results"][i]["comp_registered"] is True
+            for i in range(len(response.data["results"]))))
 
     def test_get_all_profiles_authorized_filter_startups(self):
-        response = self.client.get("/api/profiles/?company_type=startup")
+        response = self.client.get("/api/profiles/?company_type=startup&page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(6, len(response.data))
+        self.assertEqual(6, len(response.data["results"]))
         self.assertTrue(all(
-            response.data[i]["comp_is_startup"] is True and response.data[i]["comp_registered"] is False
-            for i in range(len(response.data))))
+            response.data["results"][i]["comp_is_startup"] is True and response.data["results"][i]["comp_registered"] is False
+            for i in range(len(response.data["results"]))))
 
     def test_get_all_profiles_authorized_filter_activity_producer(self):
-        response = self.client.get("/api/profiles/?activity_type=producer")
-        filtered_len = len(response.data)
+        response = self.client.get("/api/profiles/?activity_type=producer&page=1&page_size=12")
+        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/")
-        producer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
-                         1 in response.data[i]["comp_activity"]]
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
+        producer_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
+                         1 in response.data["results"][i]["comp_activity"]]
         self.assertEqual(len(producer_type), filtered_len)
 
     def test_get_all_profiles_authorized_filter_activity_importer(self):
-        response = self.client.get("/api/profiles/?activity_type=importer")
-        filtered_len = len(response.data)
+        response = self.client.get("/api/profiles/?activity_type=importer&page=1&page_size=12")
+        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/")
-        importer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
-                         2 in response.data[i]["comp_activity"]]
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
+        importer_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
+                         2 in response.data["results"][i]["comp_activity"]]
         self.assertEqual(len(importer_type), filtered_len)
 
     def test_get_all_profiles_authorized_filter_activity_retail(self):
-        response = self.client.get("/api/profiles/?activity_type=retail")
-        filtered_len = len(response.data)
+        response = self.client.get("/api/profiles/?activity_type=retail&page=1&page_size=12")
+        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/")
-        retail_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
-                       3 in response.data[i]["comp_activity"]]
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
+        retail_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
+                       3 in response.data["results"][i]["comp_activity"]]
         self.assertEqual(len(retail_type), filtered_len)
 
     def test_get_all_profiles_authorized_filter_activity_horeca(self):
-        response = self.client.get("/api/profiles/?activity_type=horeca")
-        filtered_len = len(response.data)
+        response = self.client.get("/api/profiles/?activity_type=horeca&page=1&page_size=12")
+        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/")
-        horeca_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
-                       4 in response.data[i]["comp_activity"]]
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
+        horeca_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
+                       4 in response.data["results"][i]["comp_activity"]]
         self.assertEqual(len(horeca_type), filtered_len)
 
     def test_get_all_profiles_unauthorized(self):
         self.client.logout()
-        response = self.client.get("/api/profiles/")
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
         self.assertEqual(200, response.status_code)
 
     def test_get_all_profiles_unauthorized_filter_companies(self):
         self.client.logout()
-        response = self.client.get("/api/profiles/?company_type=company")
+        response = self.client.get("/api/profiles/?company_type=company&page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(6, len(response.data))
+        self.assertEqual(6, len(response.data["results"]))
         self.assertTrue(all(
-            response.data[i]["comp_is_startup"] is False and response.data[i]["comp_registered"] is True
-            for i in range(len(response.data))))
+            response.data["results"][i]["comp_is_startup"] is False and response.data["results"][i]["comp_registered"] is True
+            for i in range(len(response.data["results"]))))
 
     def test_get_all_profiles_unauthorized_filter_startups(self):
         self.client.logout()
-        response = self.client.get("/api/profiles/?company_type=startup")
+        response = self.client.get("/api/profiles/?company_type=startup&page=1&page_size=12")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(6, len(response.data))
+        self.assertEqual(6, len(response.data["results"]))
         self.assertTrue(all(
-            response.data[i]["comp_is_startup"] is True and response.data[i]["comp_registered"] is False
-            for i in range(len(response.data))))
+            response.data["results"][i]["comp_is_startup"] is True and response.data["results"][i]["comp_registered"] is False
+            for i in range(len(response.data["results"]))))
 
     def test_get_all_profiles_unauthorized_filter_activity_producer(self):
         self.client.logout()
-        response = self.client.get("/api/profiles/?activity_type=producer")
-        filtered_len = len(response.data)
+        response = self.client.get("/api/profiles/?activity_type=producer&page=1&page_size=12")
+        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/")
-        producer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
-                         1 in response.data[i]["comp_activity"]]
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
+        producer_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
+                         1 in response.data["results"][i]["comp_activity"]]
         self.assertEqual(len(producer_type), filtered_len)
 
     def test_get_all_profiles_unauthorized_filter_activity_importer(self):
         self.client.logout()
-        response = self.client.get("/api/profiles/?activity_type=importer")
-        filtered_len = len(response.data)
+        response = self.client.get("/api/profiles/?activity_type=importer&page=1&page_size=12")
+        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/")
-        importer_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
-                         2 in response.data[i]["comp_activity"]]
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
+        importer_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
+                         2 in response.data["results"][i]["comp_activity"]]
         self.assertEqual(len(importer_type), filtered_len)
 
     def test_get_all_profiles_unauthorized_filter_activity_retail(self):
         self.client.logout()
-        response = self.client.get("/api/profiles/?activity_type=retail")
-        filtered_len = len(response.data)
+        response = self.client.get("/api/profiles/?activity_type=retail&page=1&page_size=12")
+        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/")
-        retail_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
-                       3 in response.data[i]["comp_activity"]]
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
+        retail_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
+                       3 in response.data["results"][i]["comp_activity"]]
         self.assertEqual(len(retail_type), filtered_len)
 
     def test_get_all_profiles_unauthorized_filter_activity_horeca(self):
         self.client.logout()
-        response = self.client.get("/api/profiles/?activity_type=horeca")
-        filtered_len = len(response.data)
+        response = self.client.get("/api/profiles/?activity_type=horeca&page=1&page_size=12")
+        filtered_len = len(response.data["results"])
         self.assertEqual(200, response.status_code)
-        response = self.client.get("/api/profiles/")
-        horeca_type = [response.data[i]["comp_activity"] for i in range(len(response.data)) if
-                       4 in response.data[i]["comp_activity"]]
+        response = self.client.get("/api/profiles/?page=1&page_size=12")
+        horeca_type = [response.data["results"][i]["comp_activity"] for i in range(len(response.data["results"])) if
+                    4 in response.data["results"][i]["comp_activity"]]
         self.assertEqual(len(horeca_type), filtered_len)
