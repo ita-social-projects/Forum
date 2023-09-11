@@ -8,7 +8,7 @@ function DeleteModal({active, setActive}) {
 
     return !active ? null : (
         <div
-            className={`${css['modal-window']} ${active && css['active']}`}
+            className={`${css['modal-cover']} ${active && css['active']}`}
             onClick={() => setActive(false)}
         >
             <div className={css['modal-content']}>
