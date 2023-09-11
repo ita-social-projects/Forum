@@ -1,7 +1,7 @@
 from djoser.serializers import UserSerializer
 from django.contrib.auth import get_user_model
-from rest_framework.serializers import SerializerMethodField
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.serializers import SerializerMethodField
 
 User = get_user_model()
 

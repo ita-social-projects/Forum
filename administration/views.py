@@ -1,7 +1,6 @@
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.response import Response
-from rest_framework import status
+
 from authentication.models import CustomUser
 from .serializers import AdminUserSerializer
 from .pagination import UserListPagination
@@ -28,7 +27,3 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return CustomUser.objects.filter(is_superuser=False).order_by('id')
-
-
-
-
