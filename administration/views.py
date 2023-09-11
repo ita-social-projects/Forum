@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from profiles.models import Profile
@@ -18,19 +18,17 @@ class ProfileList(ListCreateAPIView):
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "HORACE"]
 
         if company_type == "startup":
-            return Profile.objects.filter(comp_is_startup=True)
+            return Profile.objects.filter(comp_is_startup=True, is_approved=True)
         elif company_type == "company":
-            return Profile.objects.filter(comp_registered=True)
+            return Profile.objects.filter(comp_registered=True, is_approved=True)
         if activity_type in HEADER_ACTIVITIES:
-            return Profile.objects.filter(comp_activity__name=activity_type)
+            return Profile.objects.filter(comp_activity__name=activity_type, is_approved=True)
 
-        return Profile.objects.filter(is_deleted=False)
+        profile_exists = Profile.objects.filter(person_id=user_id, is_approved=True).exists()
+        if self.request.method == "POST" and profile_exists:
+            return Profile.objects.filter(person_id=user_id, is_approved=True)
 
-    def create(self, request):
-        profile = Profile.objects.filter(person_id=self.request.user)
-        if profile.exists():
-            return Response(status=409)
-        return super().create(request)
+        return Profile.objects.filter(is_deleted=False, is_approved=True)
     
 
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
