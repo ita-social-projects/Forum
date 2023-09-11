@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '0.0.0.0']
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '0.0.0.0']
 
 # Application definition
 
@@ -156,16 +156,10 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-<<<<<<< HEAD
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-
-=======
         'authentication.authentication.DjoserTokenAuthentication',
 
     ),
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
->>>>>>> a2efdce013347fbf261acd1b944acefe6e322cce
 }
 
 TOKEN_EXPIRATION_TIME = timedelta(days=14)
