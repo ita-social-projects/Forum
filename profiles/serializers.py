@@ -78,3 +78,10 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
         if company.person == user:
             raise serializers.ValidationError({"error": "You can not view your company."})
         return attrs
+
+
+class RegionSerializer(serializers.Serializer):
+    regions = serializers.SerializerMethodField()
+
+    def get_regions(self, obj):
+        return [{region[0]: region[1]} for region in obj]

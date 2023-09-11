@@ -7,35 +7,37 @@ from validation.validate_image import validate_image_size, validate_image_format
 from authentication.models import CustomUser
 
 
+class Region(models.TextChoices):
+    Kyiv = 'Kyiv', "Київ"
+    VinnytsiaReg = 'Vinnytsia region', "Вінницька область"
+    VolynReg = 'Volyn region', "Волинська область"
+    DniproReg = 'Dnipro region', "Дніпропетровська область"
+    DonetskReg = 'Donetsk region', "Донецька область"
+    ZhytomyrReg = 'Zhytomyr region', "Житомирська область"
+    ZakarpattiaReg = 'Zakarpattia region', "Закарпатська область"
+    ZaporizhzhiaReg = 'Zaporizhzhia region', "Запорізька область"
+    IvanoFrankivskReg = 'IvanoFrankivsk region', "Івано-Франківська область"
+    KyivReg = 'Kyiv region', "Київська область"
+    KirovohradReg = 'Kirovohrad region', "Кіровоградська область"
+    Crimea = 'Crimea', "Автономна Республіка Крим"
+    LuhanskReg = 'Luhansk region', "Луганська область"
+    LvivReg = 'Lviv region', "Львівська область"
+    MykolaivReg = 'Mykolaiv region', "Миколаївська область"
+    OdesaReg = 'Odesa region', "Одеська область"
+    PoltavaReg = 'Poltava region', "Полтавська область"
+    RivneReg = 'Rivne region', "Рівненська область"
+    Sevastopol = 'Sevastopol', 'Севастополь'
+    SumyReg = 'Sumy region', "Сумська область"
+    TernopilReg = 'Ternopil region', "Тернопільська область"
+    KharkivReg = 'Kharkiv region', "Харківська область"
+    KhersonReg = 'Kherson region', "Херсонська область"
+    KhmelnytskyiReg = 'Khmelnytskyi region', "Хмельницька область"
+    CherkasyReg = 'Cherkasy region', "Черкаська область"
+    ChernivtsiReg = 'Chernivtsi region', "Чернівецька область"
+    ChernihivReg = 'Chernihiv region', "Чернігівська область"
+
+
 class Profile(models.Model):
-
-    class Region(models.TextChoices):
-        Kyiv = 'Kyiv', "Київська область"
-        Vinnytsia = 'Vinnytsia', "Вінницька область"
-        Volyn = 'Volyn', "Волинська область"
-        Dnipro = 'Dnipro', "Дніпропетровська область"
-        Donetsk = 'Donetsk', "Донецька область"
-        Zhytomyr = 'Zhytomyr', "Житомирська область"
-        Zakarpattia = 'Zakarpattia', "Закарпатська область"
-        Zaporizhzhia = 'Zaporizhzhia', "Запорізька область"
-        IvanoFrankivsk = 'IvanoFrankivsk', "Івано-Франківська область"
-        Kirovohrad = 'Kirovohrad', "Кіровоградська область"
-        Crimea = 'Crimea', "Крим"
-        Luhansk = 'Luhansk', "Луганська область"
-        Lviv = 'Lviv', "Львівська область"
-        Mykolaiv = 'Mykolaiv', "Миколаївська область"
-        Odesa = 'Odesa', "Одеська область"
-        Poltava = 'Poltava', "Полтавська область"
-        Rivne = 'Rivne', "Рівненська область"
-        Sumy = 'Sumy', "Сумська область"
-        Ternopil = 'Ternopil', "Тернопільська область"
-        Kharkiv = 'Kharkiv', "Харківська область"
-        Kherson = 'Kherson', "Херсонська область"
-        Khmelnytskyi = 'Khmelnytskyi', "Хмельницька область"
-        Cherkasy = 'Cherkasy', "Черкаська область"
-        Chernivtsi = 'Chernivtsi', "Чернівецька область"
-        Chernihiv = 'Chernihiv', "Чернігівська область"
-
     profile_id = models.AutoField(primary_key=True)
     comp_name = models.CharField(max_length=50, default=None, null=True)
     comp_registered = models.BooleanField(default=None, null=True)

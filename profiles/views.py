@@ -2,12 +2,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
 
 from forum.pagination import ForumPagination
-from .models import SavedCompany, Profile, ViewedCompany
+from .models import SavedCompany, Profile, ViewedCompany, Region
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
+                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, RegionSerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly
 from django.http import JsonResponse
 
@@ -126,6 +127,7 @@ class ViewedCompanyList(ListCreateAPIView):
         return ViewedCompany.objects.filter(user=user_id).order_by("company_id")
 
 
-def region_list(request):
-    regions = [{region[0]: region[1]} for region in Profile.Region.choices]
-    return JsonResponse(regions, safe=False)
+class RegionListView(APIView):
+    def get(self, request, format=None):
+        serializer = RegionSerializer(Region.choices)
+        return Response(serializer.data, status=status.HTTP_200_OK)
