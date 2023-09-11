@@ -7,6 +7,7 @@ from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly
+from django.http import JsonResponse
 
 
 class SavedCompaniesListCreate(ListCreateAPIView):
@@ -118,3 +119,8 @@ class ViewedCompanyList(ListCreateAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         return ViewedCompany.objects.filter(user=user_id)
+
+
+def region_list(request):
+    regions = [{region[0]: region[1]} for region in Profile.Region.choices]
+    return JsonResponse(regions, safe=False)
