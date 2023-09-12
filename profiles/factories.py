@@ -69,7 +69,15 @@ class SavedCompanyFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = SavedCompany
 
-    company = factory.SubFactory(ProfileFactory)
+    company = factory.SubFactory(ProfileCompanyFactory)
+    user = factory.SubFactory("authentication.factories.UserFactory")
+
+
+class SavedStartupFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = SavedCompany
+
+    company = factory.SubFactory(ProfileStartupFactory)
     user = factory.SubFactory("authentication.factories.UserFactory")
 
 
