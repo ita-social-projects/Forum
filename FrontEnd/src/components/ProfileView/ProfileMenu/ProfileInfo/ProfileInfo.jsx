@@ -1,6 +1,22 @@
 import classes from "./ProfileInfo.module.css";
 
-const ProfileInfo = () => {
+const dataItems = [
+    {
+        title: "Рік заснування",
+        text: "2016",
+    },
+    {
+        title: "Розмір компанії",
+        text: "250 працівників",
+    },
+    {
+        title: "Аудит",
+        text: "Назва аудиту",
+    },
+];
+
+const ProfileInfo = ({ dataItems }) => {
+
   return (
       <div className={classes["profile-info-block"]}>
           <div className={classes["profile-info-block__main"]}>
@@ -9,17 +25,17 @@ const ProfileInfo = () => {
                       <div className={classes["profile-info-block__main-content-bold-title"]}>ЄДРПОУ</div>
                       <div className={classes["profile-info-block__main-content-text"]}>11223344</div>
                   </div>
-                  <div className={classes["profile-info-block__main-content-data"]}>
-                      <div className={classes["profile-info-block__main-content-title"]}>Рік заснування</div>
-                      <div className={classes["profile-info-block__main-content-text"]}>2016</div>
-                  </div>
-                  <div className={classes["profile-info-block__main-content-data"]}>
-                      <div className={classes["profile-info-block__main-content-title"]}>Розмір компанії</div>
-                      <div className={classes["profile-info-block__main-content-text"]}>250 працівників</div>
-                  </div>
-                  <div className={classes["profile-info-block__main-content-data"]}>
-                      <div className={classes["profile-info-block__main-content-title"]}>Аудит</div>
-                      <div className={classes["profile-info-block__main-content-text"]}>Назва аудиту</div>
+                  <div>
+                      {dataItems.map((item, index) => (
+                          <div key={index} className={classes["profile-info-block__main-content-data"]}>
+                              <div className={classes["profile-info-block__main-content-title"]}>
+                                  {item.title}
+                              </div>
+                              <div className={classes["profile-info-block__main-content-text"]}>
+                                  {item.text}
+                              </div>
+                          </div>
+                      ))}
                   </div>
               </div>
               <div className={classes["profile-info-block__main-content"]}>

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export const ProductCard = ({ data }) => {
     const { category, name, address, badges, logoSrc, photoSrc } = data;
-    console.log(photoSrc)
 
     return (
         <Link to="/profile-view" state={{ data: data }} className="no-underline">
