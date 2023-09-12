@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.exceptions import ValidationError
+
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
@@ -66,16 +66,16 @@ class ProfileList(ListCreateAPIView):
         query_params_serializer = QueryParamSerializer(data=self.request.query_params)
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
+        userid = self.request.query_params.get("userid")
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
         queryset = Profile.objects.filter(is_deleted=False).order_by("profile_id")
-        
-        if self.request.query_params:
+       
+        if userid:
             try:
-                userid = self.request.query_params.get('userid')
-                return Profile.objects.filter(person_id=userid)
+                return queryset.filter(person_id=userid)
             except ValueError:
-                raise ValidationError(detail='Bad request')
+                pass
         if company_type == "startup":
             return queryset.filter(comp_is_startup=True)
         elif company_type == "company":
