@@ -1,11 +1,11 @@
 from django.urls import path, re_path, include
-from .views import ProfileList, ProfileDetail
+from .views import AdminProfileList, AdminProfileDetail
 
 app_name = "administration"
 
 urlpatterns = [
     path("auth/", include('djoser.urls')),
     re_path(r"^auth/", include('djoser.urls.authtoken')),
-    path('profiles/', ProfileList.as_view(), name='profile-list'),
-    path('profiles/<pk>', ProfileDetail.as_view(), name='profile-detail'),
+    path('profiles/', AdminProfileList.as_view(), name='profile-list'),
+    path('profiles/<pk>', AdminProfileDetail.as_view(), name='profile-detail'),
 ]
