@@ -24,7 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header isAuthorized={true}></Header>
+        <Header isAuthorized={false}></Header>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/profile/*" element={<ProfilePage />} />
@@ -32,7 +32,7 @@ function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="/search" element={<Search isAuthorized={true}/>} />
+          <Route path="/search" element={<Search isAuthorized={false}/>} />
         </Routes>
         <Footer />
         <ScrollToTopButton />

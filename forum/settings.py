@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'forum.urls'
@@ -165,6 +166,10 @@ DJOSER = {
     }
 }
 
+# allow acces from reat to Django
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React server для React
+]
 
 def running_tests():
     import sys
