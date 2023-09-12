@@ -9,3 +9,9 @@ class UserIsProfileOwnerOrReadOnly(BasePermission):
             return True
 
         return obj.person == request.user
+
+class SavedCompaniesListPermission(BasePermission):
+    def has_permission(self, request, view):
+        if request.query_params.get("filters") == "is_saved":
+            return request.user.is_authenticated
+        return True

@@ -80,6 +80,34 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertIsNone(response.data.get("email"))
 
     def test_get_profile_authorized_owner(self):
+        self.client.force_authenticate(self.test_person_with_profile)
+        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id))
+        self.assertEqual(200, response.status_code, response.content)
+        self.assertEqual(
+            {
+                "profile_id": self.test_profile.profile_id,
+                "person": self.test_person_with_profile.id,
+                "is_saved": False,
+                "comp_name": "Test 1",
+                "comp_registered": True,
+                "comp_is_startup": False,
+                "comp_official_name": "Test 1 official name",
+                "comp_region": "E",
+                "comp_common_info": "Test 1 common info",
+                "comp_phone_number": "380990102034",
+                "comp_EDRPOU": 10000001,
+                "comp_year_of_foundation": 2020,
+                "comp_service_info": "Test 1 service info",
+                "comp_product_info": "Test 1 product info",
+                "comp_address": "Lviv",
+                "comp_banner_image": None,
+                "person_position": None,
+                "startup_idea": "Test 1 start up idea",
+                "is_deleted": False,
+                "comp_category": [],
+                "comp_activity": []
+            }, response.data
+        )
         self.client.force_authenticate(self.user)
         response = self.client.get(
             path="/api/profiles/{profile_id}".format(profile_id=self.profile.profile_id))
