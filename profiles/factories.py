@@ -1,5 +1,5 @@
 import factory.django
-from faker import Factory as FakerFactory
+
 from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
 
 
@@ -8,14 +8,15 @@ class CategoryFactory(factory.django.DjangoModelFactory):
         model = Category
         django_get_or_create = ('name',)
 
-    name = "test"
+    name = factory.Sequence(lambda n: f"test category {n}")
 
 
 class ActivityFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Activity
+        django_get_or_create = ('name',)
 
-    name = "test"
+    name = factory.Sequence(lambda n: f"test activity {n}")
 
 
 class ProfileFactory(factory.django.DjangoModelFactory):
