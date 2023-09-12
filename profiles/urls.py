@@ -10,6 +10,6 @@ urlpatterns = [
     path('saved-list/', SavedCompaniesCreate.as_view(), name='saved_companies_create'),
     path('saved-list/<pk>/', SavedCompaniesDestroy.as_view(), name='saved_companies_destroy'),
     path('viewed-list/', ViewedCompanyList.as_view(), name='viewed_company_list'),
-    path('category-list/', CategoryList.as_view(), name='category_list'),
-    path('activity-list/', ActivityList.as_view(), name='activity_list'),
+    path('categories/', CategoryList.as_view(), name='category_list'),
+    path('activities/', ActivityList.as_view(), name='activity_list'),
 ]
