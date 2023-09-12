@@ -7,11 +7,8 @@ from rest_framework import status
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, QueryParamSerializer)
+                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, FiltersQueryParamSerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission
-
-
-FILTERS= {"saved": "is_saved"}
 
 
 class SavedCompaniesCreate(CreateAPIView):
@@ -63,30 +60,30 @@ class ProfileList(ListCreateAPIView):
     pagination_class = ForumPagination
 
     def get_queryset(self):
-        query_params_serializer = QueryParamSerializer(data=self.request.query_params)
+        filters = FiltersQueryParamSerializer(data=self.request.query_params)
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
-        userid = self.request.query_params.get("userid")
+        user_id = self.request.query_params.get("userid")
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
         queryset = Profile.objects.filter(is_deleted=False).order_by("profile_id")
        
-        if userid:
+        if user_id:
             try:
-                return queryset.filter(person_id=userid)
+                return queryset.filter(person_id=user_id)
             except ValueError:
                 pass
         if company_type == "startup":
-            return queryset.filter(comp_is_startup=True)
+            queryset = queryset.filter(comp_is_startup=True)
         elif company_type == "company":
-            return queryset.filter(comp_registered=True)
+            queryset = queryset.filter(comp_registered=True)
         if activity_type in HEADER_ACTIVITIES:
             return queryset.filter(comp_activity__name=activity_type)
-        if query_params_serializer.is_valid():
-            data = query_params_serializer.validated_data
+        if filters.is_valid():
+            data = filters.validated_data
             filters = data.get("filters")
-            if filters == FILTERS["saved"]:
-                return queryset.filter(saved_list__user=self.request.user)
+            if filters == "is_saved":
+                queryset = queryset.filter(saved_list__user=self.request.user)
         return queryset
 
     def create(self, request):

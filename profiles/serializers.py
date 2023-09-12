@@ -1,3 +1,4 @@
+import re
 from rest_framework import serializers
 
 from authentication.models import CustomUser
@@ -86,5 +87,9 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"error": "You can not view your company."})
         return attrs
 
-class QueryParamSerializer(serializers.Serializer):
+class FiltersQueryParamSerializer(serializers.Serializer):
     filters = serializers.CharField(required=True)
+
+    def to_representation(self, instance):
+        representation = {"instance": "instance"}
+        return representation

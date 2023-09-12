@@ -1,7 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-from profiles import views
-
 
 class UserIsProfileOwnerOrReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -14,6 +12,6 @@ class UserIsProfileOwnerOrReadOnly(BasePermission):
 
 class SavedCompaniesListPermission(BasePermission):
     def has_permission(self, request, view):
-        if request.query_params.get("filters") == views.FILTERS["saved"]:
+        if request.query_params.get("filters") == "is_saved":
             return request.user.is_authenticated
         return True
