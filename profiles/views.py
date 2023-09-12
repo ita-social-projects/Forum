@@ -6,9 +6,9 @@ from rest_framework import status
 from rest_framework.exceptions import ValidationError
 
 from forum.pagination import ForumPagination
-from .models import SavedCompany, Profile, ViewedCompany
+from .models import SavedCompany, Profile, ViewedCompany, Category, Activity
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                      ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
+                      ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer, ActivitySerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly
 
 
@@ -130,3 +130,15 @@ class ViewedCompanyList(ListCreateAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         return ViewedCompany.objects.filter(user=user_id).order_by("company_id")
+
+
+class CategoryList(ListAPIView):
+    model = Category
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+
+class ActivityList(ListAPIView):
+    model = Activity
+    serializer_class = ActivitySerializer
+    queryset = Activity.objects.all()
