@@ -51,25 +51,42 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertIsNone(response.data.get("comp_phone_number"))
         self.assertIsNone(response.data.get("email"))
-        self.assertEqual({
-            "comp_official_name": "Test Official Startup",
-            "comp_region": "E",
-            "comp_common_info": "test common info",
-            "comp_EDRPOU": 99999999,
-            "comp_year_of_foundation": 2022,
-            "comp_address": "Test Country, Test City, St. Test, 1",
-            "startup_idea": "Test startup idea",
-            "comp_name": "Test Comp name",
-            "comp_registered": False,
-            "comp_is_startup": True,
-            "comp_service_info": "test service info",
-            "comp_product_info": "test product info",
-            "comp_banner_image": None
-        }, response.data
-        )
+
+        # fields check
+        self.assertEqual(self.profile.comp_official_name, response.data.get("comp_official_name"),
+                         msg="Official names do not match.")
+        self.assertEqual(self.profile.comp_region, response.data.get("comp_region"),
+                         msg="Regions do not match.")
+        self.assertEqual(self.profile.comp_common_info, response.data.get("comp_common_info"),
+                         msg="Common info do not match.")
+        self.assertEqual(self.profile.comp_EDRPOU, response.data.get("comp_EDRPOU"),
+                         msg="EDRPOUs do not match.")
+        self.assertEqual(self.profile.comp_year_of_foundation, response.data.get("comp_year_of_foundation"),
+                         msg="Years of foundation do not match.")
+        self.assertEqual(self.profile.comp_address, response.data.get("comp_address"),
+                         msg="Addresses do not match.")
+        self.assertEqual(self.profile.startup_idea, response.data.get("startup_idea"),
+                         msg="Startup ideas do not match.")
+        self.assertEqual(self.profile.comp_name, response.data.get("comp_name"),
+                         msg="Company names do not match")
+        self.assertEqual(self.profile.comp_registered, response.data.get("comp_registered"),
+                         msg="Company is registered fields do not match.")
+        self.assertEqual(self.profile.comp_is_startup, response.data.get("comp_is_startup"),
+                         msg="Company is startup fields do not match.")
+        self.assertEqual(self.profile.comp_service_info, response.data.get("comp_service_info"),
+                         msg="Service info do not match.")
+        self.assertEqual(self.profile.comp_product_info, response.data.get("comp_product_info"),
+                         msg="Product info do not match.")
+        self.assertEqual(self.profile.comp_banner_image, response.data.get("comp_banner_image"),
+                         msg="Banner images do not match.")
+        # TODO: add check for categories and activities
+        # self.assertIsNone(response.data.get("comp_category"),
+        #                   msg="Categories do not match.")
+        # self.assertIsNone(response.data.get("comp_activity"),
+        #                   msg="Activities do not match.")
 
     def test_get_profile_authorized_not_owner(self):
-        profile2 = ProfileStartupFactory()
+        profile2 = ProfileStartupFactory(comp_official_name="Test Official Startup from test case")
         self.client.force_authenticate(self.user)
 
         response = self.client.get(path="/api/profiles/{profile_id}".format(profile_id=profile2.profile_id))
@@ -77,41 +94,83 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertIsNone(response.data.get("comp_phone_number"))
         self.assertIsNone(response.data.get("email"))
 
+        # fields check
+        self.assertEqual(profile2.comp_official_name, response.data.get("comp_official_name"),
+                         msg="Official names do not match.")
+        self.assertEqual(profile2.comp_region, response.data.get("comp_region"),
+                         msg="Regions do not match.")
+        self.assertEqual(profile2.comp_common_info, response.data.get("comp_common_info"),
+                         msg="Common info do not match.")
+        self.assertEqual(profile2.comp_EDRPOU, response.data.get("comp_EDRPOU"),
+                         msg="EDRPOUs do not match.")
+        self.assertEqual(profile2.comp_year_of_foundation, response.data.get("comp_year_of_foundation"),
+                         msg="Years of foundation do not match.")
+        self.assertEqual(profile2.comp_address, response.data.get("comp_address"),
+                         msg="Addresses do not match.")
+        self.assertEqual(profile2.startup_idea, response.data.get("startup_idea"),
+                         msg="Startup ideas do not match.")
+        self.assertEqual(profile2.comp_name, response.data.get("comp_name"),
+                         msg="Company names do not match")
+        self.assertEqual(profile2.comp_registered, response.data.get("comp_registered"),
+                         msg="Company is registered fields do not match.")
+        self.assertEqual(profile2.comp_is_startup, response.data.get("comp_is_startup"),
+                         msg="Company is startup fields do not match.")
+        self.assertEqual(profile2.comp_service_info, response.data.get("comp_service_info"),
+                         msg="Service info do not match.")
+        self.assertEqual(profile2.comp_product_info, response.data.get("comp_product_info"),
+                         msg="Product info do not match.")
+        self.assertEqual(profile2.comp_banner_image, response.data.get("comp_banner_image"),
+                         msg="Banner images do not match.")
+        # TODO: add check for categories and activities
+        # self.assertEqual(list(profile2.comp_category.all()), response.data.get("comp_category"),
+        #                  msg="Categories do not match.")
+        # self.assertEqual(list(profile2.comp_category.all()), response.data.get("comp_activity"),
+        #                  msg="Activities do not match.")
+
     def test_get_profile_authorized_owner(self):
         self.client.force_authenticate(self.user)
 
         response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.profile.profile_id))
-        self.assertEqual(200, response.status_code, response.content)
-        self.assertEqual(
-            {
-                "profile_id": self.profile.profile_id,
-                "person": self.user.id,
-                "is_saved": False,
-                "comp_name": "Test Comp name",
-                "comp_registered": False,
-                "comp_is_startup": True,
-                "comp_official_name": "Test Official Startup",
-                "comp_region": "E",
-                "comp_common_info": "test common info",
-                "comp_phone_number": "380100102034",
-                "comp_EDRPOU": 99999999,
-                "comp_year_of_foundation": 2022,
-                "comp_service_info": "test service info",
-                "comp_product_info": "test product info",
-                "comp_address": "Test Country, Test City, St. Test, 1",
-                "comp_banner_image": None,
-                "person_position": "Test",
-                "startup_idea": "Test startup idea",
-                "is_deleted": False,
-                "comp_category": [],
-                "comp_activity": []
-            }, response.data
-        )
-        self.client.force_authenticate(self.user)
-        response = self.client.get(
-            path="/api/profiles/{profile_id}".format(profile_id=self.profile.profile_id))
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertIsNotNone(response.data.get("comp_phone_number"))
+
+        # fields check
+        self.assertEqual(self.profile.profile_id, response.data.get("profile_id"),
+                         msg="IDs do not match.")
+        self.assertEqual(self.profile.person.id, response.data.get("person"),
+                         msg="Persons do not match.")
+        self.assertFalse(response.data.get("is_saved"), msg="is_saved shouldn't be True.")
+        self.assertEqual(self.profile.comp_official_name, response.data.get("comp_official_name"),
+                         msg="Official names do not match.")
+        self.assertEqual(self.profile.comp_region, response.data.get("comp_region"),
+                         msg="Regions do not match.")
+        self.assertEqual(self.profile.comp_common_info, response.data.get("comp_common_info"),
+                         msg="Common info do not match.")
+        self.assertEqual(self.profile.comp_phone_number, response.data.get("comp_phone_number"),
+                         msg="Phone numbers do not match.")
+        self.assertEqual(self.profile.comp_EDRPOU, response.data.get("comp_EDRPOU"),
+                         msg="EDRPOUs do not match.")
+        self.assertEqual(self.profile.comp_year_of_foundation, response.data.get("comp_year_of_foundation"),
+                         msg="Years of foundation do not match.")
+        self.assertEqual(self.profile.comp_address, response.data.get("comp_address"),
+                         msg="Addresses do not match.")
+        self.assertEqual(self.profile.startup_idea, response.data.get("startup_idea"),
+                         msg="Startup ideas do not match.")
+        self.assertEqual(self.profile.comp_name, response.data.get("comp_name"),
+                         msg="Company names do not match")
+        self.assertEqual(self.profile.comp_registered, response.data.get("comp_registered"),
+                         msg="Company is registered fields do not match.")
+        self.assertEqual(self.profile.comp_is_startup, response.data.get("comp_is_startup"),
+                         msg="Company is startup fields do not match.")
+        self.assertEqual(self.profile.comp_service_info, response.data.get("comp_service_info"),
+                         msg="Service info do not match.")
+        self.assertEqual(self.profile.comp_product_info, response.data.get("comp_product_info"),
+                         msg="Product info do not match.")
+        self.assertEqual(self.profile.comp_banner_image, response.data.get("comp_banner_image"),
+                         msg="Banner images do not match.")
+        self.assertEqual(list(self.profile.comp_category.all()), response.data.get("comp_category"),
+                         msg="Categories do not match.")
+        self.assertEqual(list(self.profile.comp_category.all()), response.data.get("comp_activity"),
+                         msg="Activities do not match.")
 
     def test_get_contact_info_unauthorized(self):
         response = self.client.get(
@@ -124,13 +183,10 @@ class TestProfileDetailAPIView(APITestCase):
         response = self.client.get(
             path="/api/profiles/{profile_id}?with_contacts=True".format(profile_id=self.profile.profile_id))
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(
-            {
-                "comp_phone_number": "380100102034",
-                "email": 'test1@test.com'
-            },
-            response.data
-        )
+        self.assertEqual(self.profile.comp_phone_number, response.data.get("comp_phone_number"),
+                         msg="Phone numbers do not match.")
+        self.assertEqual(self.profile.person.person_email, response.data.get("email"),
+                         msg="Emails do not match.")
 
     # DELETE requests section
     def test_delete_profile_unauthorized(self):
