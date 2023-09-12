@@ -89,7 +89,3 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 
 class FiltersQueryParamSerializer(serializers.Serializer):
     filters = serializers.CharField(required=True)
-
-    def to_representation(self, instance):
-        representation = {"instance": "instance"}
-        return representation
