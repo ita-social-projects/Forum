@@ -1,13 +1,14 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 
 from forum.pagination import ForumPagination
-from .models import SavedCompany, Profile, ViewedCompany
+from .models import SavedCompany, Profile, ViewedCompany, Category, Activity
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer)
+                      ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer, ActivitySerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly
 
 
@@ -69,6 +70,12 @@ class ProfileList(ListCreateAPIView):
         activity_type = self.request.query_params.get("activity_type")
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
+        if self.request.query_params:
+            try:
+                userid = self.request.query_params.get('userid')
+                return Profile.objects.filter(person_id=userid)
+            except ValueError:
+                raise ValidationError(detail='Bad request')
         if company_type == "startup":
             return Profile.objects.filter(comp_is_startup=True).order_by("profile_id")
         elif company_type == "company":
@@ -123,3 +130,15 @@ class ViewedCompanyList(ListCreateAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         return ViewedCompany.objects.filter(user=user_id).order_by("company_id")
+
+
+class CategoryList(ListAPIView):
+    model = Category
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+
+class ActivityList(ListAPIView):
+    model = Activity
+    serializer_class = ActivitySerializer
+    queryset = Activity.objects.all()
