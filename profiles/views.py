@@ -147,7 +147,6 @@ class ActivityList(ListAPIView):
     queryset = Activity.objects.all()
 
 
-class RegionListView(APIView):
-    def get(self, request, format=None):
-        serializer = RegionSerializer(Region.choices)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class RegionListView(ListAPIView):
+    serializer_class = RegionSerializer
+    queryset = Region.choices

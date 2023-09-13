@@ -93,8 +93,6 @@ class FiltersQueryParamSerializer(serializers.Serializer):
 
     
 class RegionSerializer(serializers.Serializer):
-    regions = serializers.SerializerMethodField()
 
-    def get_regions(self, obj):
-        return [{region[0]: region[1]} for region in obj]
-
+    def to_representation(self, obj):
+        return {obj[0]: obj[1]}
