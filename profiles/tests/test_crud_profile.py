@@ -51,7 +51,7 @@ class TestProfileDetailAPIView(APITestCase):
             comp_is_startup=False,
             comp_official_name="Test 1 official name",
             comp_name="Test 1",
-            comp_region=Region.DniproReg,
+            comp_region=Region.DNIPRO_REGION,
             comp_common_info="Test 1 common info",
             comp_phone_number=380990102034,
             comp_EDRPOU=10000001,
@@ -67,7 +67,7 @@ class TestProfileDetailAPIView(APITestCase):
             comp_is_startup=False,
             comp_official_name="Test 2 official name",
             comp_name="Test 2",
-            comp_region=Region.DniproReg,
+            comp_region=Region.DNIPRO_REGION,
             comp_common_info="Test 2 common info",
             comp_phone_number=380990102034,
             comp_EDRPOU=10000002,
@@ -110,7 +110,7 @@ class TestProfileDetailAPIView(APITestCase):
             "profile_id": self.test_profile,
             "person": self.test_person_with_profile.id,
             "comp_official_name": "Jannifer",
-            "comp_region": Region.DniproReg,
+            "comp_region": Region.DNIPRO_REGION,
             "comp_common_info": "Good Very",
             "comp_phone_number": 123456789012,
             "comp_EDRPOU": 12345678,
@@ -159,7 +159,7 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertIsNone(response.data.get("email"))
         self.assertEqual({
             "comp_official_name": "Test 2 official name",
-            "comp_region": Region.DniproReg,
+            "comp_region": Region.DNIPRO_REGION,
             "comp_common_info": "Test 2 common info",
             "comp_EDRPOU": 10000002,
             "comp_year_of_foundation": 2020,
@@ -182,7 +182,7 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertIsNone(response.data.get("email"))
         self.assertEqual({
             "comp_official_name": "Test 2 official name",
-            "comp_region": Region.DniproReg,
+            "comp_region": Region.DNIPRO_REGION,
             "comp_common_info": "Test 2 common info",
             "comp_EDRPOU": 10000002,
             "comp_year_of_foundation": 2020,
@@ -210,7 +210,7 @@ class TestProfileDetailAPIView(APITestCase):
                 "comp_registered": True,
                 "comp_is_startup": False,
                 "comp_official_name": "Test 1 official name",
-                "comp_region": Region.DniproReg,
+                "comp_region": Region.DNIPRO_REGION,
                 "comp_common_info": "Test 1 common info",
                 "comp_phone_number": "380990102034",
                 "comp_EDRPOU": 10000001,
