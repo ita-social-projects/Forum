@@ -16,7 +16,7 @@ const DeleteProfilePage = (props) => {
     return (
         <div>
             <div className={css['text__for__delete']}>Видалити акаунт</div>
-            <button className={css['button__delete']}  onClick={() => setModal(true)}>Видалити</button>
+            <button className={css['button__delete']}  onClick={() => setModal(true)} style={{marginBottom: 400}}>Видалити</button>
             <MyModal visible={modal} setVisisble={setModal}>
                 <DeleteProfileModal onCancel={cancelHandler} user={props.user}/>
             </MyModal>

@@ -87,5 +87,12 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"error": "You can not view your company."})
         return attrs
 
+      
 class FiltersQueryParamSerializer(serializers.Serializer):
-    filters = serializers.CharField(required=True)
+    filters = serializers.CharField(required=True)      
+
+    
+class RegionSerializer(serializers.Serializer):
+
+    def to_representation(self, obj):
+        return {obj[0]: obj[1]}

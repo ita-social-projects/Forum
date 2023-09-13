@@ -6,7 +6,35 @@ from validation.validate_image import validate_image_size, validate_image_format
 
 from authentication.models import CustomUser
 
-REGIONS = (('E', "east"), ('W', "west"), ('N', "north"), ('S', "south"))
+
+class Region(models.TextChoices):
+    KYIV = 'Kyiv', "Київ"
+    VINNYTSIA_REGION = 'Vinnytsia region', "Вінницька область"
+    VOLYN_REGION = 'Volyn region', "Волинська область"
+    DNIPRO_REGION = 'Dnipro region', "Дніпропетровська область"
+    DONETSK_REGION = 'Donetsk region', "Донецька область"
+    ZHYTOMYR_REGION = 'Zhytomyr region', "Житомирська область"
+    ZAKARPATTIA_REGION = 'Zakarpattia region', "Закарпатська область"
+    ZAPORIZHZHIA_REGION = 'Zaporizhzhia region', "Запорізька область"
+    IVANOFRANKIVSK_REGION = 'IvanoFrankivsk region', "Івано-Франківська область"
+    KYIV_REGION = 'Kyiv region', "Київська область"
+    KIROVOHRAD_REGION = 'Kirovohrad region', "Кіровоградська область"
+    CRIMEA = 'Crimea', "Автономна Республіка Крим"
+    LUHANSK_REGION = 'Luhansk region', "Луганська область"
+    LVIV_REGION = 'Lviv region', "Львівська область"
+    MYKOLAIV_REGION = 'Mykolaiv region', "Миколаївська область"
+    ODESA_REGION = 'Odesa region', "Одеська область"
+    POLTAVA_REGION = 'Poltava region', "Полтавська область"
+    RIVNE_REGION = 'Rivne region', "Рівненська область"
+    SEVASTOPOL = 'Sevastopol', 'Севастополь'
+    SUMY_REGION = 'Sumy region', "Сумська область"
+    TERNOPIL_REGION = 'Ternopil region', "Тернопільська область"
+    KHARKIV_REGION = 'Kharkiv region', "Харківська область"
+    KHERSON_REGION = 'Kherson region', "Херсонська область"
+    KHMELNYTSKYI_REGION = 'Khmelnytskyi region', "Хмельницька область"
+    CHERKASY_REGION = 'Cherkasy region', "Черкаська область"
+    CHERNIVTSI_REGION = 'Chernivtsi region', "Чернівецька область"
+    CHERNIHIV_REGION = 'Chernihiv region', "Чернігівська область"
 
 
 class Profile(models.Model):
@@ -17,7 +45,7 @@ class Profile(models.Model):
     comp_category = models.ManyToManyField("Category")
     comp_activity = models.ManyToManyField("Activity")
     comp_official_name = models.CharField(max_length=255, unique=True, default=None, null=True)
-    comp_region = models.CharField(max_length=128, choices=REGIONS, default=None, null=True)
+    comp_region = models.CharField(max_length=128, choices=Region.choices, default=None, null=True)
     comp_common_info = models.CharField(max_length=255, default=None, null=True)
     comp_phone_number = models.CharField(
         max_length=12,
