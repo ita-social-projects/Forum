@@ -1,20 +1,19 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework.generics import ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework.exceptions import ValidationError
+
 from forum.pagination import ForumPagination
-from .models import SavedCompany, Profile, ViewedCompany, Region
+
+from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, RegionSerializer)
-
-from .permissions import UserIsProfileOwnerOrReadOnly
-from django.http import JsonResponse
+                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer, ActivitySerializer, FiltersQueryParamSerializer, RegionSerializer)
+from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission
 
 
-class SavedCompaniesListCreate(ListCreateAPIView):
+class SavedCompaniesCreate(CreateAPIView):
     """
     List of saved companies.
     Add a company to the saved list.
@@ -23,11 +22,6 @@ class SavedCompaniesListCreate(ListCreateAPIView):
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
     
-    def get_queryset(self):
-        user = self.request.user
-        saved_companies = SavedCompany.objects.filter(user=user).order_by("company_id")
-        return saved_companies
-
     def post(self, request):
         user = request.user
         pk = request.data.get("company_pk")
@@ -64,28 +58,35 @@ class ProfileList(ListCreateAPIView):
      include_all: bool.
     """
     serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = [IsAuthenticatedOrReadOnly & SavedCompaniesListPermission]
     pagination_class = ForumPagination
 
     def get_queryset(self):
+        filters = FiltersQueryParamSerializer(data=self.request.query_params)
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
+        user_id = self.request.query_params.get("userid")
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
-        if self.request.query_params:
+        queryset = Profile.objects.filter(is_deleted=False).order_by("profile_id")
+       
+        if user_id:
             try:
-                userid = self.request.query_params.get('userid')
-                return Profile.objects.filter(person_id=userid)
+                return queryset.filter(person_id=user_id)
             except ValueError:
-                raise ValidationError(detail='Bad request')
+                pass
         if company_type == "startup":
-            return Profile.objects.filter(comp_is_startup=True).order_by("profile_id")
+            queryset = queryset.filter(comp_is_startup=True)
         elif company_type == "company":
-            return Profile.objects.filter(comp_registered=True).order_by("profile_id")
+            queryset = queryset.filter(comp_registered=True)
         if activity_type in HEADER_ACTIVITIES:
-            return Profile.objects.filter(comp_activity__name=activity_type).order_by("profile_id")
-
-        return Profile.objects.filter(is_deleted=False).order_by("profile_id")
+            return queryset.filter(comp_activity__name=activity_type)
+        if filters.is_valid():
+            data = filters.validated_data
+            filters = data.get("filters")
+            if filters == "is_saved":
+                queryset = queryset.filter(saved_list__user=self.request.user)
+        return queryset
 
     def create(self, request):
         profile = Profile.objects.filter(person_id=self.request.user)
@@ -132,6 +133,18 @@ class ViewedCompanyList(ListCreateAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         return ViewedCompany.objects.filter(user=user_id).order_by("company_id")
+
+
+class CategoryList(ListAPIView):
+    model = Category
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+
+class ActivityList(ListAPIView):
+    model = Activity
+    serializer_class = ActivitySerializer
+    queryset = Activity.objects.all()
 
 
 class RegionListView(APIView):

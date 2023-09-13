@@ -181,6 +181,7 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
         'user_delete': ['rest_framework.permissions.IsAdminUser'],
+        'user_list': ['rest_framework.permissions.IsAdminUser'],
     },
 
     'SERIALIZERS': {

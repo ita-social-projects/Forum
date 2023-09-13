@@ -5,7 +5,7 @@ from authentication.models import CustomUser
 from profiles.models import Profile
 
 
-class SavedCompaniesListCreateDestroyAPITest(APITestCase):
+class SavedCompaniesCreateDestroyAPITest(APITestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -81,20 +81,6 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         company_added_info = response.data["Company added"]
         self.assertEqual(company_added_info["company"], self.company2_id)
 
-    def test_get_test_user2_company_saved_list(self):
-        self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
-                                                   "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company2_id}".format(company2_id=self.company2_id),
-                                                   "Authentication": self.token2})
-        response = self.client.get("/api/saved-list/",
-                                   data={
-                                       "Authentication": self.token2
-                                   }
-                                   )
-        companies_info = response.data["results"]
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(2, len(companies_info))
-
     def test_delete_test_user2_company_saved_list_item(self):
         self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
                                                    "Authentication": self.token2})
@@ -106,14 +92,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
                                       }
                                       )
         self.assertEqual(204, response.status_code)
-        response = self.client.get("/api/saved-list/",
-                                   data={
-                                       "Authentication": self.token2
-                                   }
-                                   )
-        companies_info = response.data["results"]
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(companies_info))
+        self.assertEqual("Company {company2_id} deleted".format(company2_id=self.company2_id), response.data)        
 
     def test_add_non_existing_company_to_saved_list(self):
         response = self.client.post("/api/saved-list/",
@@ -124,26 +103,14 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
                                     )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_get_saved_companies_without_authentication(self):
-        self.client.logout()
+    def test_get_saved_companies_list(self):
         response = self.client.get("/api/saved-list/")
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_relike_user2_company_saved_list_item(self):
         self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
                                                    "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company2_id}".format(company2_id=self.company2_id),
+        response = self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
                                                    "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company2_id}".format(company2_id=self.company2_id),
-                                                   "Authentication": self.token2})
-        self.client.post("/api/saved-list/", data={"company_pk": "{company1_id}".format(company1_id=self.company1_id),
-                                                   "Authentication": self.token2})
-
-        response = self.client.get("/api/saved-list/",
-                                   data={
-                                       "Authentication": self.token2
-                                   }
-                                   )
-        companies_info = response.data["results"]
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(companies_info))
+        self.assertEqual(204, response.status_code)
+        self.assertEqual("Company {company1_id} deleted".format(company1_id=self.company1_id), response.data)
