@@ -177,7 +177,7 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'HIDE_USERS': False,
-    'LOGIN_FIELD': 'person_email',
+    'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
         'user_delete': ['rest_framework.permissions.IsAdminUser'],
