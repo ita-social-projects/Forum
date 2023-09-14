@@ -24,7 +24,7 @@ class CustomProfileSerializer(serializers.ModelSerializer):
 
 class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
     company = CustomProfileSerializer(write_only=True)
-    person_email = serializers.EmailField(write_only=True, validators=[UniqueValidator(
+    email = serializers.EmailField(write_only=True, validators=[UniqueValidator(
         queryset=User.objects.all(), message="Email is already registered")])
     password = serializers.CharField(
         style={"input_type": "password"}, write_only=True)
@@ -32,10 +32,10 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
     class Meta(UserCreatePasswordRetypeSerializer.Meta):
         model = User
         fields = (
-            "person_email",
+            "email",
             "password",
-            "person_name",
-            "person_surname",
+            "name",
+            "surname",
             "company"
         )
 
@@ -83,9 +83,9 @@ class UserListSerializer(UserSerializer):
         model = User
         fields = (
             "id",
-            "person_email",
-            "person_name",
-            "person_surname",
+            "email",
+            "name",
+            "surname",
         )
 
 

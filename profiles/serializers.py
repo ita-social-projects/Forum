@@ -51,7 +51,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
 
 
 class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
-    email = serializers.ReadOnlyField(source='person.person_email')
+    email = serializers.ReadOnlyField(source='person.email')
 
     class Meta:
         model = Profile
