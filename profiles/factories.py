@@ -1,6 +1,6 @@
-import factory.django
+import factory.fuzzy
 
-from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
+from .models import Profile, Activity, Category, SavedCompany, ViewedCompany, Region
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
@@ -26,7 +26,7 @@ class ProfileFactory(factory.django.DjangoModelFactory):
 
     person = factory.SubFactory("authentication.factories.UserFactory")
     comp_name = "Test Comp name"
-    comp_region = "E"  # TODO: add changing regions generated
+    comp_region = factory.fuzzy.FuzzyChoice(Region, getter=lambda r: r[0])
     comp_common_info = "test common info"
     comp_phone_number = "380112909099"
     comp_EDRPOU = factory.Sequence(lambda n: 10000000 + n)
