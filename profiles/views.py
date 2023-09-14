@@ -2,12 +2,14 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
 
 from forum.pagination import ForumPagination
-from .models import SavedCompany, Profile, ViewedCompany, Category, Activity
+
+from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer, ActivitySerializer, FiltersQueryParamSerializer)
+                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer, ActivitySerializer, FiltersQueryParamSerializer, RegionSerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission
 
 
@@ -143,3 +145,8 @@ class ActivityList(ListAPIView):
     model = Activity
     serializer_class = ActivitySerializer
     queryset = Activity.objects.all()
+
+
+class RegionListView(ListAPIView):
+    serializer_class = RegionSerializer
+    queryset = Region.choices

@@ -88,6 +88,7 @@ const ERRORS = {
 };
 
 const TEXT_AREA_MAX_LENGTH = 1000;
+const IMAGE_SIZE = 50 * 1024 * 1024;
 
 const GeneralInfo = (props) => {
     const [user, setUser] = useState(props.user);
@@ -146,9 +147,8 @@ const GeneralInfo = (props) => {
 
     const onUpdateImageField = e => {
         const file = e.target.files[0];
-        const allowedSize = 50 * 1024 * 1024;
         if (file) {
-            if (file.size > allowedSize) {
+            if (file.size > IMAGE_SIZE) {
                 if (e.target.name === 'logo') {
                     setImageLogoError('Максимальний розмір файлу 50Mb');
                 } else {
