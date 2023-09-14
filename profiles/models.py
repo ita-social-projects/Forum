@@ -68,12 +68,12 @@ class Profile(models.Model):
 
 class Activity(models.Model):
     activity_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
 
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
 
 class SavedCompany(models.Model):
