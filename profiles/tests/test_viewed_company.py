@@ -16,7 +16,7 @@ class TestViewedCompanyAPI(APITestCase):
         response = self.client.post(
             path="/api/viewed-list/",
             data={
-                "company": profile.profile_id
+                "company": profile.id
             })
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
@@ -27,11 +27,11 @@ class TestViewedCompanyAPI(APITestCase):
             path="/api/viewed-list/",
             data={
                 "user": self.user.id,
-                "company": profile.profile_id
+                "company": profile.id
             })
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(self.user.id, response.data["user"])
-        self.assertEqual(profile.profile_id, response.data["company"])
+        self.assertEqual(profile.id, response.data["company"])
 
     def test_create_viewed_company_authorized_own_company(self):
         own_profile = ProfileStartupFactory(person=self.user)
@@ -40,7 +40,7 @@ class TestViewedCompanyAPI(APITestCase):
             path="/api/viewed-list/",
             data={
                 "user": self.user.id,
-                "company": own_profile.profile_id
+                "company": own_profile.id
             })
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 

@@ -9,21 +9,21 @@ from utils.dump_response import dump # noqa
 
 class UserRegistrationAPITests(APITestCase):
     def setUp(self):
-        self.user = UserFactory(person_email="test@test.com")
+        self.user = UserFactory(email="test@test.com")
 
     def test_register_user_successful(self):
         response = self.client.post(
             path="/api/auth/users/",
             data={
-                "person_email": "jane@test.com",
+                "email": "jane@test.com",
                 "password": "Test1234",
                 "re_password": "Test1234",
-                "person_name": "Jane",
-                "person_surname": "Smith",
+                "name": "Jane",
+                "surname": "Smith",
                 "company": {
-                    "comp_name": "My Company",
-                    "comp_registered": True,
-                    "comp_is_startup": False,
+                    "name": "My Company",
+                    "is_registered": True,
+                    "is_startup": False,
                 }
             },
             format="json"
@@ -32,27 +32,27 @@ class UserRegistrationAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(
             {
-                "person_name": "Jane",
-                "person_surname": "Smith",
+                "name": "Jane",
+                "surname": "Smith",
             },
             response.json(),
         )
-        self.assertEqual(Profile.objects.get().person.person_email, "jane@test.com")
-        self.assertEqual(Profile.objects.get().comp_name, "My Company")
+        self.assertEqual(Profile.objects.get().person.email, "jane@test.com")
+        self.assertEqual(Profile.objects.get().name, "My Company")
 
     def test_register_user_email_incorrect(self):
         response = self.client.post(
             path="/api/auth/users/",
             data={
-                "person_email": "jane@testcom",
+                "email": "jane@testcom",
                 "password": "Test1234",
                 "re_password": "Test1234",
-                "person_name": "Jane",
-                "person_surname": "Smith",
+                "name": "Jane",
+                "surname": "Smith",
                 "company": {
-                    "comp_name": "My Company",
-                    "comp_registered": True,
-                    "comp_is_startup": False,
+                    "name": "My Company",
+                    "is_registered": True,
+                    "is_startup": False,
                 }
             },
             format="json"
@@ -60,7 +60,7 @@ class UserRegistrationAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
-                "person_email": [
+                "email": [
                     "Enter a valid email address."
                 ]
             },
@@ -71,15 +71,15 @@ class UserRegistrationAPITests(APITestCase):
         response = self.client.post(
             path="/api/auth/users/",
             data={
-                "person_email": "test@test.com",
+                "email": "test@test.com",
                 "password": "Test1234",
                 "re_password": "Test1234",
-                "person_name": "Test",
-                "person_surname": "Test",
+                "name": "Test",
+                "surname": "Test",
                 "company": {
-                    "comp_name": "Test Company",
-                    "comp_registered": True,
-                    "comp_is_startup": False,
+                    "name": "Test Company",
+                    "is_registered": True,
+                    "is_startup": False,
                 }
             },
             format="json"
@@ -87,7 +87,7 @@ class UserRegistrationAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
-                "person_email": ["Email is already registered"]
+                "email": ["Email is already registered"]
             },
             response.json(),
         )
@@ -96,15 +96,15 @@ class UserRegistrationAPITests(APITestCase):
         response = self.client.post(
             path="/api/auth/users/",
             data={
-                "person_email": "jane@test.com",
+                "email": "jane@test.com",
                 "password": "test",
                 "re_password": "tess",
-                "person_name": "Jane",
-                "person_surname": "Smith",
+                "name": "Jane",
+                "surname": "Smith",
                 "company": {
-                    "comp_name": "My Company",
-                    "comp_registered": True,
-                    "comp_is_startup": False,
+                    "name": "My Company",
+                    "is_registered": True,
+                    "is_startup": False,
                 }
             },
             format="json"
@@ -125,15 +125,15 @@ class UserRegistrationAPITests(APITestCase):
         response = self.client.post(
             path="/api/auth/users/",
             data={
-                "person_email": "jane@test.com",
+                "email": "jane@test.com",
                 "password": "Test1234",
                 "re_password": "Test1234",
-                "person_name": "Jane",
-                "person_surname": "Smith",
+                "name": "Jane",
+                "surname": "Smith",
                 "company": {
-                    "comp_name": "My Company",
-                    "comp_registered": False,
-                    "comp_is_startup": False,
+                    "name": "My Company",
+                    "is_registered": False,
+                    "is_startup": False,
                 }
             },
             format="json"
@@ -150,15 +150,15 @@ class UserRegistrationAPITests(APITestCase):
         response = self.client.post(
             path="/api/auth/users/",
             data={
-                "person_email": "jane@test.com",
+                "email": "jane@test.com",
                 "password": "Test1234",
                 "re_password": "Test1234",
-                "person_name": "Jane",
-                "person_surname": "Smith",
+                "name": "Jane",
+                "surname": "Smith",
                 "company": {
-                    "comp_name": "My Company",
-                    "comp_registered": True,
-                    "comp_is_startup": True,
+                    "name": "My Company",
+                    "is_registered": True,
+                    "is_startup": True,
                 }
             },
             format="json"

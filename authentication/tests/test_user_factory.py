@@ -6,7 +6,7 @@ class TestFactories(TestCase):
 
     def test_user_factory(self):
         user = UserFactory()
-        self.assertIsNotNone(user.person_email)
-        self.assertIsNotNone(user.person_name)
-        self.assertIsNotNone(user.person_surname)
+        self.assertIsNotNone(user.email)
+        self.assertIsNotNone(user.name)
+        self.assertIsNotNone(user.surname)
         self.assertTrue(user.is_active)

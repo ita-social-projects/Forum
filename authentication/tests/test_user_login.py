@@ -8,7 +8,7 @@ from utils.dump_response import dump # noqa
 
 class UserLoginAPITests(APITestCase):
     def setUp(self):
-        self.user = UserFactory(person_email="test@test.com")
+        self.user = UserFactory(email="test@test.com")
 
     def test_login_successful(self):
         self.user.set_password("Test1234")
@@ -17,7 +17,7 @@ class UserLoginAPITests(APITestCase):
         response = self.client.post(
             path="/api/auth/token/login/",
             data={
-                "person_email": "test@test.com",
+                "email": "test@test.com",
                 "password": "Test1234",
             }
         )
@@ -38,7 +38,7 @@ class UserLoginAPITests(APITestCase):
         response = self.client.post(
             path="/api/auth/token/login/",
             data={
-                "person_email": "tost@test.com",
+                "email": "tost@test.com",
                 "password": "Test1234",
             }
         )
@@ -59,7 +59,7 @@ class UserLoginAPITests(APITestCase):
         response = self.client.post(
             path="/api/auth/token/login/",
             data={
-                "person_email": "test@test.com",
+                "email": "test@test.com",
                 "password": "Test5678",
             }
         )

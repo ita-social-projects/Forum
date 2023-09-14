@@ -7,7 +7,7 @@ from utils.dump_response import dump # noqa
 
 class UserLogoutAPITests(APITestCase):
     def setUp(self):
-        self.user = UserFactory(person_email="test@test.com")
+        self.user = UserFactory(email="test@test.com")
 
     def test_logout_successful(self):
         self.user.set_password("Test1234")
@@ -16,7 +16,7 @@ class UserLogoutAPITests(APITestCase):
         self.test_user_token = self.client.post(
             path="/api/auth/token/login/",
             data={
-                "person_email": "test@test.com",
+                "email": "test@test.com",
                 "password": "Test1234",
             }
         ).data["auth_token"]

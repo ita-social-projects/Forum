@@ -11,9 +11,9 @@ from utils.dump_response import dump  # noqa
 class UserLogoutAPITests(APITestCase):
     def setUp(self):
         self.user = UserFactory(
-            person_email="test@test.com",
-            person_name="Test",
-            person_surname="Test")
+            email="test@test.com",
+            name="Test",
+            surname="Test")
 
     def test_user_autologout_after_14_days(self):
         self.user.set_password("Test1234")
@@ -22,7 +22,7 @@ class UserLogoutAPITests(APITestCase):
         self.test_user_token = self.client.post(
             path="/api/auth/token/login/",
             data={
-                "person_email": "test@test.com",
+                "email": "test@test.com",
                 "password": "Test1234",
             }
         ).data["auth_token"]
@@ -49,7 +49,7 @@ class UserLogoutAPITests(APITestCase):
         self.test_user_token = self.client.post(
             path="/api/auth/token/login/",
             data={
-                "person_email": "test@test.com",
+                "email": "test@test.com",
                 "password": "Test1234",
             }
         ).data["auth_token"]
@@ -65,9 +65,9 @@ class UserLogoutAPITests(APITestCase):
                          status.HTTP_200_OK)
         self.assertEqual(
             {"id": AnyInt(),
-             "person_email": "test@test.com",
-             "person_name": "Test",
-             "person_surname": "Test"
+             "email": "test@test.com",
+             "name": "Test",
+             "surname": "Test"
              },
             response.json()
         )

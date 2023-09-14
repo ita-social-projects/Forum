@@ -17,7 +17,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=self.profile.profile_id),
+                "company_pk": "{profile_id}".format(profile_id=self.profile.id),
                 "user": self.user.id
             }
         )
@@ -29,13 +29,13 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=self.profile.profile_id),
+                "company_pk": "{profile_id}".format(profile_id=self.profile.id),
                 "user": self.user.id
             }
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         company_added_info = response.data["Company added"]
-        self.assertEqual(company_added_info["company"], self.profile.profile_id)
+        self.assertEqual(company_added_info["company"], self.profile.id)
 
     @skip("To be implemented")
     def test_add_own_company_to_saved_authenticated(self):
@@ -44,7 +44,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=own_profile.profile_id),
+                "company_pk": "{profile_id}".format(profile_id=own_profile.id),
                 "user": self.user.id
             }
         )
@@ -67,7 +67,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path="/api/saved-list/{profile_pk}/".format(profile_pk=saved_company.company.profile_id),
+            path="/api/saved-list/{profile_pk}/".format(profile_pk=saved_company.company.id),
             data={
                 "user": self.user
             }
@@ -83,11 +83,11 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         self.client.post(
             path="/api/saved-list/",
-            data={"company_pk": "{profile_pk}".format(profile_pk=self.profile.profile_id),
+            data={"company_pk": "{profile_pk}".format(profile_pk=self.profile.id),
                   "user": self.user})
         self.client.post(
             path="/api/saved-list/",
-            data={"company_pk": "{profile_pk}".format(profile_pk=self.profile.profile_id),
+            data={"company_pk": "{profile_pk}".format(profile_pk=self.profile.id),
                   "user": self.user})
         response = self.client.get(path="/api/profiles/?filters=is_saved")
         self.assertEqual(status.HTTP_200_OK, response.status_code)

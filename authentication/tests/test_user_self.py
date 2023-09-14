@@ -9,9 +9,9 @@ from utils.dump_response import dump # noqa
 class UserSelfAPITests(APITestCase):
     def setUp(self):
         self.user = UserFactory(
-            person_email="test@test.com",
-            person_name="Test",
-            person_surname="Test",
+            email="test@test.com",
+            name="Test",
+            surname="Test",
         )
 
     def test_user_retreive_data_successful(self):
@@ -21,9 +21,9 @@ class UserSelfAPITests(APITestCase):
                          status.HTTP_200_OK)
         self.assertEqual(
             {"id": AnyInt(),
-             "person_email": "test@test.com",
-             "person_name": "Test",
-             "person_surname": "Test"
+             "email": "test@test.com",
+             "name": "Test",
+             "surname": "Test"
              },
             response.json()
         )
@@ -45,18 +45,18 @@ class UserSelfAPITests(APITestCase):
             path="/api/auth/users/me/",
             data={
                 "id": AnyInt(),
-                "person_email": "test@test.com",
-                "person_name": "Ivan",
-                "person_surname": "Ivanenko",
+                "email": "test@test.com",
+                "name": "Ivan",
+                "surname": "Ivanenko",
             }
         )
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
             {"id": AnyInt(),
-             "person_email": "test@test.com",
-             "person_name": "Ivan",
-             "person_surname": "Ivanenko"
+             "email": "test@test.com",
+             "name": "Ivan",
+             "surname": "Ivanenko"
              },
             response.json()
         )
@@ -66,16 +66,16 @@ class UserSelfAPITests(APITestCase):
         response = self.client.patch(
             path="/api/auth/users/me/",
             data={
-                "person_surname": "Petrenko",
+                "surname": "Petrenko",
             }
         )
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
             {"id": AnyInt(),
-             "person_email": "test@test.com",
-             "person_name": "Test",
-             "person_surname": "Petrenko"
+             "email": "test@test.com",
+             "name": "Test",
+             "surname": "Petrenko"
              },
             response.json()
         )
