@@ -70,7 +70,7 @@ class SavedCompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SavedCompany
-        fields = ('id', 'user', 'company', 'official_name', 'region', 'common_info', 'phone', 'EDRPOU', 'founded',
+        fields = ('id', 'user', 'company', 'official_name', 'region', 'common_info', 'phone', 'edrpou', 'founded',
                   'address', 'startup_idea', 'added_at')
 
 
