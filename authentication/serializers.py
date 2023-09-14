@@ -1,14 +1,14 @@
 from collections import defaultdict
-from django.contrib.auth import authenticate, get_user_model
+
 from django.conf import settings
+from django.contrib.auth import authenticate, get_user_model
 from django.core.exceptions import ValidationError
-from rest_framework.validators import UniqueValidator
 from djoser.serializers import UserCreatePasswordRetypeSerializer, UserSerializer, TokenCreateSerializer
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from profiles.models import Profile
 from validation.validate_password import validate_password_long, validate_password_include_symbols
-
 
 User = get_user_model()
 
@@ -78,7 +78,6 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
 
 
 class UserListSerializer(UserSerializer):
-
     class Meta(UserSerializer.Meta):
         model = User
         fields = (
@@ -109,8 +108,8 @@ class UserTokenCreateSerializer(TokenCreateSerializer):
             self.user = User.objects.filter(**params).first()
             if self.user and not self.user.check_password(password):
                 raise serializers.ValidationError({"error":
-                                                   "Email or password is incorrect"})
+                                                       "Email or password is incorrect"})
         if self.user and self.user.is_active:
             return value
         raise serializers.ValidationError({"error":
-                                           "Email or password is incorrect"})
+                                               "Email or password is incorrect"})

@@ -1,16 +1,16 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework.generics import CreateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.generics import CreateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, \
+    ListAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.response import Response
 
 from forum.pagination import ForumPagination
-
 from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
-from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer, ActivitySerializer, FiltersQueryParamSerializer, RegionSerializer)
 from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission
+from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
+                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer,
+                          ActivitySerializer, FiltersQueryParamSerializer, RegionSerializer)
 
 
 class SavedCompaniesCreate(CreateAPIView):
@@ -21,7 +21,7 @@ class SavedCompaniesCreate(CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
-    
+
     def post(self, request):
         user = request.user
         pk = request.data.get("company_pk")
@@ -69,7 +69,7 @@ class ProfileList(ListCreateAPIView):
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
         queryset = Profile.objects.filter(is_deleted=False).order_by("id")
-       
+
         if user_id:
             try:
                 return queryset.filter(person_id=user_id)
@@ -128,7 +128,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
 class ViewedCompanyList(ListCreateAPIView):
     serializer_class = ViewedCompanySerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     pagination_class = ForumPagination
 
     def get_queryset(self):
