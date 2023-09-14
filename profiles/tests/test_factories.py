@@ -1,6 +1,8 @@
 from django.test import TestCase
-from profiles.factories import ProfileFactory, ProfileStartupFactory, ProfileCompanyFactory, CategoryFactory, \
-    ActivityFactory, SavedCompanyFactory, ViewedCompanyFactory
+
+from profiles.factories import (ProfileFactory, ProfileStartupFactory, ProfileCompanyFactory,
+                                CategoryFactory, ActivityFactory,
+                                SavedCompanyFactory, SavedStartupFactory, ViewedCompanyFactory)
 from utils.dump_response import dump  # noqa
 
 
@@ -52,6 +54,12 @@ class TestFactories(TestCase):
         self.assertIsNotNone(saved_company.user)
         self.assertIsNotNone(saved_company.company)
         self.assertIsNotNone(saved_company.added_at)
+
+    def test_saved_startup_factory(self):
+        saved_startup = SavedStartupFactory()
+        self.assertIsNotNone(saved_startup.user)
+        self.assertIsNotNone(saved_startup.company)
+        self.assertIsNotNone(saved_startup.added_at)
 
     def test_viewed_company(self):
         viewed_company = ViewedCompanyFactory()
