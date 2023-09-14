@@ -14,12 +14,12 @@ User = get_user_model()
 
 
 class CustomProfileSerializer(serializers.ModelSerializer):
-    comp_registered = serializers.BooleanField()
-    comp_is_startup = serializers.BooleanField()
+    is_registered = serializers.BooleanField()
+    is_startup = serializers.BooleanField()
 
     class Meta:
         model = Profile
-        fields = ("comp_name", "comp_registered", "comp_is_startup")
+        fields = ("name", "is_registered", "is_startup")
 
 
 class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
@@ -45,12 +45,12 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
         re_password = value.pop("re_password")
         password = value.get("password")
         company_data = value.get("company")
-        comp_registered = company_data.get("comp_registered")
-        comp_is_startup = company_data.get("comp_is_startup")
-        if not comp_registered and not comp_is_startup:
+        is_registered = company_data.get("is_registered")
+        is_startup = company_data.get("is_startup")
+        if not is_registered and not is_startup:
             custom_errors["comp_status"].append(
                 "Please choose who you represent.")
-        elif comp_registered and comp_is_startup:
+        elif is_registered and is_startup:
             custom_errors["comp_status"].append(
                 "Please choose either registered or startup.")
         try:

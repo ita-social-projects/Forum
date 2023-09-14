@@ -68,7 +68,7 @@ class ProfileList(ListCreateAPIView):
         user_id = self.request.query_params.get("userid")
         HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
 
-        queryset = Profile.objects.filter(is_deleted=False).order_by("profile_id")
+        queryset = Profile.objects.filter(is_deleted=False).order_by("id")
        
         if user_id:
             try:
@@ -76,11 +76,12 @@ class ProfileList(ListCreateAPIView):
             except ValueError:
                 pass
         if company_type == "startup":
-            queryset = queryset.filter(comp_is_startup=True)
+            queryset = queryset.filter(is_startup=True)
         elif company_type == "company":
-            queryset = queryset.filter(comp_registered=True)
+            queryset = queryset.filter(is_registered=True)
         if activity_type in HEADER_ACTIVITIES:
-            return queryset.filter(comp_activity__name=activity_type)
+            # TODO: check activities
+            return queryset.filter(activities__name=activity_type)
         if filters.is_valid():
             data = filters.validated_data
             filters = data.get("filters")
@@ -110,7 +111,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         get_contacts = self.request.query_params.get("with_contacts")
 
         profile_pk = self.kwargs.get('pk')
-        profile_instance = Profile.objects.filter(profile_id=profile_pk).first()
+        profile_instance = Profile.objects.filter(id=profile_pk).first()
         user_pk = self.request.user.id
 
         if self.request.method == 'GET':
