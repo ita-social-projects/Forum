@@ -1,11 +1,12 @@
 from datetime import timedelta
+
 from rest_framework import status
-from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
+from rest_framework.test import APITestCase
 
 from authentication.factories import UserFactory
-from utils.unittest_helper import AnyInt
 from utils.dump_response import dump  # noqa
+from utils.unittest_helper import AnyInt
 
 
 class UserLogoutAPITests(APITestCase):

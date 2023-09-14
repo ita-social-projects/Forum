@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from authentication.factories import UserFactory
-from utils.dump_response import dump # noqa
+from utils.dump_response import dump  # noqa
 
 
 class UserLogoutAPITests(APITestCase):

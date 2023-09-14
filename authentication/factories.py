@@ -1,4 +1,5 @@
 import factory.django
+
 from .models import CustomUser
 
 
@@ -13,4 +14,3 @@ class UserFactory(factory.django.DjangoModelFactory):
     password = ''
 
     is_active = True
-

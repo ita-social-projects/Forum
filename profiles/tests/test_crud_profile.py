@@ -1,13 +1,13 @@
-from io import BytesIO
 import os
+from io import BytesIO
+
 from PIL import Image
-from rest_framework.test import APITestCase
 from rest_framework import status
+from rest_framework.test import APITestCase
 
-from profiles.models import Region
-from profiles.factories import ProfileStartupFactory, CategoryFactory, ActivityFactory
 from authentication.factories import UserFactory
-
+from profiles.factories import ProfileStartupFactory, CategoryFactory, ActivityFactory
+from profiles.models import Region
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
 
