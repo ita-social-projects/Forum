@@ -1,18 +1,13 @@
-from rest_framework.test import APITestCase, APIClient
-from profiles.models import Category
+from rest_framework.test import APITestCase
+
+from profiles.factories import CategoryFactory
+from utils.dump_response import dump  # noqa
+
 
 class TestCategoryList(APITestCase):
+    def test_get_categories(self):
+        categories = CategoryFactory.create_batch(3)
 
-    def setUp(self) -> None:
-        self.cheese_category = Category.objects.create(name='cheese')
-        self.honey_category = Category.objects.create(name="honey")
-        self.chocolate_category = Category.objects.create(name='chocolate')
-        self.bacery_category = Category.objects.create(name="bacery")
-
-    def tearDown(self) -> None:
-        objects_to_delete = Category.objects.all()
-        objects_to_delete.delete()
-
-    def test_get_all_activities(self):
-        response = self.client.get("/api/category-list/")
+        response = self.client.get("/api/categories/")
         self.assertEqual(200, response.status_code)
+        self.assertEqual(len(categories), len(response.data))
