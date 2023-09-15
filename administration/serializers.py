@@ -8,7 +8,7 @@ User = get_user_model()
 
 class AdminUserSerializer(UserSerializer):
 
-    phone_number = SerializerMethodField('get_phone_number')
+    phone_number = SerializerMethodField()
 
     def get_phone_number(self, user):
         try:
@@ -28,4 +28,4 @@ class AdminUserSerializer(UserSerializer):
             "is_active",
             "is_staff"
         )
-        read_only_fields = ("phone_number", )
+        read_only_fields = ("phone_number", "person_email")
