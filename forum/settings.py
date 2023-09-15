@@ -9,11 +9,11 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
 from datetime import timedelta
 from pathlib import Path
-from decouple import config
+
 from corsheaders.defaults import default_headers
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,7 +75,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://0.0.0.0',
 ]
 
-#For future:
+# For future:
 # CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST').split(',')
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
@@ -177,7 +177,7 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'HIDE_USERS': False,
-    'LOGIN_FIELD': 'person_email',
+    'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
         'user_delete': ['rest_framework.permissions.IsAdminUser'],
