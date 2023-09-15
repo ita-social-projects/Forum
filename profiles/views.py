@@ -155,14 +155,11 @@ class RegionListView(ListAPIView):
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     permission_classes = (IsAdminUser,)
-
-    def get_queryset(self, pk=None):
-        return Category.objects.all()
+    queryset = Category.objects.all()
 
 
 class ActivityDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = ActivitySerializer
     permission_classes = (IsAdminUser,)
+    queryset = Activity.objects.all()
 
-    def get_queryset(self, pk=None):
-        return Activity.objects.all()

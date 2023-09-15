@@ -26,9 +26,6 @@ class TestCategoryList(APITestCase):
             is_active=True
         )
 
-    def tearDown(self) -> None:
-        objects_to_delete = Activity.objects.all()
-        objects_to_delete.delete()
 
     def test_get_all_activities_unauthorized(self):
         response = self.client.get("/api/activity/")
