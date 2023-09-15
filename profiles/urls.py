@@ -13,8 +13,8 @@ urlpatterns = [
     path('saved-list/<pk>/', SavedCompaniesDestroy.as_view(), name='saved_companies_destroy'),
     path('viewed-list/', ViewedCompanyList.as_view(), name='viewed_company_list'),
     path('regions/', RegionListView.as_view(), name='region-list'),
-    path('category/', CategoryList.as_view(), name='category_list'),
-    path('activity/', ActivityList.as_view(), name='activity_list'),
-    path('category/<pk>', CategoryDetail.as_view(), name='category-detail'),
-    path('activity/<pk>', ActivityDetail.as_view(), name='activity-detail'),
+    path('categories/', CategoryList.as_view(), name='category_list'),
+    path('activities/', ActivityList.as_view(), name='activity_list'),
+    path('categories/<pk>', CategoryDetail.as_view(), name='category-detail'),
+    path('activities/<pk>', ActivityDetail.as_view(), name='activity-detail'),
 ]
