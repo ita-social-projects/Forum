@@ -328,28 +328,6 @@ class TestProfileDetailAPIView(APITestCase):
         category = CategoryFactory()
         activity = ActivityFactory()
         self.client.force_authenticate(self.user)
-        new_profile_data = {
-            "official_name": "Official name from test case",
-            "region": Region.KYIV,
-            "common_info": "Common info from test case",
-            "phone": '123456789012',
-            "edrpou": 12345678,
-            "founded": 2005,
-            "service_info": "Service info from test case",
-            "product_info": "Product info from test case",
-            "address": "Kyiv",
-            "person_position": "director",
-            "startup_idea": "StartUp idea from test case",
-            "is_startup": True,
-            "is_registered": False,
-            "name": "Comp name from test case",
-            "categories": [
-                category.id
-            ],
-            "activities": [
-                activity.id
-            ]
-        }
 
         response = self.client.put(
             path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),

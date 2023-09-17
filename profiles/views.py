@@ -2,12 +2,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, \
     ListAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
-from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission
+from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission, ReadOnly
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer,
                           ActivitySerializer, FiltersQueryParamSerializer, RegionSerializer)
@@ -136,18 +136,31 @@ class ViewedCompanyList(ListCreateAPIView):
         return ViewedCompany.objects.filter(user=user_id).order_by("company_id")
 
 
-class CategoryList(ListAPIView):
-    model = Category
+class CategoryList(ListCreateAPIView):
     serializer_class = CategorySerializer
+    permission_classes = (ReadOnly | IsAdminUser,)
     queryset = Category.objects.all()
 
 
-class ActivityList(ListAPIView):
-    model = Activity
+class ActivityList(ListCreateAPIView):
     serializer_class = ActivitySerializer
+    permission_classes = (ReadOnly | IsAdminUser,)
     queryset = Activity.objects.all()
 
 
 class RegionListView(ListAPIView):
     serializer_class = RegionSerializer
     queryset = Region.choices
+
+
+class CategoryDetail(RetrieveUpdateDestroyAPIView):
+    serializer_class = CategorySerializer
+    permission_classes = (IsAdminUser,)
+    queryset = Category.objects.all()
+
+
+class ActivityDetail(RetrieveUpdateDestroyAPIView):
+    serializer_class = ActivitySerializer
+    permission_classes = (IsAdminUser,)
+    queryset = Activity.objects.all()
+
