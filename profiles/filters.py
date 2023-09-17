@@ -9,3 +9,4 @@ class ProfileFilter(FilterSet):
         if value:
             return queryset.filter(saved_list__user=self.request.user)
         return queryset
+    
