@@ -76,7 +76,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
 
         # check that deleted
-        response = self.client.get(path="/api/profiles/?filters=is_saved")
+        response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(0, response.data["total_items"])
 
     def test_add_company_to_saved_twice_authenticated(self):
@@ -90,6 +90,6 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={"company_pk": "{profile_pk}".format(profile_pk=self.profile.id),
                   "user": self.user})
-        response = self.client.get(path="/api/profiles/?filters=is_saved")
+        response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(0, response.data["total_items"])
