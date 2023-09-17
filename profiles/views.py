@@ -60,7 +60,7 @@ class ProfileList(ListCreateAPIView):
      include_all: bool.
     """
     serializer_class = ProfileSerializer
-    permission_classes = IsAuthenticatedOrReadOnly
+    permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = ForumPagination
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = ProfileFilter

@@ -16,7 +16,8 @@ class TestProfileFilterCompanyType(APITestCase):
 
     def test_get_saved_companies_unauthorized(self):
         response = self.client.get(path="/api/profiles/?is_saved=True")
-        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(0, response.data["total_items"])
 
     def test_get_profiles_unauthorized_count(self):
         response = self.client.get(path="/api/profiles/")
