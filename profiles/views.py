@@ -1,3 +1,4 @@
+import django_filters
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, \
@@ -11,6 +12,7 @@ from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermiss
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer,
                           ActivitySerializer, FiltersQueryParamSerializer, RegionSerializer)
+from .filters import ProfileFilter
 
 
 class SavedCompaniesCreate(CreateAPIView):
@@ -60,9 +62,17 @@ class ProfileList(ListCreateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticatedOrReadOnly & SavedCompaniesListPermission]
     pagination_class = ForumPagination
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = ProfileFilter
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        if self.request.user.is_authenticated:
+            saved_companies_pk = frozenset(SavedCompany.objects.filter(user=self.request.user).values_list("company_id", flat=True))
+            context.update({"saved_companies_pk": saved_companies_pk})
+        return context
 
     def get_queryset(self):
-        filters = FiltersQueryParamSerializer(data=self.request.query_params)
         company_type = self.request.query_params.get("company_type")
         activity_type = self.request.query_params.get("activity_type")
         user_id = self.request.query_params.get("userid")
@@ -82,11 +92,6 @@ class ProfileList(ListCreateAPIView):
         if activity_type in HEADER_ACTIVITIES:
             # TODO: check activities
             return queryset.filter(activities__name=activity_type)
-        if filters.is_valid():
-            data = filters.validated_data
-            filters = data.get("filters")
-            if filters == "is_saved":
-                queryset = queryset.filter(saved_list__user=self.request.user)
         return queryset
 
     def create(self, request):
@@ -106,6 +111,13 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     """
     queryset = Profile.objects.filter(is_deleted=False)
     permission_classes = [UserIsProfileOwnerOrReadOnly]
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        if self.request.user.is_authenticated:
+            saved_companies_pk = frozenset(SavedCompany.objects.filter(user=self.request.user).values_list("company_id", flat=True))
+            context.update({"saved_companies_pk": saved_companies_pk})
+        return context
 
     def get_serializer_class(self):
         get_contacts = self.request.query_params.get("with_contacts")

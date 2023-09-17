@@ -29,8 +29,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_is_saved(self, obj):
         user = self.context["request"].user
         if user.is_authenticated:
-            saved_companies = obj.saved_list.filter(user=user)
-            return saved_companies.exists()
+            return obj.pk in self.context["saved_companies_pk"]
         return False
 
 
