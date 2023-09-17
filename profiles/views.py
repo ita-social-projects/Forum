@@ -11,7 +11,7 @@ from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Re
 from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer,
-                          ActivitySerializer, FiltersQueryParamSerializer, RegionSerializer)
+                          ActivitySerializer, RegionSerializer)
 from .filters import ProfileFilter
 
 

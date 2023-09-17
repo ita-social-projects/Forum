@@ -85,10 +85,6 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
         return attrs
 
 
-class FiltersQueryParamSerializer(serializers.Serializer):
-    filters = serializers.CharField(required=True)
-
-
 class RegionSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
