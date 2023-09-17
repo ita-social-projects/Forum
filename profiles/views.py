@@ -73,25 +73,7 @@ class ProfileList(ListCreateAPIView):
         return context
 
     def get_queryset(self):
-        company_type = self.request.query_params.get("company_type")
-        activity_type = self.request.query_params.get("activity_type")
-        user_id = self.request.query_params.get("userid")
-        HEADER_ACTIVITIES = ["producer", "importer", "retail", "horeca"]
-
         queryset = Profile.objects.filter(is_deleted=False).order_by("id")
-
-        if user_id:
-            try:
-                return queryset.filter(person_id=user_id)
-            except ValueError:
-                pass
-        if company_type == "startup":
-            queryset = queryset.filter(is_startup=True)
-        elif company_type == "company":
-            queryset = queryset.filter(is_registered=True)
-        if activity_type in HEADER_ACTIVITIES:
-            # TODO: check activities
-            return queryset.filter(activities__name=activity_type)
         return queryset
 
     def create(self, request):
