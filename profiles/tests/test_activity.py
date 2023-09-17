@@ -3,7 +3,7 @@ from profiles.models import Activity
 from authentication.models import CustomUser
 
 
-class TestCategoryList(APITestCase):
+class TestActivityList(APITestCase):
 
     def setUp(self) -> None:
         self.sale_activity = Activity.objects.create(name='sale')
@@ -11,18 +11,18 @@ class TestCategoryList(APITestCase):
         self.education_activity = Activity.objects.create(name='education')
         self.medicine_activity = Activity.objects.create(name="medicine")
         self.test_person_is_admin = CustomUser.objects.create_user(
-            person_email="testactivity@testadmin.com",
+            email="testactivity@testadmin.com",
             password="Testing01",
-            person_name="testactivity",
-            person_surname="admin",
+            name="testactivity",
+            surname="admin",
             is_active=True,
             is_staff=True
         )
         self.test_person_just_user = CustomUser.objects.create_user(
-            person_email="testactivity@testuser.com",
+            email="testactivity@testuser.com",
             password="Testing01",
-            person_name="testactivity",
-            person_surname="user",
+            name="testactivity",
+            surname="user",
             is_active=True
         )
 
@@ -79,7 +79,7 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get("/api/activities/")
         list_of_activities = response_get.data
         activity_for_put = list_of_activities[0]
-        response = self.client.put(path=f"/api/activities/{activity_for_put['activity_id']}", data={"name": "trade"})
+        response = self.client.put(path=f"/api/activities/{activity_for_put['id']}", data={"name": "trade"})
         self.assertEqual(200, response.status_code)
 
     def test_patch_activity_unauthorized(self):
@@ -96,7 +96,7 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get("/api/activities/")
         list_of_activities = response_get.data
         activity_for_patch = list_of_activities[0]
-        response = self.client.patch(path=f"/api/activities/{activity_for_patch['activity_id']}", data=
+        response = self.client.patch(path=f"/api/activities/{activity_for_patch['id']}", data=
                                                                                             {"name": "good transport"})
         self.assertEqual(200, response.status_code)
 
@@ -114,10 +114,11 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get("/api/activities/")
         list_of_activities = response_get.data
         activity_for_delete = list_of_activities[0]
-        response = self.client.delete(path=f"/api/activities/{activity_for_delete['activity_id']}")
+        response = self.client.delete(path=f"/api/activities/{activity_for_delete['id']}")
         self.assertEqual(204, response.status_code)
 
     def test_delete_activity_not_exists_is_staff(self):
         self.client.force_authenticate(self.test_person_is_admin)
         response = self.client.delete(path="/api/activities/20000")
         self.assertEqual(404, response.status_code)
+

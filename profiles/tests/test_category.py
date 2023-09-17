@@ -2,27 +2,28 @@ from rest_framework.test import APITestCase, APIClient
 from profiles.models import Category
 from authentication.models import CustomUser
 
+from profiles.factories import CategoryFactory
+from utils.dump_response import dump  # noqa
 
 class TestCategoryList(APITestCase):
-
     def setUp(self) -> None:
         self.cheese_category = Category.objects.create(name='cheese')
         self.honey_category = Category.objects.create(name="honey")
         self.chocolate_category = Category.objects.create(name='chocolate')
         self.bacery_category = Category.objects.create(name="bacery")
         self.test_person_is_admin = CustomUser.objects.create_user(
-            person_email="testcategory@testadmin.com",
+            email="testcategory@testadmin.com",
             password="Testing01",
-            person_name="testcategory",
-            person_surname="admin",
+            name="testcategory",
+            surname="admin",
             is_active=True,
             is_staff=True
         )
         self.test_person_just_user = CustomUser.objects.create_user(
-            person_email="testcategory@testuser.com",
+            email="testcategory@testuser.com",
             password="Testing01",
-            person_name="testcategory",
-            person_surname="user",
+            name="testcategory",
+            surname="user",
             is_active=True
         )
 
@@ -79,7 +80,7 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get("/api/categories/")
         list_of_categories = response_get.data
         category_for_put = list_of_categories[0]
-        response = self.client.put(path=f"/api/categories/{category_for_put['category_id']}", data={"name": "milk"})
+        response = self.client.put(path=f"/api/categories/{category_for_put['id']}", data={"name": "milk"})
         self.assertEqual(200, response.status_code)
 
     def test_patch_category_unauthorized(self):
@@ -96,7 +97,7 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get("/api/categories/")
         list_of_categories = response_get.data
         category_for_patch = list_of_categories[0]
-        response = self.client.patch(path=f"/api/categories/{category_for_patch['category_id']}", data={"name": "wine"})
+        response = self.client.patch(path=f"/api/categories/{category_for_patch['id']}", data={"name": "wine"})
         self.assertEqual(200, response.status_code)
 
     def test_delete_category_unauthorized(self):
@@ -113,10 +114,11 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get("/api/categories/")
         list_of_categories = response_get.data
         category_for_delete = list_of_categories[0]
-        response = self.client.delete(path=f"/api/categories/{category_for_delete['category_id']}")
+        response = self.client.delete(path=f"/api/categories/{category_for_delete['id']}")
         self.assertEqual(204, response.status_code)
 
     def test_delete_category_not_exists_is_staff(self):
         self.client.force_authenticate(self.test_person_is_admin)
         response = self.client.delete(path=f"/api/categories/20000")
         self.assertEqual(404, response.status_code)
+

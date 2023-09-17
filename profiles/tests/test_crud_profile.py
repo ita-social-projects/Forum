@@ -1,19 +1,23 @@
-import io
 import os
-from PIL import Image
-from rest_framework.test import APITestCase, APIClient
+from io import BytesIO
 
-from authentication.models import CustomUser
-from profiles.models import Profile, Category, Activity, Region
-from utils.dump_response import dump # noqa
+from PIL import Image
+from rest_framework import status
+from rest_framework.test import APITestCase
+
+from authentication.factories import UserFactory
+from profiles.factories import ProfileStartupFactory, CategoryFactory, ActivityFactory
+from profiles.models import Region
+from utils.dump_response import dump  # noqa
+from utils.unittest_helper import AnyInt
 
 
 class TestProfileDetailAPIView(APITestCase):
 
     @staticmethod
     def _generate_image(ext, size=(100, 100)):
-        '''for mocking png and jpeg files'''
-        file = io.BytesIO()
+        """for mocking png and jpeg files"""
+        file = BytesIO()
         image = Image.new("RGB", size=size)
         formatext = ext.upper()
         image.save(file, formatext)
@@ -22,124 +26,15 @@ class TestProfileDetailAPIView(APITestCase):
         return file
 
     def setUp(self) -> None:
-        self.test_person_with_profile = CustomUser.objects.create_user(
-            person_email="test1@test.com",
-            password="Testing01",
-            person_name="test1",
-            person_surname="test1",
-            is_active=True
-        )
-        self.test_person2_with_profile = CustomUser.objects.create_user(
-            person_email="test2@test.com",
-            password="Testing01",
-            person_name="test2",
-            person_surname="test2",
-            is_active=True
-        )
-
-        self.test_person_without_profile = CustomUser.objects.create_user(
-            person_email="test3@test.com",
-            password="Testing01",
-            person_name="test3",
-            person_surname="test3",
-            is_active=True
-        )
-
-        self.test_profile = Profile.objects.create(
-            person=self.test_person_with_profile,
-            comp_registered=True,
-            comp_is_startup=False,
-            comp_official_name="Test 1 official name",
-            comp_name="Test 1",
-            comp_region=Region.DNIPRO_REGION,
-            comp_common_info="Test 1 common info",
-            comp_phone_number=380990102034,
-            comp_EDRPOU=10000001,
-            comp_year_of_foundation=2020,
-            comp_service_info="Test 1 service info",
-            comp_product_info="Test 1 product info",
-            comp_address="Lviv",
-            startup_idea="Test 1 start up idea"
-        )
-        self.test_profile2 = Profile.objects.create(
-            person=self.test_person2_with_profile,
-            comp_registered=True,
-            comp_is_startup=False,
-            comp_official_name="Test 2 official name",
-            comp_name="Test 2",
-            comp_region=Region.DNIPRO_REGION,
-            comp_common_info="Test 2 common info",
-            comp_phone_number=380990102034,
-            comp_EDRPOU=10000002,
-            comp_year_of_foundation=2020,
-            comp_service_info="Test 2 service info",
-            comp_product_info="Test 2 product info",
-            comp_address="Kyiv",
-            startup_idea="Test 2 start up idea"
-        )
-        self.test_category = Category.objects.create(name='cheese')
-        self.test_category2 = Category.objects.create(name="honey")
-        self.test_activity = Activity.objects.create(name='importer')
-        self.test_activity2 = Activity.objects.create(name='producer')
-
         self.right_image = self._generate_image("jpeg", (10, 10))
         self.wrong_image = self._generate_image("png", (3000, 3000))
-
-        self.wrong_full_data_for_full_update = {
-            "profile_id": self.test_profile,
-            "person": self.test_person_with_profile,
-            "comp_official_name": "Jannifer",
-            "comp_region": 'Dnipro',
-            "comp_common_info": "Good Very",
-            "comp_phone_number": 167300044411,
-            "comp_EDRPOU": 12345678,
-            "comp_year_of_foundation": 2005,
-            "comp_service_info": "very good service",
-            "comp_product_info": "very good product",
-            "comp_address": "Kyiv",
-            "startup_idea": "very good idea",
-            "is_deleted": False,
-            "comp_category": [
-                1
-            ],
-            "comp_activity": [
-                2
-            ]
-        }
-        self.right_full_data_for_full_update = {
-            "profile_id": self.test_profile,
-            "person": self.test_person_with_profile.id,
-            "comp_official_name": "Jannifer",
-            "comp_region": Region.DNIPRO_REGION,
-            "comp_common_info": "Good Very",
-            "comp_phone_number": 123456789012,
-            "comp_EDRPOU": 12345678,
-            "comp_year_of_foundation": 2005,
-            "comp_service_info": "very good service",
-            "comp_product_info": "very good product",
-            "comp_address": "Kyiv",
-            "comp_banner_image": self.wrong_image,
-            "person_position": "director",
-            "startup_idea": "very good idea",
-            "is_deleted": False,
-            "comp_category": [
-                self.test_category.category_id
-            ],
-            "comp_activity": [
-                self.test_activity.activity_id
-            ]
-        }
-
-        self.right_data_for_create = {
-            "person": self.test_person_without_profile.id,
-            "comp_category": [self.test_category.category_id],
-            "comp_activity": [self.test_activity.activity_id]
-        }
-        self.wrong_data_for_create = {
-            "person": self.test_person_without_profile,
-            "comp_category": 1,
-            "comp_activity": 2
-        }
+        self.user = UserFactory(email="test1@test.com")
+        self.profile = ProfileStartupFactory.create(
+            person=self.user,
+            official_name="Test Official Startup",
+            phone='380100102034',
+            edrpou=99999999
+        )
 
     def tearDown(self) -> None:
         if os.path.exists(self.right_image.name):
@@ -149,278 +44,597 @@ class TestProfileDetailAPIView(APITestCase):
 
     # GET requests section
     def test_get_profile_nonexistent(self):
-        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=100000000000))
-        self.assertEqual(404, response.status_code)
+        response = self.client.get(path="/api/profiles/{profile_id}".format(profile_id=0))
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
     def test_get_profile_unauthorized(self):
-        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id))
-        self.assertEqual(200, response.status_code, response.content)
-        self.assertIsNone(response.data.get("comp_phone_number"))
+        response = self.client.get(path="/api/profiles/{profile_id}".format(profile_id=self.profile.id))
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertIsNone(response.data.get("phone"))
         self.assertIsNone(response.data.get("email"))
-        self.assertEqual({
-            "comp_official_name": "Test 2 official name",
-            "comp_region": Region.DNIPRO_REGION,
-            "comp_common_info": "Test 2 common info",
-            "comp_EDRPOU": 10000002,
-            "comp_year_of_foundation": 2020,
-            "comp_address": "Kyiv",
-            "startup_idea": "Test 2 start up idea",
-            "comp_name": "Test 2",
-            "comp_registered": True,
-            "comp_is_startup": False,
-            "comp_service_info": "Test 2 service info",
-            "comp_product_info": "Test 2 product info",
-            "comp_banner_image": None
-        }, response.data
-        )
+
+        # fields check
+        self.assertEqual(self.profile.official_name, response.data.get("official_name"),
+                         msg="Official names do not match.")
+        self.assertEqual(self.profile.region, response.data.get("region"),
+                         msg="Regions do not match.")
+        self.assertEqual(self.profile.common_info, response.data.get("common_info"),
+                         msg="Common info do not match.")
+        self.assertEqual(self.profile.edrpou, response.data.get("edrpou"),
+                         msg="EDRPOUs do not match.")
+        self.assertEqual(self.profile.founded, response.data.get("founded"),
+                         msg="Years of foundation do not match.")
+        self.assertEqual(self.profile.address, response.data.get("address"),
+                         msg="Addresses do not match.")
+        self.assertEqual(self.profile.startup_idea, response.data.get("startup_idea"),
+                         msg="Startup ideas do not match.")
+        self.assertEqual(self.profile.name, response.data.get("name"),
+                         msg="Company names do not match")
+        self.assertEqual(self.profile.is_registered, response.data.get("is_registered"),
+                         msg="Company is registered fields do not match.")
+        self.assertEqual(self.profile.is_startup, response.data.get("is_startup"),
+                         msg="Company is startup fields do not match.")
+        self.assertEqual(self.profile.service_info, response.data.get("service_info"),
+                         msg="Service info do not match.")
+        self.assertEqual(self.profile.product_info, response.data.get("product_info"),
+                         msg="Product info do not match.")
+        self.assertEqual(self.profile.banner_image, response.data.get("banner_image"),
+                         msg="Banner images do not match.")
+        self.assertIsNone(response.data.get("categories"),
+                          msg="Categories do not match.")
+        self.assertIsNone(response.data.get("activities"),
+                          msg="Activities do not match.")
 
     def test_get_profile_authorized_not_owner(self):
-        self.client.force_authenticate(self.test_person_with_profile)
-        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id))
-        self.assertEqual(200, response.status_code, response.content)
-        self.assertIsNone(response.data.get("comp_phone_number"))
+        profile2 = ProfileStartupFactory(official_name="Test Official Startup from test case")
+        self.client.force_authenticate(self.user)
+
+        response = self.client.get(path="/api/profiles/{profile_id}".format(profile_id=profile2.id))
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertIsNone(response.data.get("phone"))
         self.assertIsNone(response.data.get("email"))
-        self.assertEqual({
-            "comp_official_name": "Test 2 official name",
-            "comp_region": Region.DNIPRO_REGION,
-            "comp_common_info": "Test 2 common info",
-            "comp_EDRPOU": 10000002,
-            "comp_year_of_foundation": 2020,
-            "comp_address": "Kyiv",
-            "startup_idea": "Test 2 start up idea",
-            "comp_name": "Test 2",
-            "comp_registered": True,
-            "comp_is_startup": False,
-            "comp_service_info": "Test 2 service info",
-            "comp_product_info": "Test 2 product info",
-            "comp_banner_image": None
-        }, response.data
-        )
+
+        # fields check
+        self.assertEqual(profile2.official_name, response.data.get("official_name"),
+                         msg="Official names do not match.")
+        self.assertEqual(profile2.region, response.data.get("region"),
+                         msg="Regions do not match.")
+        self.assertEqual(profile2.common_info, response.data.get("common_info"),
+                         msg="Common info do not match.")
+        self.assertEqual(profile2.edrpou, response.data.get("edrpou"),
+                         msg="EDRPOUs do not match.")
+        self.assertEqual(profile2.founded, response.data.get("founded"),
+                         msg="Years of foundation do not match.")
+        self.assertEqual(profile2.address, response.data.get("address"),
+                         msg="Addresses do not match.")
+        self.assertEqual(profile2.startup_idea, response.data.get("startup_idea"),
+                         msg="Startup ideas do not match.")
+        self.assertEqual(profile2.name, response.data.get("name"),
+                         msg="Company names do not match")
+        self.assertEqual(profile2.is_registered, response.data.get("is_registered"),
+                         msg="Company is registered fields do not match.")
+        self.assertEqual(profile2.is_startup, response.data.get("is_startup"),
+                         msg="Company is startup fields do not match.")
+        self.assertEqual(profile2.service_info, response.data.get("service_info"),
+                         msg="Service info do not match.")
+        self.assertEqual(profile2.product_info, response.data.get("product_info"),
+                         msg="Product info do not match.")
+        self.assertEqual(self.profile.banner_image, response.data.get("banner_image"),
+                         msg="Banner images do not match.")
+        self.assertIsNone(response.data.get("categories"),
+                          msg="Categories do not match.")
+        self.assertIsNone(response.data.get("activities"),
+                          msg="Activities do not match.")
 
     def test_get_profile_authorized_owner(self):
-        self.client.force_authenticate(self.test_person_with_profile)
-        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id))
-        self.assertEqual(200, response.status_code, response.content)
-        self.assertEqual(
-            {
-                "profile_id": self.test_profile.profile_id,
-                "person": self.test_person_with_profile.id,
-                "is_saved": False,
-                "comp_name": "Test 1",
-                "comp_registered": True,
-                "comp_is_startup": False,
-                "comp_official_name": "Test 1 official name",
-                "comp_region": Region.DNIPRO_REGION,
-                "comp_common_info": "Test 1 common info",
-                "comp_phone_number": "380990102034",
-                "comp_EDRPOU": 10000001,
-                "comp_year_of_foundation": 2020,
-                "comp_service_info": "Test 1 service info",
-                "comp_product_info": "Test 1 product info",
-                "comp_address": "Lviv",
-                "comp_banner_image": None,
-                "person_position": None,
-                "startup_idea": "Test 1 start up idea",
-                "is_deleted": False,
-                "comp_category": [],
-                "comp_activity": []
-            }, response.data
-        )
+        self.client.force_authenticate(self.user)
+
+        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.profile.id))
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+
+        # fields check
+        self.assertEqual(self.profile.id, response.data.get("id"),
+                         msg="IDs do not match.")
+        self.assertEqual(self.profile.person.id, response.data.get("person"),
+                         msg="Persons do not match.")
+        self.assertFalse(response.data.get("is_saved"), msg="is_saved shouldn't be True.")
+        self.assertEqual(self.profile.official_name, response.data.get("official_name"),
+                         msg="Official names do not match.")
+        self.assertEqual(self.profile.region, response.data.get("region"),
+                         msg="Regions do not match.")
+        self.assertEqual(self.profile.common_info, response.data.get("common_info"),
+                         msg="Common info do not match.")
+        self.assertEqual(self.profile.phone, response.data.get("phone"),
+                         msg="Phone numbers do not match.")
+        self.assertEqual(self.profile.edrpou, response.data.get("edrpou"),
+                         msg="EDRPOUs do not match.")
+        self.assertEqual(self.profile.founded, response.data.get("founded"),
+                         msg="Years of foundation do not match.")
+        self.assertEqual(self.profile.address, response.data.get("address"),
+                         msg="Addresses do not match.")
+        self.assertEqual(self.profile.startup_idea, response.data.get("startup_idea"),
+                         msg="Startup ideas do not match.")
+        self.assertEqual(self.profile.name, response.data.get("name"),
+                         msg="Company names do not match")
+        self.assertEqual(self.profile.is_registered, response.data.get("is_registered"),
+                         msg="Company is registered fields do not match.")
+        self.assertEqual(self.profile.is_startup, response.data.get("is_startup"),
+                         msg="Company is startup fields do not match.")
+        self.assertEqual(self.profile.service_info, response.data.get("service_info"),
+                         msg="Service info do not match.")
+        self.assertEqual(self.profile.product_info, response.data.get("product_info"),
+                         msg="Product info do not match.")
+        self.assertEqual(self.profile.banner_image, response.data.get("banner_image"),
+                         msg="Banner images do not match.")
+        self.assertEqual(list(self.profile.categories.all()), response.data.get("categories"),
+                         msg="Categories do not match.")
+        self.assertEqual(list(self.profile.activities.all()), response.data.get("activities"),
+                         msg="Activities do not match.")
 
     def test_get_contact_info_unauthorized(self):
-        response = self.client.get("/api/profiles/{profile_id}?with_contacts=True".format(
-            profile_id=self.test_profile2.profile_id))
-        self.assertEqual(401, response.status_code)
+        response = self.client.get(
+            path="/api/profiles/{profile_id}?with_contacts=True".format(profile_id=self.profile.id))
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_get_contact_info_authorized(self):
-        self.client.force_authenticate(self.test_person_with_profile)
-        response = self.client.get("/api/profiles/{profile_id}?with_contacts=True".format(
-            profile_id=self.test_profile2.profile_id))
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(
-            {
-                "comp_phone_number": "380990102034",
-                "email": "test2@test.com"
-            },
-            response.data
-        )
+        user2 = UserFactory()
+        self.client.force_authenticate(user2)
+
+        response = self.client.get(
+            path="/api/profiles/{profile_id}?with_contacts=True".format(profile_id=self.profile.id))
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(self.profile.phone, response.data.get("phone"),
+                         msg="Phone numbers do not match.")
+        self.assertEqual(self.profile.person.email, response.data.get("email"),
+                         msg="Emails do not match.")
 
     # DELETE requests section
     def test_delete_profile_unauthorized(self):
-        response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=self.test_person_with_profile.id))
-        self.assertEqual(404, response.status_code)
+        response = self.client.delete(
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id))
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_delete_profile_authorized(self):
-        self.client.force_authenticate(self.test_person_with_profile)
-        # get all before delete
-        response = self.client.get("/api/profiles/")
-        profiles_len_before_del = len(response.data["results"])
-        user_profile = Profile.objects.get(person_id=self.test_person_with_profile.id)
+        self.client.force_authenticate(self.user)
+
         # del profile
-        response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=user_profile.profile_id))
+        response = self.client.delete(path="/api/profiles/{profile_id}".format(profile_id=self.profile.id))
         self.assertEqual(204, response.status_code)
+
         # check the profile is deleted
-        response = self.client.get("/api/profiles/")
-        profile_id_list = [profile['profile_id'] for profile in response.data["results"]]
-        self.assertEqual(profiles_len_before_del - 1, len(response.data["results"]))
-        self.assertTrue(user_profile.profile_id not in profile_id_list)
+        response = self.client.get(path="/api/profiles/")
+        self.assertEqual(0, response.data["total_items"])
+        self.profile.refresh_from_db()
+        self.assertTrue(self.profile.is_deleted)
+
         # try access deleted profile
-        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=user_profile.profile_id))
-        self.assertEqual(404, response.status_code, response.content)
+        response = self.client.get("/api/profiles/{profile_id}".format(profile_id=self.profile.id))
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
     def test_delete_profile_of_other_user_authorized(self):
-        self.client.force_authenticate(self.test_person_with_profile)
-        response = self.client.delete("/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id))
+        profile2 = ProfileStartupFactory()
+        self.client.force_authenticate(self.user)
+
+        response = self.client.delete(path="/api/profiles/{profile_id}".format(profile_id=profile2.id))
         self.assertEqual(403, response.status_code)
 
-    # PATCH requests section
+    # # PATCH requests section
     def test_partial_update_profile_authorized(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        self.client.force_authenticate(self.user)
+
         response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
             data={
-                "comp_official_name": "Test_company",
-                "comp_year_of_foundation": 2005
+                "official_name": "Test_company",
+                "founded": 2005
             })
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(2005, response.data.get("founded"))
+        self.assertEqual("Test_company", response.data.get("official_name"))
 
     def test_partial_update_authorized_not_owner(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        profile2 = ProfileStartupFactory()
+        self.client.force_authenticate(self.user)
+
         response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=profile2.id),
             data={
-                "comp_official_name": "Test_company",
-                "comp_year_of_foundation": 2005
+                "official_name": "Test_company",
+                "founded": 2005
             })
-        self.assertEqual(403, response.status_code)
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
     def test_partial_update_profile_with_wrong_image(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        self.client.force_authenticate(self.user)
+
         response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
             data={
-                "comp_banner_image": f'/Forum/{self.wrong_image}',
-                "comp_year_of_foundation": 2005
+                "banner_image": f'/Forum/{self.wrong_image}',
+                "founded": 2005
             })
-        self.assertEqual(400, response.status_code)
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_partial_update_profile_unauthorized(self):
         response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
             data={
-                "comp_official_name": "Test_company",
-                "comp_year_of_foundation": 2005
+                "official_name": "Test_company",
+                "founded": 2005
             })
-        self.assertEqual(401, response.status_code)
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_partial_update_profile_not_exist(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        self.client.force_authenticate(self.user)
+
         response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(profile_id=1000000000000),
+            path="/api/profiles/{profile_id}".format(profile_id=0),
             data={
-                "comp_official_name": "Test_company",
-                "comp_year_of_foundation": 2005
+                "official_name": "Test_company",
+                "founded": 2005
             })
-        self.assertEqual(404, response.status_code)
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
     def test_partial_update_profile_wrong_data(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        self.client.force_authenticate(self.user)
+
         response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
             data={
-                "comp_official_name": 12345,
-                "comp_year_of_foundation": "Jane"
+                "official_name": 12345,
+                "founded": "Jane"
             })
-        self.assertEqual(400, response.status_code)
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_partial_update_profile_category(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        category = CategoryFactory()
+        self.client.force_authenticate(self.user)
+
         response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
             data={
-                "comp_category": [self.test_category.category_id, self.test_category2.category_id]
+                "categories": [category.id]
             }
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual([self.test_category.category_id, self.test_category2.category_id], response.data.get('comp_category'))
+        self.assertEqual([category.id], response.data.get('categories'))
 
     def test_partial_update_profile_activity(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        activity = ActivityFactory()
+        self.client.force_authenticate(self.user)
+
         response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
             data={
-                "comp_activity": [self.test_activity.activity_id, self.test_activity2.activity_id]
+                "activities": [activity.id]
             }
         )
-        self.assertEqual(200, response.status_code)
-        self.assertEqual([self.test_activity.activity_id, self.test_activity2.activity_id], response.data.get('comp_activity'))
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual([activity.id], response.data.get('activities'))
 
-    # PUT requests section
+    # # PUT requests section
     def test_full_update_profile_authorized_with_partial_data(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        self.client.force_authenticate(self.user)
+
         response = self.client.put(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
-            data=self.wrong_full_data_for_full_update)
-        self.assertEqual(400, response.status_code)
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
+            data={
+                "region": Region.DNIPRO_REGION,
+                "phone": '380100109934'
+            })
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_full_update_profile_authorized_with_full_data(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        category = CategoryFactory()
+        activity = ActivityFactory()
+        self.client.force_authenticate(self.user)
+        new_profile_data = {
+            "official_name": "Official name from test case",
+            "region": Region.KYIV,
+            "common_info": "Common info from test case",
+            "phone": '123456789012',
+            "edrpou": 12345678,
+            "founded": 2005,
+            "service_info": "Service info from test case",
+            "product_info": "Product info from test case",
+            "address": "Kyiv",
+            "person_position": "director",
+            "startup_idea": "StartUp idea from test case",
+            "is_startup": True,
+            "is_registered": False,
+            "name": "Comp name from test case",
+            "categories": [
+                category.id
+            ],
+            "activities": [
+                activity.id
+            ]
+        }
+
         response = self.client.put(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
-            data=self.right_full_data_for_full_update)
-        self.assertEqual(200, response.status_code, response.content)
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
+            data={
+                "person": self.user.id,
+                "official_name": "Official name from test case",
+                "region": Region.KYIV,
+                "common_info": "Common info from test case",
+                "phone": '123456789012',
+                "edrpou": 12345678,
+                "founded": 2005,
+                "service_info": "Service info from test case",
+                "product_info": "Product info from test case",
+                "address": "Kyiv",
+                "banner_image": self.right_image,
+                "person_position": "director",
+                "startup_idea": "StartUp idea from test case",
+                "is_startup": True,
+                "is_registered": False,
+                "name": "Comp name from test case",
+                "categories": [
+                    category.id
+                ],
+                "activities": [
+                    activity.id
+                ]
+            })
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
 
     def test_full_update_profile_unauthorized(self):
+        category = CategoryFactory()
+        activity = ActivityFactory()
+
         response = self.client.put(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
-            data=self.right_full_data_for_full_update)
-        self.assertEqual(401, response.status_code)
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
+            data={
+                "person": self.user.id,
+                "official_name": "Official name from test case",
+                "region": Region.KYIV,
+                "common_info": "Common info from test case",
+                "phone": '123456789012',
+                "edrpou": 12345678,
+                "founded": 2005,
+                "service_info": "Service info from test case",
+                "product_info": "Product info from test case",
+                "address": "Kyiv",
+                "banner_image": self.right_image,
+                "person_position": "director",
+                "startup_idea": "StartUp idea from test case",
+                "is_startup": True,
+                "is_registered": False,
+                "name": "Comp name from test case",
+                "categories": [
+                    category.id
+                ],
+                "activities": [
+                    activity.id
+                ]
+            })
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_full_update_profile_not_exist(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        self.client.force_authenticate(self.user)
+
         response = self.client.put(
-            path="/api/profiles/{profile_id}".format(profile_id=10000000000),
-            data=self.right_full_data_for_full_update)
-        self.assertEqual(404, response.status_code)
+            path="/api/profiles/{profile_id}".format(profile_id=0),
+            data={
+                "person": self.user.id,
+                "official_name": "Official name from test case",
+                "region": Region.KYIV,
+                "common_info": "Common info from test case",
+                "phone": '123456789012',
+                "edrpou": 12345678,
+                "founded": 2005,
+                "service_info": "Service info from test case",
+                "product_info": "Product info from test case",
+                "address": "Kyiv",
+                "banner_image": self.right_image,
+                "person_position": "director",
+                "startup_idea": "StartUp idea from test case",
+                "is_startup": True,
+                "is_registered": False,
+                "name": "Comp name from test case",
+            })
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
     def test_full_update_profile_wrong_data(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        self.client.force_authenticate(self.user)
+
         response = self.client.put(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile.profile_id),
-            data=self.wrong_full_data_for_full_update)
-        self.assertEqual(400, response.status_code)
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
+            data={
+                "person": self.user.id,
+                "official_name": "Official name from test case",
+                "region": Region.KYIV,
+                "common_info": "Common info from test case",
+                "phone": '123456789012',
+                "edrpou": 12345678,
+                "founded": 2005,
+                "service_info": "Service info from test case",
+                "product_info": "Product info from test case",
+                "address": "Kyiv",
+                "banner_image": self.wrong_image,
+                "person_position": "director",
+                "startup_idea": "StartUp idea from test case",
+                "is_startup": True,
+                "is_registered": False,
+                "name": "Comp name from test case",
+                "categories": [
+                    "5"
+                ],
+                "activities": [
+                    "39"
+                ]
+            })
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_full_update_authorized_not_owner(self):
-        self.client.force_authenticate(self.test_person_with_profile)
+        user2 = UserFactory()
+        self.client.force_authenticate(user2)
         response = self.client.put(
-            path="/api/profiles/{profile_id}".format(profile_id=self.test_profile2.profile_id),
-            data=self.right_full_data_for_full_update)
-        self.assertEqual(403, response.status_code, response.content)
+            path="/api/profiles/{profile_id}".format(profile_id=self.profile.id),
+            data={
+                "person": self.user.id,
+                "official_name": "Official name from test case",
+                "region": Region.KYIV,
+                "common_info": "Common info from test case",
+                "phone": '123456789012',
+                "edrpou": 12345678,
+                "founded": 2005,
+                "service_info": "Service info from test case",
+                "product_info": "Product info from test case",
+                "address": "Kyiv",
+                "banner_image": self.right_image,
+                "person_position": "director",
+                "startup_idea": "StartUp idea from test case",
+                "is_startup": True,
+                "is_registered": False,
+                "name": "Comp name from test case",
+                "categories": [
+                    1
+                ],
+                "activities": [
+                    2
+                ]
+            })
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
-    # POST requests section
-    def test_create_profile_authorized(self):
-        self.client.force_authenticate(self.test_person_without_profile)
+    # # POST requests section
+    def test_create_profile_authorized_required_data_only(self):
+        user2 = UserFactory()
+        category = CategoryFactory()
+        activity = ActivityFactory()
+        new_profile_data = {
+            "person": user2.id,
+            "categories": [category.id],
+            "activities": [activity.id]
+        }
+        self.client.force_authenticate(user2)
+
         response = self.client.post(
             path="/api/profiles/",
-            data=self.right_data_for_create)
-        self.assertEqual(201, response.status_code, response.content)
+            data=new_profile_data)
+
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code, response.content)
+
+        self.assertEqual(AnyInt(), response.data.get("id"),
+                         msg="IDs do not match.")
+        self.assertEqual(user2.id, response.data.get("person"),
+                         msg="Persons do not match.")
+        self.assertEqual(new_profile_data.get("comp_name"), response.data.get("comp_name"),
+                         msg="Company names do not match")
+        self.assertEqual(new_profile_data.get("categories"), response.data.get("categories"),
+                         msg="Categories do not match.")
+        self.assertEqual(new_profile_data.get("activities"), response.data.get("activities"),
+                         msg="Activities do not match.")
+
+    def test_create_profile_authorized_full_data(self):
+        user2 = UserFactory()
+        category = CategoryFactory()
+        activity = ActivityFactory()
+        new_profile_data = {
+            "person": user2.id,
+            "official_name": "Official name from test case",
+            "region": Region.KYIV,
+            "common_info": "Common info from test case",
+            "phone": '123456789012',
+            "edrpou": 12345678,
+            "founded": 2005,
+            "service_info": "Service info from test case",
+            "product_info": "Product info from test case",
+            "address": "Kyiv",
+            "person_position": "director",
+            "startup_idea": "StartUp idea from test case",
+            "is_startup": True,
+            "is_registered": False,
+            "name": "Comp name from test case",
+            "categories": [
+                category.id
+            ],
+            "activities": [
+                activity.id
+            ]
+        }
+
+        self.client.force_authenticate(user2)
+
+        response = self.client.post(
+            path="/api/profiles/",
+            data=new_profile_data)
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+        self.assertEqual(AnyInt(), response.data.get("id"),
+                         msg="IDs do not match.")
+        self.assertEqual(user2.id, response.data.get("person"),
+                         msg="Persons do not match.")
+        self.assertFalse(response.data.get("is_saved"), msg="is_saved shouldn't be True.")
+        self.assertEqual(new_profile_data.get("official_name"), response.data.get("official_name"),
+                         msg="Official names do not match.")
+        self.assertEqual(new_profile_data.get("region"), response.data.get("region"),
+                         msg="Regions do not match.")
+        self.assertEqual(new_profile_data.get("common_info"), response.data.get("common_info"),
+                         msg="Common info do not match.")
+        self.assertEqual(new_profile_data.get("phone"), response.data.get("phone"),
+                         msg="Phone numbers do not match.")
+        self.assertEqual(new_profile_data.get("edrpou"), response.data.get("edrpou"),
+                         msg="EDRPOUs do not match.")
+        self.assertEqual(new_profile_data.get("founded"), response.data.get("founded"),
+                         msg="Years of foundation do not match.")
+        self.assertEqual(new_profile_data.get("address"), response.data.get("address"),
+                         msg="Addresses do not match.")
+        self.assertEqual(new_profile_data.get("startup_idea"), response.data.get("startup_idea"),
+                         msg="Startup ideas do not match.")
+        self.assertEqual(new_profile_data.get("name"), response.data.get("name"),
+                         msg="Company names do not match")
+        self.assertEqual(new_profile_data.get("is_registered"), response.data.get("is_registered"),
+                         msg="Company is registered fields do not match.")
+        self.assertEqual(new_profile_data.get("is_startup"), response.data.get("is_startup"),
+                         msg="Company is startup fields do not match.")
+        self.assertEqual(new_profile_data.get("service_info"), response.data.get("service_info"),
+                         msg="Service info do not match.")
+        self.assertEqual(new_profile_data.get("product_info"), response.data.get("product_info"),
+                         msg="Product info do not match.")
+        self.assertEqual(new_profile_data.get("categories"), response.data.get("categories"),
+                         msg="Categories do not match.")
+        self.assertEqual(new_profile_data.get("activities"), response.data.get("activities"),
+                         msg="Activities do not match.")
 
     def test_create_profile_unauthorized(self):
-        response = self.client.post(
-            path="/api/profiles/",
-            data=self.right_data_for_create)
-        self.assertEqual(401, response.status_code)
+        user2 = UserFactory()
+        category = CategoryFactory()
+        activity = ActivityFactory()
 
-    def test_create_profile_already_exist(self):
-        self.client.force_authenticate(self.test_person_with_profile)
         response = self.client.post(
             path="/api/profiles/",
-            data=self.right_full_data_for_full_update)
-        self.assertEqual(409, response.status_code)
+            data={
+                "person": user2.id,
+                "categories": [category.id],
+                "activities": [activity.id]
+            })
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+    def test_create_profile_already_exists(self):
+        category = CategoryFactory()
+        activity = ActivityFactory()
+        self.client.force_authenticate(self.user)
+
+        response = self.client.post(
+            path="/api/profiles/",
+            data={
+                "person": self.user.id,
+                "categories": [category.id],
+                "activities": [activity.id]
+            })
+        self.assertEqual(status.HTTP_409_CONFLICT, response.status_code)
 
     def test_create_profile_wrong_data(self):
-        self.client.force_authenticate(self.test_person_without_profile)
+        user2 = UserFactory()
+        self.client.force_authenticate(user2)
+
         response = self.client.post(
             path="/api/profiles/",
-            data=self.wrong_data_for_create)
+            data={
+                "person": user2.id,
+                "categories": ['1'],
+                "activities": ['2']
+            })
         self.assertEqual(400, response.status_code)

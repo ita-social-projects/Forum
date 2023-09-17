@@ -10,6 +10,7 @@ class UserIsProfileOwnerOrReadOnly(BasePermission):
 
         return obj.person == request.user
 
+
 class SavedCompaniesListPermission(BasePermission):
     def has_permission(self, request, view):
         if request.query_params.get("filters") == "is_saved":
@@ -22,8 +23,3 @@ class ReadOnly(BasePermission):
         if request.method in SAFE_METHODS:
                  return True
 
-# class UserIsAdmin(BasePermission):
-#     def has_permission(self, request, view):
-#         if request.method in SAFE_METHODS:
-#             return True
-#         return request.user.is_staff

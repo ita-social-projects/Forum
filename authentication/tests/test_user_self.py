@@ -1,36 +1,35 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from authentication.models import CustomUser
-from .unittest_helper import AnyInt
+from authentication.factories import UserFactory
+from utils.dump_response import dump  # noqa
+from utils.unittest_helper import AnyInt
 
 
 class UserSelfAPITests(APITestCase):
     def setUp(self):
-        self.test_user = CustomUser.objects.create_user(
-            person_email="test@test.com",
-            password="Test1234",
-            person_name="Test",
-            person_surname="Test",
-            is_active = True
+        self.user = UserFactory(
+            email="test@test.com",
+            name="Test",
+            surname="Test",
         )
 
     def test_user_retreive_data_successful(self):
-        self.client.force_authenticate(self.test_user)
-        response = self.client.get("/api/auth/users/me/")
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/auth/users/me/")
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {   "id": AnyInt(),
-                "person_email": "test@test.com",
-                "person_name": "Test",
-                "person_surname": "Test"
-            },
-                response.json()
+            {"id": AnyInt(),
+             "email": "test@test.com",
+             "name": "Test",
+             "surname": "Test"
+             },
+            response.json()
         )
 
     def test_user_retreive_data_not_logged_in(self):
-        response = self.client.get("/api/auth/users/me/")
+        response = self.client.get(path="/api/auth/users/me/")
         self.assertEqual(response.status_code,
                          status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(
@@ -41,49 +40,49 @@ class UserSelfAPITests(APITestCase):
         )
 
     def test_user_update_all_fields_successful(self):
-        self.client.force_authenticate(self.test_user)
+        self.client.force_authenticate(self.user)
         response = self.client.put(
-            "/api/auth/users/me/",
+            path="/api/auth/users/me/",
             data={
                 "id": AnyInt(),
-                "person_email": "test@test.com",
-                "person_name": "Ivan",
-                "person_surname": "Ivanenko",
+                "email": "test@test.com",
+                "name": "Ivan",
+                "surname": "Ivanenko",
             }
         )
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {   "id": AnyInt(),
-                "person_email": "test@test.com",
-                "person_name": "Ivan",
-                "person_surname": "Ivanenko"
-            },
+            {"id": AnyInt(),
+             "email": "test@test.com",
+             "name": "Ivan",
+             "surname": "Ivanenko"
+             },
             response.json()
         )
 
     def test_user_update_one_field_successful(self):
-        self.client.force_authenticate(self.test_user)
+        self.client.force_authenticate(self.user)
         response = self.client.patch(
-            "/api/auth/users/me/",
+            path="/api/auth/users/me/",
             data={
-                "person_surname": "Petrenko",
+                "surname": "Petrenko",
             }
         )
         self.assertEqual(response.status_code,
                          status.HTTP_200_OK)
         self.assertEqual(
-            {   "id": AnyInt(),
-                "person_email": "test@test.com",
-                "person_name": "Test",
-                "person_surname": "Petrenko"
-            },
+            {"id": AnyInt(),
+             "email": "test@test.com",
+             "name": "Test",
+             "surname": "Petrenko"
+             },
             response.json()
         )
 
     def test_user_delete(self):
         response = self.client.get(
-            "/api/auth/users/me/",
+            path="/api/auth/users/me/",
             data={
                 "password": "Test1234"
             }
