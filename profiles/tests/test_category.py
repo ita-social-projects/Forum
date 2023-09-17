@@ -1,36 +1,26 @@
 from rest_framework.test import APITestCase, APIClient
-from profiles.models import Category
-from authentication.models import CustomUser
 
+from authentication.factories import UserFactory
 from profiles.factories import CategoryFactory
-from utils.dump_response import dump  # noqa
+
 
 class TestCategoryList(APITestCase):
     def setUp(self) -> None:
-        self.cheese_category = Category.objects.create(name='cheese')
-        self.honey_category = Category.objects.create(name="honey")
-        self.chocolate_category = Category.objects.create(name='chocolate')
-        self.bacery_category = Category.objects.create(name="bacery")
-        self.test_person_is_admin = CustomUser.objects.create_user(
-            email="testcategory@testadmin.com",
-            password="Testing01",
-            name="testcategory",
-            surname="admin",
-            is_active=True,
-            is_staff=True
-        )
-        self.test_person_just_user = CustomUser.objects.create_user(
-            email="testcategory@testuser.com",
-            password="Testing01",
-            name="testcategory",
-            surname="user",
-            is_active=True
-        )
-
+        self.cheese_category = CategoryFactory(name='cheese')
+        self.honey_category = CategoryFactory(name="honey")
+        self.chocolate_category = CategoryFactory(name='chocolate')
+        self.bakery_category = CategoryFactory(name="bakery")
+        self.test_person_is_admin = UserFactory(is_staff=True)
+        self.test_person_just_user = UserFactory()
 
     def test_get_all_categories_unauthorized(self):
         response = self.client.get("/api/categories/")
         self.assertEqual(200, response.status_code)
+
+    def test_get_all_categories_data(self):
+        response = self.client.get("/api/categories/")
+        self.assertEqual([{'id': 42, 'name': 'cheese'}, {'id': 43, 'name': 'honey'}, {'id': 44, 'name': 'chocolate'},
+                          {'id': 45, 'name': 'bakery'}], response.json())
 
     def test_get_all_categories_authorized_user(self):
         self.client.force_authenticate(self.test_person_just_user)

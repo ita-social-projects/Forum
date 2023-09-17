@@ -1,35 +1,27 @@
 from rest_framework.test import APITestCase, APIClient
-from profiles.models import Activity
-from authentication.models import CustomUser
+
+from authentication.factories import UserFactory
+from profiles.factories import ActivityFactory
 
 
 class TestActivityList(APITestCase):
 
     def setUp(self) -> None:
-        self.sale_activity = Activity.objects.create(name='sale')
-        self.transport_activity = Activity.objects.create(name="transport")
-        self.education_activity = Activity.objects.create(name='education')
-        self.medicine_activity = Activity.objects.create(name="medicine")
-        self.test_person_is_admin = CustomUser.objects.create_user(
-            email="testactivity@testadmin.com",
-            password="Testing01",
-            name="testactivity",
-            surname="admin",
-            is_active=True,
-            is_staff=True
-        )
-        self.test_person_just_user = CustomUser.objects.create_user(
-            email="testactivity@testuser.com",
-            password="Testing01",
-            name="testactivity",
-            surname="user",
-            is_active=True
-        )
-
+        self.sale_activity = ActivityFactory(name='sale')
+        self.transport_activity = ActivityFactory(name="transport")
+        self.education_activity = ActivityFactory(name='education')
+        self.medicine_activity = ActivityFactory(name="medicine")
+        self.test_person_is_admin = UserFactory(is_staff=True)
+        self.test_person_just_user = UserFactory()
 
     def test_get_all_activities_unauthorized(self):
         response = self.client.get("/api/activities/")
         self.assertEqual(200, response.status_code)
+
+    def test_get_all_activities_data(self):
+        response = self.client.get("/api/activities/")
+        self.assertEqual([{'id': 46, 'name': 'sale'}, {'id': 47, 'name': 'transport'}, {'id': 48,
+                            'name': 'education'}, {'id': 49, 'name': 'medicine'}], response.json())
 
     def test_get_all_activities_authorized_user(self):
         self.client.force_authenticate(self.test_person_just_user)
