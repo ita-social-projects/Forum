@@ -10,7 +10,7 @@ from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer, ActivitySerializer, FiltersQueryParamSerializer, RegionSerializer)
-from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission, UserIsAdmin
+from .permissions import UserIsProfileOwnerOrReadOnly, SavedCompaniesListPermission, ReadOnly
 
 
 class SavedCompaniesCreate(CreateAPIView):
@@ -137,13 +137,15 @@ class ViewedCompanyList(ListCreateAPIView):
 
 class CategoryList(ListCreateAPIView):
     serializer_class = CategorySerializer
-    permission_classes = (UserIsAdmin,)
+    # permission_classes = (UserIsAdmin,)
+    permission_classes = (ReadOnly | IsAdminUser,)
     queryset = Category.objects.all()
 
 
 class ActivityList(ListCreateAPIView):
     serializer_class = ActivitySerializer
-    permission_classes = (UserIsAdmin,)
+    # permission_classes = (UserIsAdmin,)
+    permission_classes = (ReadOnly | IsAdminUser,)
     queryset = Activity.objects.all()
 
 

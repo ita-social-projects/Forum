@@ -17,8 +17,13 @@ class SavedCompaniesListPermission(BasePermission):
         return True
 
 
-class UserIsAdmin(BasePermission):
+class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
-            return True
-        return request.user.is_staff
+                 return True
+
+# class UserIsAdmin(BasePermission):
+#     def has_permission(self, request, view):
+#         if request.method in SAFE_METHODS:
+#             return True
+#         return request.user.is_staff
