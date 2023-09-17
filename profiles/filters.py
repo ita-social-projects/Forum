@@ -10,7 +10,10 @@ class ProfileFilter(FilterSet):
 
     def is_saved_filter(self, queryset, name, value):
         if value:
-            return queryset.filter(saved_list__user=self.request.user)
+            if self.request.user.is_authenticated:
+                queryset = queryset.filter(saved_list__user=self.request.user)
+            else:
+                queryset = queryset.none()
         return queryset
 
     def company_filter(self, queryset, name, value):
