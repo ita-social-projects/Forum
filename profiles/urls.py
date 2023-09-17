@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import SavedCompaniesCreate, SavedCompaniesDestroy
-from .views import ProfileList, ProfileDetail, ViewedCompanyList, CategoryList, ActivityList, RegionListView
+from .views import ProfileList, ProfileDetail, ViewedCompanyList, CategoryList, ActivityList, RegionListView, \
+    CategoryDetail, ActivityDetail
 
 
 app_name = "profiles"
@@ -14,4 +15,6 @@ urlpatterns = [
     path('regions/', RegionListView.as_view(), name='region-list'),
     path('categories/', CategoryList.as_view(), name='category_list'),
     path('activities/', ActivityList.as_view(), name='activity_list'),
+    path('categories/<pk>', CategoryDetail.as_view(), name='category-detail'),
+    path('activities/<pk>', ActivityDetail.as_view(), name='activity-detail'),
 ]
