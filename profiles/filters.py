@@ -6,7 +6,7 @@ class ProfileFilter(FilterSet):
     is_saved = filters.BooleanFilter(method="is_saved_filter")
     company = filters.BooleanFilter(field_name="is_registered")
     startup = filters.BooleanFilter(field_name="is_startup")
-    activity = filters.CharFilter(field_name="activities")
+    activity_type = filters.CharFilter(field_name="activities")
 
     def is_saved_filter(self, queryset, name, value):
         if value:
@@ -23,7 +23,7 @@ class ProfileFilter(FilterSet):
             return queryset.filter(is_startup=True)
         return queryset
 
-    def activity_filter(self, queryset, name, value):
+    def activity_type_filter(self, queryset, name, value):
         if value:
             queryset = queryset.filter(activities__name=value)
         return queryset
