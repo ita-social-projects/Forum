@@ -29,8 +29,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_is_saved(self, obj):
         user = self.context["request"].user
         if user.is_authenticated:
-            saved_companies = obj.saved_list.filter(user=user)
-            return saved_companies.exists()
+            return obj.pk in self.context["saved_companies_pk"]
         return False
 
 
@@ -84,10 +83,6 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
         if company.person == user:
             raise serializers.ValidationError({"error": "You can not view your company."})
         return attrs
-
-
-class FiltersQueryParamSerializer(serializers.Serializer):
-    filters = serializers.CharField(required=True)
 
 
 class RegionSerializer(serializers.Serializer):
