@@ -32,27 +32,27 @@ class TestProfileFilterCompanyType(APITestCase):
 
     def test_get_profiles_filter_companies_unauthorized_count(self):
         response = self.client.get(
-            path="/api/profiles/?company=True&page=1&page_size=12")
+            path="/api/profiles/?is_registered=True&page=1&page_size=12")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(1, response.data["total_items"])
 
     def test_get_profiles_filter_companies_unauthorized_content(self):
         response = self.client.get(
-            path="/api/profiles/?company=True&page=1&page_size=12")
+            path="/api/profiles/?is_registered=True&page=1&page_size=12")
         ids_from_response = [prof["id"] for prof in response.data["results"]]
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual([self.company.id], ids_from_response)
 
     def test_get_profiles_filter_startups_unauthorized_count(self):
         response = self.client.get(
-            path="/api/profiles/?startup=True&page=1&page_size=12")
+            path="/api/profiles/?is_startup=True&page=1&page_size=12")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         # self.assertEqual(len(self.startup), response.data["total_items"])
         self.assertEqual(1, response.data["total_items"])
 
     def test_get_profiles_filter_startups_unauthorized_content(self):
         response = self.client.get(
-            path="/api/profiles/?startup=True&page=1&page_size=12")
+            path="/api/profiles/?is_startup=True&page=1&page_size=12")
         ids_from_response = [prof["id"] for prof in response.data["results"]]
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual([self.startup.id], ids_from_response)
@@ -62,7 +62,7 @@ class TestProfileFilterCompanyType(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.get(
-            path="/api/profiles/?company=True&page=1&page_size=12")
+            path="/api/profiles/?is_registered=True&page=1&page_size=12")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, response.data["total_items"], msg="Total result amount doesn't match.")
         self.assertEqual(
@@ -75,7 +75,7 @@ class TestProfileFilterCompanyType(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.get(
-            path="/api/profiles/?company=True&page=1&page_size=12")
+            path="/api/profiles/?is_registered=True&page=1&page_size=12")
 
         saved_from_response = [company for company in response.data["results"] if company["is_saved"]]
 
@@ -93,7 +93,7 @@ class TestProfileFilterCompanyType(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.get(
-            path="/api/profiles/?company=True&is_saved=True&page=1&page_size=12")
+            path="/api/profiles/?is_registered=True&is_saved=True&page=1&page_size=12")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(1, response.data["total_items"])
 
@@ -102,7 +102,7 @@ class TestProfileFilterCompanyType(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.get(
-            path="/api/profiles/?company=True&is_saved=True&page=1&page_size=12")
+            path="/api/profiles/?is_registered=True&is_saved=True&page=1&page_size=12")
         saved_from_response = [company for company in response.data["results"] if company["is_saved"]]
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
@@ -114,7 +114,7 @@ class TestProfileFilterCompanyType(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.get(
-            path="/api/profiles/?startup=True&page=1&page_size=12")
+            path="/api/profiles/?is_startup=True&page=1&page_size=12")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, response.data["total_items"])
         self.assertEqual(
@@ -127,7 +127,7 @@ class TestProfileFilterCompanyType(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.get(
-            path="/api/profiles/?startup=True&page=1&page_size=12")
+            path="/api/profiles/?is_startup=True&page=1&page_size=12")
 
         saved_from_response = [startup for startup in response.data["results"] if startup["is_saved"]]
 
@@ -145,7 +145,7 @@ class TestProfileFilterCompanyType(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.get(
-            path="/api/profiles/?startup=True&is_saved=True&page=1&page_size=12".format(
+            path="/api/profiles/?is_startup=True&is_saved=True&page=1&page_size=12".format(
                 company_type="startup"))
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(1, response.data["total_items"])
@@ -155,7 +155,7 @@ class TestProfileFilterCompanyType(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.get(
-            path="/api/profiles/?startup=True&is_saved=True&page=1&page_size=12".format(
+            path="/api/profiles/?is_startup=True&is_saved=True&page=1&page_size=12".format(
                 company_type="startup"))
         saved_from_response = [startup for startup in response.data["results"] if startup["is_saved"]]
 
@@ -193,14 +193,14 @@ class TestProfileFilterActivityType(APITestCase):
 
     def test_get_profiles_any_user_filter_producer_count(self):
         response = self.client.get(
-            path="/api/profiles/?activity_type={activity}&page=1&page_size={page_size}".format(
+            path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
                 activity="producer", page_size=self.page_size))
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.producers_number, response.data["total_items"])
 
     def test_get_profiles_any_user_filter_producer_content(self):
         response = self.client.get(
-            path="/api/profiles/?activity_type={activity}&page=1&page_size={page_size}".format(
+            path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
                 activity="producer", page_size=self.page_size))
         producers_from_db = Profile.objects.filter(
             activities=self.producer_activity, is_deleted=False).order_by("id")
@@ -212,14 +212,14 @@ class TestProfileFilterActivityType(APITestCase):
 
     def test_get_profiles_any_user_filter_importer_count(self):
         response = self.client.get(
-            path="/api/profiles/?activity_type={activity}&page=1&page_size={page_size}".format(
+            path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
                 activity="importer", page_size=self.page_size))
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.importers_number, response.data["total_items"])
 
     def test_get_profiles_any_user_filter_importer_content(self):
         response = self.client.get(
-            path="/api/profiles/?activity_type={activity}&page=1&page_size={page_size}".format(
+            path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
                 activity="importer", page_size=self.page_size))
         importers_from_db = Profile.objects.filter(
             activities=self.importer_activity, is_deleted=False).order_by("id")
@@ -231,14 +231,14 @@ class TestProfileFilterActivityType(APITestCase):
 
     def test_get_profiles_any_user_filter_retail_count(self):
         response = self.client.get(
-            path="/api/profiles/?activity_type={activity}&page=1&page_size={page_size}".format(
+            path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
                 activity="retail", page_size=self.page_size))
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.retailers_number, response.data["total_items"])
 
     def test_get_profiles_any_user_filter_retail_content(self):
         response = self.client.get(
-            path="/api/profiles/?activity_type={activity}&page=1&page_size={page_size}".format(
+            path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
                 activity="retail", page_size=self.page_size))
         retailers_from_db = Profile.objects.filter(
             activities=self.retail_activity, is_deleted=False).order_by("id")
@@ -250,14 +250,14 @@ class TestProfileFilterActivityType(APITestCase):
 
     def test_get_profiles_any_user_filter_horeca_count(self):
         response = self.client.get(
-            path="/api/profiles/?activity_type={activity}&page=1&page_size={page_size}".format(
+            path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
                 activity="horeca", page_size=self.page_size))
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.horecas_number, response.data["total_items"])
 
     def test_get_profiles_any_user_filter_horeca_content(self):
         response = self.client.get(
-            path="/api/profiles/?activity_type={activity}&page=1&page_size={page_size}".format(
+            path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
                 activity="horeca", page_size=self.page_size))
         horecas_from_db = Profile.objects.filter(
             activities=self.horeca_activity, is_deleted=False).order_by("id")
