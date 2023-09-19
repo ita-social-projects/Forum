@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect} from "react";
-import axios from 'axios';
 import validator from "validator";
 import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";

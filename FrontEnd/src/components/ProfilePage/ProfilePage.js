@@ -21,7 +21,7 @@ const USER = {
     'edrpou': '',
     'activities': [],
     'categories': [],
-    'regions': [],
+    'regions': '',
     'bannerImage': '',
     'logo': '',    
     'slogan': '',

@@ -88,4 +88,4 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 class RegionSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
-        return {obj[0]: obj[1]}
+        return {'key':obj[0], 'value': obj[1]}
