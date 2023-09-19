@@ -1,5 +1,5 @@
 import classes from "./ProfileMenuStartup.module.css";
-import {profileInfo} from "../ProfileText.jsx";
+import { profileInfo } from "../ProfileText.jsx";
 
 const ProfileMenuStartupName = () => {
   return (

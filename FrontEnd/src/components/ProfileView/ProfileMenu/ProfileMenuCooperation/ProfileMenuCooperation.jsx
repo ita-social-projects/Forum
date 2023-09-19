@@ -1,5 +1,5 @@
 import classes from "./ProfileMenuCooperation.module.css";
-import {profileInfo} from "../ProfileText.jsx";
+import { profileInfo } from "../ProfileText.jsx";
 
 const ProfileMenuCooperation = () => {
   return (
