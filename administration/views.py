@@ -1,9 +1,10 @@
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
+
+from administration.serializers import AdminCompanySerializer
+from administration.pagination import ListPagination
 from profiles.models import Profile
-from .serializers import AdminCompanySerializer
-from .pagination import ListPagination
 
 
 class AdminProfileList(ListCreateAPIView):
