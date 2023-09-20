@@ -3,10 +3,12 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.response import Response
 from profiles.models import Profile
 from .serializers import AdminCompanySerializer
+from .pagination import ListPagination
 
 
 class AdminProfileList(ListCreateAPIView):
     permission_classes = (IsAuthenticated, IsAdminUser)
+    pagination_class = ListPagination
     serializer_class = AdminCompanySerializer
     queryset = Profile.objects.filter(is_deleted=False)
     
