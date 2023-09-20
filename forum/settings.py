@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
+
+from corsheaders.defaults import default_headers
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'djoser',
     'authentication',
     'profiles',
@@ -48,11 +52,35 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+]
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://0.0.0.0',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://0.0.0.0',
+]
+
+# For future:
+# CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST').split(',')
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Access-Control-Expose-Headers', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Origin', 'Content-Type'
 ]
 
 ROOT_URLCONF = 'forum.urls'
@@ -74,7 +102,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'forum.wsgi.application'
-
 
 DATABASES = {
     "default": {
@@ -105,7 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -116,7 +142,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -132,10 +157,13 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'authentication.authentication.DjoserTokenAuthentication',
 
     ),
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
+
+TOKEN_EXPIRATION_TIME = timedelta(days=14)
 
 # SMTP
 EMAIL_BACKEND = config('EMAIL_BACKEND')
@@ -152,10 +180,11 @@ DJOSER = {
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'HIDE_USERS': False,
-    'LOGIN_FIELD': 'person_email',
+    'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
         'user_delete': ['rest_framework.permissions.IsAdminUser'],
+        'user_list': ['rest_framework.permissions.IsAdminUser'],
     },
 
     'SERIALIZERS': {
@@ -165,3 +194,17 @@ DJOSER = {
         'token_create': 'authentication.serializers.UserTokenCreateSerializer',
     }
 }
+
+
+def running_tests():
+    import sys
+    """ Check if tests are executed """
+    return sys.argv[1:2] == ['test']
+
+
+if running_tests():
+    # For tests execution, the fastest password hasher is used
+    # (may increase execution speed ×10 and more)
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+    )

@@ -1,100 +1,68 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useState, useEffect} from "react";
+import axios from 'axios';
 import validator from "validator";
-
+import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";
-import RememberMeCheckbox from "./RememberMeCheckbox";
 import classes from "./LoginContent.module.css";
 
 const LoginContent = (props) => {
-  const [typePassword, setTypePassword] = useState("password")
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false)
 
-  const passwordVisisbilityHandler = () => {
-    if (typePassword === "password") {
-      setTypePassword("text")
-    } else setTypePassword("password")
+  const togglePassword = () => {
+    setShowPassword(!showPassword)
   };
 
-  const userValidationHandler = (event) => {
-    event.preventDefault();
+  const errorMessageTemplates = {
+    required: "Обов’язкове поле",
+    email: "Формат електронної пошти некоректний",
+  };
 
-    const emailErrorText = "Формат електронної пошти некоректний";
-    const unspecifiedErrorText =
-      "Електронна пошта чи пароль вказані некоректно";
-    const emptyFieldErrorText = "Обов'язкове поле";
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "all"
+  });
 
+  const onSubmit = (value) => {
+
+  };
+
+  const { setErrorMessage } = props;
+
+  useEffect(() => {
     let errorMessage = "";
 
-    if (!validator.isEmail(enteredEmail) && enteredEmail.trim().length > 0) {
-      errorMessage = emailErrorText;
-      setError({
-        errorType: "email",
-        message: emailErrorText,
-      });
-      setEnteredEmail("");
-    } else if (
-      enteredEmail.trim().length === 0 &&
-      enteredPassword.trim().length === 0
-    ) {
-      errorMessage = emptyFieldErrorText;
-      setError({
-        errorType: "empty-fields",
-        message: emptyFieldErrorText,
-      });
-    } else if (enteredEmail.trim().length === 0) {
-      errorMessage = emptyFieldErrorText;
-      setError({
-        errorType: "empty-email-field",
-        message: emptyFieldErrorText,
-      });
-    } else if (enteredPassword.trim().length === 0) {
-      errorMessage = emptyFieldErrorText;
-      setError({
-        errorType: "empty-password-field",
-        message: emptyFieldErrorText,
-      });
-    } else if (
-      enteredEmail.trim().length < 5 ||
-      enteredPassword.trim().length < 8
-    ) {
-      errorMessage = unspecifiedErrorText;
-      setError({
-        errorType: "wrong-data",
-        message: unspecifiedErrorText,
-      });
-      setEnteredEmail("");
-      setEnteredPassword("");
+    if (errors.email?.message && errors.password?.message) {
+      if (errors.email.message === errors.password.message) {
+        errorMessage = errors.email.message;
+      } else {
+        errorMessage = `${errors.email?.message || ""}\n${errors.password?.message || ""}`;
+      }
+    } else if (errors.email?.message) {
+      errorMessage = errors.email.message;
+    } else if (errors.password?.message) {
+      errorMessage = errors.password.message;
     }
-    props.setErrorMessage(errorMessage);
-  };
 
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-  };
-
-  const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
-  };
-
-  const errorHandler = () => {
-    setError("");
-  };
+    setErrorMessage(errorMessage);
+  }, [errors.email?.message, errors.password?.message, setErrorMessage]);
 
   return (
-    <div className={classes["login-basic"]} onClick={errorHandler}>
+    <div className={classes["login-basic"]}>
       <div className={classes["login-header"]}>
         <p>Вхід на платформу</p>
       </div>
-      <form onSubmit={userValidationHandler}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className={classes["login-content"]}>
           <div className={classes["login-content__items"]}>
             <div className={classes["login-content__item"]}>
               <label
                 className={`${
-                  error.errorType === "empty-email-field" ||
-                  error.errorType === "empty-fields"
+                  errors.email && getValues("email").trim().length === 0
                     ? classes["error-dot"]
                     : ""
                 }`}
@@ -105,22 +73,24 @@ const LoginContent = (props) => {
               <div className={classes["login-content__email"]}>
                 <input
                   id="email"
-                  type="text"
+                  type="email"
                   autoComplete="username"
                   placeholder="Електронна пошта"
-                  value={enteredEmail}
-                  onChange={emailChangeHandler}
+                  {...register("email", {
+                    required: errorMessageTemplates.required,
+                    validate: (value) => validator.isEmail(value) || errorMessageTemplates.email,
+                  })}
                 />
-                <span className={classes["error-message"]}>
-                  {error.errorType === "email" && error.message}
-                </span>
               </div>
+              <span className={classes["error-message"]}>
+                {errors.email && errors.email.message}
+                {errors.required && errors.required.message}
+                </span>
             </div>
             <div className={classes["login-content__item"]}>
               <label
                 className={`${
-                  error.errorType === "empty-password-field" ||
-                  error.errorType === "empty-fields"
+                  errors.password && getValues("password").trim().length === 0
                     ? classes["error-dot"]
                     : ""
                 }`}
@@ -132,41 +102,41 @@ const LoginContent = (props) => {
                 <div className={classes["login-content__password__wrapper"]}>
                   <input
                     id="password"
-                    type={typePassword}
+                    type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     placeholder="Пароль"
-                    value={enteredPassword}
-                    onChange={passwordChangeHandler}
+                    {...register("password", {
+                      required: errorMessageTemplates.required,
+                    })}
                   />
-                  <button onClick={passwordVisisbilityHandler} type="button">
-                    <EyeInvisible />
-                  </button>
+                  <span className={classes["password-visibility"]} onClick={togglePassword}>
+                    {!showPassword ? <EyeInvisible /> : <EyeVisible />}
+                  </span>
                 </div>
-                <span className={classes["error-message"]}>
-                  {(error.errorType === "empty-password-field" ||
-                    error.errorType === "empty-email-field" ||
-                    error.errorType === "wrong-data" ||
-                    error.errorType === "empty-fields") &&
-                    error.message}
-                </span>
               </div>
+              <span className={classes["error-message"]}>
+                    {errors.password && errors.password.message}
+                    {errors.required && errors.required.message}
+              </span>
             </div>
+            <a href="/" className={classes["forget-password"]}>Забули пароль?</a>
           </div>
-          <RememberMeCheckbox />
+          
         </div>
-        <div className={classes.loginfooter}>
-          <div className={classes["loginfooter-buttons"]}>
+        <div className={classes["login-footer"]}>
+          <div className={classes["login-footer-buttons"]}>
           <a href="/">
               <button
                 type="button"
-                className={classes["loginfooter-buttons__main"]}
+                className={classes["login-footer-buttons__main"]}
               >
                 Головна
               </button>
             </a>
             <button
+              disabled={!isValid}
               type="submit"
-              className={classes["loginfooter-buttons__signin"]}
+              className={isValid ? classes["login-footer-buttons__signin"] : classes["login-footer-buttons__signin__disabled"]}
             >
               Увійти
             </button>
