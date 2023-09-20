@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext} from "react";
+import { useNavigate  } from 'react-router-dom';
 import axios from 'axios';
 import validator from "validator";
 import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";
 import classes from "./LoginContent.module.css";
+import { AuthContext } from "../../context";
+
 
 const LoginContent = (props) => {
+  const {isAuth, setIsAuth} = useContext(AuthContext)
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false)
 
   const togglePassword = () => {
@@ -16,20 +21,19 @@ const LoginContent = (props) => {
   const errorMessageTemplates = {
     required: "Обов’язкове поле",
     email: "Формат електронної пошти некоректний",
+    unspecifiedError: "Електронна пошта чи пароль вказані некоректно",
   };
 
   const {
     register,
     handleSubmit,
     getValues,
+    setError,
+    clearErrors,
     formState: { errors, isValid },
   } = useForm({
     mode: "all"
   });
-
-  const onSubmit = (value) => {
-
-  };
 
   const { setErrorMessage } = props;
 
@@ -46,10 +50,36 @@ const LoginContent = (props) => {
       errorMessage = errors.email.message;
     } else if (errors.password?.message) {
       errorMessage = errors.password.message;
+    } else if (errors.unspecifiedError?.message) {
+      errorMessage = errors.unspecifiedError.message;
     }
 
     setErrorMessage(errorMessage);
-  }, [errors.email?.message, errors.password?.message, setErrorMessage]);
+  }, [errors.email?.message, errors.password?.message, errors.unspecifiedError?.message, setErrorMessage]);
+
+  useEffect(() => {
+    clearErrors("unspecifiedError");
+  }, [getValues("email"), getValues("password"), clearErrors]);
+
+  const onSubmit = async (value) => {
+    try {
+      const response = await axios.post("http://localhost:8000/api/auth/token/login/", {
+        email: value.email,
+        password: value.password,
+      });
+      const authToken = response.data.auth_token;
+      localStorage.setItem("Token", authToken)
+      setIsAuth(true);
+      navigate("/profile/user-info");
+    }
+    catch (error) {
+      if (error.response.status === 400) {
+      setError("unspecifiedError", {
+        type: "manual",
+        message: errorMessageTemplates.unspecifiedError
+      });
+    }}
+  };
 
   return (
     <div className={classes["login-basic"]}>
@@ -117,6 +147,7 @@ const LoginContent = (props) => {
               <span className={classes["error-message"]}>
                     {errors.password && errors.password.message}
                     {errors.required && errors.required.message}
+                    {errors.unspecifiedError && errors.unspecifiedError.message}
               </span>
             </div>
             <a href="/" className={classes["forget-password"]}>Забули пароль?</a>
