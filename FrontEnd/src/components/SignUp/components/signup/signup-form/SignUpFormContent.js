@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
+
+import axios from "axios";
 import EyeInvisible from "../../../../authorization/EyeInvisible";
 import EyeVisible from "../../../../authorization/EyeVisible";
 import styles from "./SignUpFormContent.module.css";
 
-
 export function SignUpFormContentComponent(props) {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const togglePassword = () => {
-    setShowPassword(!showPassword)
+    setShowPassword(!showPassword);
   };
 
   const toggleConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword)
+    setShowConfirmPassword(!showConfirmPassword);
   };
-  
+
   const errorMessageTemplates = {
     required: "Обов’язкове поле",
     email: "Email не відповідає вимогам",
@@ -33,9 +33,10 @@ export function SignUpFormContentComponent(props) {
     register,
     handleSubmit,
     watch,
+    getValues,
     formState: { errors, isValid },
   } = useForm({
-    mode: "all"
+    mode: "all",
   });
 
   const [isChecked, setIsChecked] = useState({
@@ -61,12 +62,30 @@ export function SignUpFormContentComponent(props) {
 
   useEffect(() => {
     const companyOrStartup = isChecked.company || isChecked.startup;
-    const formIsValid = companyOrStartup && isValid
+    const formIsValid = companyOrStartup && isValid;
     setIsValid(formIsValid);
-    }, [isValid, setIsValid, isChecked.company, isChecked.startup])
+  }, [isValid, setIsValid, isChecked.company, isChecked.startup]);
 
   const onSubmit = (event) => {
-    // TODO - add submission
+    const dataToSend = {
+      email: getValues("email"),
+      password: getValues("password"),
+      re_password: getValues("confirmPassword"),
+      name: getValues("name"),
+      surname: getValues("surname"),
+      company: {
+        name: getValues("companyName"),
+        is_registered: isChecked.company,
+        is_startup: isChecked.startup,
+      },
+    };
+    
+    axios({
+      method: 'post',
+      url: `http://localhost:8000/api/auth/users/`,
+      withCredentials: false,
+      data: dataToSend
+    }).then(res => console.log(res.data))
   };
 
   return (
@@ -156,7 +175,10 @@ export function SignUpFormContentComponent(props) {
                   },
                 })}
               />
-              <span className={styles["password-visibility"]} onClick={togglePassword}>
+              <span
+                className={styles["password-visibility"]}
+                onClick={togglePassword}
+              >
                 {!showPassword ? <EyeInvisible /> : <EyeVisible />}
               </span>
             </div>
@@ -186,11 +208,15 @@ export function SignUpFormContentComponent(props) {
                 {...register("confirmPassword", {
                   required: errorMessageTemplates.required,
                   validate: (value) =>
-                    watch("password") !== value ?
-                    errorMessageTemplates.confirmPassword : null,
+                    watch("password") !== value
+                      ? errorMessageTemplates.confirmPassword
+                      : null,
                 })}
               />
-              <span className={styles["password-visibility"]} onClick={toggleConfirmPassword}>
+              <span
+                className={styles["password-visibility"]}
+                onClick={toggleConfirmPassword}
+              >
                 {!showConfirmPassword ? <EyeInvisible /> : <EyeVisible />}
               </span>
             </div>
