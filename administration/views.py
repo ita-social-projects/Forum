@@ -6,19 +6,15 @@ from .serializers import AdminCompanySerializer
 
 
 class AdminProfileList(ListCreateAPIView):
-    serializer_class = AdminCompanySerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
-
-    def get_queryset(self):
-        return Profile.objects.filter(is_deleted=False)
+    serializer_class = AdminCompanySerializer
+    queryset = Profile.objects.filter(is_deleted=False)
     
 
 class AdminProfileDetail(RetrieveUpdateDestroyAPIView):
-    serializer_class = AdminCompanySerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
-
-    def get_queryset(self):
-        return Profile.objects.filter(is_deleted=False)
+    serializer_class = AdminCompanySerializer
+    queryset = Profile.objects.filter(is_deleted=False)
     
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
