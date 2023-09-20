@@ -73,7 +73,7 @@ const GeneralInfo = (props) => {
     const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
 
-    const { data, error, isLoading } = useSWR('http://127.0.0.1:8000/api/regions/', fetcher);
+    const { data: fetchedRegions, error, isLoading } = useSWR('http://127.0.0.1:8000/api/regions/', fetcher);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -111,7 +111,7 @@ const GeneralInfo = (props) => {
 
     const onUpdateOneSelectField = e => {
         setUser((prevState) => {
-            const selectedRegion = data.find((el) => el.value ===  e.target.value);
+            const selectedRegion = fetchedRegions.find((el) => el.value ===  e.target.value);
             return { ...prevState, [e.target.name]: selectedRegion.key };
         });
     };    
@@ -236,12 +236,14 @@ const GeneralInfo = (props) => {
                         {!isLoading && 
                         <OneSelectChip
                             name='regions'
-                            options={data}
+                            options={fetchedRegions}
                             label={LABELS.regions}
                             updateHandler={onUpdateOneSelectField}
                             requredField={false}
                             defaultValue="Оберіть"
-                            value={data.find((el) => el.key ===  user.regions)?  data.find((el) => el.key ===  user.regions).value : ''}
+                            value={fetchedRegions.find((el) => el.key ===  user.regions) 
+                                ?  fetchedRegions.find((el) => el.key ===  user.regions).value 
+                                : ''}
                         />
                     }
                     </div>
