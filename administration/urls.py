@@ -8,5 +8,5 @@ urlpatterns = [
     path("auth/", include('djoser.urls')),
     re_path(r"^auth/", include('djoser.urls.authtoken')),
     path('profiles/', AdminProfileList.as_view(), name='profile-list'),
-    path('profiles/<pk>', AdminProfileDetail.as_view(), name='profile-detail'),
+    path('profiles/<pk>/', AdminProfileDetail.as_view(), name='profile-detail'),
 ]
