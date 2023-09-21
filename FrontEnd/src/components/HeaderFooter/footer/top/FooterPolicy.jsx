@@ -5,17 +5,17 @@ const POLICY_LINKS = [
     {
         id: "i0",
         title: "Privacy Policy",
-        link: "PrivacyPolicyPage/"
+        link: "privacy-policy/"
     },
     {
         id: "i1",
         title: "Terms & Conditions",
-        link: "TermsAndConditions/"
+        link: "terms-and-conditions/"
     },
     {
         id: "i2",
         title: "Cookie Policy",
-        link: "CookiesPolicyPage/"
+        link: "cookies-policy/"
     },
     {
         id: "i3",
