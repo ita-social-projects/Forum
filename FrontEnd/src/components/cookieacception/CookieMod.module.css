@@ -1,4 +1,4 @@
-.modal-cover {
+.modal-window {
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.4);
@@ -11,7 +11,7 @@
   transform: scale(0);
 }
 
-.modal-cover.active {
+.modal-window.active {
   transform: scale(1);
 }
 
