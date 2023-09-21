@@ -20,7 +20,7 @@ class TestActivityList(APITestCase):
 
     def test_get_activity_data_authorized_admin(self):
         self.client.force_authenticate(self.test_person_is_admin)
-        response = self.client.get(f"/api/activities/{self.sale_activity.id}/")
+        response = self.client.get("/api/activities/{id}/".format(id=self.sale_activity.id))
         self.assertEqual({"id": self.sale_activity.id, "name": self.sale_activity.name}, response.json())
 
     def test_get_activity_authorized_admin(self):
@@ -28,7 +28,7 @@ class TestActivityList(APITestCase):
         response_get = self.client.get("/api/activities/")
         list_of_activities = response_get.data
         activity_for_get = list_of_activities[0]
-        response = self.client.get(path=f"/api/activities/{activity_for_get['id']}/")
+        response = self.client.get(path="/api/activities/{id}/".format(id=activity_for_get['id']))
         self.assertEqual(200, response.status_code)
 
     def test_get_all_activities_authorized_user(self):
@@ -79,7 +79,7 @@ class TestActivityList(APITestCase):
         response_get = self.client.get("/api/activities/")
         list_of_activities = response_get.data
         activity_for_put = list_of_activities[0]
-        response = self.client.put(path=f"/api/activities/{activity_for_put['id']}/", data={"name": "trade"})
+        response = self.client.put(path="/api/activities/{id}/".format(id=activity_for_put['id']), data={"name": "trade"})
         self.assertEqual(200, response.status_code)
 
     def test_patch_activity_unauthorized(self):
@@ -96,7 +96,7 @@ class TestActivityList(APITestCase):
         response_get = self.client.get("/api/activities/")
         list_of_activities = response_get.data
         activity_for_patch = list_of_activities[0]
-        response = self.client.patch(path=f"/api/activities/{activity_for_patch['id']}/", data=
+        response = self.client.patch(path="/api/activities/{id}/".format(id=activity_for_patch['id']), data=
                                                                                             {"name": "good transport"})
         self.assertEqual(200, response.status_code)
 
@@ -114,7 +114,7 @@ class TestActivityList(APITestCase):
         response_get = self.client.get("/api/activities/")
         list_of_activities = response_get.data
         activity_for_delete = list_of_activities[0]
-        response = self.client.delete(path=f"/api/activities/{activity_for_delete['id']}/")
+        response = self.client.delete(path="/api/activities/{id}/".format(id=activity_for_delete['id']))
         self.assertEqual(204, response.status_code)
 
     def test_delete_activity_not_exists_is_staff(self):

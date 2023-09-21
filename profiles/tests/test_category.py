@@ -19,7 +19,7 @@ class TestCategoryList(APITestCase):
 
     def test_get_category_data_authorized_admin(self):
         self.client.force_authenticate(self.test_person_is_admin)
-        response = self.client.get(f'/api/categories/{self.cheese_category.id}/')
+        response = self.client.get('/api/categories/{id}/'.format(id=self.cheese_category.id))
         self.assertEqual({'id': self.cheese_category.id, 'name': self.cheese_category.name}, response.json())
 
     def test_get_category_authorized_admin(self):
@@ -27,7 +27,7 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get('/api/categories/')
         list_of_categories = response_get.data
         category_for_get = list_of_categories[0]
-        response = self.client.get(path=f'/api/categories/{category_for_get["id"]}/')
+        response = self.client.get(path='/api/categories/{id}/'.format(id=category_for_get["id"]))
         self.assertEqual(200, response.status_code)
 
     def test_get_all_categories_authorized_user(self):
@@ -78,7 +78,7 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get('/api/categories/')
         list_of_categories = response_get.data
         category_for_put = list_of_categories[0]
-        response = self.client.put(path=f'/api/categories/{category_for_put["id"]}/', data={'name': 'milk'})
+        response = self.client.put(path='/api/categories/{id}/'.format(id=category_for_put["id"]), data={'name': 'milk'})
         self.assertEqual(200, response.status_code)
 
     def test_patch_category_unauthorized(self):
@@ -95,7 +95,7 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get('/api/categories/')
         list_of_categories = response_get.data
         category_for_patch = list_of_categories[0]
-        response = self.client.patch(path=f'/api/categories/{category_for_patch["id"]}/', data={'name': 'wine'})
+        response = self.client.patch(path='/api/categories/{id}/'.format(id=category_for_patch["id"]), data={'name': 'wine'})
         self.assertEqual(200, response.status_code)
 
     def test_delete_category_unauthorized(self):
@@ -112,7 +112,7 @@ class TestCategoryList(APITestCase):
         response_get = self.client.get('/api/categories/')
         list_of_categories = response_get.data
         category_for_delete = list_of_categories[0]
-        response = self.client.delete(path=f'/api/categories/{category_for_delete["id"]}/')
+        response = self.client.delete(path='/api/categories/{id}/'.format(id=category_for_delete["id"]))
         self.assertEqual(204, response.status_code)
 
     def test_delete_category_not_exists_is_staff(self):
