@@ -7,6 +7,4 @@
 /.env
 /.DS_Store
 __pycache__/
-/authentication/migrations/
-/profiles/migrations/
 /FrontEnd/node_modules

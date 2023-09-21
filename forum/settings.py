@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from datetime import timedelta
 from pathlib import Path
+
+from corsheaders.defaults import default_headers
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'djoser',
     'authentication',
     'profiles',
@@ -49,11 +52,35 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+]
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://0.0.0.0',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://0.0.0.0',
+]
+
+# For future:
+# CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST').split(',')
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Access-Control-Expose-Headers', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Origin', 'Content-Type'
 ]
 
 ROOT_URLCONF = 'forum.urls'
@@ -133,6 +160,7 @@ REST_FRAMEWORK = {
         'authentication.authentication.DjoserTokenAuthentication',
 
     ),
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
 
 TOKEN_EXPIRATION_TIME = timedelta(days=14)
@@ -150,10 +178,11 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'HIDE_USERS': False,
-    'LOGIN_FIELD': 'person_email',
+    'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PERMISSIONS': {
         'user_delete': ['rest_framework.permissions.IsAdminUser'],
+        'user_list': ['rest_framework.permissions.IsAdminUser'],
     },
 
     'SERIALIZERS': {

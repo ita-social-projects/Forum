@@ -1,25 +1,23 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from authentication.models import CustomUser
-from .unittest_helper import AnyStr
+from authentication.factories import UserFactory
+from utils.dump_response import dump  # noqa
+from utils.unittest_helper import AnyStr
 
 
 class UserLoginAPITests(APITestCase):
     def setUp(self):
-        self.test_user = CustomUser.objects.create_user(
-            person_email="test@test.com",
-            password="Test1234",
-            person_name="Test",
-            person_surname="Test",
-            is_active = True
-        )
+        self.user = UserFactory(email="test@test.com")
 
     def test_login_successful(self):
+        self.user.set_password("Test1234")
+        self.user.save()
+
         response = self.client.post(
-            "/api/auth/token/login/",
+            path="/api/auth/token/login/",
             data={
-                "person_email": "test@test.com",
+                "email": "test@test.com",
                 "password": "Test1234",
             }
         )
@@ -28,16 +26,19 @@ class UserLoginAPITests(APITestCase):
         self.assertEqual(
             {
                 "auth_token": AnyStr()
-                },
+            },
             response.json()
         )
         self.assertContains(response, "auth_token")
 
     def test_login_email_incorrect(self):
+        self.user.set_password("Test1234")
+        self.user.save()
+
         response = self.client.post(
-            "/api/auth/token/login/",
+            path="/api/auth/token/login/",
             data={
-                "person_email": "tost@test.com",
+                "email": "tost@test.com",
                 "password": "Test1234",
             }
         )
@@ -52,10 +53,13 @@ class UserLoginAPITests(APITestCase):
         )
 
     def test_login_password_incorrect(self):
+        self.user.set_password("Test1234")
+        self.user.save()
+
         response = self.client.post(
-            "/api/auth/token/login/",
+            path="/api/auth/token/login/",
             data={
-                "person_email": "test@test.com",
+                "email": "test@test.com",
                 "password": "Test5678",
             }
         )
