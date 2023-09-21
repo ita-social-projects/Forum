@@ -9,6 +9,7 @@ import TermsAndConditions from "../terms-and-conditions-app/terms_conditions/Ter
 import Footer from "../HeaderFooter/footer/Footer";
 import ScrollToTopButton from "../PrivacyPolicyPage/privacy/ScrollToTopButton";
 import React from "react";
+import CookiesPolicyComponent from "../CookiesPolicyPage/CookiesPolicyComponent";
 
 
 function BasicPage() {
@@ -22,6 +23,7 @@ function BasicPage() {
                 <Route path="/sign-up" element={<SignUpPage />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
             </Routes>
             <Footer />
             <ScrollToTopButton />
