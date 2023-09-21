@@ -1,8 +1,7 @@
-import React from 'react';
-import axios from 'axios';
 import './App.css';
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState, useEffect} from "react";
 import AuthorizationPage from './components/authorization/AuthorizationPage';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 import Footer from './components/HeaderFooter/footer/Footer';
@@ -13,27 +12,36 @@ import TermsAndConditions from './components/terms-and-conditions-app/terms_cond
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import MainPage from './components/landing-page/MainPage';
 import ProfileView from "./components/ProfileView/ProfileView";
-import { AuthContext } from "./context";
+import { AuthContext } from "./context/AuthContext";
 
 
 function App() {
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setLoading] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const validateToken = async (authToken) => {
+    try {
+      await axios.get("http://localhost:8000/api/auth/users/me/", {
+        headers: {
+          'Authorization': `Token ${authToken}`,
+        },
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 
-    useEffect(() => {
-        if (localStorage.getItem("Token")) {
-            setIsAuth(true)
+  useEffect(() => {
+    const authToken = localStorage.getItem("Token")
+    if (authToken && validateToken(authToken)) {
+          setIsAuth(true)
+          axios.interceptors.request.use(config => {
+            config.headers.Authorization = `Token ${authToken}`;
+          return config;
+          });
         }
-        setLoading(false);
-    }, [])
-
-    axios.interceptors.request.use(config => {
-      const authToken = localStorage.getItem("Token");
-      if (authToken) {
-        config.headers.Authorization = `Token ${authToken}`;
-      }
-      return config;
-    });
+    setLoading(false);
+  }, []);
 
   return (
     <AuthContext.Provider value={{

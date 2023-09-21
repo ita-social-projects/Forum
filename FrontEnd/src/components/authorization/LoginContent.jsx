@@ -1,16 +1,16 @@
 import { useForm } from "react-hook-form";
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate  } from 'react-router-dom';
 import axios from 'axios';
 import validator from "validator";
 import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";
 import classes from "./LoginContent.module.css";
-import { AuthContext } from "../../context";
+import { AuthContext } from "../../context/AuthContext";
 
 
 const LoginContent = (props) => {
-  const {isAuth, setIsAuth} = useContext(AuthContext)
+  const {isAuth, setIsAuth} = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false)
 
