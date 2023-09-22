@@ -1,8 +1,7 @@
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.response import Response
 
-from administration.serializers import AdminCompanySerializer
+from administration.serializers import AdminCompanyListSerializer, AdminCompanyDetailSerializer
 from administration.pagination import ListPagination
 from profiles.models import Profile
 
@@ -10,18 +9,11 @@ from profiles.models import Profile
 class AdminProfileList(ListCreateAPIView):
     permission_classes = (IsAuthenticated, IsAdminUser)
     pagination_class = ListPagination
-    serializer_class = AdminCompanySerializer
+    serializer_class = AdminCompanyListSerializer
     queryset = Profile.objects.filter(is_deleted=False)
     
 
 class AdminProfileDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, IsAdminUser)
-    serializer_class = AdminCompanySerializer
+    serializer_class = AdminCompanyDetailSerializer
     queryset = Profile.objects.filter(is_deleted=False)
-    
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)

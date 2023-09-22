@@ -69,7 +69,6 @@ class Profile(models.Model):
     banner_image = models.ImageField(validators=[validate_image_format, validate_image_size], null=True)
 
     is_deleted = models.BooleanField(default=False)
-    is_approved = models.BooleanField(default=False)
 
 
 class Activity(models.Model):
