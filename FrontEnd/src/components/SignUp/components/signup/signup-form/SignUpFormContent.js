@@ -86,8 +86,9 @@ export function SignUpFormContentComponent(props) {
       url: `http://localhost:8000/api/auth/users/`,
       withCredentials: false,
       data: dataToSend
-    }).then(res => console.log(res.data))
+    }).then(res => console.log(res.data)).catch(error => console.log(error))
   };
+  // TODO: add error hndling (separate task)
 
   return (
     <div className={styles["signup-form"]}>
