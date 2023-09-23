@@ -241,9 +241,7 @@ const GeneralInfo = (props) => {
                             updateHandler={onUpdateOneSelectField}
                             requredField={false}
                             defaultValue="Оберіть"
-                            value={fetchedRegions.find((el) => el.key ===  user.regions) 
-                                ?  fetchedRegions.find((el) => el.key ===  user.regions).value 
-                                : ''}
+                            value={fetchedRegions.find((el) => el.key ===  user.regions)?.value ?? ''}
                         />
                     }
                     </div>

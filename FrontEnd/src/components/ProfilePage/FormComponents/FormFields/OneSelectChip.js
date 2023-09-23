@@ -64,7 +64,7 @@ export default function OneSelectChip(props) {
               key={option.key}
               value={option.value}
               style={{
-                ...getStyles(option.name, props.value, theme),
+                ...getStyles(option.value, props.value, theme),
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '14px',
                 fontWeight: 400,
