@@ -14,28 +14,26 @@ export default function useProvideAuth() {
             });
             return true;
         } catch (error) {
+          if (error.response && error.response.status === 401) {
             return false;
         }
         };
+      };
 
-    const login = () => {
+    const login = (authToken) => {
+        localStorage.setItem("Token", authToken);
+        axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
         setIsAuth(true)
     };
 
     const logout = () => {
         localStorage.removeItem("Token");
+        delete axios.defaults.headers.common['Authorization'];
         setIsAuth(false);
     };
 
   useEffect(() => {
-    const authToken = localStorage.getItem("Token")
-    axios.interceptors.request.use(config => {
-        if (authToken) {
-          config.headers.Authorization = `Token ${authToken}`;
-        }
-        return config;
-      });
-
+    const authToken = localStorage.getItem("Token")  
     axios.interceptors.response.use(
         response => response,
         error => {
@@ -45,8 +43,9 @@ export default function useProvideAuth() {
           return Promise.reject(error);
         }
       );
+
     if (authToken && validateToken(authToken)) {
-          login()
+          login(authToken)
         } else {
           logout()
         }

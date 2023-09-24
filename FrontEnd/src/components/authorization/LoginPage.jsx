@@ -68,8 +68,7 @@ const LoginContent = (props) => {
         password: value.password,
       });
       const authToken = response.data.auth_token;
-      localStorage.setItem("Token", authToken);
-      auth.login()
+      auth.login(authToken)
       navigate("/profile/user-info");
     }
     catch (error) {
