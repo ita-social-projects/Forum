@@ -1,16 +1,16 @@
 import { useForm } from "react-hook-form";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate  } from 'react-router-dom';
 import axios from 'axios';
 import validator from "validator";
 import EyeVisible from "./EyeVisible";
 import EyeInvisible from "./EyeInvisible";
-import classes from "./LoginContent.module.css";
-import { AuthContext } from "../../context/AuthContext";
+import classes from "./LoginPage.module.css";
+import { useAuth } from "../../hooks/";
 
 
 const LoginContent = (props) => {
-  const {isAuth, setIsAuth} = useContext(AuthContext);
+  const auth = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false)
 
@@ -63,16 +63,17 @@ const LoginContent = (props) => {
 
   const onSubmit = async (value) => {
     try {
-      const response = await axios.post("http://localhost:8000/api/auth/token/login/", {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/login/`, {
         email: value.email,
         password: value.password,
       });
       const authToken = response.data.auth_token;
-      localStorage.setItem("Token", authToken)
-      setIsAuth(true);
+      localStorage.setItem("Token", authToken);
+      auth.login()
       navigate("/profile/user-info");
     }
     catch (error) {
+      console.error("ERROR", error)
       if (error.response.status === 400) {
       setError("unspecifiedError", {
         type: "manual",

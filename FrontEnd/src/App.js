@@ -1,7 +1,5 @@
 import './App.css';
-import { useState, useEffect } from "react";
-import axios from 'axios';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AuthorizationPage from './components/authorization/AuthorizationPage';
 import { SignUpPage } from './components/SignUp/pages/SignUpPage';
 import Footer from './components/HeaderFooter/footer/Footer';
@@ -12,49 +10,26 @@ import TermsAndConditions from './components/terms-and-conditions-app/terms_cond
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import MainPage from './components/landing-page/MainPage';
 import ProfileView from "./components/ProfileView/ProfileView";
-import { AuthContext } from "./context/AuthContext";
+import AuthContext from "./context/AuthContext";
+import { useProvideAuth } from "./hooks";
 
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
-  const [isLoading, setLoading] = useState(true);
-  const validateToken = async (authToken) => {
-    try {
-      await axios.get("http://localhost:8000/api/auth/users/me/", {
-        headers: {
-          'Authorization': `Token ${authToken}`,
-        },
-      });
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
-
-  useEffect(() => {
-    const authToken = localStorage.getItem("Token")
-    if (authToken && validateToken(authToken)) {
-          setIsAuth(true)
-          axios.interceptors.request.use(config => {
-            config.headers.Authorization = `Token ${authToken}`;
-          return config;
-          });
-        }
-    setLoading(false);
-  }, []);
+  const auth = useProvideAuth()
 
   return (
-    <AuthContext.Provider value={{
-      isAuth,
-      setIsAuth,
-      isLoading
-    }}>
+    <AuthContext.Provider value={auth}>
       <BrowserRouter>
         <div className="App">
-          <Header isAuthorized={isAuth}> </Header>
+          <Header isAuthorized={ auth.isAuth }> </Header>
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/profile/*" element={<ProfilePage />} />
+              { auth.isAuth ? (
+              <Route path="/authorization" element={<Navigate to="/profile/user-info" />} />
+              ) : (
+              <Route path="/authorization" element={<AuthorizationPage />} />
+              )}
               <Route path="/authorization" element={<AuthorizationPage />} />
               <Route path="/sign-up" element={<SignUpPage />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
