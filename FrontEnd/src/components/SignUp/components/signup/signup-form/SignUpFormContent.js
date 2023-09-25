@@ -89,6 +89,7 @@ export function SignUpFormContentComponent(props) {
     }).then(res => console.log(res.data)).catch(error => console.log(error))
   };
   // TODO: add error hndling (separate task)
+  // TODO: add modal about email being sent
 
   return (
     <div className={styles["signup-form"]}>
