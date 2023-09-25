@@ -5,20 +5,22 @@ export default function useProvideAuth() {
     const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const validateToken = async (authToken) => {
-
-        try {
-            await axios.get(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
+      try {
+        await axios.get(
+          `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
+          {
             headers: {
-                'Authorization': `Token ${authToken}`,
+              Authorization: `Token ${authToken}`,
             },
-            });
-            return true;
-        } catch (error) {
-          if (error.response && error.response.status === 401) {
-            return false;
+          }
+        );
+        return true;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          return false;
         }
-        };
-      };
+      }
+    };
 
     const login = (authToken) => {
         localStorage.setItem("Token", authToken);
