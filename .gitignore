@@ -5,6 +5,7 @@
 /venv
 /.venv
 /.env
+env
 /*/.env
 /.DS_Store
 __pycache__/
