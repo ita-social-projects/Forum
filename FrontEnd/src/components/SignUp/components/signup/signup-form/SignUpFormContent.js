@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
 import EyeInvisible from "../../../../authorization/EyeInvisible";
 import EyeVisible from "../../../../authorization/EyeVisible";
 import styles from "./SignUpFormContent.module.css";
