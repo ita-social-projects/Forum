@@ -20,12 +20,11 @@ class AdminUserSerializer(UserSerializer):
         model = User
         fields = (
             "id",
-            "person_name",
-            "person_surname",
-            "person_email",
+            "name",
+            "surname",
+            "email",
             "phone_number",
-            "last_login",
             "is_active",
             "is_staff"
         )
-        read_only_fields = ("phone_number", "person_email")
+        read_only_fields = ("phone_number", "email")
