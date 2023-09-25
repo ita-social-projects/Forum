@@ -1,4 +1,6 @@
 .page-container {
-    width: 1512px;
-    height: 1594px;
+  width: 1512px;
+  height: 1594px;
+  border-radius: 8px;
+  background: var(--wf-base-white, #fff);
 }
