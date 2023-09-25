@@ -10,7 +10,7 @@ import Footer from "../HeaderFooter/footer/Footer";
 import ScrollToTopButton from "../PrivacyPolicyPage/privacy/ScrollToTopButton";
 import React from "react";
 import CookiesPolicyComponent from "../CookiesPolicyPage/CookiesPolicyComponent";
-
+import ProfileListPage from "../profileList/ProfileListPage";
 
 function BasicPage() {
     return (
@@ -19,6 +19,7 @@ function BasicPage() {
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/profile/*" element={<ProfilePage />} />
+                <Route path="/profiles/*" element={<ProfileListPage/>} />
                 <Route path="/authorization" element={<AuthorizationPage />} />
                 <Route path="/sign-up" element={<SignUpPage />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
