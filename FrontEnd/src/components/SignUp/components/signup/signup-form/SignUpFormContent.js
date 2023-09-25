@@ -83,7 +83,8 @@ export function SignUpFormContentComponent(props) {
 
     axios({
       method: 'post',
-      url: `http://localhost:8000/api/auth/users/`,
+     
+      url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
       withCredentials: false,
       data: dataToSend
     }).then(res => console.log(res.data)).catch(error => console.log(error))
