@@ -15,7 +15,7 @@ class AdminUserSerializer(serializers.UserSerializer):
 
     def get_phone_number(self, user):
         try:
-            return user.profile.comp_phone_number
+            return user.profile.phone
         except ObjectDoesNotExist:
             return None
 
