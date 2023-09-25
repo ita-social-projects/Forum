@@ -15,6 +15,6 @@ urlpatterns = [
     path('regions/', RegionListView.as_view(), name='region-list'),
     path('categories/', CategoryList.as_view(), name='category_list'),
     path('activities/', ActivityList.as_view(), name='activity_list'),
-    path('categories/<pk>', CategoryDetail.as_view(), name='category-detail'),
-    path('activities/<pk>', ActivityDetail.as_view(), name='activity-detail'),
+    path('categories/<pk>/', CategoryDetail.as_view(), name='category-detail'),
+    path('activities/<pk>/', ActivityDetail.as_view(), name='activity-detail'),
 ]

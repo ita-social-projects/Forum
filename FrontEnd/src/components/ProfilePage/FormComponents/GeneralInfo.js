@@ -1,11 +1,13 @@
 import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
+import useSWR from 'swr';
 
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
+import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
 
 const LABELS = {
@@ -36,34 +38,6 @@ const CATEGORIES = [
     { name: "Спеції" },
 ];
 
-const REGIONS = [
-    { name: "Київська область" },
-    { name: "Вінницька область" },
-    { name: "Волинська область" },
-    { name: "Дніпропетровська область" },
-    { name: "Донецька область" },
-    { name: "Житомирська область" },
-    { name: "Закарпатська область" },
-    { name: "Запорізька область" },
-    { name: "Івано-Франківська область" },
-    { name: "Кіровоградська область" },
-    { name: "Крим" },
-    { name: "Луганська область" },
-    { name: "Львівська область" },
-    { name: "Миколаївська область" },
-    { name: "Одеська область" },
-    { name: "Полтавська область" },
-    { name: "Рівненська область" },
-    { name: "Сумська область" },
-    { name: "Тернопільська область" },
-    { name: "Харківська область" },
-    { name: "Херсонська область" },
-    { name: "Хмельницька область" },
-    { name: "Черкаська область" },
-    { name: "Чернівецька область" },
-    { name: "Чернігівська область" },
-];
-
 const ACTIVITIES = [
     { name: "Виробництво" },
     { name: "Роздрібна мережа" },
@@ -90,12 +64,16 @@ const ERRORS = {
 const TEXT_AREA_MAX_LENGTH = 1000;
 const IMAGE_SIZE = 50 * 1024 * 1024;
 
+const fetcher = (...args) => fetch(...args).then(res => res.json());
+
 const GeneralInfo = (props) => {
     const [user, setUser] = useState(props.user);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const [imageBannerError, setImageBannerError] = useState(null);
     const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
+
+    const { data: fetchedRegions, error, isLoading } = useSWR('http://127.0.0.1:8000/api/regions/', fetcher);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -130,6 +108,13 @@ const GeneralInfo = (props) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
     };
+
+    const onUpdateOneSelectField = e => {
+        setUser((prevState) => {
+            const selectedRegion = fetchedRegions.find((el) => el.value ===  e.target.value);
+            return { ...prevState, [e.target.name]: selectedRegion.key };
+        });
+    };    
 
     const onUpdateEdrpouField = e => {
         if (e.target.value && e.target.value.length !== 8) {
@@ -248,15 +233,17 @@ const GeneralInfo = (props) => {
                             value={user.edrpou}
                             error={edrpouError}
                         />
-                        <MultipleSelectChip
+                        {!isLoading && 
+                        <OneSelectChip
                             name='regions'
-                            options={REGIONS}
+                            options={fetchedRegions}
                             label={LABELS.regions}
-                            updateHandler={onUpdateSelectField}
+                            updateHandler={onUpdateOneSelectField}
                             requredField={false}
-                            value={user.regions}
                             defaultValue="Оберіть"
+                            value={fetchedRegions.find((el) => el.key ===  user.regions)?.value ?? ''}
                         />
+                    }
                     </div>
                     <div className={css['fields-groups']}>
                         <MultipleSelectChip

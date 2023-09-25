@@ -80,7 +80,7 @@ export function SignUpFormContentComponent(props) {
         is_startup: isChecked.startup,
       },
     };
-    
+
     axios({
       method: 'post',
       url: `http://localhost:8000/api/auth/users/`,

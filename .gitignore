@@ -5,6 +5,7 @@
 /venv
 /.venv
 /.env
+/*/.env
 /.DS_Store
 __pycache__/
 /FrontEnd/node_modules
