@@ -10,8 +10,8 @@ from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
 from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer,
-                          ActivitySerializer, RegionSerializer)
+                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, ProfileOwnerDetailSerializer,
+                          CategorySerializer, ActivitySerializer, RegionSerializer)
 from .filters import ProfileFilter
 
 
@@ -116,10 +116,10 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
         if self.request.method == 'GET':
             if profile_instance.person.id == user_pk:
-                return ProfileSerializer
+                return ProfileOwnerDetailSerializer
             return ProfileSensitiveDataROSerializer if get_contacts else ProfileDetailSerializer
         else:
-            return ProfileSerializer
+            return ProfileOwnerDetailSerializer
 
     def perform_destroy(self, instance):
         instance.is_deleted = True

@@ -1,6 +1,4 @@
 from rest_framework import serializers
-
-from authentication.models import CustomUser
 from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
 
 
@@ -17,14 +15,13 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    activity = ActivitySerializer(many=True, read_only=True)
-    category = CategorySerializer(many=True, read_only=True)
-    person = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
     is_saved = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = "__all__"
+        fields = ('name', 'person', 'is_registered', 'is_startup', 'official_name', 'region', 'common_info', 'address',
+                  'categories', 'activities', 'banner_image', 'is_saved')
+        read_only_fields = ('person', )
 
     def get_is_saved(self, obj):
         user = self.context["request"].user
@@ -34,17 +31,34 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
-    activity = ActivitySerializer(many=True, read_only=True)
-    category = CategorySerializer(many=True, read_only=True)
+    is_saved = serializers.SerializerMethodField()
+    email = serializers.ReadOnlyField(source='person.email')
 
     class Meta:
         model = Profile
-        fields = ('official_name', 'region', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea', 'name',
-                  'is_registered', 'is_startup', 'category', 'activity', 'service_info', 'product_info',
-                  'banner_image')
-        read_only_fields = ('official_name', 'region', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea',
-                            'name', 'is_registered', 'is_startup', 'category', 'activity', 'service_info',
-                            'product_info', 'banner_image')
+        fields = ('official_name', 'region', 'email', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea',
+                  'name', 'is_registered', 'is_startup', 'categories', 'activities', 'service_info', 'product_info',
+                  'banner_image', 'is_saved')
+        read_only_fields = ('official_name', 'region', 'email', 'common_info', 'edrpou', 'founded', 'address',
+                            'startup_idea', 'name', 'is_registered', 'is_startup', 'categories', 'activities',
+                            'service_info', 'product_info', 'banner_image')
+
+    def get_is_saved(self, obj):
+        user = self.context["request"].user
+        if user.is_authenticated:
+            return obj.pk in self.context["saved_companies_pk"]
+        return False
+
+
+class ProfileOwnerDetailSerializer(serializers.ModelSerializer):
+    email = serializers.ReadOnlyField(source='person.email')
+
+    class Meta:
+        model = Profile
+        fields = ('name', 'is_registered', 'is_startup', 'categories', 'activities', 'person', 'email', 'person_position',
+                  'official_name', 'region', 'common_info', 'phone', 'edrpou', 'founded',  'service_info',
+                  'product_info', 'address', 'startup_idea', 'banner_image', 'is_deleted')
+        read_only_fields = ('person', )
 
 
 class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
