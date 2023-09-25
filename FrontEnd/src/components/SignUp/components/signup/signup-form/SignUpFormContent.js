@@ -67,7 +67,6 @@ export function SignUpFormContentComponent(props) {
   }, [isValid, setIsValid, isChecked.company, isChecked.startup]);
 
   const onSubmit = (event) => {
-    event.preventDefault();
     const dataToSend = {
       email: getValues("email"),
       password: getValues("password"),
@@ -83,11 +82,11 @@ export function SignUpFormContentComponent(props) {
 
     axios({
       method: 'post',
-     
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
       withCredentials: false,
       data: dataToSend
     }).then(res => console.log(res.data)).catch(error => console.log(error))
+    console.log(process.env.REACT_APP_BASE_API_URL)
   };
   // TODO: add error hndling (separate task)
   // TODO: add modal about email being sent
