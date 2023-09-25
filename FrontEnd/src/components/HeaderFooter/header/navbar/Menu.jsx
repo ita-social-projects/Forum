@@ -10,7 +10,7 @@ const MENU_LINKS = [
     {
         id: "m1",
         title: "Компанії",
-        link: "/"
+        link: "/profiles/"
     },
     {
         id: "m2",
