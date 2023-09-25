@@ -4,6 +4,7 @@ import ProfileContent from './ProfilePageComponents/ProfileContent';
 import { useState } from 'react';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
 
+
 const USER = {
     'email': 'ex@gmail.com',
     'companyEmail': '',    
@@ -21,7 +22,7 @@ const USER = {
     'edrpou': '',
     'activities': [],
     'categories': [],
-    'regions': [],
+    'regions': '',
     'bannerImage': '',
     'logo': '',    
     'slogan': '',

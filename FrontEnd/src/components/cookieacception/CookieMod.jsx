@@ -31,7 +31,7 @@ const CookieMod = ({ active, setActive }) => {
           Наш веб-сайт використовує файли cookie, щоб покращити ваш досвід. Ви
           можете відмовитися, якщо хочете. Дізнатися більше{' '}
           {
-            <Link to="/PrivacyPolicyPage" className={styles['cookie-link']}>
+            <Link to="/cookies-policy" className={styles['cookie-link']}>
               про кукі-файли
             </Link>
           }
