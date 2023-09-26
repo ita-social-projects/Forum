@@ -5,7 +5,9 @@ import { StarOutlined, StarFilled } from "@ant-design/icons";
 
 const { Paragraph } = Typography;
 
-export default function ProfileCard() {
+export default function ProfileCard(props) {
+  const isAuthorized = props.isAuthorized;
+  
   const [isSaved, setIsSaved] = useState(false);
   
   const profile1 = {
@@ -48,6 +50,7 @@ export default function ProfileCard() {
   function onClick() {
     // TODO: add request to add/remove to saved
     setIsSaved(!isSaved);
+    console.log(isAuthorized)
   }
   // TODO: add getting info
 
@@ -75,7 +78,7 @@ export default function ProfileCard() {
         </div>
         <div className={css["content__categories"]}>{badges}</div>
       </div>
-      {isSaved ? filledStar : outlinedStar}
+      {isAuthorized ? (isSaved ? filledStar : outlinedStar): null}
     </div>
   );
 }

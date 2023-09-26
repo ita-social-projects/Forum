@@ -9,7 +9,7 @@
 .results-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
   align-self: stretch;
 }
@@ -56,5 +56,3 @@
   align-items: flex-start;
   gap: 12px;
 }
-
-

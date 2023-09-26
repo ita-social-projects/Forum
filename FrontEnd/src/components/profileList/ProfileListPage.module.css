@@ -1,6 +1,14 @@
-.page-container {
+.page {
   width: 1512px;
   height: 1594px;
   border-radius: 8px;
   background: var(--wf-base-white, #fff);
+}
+
+.page-content {
+  display: flex;
+  width: 1305px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
