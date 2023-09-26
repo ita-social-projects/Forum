@@ -7,12 +7,11 @@ const { Paragraph } = Typography;
 
 export default function ProfileCard() {
   const [isSaved, setIsSaved] = useState(false);
-  const [show, setShow] = useState(true);
-
+  
   const profile1 = {
     companyName: "Ace&W by Stakhovsky",
     activities: "Виробник",
-    region: "Львівська обл",
+    region: "Львівська обл.",
     address: "Львів",
     catogories: ["Сироваріння", "КАТЕГОРІЯ", "КАТЕГОРІЯ", "КАТЕГОРІЯ"],
     isSaved: isSaved,
@@ -40,11 +39,12 @@ export default function ProfileCard() {
         backgroundColor: "#1F9A7C",
         fontWeight: 600,
         fontFamily: "Inter",
-        // lineHeight: 16
+        fontSize: 10
       }}
     />
   ));
 
+  const addressLine = `${profile1.address}, ${profile1.region}`
   function onClick() {
     // TODO: add request to add/remove to saved
     setIsSaved(!isSaved);
@@ -65,8 +65,7 @@ export default function ProfileCard() {
             {profile1.companyName}
           </div>
           <div className={css["content-header__address"]}>
-            {profile1.address}
-            {profile1.region}
+            {addressLine}
           </div>
         </div>
         <div className={css["content__common-info"]}>
@@ -74,7 +73,6 @@ export default function ProfileCard() {
             {profile1.commonInfo}
           </Paragraph>
         </div>
-        // TODO: add badges
         <div className={css["content__categories"]}>{badges}</div>
       </div>
       {isSaved ? filledStar : outlinedStar}
