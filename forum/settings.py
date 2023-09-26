@@ -189,7 +189,6 @@ DJOSER = {
         'user_create_password_retype': 'authentication.serializers.UserRegistrationSerializer',
         'user': 'authentication.serializers.UserListSerializer',
         'current_user': 'authentication.serializers.UserListSerializer',
-        'token_create': 'authentication.serializers.UserTokenCreateSerializer',
     }
 }
 
