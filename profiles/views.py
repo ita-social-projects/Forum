@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
 from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly
-from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
+from .serializers import (SavedCompanySerializer, ProfileListSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer, ProfileOwnerDetailSerializer,
                           CategorySerializer, ActivitySerializer, RegionSerializer)
 from .filters import ProfileFilter
@@ -59,7 +59,7 @@ class ProfileList(ListCreateAPIView):
      include_deleted: bool
      include_all: bool.
     """
-    serializer_class = ProfileSerializer
+    serializer_class = ProfileListSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = ForumPagination
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]

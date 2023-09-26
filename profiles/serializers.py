@@ -14,7 +14,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileListSerializer(serializers.ModelSerializer):
     is_saved = serializers.SerializerMethodField()
 
     class Meta:
@@ -32,14 +32,13 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
     is_saved = serializers.SerializerMethodField()
-    email = serializers.ReadOnlyField(source='person.email')
 
     class Meta:
         model = Profile
-        fields = ('official_name', 'region', 'email', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea',
+        fields = ('official_name', 'region', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea',
                   'name', 'is_registered', 'is_startup', 'categories', 'activities', 'service_info', 'product_info',
                   'banner_image', 'is_saved')
-        read_only_fields = ('official_name', 'region', 'email', 'common_info', 'edrpou', 'founded', 'address',
+        read_only_fields = ('official_name', 'region', 'common_info', 'edrpou', 'founded', 'address',
                             'startup_idea', 'name', 'is_registered', 'is_startup', 'categories', 'activities',
                             'service_info', 'product_info', 'banner_image')
 
