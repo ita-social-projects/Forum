@@ -13,7 +13,7 @@ export function SignUpPage() {
             <div className={styles["sign-in-line__text"]}>
               Вже були на нашому сайті?
             </div>
-            <a href="#" className={styles["sign-in-line__link"]}>
+            <a href="/login" className={styles["sign-in-line__link"]}>
               Увійти
             </a>
           </div>
