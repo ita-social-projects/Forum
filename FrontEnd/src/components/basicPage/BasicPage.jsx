@@ -22,11 +22,11 @@ function BasicPage() {
           <Route path="/profile/*" element={<ProfilePage />} />
           {auth.isAuth ? (
             <Route
-              path="/authorization"
+              path="/login"
               element={<Navigate to="/profile/user-info" />}
             />
           ) : (
-            <Route path="/authorization" element={<AuthorizationPage />} />
+            <Route path="/login" element={<AuthorizationPage />} />
           )}
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
