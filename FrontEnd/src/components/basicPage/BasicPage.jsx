@@ -11,6 +11,7 @@ import ScrollToTopButton from "../PrivacyPolicyPage/privacy/ScrollToTopButton";
 import React from "react";
 import CookiesPolicyComponent from "../CookiesPolicyPage/CookiesPolicyComponent";
 import { useAuth } from "../../hooks";
+import ProfileListPage from "../profileList/ProfileListPage";
 
 function BasicPage() {
   const auth = useAuth();
@@ -29,6 +30,7 @@ function BasicPage() {
             <Route path="/authorization" element={<AuthorizationPage />} />
           )}
           <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/profiles/*" element={<ProfileListPage isAuthorized={auth.isAuth} />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             path="/terms-and-conditions"
