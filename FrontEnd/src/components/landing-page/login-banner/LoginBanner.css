@@ -138,6 +138,7 @@
     font-weight: 600;
     line-height: 20px; /* 125% */
     letter-spacing: -0.16px;
+    text-decoration: none;
 }
 
 .login-banner-group__register-button {
@@ -162,4 +163,5 @@
     font-weight: 600;
     line-height: 20px; /* 125% */
     letter-spacing: -0.16px;
+    text-decoration: none;
 }
