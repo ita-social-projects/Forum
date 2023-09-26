@@ -1,5 +1,6 @@
 import './LoginBanner.css';
 import Ellipses from "../ellipses/Ellipses";
+import { Link } from 'react-router-dom';
 
 
 const MainLoginBanner = () => {
@@ -23,10 +24,10 @@ const MainLoginBanner = () => {
                       <div className="login-banner-group__text-section"/>
                       <div className="login-banner-group__login-buttons">
                           <div className="login-banner-group__login-button">
-                              <div className="login-banner-group__login-button-text">Увійти</div>
+                              <Link className="login-banner-group__login-button-text" to="/login">Увійти</Link>
                           </div>
                           <div className="login-banner-group__register-button">
-                              <div className="login-banner-group__register-button-text">Зареєстуватися</div>
+                              <Link className="login-banner-group__register-button-text" to="/sign-up">Зареєстуватися</Link>
                           </div>
                       </div>
                   </div>
