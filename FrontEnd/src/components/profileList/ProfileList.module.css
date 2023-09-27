@@ -1,6 +1,6 @@
 .list-container {
   display: flex;
-  width: 1305px;
+  /* width: 1305px; */
   flex-direction: column;
   align-items: center;
   gap: 16px;
