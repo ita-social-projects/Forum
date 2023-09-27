@@ -1,14 +1,17 @@
-from djoser.serializers import UserSerializer
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.serializers import SerializerMethodField
+from rest_framework import serializers
+
+from authentication.models import CustomUser
+from profiles.models import Profile
+
 
 User = get_user_model()
 
 
-class AdminUserSerializer(UserSerializer):
+class AdminUserSerializer(serializers.UserSerializer):
 
-    phone_number = SerializerMethodField()
+    phone_number = serializers.SerializerMethodField()
 
     def get_phone_number(self, user):
         try:
@@ -16,7 +19,7 @@ class AdminUserSerializer(UserSerializer):
         except ObjectDoesNotExist:
             return None
 
-    class Meta(UserSerializer.Meta):
+    class Meta(serializers.UserSerializer.Meta):
         model = User
         fields = (
             "id",
@@ -28,3 +31,58 @@ class AdminUserSerializer(UserSerializer):
             "is_staff"
         )
         read_only_fields = ("phone_number", "email")
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'name', 'surname')
+
+
+class AdminCompanyListSerializer(serializers.ModelSerializer):
+    person = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = (
+            'name',
+            'is_registered',
+            'is_startup',
+            'person',
+            'person_position',
+            'official_name',
+            'phone',
+            'edrpou',
+            'address',
+            'is_deleted'
+        )
+
+
+class AdminCompanyDetailSerializer(serializers.ModelSerializer):
+    person = UserSerializer(read_only=True)
+    categories = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
+    activities = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = (
+            'name',
+            'is_registered',
+            'is_startup',
+            'categories',
+            'activities',
+            'person',
+            'person_position',
+            'official_name',
+            'region',
+            'common_info',
+            'phone',
+            'edrpou',
+            'founded',
+            'service_info',
+            'product_info',
+            'address',
+            'startup_idea',
+            'banner_image',
+            'is_deleted'
+        )
