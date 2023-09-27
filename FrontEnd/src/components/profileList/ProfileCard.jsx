@@ -7,7 +7,8 @@ const { Paragraph } = Typography;
 
 export default function ProfileCard(props) {
   const isAuthorized = props.isAuthorized;
-  
+  const profile = props.data;
+
   const [isSaved, setIsSaved] = useState(false);
   
   const profile1 = {
@@ -65,7 +66,7 @@ export default function ProfileCard(props) {
             </p>
           </div>
           <div className={css["content-header__name"]}>
-            {profile1.companyName}
+            {profile.name}
           </div>
           <div className={css["content-header__address"]}>
             {addressLine}
