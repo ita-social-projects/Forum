@@ -38,7 +38,7 @@ function Profile(props) {
         </span>
         {isOpen && (
           <div className={css["header-profile-dropdown-menu"]}>
-            <Link
+            <Link onClick={handleOpen}
               to="/profile/user-info"
               className={css["header-profile-dropdown-menu__text"]}
             >
