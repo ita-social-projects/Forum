@@ -20,6 +20,11 @@ export default function ProfileList(props) {
         <div className={css["results-list"]}>
           <Space direction="vertical" size="middle" style={{ display: "flex" }}>
             <ProfileCard isAuthorized={isAuthorized} />
+            <ProfileCard isAuthorized={isAuthorized} />
+            <ProfileCard isAuthorized={isAuthorized} />
+            <ProfileCard isAuthorized={isAuthorized} />
+            <ProfileCard isAuthorized={isAuthorized} />
+            <ProfileCard isAuthorized={isAuthorized} />
           </Space>
         </div>
       </div>

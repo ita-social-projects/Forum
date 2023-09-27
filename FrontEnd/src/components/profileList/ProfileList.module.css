@@ -14,40 +14,29 @@
   align-self: stretch;
 }
 
-.results-text {
+.results-header {
   width: 413px;
   height: 24px;
   display: flex;
+  gap: 5px;
+
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: 120%; /* 24px */
+  letter-spacing: 0em;
   text-transform: uppercase;
+  text-align: left;
 }
 
-.results-text__number {
+
+.results-header__number {
   color: var(--primary-green-100, #0b6c61);
-
-  /* Header/H6 */
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%; /* 24px */
-  text-transform: uppercase;
 }
 
-.results-text__text {
+.results-header__text {
   color: #767f86;
-
-  /* Header/H6 */
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%;
-  text-transform: uppercase;
 }
 
 .results-list {
