@@ -4,22 +4,22 @@ const SERVICES_LINKS = [
     {
         id: "sl0",
         title: "Виробники",
-        link: "#"
+        link: "/profiles/producers"
     },
     {
         id: "sl1",
         title: "Імпортери",
-        link: "#"
+        link: "/profiles/importers"
     },
     {
         id: "sl2",
         title: "Роздрібні мережі",
-        link: "#"
+        link: "/profiles/retailers"
     },
     {
         id: "sl3",
         title: "HORECA",
-        link: "#"
+        link: "/profiles/horeca"
     },
     {
         id: "sl4",

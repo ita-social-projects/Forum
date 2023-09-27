@@ -30,7 +30,7 @@ function BasicPage() {
             <Route path="/login" element={<AuthorizationPage />} />
           )}
           <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/profiles/*" element={<ProfileListPage isAuthorized={auth.isAuth} />} />
+          <Route path="/profiles/:filter" element={<ProfileListPage isAuthorized={auth.isAuth} />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             path="/terms-and-conditions"

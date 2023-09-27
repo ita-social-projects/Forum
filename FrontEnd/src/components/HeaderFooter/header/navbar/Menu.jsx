@@ -10,12 +10,12 @@ const MENU_LINKS = [
     {
         id: "m1",
         title: "Компанії",
-        link: "/profiles/"
+        link: "/profiles/companies"
     },
     {
         id: "m2",
         title: "Стартапи",
-        link: "/"
+        link: "/profiles/startups"
     },
     {
         id: "m3",
