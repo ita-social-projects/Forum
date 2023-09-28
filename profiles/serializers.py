@@ -15,6 +15,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProfileListSerializer(serializers.ModelSerializer):
+    activities = ActivitySerializer(many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
 
     class Meta:
@@ -31,6 +33,8 @@ class ProfileListSerializer(serializers.ModelSerializer):
 
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
+    activities = ActivitySerializer(many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
 
     class Meta:
@@ -50,6 +54,8 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
 
 
 class ProfileOwnerDetailSerializer(serializers.ModelSerializer):
+    activities = ActivitySerializer(many=True)
+    categories = CategorySerializer(many=True)
     email = serializers.ReadOnlyField(source='person.email')
 
     class Meta:
