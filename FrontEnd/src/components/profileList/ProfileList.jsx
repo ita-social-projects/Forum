@@ -25,28 +25,27 @@ export default function ProfileList(props) {
             Pagination: {
               colorPrimary: "#1F9A7C",
               colorPrimaryHover: "#0b6c61",
-            }
+            },
           },
         }}
       >
         <List
           pagination={{
-            onChange: (page) => {              
+            onChange: (page) => {
               props.paginationFunc(page);
             },
             position: "bottom",
             align: "center",
             pageSize: pageSize,
             total: companiesFound,
-            hideOnSinglePage: true
+            hideOnSinglePage: true,
           }}
-          
           header={<ListHeader number={companiesFound} />}
           dataSource={profiles}
           split={false}
           renderItem={(item) => (
-            <List.Item>
-                <ProfileCard isAuthorized={isAuthorized} data={item} />
+            <List.Item key={item.id}>
+              <ProfileCard isAuthorized={isAuthorized} data={item} />
             </List.Item>
           )}
         />
