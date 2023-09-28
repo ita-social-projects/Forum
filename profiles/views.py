@@ -28,6 +28,10 @@ class SavedCompaniesCreate(CreateAPIView):
         user = request.user
         pk = request.data.get("company_pk")
 
+        # profile = Profile.objects.filter(id=pk)
+        # if profile.person == user.id:
+        #     return Response(status.HTTP_403_FORBIDDEN)
+
         # Check if the company is already in the user's saved list
         if SavedCompany.objects.filter(user=user, company_id=pk).exists():
             saved_company_destroyer = SavedCompaniesDestroy()
