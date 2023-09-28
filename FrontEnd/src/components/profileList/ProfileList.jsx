@@ -1,33 +1,56 @@
 import css from "./ProfileList.module.css";
-import { StarOutlined, StarFilled, StarTwoTone } from "@ant-design/icons";
-import { Card, Space } from "antd";
-import { Typography } from "antd";
+import { List, ConfigProvider } from "antd";
 import ProfileCard from "./ProfileCard";
-const { Title } = Typography;
+import { useState } from "react";
+
+const ListHeader = ({ number }) => (
+  <div className={css["results-header"]}>
+    <p className={css["results-header__number"]}>{number}</p>
+    <p className={css["results-header__text"]}>компаній</p>
+  </div>
+);
 
 export default function ProfileList(props) {
   const isAuthorized = props.isAuthorized;
-  const companiesFound = 30;
+  const data = props.data;
+  const companiesFound = data.total_items;
+  const profiles = data.results;
+  const pageSize = 6;
 
   return (
-    <div className={css["list-container"]}>
-      <div className={css["results-container"]}>
-        <div className={css["results-text"]}>
-          <h6 className={css["results-text__number"]}>{companiesFound} </h6>
-          <h6 className={css["results-text__text"]}>компаній</h6>
-        </div>
-        {/* <Title level={5}>TRY</Title> */}
-        <div className={css["results-list"]}>
-          <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-            <ProfileCard isAuthorized={isAuthorized} />
-            <ProfileCard isAuthorized={isAuthorized} />
-            <ProfileCard isAuthorized={isAuthorized} />
-            <ProfileCard isAuthorized={isAuthorized} />
-            <ProfileCard isAuthorized={isAuthorized} />
-            <ProfileCard isAuthorized={isAuthorized} />
-          </Space>
-        </div>
-      </div>
-    </div>
+    <>
+      <ConfigProvider
+        theme={{
+          components: {
+            Pagination: {
+              colorPrimary: "#1F9A7C",
+              colorPrimaryHover: "#0b6c61",
+            }
+          },
+        }}
+      >
+        <List
+          pagination={{
+            onChange: (page) => {              
+              props.paginationFunc(page);
+            },
+            position: "bottom",
+            align: "center",
+            pageSize: pageSize,
+            total: companiesFound,
+            hideOnSinglePage: true
+          }}
+          
+          header={<ListHeader number={companiesFound} />}
+          dataSource={profiles}
+          split={false}
+          renderItem={(item) => (
+            <List.Item>
+                <ProfileCard isAuthorized={isAuthorized} data={item} />
+            </List.Item>
+          )}
+        />
+      </ConfigProvider>
+    </>
   );
 }

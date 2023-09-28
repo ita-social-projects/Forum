@@ -17,14 +17,16 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    activity = ActivitySerializer(many=True, read_only=True)
-    category = CategorySerializer(many=True, read_only=True)
-    person = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
+    activities = ActivitySerializer(many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+    # person = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
     is_saved = serializers.SerializerMethodField()
+    
 
     class Meta:
         model = Profile
-        fields = "__all__"
+        fields = ("id", 'name', 'person', 'is_registered', 'is_startup', 'official_name', 'region', 'common_info', 'address',
+                  'categories', 'activities', 'banner_image', 'is_saved')
 
     def get_is_saved(self, obj):
         user = self.context["request"].user
