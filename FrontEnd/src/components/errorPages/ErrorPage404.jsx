@@ -1,7 +1,7 @@
-import css from "./ErrorPage.module.css";
+import css from "./ErrorPage404.module.css";
 import { Button, ConfigProvider } from "antd";
 
-export default function ErrorPage() {
+export default function ErrorPage404() {
   return (
     <div className={css.page}>
       <div className={css.container}>
