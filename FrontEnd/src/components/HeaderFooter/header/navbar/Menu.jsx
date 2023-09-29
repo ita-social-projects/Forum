@@ -29,7 +29,7 @@ function Menu () {
         <div className={css["header-menu-section"]}>
             {MENU_LINKS.map( (element) => (
                 <div className={css["header-menu-element"]} key={element.id}>
-                    <HashLink className={css["header-menu-element__text"]} to={element.link}>{element.title}</HashLink>
+                    <a className={css["header-menu-element__text"]} href={element.link}>{element.title}</a>
                 </div>
             ))}
         </div>
