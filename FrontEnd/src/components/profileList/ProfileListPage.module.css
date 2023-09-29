@@ -13,6 +13,12 @@
   margin: 17px 100px;
 }
 
+.loading {
+  width: 1512px;
+  /* height: 468px; */
+  /* padding: 234px 0; */
+}
+
 .group {
   display: flex;
   align-items: center;
