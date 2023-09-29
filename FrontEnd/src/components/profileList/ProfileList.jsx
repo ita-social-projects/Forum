@@ -3,6 +3,9 @@ import { List, ConfigProvider, Skeleton  } from "antd";
 import ProfileCard from "./ProfileCard";
 import { useState } from "react";
 
+// FIXME: change loader to the one from dev
+// FIXME: change error page to the one from dev
+
 const ListHeader = ({ number }) => (
   <div className={css["results-header"]}>
     <p className={css["results-header__number"]}>{number}</p>
