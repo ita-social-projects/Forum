@@ -4,7 +4,7 @@ import { useState } from "react";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { PropTypes } from "prop-types";
 import axios from "axios";
-
+import { useSWRConfig } from "swr";
 const { Paragraph } = Typography;
 
 // FIXME: will be changed once serializer will be changed to return display_name
@@ -75,7 +75,7 @@ export default function ProfileCard(props) {
   };
 
   // TODO: add loader to saved switch around post
-
+  // const {mutate} = useSWRConfig()
   function onStarClick() {
     axios({
       method: "post",
@@ -88,6 +88,7 @@ export default function ProfileCard(props) {
       .then(() => setIsSaved(!isSaved))
       .catch((error) => console.log(error));
   }
+  // mutate("/api/profiles/")
   // TODO: add logo from db once it's implemented on the server side
 
   return (

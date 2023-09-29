@@ -7,16 +7,6 @@ import { ConfigProvider, Radio } from "antd";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
 
-const optionSet = [
-  {
-    label: "Усі",
-    value: false,
-  },
-  {
-    label: "Збережені",
-    value: true,
-  },
-];
 
 export default function ProfileListPage(props) {
   let isAuthorized = props.isAuthorized;
@@ -76,7 +66,7 @@ export default function ProfileListPage(props) {
     error,
     isLoading,
   } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
-
+  // const { trigger, isMutating } = useSWRMutation(urlForAll, fetcher)
   const handleRadioSelect = () => {
     if (!filterSaved) {
       setCurrentPage(1);
@@ -108,13 +98,15 @@ export default function ProfileListPage(props) {
                 }}
               >
                 <Radio.Group
-                  options={optionSet}
                   onChange={handleRadioSelect}
                   value={filterSaved}
                   optionType="button"
                   buttonStyle="solid"
                   size="large"
-                />
+                >
+                  <Radio.Button value={false}>All</Radio.Button>
+                  <Radio.Button value={true}>Saved</Radio.Button>
+                </Radio.Group>
               </ConfigProvider>
             </div>
           ) : null}
