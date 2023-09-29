@@ -82,8 +82,6 @@ export default function ProfileCard(props) {
       url: `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
       withCredentials: true,
       data: {
-        // FIXME: will be changed after Sofia's PR merged: user id removed
-        user: 7,
         company_pk: profile.id,
       },
     })
