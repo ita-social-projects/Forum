@@ -74,8 +74,7 @@ export default function ProfileCard(props) {
     );
   };
 
-  // TODO: add loader to saved switch around post
-  // const {mutate} = useSWRConfig()
+  // FIXME: fix race condition when switching from saved to all w/saved changes
   function onStarClick() {
     axios({
       method: "post",
@@ -88,7 +87,6 @@ export default function ProfileCard(props) {
       .then(() => setIsSaved(!isSaved))
       .catch((error) => console.log(error));
   }
-  // mutate("/api/profiles/")
   // TODO: add logo from db once it's implemented on the server side
 
   return (
