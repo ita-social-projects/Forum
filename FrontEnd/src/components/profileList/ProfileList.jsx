@@ -1,5 +1,5 @@
 import css from "./ProfileList.module.css";
-import { List, ConfigProvider } from "antd";
+import { List, ConfigProvider, Skeleton  } from "antd";
 import ProfileCard from "./ProfileCard";
 import { useState } from "react";
 
@@ -12,11 +12,16 @@ const ListHeader = ({ number }) => (
 
 export default function ProfileList(props) {
   const isAuthorized = props.isAuthorized;
+  // const loading = props.isLoading;
+  // const loading = true;
+  const currentPage = props.current;
   const data = props.data;
   const companiesFound = data.total_items;
   const profiles = data.results;
   const pageSize = 6;
 
+  // TODO: add loader
+  // FIXME: FIX STAR
   return (
     <>
       <ConfigProvider
@@ -39,6 +44,7 @@ export default function ProfileList(props) {
             pageSize: pageSize,
             total: companiesFound,
             hideOnSinglePage: true,
+            current: currentPage
           }}
           header={<ListHeader number={companiesFound} />}
           dataSource={profiles}
