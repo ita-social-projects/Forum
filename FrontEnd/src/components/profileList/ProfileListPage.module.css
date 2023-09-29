@@ -1,6 +1,7 @@
 .page {
   width: 1512px;
-  height: 1594px;
+  /* height: 1594px; */
+  min-height: 470px;
   border-radius: 8px;
   background: var(--wf-base-white, #fff);
 }
@@ -11,12 +12,6 @@
   flex-direction: column;
   gap: 16px;
   margin: 17px 100px;
-}
-
-.loading {
-  width: 1512px;
-  /* height: 468px; */
-  /* padding: 234px 0; */
 }
 
 .group {

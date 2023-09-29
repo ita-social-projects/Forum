@@ -1,6 +1,6 @@
 .page {
   width: 1513px;
-  height: 800px;
+  min-height: 800px;
   display: flex;
   justify-content: center;
   background: var(--primary-green-80, #1f9a7c);

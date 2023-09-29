@@ -3,7 +3,7 @@ import ProfileList from "./ProfileList";
 import useSWR from "swr";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { ConfigProvider, Radio, Skeleton, Spin } from "antd";
+import { ConfigProvider, Radio } from "antd";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
 
@@ -39,16 +39,16 @@ export default function ProfileListPage(props) {
       profileTypeFilter = "is_startup=True";
       break;
     case "producers":
-      profileActivityFilter += "production";
+      profileActivityFilter += "Виробник";
       break;
     case "importers":
-      profileActivityFilter += "import";
+      profileActivityFilter += "Імпортер";
       break;
     case "retailers":
-      profileActivityFilter += "retail";
+      profileActivityFilter += "Роздрібна мережа";
       break;
     case "horeca":
-      profileActivityFilter += "horeca";
+      profileActivityFilter += "HORECA";
       break;
     default:
       break;
@@ -85,7 +85,7 @@ export default function ProfileListPage(props) {
   };
 
   return (
-    <div className={isLoading || error ? css["loading"] : css.page}>
+    <div className={css.page}>
       {error ? (
         <ErrorPage />
       ) : (
