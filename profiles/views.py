@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
-from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly
+from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, SelfCompany
 from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer,
                           ActivitySerializer, RegionSerializer)
@@ -20,17 +20,13 @@ class SavedCompaniesCreate(CreateAPIView):
     List of saved companies.
     Add a company to the saved list.
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, SelfCompany]
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
 
     def post(self, request):
-        user = request.user
+        user = self.request.user
         pk = request.data.get("company_pk")
-
-        # profile = Profile.objects.filter(id=pk)
-        # if profile.person == user.id:
-        #     return Response(status.HTTP_403_FORBIDDEN)
 
         # Check if the company is already in the user's saved list
         if SavedCompany.objects.filter(user=user, company_id=pk).exists():

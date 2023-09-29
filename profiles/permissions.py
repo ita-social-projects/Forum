@@ -1,4 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
+from profiles.models import Profile
 
 
 class UserIsProfileOwnerOrReadOnly(BasePermission):
@@ -15,3 +16,15 @@ class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
                  return True
+
+
+class SelfCompany(BasePermission):
+    def has_permission(self, request, view):
+        user = request.user
+        pk = request.data.get("company_pk")
+        try:
+            profile = Profile.objects.get(id=pk)
+        except:
+            return True
+        return str(profile.person_id) != str(user.id)
+
