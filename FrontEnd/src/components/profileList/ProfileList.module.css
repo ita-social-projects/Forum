@@ -1,6 +1,5 @@
 .list-container {
   display: flex;
-  /* width: 1305px; */
   flex-direction: column;
   align-items: center;
   gap: 16px;
@@ -24,8 +23,7 @@
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
-  line-height: 120%; /* 24px */
-  letter-spacing: 0em;
+  line-height: 24px; 
   text-transform: uppercase;
   text-align: left;
 }
@@ -36,7 +34,7 @@
 }
 
 .results-header__text {
-  color: #767f86;
+  color: var(--main-grey-20, #767f86);
 }
 
 .results-list {
