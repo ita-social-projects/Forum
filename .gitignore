@@ -10,3 +10,7 @@ env
 /.DS_Store
 __pycache__/
 /FrontEnd/node_modules
+
+public/*
+!public/media/.gitkeep
+!public/static/.gitkeep
