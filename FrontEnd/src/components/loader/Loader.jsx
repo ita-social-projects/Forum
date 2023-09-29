@@ -1,36 +1,23 @@
 import css from "./Loader.module.css";
-import { Carousel, ConfigProvider } from "antd";
+import { Carousel } from "antd";
 
 export default function Loader() {
   return (
     <div className={css.container}>
-      <ConfigProvider
-        theme={{
-          components: {
-            Carousel: {
-              colorBgContainer: "#40af85",
-              dotActiveWidth: 32,
-              dotWidth: 32,
-              dotHeight: 6,
-              lineHeight: 1
-            },
-          },
-        }}
-      >
-        <Carousel autoplay autoplaySpeed={1000} infinite dotPosition="top" >
+        <Carousel autoplay autoplaySpeed={1000} infinite dotPosition="top">
           <div>
-            <span/>
+            <span />
           </div>
           <div>
-          <span/>
+            <span />
           </div>
           <div>
-          <span/>
+            <span />
           </div>
           <div>
-          <span/>
+            <span />
           </div>
         </Carousel>
-      </ConfigProvider>
-      </div>);
+    </div>
+  );
 }
