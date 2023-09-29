@@ -1,5 +1,6 @@
 import './Banner.css';
 import Ellipses from "../ellipses/Ellipses";
+import { Link } from 'react-router-dom';
 
 
 const MainBanner = () => {
@@ -25,10 +26,10 @@ const MainBanner = () => {
                 <div className="main-banner-group__banner-text">Це унікальний майданчик <br/>для обміну інформацією і досвідом з тими, хто втілює свої ідеї в життя.</div>
                 <div className="main-banner-group__frame-login">
                     <div className="main-banner-group__login-button">
-                        <div className="main-banner-group__login-button-text">Увійти</div>
+                        <Link className="main-banner-group__login-button-text" to="/login">Увійти</Link>
                     </div>
                     <div className="main-banner-group__register-button">
-                        <div className="main-banner-group__register-button-text">Зареєстуватися</div>
+                        <Link className="main-banner-group__register-button-text" to="/sign-up">Зареєстуватися</Link>
                     </div>
                 </div>
             </div>

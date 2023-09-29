@@ -1,6 +1,8 @@
 import styles from "./SignUpForm.module.css";
 import { SignUpFormContentComponent } from "./signup-form/SignUpFormContent";
 import { useState } from "react";
+import { Link } from "react-router-dom"
+
 
 export function SignUpFormComponent() {
   const [isValid, setIsValid] = useState(false)
@@ -10,9 +12,9 @@ export function SignUpFormComponent() {
       <SignUpFormContentComponent setIsValid={setIsValid}/>
       <div className={styles["form__footer"]}>
         <div className={styles["button-container"]}>
-          <button className={styles["main-page__button"]} type="button">
+          <Link className={styles["main-page__button"]} to="/">
             Головна
-          </button>
+          </Link>
           <button
             disabled={!isValid}
             form="signUpForm"
