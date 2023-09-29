@@ -7,6 +7,7 @@ import axios from "axios";
 
 const { Paragraph } = Typography;
 
+// FIXME: will be changed once serializer will be changed to return display_name
 const regions = [
   {
     key: "Lviv region",
@@ -35,10 +36,8 @@ export default function ProfileCard(props) {
     commonInfo:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac condimentum nunc, eu bibendum odio. Donec porttitor tincidunt enim, at cursus diam efficitur sed. Cras sapien diam, efficitur in pretium sit amet, blandit vel nisi. Quisque facilisis sapien non mauris pharetra, sit amet tristique turpis placerat. Integer eleifend faucibus tristique. Etiam sed justo diam. Pellentesque vel elit at lectus elementum pellentesque quis vel erat.Proin laoreet, ipsum eget vestibulum ullamcorper, turpis nisl aliquam arcu, vitae dapibus ipsum nibh varius justo. Mauris dignissim iaculis libero non euismod. Maecenas massa purus, tincidunt sit amet enim et, scelerisque eleifend mauris. Aliquam euismod viverra mauris, ut interdum est venenatis nec. Mauris malesuada libero ut placerat semper. Cras sit amet vehicula metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam congue vestibulum neque, ac volutpat neque. Suspendisse semper turpis tincidunt elit pulvinar laoreet. Pellentesque convallis vitae risus at pellentesque. Ut eget viverra erat. Donec molestie mauris lacus, maximus sollicitudin nulla volutpat ullamcorper. Integer commodo cursus arcu ac ullamcorper. Donec vulputate eros est, at pretium neque faucibus eu.",
   };
-  // FIXME: remove address for now
-  const addressLine = `${profile.address ? profile.address + ", " : ""}${
-    profile.region ? profile.region : ""
-  }`;
+
+  const addressLine = `${profile.region ? profile.region : ""}`;
   const activitiesLine = profile.activities
     .map(({ id, name }) => name)
     .join(", ");
@@ -78,7 +77,7 @@ export default function ProfileCard(props) {
       url: `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
       withCredentials: true,
       data: {
-        // FIXME: change user id to the one from the token
+        // FIXME: will be changed after Sofia's PR merged: user id removed
         user: 7,
         company_pk: profile.id,
       },
@@ -86,13 +85,14 @@ export default function ProfileCard(props) {
       .then(() => setIsSaved(!isSaved))
       .catch((error) => console.log(error));
   }
-  // TODO: add logo
+  // TODO: add logo from db once it's implemented on the server side
 
   return (
     <div className={css["company-card"]}>
-      <div className={css.logo}>
+      <div className={css["logo-box"]}>
         <img
-          src={`${process.env.PUBLIC_URL}/profilepage/initialCompanyLogo.png`}
+          className={css.logo}
+          src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
         />
       </div>
       <div className={css.content}>
