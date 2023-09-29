@@ -101,19 +101,10 @@ class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
 
 
 class SavedCompanySerializer(serializers.ModelSerializer):
-    official_name = serializers.ReadOnlyField(source='company.official_name')
-    region = serializers.ReadOnlyField(source='company.region')
-    common_info = serializers.ReadOnlyField(source='company.common_info')
-    phone = serializers.ReadOnlyField(source='company.phone')
-    edrpou = serializers.ReadOnlyField(source='company.edrpou')
-    founded = serializers.ReadOnlyField(source='company.founded')
-    address = serializers.ReadOnlyField(source='company.address')
-    startup_idea = serializers.ReadOnlyField(source='company.startup_idea')
-
     class Meta:
         model = SavedCompany
-        fields = ('id', 'user', 'company', 'official_name', 'region', 'common_info', 'phone', 'edrpou', 'founded',
-                  'address', 'startup_idea', 'added_at')
+        fields = ('id', 'user', 'company', 'added_at')
+        read_only_fields = ('user',)
 
 
 class ViewedCompanySerializer(serializers.ModelSerializer):
