@@ -24,7 +24,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ('id', 'name', 'person', 'is_registered', 'is_startup', 'official_name', 'region_display',
                   'common_info', 'address', 'categories', 'activities', 'banner_image', 'is_saved')
-        read_only_fields = ('person', )
+        read_only_fields = ('person',)
 
     def get_is_saved(self, obj):
         user = self.context["request"].user
@@ -44,10 +44,10 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'official_name', 'region_display', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea',
-                  'name', 'is_registered', 'is_startup', 'categories', 'activities', 'service_info', 'product_info',
-                  'banner_image', 'is_saved')
-        read_only_fields = ('official_name', 'region_display', 'common_info', 'edrpou', 'founded', 'address',
+        fields = ('id', 'official_name', 'region_display', 'common_info', 'edrpou', 'founded', 'address',
+                  'startup_idea', 'name', 'is_registered', 'is_startup', 'categories', 'activities', 'service_info',
+                  'product_info', 'banner_image', 'is_saved')
+        read_only_fields = ('id', 'official_name', 'region_display', 'common_info', 'edrpou', 'founded', 'address',
                             'startup_idea', 'name', 'is_registered', 'is_startup', 'categories', 'activities',
                             'service_info', 'product_info', 'banner_image')
 
@@ -62,17 +62,14 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
 
 
 class ProfileOwnerDetailSerializer(serializers.ModelSerializer):
-    activities = ActivitySerializer(many=True)
-    categories = CategorySerializer(many=True)
     email = serializers.ReadOnlyField(source='person.email')
-    region_display = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ('id', 'name', 'is_registered', 'is_startup', 'categories', 'activities', 'person', 'email', 'person_position',
-                  'official_name', 'region', 'region_display', 'common_info', 'phone', 'edrpou', 'founded',  'service_info',
-                  'product_info', 'address', 'startup_idea', 'banner_image', 'is_deleted')
-        read_only_fields = ('person', )
+        fields = ('id', 'name', 'is_registered', 'is_startup', 'categories', 'activities', 'person', 'email',
+                  'person_position', 'official_name', 'region', 'common_info', 'phone', 'edrpou', 'founded',
+                  'service_info', 'product_info', 'address', 'startup_idea', 'banner_image', 'is_deleted')
+        read_only_fields = ('person',)
 
     def get_region_display(self, obj):
         return obj.get_region_display()
