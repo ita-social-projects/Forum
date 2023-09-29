@@ -14,23 +14,9 @@ export default function ErrorPage() {
               або тимчасово недоступна.
             </p>
           </div>
-          <ConfigProvider
-            theme={{
-              components: {
-                Button: {
-                  defaultColor: "#1F9A7C",
-                  colorPrimaryHover: "#0b6c61",
-                  fontWeight: 600,
-                  contentFontSize: 16,
-                  fontFamilyCode: "Inter",
-                },
-              },
-            }}
-          >
-            <Button>
-              <a href="/">Повернутися на Головну</a>
-            </Button>
-          </ConfigProvider>
+          <Button>
+            <a href="/">Повернутися на Головну</a>
+          </Button>
         </div>
       </div>
     </div>

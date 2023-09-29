@@ -19,9 +19,9 @@ const regions = [
   },
 ];
 
-export default function ProfileCard(props) {
-  const isAuthorized = props.isAuthorized;
-  const data = props.data;
+export default function ProfileCard({isAuthorized, data}) {
+  // const isAuthorized = props.isAuthorized;
+  // const data = props.data;
 
   const [isSaved, setIsSaved] = useState(data.is_saved);
 
@@ -85,7 +85,7 @@ export default function ProfileCard(props) {
       },
     })
       .then(() => setIsSaved(!isSaved))
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   }
   // TODO: add logo from db once it's implemented on the server side
 

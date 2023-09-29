@@ -21,39 +21,26 @@ export default function ProfileList(props) {
   const pageSize = 6;
 
   return (
-    <>
-      <ConfigProvider
-        theme={{
-          components: {
-            Pagination: {
-              colorPrimary: "#1F9A7C",
-              colorPrimaryHover: "#0b6c61",
-            },
-          },
-        }}
-      >
-        <List
-          pagination={{
-            onChange: (page) => {
-              props.paginationFunc(page);
-            },
-            position: "bottom",
-            align: "center",
-            pageSize: pageSize,
-            total: companiesFound,
-            hideOnSinglePage: true,
-            current: currentPage,
-          }}
-          header={<ListHeader number={companiesFound} />}
-          dataSource={profiles}
-          split={false}
-          renderItem={(item) => (
-            <List.Item key={item.id}>
-              <ProfileCard isAuthorized={isAuthorized} data={item} />
-            </List.Item>
-          )}
-        />
-      </ConfigProvider>
-    </>
+    <List
+      pagination={{
+        onChange: (page) => {
+          props.paginationFunc(page);
+        },
+        position: "bottom",
+        align: "center",
+        pageSize: pageSize,
+        total: companiesFound,
+        hideOnSinglePage: true,
+        current: currentPage,
+      }}
+      header={<ListHeader number={companiesFound} />}
+      dataSource={profiles}
+      split={false}
+      renderItem={(item) => (
+        <List.Item key={item.id}>
+          <ProfileCard isAuthorized={isAuthorized} data={item} />
+        </List.Item>
+      )}
+    />
   );
 }

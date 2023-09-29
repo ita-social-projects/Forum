@@ -7,10 +7,7 @@ import { ConfigProvider, Radio } from "antd";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
 
-
-export default function ProfileListPage(props) {
-  let isAuthorized = props.isAuthorized;
-
+export default function ProfileListPage({ isAuthorized }) {
   const { filter } = useParams();
 
   let profileTypeFilter = "";
@@ -60,14 +57,17 @@ export default function ProfileListPage(props) {
       : ""
   }${filterSaved ? "&is_saved=True" : ""}&page=${currentPage}`;
 
+  // const authToken = localStorage.getItem("Token");
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
   const {
     data: fetchedProfiles,
     error,
     isLoading,
   } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
-  // const { trigger, isMutating } = useSWRMutation(urlForAll, fetcher)
+
   const handleRadioSelect = () => {
+    // TODO: add reset when redirect
     if (!filterSaved) {
       setCurrentPage(1);
     }
@@ -82,32 +82,16 @@ export default function ProfileListPage(props) {
         <div className={css["page-content"]}>
           {isAuthorized ? (
             <div className={css.group}>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Radio: {
-                      colorPrimary: "#1f9a7c",
-                      borderRadius: 2,
-                      colorBorder: "#DEE1E8",
-                      buttonColor: "#25292C",
-                      fontFamily: "Inter",
-                      fontSize: 16,
-                      algorithm: true, // Enable algorithm
-                    },
-                  },
-                }}
+              <Radio.Group
+                onChange={handleRadioSelect}
+                value={filterSaved}
+                optionType="button"
+                buttonStyle="solid"
+                size="large"
               >
-                <Radio.Group
-                  onChange={handleRadioSelect}
-                  value={filterSaved}
-                  optionType="button"
-                  buttonStyle="solid"
-                  size="large"
-                >
-                  <Radio.Button value={false}>All</Radio.Button>
-                  <Radio.Button value={true}>Saved</Radio.Button>
-                </Radio.Group>
-              </ConfigProvider>
+                <Radio.Button value={false}>All</Radio.Button>
+                <Radio.Button value={true}>Saved</Radio.Button>
+              </Radio.Group>
             </div>
           ) : null}
           {isLoading ? (
