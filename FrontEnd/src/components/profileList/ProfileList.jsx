@@ -1,9 +1,10 @@
-import css from "./ProfileList.module.css";
-import { List, ConfigProvider } from "antd";
+import { List } from "antd";
 import ProfileCard from "./ProfileCard";
+import css from "./ProfileList.module.css";
 
 // FIXME: change loader to the one from dev
 // FIXME: change error page to the one from dev
+const PAGE_SIZE = 6;
 
 const ListHeader = ({ number }) => (
   <div className={css["results-header"]}>
@@ -12,29 +13,27 @@ const ListHeader = ({ number }) => (
   </div>
 );
 
-export default function ProfileList(props) {
-  const isAuthorized = props.isAuthorized;
-  const currentPage = props.current;
-  const data = props.data;
-  const companiesFound = data.total_items;
-  const profiles = data.results;
-  const pageSize = 6;
-
+export default function ProfileList({
+  isAuthorized,
+  current,
+  data,
+  paginationFunc,
+}) {
   return (
     <List
       pagination={{
         onChange: (page) => {
-          props.paginationFunc(page);
+          paginationFunc(page);
         },
         position: "bottom",
         align: "center",
-        pageSize: pageSize,
-        total: companiesFound,
+        pageSize: PAGE_SIZE,
+        total: data.total_items,
         hideOnSinglePage: true,
-        current: currentPage,
+        current: current,
       }}
-      header={<ListHeader number={companiesFound} />}
-      dataSource={profiles}
+      header={<ListHeader number={data.total_items} />}
+      dataSource={data.results}
       split={false}
       renderItem={(item) => (
         <List.Item key={item.id}>
