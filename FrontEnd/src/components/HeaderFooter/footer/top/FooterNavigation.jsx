@@ -10,12 +10,12 @@ const PAGE_NAVIGATION_LINKS = [
   {
     id: "pnl1",
     title: "Компанії",
-    link: "#",
+    link: "/profiles/companies",
   },
   {
     id: "pnl2",
     title: "Стартапи",
-    link: "#",
+    link: "/profiles/startups",
   },
   {
     id: "pnl3",

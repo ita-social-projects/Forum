@@ -92,6 +92,7 @@ export default function ProfileCard(props) {
       }}
     />
   ));
+  // TODO: add loader around post
 
   function onStarClick() {
     axios({
