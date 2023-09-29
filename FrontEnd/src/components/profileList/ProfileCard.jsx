@@ -28,8 +28,8 @@ export default function ProfileCard(props) {
   const profile = {
     id: data.id,
     companyName: data.name,
-    activities: !data.activities.length ? null : data.activities,
-    region: regions.find((region) => region.key == data.region).value,
+    activities: !data.activities.length ? null : data.activities.map((activity) => activity.name).join(", "),
+    region: data.region ? regions.find((region) => region.key == data.region).value : "",
     address: data.address,
     categories: !data.categories.length ? null : data.categories,
     isSaved: isSaved,
@@ -37,7 +37,7 @@ export default function ProfileCard(props) {
   };
 
   const addressLine = `${profile.region ? profile.region : ""}`;
-  const activitiesLine = profile.activities.map((activity) => activity.name).join(", ");
+  // const activitiesLine = profile.activities.map((activity) => activity.name).join(", ");
 
   const filledStar = (
     <StarFilled
@@ -101,7 +101,7 @@ export default function ProfileCard(props) {
         <div className={css["content-header"]}>
           <div className={css["content-header__activity"]}>
             <p className={css["content-header__activity--text"]}>
-              {activitiesLine}
+              {profile.activities}
             </p>
           </div>
           <div className={css["content-header__name"]}>
