@@ -18,11 +18,12 @@ class ProfileListSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
+    region_display = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ('name', 'person', 'is_registered', 'is_startup', 'official_name', 'region', 'common_info', 'address',
-                  'categories', 'activities', 'banner_image', 'is_saved')
+        fields = ('id', 'name', 'person', 'is_registered', 'is_startup', 'official_name', 'region_display',
+                  'common_info', 'address', 'categories', 'activities', 'banner_image', 'is_saved')
         read_only_fields = ('person', )
 
     def get_is_saved(self, obj):
@@ -31,18 +32,22 @@ class ProfileListSerializer(serializers.ModelSerializer):
             return obj.pk in self.context["saved_companies_pk"]
         return False
 
+    def get_region_display(self, obj):
+        return obj.get_region_display()
+
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
+    region_display = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ('official_name', 'region', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea',
+        fields = ('id', 'official_name', 'region_display', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea',
                   'name', 'is_registered', 'is_startup', 'categories', 'activities', 'service_info', 'product_info',
                   'banner_image', 'is_saved')
-        read_only_fields = ('official_name', 'region', 'common_info', 'edrpou', 'founded', 'address',
+        read_only_fields = ('official_name', 'region_display', 'common_info', 'edrpou', 'founded', 'address',
                             'startup_idea', 'name', 'is_registered', 'is_startup', 'categories', 'activities',
                             'service_info', 'product_info', 'banner_image')
 
@@ -52,18 +57,25 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             return obj.pk in self.context["saved_companies_pk"]
         return False
 
+    def get_region_display(self, obj):
+        return obj.get_region_display()
+
 
 class ProfileOwnerDetailSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True)
     categories = CategorySerializer(many=True)
     email = serializers.ReadOnlyField(source='person.email')
+    region_display = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ('name', 'is_registered', 'is_startup', 'categories', 'activities', 'person', 'email', 'person_position',
-                  'official_name', 'region', 'common_info', 'phone', 'edrpou', 'founded',  'service_info',
+        fields = ('id', 'name', 'is_registered', 'is_startup', 'categories', 'activities', 'person', 'email', 'person_position',
+                  'official_name', 'region', 'region_display', 'common_info', 'phone', 'edrpou', 'founded',  'service_info',
                   'product_info', 'address', 'startup_idea', 'banner_image', 'is_deleted')
         read_only_fields = ('person', )
+
+    def get_region_display(self, obj):
+        return obj.get_region_display()
 
 
 class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
@@ -107,4 +119,4 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 class RegionSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
-        return {'key':obj[0], 'value': obj[1]}
+        return {'key': obj[0], 'value': obj[1]}
