@@ -5,7 +5,6 @@ import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { PropTypes } from "prop-types";
 import axios from "axios";
 
-
 const { Paragraph } = Typography;
 
 const regions = [
@@ -93,17 +92,19 @@ export default function ProfileCard(props) {
       }}
     />
   ));
-  
+
   function onStarClick() {
     axios({
-      method: 'post',
+      method: "post",
       url: `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
       withCredentials: true,
       data: {
-        "user": 7,
-        "company_pk": profile.id
-      }
-    }).then(() => setIsSaved(!isSaved)).catch(error => console.log(error))
+        user: 7,
+        company_pk: profile.id,
+      },
+    })
+      .then(() => setIsSaved(!isSaved))
+      .catch((error) => console.log(error));
   }
   // TODO: add logo
 
