@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
+from djoser.serializers import UserSerializer
 
 from authentication.models import CustomUser
 from profiles.models import Profile
@@ -9,17 +10,17 @@ from profiles.models import Profile
 User = get_user_model()
 
 
-class AdminUserSerializer(serializers.UserSerializer):
+class AdminUserSerializer(UserSerializer):
 
     phone_number = serializers.SerializerMethodField()
 
     def get_phone_number(self, user):
         try:
-            return user.profile.comp_phone_number
+            return user.profile.phone_number
         except ObjectDoesNotExist:
             return None
 
-    class Meta(serializers.UserSerializer.Meta):
+    class Meta(UserSerializer.Meta):
         model = User
         fields = (
             "id",
