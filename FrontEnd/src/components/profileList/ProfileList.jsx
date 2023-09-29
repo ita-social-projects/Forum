@@ -21,7 +21,6 @@ export default function ProfileList(props) {
   const pageSize = 6;
 
   // TODO: add loader
-  // FIXME: FIX STAR
   return (
     <>
       <ConfigProvider

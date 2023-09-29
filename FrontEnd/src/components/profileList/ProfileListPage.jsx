@@ -53,7 +53,7 @@ export default function ProfileListPage(props) {
     default:
       break;
   }
-  // isAuthorized = false;
+
   const urlForAll = `${
     process.env.REACT_APP_BASE_API_URL
   }/api/profiles/?${profileTypeFilter}${
@@ -77,20 +77,16 @@ export default function ProfileListPage(props) {
     isLoading,
   } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
 
-  // FIXME: look up if useSWR is async
   const handleRadioSelect = () => {
     if (!filterSaved) {
       setCurrentPage(1);
     }
     setFilterSaved(!filterSaved);
   };
-  // isLoading = true;
-  const loading = true;
-  const error404 = true;
 
   return (
-    <div className={isLoading || error404 ? css["loading"] : css.page}>
-      {error404 ? (
+    <div className={isLoading || error ? css["loading"] : css.page}>
+      {error ? (
         <ErrorPage />
       ) : (
         <div className={css["page-content"]}>

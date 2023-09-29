@@ -92,7 +92,7 @@ export default function ProfileCard(props) {
       }}
     />
   ));
-  // TODO: add loader around post
+  // TODO: add loader to saved switch around post
 
   function onStarClick() {
     axios({
