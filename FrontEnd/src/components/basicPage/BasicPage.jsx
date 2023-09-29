@@ -11,11 +11,24 @@ import ScrollToTopButton from "../PrivacyPolicyPage/privacy/ScrollToTopButton";
 import React from "react";
 import CookiesPolicyComponent from "../CookiesPolicyPage/CookiesPolicyComponent";
 import { useAuth } from "../../hooks";
+import { ConfigProvider } from "antd";
 
 function BasicPage() {
   const auth = useAuth();
   return (
-      <div>
+      <ConfigProvider
+      theme={{
+        components: {
+          Button: {
+            defaultColor: "#1F9A7C",
+            colorPrimaryHover: "#0b6c61",
+            fontWeight: 600,
+            contentFontSize: 16,
+            fontFamilyCode: "Inter",
+          },
+        },
+      }}
+    >
         <Header isAuthorized={auth.isAuth} />
         <Routes>
           <Route path="/" element={<MainPage />} />
@@ -38,7 +51,7 @@ function BasicPage() {
         </Routes>
         <Footer />
         <ScrollToTopButton />
-      </div>
+      </ConfigProvider>
   );
 }
 

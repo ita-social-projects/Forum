@@ -1,5 +1,5 @@
 import css from "./ErrorPage404.module.css";
-import { Button, ConfigProvider } from "antd";
+import { Button } from "antd";
 
 export default function ErrorPage404() {
   return (
@@ -14,23 +14,9 @@ export default function ErrorPage404() {
               або тимчасово недоступна.
             </p>
           </div>
-          <ConfigProvider
-            theme={{
-              components: {
-                Button: {
-                  defaultColor: "#1F9A7C",
-                  colorPrimaryHover: "#0b6c61",
-                  fontWeight: 600,
-                  contentFontSize: 16,
-                  fontFamilyCode: "Inter",
-                },
-              },
-            }}
-          >
-            <Button>
-              <a href="/">Повернутися на Головну</a>
-            </Button>
-          </ConfigProvider>
+          <Button>
+            <a className={css["button-text"]} href="/">Повернутися на Головну</a>
+          </Button>
         </div>
       </div>
     </div>
