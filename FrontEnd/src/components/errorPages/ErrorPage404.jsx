@@ -8,7 +8,7 @@ export default function ErrorPage404() {
         <div className={css.text404}>404</div>
         <div className={css.block}>
           <div className={css.explanation}>
-            <p className={css.main}>Щось пішло не так</p>
+            <p className={css["main-text"]}>Щось пішло не так</p>
             <p className={css.details}>
               Схоже, це неправильна адреса, ця сторінка видалена, перейменована
               або тимчасово недоступна.

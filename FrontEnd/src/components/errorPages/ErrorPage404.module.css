@@ -1,5 +1,4 @@
 .page {
-  width: 1513px;
   height: 800px;
   display: flex;
   justify-content: center;
@@ -10,22 +9,20 @@
   display: flex;
   align-items: center;
   gap: 80px;
+  font-family: Inter;
+  color: var(--primary-green-20, #effff6);
+  font-feature-settings: "calt" off;
+  font-style: normal;
 }
 
 .text404 {
   display: flex;
-  width: 408px;
   height: 178px;
   flex-direction: column;
   justify-content: center;
-  
-  color: var(--primary-green-20, #effff6);
-  font-feature-settings: "calt" off;
-  font-family: Inter;
   font-size: 200px;
-  font-style: normal;
   font-weight: 600;
-  line-height: 20px; /* 10% */
+  line-height: 20px;
   letter-spacing: -2px;
 }
 
@@ -40,15 +37,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   gap: 24px;
-
-  font-family: Inter;
-  font-style: normal;
-  color: var(--primary-green-20, #effff6);
 }
 
-.main {
+.main-text {
   font-size: 48px;
   font-weight: 700;
   line-height: 120%;
@@ -59,7 +51,7 @@
   width: 548px;
   font-size: 16px;
   font-weight: 400;
-  line-height: 20px; /* 125% */
+  line-height: 20px;
   letter-spacing: -0.16px;
 }
 
