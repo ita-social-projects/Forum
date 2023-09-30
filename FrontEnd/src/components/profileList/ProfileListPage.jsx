@@ -2,7 +2,7 @@ import css from "./ProfileListPage.module.css";
 import ProfileList from "./ProfileList";
 import useSWR from "swr";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfigProvider, Radio } from "antd";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
@@ -10,52 +10,43 @@ import ErrorPage from "./ErrorPage";
 export default function ProfileListPage({ isAuthorized }) {
   const { filter } = useParams();
 
-  let profileTypeFilter = "";
-
-  let profileActivityFilter = "activities__name=";
-  const emptyActivityFilter = profileActivityFilter.length;
-
   const [filterSaved, setFilterSaved] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  switch (filter) {
-    case "companies":
-      profileTypeFilter = "is_registered=True";
-      break;
-    case "startups":
-      profileTypeFilter = "is_startup=True";
-      break;
-    case "producers":
-      profileActivityFilter += "Виробник";
-      break;
-    case "importers":
-      profileActivityFilter += "Імпортер";
-      break;
-    case "retailers":
-      profileActivityFilter += "Роздрібна мережа";
-      break;
-    case "horeca":
-      profileActivityFilter += "HORECA";
-      break;
-    default:
-      break;
-  }
+  const [profileFilter, setProfileFilter] = useState("");
 
-  const urlForAll = `${
-    process.env.REACT_APP_BASE_API_URL
-  }/api/profiles/?${profileTypeFilter}${
-    profileActivityFilter.length > emptyActivityFilter
-      ? profileActivityFilter
-      : ""
-  }&page=${currentPage}`;
+  useEffect(() => {
+    switch (filter) {
+      case "companies":
+        setProfileFilter("is_registered=True");
+        break;
+      case "startups":
+        setProfileFilter("is_startup=True");
+        break;
+      case "producers":
+        setProfileFilter("activities__name=Виробник");
+        break;
+      case "importers":
+        setProfileFilter("activities__name=Імпортер");
+        break;
+      case "retailers":
+        setProfileFilter("activities__name=Роздрібна мережа");
+        break;
+      case "horeca":
+        setProfileFilter("activities__name=HORECA");
+        break;
+      default:
+        break;
+    }
+  }, [filter]);
+
+  const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
 
   const urlForSaved = `${
     process.env.REACT_APP_BASE_API_URL
-  }/api/profiles/?${profileTypeFilter}${
-    profileActivityFilter.length > emptyActivityFilter
-      ? profileActivityFilter
-      : ""
-  }${filterSaved ? "&is_saved=True" : ""}&page=${currentPage}`;
+  }/api/profiles/?${profileFilter}${
+    filterSaved ? "&is_saved=True" : ""
+  }&page=${currentPage}`;
 
   // const authToken = localStorage.getItem("Token");
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
