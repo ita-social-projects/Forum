@@ -36,6 +36,7 @@ export default function ProfileListPage({ isAuthorized }) {
         setProfileFilter("activities__name=HORECA");
         break;
       default:
+        setFilterSaved(false);
         break;
     }
   }, [filter]);
@@ -58,7 +59,6 @@ export default function ProfileListPage({ isAuthorized }) {
   } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
 
   const handleRadioSelect = () => {
-    // TODO: add reset when redirect
     if (!filterSaved) {
       setCurrentPage(1);
     }
