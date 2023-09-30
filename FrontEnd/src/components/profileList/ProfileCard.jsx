@@ -1,14 +1,16 @@
 import { useState, useMemo } from "react";
 
-import axios from "axios";
 import { Badge, Typography } from "antd";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { PropTypes } from "prop-types";
+import { useSWRConfig } from "swr";
+import useSWRMutation from "swr/mutation";
 
 import css from "./ProfileCard.module.css";
 
-import { useSWRConfig } from "swr";
 const { Paragraph } = Typography;
+
+
 
 // FIXME: will be changed once serializer will be changed to return display_name
 const regions = [
@@ -23,12 +25,13 @@ const regions = [
 ];
 
 export default function ProfileCard({ isAuthorized, data }) {
+  const { mutate } = useSWRConfig();
   const [isSaved, setIsSaved] = useState(data.is_saved);
 
   const profile = useMemo(() => {
     return {
       id: data.id,
-      companyName: data.name,
+      name: data.name,
       activities: !data.activities.length
         ? null
         : data.activities.map((activity) => activity.name).join(", "),
@@ -44,16 +47,47 @@ export default function ProfileCard({ isAuthorized, data }) {
     };
   }, [data]);
 
+  async function sendRequest(url, { arg: data }) {
+    return fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
+  }
+
+  const { trigger } = useSWRMutation(
+    `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
+    sendRequest
+  );
+
+  const handleClick = async () => {
+    try {
+      await trigger(
+        { company_pk: profile.id },
+        { optimisticData: () => setIsSaved(!isSaved) }
+      );
+    } catch (error) {
+      console.error("ERROR", error);
+    }
+  };
+
+  mutate(
+    (key) => typeof key === "string" && key.startsWith("/api/profiles/?"),
+    { revalidate: true }
+  );
+
   const filledStar = (
     <StarFilled
       style={{ color: "#FFD800", fontSize: "24px" }}
-      onClick={onStarClick}
+      onClick={handleClick}
     />
   );
   const outlinedStar = (
     <StarOutlined
       style={{ color: "#FFD800", fontSize: "24px" }}
-      onClick={onStarClick}
+      onClick={handleClick}
     />
   );
 
@@ -79,19 +113,6 @@ export default function ProfileCard({ isAuthorized, data }) {
     );
   };
 
-  // FIXME: fix race condition when switching from saved to all w/saved changes
-  function onStarClick() {
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
-      withCredentials: true,
-      data: {
-        company_pk: profile.id,
-      },
-    })
-      .then(() => setIsSaved(!isSaved))
-      .catch((error) => console.error(error));
-  }
   // TODO: add logo from db once it's implemented on the server side
 
   return (
@@ -110,9 +131,7 @@ export default function ProfileCard({ isAuthorized, data }) {
               {profile.activities}
             </p>
           </div>
-          <div className={css["content-header__name"]}>
-            {profile.companyName}
-          </div>
+          <div className={css["content-header__name"]}>{profile.name}</div>
           <div className={css["content-header__address"]}>{profile.region}</div>
         </div>
         <div className={css["content__common-info"]}>

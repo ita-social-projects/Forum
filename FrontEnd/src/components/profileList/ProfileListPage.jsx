@@ -3,7 +3,7 @@ import ProfileList from "./ProfileList";
 import useSWR from "swr";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ConfigProvider, Radio } from "antd";
+import { Radio } from "antd";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
 
