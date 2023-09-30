@@ -10,9 +10,7 @@ import css from "./ProfileCard.module.css";
 
 const { Paragraph } = Typography;
 
-
-
-// FIXME: will be changed once serializer will be changed to return display_name
+// TODO: will be changed once serializer will be changed to return display_name
 const regions = [
   {
     key: "Lviv region",
@@ -48,13 +46,15 @@ export default function ProfileCard({ isAuthorized, data }) {
   }, [data]);
 
   async function sendRequest(url, { arg: data }) {
+    const authToken = localStorage.getItem("Token");
     return fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Token ${authToken}`,
       },
       body: JSON.stringify(data),
-    }).then((res) => res.json());
+    }).then((res) => console.log(res));
   }
 
   const { trigger } = useSWRMutation(
@@ -69,14 +69,13 @@ export default function ProfileCard({ isAuthorized, data }) {
         { optimisticData: () => setIsSaved(!isSaved) }
       );
     } catch (error) {
-      console.error("ERROR", error);
+      console.error(error);
     }
   };
 
-  mutate(
-    (key) => typeof key === "string" && key.startsWith("/api/profiles/?"),
-    { revalidate: true }
-  );
+  mutate((key) => typeof key === "string" && key.startsWith("/api/profiles/"), {
+    revalidate: true,
+  });
 
   const filledStar = (
     <StarFilled

@@ -1,11 +1,14 @@
-import css from "./ProfileListPage.module.css";
-import ProfileList from "./ProfileList";
-import useSWR from "swr";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { Radio } from "antd";
-import Loader from "./Loader";
+import useSWR from "swr";
+
 import ErrorPage from "./ErrorPage";
+import Loader from "./Loader";
+import ProfileList from "./ProfileList";
+
+import css from "./ProfileListPage.module.css";
 
 export default function ProfileListPage({ isAuthorized }) {
   const { filter } = useParams();
@@ -36,9 +39,9 @@ export default function ProfileListPage({ isAuthorized }) {
         setProfileFilter("activities__name=HORECA");
         break;
       default:
-        setFilterSaved(false);
         break;
     }
+    setFilterSaved(false);
   }, [filter]);
 
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
@@ -49,8 +52,19 @@ export default function ProfileListPage({ isAuthorized }) {
     filterSaved ? "&is_saved=True" : ""
   }&page=${currentPage}`;
 
-  // const authToken = localStorage.getItem("Token");
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  async function fetcher(url) {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    if (isAuthorized) {
+      const authToken = localStorage.getItem("Token");
+      headers.Authorization = `Token ${authToken}`;
+    }
+    return fetch(url, {
+      method: "GET",
+      headers: headers,
+    }).then((res) => res.json());
+  }
 
   const {
     data: fetchedProfiles,
