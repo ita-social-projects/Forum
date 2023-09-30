@@ -7,6 +7,7 @@
 .page-content {
   display: flex;
   flex-direction: column;
+  width: 1305px;
   gap: 16px;
   margin: 17px 100px;
 }

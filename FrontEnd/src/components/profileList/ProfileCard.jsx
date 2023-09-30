@@ -1,9 +1,12 @@
-import css from "./ProfileCard.module.css";
+import { useState, useMemo } from "react";
+
+import axios from "axios";
 import { Badge, Typography } from "antd";
-import { useState } from "react";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { PropTypes } from "prop-types";
-import axios from "axios";
+
+import css from "./ProfileCard.module.css";
+
 import { useSWRConfig } from "swr";
 const { Paragraph } = Typography;
 
@@ -19,25 +22,27 @@ const regions = [
   },
 ];
 
-export default function ProfileCard({isAuthorized, data}) {
-  // const isAuthorized = props.isAuthorized;
-  // const data = props.data;
-
+export default function ProfileCard({ isAuthorized, data }) {
   const [isSaved, setIsSaved] = useState(data.is_saved);
 
-  const profile = {
-    id: data.id,
-    companyName: data.name,
-    activities: !data.activities.length ? null : data.activities.map((activity) => activity.name).join(", "),
-    region: data.region ? regions.find((region) => region.key == data.region).value : "",
-    address: data.address,
-    categories: !data.categories.length ? null : data.categories,
-    isSaved: isSaved,
-    commonInfo: data.common_info,
-  };
-
-  const addressLine = `${profile.region ? profile.region : ""}`;
-  // const activitiesLine = profile.activities.map((activity) => activity.name).join(", ");
+  const profile = useMemo(() => {
+    return {
+      id: data.id,
+      companyName: data.name,
+      activities: !data.activities.length
+        ? null
+        : data.activities.map((activity) => activity.name).join(", "),
+      region: data.region
+        ? regions.find((region) => region.key === data.region).value
+        : "",
+      categories:
+        data.categories.length > 4
+          ? data.categories.slice(0, 4)
+          : data.categories,
+      isSaved: data.is_saved,
+      commonInfo: data.common_info,
+    };
+  }, [data]);
 
   const filledStar = (
     <StarFilled
@@ -95,6 +100,7 @@ export default function ProfileCard({isAuthorized, data}) {
         <img
           className={css.logo}
           src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
+          alt=""
         />
       </div>
       <div className={css.content}>
@@ -107,7 +113,7 @@ export default function ProfileCard({isAuthorized, data}) {
           <div className={css["content-header__name"]}>
             {profile.companyName}
           </div>
-          <div className={css["content-header__address"]}>{addressLine}</div>
+          <div className={css["content-header__address"]}>{profile.region}</div>
         </div>
         <div className={css["content__common-info"]}>
           <Paragraph ellipsis={{ rows: 3, expandable: false }}>
@@ -118,28 +124,31 @@ export default function ProfileCard({isAuthorized, data}) {
           <CategoryBadges categories={profile.categories} />
         </div>
       </div>
-      {isAuthorized ? (profile.isSaved ? filledStar : outlinedStar) : null}
+      {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
     </div>
   );
 }
 
-// FIXME: add null acceptance for optional fields
 ProfileCard.propTypes = {
   isAuthorized: PropTypes.bool,
   data: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
     address: PropTypes.string,
     region: PropTypes.string,
-    categories: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    }),
-    activities: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    }),
+    categories: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+      })
+    ),
+    activities: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+      })
+    ),
     common_info: PropTypes.string,
-    is_saved: PropTypes.bool,
-  }),
+    is_saved: PropTypes.bool.isRequired,
+  }).isRequired,
 };
