@@ -5,7 +5,6 @@ export default function useProvideAuth() {
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const validateToken = async (authToken) => {
-    console.log("In validation")
     try {
       await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
