@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../hooks";
 
-function Logout(props) {
+function Logout() {
   const auth = useAuth();
   const navigate = useNavigate();
 
