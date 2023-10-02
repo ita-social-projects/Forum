@@ -10,6 +10,6 @@ function SearchBox () {
             <span className={css["header-search-form__addon"]}><img src={icon_search} width="14" height="14" alt=""/></span>
         </div>
     );
-};
+}
 
 export default SearchBox;

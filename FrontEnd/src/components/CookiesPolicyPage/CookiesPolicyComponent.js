@@ -23,6 +23,6 @@ function CookiesPolicyComponent () {
             </div>
         </div>
     )
-};
+}
 
 export default CookiesPolicyComponent;

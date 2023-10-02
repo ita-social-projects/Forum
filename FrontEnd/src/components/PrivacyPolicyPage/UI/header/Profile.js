@@ -10,6 +10,6 @@ function Profile(props) {
             </div>
         </div>
     );
-};
+}
 
 export default Profile;
