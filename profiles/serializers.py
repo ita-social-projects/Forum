@@ -110,7 +110,6 @@ class SavedCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = SavedCompany
         fields = ('id', 'user', 'company', 'added_at')
-        read_only_fields = ('user',)
 
 
 class ViewedCompanySerializer(serializers.ModelSerializer):

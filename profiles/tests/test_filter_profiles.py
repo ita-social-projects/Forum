@@ -206,7 +206,7 @@ class TestProfileFilterActivityType(APITestCase):
             activities=self.producer_activity, is_deleted=False).order_by("id")
         self.assertEqual(producers_from_db.count(), self.producers_number)
         self.assertTrue(all(
-            [self.producer_activity.id in response.data["results"][i]["activities"]
+            [self.producer_activity.id in [item.get('id') for item in response.data["results"][i]["activities"]]
              for i in range(self.producers_number)]
         ))
 
@@ -225,7 +225,7 @@ class TestProfileFilterActivityType(APITestCase):
             activities=self.importer_activity, is_deleted=False).order_by("id")
         self.assertEqual(importers_from_db.count(), self.importers_number)
         self.assertTrue(all(
-            [self.importer_activity.id in response.data["results"][i]["activities"]
+            [self.importer_activity.id in [item.get('id') for item in response.data["results"][i]["activities"]]
              for i in range(self.importers_number)]
         ))
 
@@ -244,7 +244,7 @@ class TestProfileFilterActivityType(APITestCase):
             activities=self.retail_activity, is_deleted=False).order_by("id")
         self.assertEqual(retailers_from_db.count(), self.retailers_number)
         self.assertTrue(all(
-            [self.retail_activity.id in response.data["results"][i]["activities"]
+            [self.retail_activity.id in [item.get('id') for item in response.data["results"][i]["activities"]]
              for i in range(self.retailers_number)]
         ))
 
@@ -263,6 +263,6 @@ class TestProfileFilterActivityType(APITestCase):
             activities=self.horeca_activity, is_deleted=False).order_by("id")
         self.assertEqual(horecas_from_db.count(), self.horecas_number)
         self.assertTrue(all(
-            [self.horeca_activity.id in response.data["results"][i]["activities"]
+            [self.horeca_activity.id in [item.get('id') for item in response.data["results"][i]["activities"]]
              for i in range(self.horecas_number)]
         ))
