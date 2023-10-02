@@ -14,6 +14,7 @@ class DjoserTokenAuthentication(TokenAuthentication):
 
         if token.created <= now() - settings.TOKEN_EXPIRATION_TIME:
             token.delete()
-            raise AuthenticationFailed("Your session has expired. Please login again.")
+            raise AuthenticationFailed(
+                "Your session has expired. Please login again."
+            )
         return token.user, token
-    

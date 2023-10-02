@@ -19,7 +19,9 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     activity = ActivitySerializer(many=True, read_only=True)
     category = CategorySerializer(many=True, read_only=True)
-    person = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
+    person = serializers.PrimaryKeyRelatedField(
+        queryset=CustomUser.objects.all()
+    )
     is_saved = serializers.SerializerMethodField()
 
     class Meta:
@@ -39,53 +41,100 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('official_name', 'region', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea', 'name',
-                  'is_registered', 'is_startup', 'category', 'activity', 'service_info', 'product_info',
-                  'banner_image')
-        read_only_fields = ('official_name', 'region', 'common_info', 'edrpou', 'founded', 'address', 'startup_idea',
-                            'name', 'is_registered', 'is_startup', 'category', 'activity', 'service_info',
-                            'product_info', 'banner_image')
+        fields = (
+            "official_name",
+            "region",
+            "common_info",
+            "edrpou",
+            "founded",
+            "address",
+            "startup_idea",
+            "name",
+            "is_registered",
+            "is_startup",
+            "category",
+            "activity",
+            "service_info",
+            "product_info",
+            "banner_image",
+        )
+        read_only_fields = (
+            "official_name",
+            "region",
+            "common_info",
+            "edrpou",
+            "founded",
+            "address",
+            "startup_idea",
+            "name",
+            "is_registered",
+            "is_startup",
+            "category",
+            "activity",
+            "service_info",
+            "product_info",
+            "banner_image",
+        )
 
 
 class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
-    email = serializers.ReadOnlyField(source='person.email')
+    email = serializers.ReadOnlyField(source="person.email")
 
     class Meta:
         model = Profile
-        fields = ('phone', 'email',)
-        read_only_fields = ('phone', 'email',)
+        fields = (
+            "phone",
+            "email",
+        )
+        read_only_fields = (
+            "phone",
+            "email",
+        )
 
 
 class SavedCompanySerializer(serializers.ModelSerializer):
-    official_name = serializers.ReadOnlyField(source='company.official_name')
-    region = serializers.ReadOnlyField(source='company.region')
-    common_info = serializers.ReadOnlyField(source='company.common_info')
-    phone = serializers.ReadOnlyField(source='company.phone')
-    edrpou = serializers.ReadOnlyField(source='company.edrpou')
-    founded = serializers.ReadOnlyField(source='company.founded')
-    address = serializers.ReadOnlyField(source='company.address')
-    startup_idea = serializers.ReadOnlyField(source='company.startup_idea')
+    official_name = serializers.ReadOnlyField(source="company.official_name")
+    region = serializers.ReadOnlyField(source="company.region")
+    common_info = serializers.ReadOnlyField(source="company.common_info")
+    phone = serializers.ReadOnlyField(source="company.phone")
+    edrpou = serializers.ReadOnlyField(source="company.edrpou")
+    founded = serializers.ReadOnlyField(source="company.founded")
+    address = serializers.ReadOnlyField(source="company.address")
+    startup_idea = serializers.ReadOnlyField(source="company.startup_idea")
 
     class Meta:
         model = SavedCompany
-        fields = ('id', 'user', 'company', 'official_name', 'region', 'common_info', 'phone', 'edrpou', 'founded',
-                  'address', 'startup_idea', 'added_at')
+        fields = (
+            "id",
+            "user",
+            "company",
+            "official_name",
+            "region",
+            "common_info",
+            "phone",
+            "edrpou",
+            "founded",
+            "address",
+            "startup_idea",
+            "added_at",
+        )
 
 
 class ViewedCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = ViewedCompany
-        fields = ('id', 'user', 'company', 'date')
+        fields = ("id", "user", "company", "date")
 
     def validate(self, attrs):
         user = attrs.get("user")
         company = attrs.get("company")
         if company.person == user:
-            raise serializers.ValidationError({"error": "You can not view your company."})
+            raise serializers.ValidationError(
+                {"error": "You can not view your company."}
+            )
         return attrs
 
 
 class RegionSerializer(serializers.Serializer):
-
     def to_representation(self, obj):
-        return {'key':obj[0], 'value': obj[1]}
+        return {"key": obj[0], "value": obj[1]}
