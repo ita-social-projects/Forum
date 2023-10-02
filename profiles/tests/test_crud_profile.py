@@ -80,9 +80,9 @@ class TestProfileDetailAPIView(APITestCase):
                          msg="Product info do not match.")
         self.assertEqual(self.profile.banner_image, response.data.get("banner_image"),
                          msg="Banner images do not match.")
-        self.assertIsNone(response.data.get("categories"),
+        self.assertFalse(response.data.get("categories"),
                           msg="Categories do not match.")
-        self.assertIsNone(response.data.get("activities"),
+        self.assertFalse(response.data.get("activities"),
                           msg="Activities do not match.")
 
     def test_get_profile_authorized_not_owner(self):
@@ -121,10 +121,10 @@ class TestProfileDetailAPIView(APITestCase):
                          msg="Product info do not match.")
         self.assertEqual(self.profile.banner_image, response.data.get("banner_image"),
                          msg="Banner images do not match.")
-        self.assertIsNone(response.data.get("categories"),
-                          msg="Categories do not match.")
-        self.assertIsNone(response.data.get("activities"),
-                          msg="Activities do not match.")
+        self.assertFalse(response.data.get("categories"),
+                         msg="Categories do not match.")
+        self.assertFalse(response.data.get("activities"),
+                         msg="Activities do not match.")
 
     def test_get_profile_authorized_owner(self):
         self.client.force_authenticate(self.user)
@@ -498,7 +498,7 @@ class TestProfileDetailAPIView(APITestCase):
                          msg="IDs do not match.")
         self.assertEqual(user2.id, response.data.get("person"),
                          msg="Persons do not match.")
-        self.assertEqual(new_profile_data.get("comp_name"), response.data.get("comp_name"),
+        self.assertEqual(new_profile_data.get("name"), response.data.get("name"),
                          msg="Company names do not match")
         self.assertEqual(new_profile_data.get("categories"), response.data.get("categories"),
                          msg="Categories do not match.")
@@ -551,26 +551,16 @@ class TestProfileDetailAPIView(APITestCase):
                          msg="Regions do not match.")
         self.assertEqual(new_profile_data.get("common_info"), response.data.get("common_info"),
                          msg="Common info do not match.")
-        self.assertEqual(new_profile_data.get("phone"), response.data.get("phone"),
-                         msg="Phone numbers do not match.")
-        self.assertEqual(new_profile_data.get("edrpou"), response.data.get("edrpou"),
-                         msg="EDRPOUs do not match.")
-        self.assertEqual(new_profile_data.get("founded"), response.data.get("founded"),
-                         msg="Years of foundation do not match.")
+        self.assertIsNone(response.data.get("phone"),
+                          msg="Phone number is not allowed for a view.")
         self.assertEqual(new_profile_data.get("address"), response.data.get("address"),
                          msg="Addresses do not match.")
-        self.assertEqual(new_profile_data.get("startup_idea"), response.data.get("startup_idea"),
-                         msg="Startup ideas do not match.")
         self.assertEqual(new_profile_data.get("name"), response.data.get("name"),
                          msg="Company names do not match")
         self.assertEqual(new_profile_data.get("is_registered"), response.data.get("is_registered"),
                          msg="Company is registered fields do not match.")
         self.assertEqual(new_profile_data.get("is_startup"), response.data.get("is_startup"),
                          msg="Company is startup fields do not match.")
-        self.assertEqual(new_profile_data.get("service_info"), response.data.get("service_info"),
-                         msg="Service info do not match.")
-        self.assertEqual(new_profile_data.get("product_info"), response.data.get("product_info"),
-                         msg="Product info do not match.")
         self.assertEqual(new_profile_data.get("categories"), response.data.get("categories"),
                          msg="Categories do not match.")
         self.assertEqual(new_profile_data.get("activities"), response.data.get("activities"),
