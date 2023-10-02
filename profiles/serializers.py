@@ -35,6 +35,12 @@ class ProfileListSerializer(serializers.ModelSerializer):
         return obj.get_region_display()
 
 
+class ProfileCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"
+
+
 class ProfileDetailSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)

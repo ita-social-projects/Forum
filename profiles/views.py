@@ -11,7 +11,8 @@ from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Re
 from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, IsOwnCompany
 from .serializers import (SavedCompanySerializer, ProfileListSerializer, ViewedCompanySerializer,
                           ProfileSensitiveDataROSerializer, ProfileDetailSerializer, ProfileOwnerDetailViewSerializer,
-                          ProfileOwnerDetailEditSerializer, CategorySerializer, ActivitySerializer, RegionSerializer)
+                          ProfileOwnerDetailEditSerializer, CategorySerializer, ActivitySerializer, RegionSerializer,
+                          ProfileCreateSerializer)
 from .filters import ProfileFilter
 
 
@@ -59,11 +60,16 @@ class ProfileList(ListCreateAPIView):
      include_deleted: bool
      include_all: bool.
     """
-    serializer_class = ProfileListSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = ForumPagination
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = ProfileFilter
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ProfileListSerializer
+        else:
+            return ProfileCreateSerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
