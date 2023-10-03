@@ -10,22 +10,10 @@ import css from "./ProfileCard.module.css";
 
 const { Paragraph } = Typography;
 
-// TODO: will be changed once serializer will be changed to return display_name
-const regions = [
-  {
-    key: "Lviv region",
-    value: "Львівська область",
-  },
-  {
-    key: "Kyiv region",
-    value: "Київська область",
-  },
-];
 
 export default function ProfileCard({ isAuthorized, data }) {
   const { mutate } = useSWRConfig();
   const [isSaved, setIsSaved] = useState(data.is_saved);
-
   const profile = useMemo(() => {
     return {
       id: data.id,
@@ -33,8 +21,8 @@ export default function ProfileCard({ isAuthorized, data }) {
       activities: !data.activities.length
         ? null
         : data.activities.map((activity) => activity.name).join(", "),
-      region: data.region
-        ? regions.find((region) => region.key === data.region).value
+      region: data.region_display
+        ? data.region_display
         : "",
       categories:
         data.categories.length > 4
@@ -153,7 +141,7 @@ ProfileCard.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     address: PropTypes.string,
-    region: PropTypes.string,
+    region_display: PropTypes.string,
     categories: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,

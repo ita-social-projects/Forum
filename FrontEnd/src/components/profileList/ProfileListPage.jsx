@@ -10,6 +10,9 @@ import ProfileList from "./ProfileList";
 
 import css from "./ProfileListPage.module.css";
 
+// FIXME: change loader to the one from dev
+// FIXME: change error page to the one from dev
+
 export default function ProfileListPage({ isAuthorized }) {
   const { filter } = useParams();
 
@@ -94,8 +97,8 @@ export default function ProfileListPage({ isAuthorized }) {
                 buttonStyle="solid"
                 size="large"
               >
-                <Radio.Button value={false}>All</Radio.Button>
-                <Radio.Button value={true}>Saved</Radio.Button>
+                <Radio.Button value={false}>Усі</Radio.Button>
+                <Radio.Button value={true}>Збережені</Radio.Button>
               </Radio.Group>
             </div>
           ) : null}

@@ -2,8 +2,6 @@ import { List } from "antd";
 import ProfileCard from "./ProfileCard";
 import css from "./ProfileList.module.css";
 
-// FIXME: change loader to the one from dev
-// FIXME: change error page to the one from dev
 const PAGE_SIZE = 6;
 
 const ListHeader = ({ number }) => (
