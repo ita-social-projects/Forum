@@ -1,10 +1,10 @@
-import css from "./DeleteModal.module.css"
+import css from './DeleteModal.module.css';
 
 function DeleteModal({active, setActive}) {
 
     const onDeleteClick = () => {
-        console.log("Delete")
-    }
+        console.log('Delete');
+    };
 
     return !active ? null : (
         <div
@@ -24,6 +24,6 @@ function DeleteModal({active, setActive}) {
             </div>
         </div>
     );
-};
+}
 
 export default DeleteModal;

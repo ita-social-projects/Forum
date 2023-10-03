@@ -19,7 +19,7 @@ const AdditionalInfo = (props) => {
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
-    }, []); 
+    }, []);
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
@@ -69,12 +69,12 @@ const AdditionalInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
-            <form id='AdditionalInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id="AdditionalInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
                         <HalfFormField
-                            inputType='number'
-                            name='foundationYear'
+                            inputType="number"
+                            name="foundationYear"
                             label={LABELS.foundationYear}
                             updateHandler={onUpdateFoundationYearField}
                             requredField={false}
@@ -82,8 +82,8 @@ const AdditionalInfo = (props) => {
                             error={foundationYearError}
                         />
                         <HalfFormField
-                            inputType='number'
-                            name='companySize'
+                            inputType="number"
+                            name="companySize"
                             label={LABELS.companySize}
                             updateHandler={onUpdateField}
                             requredField={false}
@@ -91,7 +91,7 @@ const AdditionalInfo = (props) => {
                         />
                     </div>
                     <TextField
-                        name='topClients'
+                        name="topClients"
                         label={LABELS.topClients}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -99,7 +99,7 @@ const AdditionalInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='passedAudit'
+                        name="passedAudit"
                         label={LABELS.passedAudit}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}

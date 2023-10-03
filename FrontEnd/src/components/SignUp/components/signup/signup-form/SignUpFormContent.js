@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import axios from "axios";
-import EyeInvisible from "../../../../authorization/EyeInvisible";
-import EyeVisible from "../../../../authorization/EyeVisible";
-import styles from "./SignUpFormContent.module.css";
+import axios from 'axios';
+import EyeInvisible from '../../../../authorization/EyeInvisible';
+import EyeVisible from '../../../../authorization/EyeVisible';
+import styles from './SignUpFormContent.module.css';
 
 export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,10 +19,10 @@ export function SignUpFormContentComponent(props) {
   };
 
   const errorMessageTemplates = {
-    required: "Обов’язкове поле",
-    email: "Email не відповідає вимогам",
-    password: "Пароль не відповідає вимогам",
-    confirmPassword: "Паролі не збігаються",
+    required: 'Обов’язкове поле',
+    email: 'Email не відповідає вимогам',
+    password: 'Пароль не відповідає вимогам',
+    confirmPassword: 'Паролі не збігаються',
   };
 
   const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -36,7 +36,7 @@ export function SignUpFormContentComponent(props) {
     getValues,
     formState: { errors, isValid },
   } = useForm({
-    mode: "all",
+    mode: 'all',
   });
 
   const [isChecked, setIsChecked] = useState({
@@ -45,12 +45,12 @@ export function SignUpFormContentComponent(props) {
   });
 
   const onChangeCheckbox = (event) => {
-    if (event.target.name === "startup") {
+    if (event.target.name === 'startup') {
       setIsChecked({
         startup: true,
         company: false,
       });
-    } else if (event.target.name === "company") {
+    } else if (event.target.name === 'company') {
       setIsChecked({
         startup: false,
         company: true,
@@ -66,15 +66,15 @@ export function SignUpFormContentComponent(props) {
     setIsValid(formIsValid);
   }, [isValid, setIsValid, isChecked.company, isChecked.startup]);
 
-  const onSubmit = (event) => {
+  const onSubmit = () => {
     const dataToSend = {
-      email: getValues("email"),
-      password: getValues("password"),
-      re_password: getValues("confirmPassword"),
-      name: getValues("name"),
-      surname: getValues("surname"),
+      email: getValues('email'),
+      password: getValues('password'),
+      re_password: getValues('confirmPassword'),
+      name: getValues('name'),
+      surname: getValues('surname'),
       company: {
-        name: getValues("companyName"),
+        name: getValues('companyName'),
         is_registered: isChecked.company,
         is_startup: isChecked.startup,
       },
@@ -85,37 +85,37 @@ export function SignUpFormContentComponent(props) {
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
       withCredentials: false,
       data: dataToSend
-    }).then(res => console.log(res.data)).catch(error => console.log(error))
-    console.log(process.env.REACT_APP_BASE_API_URL)
+    }).then(res => console.log(res.data)).catch(error => console.log(error));
+    console.log(process.env.REACT_APP_BASE_API_URL);
   };
   // TODO: add error hndling (separate task)
   // TODO: add modal about email being sent
 
   return (
-    <div className={styles["signup-form"]}>
+    <div className={styles['signup-form']}>
       <form
         id="signUpForm"
-        className={styles["signup-form__container"]}
+        className={styles['signup-form__container']}
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
-        <div className={styles["signup-form__row"]}>
-          <div className={styles["signup-form__column"]}>
-            <div className={styles["signup-form__label"]}>
-              <label className={styles["signup-form__label--required"]}>
+        <div className={styles['signup-form__row']}>
+          <div className={styles['signup-form__column']}>
+            <div className={styles['signup-form__label']}>
+              <label className={styles['signup-form__label--required']}>
                 *
               </label>
-              <label className={styles["signup-form__label--text"]}>
+              <label className={styles['signup-form__label--text']}>
                 Електронна пошта
               </label>
             </div>
-            <div className={styles["signup-form__field"]}>
+            <div className={styles['signup-form__field']}>
               <input
-                className={styles["signup-form__input"]}
+                className={styles['signup-form__input']}
                 placeholder="Електронна пошта"
                 type="email"
-                {...register("email", {
+                {...register('email', {
                   required: errorMessageTemplates.required,
                   pattern: {
                     value: emailPattern,
@@ -124,53 +124,53 @@ export function SignUpFormContentComponent(props) {
                 })}
               />
             </div>
-            <div className={styles["signup-form__error"]}>
+            <div className={styles['signup-form__error']}>
               {errors.email && errors.email.message}
             </div>
           </div>
-          <div className={styles["signup-form__column"]}>
-            <div className={styles["signup-form__label"]}>
-              <label className={styles["signup-form__label--required"]}>
+          <div className={styles['signup-form__column']}>
+            <div className={styles['signup-form__label']}>
+              <label className={styles['signup-form__label--required']}>
                 *
               </label>
-              <label className={styles["signup-form__label--text"]}>
+              <label className={styles['signup-form__label--text']}>
                 Назва компанії
               </label>
             </div>
-            <div className={styles["signup-form__field"]}>
+            <div className={styles['signup-form__field']}>
               <input
-                className={styles["signup-form__input"]}
+                className={styles['signup-form__input']}
                 type="text"
                 placeholder="Назва компанії"
-                {...register("companyName", {
+                {...register('companyName', {
                   required: errorMessageTemplates.required,
                 })}
               />
             </div>
-            <div className={styles["signup-form__error"]}>
+            <div className={styles['signup-form__error']}>
               {errors.companyName && errors.companyName.message}
             </div>
           </div>
         </div>
-        <div className={styles["signup-form__row"]}>
-          <div className={styles["signup-form__column"]}>
-            <div className={styles["signup-form__label"]}>
-              <label className={styles["signup-form__label--required"]}>
+        <div className={styles['signup-form__row']}>
+          <div className={styles['signup-form__column']}>
+            <div className={styles['signup-form__label']}>
+              <label className={styles['signup-form__label--required']}>
                 *
               </label>
-              <div className={styles["signup-form__label--password"]}>
+              <div className={styles['signup-form__label--password']}>
                 <label>Пароль</label>
-                <label className={styles["signup-form__label--hint"]}>
+                <label className={styles['signup-form__label--hint']}>
                   (Повинен містити A-Z, a-z, 0-9)
                 </label>
               </div>
             </div>
-            <div className={styles["signup-form__field__password"]}>
+            <div className={styles['signup-form__field__password']}>
               <input
-                className={styles["signup-form__input__password"]}
+                className={styles['signup-form__input__password']}
                 placeholder="Пароль"
-                type={showPassword ? "text" : "password"}
-                {...register("password", {
+                type={showPassword ? 'text' : 'password'}
+                {...register('password', {
                   required: errorMessageTemplates.required,
                   pattern: {
                     value: passwordPattern,
@@ -179,115 +179,115 @@ export function SignUpFormContentComponent(props) {
                 })}
               />
               <span
-                className={styles["password-visibility"]}
+                className={styles['password-visibility']}
                 onClick={togglePassword}
               >
                 {!showPassword ? <EyeInvisible /> : <EyeVisible />}
               </span>
             </div>
-            <div className={styles["signup-form__error"]}>
+            <div className={styles['signup-form__error']}>
               {errors.password && errors.password.message}
             </div>
           </div>
-          <div className={styles["signup-form__column"]}>
-            <div className={styles["signup-form__label"]}>
-              <label className={styles["signup-form__label--required"]}>
+          <div className={styles['signup-form__column']}>
+            <div className={styles['signup-form__label']}>
+              <label className={styles['signup-form__label--required']}>
                 *
               </label>
-              <div className={styles["signup-form__label--password"]}>
-                <label className={styles["signup-form__label--text"]}>
+              <div className={styles['signup-form__label--password']}>
+                <label className={styles['signup-form__label--text']}>
                   Повторіть пароль
                 </label>
-                <label className={styles["signup-form__label--hint"]}>
+                <label className={styles['signup-form__label--hint']}>
                   (Повинен містити A-Z, a-z, 0-9)
                 </label>
               </div>
             </div>
-            <div className={styles["signup-form__field__password"]}>
+            <div className={styles['signup-form__field__password']}>
               <input
-                className={styles["signup-form__input__password"]}
+                className={styles['signup-form__input__password']}
                 placeholder="Пароль"
-                type={showConfirmPassword ? "text" : "password"}
-                {...register("confirmPassword", {
+                type={showConfirmPassword ? 'text' : 'password'}
+                {...register('confirmPassword', {
                   required: errorMessageTemplates.required,
                   validate: (value) =>
-                    watch("password") !== value
+                    watch('password') !== value
                       ? errorMessageTemplates.confirmPassword
                       : null,
                 })}
               />
               <span
-                className={styles["password-visibility"]}
+                className={styles['password-visibility']}
                 onClick={toggleConfirmPassword}
               >
                 {!showConfirmPassword ? <EyeInvisible /> : <EyeVisible />}
               </span>
             </div>
-            <div className={styles["signup-form__error"]}>
+            <div className={styles['signup-form__error']}>
               {errors.confirmPassword && errors.confirmPassword.message}
             </div>
           </div>
         </div>
-        <div className={styles["signup-form__row"]}>
-          <div className={styles["signup-form__column"]}>
-            <div className={styles["signup-form__label"]}>
-              <label className={styles["signup-form__label--required"]}>
+        <div className={styles['signup-form__row']}>
+          <div className={styles['signup-form__column']}>
+            <div className={styles['signup-form__label']}>
+              <label className={styles['signup-form__label--required']}>
                 *
               </label>
-              <label className={styles["signup-form__label--text"]}>
+              <label className={styles['signup-form__label--text']}>
                 Прізвище
               </label>
             </div>
-            <div className={styles["signup-form__field"]}>
+            <div className={styles['signup-form__field']}>
               <input
-                className={styles["signup-form__input"]}
+                className={styles['signup-form__input']}
                 type="text"
                 placeholder="Прізвище"
-                {...register("surname", {
+                {...register('surname', {
                   required: errorMessageTemplates.required,
                 })}
               />
             </div>
-            <div className={styles["signup-form__error"]}>
+            <div className={styles['signup-form__error']}>
               {errors.surname && errors.surname.message}
             </div>
           </div>
-          <div className={styles["signup-form__column"]}>
-            <div className={styles["signup-form__label"]}>
-              <label className={styles["signup-form__label--required"]}>
+          <div className={styles['signup-form__column']}>
+            <div className={styles['signup-form__label']}>
+              <label className={styles['signup-form__label--required']}>
                 *
               </label>
-              <label className={styles["signup-form__label--text"]}>Ім‘я</label>
+              <label className={styles['signup-form__label--text']}>Ім‘я</label>
             </div>
-            <div className={styles["signup-form__field"]}>
+            <div className={styles['signup-form__field']}>
               <input
-                className={styles["signup-form__input"]}
+                className={styles['signup-form__input']}
                 type="text"
                 placeholder="Ім‘я"
-                {...register("name", {
+                {...register('name', {
                   required: errorMessageTemplates.required,
                 })}
               />
             </div>
-            <div className={styles["signup-form__error"]}>
+            <div className={styles['signup-form__error']}>
               {errors.name && errors.name.message}
             </div>
           </div>
         </div>
-        <div className={styles["signup-form__checkboxes-container"]}>
-          <div className={styles["representative"]}>
-            <div className={styles["representative__title"]}>
-              <label className={styles["signup-form__label--required"]}>
+        <div className={styles['signup-form__checkboxes-container']}>
+          <div className={styles['representative']}>
+            <div className={styles['representative__title']}>
+              <label className={styles['signup-form__label--required']}>
                 *
               </label>
               <label>Кого ви представляєте?</label>
             </div>
-            <div className={styles["representative__container"]}>
-              <div className={styles["representative__content"]}>
-                <div className={styles["representative__column"]}>
-                  <div className={styles["representative__option"]}>
+            <div className={styles['representative__container']}>
+              <div className={styles['representative__content']}>
+                <div className={styles['representative__column']}>
+                  <div className={styles['representative__option']}>
                     <div
-                      className={styles["representative__checkbox-container"]}
+                      className={styles['representative__checkbox-container']}
                     >
                       <input
                         type="checkbox"
@@ -296,15 +296,15 @@ export function SignUpFormContentComponent(props) {
                         checked={isChecked.company}
                       />
                     </div>
-                    <label className={styles["representative__label"]}>
+                    <label className={styles['representative__label']}>
                       Зареєстрована компанія
                     </label>
                   </div>
                 </div>
-                <div className={styles["representative__column"]}>
-                  <div className={styles["representative__option"]}>
+                <div className={styles['representative__column']}>
+                  <div className={styles['representative__option']}>
                     <div
-                      className={styles["representative__checkbox-container"]}
+                      className={styles['representative__checkbox-container']}
                     >
                       <input
                         type="checkbox"
@@ -313,7 +313,7 @@ export function SignUpFormContentComponent(props) {
                         checked={isChecked.startup}
                       />
                     </div>
-                    <label className={styles["representative__label"]}>
+                    <label className={styles['representative__label']}>
                       Стартап проект, який шукає інвестиції
                     </label>
                   </div>
@@ -321,22 +321,22 @@ export function SignUpFormContentComponent(props) {
               </div>
             </div>
           </div>
-          <div className={styles["signup-form__checkboxes-container--rules"]}>
-            <div className={styles["rules__container"]}>
-              <label className={styles["signup-form__label--required"]}>
+          <div className={styles['signup-form__checkboxes-container--rules']}>
+            <div className={styles['rules__container']}>
+              <label className={styles['signup-form__label--required']}>
                 *
               </label>
-              <div className={styles["rules__line"]}>
+              <div className={styles['rules__line']}>
                 <input
                   type="checkbox"
-                  className={styles["rules__checkbox"]}
-                  {...register("rulesAgreement", {
+                  className={styles['rules__checkbox']}
+                  {...register('rulesAgreement', {
                     required: errorMessageTemplates.required,
                   })}
                 />
-                <label className={styles["rules__line--text"]}>
-                  Погоджуюсь з{" "}
-                  <a href="#" className={styles["rules__line--link"]}>
+                <label className={styles['rules__line--text']}>
+                  Погоджуюсь з{' '}
+                  <a href="#" className={styles['rules__line--link']}>
                     правилами використання
                   </a>
                 </label>

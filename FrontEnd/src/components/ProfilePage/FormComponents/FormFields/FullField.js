@@ -19,8 +19,8 @@ const FullField = (props) => {
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder: 'Введіть текст'}
                     onChange={props.updateHandler}
-                    required={(props.requredField) ? "required" : ""}
-                    disabled={(props.name === 'email') ? "disabled" : ""}
+                    required={(props.requredField) ? 'required' : ''}
+                    disabled={(props.name === 'email') ? 'disabled' : ''}
                 />
             </div>
             {(props.requredField || props.error)  &&
@@ -30,6 +30,6 @@ const FullField = (props) => {
             }
         </div>
     );
-}
+};
 
 export default FullField;
