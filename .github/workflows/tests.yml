@@ -1,0 +1,56 @@
+name: Testing BE
+on: pull_request
+
+env:
+  SECRET_KEY: django-insecure-8p_=_(i8$#=t_n26md(d7=gpc%5sss!4-1a0cp(lir3-0x^$8%
+  PG_DB: db
+  PG_USER: postgres
+  PG_PASSWORD: postgres
+  DB_HOST: db
+  DB_PORT: 5432
+  EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+  EMAIL_HOST: smtp.gmail.com
+  EMAIL_PORT: 587
+  EMAIL_USE_TLS: 1
+  EMAIL_HOST_USER: forumsoftserve@gmail.com
+  EMAIL_HOST_PASSWORD: evezhjqcfubkudrg
+  CORS_ORIGIN_WHITELIST: ''
+
+jobs:
+  build:
+    name: Testing
+    runs-on: ubuntu-latest
+    services:
+      # Label used to access the service container ?
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: db
+          POSTGRES_PASSWORD: postgres
+#        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v3
+        with:
+          python-verion: 3.10
+      - name: install requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r medsite/requirements.txt
+      - name: Create Migrations
+        run: |
+          python manage.py makemigrations
+          python manage.py migrate
+      - name: running tests
+        run: python manage.py test
