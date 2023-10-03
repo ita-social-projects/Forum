@@ -86,30 +86,3 @@ class UserListSerializer(UserSerializer):
             "name",
             "surname",
         )
-
-
-class UserTokenCreateSerializer(TokenCreateSerializer):
-    password = serializers.CharField(
-        required=False, style={"input_type": "password"})
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.user = None
-        self.fields[settings.DJOSER["LOGIN_FIELD"]] = serializers.CharField(
-            required=False)
-
-    def validate(self, value):
-        password = value.get("password")
-        params = {settings.DJOSER["LOGIN_FIELD"]: value.get(settings.DJOSER["LOGIN_FIELD"])}
-        self.user = authenticate(
-            request=self.context.get("request"), **params, password=password
-        )
-        if not self.user:
-            self.user = User.objects.filter(**params).first()
-            if self.user and not self.user.check_password(password):
-                raise serializers.ValidationError({"error":
-                                                       "Email or password is incorrect"})
-        if self.user and self.user.is_active:
-            return value
-        raise serializers.ValidationError({"error":
-                                               "Email or password is incorrect"})

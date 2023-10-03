@@ -9,9 +9,10 @@ from rest_framework.response import Response
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
 from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, IsOwnCompany
-from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer,
-                          ActivitySerializer, RegionSerializer)
+from .serializers import (SavedCompanySerializer, ProfileListSerializer, ViewedCompanySerializer,
+                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, ProfileOwnerDetailViewSerializer,
+                          ProfileOwnerDetailEditSerializer, CategorySerializer, ActivitySerializer, RegionSerializer,
+                          ProfileCreateSerializer)
 from .filters import ProfileFilter
 
 
@@ -59,11 +60,16 @@ class ProfileList(ListCreateAPIView):
      include_deleted: bool
      include_all: bool.
     """
-    serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = ForumPagination
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = ProfileFilter
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ProfileListSerializer
+        else:
+            return ProfileCreateSerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -116,10 +122,10 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
         if self.request.method == 'GET':
             if profile_instance.person.id == user_pk:
-                return ProfileSerializer
+                return ProfileOwnerDetailViewSerializer
             return ProfileSensitiveDataROSerializer if get_contacts else ProfileDetailSerializer
         else:
-            return ProfileSerializer
+            return ProfileOwnerDetailEditSerializer
 
     def perform_destroy(self, instance):
         instance.is_deleted = True
