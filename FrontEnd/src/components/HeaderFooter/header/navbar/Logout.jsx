@@ -7,7 +7,7 @@ function Logout() {
   const navigate = useNavigate();
 
   const onClick = async () => {
-    const response = await axios.post(
+    await axios.post(
       `${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`
     );
     auth.logout();

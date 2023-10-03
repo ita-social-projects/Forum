@@ -24,6 +24,6 @@ function Menu() {
           <Link className={css["menu-section-logout"]} to={"#"}>Вихід</Link>
       </div>
     );
-};
+}
 
 export default Menu;

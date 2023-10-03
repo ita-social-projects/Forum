@@ -13,7 +13,7 @@ const DotRow = () => {
     </svg>
   );
 
-  const dots = [...Array(7)].map((e, i) => circle);
+  const dots = [...Array(7)].map(() => circle);
 
   return <div className={css["dot-row"]}>{dots}</div>;
 };

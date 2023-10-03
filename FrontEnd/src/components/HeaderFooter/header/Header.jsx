@@ -13,6 +13,6 @@ function Header (props) {
             </div>
         </header>
     );
-};
+}
 
 export default Header;

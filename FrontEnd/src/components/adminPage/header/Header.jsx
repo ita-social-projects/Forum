@@ -1,7 +1,7 @@
 import css from "./Header.module.css"
 import { Link } from "react-router-dom"
 
-function Header (props) {
+function Header () {
     return (
         <header>
             <div className={css["header-content"]}>
@@ -11,6 +11,6 @@ function Header (props) {
             <div className={css["header-divider"]}></div>
         </header>
     );
-};
+}
 
 export default Header;

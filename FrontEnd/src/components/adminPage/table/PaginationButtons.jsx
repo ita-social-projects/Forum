@@ -11,6 +11,6 @@ function PaginationButtons() {
 
         </div>
     );
-};
+}
 
 export default PaginationButtons;

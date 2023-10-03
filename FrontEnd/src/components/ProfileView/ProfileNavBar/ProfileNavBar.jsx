@@ -9,7 +9,7 @@ class ProfileNavBar extends Component {
     };
   }
 
-  onMenuItemClick = (index) => {
+  onMenuItemClick(index) {
     this.setState({ activeIndex: index });
 
     const anchors = ["about-company", "startup", "goods-services", "logistics", "cooperation"];
@@ -22,9 +22,9 @@ class ProfileNavBar extends Component {
         behavior: "smooth",
       });
     }
-  };
+  }
 
-  renderMenuItem = (text, index) => {
+  renderMenuItem(text, index) {
     const { activeIndex } = this.state;
     const isActive = activeIndex === index;
     const menuItemClass = isActive ? classes["active-nav-bar-item"] : classes["inactive-nav-bar-item"];
@@ -39,7 +39,7 @@ class ProfileNavBar extends Component {
         <div className={`${classes["divider"]} ${dividerClass}`} />
       </div>
     );
-  };
+  }
 
   render() {
     const menuItems = [

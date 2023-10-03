@@ -66,7 +66,7 @@ export function SignUpFormContentComponent(props) {
     setIsValid(formIsValid);
   }, [isValid, setIsValid, isChecked.company, isChecked.startup]);
 
-  const onSubmit = (event) => {
+  const onSubmit = () => {
     const dataToSend = {
       email: getValues("email"),
       password: getValues("password"),

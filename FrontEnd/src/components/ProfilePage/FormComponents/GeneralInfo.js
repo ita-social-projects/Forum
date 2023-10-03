@@ -73,7 +73,7 @@ const GeneralInfo = (props) => {
     const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
 
-    const { data: fetchedRegions, error, isLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
+    const { data: fetchedRegions, isLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);

@@ -1,5 +1,5 @@
 import css from './ProfileContent.module.css';
-import { Link, NavLink, Route, Routes, Navigate } from 'react-router-dom';
+import { Link, NavLink, Route, Routes } from 'react-router-dom';
 import AdditionalInfo from '../FormComponents/AdditionalInfo';
 import ContactsInfo from '../FormComponents/ContactsInfo';
 import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';

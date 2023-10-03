@@ -1,20 +1,5 @@
 import classes from "./ProfileInfo.module.css";
 
-const dataItems = [
-    {
-        title: "Рік заснування",
-        text: "2016",
-    },
-    {
-        title: "Розмір компанії",
-        text: "250 працівників",
-    },
-    {
-        title: "Аудит",
-        text: "Назва аудиту",
-    },
-];
-
 const ProfileInfo = ({ dataItems }) => {
 
   return (

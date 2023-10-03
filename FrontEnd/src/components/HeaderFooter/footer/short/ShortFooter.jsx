@@ -41,6 +41,6 @@ function ShortFooter() {
             </div>
         </footer>
     )
-};
+}
 
 export default ShortFooter;

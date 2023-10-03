@@ -4,7 +4,7 @@ import AlertMessage from "../authorization/AlertMessage";
 import classes from "./AuthorizationPage.module.css";
 import dots_decor from "./dots_decor.svg";
 
-const AuthorizationPage = (props) => {
+const AuthorizationPage = () => {
   const [errorText, setErrorText] = useState("");
   
   return (

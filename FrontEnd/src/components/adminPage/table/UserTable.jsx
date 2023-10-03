@@ -65,13 +65,13 @@ function UserTable() {
             <thead>
                 <tr className={css["table-header"]}>
                     {COLUMN_NAMES.map((column) =>(
-                        <th className={css["table-header__text"]}>{column}</th>
+                        <th key={column} className={css["table-header__text"]}>{column}</th>
                     ))}
                 </tr>
             </thead>
             <tbody>
                 {USERS.map((user) =>(
-                    <tr className={css["table-element"]} onClick={() => routeChange(user.id)}>
+                    <tr key={user.id} className={css["table-element"]} onClick={() => routeChange(user.id)}>
                         <td className={css["table-element__text"]}>{user.id}</td>
                         <td className={css["table-element__text"]}>{user.surname} {user.name}</td>
                         <td className={css["table-element__text"]}>{user.person_email}</td>
@@ -83,6 +83,6 @@ function UserTable() {
         </div>
 
     );
-};
+}
 
 export default UserTable;

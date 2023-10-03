@@ -8,6 +8,6 @@ function FooterBottom() {
             <img className={css["footer-bottom-logo__svg"]} src={logo} alt=""/>
         </div>
     );
-};
+}
 
 export default FooterBottom;

@@ -27,7 +27,7 @@ const FIELDS = [
 ]
 
 
-function UserDetail(props) {
+function UserDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
 
     const handleDeleteClick = () => {
@@ -59,6 +59,6 @@ function UserDetail(props) {
         </div>
 
     );
-};
+}
 
 export default UserDetail;

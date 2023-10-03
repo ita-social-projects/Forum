@@ -11,6 +11,6 @@ function FooterTop() {
             </div>
         </div>
     );
-};
+}
 
 export default FooterTop;

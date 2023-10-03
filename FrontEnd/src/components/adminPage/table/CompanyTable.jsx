@@ -82,13 +82,13 @@ function CompanyTable() {
             <thead>
                 <tr className={css["table-header"]}>
                     {COLUMN_NAMES.map((column) =>(
-                        <th className={css["table-header__text"]}>{column}</th>
+                        <th key={column} className={css["table-header__text"]}>{column}</th>
                     ))}
                 </tr>
             </thead>
             <tbody>
                 {COMPANIES.map((company) =>(
-                    <tr className={css["table-element"]} onClick={() => routeChange(company.id)}>
+                    <tr key={company.id} className={css["table-element"]} onClick={() => routeChange(company.id)}>
                         <td className={css["table-element__text"]}>{company.id}</td>
                         <td className={css["table-element__text"]}>{company.person}</td>
                         <td className={css["table-element__text"]}>{company.person_position}</td>
@@ -105,6 +105,6 @@ function CompanyTable() {
         </table>
         </div>
     );
-};
+}
 
 export default CompanyTable;
