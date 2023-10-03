@@ -1,16 +1,16 @@
-import Header from "../HeaderFooter/header/Header";
-import { Route, Routes, Navigate } from "react-router-dom";
-import MainPage from "../landing-page/MainPage";
-import ProfilePage from "../ProfilePage/ProfilePage";
-import AuthorizationPage from "../authorization/AuthorizationPage";
-import { SignUpPage } from "../SignUp/pages/SignUpPage";
-import PrivacyPolicy from "../PrivacyPolicyPage/privacy/PrivacyPolicyComponent";
-import TermsAndConditions from "../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent";
-import Footer from "../HeaderFooter/footer/Footer";
-import ScrollToTopButton from "../PrivacyPolicyPage/privacy/ScrollToTopButton";
-import React from "react";
-import CookiesPolicyComponent from "../CookiesPolicyPage/CookiesPolicyComponent";
-import { useAuth } from "../../hooks";
+import Header from '../HeaderFooter/header/Header';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import MainPage from '../landing-page/MainPage';
+import ProfilePage from '../ProfilePage/ProfilePage';
+import AuthorizationPage from '../authorization/AuthorizationPage';
+import { SignUpPage } from '../SignUp/pages/SignUpPage';
+import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
+import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
+import Footer from '../HeaderFooter/footer/Footer';
+import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
+import React from 'react';
+import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
+import { useAuth } from '../../hooks';
 
 function BasicPage() {
   const auth = useAuth();

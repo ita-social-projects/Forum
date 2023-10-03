@@ -5,7 +5,7 @@ import styles from './CookieMod.module.css';
 import cookiesimage from './cookieimg/homecookies.png';
 
 const CookieMod = ({ active, setActive }) => {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies, setCookie] = useCookies();
   const accessCookie = () => {
     const d = new Date();
     const cookieLifeTime = 30 * 24 * 60 * 60 * 1000;

@@ -1,35 +1,35 @@
-import css from "./Menu.module.css"
+import css from './Menu.module.css';
 import { HashLink } from 'react-router-hash-link';
 
 const MENU_LINKS = [
     {
-        id: "m0",
-        title: "Головна",
-        link: "/"
+        id: 'm0',
+        title: 'Головна',
+        link: '/'
     },
     {
-        id: "m1",
-        title: "Компанії",
-        link: "/"
+        id: 'm1',
+        title: 'Компанії',
+        link: '/'
     },
     {
-        id: "m2",
-        title: "Стартапи",
-        link: "/"
+        id: 'm2',
+        title: 'Стартапи',
+        link: '/'
     },
     {
-        id: "m3",
-        title: "Про нас",
-        link: "/#about-us"
+        id: 'm3',
+        title: 'Про нас',
+        link: '/#about-us'
     },
-]
+];
 
 function Menu () {
     return (
-        <div className={css["header-menu-section"]}>
+        <div className={css['header-menu-section']}>
             {MENU_LINKS.map( (element) => (
-                <div className={css["header-menu-element"]} key={element.id}>
-                    <HashLink className={css["header-menu-element__text"]} to={element.link}>{element.title}</HashLink>
+                <div className={css['header-menu-element']} key={element.id}>
+                    <HashLink className={css['header-menu-element__text']} to={element.link}>{element.title}</HashLink>
                 </div>
             ))}
         </div>

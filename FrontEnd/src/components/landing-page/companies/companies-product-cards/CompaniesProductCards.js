@@ -1,5 +1,5 @@
 import './CompaniesProductCards.css';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export const ProductCard = ({ data }) => {
     const { category, name, address, badges, logoSrc, photoSrc } = data;

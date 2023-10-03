@@ -1,8 +1,8 @@
 import './App.css';
-import Footer from "./components/UI/footer/Footer";
-import Header from "./components/UI/header/Header";
-import {PrivacyPolicy} from "./components/privacy/PrivacyPolicyComponent";
-import ScrollToTopButton from "./components/privacy/ScrollToTopButton";
+import Footer from './components/UI/footer/Footer';
+import Header from './components/UI/header/Header';
+import {PrivacyPolicy} from './components/privacy/PrivacyPolicyComponent';
+import ScrollToTopButton from './components/privacy/ScrollToTopButton';
 
 
 function App() {

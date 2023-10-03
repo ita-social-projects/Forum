@@ -18,8 +18,8 @@ const TextField = (props) => {
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
                     onChange={props.updateHandler}
-                    required={(props.requredField) ? "required" : ""}
-                    disabled={(props.name === 'email') ? "disabled" : ""}
+                    required={(props.requredField) ? 'required' : ''}
+                    disabled={(props.name === 'email') ? 'disabled' : ''}
                 ></textarea>
             </div>
             <div className={css['count__symbols']}>
