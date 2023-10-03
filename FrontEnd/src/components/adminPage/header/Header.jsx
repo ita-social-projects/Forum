@@ -11,6 +11,6 @@ function Header (props) {
             <div className={css["header-divider"]}></div>
         </header>
     );
-};
+}
 
 export default Header;

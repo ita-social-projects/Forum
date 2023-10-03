@@ -75,6 +75,6 @@ function CompanyDetail(props) {
         </div>
 
     );
-};
+}
 
 export default CompanyDetail;

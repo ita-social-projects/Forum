@@ -8,6 +8,6 @@ function Buttons() {
             <Link className={css["header-register__button"]} to="/sign-up">Зареєструватися</Link>
         </div>
     );
-};
+}
 
 export default Buttons;

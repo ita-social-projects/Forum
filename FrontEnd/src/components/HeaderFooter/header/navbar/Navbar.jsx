@@ -15,6 +15,6 @@ function Navbar(props) {
             </div>
         </div>
     );
-};
+}
 
 export default Navbar;

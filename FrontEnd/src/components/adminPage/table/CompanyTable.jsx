@@ -105,6 +105,6 @@ function CompanyTable() {
         </table>
         </div>
     );
-};
+}
 
 export default CompanyTable;

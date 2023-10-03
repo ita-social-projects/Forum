@@ -59,6 +59,6 @@ function UserDetail(props) {
         </div>
 
     );
-};
+}
 
 export default UserDetail;

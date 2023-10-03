@@ -83,6 +83,6 @@ function UserTable() {
         </div>
 
     );
-};
+}
 
 export default UserTable;

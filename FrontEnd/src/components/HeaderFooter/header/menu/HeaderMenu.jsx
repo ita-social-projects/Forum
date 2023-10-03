@@ -44,6 +44,6 @@ function HeaderMenu() {
             </div>
         </div>
     );
-};
+}
 
 export default HeaderMenu;

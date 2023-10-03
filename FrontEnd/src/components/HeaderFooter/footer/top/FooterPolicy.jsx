@@ -40,6 +40,6 @@ function FooterPolicy() {
             </div>
         </div>
     );
-};
+}
 
 export default FooterPolicy;

@@ -24,6 +24,6 @@ function DeleteModal({active, setActive}) {
             </div>
         </div>
     );
-};
+}
 
 export default DeleteModal;
