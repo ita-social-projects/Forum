@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 const LABELS = {
     'surname': 'Прізвище',
     'name': 'Ім‘я',
-    'position': 'Посада в компанії чи стартапі',
+    'person_position': 'Посада в компанії чи стартапі',
     'email': 'Електронна пошта',
 };
 
@@ -22,6 +22,7 @@ const ERRORS = {
 
 const UserInfo = (props) => {
     const [user, setUser] = useState(props.user);
+    const [profile, setProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
 
     useEffect(() => {
@@ -50,9 +51,15 @@ const UserInfo = (props) => {
     };
 
     const onUpdateField = e => {
-        setUser((prevState) => {
-            return { ...prevState, [e.target.name]: e.target.value };
-        });
+        if (e.target.name === 'person_position') {
+            setProfile((prevState) => {
+                return { ...prevState, [e.target.name]: e.target.value };
+            });
+        } else {
+            setUser((prevState) => {
+                return { ...prevState, [e.target.name]: e.target.value };
+            });
+        }
     };
 
     const handleSubmit = (event) => {
@@ -92,11 +99,11 @@ const UserInfo = (props) => {
                     <div className={css['fields-groups']}>
                         <HalfFormField
                             inputType='text'
-                            name='position'
-                            label={LABELS.position}
+                            name='person_position'
+                            label={LABELS.person_position}
                             updateHandler={onUpdateField}
                             requredField={false}
-                            value={user.position}
+                            value={profile.person_position ?? ''}
                         />
                         <HalfFormField
                             inputType='text'

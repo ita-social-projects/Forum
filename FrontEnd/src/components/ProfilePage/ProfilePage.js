@@ -3,64 +3,12 @@ import Description from './ProfilePageComponents/Description';
 import ProfileContent from './ProfilePageComponents/ProfileContent';
 import { useState } from 'react';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
-import { useAuth } from "../../hooks/";
 import axios from 'axios';
 import { useEffect } from 'react';
 
 
-const USER = {
-    'email': 'ex@gmail.com',
-    'companyEmail': '',
-    'password': '12345678',
-    'confirmPassword': '12345678',
-    'surname': 'Василенко',
-    'name': 'Тарас',
-    'companyName': ' Назва Компанії',
-    'companyCheckbox': true,
-    'startupCheckbox': false,
-    'rulesAgreement': true,
-    'position': '',
-    'brend': '',
-    'companyOfficialName': '',
-    'edrpou': '',
-    'activities': [],
-    'categories': [],
-    'regions': '',
-    'bannerImage': '',
-    'logo': '',
-    'slogan': '',
-    'companyInfo': '',
-    'productInfo': '',
-    'serviceInfo': '',
-    'logisticProductService': '',
-    'cooperationFormat': '',
-    'competitiveAdvantage': '',
-    'foundationYear': '',
-    'companySize': '',
-    'topClients': '',
-    'passedAudit': '',
-    'startupName': '',
-    'investmentAmount': '',
-    'cooperationGoals': [],
-    'endResult': '',
-    'competitiveAdvantageIdea': '',
-    'risks': '',
-    'searchPartners': '',
-    'startupIdea': '',
-    'phoneNumber': '',
-    'companySite': '',
-    'address': '',
-    'Facebook': '',
-    'Instagram': '',
-    'Tiktok': '',
-    'LinkedIn': '',
-    'Youtube': '',
-};
-
 const ProfilePage = () => {
     const authToken = localStorage.getItem("Token");
-    const [mainUser, setMainUser] = useState(USER);
-
     const [backUser, setBackUser] = useState(null);
     const [mainProfile, setMainProfile] = useState(null);
     const [formName, setFormName] = useState('');
@@ -98,20 +46,22 @@ const ProfilePage = () => {
                     console.error(error);
                 })
                 .finally(() => {
-                    setIsLoading(false); 
+                    setIsLoading(false);
                 });
         }
 
     }, [backUser]);
 
-    
-    const profileUpdateHandler = (myUser) => {
-        console.log('in app');
-        console.log(myUser);
-        setMainUser((prev) => {
-            return { ...prev, ...myUser }
-        });
+
+    const userUpdateHandler = (myUser) => {
+        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
+            name: myUser.name,
+            surname: myUser.surname,
+        })
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
     };
+
     return (
         <div className={css['container']}>
             <BreadCrumbs currentPage='Профіль' />
@@ -119,9 +69,9 @@ const ProfilePage = () => {
                 ? <div>Loading...</div>
                 :
                 <>
-            <Description companyName={mainProfile.name} formName={formName} />
-            <ProfileContent user={mainUser} onUpdate={profileUpdateHandler} currentFormNameHandler={currentFormNameHandler} formName={formName} />
-            </>}
+                    <Description companyName={mainProfile.name} formName={formName} />
+                    <ProfileContent user={backUser} profile={mainProfile} onUpdate={userUpdateHandler} currentFormNameHandler={currentFormNameHandler} formName={formName} />
+                </>}
         </div>
     );
 };
