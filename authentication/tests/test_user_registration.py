@@ -23,9 +23,9 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": True,
                     "is_startup": False,
-                }
+                },
             },
-            format="json"
+            format="json",
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -52,17 +52,13 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": True,
                     "is_startup": False,
-                }
+                },
             },
-            format="json"
+            format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            {
-                "email": [
-                    "Enter a valid email address."
-                ]
-            },
+            {"email": ["Enter a valid email address."]},
             response.json(),
         )
 
@@ -79,15 +75,13 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "Test Company",
                     "is_registered": True,
                     "is_startup": False,
-                }
+                },
             },
-            format="json"
+            format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            {
-                "email": ["Email is already registered"]
-            },
+            {"email": ["Email is already registered"]},
             response.json(),
         )
 
@@ -104,9 +98,9 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": True,
                     "is_startup": False,
-                }
+                },
             },
-            format="json"
+            format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
@@ -114,7 +108,7 @@ class UserRegistrationAPITests(APITestCase):
                 "password": [
                     "Password must be at least 8 characters long.",
                     "Password must include at least one uppercase letter (A-Z), one lowercase letter (a-z) and one digit (0-9).",
-                    "Passwords don't match."
+                    "Passwords don't match.",
                 ]
             },
             response.json(),
@@ -133,15 +127,13 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": False,
                     "is_startup": False,
-                }
+                },
             },
-            format="json"
+            format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            {
-                "comp_status": ["Please choose who you represent."]
-            },
+            {"comp_status": ["Please choose who you represent."]},
             response.json(),
         )
 
@@ -158,14 +150,12 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": True,
                     "is_startup": True,
-                }
+                },
             },
-            format="json"
+            format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            {
-                "comp_status": ["Please choose either registered or startup."]
-            },
+            {"comp_status": ["Please choose either registered or startup."]},
             response.json(),
         )

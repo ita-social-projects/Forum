@@ -16,7 +16,7 @@ class UserIsProfileOwnerOrReadOnly(BasePermission):
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
-                 return True
+            return True
 
 
 class IsOwnCompany(BasePermission):
@@ -28,4 +28,3 @@ class IsOwnCompany(BasePermission):
         except ObjectDoesNotExist:
             return True
         return str(profile.person_id) != str(user.id)
-

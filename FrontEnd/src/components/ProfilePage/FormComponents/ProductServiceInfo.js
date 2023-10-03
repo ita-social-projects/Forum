@@ -34,10 +34,10 @@ const ProductServiceInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
-            <form id='ProductServiceInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id="ProductServiceInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
                 <div className={css['fields']}>
                     <TextField
-                        name='productInfo'
+                        name="productInfo"
                         label={LABELS.productInfo}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -45,7 +45,7 @@ const ProductServiceInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='serviceInfo'
+                        name="serviceInfo"
                         label={LABELS.serviceInfo}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -53,7 +53,7 @@ const ProductServiceInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='logisticProductService'
+                        name="logisticProductService"
                         label={LABELS.logisticProductService}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -61,7 +61,7 @@ const ProductServiceInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='cooperationFormat'
+                        name="cooperationFormat"
                         label={LABELS.cooperationFormat}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -69,7 +69,7 @@ const ProductServiceInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='competitiveAdvantage'
+                        name="competitiveAdvantage"
                         label={LABELS.competitiveAdvantage}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
