@@ -64,21 +64,21 @@ const DeleteProfileModal = (props) => {
                     <div className={css['fields__label--text']}><label >Електронна пошта</label></div>
                     <div className={css['fields__field']}>
                         <input
-                            type='text'
+                            type="text"
                             className={css['fields__field--input']}
-                            name='email'
-                            placeholder='Електронна пошта'
+                            name="email"
+                            placeholder="Електронна пошта"
                             onChange={emailChangeHandler}
                         />
                     </div>
                     <div className={css['fields__label--text']}><label >Пароль</label></div>
                     <div className={css['fields__field']}>
                         <input
-                            id='companyPassword'
+                            id="companyPassword"
                             type={typePassword}
                             className={css['fields__field--input']}
-                            name='password'
-                            placeholder='Пароль'
+                            name="password"
+                            placeholder="Пароль"
                             onChange={passwordChangeHandler}
                         />
                         <span onClick={passwordVisisbilityHandler}>
@@ -89,7 +89,7 @@ const DeleteProfileModal = (props) => {
                             :
                             `${process.env.PUBLIC_URL}/profilepage/eye_icon.png`
                             }
-                            alt=''
+                            alt=""
                             className={css['password__eye']}
                             />
                         </span>

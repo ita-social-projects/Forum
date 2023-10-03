@@ -16,7 +16,6 @@
   "plugins": ["react", "react-hooks"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    // TOOD: https://github.com/orgs/ita-social-projects/projects/29?pane=issue&itemId=40508147
     "react/prop-types": "warn",
     "max-len": [
       "warn",
@@ -47,6 +46,7 @@
         ]
       }
     ],
-    "no-trailing-spaces": 2
+    "no-trailing-spaces": 2,
+    "jsx-quotes": ["error", "prefer-double"]
   }
 } 

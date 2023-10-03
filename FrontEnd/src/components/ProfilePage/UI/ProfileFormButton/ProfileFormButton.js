@@ -6,7 +6,7 @@ const ProfileFormButton = (props) => {
             <button
                 form={props.formName}
                 className={css['sign-up__button']}
-                type='submit'
+                type="submit"
             >Зберегти зміни</button>
         </div>
     );

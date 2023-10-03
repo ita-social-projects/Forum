@@ -196,11 +196,11 @@ const GeneralInfo = (props) => {
     };
     return (
         <div className={css['form__container']}>
-            <form id='GeneralInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id="GeneralInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
                         <HalfFormField
-                            name='companyName'
+                            name="companyName"
                             label={LABELS.companyName}
                             updateHandler={onUpdateField}
                             error={formStateErr['companyName']['error'] ? formStateErr['companyName']['message'] : null}
@@ -208,8 +208,8 @@ const GeneralInfo = (props) => {
                             value={user.companyName}
                         />
                         <HalfFormField
-                            inputType='text'
-                            name='brend'
+                            inputType="text"
+                            name="brend"
                             label={LABELS.brend}
                             updateHandler={onUpdateField}
                             requredField={false}
@@ -217,7 +217,7 @@ const GeneralInfo = (props) => {
                         />
                     </div>
                     <FullField
-                        name='companyOfficialName'
+                        name="companyOfficialName"
                         label={LABELS.companyOfficialName}
                         updateHandler={onUpdateField}
                         requredField={false}
@@ -225,8 +225,8 @@ const GeneralInfo = (props) => {
                     />
                     <div className={css['fields-groups']}>
                         <HalfFormField
-                            inputType='text'
-                            name='edrpou'
+                            inputType="text"
+                            name="edrpou"
                             label={LABELS.edrpou}
                             updateHandler={onUpdateEdrpouField}
                             requredField={false}
@@ -235,7 +235,7 @@ const GeneralInfo = (props) => {
                         />
                         {!isLoading &&
                         <OneSelectChip
-                            name='regions'
+                            name="regions"
                             options={fetchedRegions}
                             label={LABELS.regions}
                             updateHandler={onUpdateOneSelectField}
@@ -247,7 +247,7 @@ const GeneralInfo = (props) => {
                     </div>
                     <div className={css['fields-groups']}>
                         <MultipleSelectChip
-                            name='activities'
+                            name="activities"
                             options={ACTIVITIES}
                             label={LABELS.activities}
                             updateHandler={onUpdateSelectField}
@@ -257,7 +257,7 @@ const GeneralInfo = (props) => {
                             error={formStateErr['activities']['error'] ? formStateErr['activities']['message'] : null}
                         />
                         <MultipleSelectChip
-                            name='categories'
+                            name="categories"
                             options={CATEGORIES}
                             label={LABELS.categories}
                             updateHandler={onUpdateSelectField}
@@ -268,8 +268,8 @@ const GeneralInfo = (props) => {
                         />
                     </div>
                     <ImageField
-                        inputType='file'
-                        name='bannerImage'
+                        inputType="file"
+                        name="bannerImage"
                         label={LABELS.bannerImage}
                         updateHandler={onUpdateImageField}
                         requredField={false}
@@ -278,8 +278,8 @@ const GeneralInfo = (props) => {
                         onDeleteImage={deleteImageHandler}
                     />
                     <ImageField
-                        inputType='file'
-                        name='logo'
+                        inputType="file"
+                        name="logo"
                         label={LABELS.logo}
                         updateHandler={onUpdateImageField}
                         requredField={false}
@@ -288,7 +288,7 @@ const GeneralInfo = (props) => {
                         onDeleteImage={deleteImageHandler}
                     />
                     <TextField
-                        name='slogan'
+                        name="slogan"
                         label={LABELS.slogan}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -296,7 +296,7 @@ const GeneralInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='companyInfo'
+                        name="companyInfo"
                         label={LABELS.companyInfo}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -304,10 +304,10 @@ const GeneralInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <CheckBoxField
-                        name='companyType'
-                        nameRegister='companyCheckbox'
+                        name="companyType"
+                        nameRegister="companyCheckbox"
                         valueRegister={user.companyCheckbox}
-                        nameStartup='startupCheckbox'
+                        nameStartup="startupCheckbox"
                         valueStartup={user.startupCheckbox}
                         updateHandler={onChangeCheckbox}
                         requredField={true}

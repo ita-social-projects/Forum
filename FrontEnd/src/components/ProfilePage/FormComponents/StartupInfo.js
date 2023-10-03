@@ -59,17 +59,17 @@ const StartupInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
-            <form id='StartupInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id="StartupInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
                 <div className={css['fields']}>
                     <FullField
-                        name='startupName'
+                        name="startupName"
                         label={LABELS.startupName}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.startupName}
                     />
                     <TextField
-                        name='startupIdea'
+                        name="startupIdea"
                         label={LABELS.startupIdea}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -77,16 +77,16 @@ const StartupInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <FullField
-                        inputType='number'
-                        name='investmentAmount'
+                        inputType="number"
+                        name="investmentAmount"
                         label={LABELS.investmentAmount}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.investmentAmount}
                     />
                     <MultipleSelectChip
-                        selectedWidth='530px'
-                        name='cooperationGoals'
+                        selectedWidth="530px"
+                        name="cooperationGoals"
                         options={COOPERATION_GOALS}
                         label={LABELS.cooperationGoals}
                         updateHandler={onUpdateSelectField}
@@ -95,7 +95,7 @@ const StartupInfo = (props) => {
                         defaultValue="Оберіть"
                     />
                     <TextField
-                        name='endResult'
+                        name="endResult"
                         label={LABELS.endResult}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -103,7 +103,7 @@ const StartupInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='competitiveAdvantageIdea'
+                        name="competitiveAdvantageIdea"
                         label={LABELS.competitiveAdvantageIdea}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -111,7 +111,7 @@ const StartupInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='risks'
+                        name="risks"
                         label={LABELS.risks}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
@@ -119,7 +119,7 @@ const StartupInfo = (props) => {
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name='searchPartners'
+                        name="searchPartners"
                         label={LABELS.searchPartners}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}

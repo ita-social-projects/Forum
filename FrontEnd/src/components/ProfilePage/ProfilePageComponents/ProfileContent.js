@@ -66,7 +66,7 @@ const ProfileContent = (props) => {
                         >{element.title}</NavLink>
                     ))}
                     <div className={css['divider']}></div>
-                    <Link to='/profile/delete' className={`${css['infolink']} ${css['delete']}`}>Видалити профіль</Link>
+                    <Link to="/profile/delete" className={`${css['infolink']} ${css['delete']}`}>Видалити профіль</Link>
                 </div>
 
                 <Routes>

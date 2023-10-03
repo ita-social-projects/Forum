@@ -27,10 +27,10 @@ const ImageField = (props) => {
                     <div className={css['upload-file__filename']}>
                         <img
                         src={`${process.env.PUBLIC_URL}/profilepage/Vector.png`}
-                        className={css['upload-file__icon']} alt='' />
+                        className={css['upload-file__icon']} alt="" />
                         <div className={css['upload-file__filename--text']}>{props.value}</div>
                         <span className={css['upload-file__filename--trashBin']} onClick={() => (props.onDeleteImage(props.name))}>
-                            <img src={`${process.env.PUBLIC_URL}/profilepage/Vectordelete.png`} alt='' />
+                            <img src={`${process.env.PUBLIC_URL}/profilepage/Vectordelete.png`} alt="" />
                         </span>
                     </div>
                 }

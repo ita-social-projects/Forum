@@ -56,11 +56,11 @@ function CompanyDetail() {
                 {FIELDS.map((field) => (
                     <div key={field.id} className={css['form-section']}>
                         <label className={css['form-info__text']}>{field.label}</label>
-                        <input id={field.form_name} type='text' className={css['form-input']}></input>
+                        <input id={field.form_name} type="text" className={css['form-input']}></input>
                     </div>
                 ))}
-                <Checkbox id='is_deleted' title='Is Deleted' />
-                <Checkbox id='is_active' title='Активний користувач' />
+                <Checkbox id="is_deleted" title="Is Deleted" />
+                <Checkbox id="is_active" title="Активний користувач" />
 
                 <button className={css['save-button']}>Зберегти зміни</button>
             </div>

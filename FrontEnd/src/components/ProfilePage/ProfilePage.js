@@ -70,7 +70,7 @@ const ProfilePage = () => {
     };
     return (
         <div className={css['container']}>
-            <BreadCrumbs currentPage='Профіль'/>
+            <BreadCrumbs currentPage="Профіль"/>
             <Description companyName={mainUser.companyName} brend={mainUser.brend} formName={formName}/>
             <ProfileContent user={mainUser} onUpdate={profileUpdateHandler} currentFormNameHandler={currentFormNameHandler} formName={formName}/>
         </div>
