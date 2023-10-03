@@ -6,7 +6,7 @@ env:
   PG_DB: db
   PG_USER: postgres
   PG_PASSWORD: postgres
-  DB_HOST: db
+  DB_HOST: 127.0.0.1
   DB_PORT: 5432
   EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
   EMAIL_HOST: smtp.gmail.com
