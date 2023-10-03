@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const DeleteProfileModal = (props) => {
-    const [typePassword, setTypePassword] = useState("password");
+    const [typePassword, setTypePassword] = useState('password');
     const [isCorrectEmail, setIsCorrectEmail] = useState(false);
     const [isCorrectPassword, setIsCorrectPassword] = useState(false);
     const [isDisabled, setIsDisabled] = useState(true);
@@ -41,18 +41,18 @@ const DeleteProfileModal = (props) => {
     }, [isCorrectEmail, isCorrectPassword]);
 
     const passwordVisisbilityHandler = () => {
-        if (typePassword === "password") {
-          setTypePassword("text");
-        } else setTypePassword("password");
+        if (typePassword === 'password') {
+          setTypePassword('text');
+        } else setTypePassword('password');
       };
 
     return (
         <div>
             <div className={css['delete-header']}>Ви впевнені, що хочете видалити профіль?
-            <img  
+            <img
             src={`${process.env.PUBLIC_URL}/profilepage/Vectorcancel.png`}
-            className={css['delete__cancelButton']} 
-            alt="" 
+            className={css['delete__cancelButton']}
+            alt=""
             onClick={props.onCancel}/>
             </div>
             <div >
@@ -82,14 +82,14 @@ const DeleteProfileModal = (props) => {
                             onChange={passwordChangeHandler}
                         />
                         <span onClick={passwordVisisbilityHandler}>
-                            <img 
-                            src={typePassword==='password' 
+                            <img
+                            src={typePassword==='password'
                             ?
                             `${process.env.PUBLIC_URL}/profilepage/hidden_eye_icon.png`
                             :
                             `${process.env.PUBLIC_URL}/profilepage/eye_icon.png`
-                            } 
-                            alt='' 
+                            }
+                            alt=''
                             className={css['password__eye']}
                             />
                         </span>

@@ -17,6 +17,36 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     // TOOD: https://github.com/orgs/ita-social-projects/projects/29?pane=issue&itemId=40508147
-    "react/prop-types": "off"
+    "react/prop-types": "warn",
+    "max-len": [
+      "warn",
+      {
+        "code": 120,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error",
+          "info"
+        ]
+      }
+    ],
+    "no-trailing-spaces": 2
   }
 } 

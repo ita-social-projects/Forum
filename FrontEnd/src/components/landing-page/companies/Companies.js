@@ -1,5 +1,5 @@
 import './Companies.css';
-import {ProductCard} from "./companies-product-cards/CompaniesProductCards";
+import {ProductCard} from './companies-product-cards/CompaniesProductCards';
 
 
 const MainCompanies = () => {

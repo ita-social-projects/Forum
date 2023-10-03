@@ -17,8 +17,8 @@ const LABELS = {
 };
 
 const COOPERATION_GOALS = [
-    { name: "Гроші" },
-    { name: "Партнерство" },
+    { name: 'Гроші' },
+    { name: 'Партнерство' },
 ];
 
 const TEXT_AREA_MAX_LENGTH = 1000;

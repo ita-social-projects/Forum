@@ -27,23 +27,23 @@ const LABELS = {
 };
 
 const CATEGORIES = [
-    { name: "Вино" },
-    { name: "Продукти переробляння молока" },
-    { name: "Соуси" },
-    { name: "Кава" },
-    { name: "Чай та чайні напої" },
-    { name: "Алкоголь" },
-    { name: "Упакування" },
-    { name: "Кондитерські вироби" },
-    { name: "Спеції" },
+    { name: 'Вино' },
+    { name: 'Продукти переробляння молока' },
+    { name: 'Соуси' },
+    { name: 'Кава' },
+    { name: 'Чай та чайні напої' },
+    { name: 'Алкоголь' },
+    { name: 'Упакування' },
+    { name: 'Кондитерські вироби' },
+    { name: 'Спеції' },
 ];
 
 const ACTIVITIES = [
-    { name: "Виробництво" },
-    { name: "Роздрібна мережа" },
-    { name: "Імпортер" },
-    { name: "HORECA" },
-    { name: "Інші послуги" },
+    { name: 'Виробництво' },
+    { name: 'Роздрібна мережа' },
+    { name: 'Імпортер' },
+    { name: 'HORECA' },
+    { name: 'Інші послуги' },
 ];
 
 const ERRORS = {
@@ -114,7 +114,7 @@ const GeneralInfo = (props) => {
             const selectedRegion = fetchedRegions.find((el) => el.value ===  e.target.value);
             return { ...prevState, [e.target.name]: selectedRegion.key };
         });
-    };    
+    };
 
     const onUpdateEdrpouField = e => {
         if (e.target.value && e.target.value.length !== 8) {
@@ -233,7 +233,7 @@ const GeneralInfo = (props) => {
                             value={user.edrpou}
                             error={edrpouError}
                         />
-                        {!isLoading && 
+                        {!isLoading &&
                         <OneSelectChip
                             name='regions'
                             options={fetchedRegions}

@@ -7,7 +7,7 @@ import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
 
 const USER = {
     'email': 'ex@gmail.com',
-    'companyEmail': '',    
+    'companyEmail': '',
     'password': '12345678',
     'confirmPassword': '12345678',
     'surname': 'Василенко',
@@ -24,18 +24,18 @@ const USER = {
     'categories': [],
     'regions': '',
     'bannerImage': '',
-    'logo': '',    
+    'logo': '',
     'slogan': '',
     'companyInfo': '',
     'productInfo': '',
     'serviceInfo': '',
     'logisticProductService': '',
     'cooperationFormat': '',
-    'competitiveAdvantage': '',  
+    'competitiveAdvantage': '',
     'foundationYear': '',
     'companySize': '',
     'topClients': '',
-    'passedAudit': '',  
+    'passedAudit': '',
     'startupName': '',
     'investmentAmount': '',
     'cooperationGoals': [],
@@ -51,7 +51,7 @@ const USER = {
     'Instagram': '',
     'Tiktok': '',
     'LinkedIn': '',
-    'Youtube': '',               
+    'Youtube': '',
 };
 
 const ProfilePage = () => {
@@ -65,7 +65,7 @@ const ProfilePage = () => {
         console.log('in app');
         console.log(myUser);
         setMainUser((prev) => {
-            return {...prev, ...myUser}
+            return {...prev, ...myUser};
         });
     };
     return (

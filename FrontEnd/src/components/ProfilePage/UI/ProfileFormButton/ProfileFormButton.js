@@ -9,7 +9,7 @@ const ProfileFormButton = (props) => {
                 type='submit'
             >Зберегти зміни</button>
         </div>
-    )
+    );
 };
 
 export default ProfileFormButton;

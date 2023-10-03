@@ -12,33 +12,33 @@ import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
 const INFOLINKS = [
     {
-        title: "Інформація про користувача",
-        link: "/user-info",
+        title: 'Інформація про користувача',
+        link: '/user-info',
         element: UserInfo,
     },
     {
-        title: "Загальна інформація",
-        link: "/general-info",
+        title: 'Загальна інформація',
+        link: '/general-info',
         element: GeneralInfo,
     },
     {
-        title: "Контакти",
-        link: "/contacts",
+        title: 'Контакти',
+        link: '/contacts',
         element: ContactsInfo,
     },
     {
-        title: "Інформація про товари/ послуги",
-        link: "/products-service-info",
+        title: 'Інформація про товари/ послуги',
+        link: '/products-service-info',
         element: ProductServiceInfo,
     },
     {
-        title: "Додаткова інформація",
-        link: "/additional-info",
+        title: 'Додаткова інформація',
+        link: '/additional-info',
         element: AdditionalInfo,
     },
     {
-        title: "Стартап",
-        link: "/startup",
+        title: 'Стартап',
+        link: '/startup',
         element: StartupInfo,
     },
 ];

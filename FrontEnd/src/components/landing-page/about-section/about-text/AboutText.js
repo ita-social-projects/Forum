@@ -1,5 +1,5 @@
 import './AboutText.css';
-import Ellipses from "../../ellipses/Ellipses";
+import Ellipses from '../../ellipses/Ellipses';
 
 const AboutSectionText = () => {
     return (
@@ -71,7 +71,7 @@ const AboutSectionText = () => {
               </div>
             </div>
           </div>
-    )
-}
+    );
+};
 
 export default AboutSectionText;

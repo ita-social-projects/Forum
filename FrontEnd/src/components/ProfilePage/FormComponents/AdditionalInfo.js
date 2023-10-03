@@ -19,7 +19,7 @@ const AdditionalInfo = (props) => {
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
-    }, []); 
+    }, []);
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)

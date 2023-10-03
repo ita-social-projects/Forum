@@ -1,6 +1,6 @@
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../../hooks";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../hooks';
 
 function Logout() {
   const auth = useAuth();
@@ -11,7 +11,7 @@ function Logout() {
       `${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`
     );
     auth.logout();
-    navigate("/");
+    navigate('/');
   };
   return (
     <button onClick={onClick} type="submit">

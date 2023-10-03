@@ -1,17 +1,17 @@
-import classes from "./AlertMessage.module.css";
+import classes from './AlertMessage.module.css';
 
 const AlertMessage = (props) => {
 
     const alertMessageHandler = () => {
-        props.setErrorMessage("")
+        props.setErrorMessage('');
     };
-    
+
    return (
-    <div className={classes["alert-message"]}>
-      <p className={classes["alert-message__content"]}>
+    <div className={classes['alert-message']}>
+      <p className={classes['alert-message__content']}>
         {props.errorMessage.split('\n').map((line) => (<span key={line}>{line}</span>))}
       </p>
-      <button className={classes["alert-message__icon"]} onClick={alertMessageHandler}>
+      <button className={classes['alert-message__icon']} onClick={alertMessageHandler}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"

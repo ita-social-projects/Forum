@@ -53,8 +53,8 @@ export default function OneSelectChip(props) {
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                 <Chip
-                 label={selected} 
-                 sx={{color: '#1F9A7C', backgroundColor: 'white', border: '1px solid #1F9A7C'}}/>    
+                 label={selected}
+                 sx={{color: '#1F9A7C', backgroundColor: 'white', border: '1px solid #1F9A7C'}}/>
             </Box>
           )}
           MenuProps={MenuProps}

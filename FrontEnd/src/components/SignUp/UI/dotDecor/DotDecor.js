@@ -1,4 +1,4 @@
-import css from "./DotDecor.module.css";
+import css from './DotDecor.module.css';
 
 const DotRow = () => {
   const circle = (
@@ -15,13 +15,13 @@ const DotRow = () => {
 
   const dots = [...Array(7)].map(() => circle);
 
-  return <div className={css["dot-row"]}>{dots}</div>;
+  return <div className={css['dot-row']}>{dots}</div>;
 };
 
 function DotDecorComponent(props) {
   const blockPosition = props.position;
   return (
-    <div className={`${css["dot-block"]} ${css[blockPosition]}`}>
+    <div className={`${css['dot-block']} ${css[blockPosition]}`}>
       <DotRow />
       <DotRow />
       <DotRow />

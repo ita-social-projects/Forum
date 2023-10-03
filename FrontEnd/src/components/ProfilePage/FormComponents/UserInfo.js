@@ -37,12 +37,12 @@ const UserInfo = (props) => {
                 newFormState[key] = {
                     'error': true,
                     'message': 'Обов’язкове поле',
-                }
+                };
             } else {
                 newFormState[key] = {
                     'error': false,
                     'message': '',
-                }
+                };
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
