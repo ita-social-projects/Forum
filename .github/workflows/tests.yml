@@ -47,7 +47,7 @@ jobs:
       - name: install requirements.txt
         run: |
           python -m pip install --upgrade pip
-          pip install -r medsite/requirements.txt
+          pip install -r requirements.txt
       - name: Create Migrations
         run: |
           python manage.py makemigrations
