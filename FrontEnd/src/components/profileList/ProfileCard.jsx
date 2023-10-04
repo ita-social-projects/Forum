@@ -1,12 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
 
-import { Badge, Typography } from "antd";
-import { StarOutlined, StarFilled } from "@ant-design/icons";
-import { PropTypes } from "prop-types";
-import { useSWRConfig } from "swr";
-import useSWRMutation from "swr/mutation";
+import { Badge, Typography } from 'antd';
+import { StarOutlined, StarFilled } from '@ant-design/icons';
+import { PropTypes } from 'prop-types';
+import { useSWRConfig } from 'swr';
+import useSWRMutation from 'swr/mutation';
 
-import css from "./ProfileCard.module.css";
+import css from './ProfileCard.module.css';
 
 const { Paragraph } = Typography;
 
@@ -20,10 +20,10 @@ export default function ProfileCard({ isAuthorized, data }) {
       name: data.name,
       activities: !data.activities.length
         ? null
-        : data.activities.map((activity) => activity.name).join(", "),
+        : data.activities.map((activity) => activity.name).join(', '),
       region: data.region_display
         ? data.region_display
-        : "",
+        : '',
       categories:
         data.categories.length > 4
           ? data.categories.slice(0, 4)
@@ -34,11 +34,11 @@ export default function ProfileCard({ isAuthorized, data }) {
   }, [data]);
 
   async function sendRequest(url, { arg: data }) {
-    const authToken = localStorage.getItem("Token");
+    const authToken = localStorage.getItem('Token');
     return fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Token ${authToken}`,
       },
       body: JSON.stringify(data),
@@ -61,19 +61,19 @@ export default function ProfileCard({ isAuthorized, data }) {
     }
   };
 
-  mutate((key) => typeof key === "string" && key.startsWith("/api/profiles/"), {
+  mutate((key) => typeof key === 'string' && key.startsWith('/api/profiles/'), {
     revalidate: true,
   });
 
   const filledStar = (
     <StarFilled
-      style={{ color: "#FFD800", fontSize: "24px" }}
+      style={{ color: '#FFD800', fontSize: '24px' }}
       onClick={handleClick}
     />
   );
   const outlinedStar = (
     <StarOutlined
-      style={{ color: "#FFD800", fontSize: "24px" }}
+      style={{ color: '#FFD800', fontSize: '24px' }}
       onClick={handleClick}
     />
   );
@@ -88,14 +88,14 @@ export default function ProfileCard({ isAuthorized, data }) {
                 size="medium"
                 count={category.name.toUpperCase()}
                 style={{
-                  backgroundColor: "#1F9A7C",
+                  backgroundColor: '#1F9A7C',
                   fontWeight: 600,
-                  fontFamily: "Inter",
+                  fontFamily: 'Inter',
                   fontSize: 10,
                 }}
               />
             ))
-          : ""}
+          : ''}
       </>
     );
   };
@@ -103,8 +103,8 @@ export default function ProfileCard({ isAuthorized, data }) {
   // TODO: add logo from db once it's implemented on the server side
 
   return (
-    <div className={css["company-card"]}>
-      <div className={css["logo-box"]}>
+    <div className={css['company-card']}>
+      <div className={css['logo-box']}>
         <img
           className={css.logo}
           src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
@@ -112,21 +112,21 @@ export default function ProfileCard({ isAuthorized, data }) {
         />
       </div>
       <div className={css.content}>
-        <div className={css["content-header"]}>
-          <div className={css["content-header__activity"]}>
-            <p className={css["content-header__activity--text"]}>
+        <div className={css['content-header']}>
+          <div className={css['content-header__activity']}>
+            <p className={css['content-header__activity--text']}>
               {profile.activities}
             </p>
           </div>
-          <div className={css["content-header__name"]}>{profile.name}</div>
-          <div className={css["content-header__address"]}>{profile.region}</div>
+          <div className={css['content-header__name']}>{profile.name}</div>
+          <div className={css['content-header__address']}>{profile.region}</div>
         </div>
-        <div className={css["content__common-info"]}>
+        <div className={css['content__common-info']}>
           <Paragraph ellipsis={{ rows: 3, expandable: false }}>
             {profile.commonInfo}
           </Paragraph>
         </div>
-        <div className={css["content__categories"]}>
+        <div className={css['content__categories']}>
           <CategoryBadges categories={profile.categories} />
         </div>
       </div>

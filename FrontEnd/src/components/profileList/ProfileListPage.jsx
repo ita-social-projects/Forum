@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { Radio } from "antd";
-import useSWR from "swr";
+import { Radio } from 'antd';
+import useSWR from 'swr';
 
-import ErrorPage from "./ErrorPage";
-import Loader from "./Loader";
-import ProfileList from "./ProfileList";
+import ErrorPage404 from '../errorPages/ErrorPage404';
+import Loader from '../loader/Loader';
+import ProfileList from './ProfileList';
 
-import css from "./ProfileListPage.module.css";
-
-// FIXME: change loader to the one from dev
-// FIXME: change error page to the one from dev
+import css from './ProfileListPage.module.css';
 
 export default function ProfileListPage({ isAuthorized }) {
   const { filter } = useParams();
@@ -19,27 +16,27 @@ export default function ProfileListPage({ isAuthorized }) {
   const [filterSaved, setFilterSaved] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [profileFilter, setProfileFilter] = useState("");
+  const [profileFilter, setProfileFilter] = useState('');
 
   useEffect(() => {
     switch (filter) {
-      case "companies":
-        setProfileFilter("is_registered=True");
+      case 'companies':
+        setProfileFilter('is_registered=True');
         break;
-      case "startups":
-        setProfileFilter("is_startup=True");
+      case 'startups':
+        setProfileFilter('is_startup=True');
         break;
-      case "producers":
-        setProfileFilter("activities__name=Виробник");
+      case 'producers':
+        setProfileFilter('activities__name=Виробник');
         break;
-      case "importers":
-        setProfileFilter("activities__name=Імпортер");
+      case 'importers':
+        setProfileFilter('activities__name=Імпортер');
         break;
-      case "retailers":
-        setProfileFilter("activities__name=Роздрібна мережа");
+      case 'retailers':
+        setProfileFilter('activities__name=Роздрібна мережа');
         break;
-      case "horeca":
-        setProfileFilter("activities__name=HORECA");
+      case 'horeca':
+        setProfileFilter('activities__name=HORECA');
         break;
       default:
         break;
@@ -52,19 +49,19 @@ export default function ProfileListPage({ isAuthorized }) {
   const urlForSaved = `${
     process.env.REACT_APP_BASE_API_URL
   }/api/profiles/?${profileFilter}${
-    filterSaved ? "&is_saved=True" : ""
+    filterSaved ? '&is_saved=True' : ''
   }&page=${currentPage}`;
 
   async function fetcher(url) {
     const headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     };
     if (isAuthorized) {
-      const authToken = localStorage.getItem("Token");
+      const authToken = localStorage.getItem('Token');
       headers.Authorization = `Token ${authToken}`;
     }
     return fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: headers,
     }).then((res) => res.json());
   }
@@ -85,9 +82,9 @@ export default function ProfileListPage({ isAuthorized }) {
   return (
     <div className={css.page}>
       {error ? (
-        <ErrorPage />
+        <ErrorPage404 />
       ) : (
-        <div className={css["page-content"]}>
+        <div className={css['page-content']}>
           {isAuthorized ? (
             <div className={css.group}>
               <Radio.Group

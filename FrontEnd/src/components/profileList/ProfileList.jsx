@@ -1,13 +1,13 @@
-import { List } from "antd";
-import ProfileCard from "./ProfileCard";
-import css from "./ProfileList.module.css";
+import { List } from 'antd';
+import ProfileCard from './ProfileCard';
+import css from './ProfileList.module.css';
 
 const PAGE_SIZE = 6;
 
 const ListHeader = ({ number }) => (
-  <div className={css["results-header"]}>
-    <p className={css["results-header__number"]}>{number}</p>
-    <p className={css["results-header__text"]}>компаній</p>
+  <div className={css['results-header']}>
+    <p className={css['results-header__number']}>{number}</p>
+    <p className={css['results-header__text']}>компаній</p>
   </div>
 );
 
@@ -23,8 +23,8 @@ export default function ProfileList({
         onChange: (page) => {
           paginationFunc(page);
         },
-        position: "bottom",
-        align: "center",
+        position: 'bottom',
+        align: 'center',
         pageSize: PAGE_SIZE,
         total: data.total_items,
         hideOnSinglePage: true,
