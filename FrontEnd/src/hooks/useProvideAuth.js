@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function useProvideAuth() {
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const validateToken = async (authToken) => {
-    console.log("In validation")
     try {
       await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
@@ -24,19 +23,19 @@ export default function useProvideAuth() {
   };
 
   const login = (authToken) => {
-    localStorage.setItem("Token", authToken);
-    axios.defaults.headers.common["Authorization"] = `Token ${authToken}`;
+    localStorage.setItem('Token', authToken);
+    axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
     setIsAuth(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("Token");
-    delete axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem('Token');
+    delete axios.defaults.headers.common['Authorization'];
     setIsAuth(false);
   };
 
   useEffect(() => {
-    const authToken = localStorage.getItem("Token");
+    const authToken = localStorage.getItem('Token');
     axios.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -57,8 +56,8 @@ export default function useProvideAuth() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("storage", (e) => {
-      if (e.key === "Token") {
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'Token') {
         setIsAuth(e.newValue);
       }
     });

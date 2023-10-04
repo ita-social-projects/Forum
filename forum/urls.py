@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('authentication.urls', namespace='authentication')),
-    path('api/', include('profiles.urls', namespace='profiles')),
-    path('api/admin/', include('administration.urls', namespace='administration')),
+    path("admin/", admin.site.urls),
+    path("api/", include("authentication.urls", namespace="authentication")),
+    path("api/", include("profiles.urls", namespace="profiles")),
+    path(
+        "api/admin/",
+        include("administration.urls", namespace="administration"),
+    ),
 ]

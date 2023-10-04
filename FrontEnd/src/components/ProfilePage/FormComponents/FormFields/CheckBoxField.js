@@ -16,7 +16,7 @@ const CheckBoxField = (props) => {
                     <input
                         className={css['checkbox__input']}
                         name={props.nameRegister}
-                        type='checkbox'
+                        type="checkbox"
                         value={props.nameRegister}
                         onChange={props.updateHandler}
                         checked={props.valueRegister}
@@ -29,7 +29,7 @@ const CheckBoxField = (props) => {
                     <input
                         className={css['checkbox__input']}
                         name={props.nameStartup}
-                        type='checkbox'
+                        type="checkbox"
                         value={props.nameStartup}
                         onChange={props.updateHandler}
                         checked={props.valueStartup}
