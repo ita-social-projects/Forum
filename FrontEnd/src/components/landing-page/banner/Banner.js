@@ -1,5 +1,5 @@
 import './Banner.css';
-import Ellipses from "../ellipses/Ellipses";
+import Ellipses from '../ellipses/Ellipses';
 import { Link } from 'react-router-dom';
 
 
@@ -82,7 +82,7 @@ const MainBanner = () => {
             </div>
           </div>
         </div>
-    )
-}
+    );
+};
 
 export default MainBanner;

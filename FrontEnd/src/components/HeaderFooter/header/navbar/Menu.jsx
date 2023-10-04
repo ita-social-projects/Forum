@@ -1,24 +1,25 @@
-import { Link } from "react-router-dom";
-import css from "./Menu.module.css";
+import { Link } from 'react-router-dom';
+import css from './Menu.module.css';
 import { HashLink } from "react-router-hash-link";
 
 const MENU_LINKS = [
-  {
-    title: "Головна",
-    link: "/",
-  },
-  {
-    title: "Компанії",
-    link: "/profiles/companies",
-  },
-  {
-    title: "Стартапи",
-    link: "/profiles/startups",
-  },
-  {
-    title: "Про нас",
-    link: "/#about-us",
-  },
+    {
+        id: 'm0',
+        title: 'Головна',
+        link: '/'
+    },
+    {
+        title: 'Компанії',
+        link: '/profiles/companies'
+    },
+    {
+        title: 'Стартапи',
+        link: '/profiles/startups'
+    },
+    {
+        title: 'Про нас',
+        link: '/#about-us'
+    },
 ];
 
 function Menu() {

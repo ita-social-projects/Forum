@@ -1,12 +1,19 @@
 import factory.fuzzy
 
-from .models import Profile, Activity, Category, SavedCompany, ViewedCompany, Region
+from .models import (
+    Profile,
+    Activity,
+    Category,
+    SavedCompany,
+    ViewedCompany,
+    Region,
+)
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Category
-        django_get_or_create = ('name',)
+        django_get_or_create = ("name",)
 
     name = factory.Sequence(lambda n: f"test category {n}")
 
@@ -14,7 +21,7 @@ class CategoryFactory(factory.django.DjangoModelFactory):
 class ActivityFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Activity
-        django_get_or_create = ('name',)
+        django_get_or_create = ("name",)
 
     name = factory.Sequence(lambda n: f"test activity {n}")
 
@@ -22,7 +29,7 @@ class ActivityFactory(factory.django.DjangoModelFactory):
 class ProfileFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Profile
-        django_get_or_create = ('edrpou',)
+        django_get_or_create = ("edrpou",)
 
     person = factory.SubFactory("authentication.factories.UserFactory")
     name = "Test Comp name"

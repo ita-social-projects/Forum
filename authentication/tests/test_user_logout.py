@@ -18,17 +18,18 @@ class UserLogoutAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
-            }
+            },
         ).data["auth_token"]
         self.client.credentials(
-            HTTP_AUTHORIZATION=f"Token {self.test_user_token}")
+            HTTP_AUTHORIZATION=f"Token {self.test_user_token}"
+        )
         response = self.client.post(path="/api/auth/token/logout/")
-        self.assertEqual(response.status_code,
-                         status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_logout_not_logged_in(self):
         response = self.client.post(path="/api/auth/token/logout/")
-        self.assertEqual(response.status_code,
-                         status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(
-            {"detail": "Authentication credentials were not provided."}, response.json())
+            {"detail": "Authentication credentials were not provided."},
+            response.json(),
+        )

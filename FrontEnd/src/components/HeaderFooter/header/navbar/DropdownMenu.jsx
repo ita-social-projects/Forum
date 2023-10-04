@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import css from "./DropdownMenu.module.css";
+import React, { useState, useEffect, useRef } from 'react';
+import css from './DropdownMenu.module.css';
 
 function DropdownMenu({ children, toggleText }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,10 +11,10 @@ function DropdownMenu({ children, toggleText }) {
         setIsOpen(false);
       }
     };
-    document.body.addEventListener("mousedown", onBodyClick);
+    document.body.addEventListener('mousedown', onBodyClick);
 
     return () => {
-      document.body.removeEventListener("mousedown", onBodyClick);
+      document.body.removeEventListener('mousedown', onBodyClick);
     };
   }, []);
 
@@ -23,15 +23,15 @@ function DropdownMenu({ children, toggleText }) {
   };
 
   return (
-    <div ref={ref} className={css["dropdown-menu-tab"]}>
-      <span onClick={handleOpen} className={css["dropdown-menu-tab__text"]}>
+    <div ref={ref} className={css['dropdown-menu-tab']}>
+      <span onClick={handleOpen} className={css['dropdown-menu-tab__text']}>
         {toggleText}
       </span>
       {isOpen && (
-        <div onClick={handleOpen} className={css["dropdown-menu"]}>
+        <div onClick={handleOpen} className={css['dropdown-menu']}>
           {React.Children.map(children, (child) => {
             return React.cloneElement(child, {
-              className: css["dropdown-menu__text"],
+              className: css['dropdown-menu__text'],
             });
           })}
         </div>

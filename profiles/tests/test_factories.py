@@ -1,17 +1,25 @@
 from django.test import TestCase
 
-from profiles.factories import (ProfileFactory, ProfileStartupFactory, ProfileCompanyFactory,
-                                CategoryFactory, ActivityFactory,
-                                SavedCompanyFactory, SavedStartupFactory, ViewedCompanyFactory)
+from profiles.factories import (
+    ProfileFactory,
+    ProfileStartupFactory,
+    ProfileCompanyFactory,
+    CategoryFactory,
+    ActivityFactory,
+    SavedCompanyFactory,
+    SavedStartupFactory,
+    ViewedCompanyFactory,
+)
 from utils.dump_response import dump  # noqa
 
 
 class TestFactories(TestCase):
-
     def test_profile_factory(self):
         activity = ActivityFactory()
         category = CategoryFactory()
-        profile = ProfileFactory(activities=(activity,), categories=(category,))
+        profile = ProfileFactory(
+            activities=(activity,), categories=(category,)
+        )
         self.assertIsNotNone(profile.id)
         self.assertIsNotNone(profile.person)
         self.assertIsNotNone(profile.name)

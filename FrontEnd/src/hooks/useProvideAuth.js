@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function useProvideAuth() {
   const [isAuth, setIsAuth] = useState(false);
@@ -23,19 +23,19 @@ export default function useProvideAuth() {
   };
 
   const login = (authToken) => {
-    localStorage.setItem("Token", authToken);
-    axios.defaults.headers.common["Authorization"] = `Token ${authToken}`;
+    localStorage.setItem('Token', authToken);
+    axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
     setIsAuth(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("Token");
-    delete axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem('Token');
+    delete axios.defaults.headers.common['Authorization'];
     setIsAuth(false);
   };
 
   useEffect(() => {
-    const authToken = localStorage.getItem("Token");
+    const authToken = localStorage.getItem('Token');
     axios.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -56,8 +56,8 @@ export default function useProvideAuth() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("storage", (e) => {
-      if (e.key === "Token") {
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'Token') {
         setIsAuth(e.newValue);
       }
     });

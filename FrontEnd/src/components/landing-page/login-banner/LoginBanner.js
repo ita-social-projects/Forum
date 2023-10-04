@@ -1,5 +1,5 @@
 import './LoginBanner.css';
-import Ellipses from "../ellipses/Ellipses";
+import Ellipses from '../ellipses/Ellipses';
 import { Link } from 'react-router-dom';
 
 
@@ -36,7 +36,7 @@ const MainLoginBanner = () => {
             <div className="login-banner-group__banner-shadow-text">Майданчик для тих, хто втілює свої ідеї в життя.</div>
             <div className="login-banner-group__banner-text">Майданчик для тих, хто втілює свої ідеї в життя.</div>
         </div>
-    )
-}
+    );
+};
 
 export default MainLoginBanner;

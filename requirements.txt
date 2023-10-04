@@ -13,3 +13,5 @@ django-cors-headers==4.2.0
 factory-boy==3.3.0
 django-filter==23.2
 gunicorn==21.2.0
+toml==0.10.2
+black==23.9.1
