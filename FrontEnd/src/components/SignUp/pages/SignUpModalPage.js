@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styles from "./SignUpModalPage.module.css";
 import DotDecorComponent from "../UI/dotDecor/DotDecor";
 
@@ -19,6 +20,13 @@ export function SignUpModalPage() {
                     </a>
                   </div>
                 </p>
+            </div>
+            <div className={styles["modal__footer"]}>
+              <div className={styles["button-container"]}>
+                <Link className={styles["signup-page__button"]} to="/login">
+                  Закрити
+                </Link>
+              </div>
             </div>
         </div>
         <DotDecorComponent position={"down-left"} />

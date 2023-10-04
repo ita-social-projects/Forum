@@ -14,7 +14,7 @@
 
 .container-modal {
   width: 610px;
-  height: 225px;
+  height: 290px;
   position: absolute;
   z-index: 2;
 }
@@ -70,4 +70,46 @@
   font-weight: 400;
   line-height: 20px;
   letter-spacing: -0.14px;
+}
+
+.button-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.signup-page__button {
+  display: flex;
+  padding: 5px 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--primary-green-80, #1f9a7c);
+  background: var(--main-white, #fff);
+
+  /* drop-shadow/button-secondary */
+  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+
+  color: var(--primary-green-80, #1f9a7c);
+  text-align: center;
+  font-feature-settings: "calt" off;
+
+  /* Text/Body/16-Semi bold */
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  /* 125% */
+  letter-spacing: -0.16px;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.signup-page__button:hover {
+  border: 1px solid var(--primary-green-80, #1f9a7c);
+  background: var(--primary-green-80, #1f9a7c);
+  color: var(--main-white, #fff);
 }
