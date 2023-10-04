@@ -1,28 +1,24 @@
-import css from './HeaderMenu.module.css';
+import { Link } from 'react-router-dom';
+import css from './HeaderMenu.module.css';;
 
 const SERVICES_LINKS = [
     {
-        id: 'sl0',
         title: 'Виробники',
-        link: '#'
+        link: '/profiles/producers'
     },
     {
-        id: 'sl1',
         title: 'Імпортери',
-        link: '#'
+        link: '/profiles/importers'
     },
     {
-        id: 'sl2',
         title: 'Роздрібні мережі',
-        link: '#'
+        link: '/profiles/retailers'
     },
     {
-        id: 'sl3',
         title: 'HORECA',
-        link: '#'
+        link: '/profiles/horeca'
     },
     {
-        id: 'sl4',
         title: 'Інші послуги',
         link: '#'
     }
@@ -34,10 +30,10 @@ function HeaderMenu() {
             <div className={css['menu-section']}>
                 <div className={css['menu-section-content']}>
                     {SERVICES_LINKS.map((element) => (
-                        <div className={css['menu-element']} key={element.id}>
-                            <a className={css['menu-element__text']}
-                               href={element.link}
-                            >{element.title}</a>
+                        <div className={css['menu-element']} key={element.link}>
+                            <Link className={css['menu-element__text']}
+                               to={element.link}
+                            >{element.title}</Link>
                         </div>
                     ))}
                 </div>

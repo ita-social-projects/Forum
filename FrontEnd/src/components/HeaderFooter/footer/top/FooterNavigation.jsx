@@ -1,51 +1,43 @@
 import css from './FooterNavigation.module.css';
 import { HashLink } from 'react-router-hash-link';
+import { Link } from "react-router-dom";
 
 const PAGE_NAVIGATION_LINKS = [
   {
-    id: 'pnl0',
     title: 'Головна',
     link: '/',
   },
   {
-    id: 'pnl1',
     title: 'Компанії',
-    link: '#',
+    link: '/profiles/companies',
   },
   {
-    id: 'pnl2',
     title: 'Стартапи',
-    link: '#',
+    link: '/profiles/startups',
   },
   {
-    id: 'pnl3',
     title: 'Про нас',
     link: '/#about-us',
   },
 ];
 const SERVICES_LINKS = [
   {
-    id: 'sl0',
     title: 'Виробники',
-    link: '#',
+    link: '/profiles/producers',
   },
   {
-    id: 'sl1',
     title: 'Імпортери',
-    link: '#',
+    link: '/profiles/importers',
   },
   {
-    id: 'sl2',
     title: 'Роздрібні мережі',
-    link: '#',
+    link: '/profiles/retailers',
   },
   {
-    id: 'sl3',
     title: 'HORECA',
-    link: '#',
+    link: '/profiles/horeca',
   },
   {
-    id: 'sl4',
     title: 'Інші послуги',
     link: '#',
   },
@@ -64,7 +56,7 @@ function FooterNavigation() {
       <div className={css['navigation-content-section']}>
         {PAGE_NAVIGATION_LINKS.map((element) => (
           <HashLink
-            key={element.id}
+            key={element.link}
             className={css['navigation-content-section__text']}
             to={element.link}
           >
@@ -74,13 +66,13 @@ function FooterNavigation() {
       </div>
       <div className={css['navigation-content-section']}>
         {SERVICES_LINKS.map((element) => (
-          <a
+          <Link
             className={css['navigation-content-section-service__text']}
-            key={element.id}
-            href={element.link}
+            key={element.link}
+            to={element.link}
           >
             {element.title}
-          </a>
+          </Link>
         ))}
       </div>
       <div className={css['navigation-content-section']}>
