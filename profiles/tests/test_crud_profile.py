@@ -507,7 +507,6 @@ class TestProfileDetailAPIView(APITestCase):
                 profile_id=self.profile.id
             ),
             data={
-                "person": self.user.id,
                 "official_name": "Official name from test case",
                 "region": Region.KYIV,
                 "common_info": "Common info from test case",
