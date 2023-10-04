@@ -17,30 +17,17 @@ export default function ProfileListPage({ isAuthorized }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [profileFilter, setProfileFilter] = useState('');
+  const FILTER_MAP = {
+    companies: 'is_registered=True',
+    startups: 'is_startup=True',
+    producers: 'activities__name=Виробник',
+    importers: 'activities__name=Імпортер',
+    retailers: 'activities__name=Роздрібна мережа',
+    horeca: 'activities__name=HORECA'
+  };
 
   useEffect(() => {
-    switch (filter) {
-      case 'companies':
-        setProfileFilter('is_registered=True');
-        break;
-      case 'startups':
-        setProfileFilter('is_startup=True');
-        break;
-      case 'producers':
-        setProfileFilter('activities__name=Виробник');
-        break;
-      case 'importers':
-        setProfileFilter('activities__name=Імпортер');
-        break;
-      case 'retailers':
-        setProfileFilter('activities__name=Роздрібна мережа');
-        break;
-      case 'horeca':
-        setProfileFilter('activities__name=HORECA');
-        break;
-      default:
-        break;
-    }
+    setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);
   }, [filter]);
 

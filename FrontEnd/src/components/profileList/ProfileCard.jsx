@@ -42,7 +42,7 @@ export default function ProfileCard({ isAuthorized, data }) {
         Authorization: `Token ${authToken}`,
       },
       body: JSON.stringify(data),
-    }).then((res) => console.log(res));
+    }).then();
   }
 
   const { trigger } = useSWRMutation(
