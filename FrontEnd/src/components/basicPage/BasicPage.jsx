@@ -4,6 +4,8 @@ import MainPage from "../landing-page/MainPage";
 import ProfilePage from "../ProfilePage/ProfilePage";
 import AuthorizationPage from "../authorization/AuthorizationPage";
 import { SignUpPage } from "../SignUp/pages/SignUpPage";
+import { SignUpModalPage } from "../SignUp/pages/SignUpModalPage";
+import { ResendActivationPage } from "../SignUp/pages/ResendActivationPage";
 import PrivacyPolicy from "../PrivacyPolicyPage/privacy/PrivacyPolicyComponent";
 import TermsAndConditions from "../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent";
 import Footer from "../HeaderFooter/footer/Footer";
@@ -29,6 +31,8 @@ function BasicPage() {
             <Route path="/login" element={<AuthorizationPage />} />
           )}
           <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/sign-up/modal" element={<SignUpModalPage />} />
+          <Route path="/sign-up/resend-activation" element={<ResendActivationPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             path="/terms-and-conditions"
