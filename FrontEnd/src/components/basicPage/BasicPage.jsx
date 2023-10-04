@@ -26,6 +26,13 @@ function BasicPage() {
             dotHeight: 6,
             lineHeight: 1,
           },
+          Button: {
+            defaultColor: "#1F9A7C",
+            colorPrimaryHover: "#0b6c61",
+            fontWeight: 600,
+            contentFontSize: 16,
+            fontFamilyCode: "Inter",
+          },
         },
       }}
     >
