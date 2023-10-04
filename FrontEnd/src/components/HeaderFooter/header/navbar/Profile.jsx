@@ -1,16 +1,23 @@
-import avatar_image from "./Avatar.png";
-import css from "./Profile.module.css";
+import avatar_image from './Avatar.png';
+import css from './Profile.module.css';
 import { Link } from 'react-router-dom';
+import Logout from './Logout';
+import DropdownMenu from './DropdownMenu';
 
-function Profile(props) {
-    return (
-        <div className={css["header-profile-section"]}>
-            <img className={css["header-profile__avatar"]} src={avatar_image} alt=""/>
-            <div className={css["header-profile-tab"]}>
-                <Link to='/profile/user-info' className={css["header-profile-link__text"]}>Профіль</Link>
-            </div>
-        </div>
-    );
-};
+function Profile() {
+  return (
+    <div className={css['header-profile-section']}>
+      <img
+        className={css['header-profile__avatar']}
+        src={avatar_image}
+        alt=""
+      />
+      <DropdownMenu toggleText="Профіль">
+        <Link to="/profile/user-info">Профіль</Link>
+        <Logout />
+      </DropdownMenu>
+    </div>
+  );
+}
 
 export default Profile;

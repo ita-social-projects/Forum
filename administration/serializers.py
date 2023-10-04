@@ -11,7 +11,6 @@ User = get_user_model()
 
 
 class AdminUserSerializer(UserSerializer):
-
     phone_number = serializers.SerializerMethodField()
 
     def get_phone_number(self, user):
@@ -29,7 +28,7 @@ class AdminUserSerializer(UserSerializer):
             "email",
             "phone_number",
             "is_active",
-            "is_staff"
+            "is_staff",
         )
         read_only_fields = ("phone_number", "email")
 
@@ -37,7 +36,7 @@ class AdminUserSerializer(UserSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('email', 'name', 'surname')
+        fields = ("email", "name", "surname")
 
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):
@@ -46,44 +45,48 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = (
-            'name',
-            'is_registered',
-            'is_startup',
-            'person',
-            'person_position',
-            'official_name',
-            'phone',
-            'edrpou',
-            'address',
-            'is_deleted'
+            "name",
+            "is_registered",
+            "is_startup",
+            "person",
+            "person_position",
+            "official_name",
+            "phone",
+            "edrpou",
+            "address",
+            "is_deleted",
         )
 
 
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
     person = UserSerializer(read_only=True)
-    categories = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
-    activities = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
+    categories = serializers.SlugRelatedField(
+        many=True, slug_field="name", read_only=True
+    )
+    activities = serializers.SlugRelatedField(
+        many=True, slug_field="name", read_only=True
+    )
 
     class Meta:
         model = Profile
         fields = (
-            'name',
-            'is_registered',
-            'is_startup',
-            'categories',
-            'activities',
-            'person',
-            'person_position',
-            'official_name',
-            'region',
-            'common_info',
-            'phone',
-            'edrpou',
-            'founded',
-            'service_info',
-            'product_info',
-            'address',
-            'startup_idea',
-            'banner_image',
-            'is_deleted'
+            "name",
+            "is_registered",
+            "is_startup",
+            "categories",
+            "activities",
+            "person",
+            "person_position",
+            "official_name",
+            "region",
+            "common_info",
+            "phone",
+            "edrpou",
+            "founded",
+            "service_info",
+            "product_info",
+            "address",
+            "startup_idea",
+            "banner_image",
+            "is_deleted",
         )

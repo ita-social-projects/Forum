@@ -41,7 +41,7 @@ export default function OneSelectChip(props) {
           {props.label}
         </label>
       </div>
-      <FormControl sx={{ width: props.selectedWidth ? props.selectedWidth : 257}} size='small' >
+      <FormControl sx={{ width: props.selectedWidth ? props.selectedWidth : 257}} size="small" >
         <InputLabel id="demo-multiple-chip-label" className={css['choose__placeholder']}>{props.defaultValue}</InputLabel>
         <Select
           name={props.name}
@@ -53,8 +53,8 @@ export default function OneSelectChip(props) {
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                 <Chip
-                 label={selected} 
-                 sx={{color: '#1F9A7C', backgroundColor: 'white', border: '1px solid #1F9A7C'}}/>    
+                 label={selected}
+                 sx={{color: '#1F9A7C', backgroundColor: 'white', border: '1px solid #1F9A7C'}}/>
             </Box>
           )}
           MenuProps={MenuProps}

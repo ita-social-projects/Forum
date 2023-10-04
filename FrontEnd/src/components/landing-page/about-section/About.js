@@ -1,6 +1,6 @@
 import './About.css';
-import AboutSectionCards from "./cards/AboutCards";
-import AboutSectionText from "./about-text/AboutText";
+import AboutSectionCards from './cards/AboutCards';
+import AboutSectionText from './about-text/AboutText';
 
 
 const MainAboutSection = () => {
@@ -19,7 +19,7 @@ const MainAboutSection = () => {
             <img className="about-us-section-content__image" src={`${process.env.PUBLIC_URL}/img/about.jpeg`} alt=""/>
           </div></div>
         </div>
-    )
-}
+    );
+};
 
 export default MainAboutSection;

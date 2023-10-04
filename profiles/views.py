@@ -1,17 +1,43 @@
 import django_filters
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, \
-    ListAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
+from rest_framework.generics import (
+    CreateAPIView,
+    ListCreateAPIView,
+    DestroyAPIView,
+    RetrieveUpdateDestroyAPIView,
+    ListAPIView,
+)
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly,
+    IsAuthenticated,
+    IsAdminUser,
+)
 from rest_framework.response import Response
 
 from forum.pagination import ForumPagination
-from .models import SavedCompany, Profile, ViewedCompany, Category, Activity, Region
+from .models import (
+    SavedCompany,
+    Profile,
+    ViewedCompany,
+    Category,
+    Activity,
+    Region,
+)
 from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, IsOwnCompany
-from .serializers import (SavedCompanySerializer, ProfileSerializer, ViewedCompanySerializer,
-                          ProfileSensitiveDataROSerializer, ProfileDetailSerializer, CategorySerializer,
-                          ActivitySerializer, RegionSerializer)
+from .serializers import (
+    SavedCompanySerializer,
+    ProfileListSerializer,
+    ViewedCompanySerializer,
+    ProfileSensitiveDataROSerializer,
+    ProfileDetailSerializer,
+    ProfileOwnerDetailViewSerializer,
+    ProfileOwnerDetailEditSerializer,
+    CategorySerializer,
+    ActivitySerializer,
+    RegionSerializer,
+    ProfileCreateSerializer,
+)
 from .filters import ProfileFilter
 
 
@@ -20,6 +46,7 @@ class SavedCompaniesCreate(CreateAPIView):
     List of saved companies.
     Add a company to the saved list.
     """
+
     permission_classes = [IsAuthenticated, IsOwnCompany]
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
@@ -33,7 +60,9 @@ class SavedCompaniesCreate(CreateAPIView):
             saved_company_destroyer = SavedCompaniesDestroy()
             return saved_company_destroyer.destroy(request, pk)
 
-        serializer = SavedCompanySerializer(data={"company": pk, "user": user.id})
+        serializer = SavedCompanySerializer(
+            data={"company": pk, "user": user.id}
+        )
         if serializer.is_valid():
             serializer.save()
             return Response({"Company added": serializer.data})
@@ -44,13 +73,18 @@ class SavedCompaniesDestroy(DestroyAPIView):
     """
     Remove the company from the saved list.
     """
+
     permission_classes = [IsAuthenticated]
 
     def destroy(self, request, pk):
         user = request.user
-        saved_company = get_object_or_404(SavedCompany, company_id=pk, user=user)
+        saved_company = get_object_or_404(
+            SavedCompany, company_id=pk, user=user
+        )
         saved_company.delete()
-        return Response(f"Company {pk} deleted", status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            f"Company {pk} deleted", status=status.HTTP_204_NO_CONTENT
+        )
 
 
 class ProfileList(ListCreateAPIView):
@@ -59,16 +93,26 @@ class ProfileList(ListCreateAPIView):
      include_deleted: bool
      include_all: bool.
     """
-    serializer_class = ProfileSerializer
+
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = ForumPagination
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = ProfileFilter
 
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return ProfileListSerializer
+        else:
+            return ProfileCreateSerializer
+
     def get_serializer_context(self):
         context = super().get_serializer_context()
         if self.request.user.is_authenticated:
-            saved_companies_pk = frozenset(SavedCompany.objects.filter(user=self.request.user).values_list("company_id", flat=True))
+            saved_companies_pk = frozenset(
+                SavedCompany.objects.filter(
+                    user=self.request.user
+                ).values_list("company_id", flat=True)
+            )
             context.update({"saved_companies_pk": saved_companies_pk})
         return context
 
@@ -97,29 +141,38 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         Else profile info without sensitive data returned.
         If user is authenticated, he can get sensitive data via query param 'with_contacts'.
     """
+
     queryset = Profile.objects.filter(is_deleted=False)
     permission_classes = [UserIsProfileOwnerOrReadOnly]
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
         if self.request.user.is_authenticated:
-            saved_companies_pk = frozenset(SavedCompany.objects.filter(user=self.request.user).values_list("company_id", flat=True))
+            saved_companies_pk = frozenset(
+                SavedCompany.objects.filter(
+                    user=self.request.user
+                ).values_list("company_id", flat=True)
+            )
             context.update({"saved_companies_pk": saved_companies_pk})
         return context
 
     def get_serializer_class(self):
         get_contacts = self.request.query_params.get("with_contacts")
 
-        profile_pk = self.kwargs.get('pk')
+        profile_pk = self.kwargs.get("pk")
         profile_instance = Profile.objects.filter(id=profile_pk).first()
         user_pk = self.request.user.id
 
-        if self.request.method == 'GET':
+        if self.request.method == "GET":
             if profile_instance.person.id == user_pk:
-                return ProfileSerializer
-            return ProfileSensitiveDataROSerializer if get_contacts else ProfileDetailSerializer
+                return ProfileOwnerDetailViewSerializer
+            return (
+                ProfileSensitiveDataROSerializer
+                if get_contacts
+                else ProfileDetailSerializer
+            )
         else:
-            return ProfileSerializer
+            return ProfileOwnerDetailEditSerializer
 
     def perform_destroy(self, instance):
         instance.is_deleted = True
@@ -133,7 +186,9 @@ class ViewedCompanyList(ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.request.user.id
-        return ViewedCompany.objects.filter(user=user_id).order_by("company_id")
+        return ViewedCompany.objects.filter(user=user_id).order_by(
+            "company_id"
+        )
 
 
 class CategoryList(ListCreateAPIView):
@@ -163,4 +218,3 @@ class ActivityDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = ActivitySerializer
     permission_classes = (IsAdminUser,)
     queryset = Activity.objects.all()
-
