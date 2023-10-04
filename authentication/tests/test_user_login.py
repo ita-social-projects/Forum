@@ -38,7 +38,11 @@ class UserLoginAPITests(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            {'non_field_errors': ['Unable to log in with provided credentials.']},
+            {
+                "non_field_errors": [
+                    "Unable to log in with provided credentials."
+                ]
+            },
             response.json(),
         )
 
@@ -55,6 +59,10 @@ class UserLoginAPITests(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            {'non_field_errors': ['Unable to log in with provided credentials.']},
+            {
+                "non_field_errors": [
+                    "Unable to log in with provided credentials."
+                ]
+            },
             response.json(),
         )
