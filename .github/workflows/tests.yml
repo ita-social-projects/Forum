@@ -10,10 +10,10 @@ env:
   DB_PORT: 5432
   EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
   EMAIL_HOST: smtp.gmail.com
-  EMAIL_PORT: 587
+  EMAIL_PORT: 572
   EMAIL_USE_TLS: 1
-  EMAIL_HOST_USER: forumsoftserve@gmail.com
-  EMAIL_HOST_PASSWORD: evezhjqcfubkudrg
+  EMAIL_HOST_USER: test@test.com
+  EMAIL_HOST_PASSWORD: Test1234
   CORS_ORIGIN_WHITELIST: ''
 
 jobs:
