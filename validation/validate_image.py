@@ -7,11 +7,14 @@ def validate_image_format(image: Image):
     img = Image.open(image)
     format_ = img.format
     if format_ not in valid_formats:
-        raise ValidationError("Unsupported image format. Only PNG and JPEG are allowed.")
+        raise ValidationError(
+            "Unsupported image format. Only PNG and JPEG are allowed."
+        )
 
 
 def validate_image_size(image: Image):
     import sys
+
     max_size = sys.getsizeof(image)
     if max_size > 50:
         raise ValidationError("Image size exceeds the maximum allowed (50MB).")

@@ -9,13 +9,13 @@ const generalDesc = 'Зробіть зміни для електронної п�
 
 const Description = (props) => {
     return (
-        <div className={css["description__section"]}>
+        <div className={css['description__section']}>
             <img
-                className={css["description__avatar"]}
+                className={css['description__avatar']}
                 src={`${process.env.PUBLIC_URL}/profilepage/initialCompanyLogo.png`}
                 alt=""
             />
-            <div className={css["description__content"]}>
+            <div className={css['description__content']}>
                 <div className={css['company__attributes']}>
                     <div className={css['companyName']}>{props.companyName.toUpperCase()}</div>
                 </div>

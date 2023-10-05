@@ -1,93 +1,85 @@
-import css from "./FooterNavigation.module.css";
-import { HashLink } from "react-router-hash-link";
+import css from './FooterNavigation.module.css';
+import { HashLink } from 'react-router-hash-link';
+import { Link } from "react-router-dom";
 
 const PAGE_NAVIGATION_LINKS = [
   {
-    id: "pnl0",
-    title: "Головна",
-    link: "/",
+    title: 'Головна',
+    link: '/',
   },
   {
-    id: "pnl1",
-    title: "Компанії",
-    link: "#",
+    title: 'Компанії',
+    link: '/profiles/companies',
   },
   {
-    id: "pnl2",
-    title: "Стартапи",
-    link: "#",
+    title: 'Стартапи',
+    link: '/profiles/startups',
   },
   {
-    id: "pnl3",
-    title: "Про нас",
-    link: "/#about-us",
+    title: 'Про нас',
+    link: '/#about-us',
   },
 ];
 const SERVICES_LINKS = [
   {
-    id: "sl0",
-    title: "Виробники",
-    link: "#",
+    title: 'Виробники',
+    link: '/profiles/producers',
   },
   {
-    id: "sl1",
-    title: "Імпортери",
-    link: "#",
+    title: 'Імпортери',
+    link: '/profiles/importers',
   },
   {
-    id: "sl2",
-    title: "Роздрібні мережі",
-    link: "#",
+    title: 'Роздрібні мережі',
+    link: '/profiles/retailers',
   },
   {
-    id: "sl3",
-    title: "HORECA",
-    link: "#",
+    title: 'HORECA',
+    link: '/profiles/horeca',
   },
   {
-    id: "sl4",
-    title: "Інші послуги",
-    link: "#",
+    title: 'Інші послуги',
+    link: '#',
   },
 ];
 const CONTACTS = [
-  "Контакти",
-  "qwerty@gmail.com",
-  "+38 050 234 23 23",
-  "Львівська Політехніка",
-  "вул. Степана Бандери 12, Львів",
+  'Контакти',
+  'qwerty@gmail.com',
+  '+38 050 234 23 23',
+  'Львівська Політехніка',
+  'вул. Степана Бандери 12, Львів',
 ];
 
 function FooterNavigation() {
   return (
-    <div className={css["navigation-content"]}>
-      <div className={css["navigation-content-section"]}>
+    <div className={css['navigation-content']}>
+      <div className={css['navigation-content-section']}>
         {PAGE_NAVIGATION_LINKS.map((element) => (
           <HashLink
-            key={element.id}
-            className={css["navigation-content-section__text"]}
+            key={element.link}
+            className={css['navigation-content-section__text']}
             to={element.link}
           >
             {element.title}
           </HashLink>
         ))}
       </div>
-      <div className={css["navigation-content-section"]}>
+      <div className={css['navigation-content-section']}>
         {SERVICES_LINKS.map((element) => (
-          <a
-            className={css["navigation-content-section-service__text"]}
-            key={element.id}
-            href={element.link}
+          <Link
+            className={css['navigation-content-section-service__text']}
+            key={element.link}
+            to={element.link}
           >
             {element.title}
-          </a>
+          </Link>
         ))}
       </div>
-      <div className={css["navigation-content-section"]}>
+      <div className={css['navigation-content-section']}>
         {CONTACTS.map((element, index) => (
           <label
             key={index}
-            className={css["navigation-content-section-service__text"]}
+            className={css['navigation-content-section-service__text']}
           >
             {element}
           </label>

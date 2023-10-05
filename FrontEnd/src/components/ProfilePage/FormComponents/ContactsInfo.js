@@ -68,13 +68,13 @@ const ContactsInfo = (props) => {
 
     return (
         <div className={css['form__container']}>
-            <form id='ContactsInfo' onSubmit={handleSubmit} autoComplete='off' noValidate>
+            <form id="ContactsInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
                         <HalfFormField
-                            inputType='tel'
-                            name='phoneNumber'
-                            fieldPlaceholder='+38'
+                            inputType="tel"
+                            name="phoneNumber"
+                            fieldPlaceholder="+38"
                             label={LABELS.phoneNumber}
                             updateHandler={onUpdatePhoneNumberField}
                             requredField={false}
@@ -82,8 +82,8 @@ const ContactsInfo = (props) => {
                             error={phoneNumberError}
                         />
                         <HalfFormField
-                            inputType='text'
-                            name='companyEmail'
+                            inputType="text"
+                            name="companyEmail"
                             label={LABELS.companyEmail}
                             updateHandler={onUpdateField}
                             requredField={false}
@@ -91,59 +91,59 @@ const ContactsInfo = (props) => {
                         />
                     </div>
                     <FullField
-                        name='companySite'
+                        name="companySite"
                         label={LABELS.companySite}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.companySite}
-                        fieldPlaceholder='Введіть URL'
+                        fieldPlaceholder="Введіть URL"
                     />
                     <FullField
-                        name='address'
+                        name="address"
                         label={LABELS.address}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.address}
                     />
                     <FullField
-                        name='Facebook'
+                        name="Facebook"
                         label={LABELS.Facebook}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.Facebook}
-                        fieldPlaceholder='Введіть URL'
+                        fieldPlaceholder="Введіть URL"
                     />
                     <FullField
-                        name='Instagram'
+                        name="Instagram"
                         label={LABELS.Instagram}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.Instagram}
-                        fieldPlaceholder='Введіть URL'
+                        fieldPlaceholder="Введіть URL"
                     />
                     <FullField
-                        name='Tiktok'
+                        name="Tiktok"
                         label={LABELS.Tiktok}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.Tiktok}
-                        fieldPlaceholder='Введіть URL'
+                        fieldPlaceholder="Введіть URL"
                     />
                     <FullField
-                        name='LinkedIn'
+                        name="LinkedIn"
                         label={LABELS.LinkedIn}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.LinkedIn}
-                        fieldPlaceholder='Введіть URL'
+                        fieldPlaceholder="Введіть URL"
                     />
                     <FullField
-                        name='Youtube'
+                        name="Youtube"
                         label={LABELS.Youtube}
                         updateHandler={onUpdateField}
                         requredField={false}
                         value={user.Youtube}
-                        fieldPlaceholder='Введіть URL'
+                        fieldPlaceholder="Введіть URL"
                     />
                 </div>
             </form>

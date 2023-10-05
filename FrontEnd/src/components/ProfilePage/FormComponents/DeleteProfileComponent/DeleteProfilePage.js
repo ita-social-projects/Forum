@@ -9,7 +9,7 @@ const DeleteProfilePage = (props) => {
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
     }, []);
-    
+
     const cancelHandler = () => {
         setModal(false);
     };
