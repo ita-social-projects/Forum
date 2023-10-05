@@ -5,10 +5,10 @@ import { useState } from 'react';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
 import axios from 'axios';
 import { useEffect } from 'react';
-
+import Loader from '../loader/Loader';
 
 const ProfilePage = () => {
-    const authToken = localStorage.getItem("Token");
+    const authToken = localStorage.getItem('Token');
     const [backUser, setBackUser] = useState(null);
     const [mainProfile, setMainProfile] = useState(null);
     const [formName, setFormName] = useState('');
@@ -35,42 +35,56 @@ const ProfilePage = () => {
     useEffect(() => {
         if (backUser) {
             axios.get(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${backUser.profile_id}`, {
-                headers: {
-                    'Authorization': `token ${authToken}`
-                }
             })
                 .then((res) => {
                     setMainProfile(res.data);
+                    setIsLoading(false);
                 })
                 .catch((error) => {
                     console.error(error);
-                })
-                .finally(() => {
-                    setIsLoading(false);
                 });
         }
 
     }, [backUser]);
 
 
-    const userUpdateHandler = (myUser) => {
-        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
-            name: myUser.name,
-            surname: myUser.surname,
-        })
-            .then(response => console.log(response.data))
-            .catch(error => console.error(error));
+    const userInfoUpdateHandler = (myUser, myProfile) => {
+        if ((myUser.name != backUser.name) || (myUser.surname != backUser.surname)) {
+            axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
+                name: myUser.name,
+                surname: myUser.surname,
+            })
+                .then(response => {
+                    setBackUser(response.data);
+                })
+                .catch(error => console.error(error));
+        }
+
+        if (myProfile.person_position != mainProfile.person_position) {
+            axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${myUser.profile_id}`, {
+                person_position: myProfile.person_position,
+            })
+                .then(response => {
+                    setMainProfile(response.data);
+                })
+                .catch(error => console.error(error));
+        }
     };
 
     return (
         <div className={css['container']}>
-            <BreadCrumbs currentPage='Профіль' />
+            <BreadCrumbs currentPage="Профіль" />
             {isLoading
-                ? <div>Loading...</div>
+                ? <Loader />
                 :
                 <>
                     <Description companyName={mainProfile.name} formName={formName} />
-                    <ProfileContent user={backUser} profile={mainProfile} onUpdate={userUpdateHandler} currentFormNameHandler={currentFormNameHandler} formName={formName} />
+                    <ProfileContent
+                        user={backUser}
+                        profile={mainProfile}
+                        onUserInfoUpdate={userInfoUpdateHandler}
+                        currentFormNameHandler={currentFormNameHandler}
+                        formName={formName} />
                 </>}
         </div>
     );

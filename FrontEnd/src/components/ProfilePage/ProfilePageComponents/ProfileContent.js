@@ -1,39 +1,39 @@
 import css from './ProfileContent.module.css';
-import { Link, NavLink, Route, Routes, Navigate } from 'react-router-dom';
-import AdditionalInfo from '../FormComponents/AdditionalInfo';
-import ContactsInfo from '../FormComponents/ContactsInfo';
-import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
-import GeneralInfo from '../FormComponents/GeneralInfo';
-import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
-import StartupInfo from '../FormComponents/StartupInfo';
+import { Link, NavLink, Route, Routes } from 'react-router-dom';
+// import AdditionalInfo from '../FormComponents/AdditionalInfo';
+// import ContactsInfo from '../FormComponents/ContactsInfo';
+// import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
+// import GeneralInfo from '../FormComponents/GeneralInfo';
+// import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
+// import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
 
 const INFOLINKS = [
     {
-        title: "Інформація про користувача",
-        link: "/user-info",
+        title: 'Інформація про користувача',
+        link: '/user-info',
     },
     {
-        title: "Загальна інформація",
-        link: "/general-info",
+        title: 'Загальна інформація',
+        link: '/general-info',
     },
     {
-        title: "Контакти",
-        link: "/contacts",
+        title: 'Контакти',
+        link: '/contacts',
     },
     {
-        title: "Інформація про товари/ послуги",
-        link: "/products-service-info",
+        title: 'Інформація про товари/ послуги',
+        link: '/products-service-info',
     },
     {
-        title: "Додаткова інформація",
-        link: "/additional-info",
+        title: 'Додаткова інформація',
+        link: '/additional-info',
     },
     {
-        title: "Стартап",
-        link: "/startup",
+        title: 'Стартап',
+        link: '/startup',
     },
 ];
 
@@ -60,12 +60,12 @@ const ProfileContent = (props) => {
                         >{element.title}</NavLink>
                     ))}
                     <div className={css['divider']}></div>
-                    <Link to='/profile/delete' className={`${css['infolink']} ${css['delete']}`}>Видалити профіль</Link>
+                    <Link to="/profile/delete" className={`${css['infolink']} ${css['delete']}`}>Видалити профіль</Link>
                 </div>
 
                 <Routes>
                     {/* <Route path="/delete" element={<DeleteProfilePage user={props.user} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[6]} />} /> */}
-                    <Route path="/user-info" element={<UserInfo user={props.user} profile={props.profile} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[0]} />} />
+                    <Route path="/user-info" element={<UserInfo user={props.user} profile={props.profile} onUpdate={props.onUserInfoUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[0]} />} />
                     {/* <Route path="/general-info" element={<GeneralInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[1]} />} />
                     <Route path="/contacts" element={<ContactsInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[2]} />} />
                     <Route path="/products-service-info" element={<ProductServiceInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[3]} />} />
