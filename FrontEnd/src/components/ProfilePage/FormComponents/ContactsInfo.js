@@ -5,7 +5,7 @@ import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 
 const LABELS = {
-    'phoneNumber': 'Телефон',
+    'phone': 'Телефон',
     'companyEmail': 'Електронна пошта',
     'companySite': 'Сайт',
     'address': 'Адрес(и)',
@@ -17,7 +17,7 @@ const LABELS = {
 };
 
 const ContactsInfo = (props) => {
-    const [user, setUser] = useState(props.user);
+    const [profile, setProfile] = useState(props.profile);
     const [phoneNumberError, setPhoneNumberError] = useState(null);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const ContactsInfo = (props) => {
     }, []);
 
     const onUpdateField = e => {
-        setUser((prevState) => {
+        setProfile((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
     };
@@ -35,22 +35,22 @@ const ContactsInfo = (props) => {
         const parsedNumber = Number(receivedPhoneNumber);
         const isInteger = Number.isInteger(parsedNumber);
         if (isInteger) {
-            if (receivedPhoneNumber && receivedPhoneNumber.length !== 10) {
-                setPhoneNumberError('Номер повинен містити 10 цифр');
+            if (receivedPhoneNumber && receivedPhoneNumber.length !== 12) {
+                setPhoneNumberError('Номер повинен містити 12 цифр');
             } else {
                 setPhoneNumberError(null);
             }
         } else {
             setPhoneNumberError('Номер повинен містити лише цифри');
         }
-        setUser((prevState) => {
+        setProfile((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
     };
 
     const validateForm = () => {
         let isValid = true;
-        if (user.phoneNumber && (user.phoneNumber.length !== 10 || !Number.isInteger(Number(user.phoneNumber)))) {
+        if (profile.phoneNumber && (profile.phoneNumber.length !== 12 || !Number.isInteger(Number(profile.phoneNumber)))) {
             isValid = false;
         }
         return isValid;
@@ -59,7 +59,7 @@ const ContactsInfo = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (validateForm()) {
-            props.onUpdate(user);
+            props.onUpdate(profile);
             // TODO something
         } else {
             // TODO something
@@ -73,44 +73,44 @@ const ContactsInfo = (props) => {
                     <div className={css['fields-groups']}>
                         <HalfFormField
                             inputType="tel"
-                            name="phoneNumber"
-                            fieldPlaceholder="+38"
-                            label={LABELS.phoneNumber}
+                            name="phone"
+                            fieldPlaceholder="38"
+                            label={LABELS.phone}
                             updateHandler={onUpdatePhoneNumberField}
                             requredField={false}
-                            value={user.phoneNumber}
+                            value={profile.phone ?? ''}
                             error={phoneNumberError}
                         />
-                        <HalfFormField
+                        {/* <HalfFormField
                             inputType="text"
                             name="companyEmail"
                             label={LABELS.companyEmail}
                             updateHandler={onUpdateField}
                             requredField={false}
-                            value={user.companyEmail}
-                        />
+                            value={profile.companyEmail}
+                        /> */}
                     </div>
-                    <FullField
+                    {/* <FullField
                         name="companySite"
                         label={LABELS.companySite}
                         updateHandler={onUpdateField}
                         requredField={false}
-                        value={user.companySite}
+                        value={profile.companySite}
                         fieldPlaceholder="Введіть URL"
-                    />
+                    /> */}
                     <FullField
                         name="address"
                         label={LABELS.address}
                         updateHandler={onUpdateField}
                         requredField={false}
-                        value={user.address}
+                        value={profile.address ?? ''}
                     />
-                    <FullField
+                    {/* <FullField
                         name="Facebook"
                         label={LABELS.Facebook}
                         updateHandler={onUpdateField}
                         requredField={false}
-                        value={user.Facebook}
+                        value={profile.Facebook}
                         fieldPlaceholder="Введіть URL"
                     />
                     <FullField
@@ -118,7 +118,7 @@ const ContactsInfo = (props) => {
                         label={LABELS.Instagram}
                         updateHandler={onUpdateField}
                         requredField={false}
-                        value={user.Instagram}
+                        value={profile.Instagram}
                         fieldPlaceholder="Введіть URL"
                     />
                     <FullField
@@ -126,7 +126,7 @@ const ContactsInfo = (props) => {
                         label={LABELS.Tiktok}
                         updateHandler={onUpdateField}
                         requredField={false}
-                        value={user.Tiktok}
+                        value={profile.Tiktok}
                         fieldPlaceholder="Введіть URL"
                     />
                     <FullField
@@ -134,7 +134,7 @@ const ContactsInfo = (props) => {
                         label={LABELS.LinkedIn}
                         updateHandler={onUpdateField}
                         requredField={false}
-                        value={user.LinkedIn}
+                        value={profile.LinkedIn}
                         fieldPlaceholder="Введіть URL"
                     />
                     <FullField
@@ -142,9 +142,9 @@ const ContactsInfo = (props) => {
                         label={LABELS.Youtube}
                         updateHandler={onUpdateField}
                         requredField={false}
-                        value={user.Youtube}
+                        value={profile.Youtube}
                         fieldPlaceholder="Введіть URL"
-                    />
+                    /> */}
                 </div>
             </form>
         </div>
