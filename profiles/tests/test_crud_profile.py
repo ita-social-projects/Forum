@@ -501,6 +501,7 @@ class TestProfileDetailAPIView(APITestCase):
         category = CategoryFactory()
         activity = ActivityFactory()
         self.client.force_authenticate(self.user)
+        print(self.user.id, self.profile.person.id, '*'*100)
 
         response = self.client.put(
             path="/api/profiles/{profile_id}".format(
