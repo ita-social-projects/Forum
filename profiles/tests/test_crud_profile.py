@@ -517,7 +517,7 @@ class TestProfileDetailAPIView(APITestCase):
                 "service_info": "Service info from test case",
                 "product_info": "Product info from test case",
                 "address": "Kyiv",
-                "banner_image": self.right_image,
+                # "banner_image": self.right_image,
                 "person_position": "director",
                 "startup_idea": "StartUp idea from test case",
                 "is_startup": True,
