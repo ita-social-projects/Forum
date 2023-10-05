@@ -5,75 +5,69 @@ import useSWR from 'swr';
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
-import ImageField from './FormFields/ImageField';
-import MultipleSelectChip from './FormFields/MultipleSelectChip';
+// import ImageField from './FormFields/ImageField';
+// import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
+import Loader from '../../loader/Loader';
 
 const LABELS = {
-    'companyName': 'Назва компанії',
+    'name': 'Назва компанії',
     'brend': 'Бренд',
-    'companyOfficialName': 'Юридична назва компанії',
+    'official_name': 'Юридична назва компанії',
     'edrpou': 'ЄДРПОУ / ІПН',
-    'regions': 'Регіон(и)',
+    'region': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
     'bannerImage': 'Зображення для банера',
     'logo': 'Логотип',
     'slogan': 'Візія, слоган',
-    'companyInfo': 'Інформація про компанію',
-    'companyCheckbox': 'Зареєстрована компанія',
-    'startupCheckbox': 'Стартап проект, який шукає інвестиції',
+    'common_info': 'Інформація про компанію',
+    'is_registered': 'Зареєстрована компанія',
+    'is_startup': 'Стартап проект, який шукає інвестиції',
 };
 
-const CATEGORIES = [
-    { name: 'Вино' },
-    { name: 'Продукти переробляння молока' },
-    { name: 'Соуси' },
-    { name: 'Кава' },
-    { name: 'Чай та чайні напої' },
-    { name: 'Алкоголь' },
-    { name: 'Упакування' },
-    { name: 'Кондитерські вироби' },
-    { name: 'Спеції' },
-];
-
-const ACTIVITIES = [
-    { name: 'Виробництво' },
-    { name: 'Роздрібна мережа' },
-    { name: 'Імпортер' },
-    { name: 'HORECA' },
-    { name: 'Інші послуги' },
-];
+// const ACTIVITIES = [
+//     { name: 'Виробництво' },
+//     { name: 'Роздрібна мережа' },
+//     { name: 'Імпортер' },
+//     { name: 'HORECA' },
+//     { name: 'Інші послуги' },
+// ];
 
 const ERRORS = {
-    companyName: {
+    name: {
         'error': false,
         'message': ''
     },
-    categories: {
-        'error': false,
-        'message': ''
-    },
-    activities: {
-        'error': false,
-        'message': ''
-    },
+    // categories: {
+    //     'error': false,
+    //     'message': ''
+    // },
+    // activities: {
+    //     'error': false,
+    //     'message': ''
+    // },
 };
 
 const TEXT_AREA_MAX_LENGTH = 1000;
-const IMAGE_SIZE = 50 * 1024 * 1024;
+// const IMAGE_SIZE = 50 * 1024 * 1024;
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 const GeneralInfo = (props) => {
-    const [user, setUser] = useState(props.user);
+    const [profile, setProfile] = useState(props.profile);
+    // const organizedActivities = props.profile.activities;
+    // console.log(organizedActivities);
+    // fetchedActivities.find((el) => el.key === profile.activities)?.value
     const [formStateErr, setFormStateErr] = useState(ERRORS);
-    const [imageBannerError, setImageBannerError] = useState(null);
-    const [imageLogoError, setImageLogoError] = useState(null);
+    // const [imageBannerError, setImageBannerError] = useState(null);
+    // const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
 
-    const { data: fetchedRegions, isLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
+    const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
+
+    // const { data: fetchedActivities, isLoading: isActivitiesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/activities/`, fetcher);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -82,8 +76,8 @@ const GeneralInfo = (props) => {
     const checkRequiredFields = () => {
         let isValid = true;
         const newFormState = {};
-        for (const key in user) {
-            if ((!user[key] || (typeof user[key] === 'object' && user[key].length === 0)) && key in ERRORS) {
+        for (const key in profile) {
+            if ((!profile[key] || (typeof profile[key] === 'object' && profile[key].length === 0)) && key in ERRORS) {
                 isValid = false;
                 newFormState[key] = {
                     'error': true,
@@ -97,21 +91,21 @@ const GeneralInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
-        if (user.edrpou && user.edrpou.length !== 8) {
+        if (profile.edrpou && profile.edrpou.length !== 8) {
             isValid = false;
         }
         return isValid;
     };
 
     const onUpdateField = e => {
-        setUser((prevState) => {
+        setProfile((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
     };
 
     const onUpdateOneSelectField = e => {
-        setUser((prevState) => {
-            const selectedRegion = fetchedRegions.find((el) => el.value ===  e.target.value);
+        const selectedRegion = fetchedRegions.find((el) => el.value === e.target.value);
+        setProfile((prevState) => {
             return { ...prevState, [e.target.name]: selectedRegion.key };
         });
     };
@@ -119,79 +113,94 @@ const GeneralInfo = (props) => {
     const onUpdateEdrpouField = e => {
         if (e.target.value && e.target.value.length !== 8) {
             setEdrpouError('ЄДРПОУ має містити 8 символів');
-            setUser((prevState) => {
+            setProfile((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
         } else {
             setEdrpouError(null);
-            setUser((prevState) => {
+            setProfile((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
         }
     };
 
-    const onUpdateImageField = e => {
-        const file = e.target.files[0];
-        if (file) {
-            if (file.size > IMAGE_SIZE) {
-                if (e.target.name === 'logo') {
-                    setImageLogoError('Максимальний розмір файлу 50Mb');
-                } else {
-                    setImageBannerError('Максимальний розмір файлу 50Mb');
-                }
-            } else {
-                if (e.target.name === 'logo') {
-                    setImageLogoError(null);
-                } else {
-                    setImageBannerError(null);
-                }
-                setUser((prevState) => {
-                    return { ...prevState, [e.target.name]: file };
-                });
-            }
-        }
-    };
+    // const onUpdateImageField = e => {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //         if (file.size > IMAGE_SIZE) {
+    //             if (e.target.name === 'logo') {
+    //                 setImageLogoError('Максимальний розмір файлу 50Mb');
+    //             } else {
+    //                 setImageBannerError('Максимальний розмір файлу 50Mb');
+    //             }
+    //         } else {
+    //             if (e.target.name === 'logo') {
+    //                 setImageLogoError(null);
+    //             } else {
+    //                 setImageBannerError(null);
+    //             }
+    //             setProfile((prevState) => {
+    //                 return { ...prevState, [e.target.name]: file };
+    //             });
+    //         }
+    //     }
+    // };
 
-    const deleteImageHandler = (name) => {
-        setUser((prevState) => {
-            return { ...prevState, [name]: '' };
-        });
-    };
+    // const deleteImageHandler = (name) => {
+    //     setProfile((prevState) => {
+    //         return { ...prevState, [name]: '' };
+    //     });
+    // };
 
     const onChangeCheckbox = e => {
-        if (e.target.name === 'startupCheckbox') {
-            setUser((prevState) => {
-                return { ...prevState, [e.target.name]: true, 'companyCheckbox': false };
+        if (e.target.name === 'is_startup') {
+            setProfile((prevState) => {
+                return { ...prevState, [e.target.name]: true, 'is_registered': false };
             });
-        } else if (e.target.name === 'companyCheckbox') {
-            setUser((prevState) => {
-                return { ...prevState, [e.target.name]: true, 'startupCheckbox': false };
+        } else if (e.target.name === 'is_registered') {
+            setProfile((prevState) => {
+                return { ...prevState, [e.target.name]: true, 'is_startup': false };
             });
         }
     };
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
-            setUser((prevState) => {
+            setProfile((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
     };
 
-    const onUpdateSelectField = e => {
-        const selectName = e.target.name;
-        const selectedValues = Array.from(e.target.value, option => option);
-        setUser((prevState) => {
-            return { ...prevState, [selectName]: selectedValues };
-        });
-    };
+    // const onUpdateSelectField = e => {
+    //     const selectName = e.target.name;
+    //     const selectedValues = Array.from(e.target.value, option => option);
+    //     setProfile((prevState) => {
+    //         return { ...prevState, [selectName]: selectedValues };
+    //     });
+    // };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        // let selectedActivities = [];
+        // for (let activity of profile.activities) {
+        //     let item = fetchedActivities.find((el) => el.name === activity);
+        //     if (item) {
+        //         selectedActivities.push(item.id);
+        //     }
+        // }
+        // if (checkRequiredFields()) {
+        //     props.onUpdate({ ...profile, 'activities': selectedActivities });
+        //     // TODO something
+        // } else {
+        //     console.log('ff');
+        // }
+
         if (checkRequiredFields()) {
-            props.onUpdate(user);
+            props.onUpdate(profile);
             // TODO something
         } else {
-            // TODO something
+            console.log('error');
         }
     };
     return (
@@ -200,28 +209,28 @@ const GeneralInfo = (props) => {
                 <div className={css['fields']}>
                     <div className={css['fields-groups']}>
                         <HalfFormField
-                            name="companyName"
-                            label={LABELS.companyName}
+                            name="name"
+                            label={LABELS.name}
                             updateHandler={onUpdateField}
-                            error={formStateErr['companyName']['error'] ? formStateErr['companyName']['message'] : null}
+                            error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
                             requredField={true}
-                            value={user.companyName}
+                            value={profile.name}
                         />
-                        <HalfFormField
+                        {/* <HalfFormField
                             inputType="text"
                             name="brend"
                             label={LABELS.brend}
                             updateHandler={onUpdateField}
                             requredField={false}
-                            value={user.brend}
-                        />
+                            value={profile.brend ?? ''}
+                        /> */}
                     </div>
                     <FullField
-                        name="companyOfficialName"
-                        label={LABELS.companyOfficialName}
+                        name="official_name"
+                        label={LABELS.official_name}
                         updateHandler={onUpdateField}
                         requredField={false}
-                        value={user.companyOfficialName}
+                        value={profile.official_name ?? ''}
                     />
                     <div className={css['fields-groups']}>
                         <HalfFormField
@@ -230,50 +239,58 @@ const GeneralInfo = (props) => {
                             label={LABELS.edrpou}
                             updateHandler={onUpdateEdrpouField}
                             requredField={false}
-                            value={user.edrpou}
+                            value={profile.edrpou ?? ''}
                             error={edrpouError}
                         />
-                        {!isLoading &&
-                        <OneSelectChip
-                            name="regions"
-                            options={fetchedRegions}
-                            label={LABELS.regions}
-                            updateHandler={onUpdateOneSelectField}
-                            requredField={false}
-                            defaultValue="Оберіть"
-                            value={fetchedRegions.find((el) => el.key ===  user.regions)?.value ?? ''}
-                        />
-                    }
+                        {isRegionLoading
+                            ?
+                            <Loader />
+                            :
+                            <OneSelectChip
+                                name="region"
+                                options={fetchedRegions}
+                                label={LABELS.region}
+                                updateHandler={onUpdateOneSelectField}
+                                requredField={false}
+                                defaultValue="Оберіть"
+                                value={fetchedRegions.find((el) => el.key === profile.region)?.value ?? ''}
+                            />
+                        }
                     </div>
                     <div className={css['fields-groups']}>
+                        {/* {isActivitiesLoading
+                            ?
+                            <Loader />
+                            :
                         <MultipleSelectChip
                             name="activities"
-                            options={ACTIVITIES}
+                            options={fetchedActivities}
                             label={LABELS.activities}
                             updateHandler={onUpdateSelectField}
                             requredField={true}
-                            value={user.activities}
+                            value={profile.activities.map(obj => obj.name) ?? ''}
                             defaultValue="Оберіть"
                             error={formStateErr['activities']['error'] ? formStateErr['activities']['message'] : null}
                         />
-                        <MultipleSelectChip
+                    } */}
+                        {/* <MultipleSelectChip
                             name="categories"
                             options={CATEGORIES}
                             label={LABELS.categories}
                             updateHandler={onUpdateSelectField}
                             requredField={true}
-                            value={user.categories}
+                            value={profile.categories}
                             defaultValue="Оберіть"
                             error={formStateErr['categories']['error'] ? formStateErr['categories']['message'] : null}
-                        />
+                        /> */}
                     </div>
-                    <ImageField
+                    {/* <ImageField
                         inputType="file"
                         name="bannerImage"
                         label={LABELS.bannerImage}
                         updateHandler={onUpdateImageField}
                         requredField={false}
-                        value={user.bannerImage.name}
+                        value={profile.bannerImage.name}
                         error={imageBannerError}
                         onDeleteImage={deleteImageHandler}
                     />
@@ -283,32 +300,32 @@ const GeneralInfo = (props) => {
                         label={LABELS.logo}
                         updateHandler={onUpdateImageField}
                         requredField={false}
-                        value={user.logo.name}
+                        value={profile.logo.name}
                         error={imageLogoError}
                         onDeleteImage={deleteImageHandler}
-                    />
-                    <TextField
+                    /> */}
+                    {/* <TextField
                         name="slogan"
                         label={LABELS.slogan}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
-                        value={user.slogan}
+                        value={profile.slogan ?? ''}
                         maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
+                    /> */}
                     <TextField
-                        name="companyInfo"
-                        label={LABELS.companyInfo}
+                        name="common_info"
+                        label={LABELS.common_info}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
-                        value={user.companyInfo}
+                        value={profile.common_info ?? ''}
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <CheckBoxField
                         name="companyType"
-                        nameRegister="companyCheckbox"
-                        valueRegister={user.companyCheckbox}
-                        nameStartup="startupCheckbox"
-                        valueStartup={user.startupCheckbox}
+                        nameRegister="is_registered"
+                        valueRegister={profile.is_registered}
+                        nameStartup="is_startup"
+                        valueStartup={profile.is_startup}
                         updateHandler={onChangeCheckbox}
                         requredField={true}
                     />

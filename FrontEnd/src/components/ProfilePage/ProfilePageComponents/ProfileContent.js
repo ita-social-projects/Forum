@@ -3,7 +3,7 @@ import { Link, NavLink, Route, Routes } from 'react-router-dom';
 // import AdditionalInfo from '../FormComponents/AdditionalInfo';
 // import ContactsInfo from '../FormComponents/ContactsInfo';
 // import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
-// import GeneralInfo from '../FormComponents/GeneralInfo';
+import GeneralInfo from '../FormComponents/GeneralInfo';
 // import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
 // import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
@@ -65,9 +65,21 @@ const ProfileContent = (props) => {
 
                 <Routes>
                     {/* <Route path="/delete" element={<DeleteProfilePage user={props.user} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[6]} />} /> */}
-                    <Route path="/user-info" element={<UserInfo user={props.user} profile={props.profile} onUpdate={props.onUserInfoUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[0]} />} />
-                    {/* <Route path="/general-info" element={<GeneralInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[1]} />} />
-                    <Route path="/contacts" element={<ContactsInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[2]} />} />
+                    <Route
+                        path="/user-info"
+                        element={<UserInfo user={props.user}
+                            profile={props.profile}
+                            onUpdate={props.onUserInfoUpdate}
+                            currentFormNameHandler={props.currentFormNameHandler}
+                            curForm={FORM_NAMES[0]} />} />
+                    <Route
+                        path="/general-info"
+                        element={<GeneralInfo
+                            profile={props.profile}
+                            onUpdate={props.onGeneralInfoUpdate}
+                            currentFormNameHandler={props.currentFormNameHandler}
+                            curForm={FORM_NAMES[1]} />} />
+                    {/*<Route path="/contacts" element={<ContactsInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[2]} />} />
                     <Route path="/products-service-info" element={<ProductServiceInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[3]} />} />
                     <Route path="/additional-info" element={<AdditionalInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[4]} />} />
                     <Route path="/startup" element={<StartupInfo user={props.user} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[5]} />} /> */}

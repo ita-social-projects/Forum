@@ -61,7 +61,7 @@ const ProfilePage = () => {
         }
 
         if (myProfile.person_position != mainProfile.person_position) {
-            axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${myUser.profile_id}`, {
+            axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${backUser.profile_id}`, {
                 person_position: myProfile.person_position,
             })
                 .then(response => {
@@ -69,6 +69,24 @@ const ProfilePage = () => {
                 })
                 .catch(error => console.error(error));
         }
+    };
+
+    const profileGeneralInfoUpdateHandler = (myProfile) => {
+        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${backUser.profile_id}`, {
+            name: myProfile.name,
+            official_name: myProfile.official_name,
+            region: myProfile.region,
+            edrpou: myProfile.edrpou,
+            common_info: myProfile.common_info,
+            is_startup: myProfile.is_startup,
+            is_registered: myProfile.is_registered,
+            // activities: myProfile.activities,
+        })
+            .then(response => {
+                console.log(response.data);
+                setMainProfile(response.data);
+            })
+            .catch(error => console.error(error));
     };
 
     return (
@@ -83,6 +101,7 @@ const ProfilePage = () => {
                         user={backUser}
                         profile={mainProfile}
                         onUserInfoUpdate={userInfoUpdateHandler}
+                        onGeneralInfoUpdate={profileGeneralInfoUpdateHandler}
                         currentFormNameHandler={currentFormNameHandler}
                         formName={formName} />
                 </>}

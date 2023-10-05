@@ -41,8 +41,12 @@ export default function MultipleSelectChip(props) {
           {props.label}
         </label>
       </div>
-      <FormControl sx={{ width: props.selectedWidth ? props.selectedWidth : 257}} size="small" >
-        <InputLabel id="demo-multiple-chip-label" className={css['choose__placeholder']}>{props.defaultValue}</InputLabel>
+      <FormControl sx={{ width: props.selectedWidth ? props.selectedWidth : 257 }} size="small" >
+        <InputLabel
+          id="demo-multiple-chip-label"
+          className={css['choose__placeholder']}>
+          {props.defaultValue}
+        </InputLabel>
         <Select
           name={props.name}
           labelId="demo-multiple-chip-label"
@@ -54,7 +58,11 @@ export default function MultipleSelectChip(props) {
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} sx={{color: '#1F9A7C', backgroundColor: 'white', border: '1px solid #1F9A7C'}}/>
+                <Chip
+                  key={value}
+                  label={value}
+                  sx={{ color: '#1F9A7C', backgroundColor: 'white', border: '1px solid #1F9A7C' }}
+                />
               ))}
             </Box>
           )}
@@ -62,7 +70,7 @@ export default function MultipleSelectChip(props) {
         >
           {props.options.map((option) => (
             <MenuItem
-              key={option.name}
+              key={option.id}
               value={option.name}
               style={{
                 ...getStyles(option.name, props.value, theme),
