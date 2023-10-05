@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import css from './HeaderMenu.module.css';;
+import css from './HeaderMenu.module.css';
 
 const SERVICES_LINKS = [
     {

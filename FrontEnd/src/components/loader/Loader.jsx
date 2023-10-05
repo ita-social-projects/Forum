@@ -1,5 +1,5 @@
-import css from "./Loader.module.css";
-import { Carousel } from "antd";
+import css from './Loader.module.css';
+import { Carousel } from 'antd';
 
 export default function Loader() {
   return (
