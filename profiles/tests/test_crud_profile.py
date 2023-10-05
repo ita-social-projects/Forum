@@ -501,7 +501,6 @@ class TestProfileDetailAPIView(APITestCase):
         category = CategoryFactory()
         activity = ActivityFactory()
         self.client.force_authenticate(self.user)
-        print(self.right_image, '*'*100)
 
         response = self.client.put(
             path="/api/profiles/{profile_id}".format(
@@ -517,8 +516,7 @@ class TestProfileDetailAPIView(APITestCase):
                 "service_info": "Service info from test case",
                 "product_info": "Product info from test case",
                 "address": "Kyiv",
-                # "banner_image": self.right_image,
-                "banner_image": '',
+                "banner_image": self.right_image,
                 "person_position": "director",
                 "startup_idea": "StartUp idea from test case",
                 "is_startup": True,
