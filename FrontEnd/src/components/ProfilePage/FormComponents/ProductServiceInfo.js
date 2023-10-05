@@ -3,17 +3,14 @@ import { useState, useEffect } from 'react';
 import TextField from './FormFields/TextField';
 
 const LABELS = {
-    'productInfo': 'Товари',
-    'serviceInfo': 'Послуги',
-    'logisticProductService': 'Логістика товарів/ послуг',
-    'cooperationFormat': 'Формат співпраці',
-    'competitiveAdvantage': 'Конкурентна перевага',
+    'product_info': 'Товари',
+    'service_info': 'Послуги',
 };
 
 const TEXT_AREA_MAX_LENGTH = 1000;
 
 const ProductServiceInfo = (props) => {
-    const [user, setUser] = useState(props.user);
+    const [profile, setProfile] = useState(props.profile);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -21,15 +18,14 @@ const ProductServiceInfo = (props) => {
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
-            setUser((prevState) => {
+            setProfile((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.onUpdate(user);
-        // TODO something
+        props.onUpdate(profile);
     };
 
     return (
@@ -37,43 +33,19 @@ const ProductServiceInfo = (props) => {
             <form id="ProductServiceInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
                 <div className={css['fields']}>
                     <TextField
-                        name="productInfo"
-                        label={LABELS.productInfo}
+                        name="product_info"
+                        label={LABELS.product_info}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
-                        value={user.productInfo}
+                        value={profile.product_info ?? ''}
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                     <TextField
-                        name="serviceInfo"
-                        label={LABELS.serviceInfo}
+                        name="service_info"
+                        label={LABELS.service_info}
                         updateHandler={onUpdateTextAreaField}
                         requredField={false}
-                        value={user.serviceInfo}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <TextField
-                        name="logisticProductService"
-                        label={LABELS.logisticProductService}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.logisticProductService}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <TextField
-                        name="cooperationFormat"
-                        label={LABELS.cooperationFormat}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.cooperationFormat}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <TextField
-                        name="competitiveAdvantage"
-                        label={LABELS.competitiveAdvantage}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.competitiveAdvantage}
+                        value={profile.service_info ?? ''}
                         maxLength={TEXT_AREA_MAX_LENGTH}
                     />
                 </div>

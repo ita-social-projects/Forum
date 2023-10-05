@@ -27,14 +27,6 @@ const LABELS = {
     'is_startup': 'Стартап проект, який шукає інвестиції',
 };
 
-// const ACTIVITIES = [
-//     { name: 'Виробництво' },
-//     { name: 'Роздрібна мережа' },
-//     { name: 'Імпортер' },
-//     { name: 'HORECA' },
-//     { name: 'Інші послуги' },
-// ];
-
 const ERRORS = {
     name: {
         'error': false,
@@ -191,14 +183,12 @@ const GeneralInfo = (props) => {
         // }
         // if (checkRequiredFields()) {
         //     props.onUpdate({ ...profile, 'activities': selectedActivities });
-        //     // TODO something
         // } else {
-        //     console.log('ff');
+        //     console.log('error');
         // }
 
         if (checkRequiredFields()) {
             props.onUpdate(profile);
-            // TODO something
         } else {
             console.log('error');
         }
@@ -216,14 +206,6 @@ const GeneralInfo = (props) => {
                             requredField={true}
                             value={profile.name}
                         />
-                        {/* <HalfFormField
-                            inputType="text"
-                            name="brend"
-                            label={LABELS.brend}
-                            updateHandler={onUpdateField}
-                            requredField={false}
-                            value={profile.brend ?? ''}
-                        /> */}
                     </div>
                     <FullField
                         name="official_name"
@@ -303,14 +285,6 @@ const GeneralInfo = (props) => {
                         value={profile.logo.name}
                         error={imageLogoError}
                         onDeleteImage={deleteImageHandler}
-                    /> */}
-                    {/* <TextField
-                        name="slogan"
-                        label={LABELS.slogan}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={profile.slogan ?? ''}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
                     /> */}
                     <TextField
                         name="common_info"

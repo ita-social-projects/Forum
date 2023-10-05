@@ -1,11 +1,11 @@
 import css from './ProfileContent.module.css';
 import { Link, NavLink, Route, Routes } from 'react-router-dom';
-// import AdditionalInfo from '../FormComponents/AdditionalInfo';
+import AdditionalInfo from '../FormComponents/AdditionalInfo';
 import ContactsInfo from '../FormComponents/ContactsInfo';
 // import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
 import GeneralInfo from '../FormComponents/GeneralInfo';
-// import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
-// import StartupInfo from '../FormComponents/StartupInfo';
+import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
+import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
@@ -85,9 +85,27 @@ const ProfileContent = (props) => {
                             onUpdate={props.onContactInfoUpdate}
                             currentFormNameHandler={props.currentFormNameHandler}
                             curForm={FORM_NAMES[2]} />} />
-                    {/*<Route path="/products-service-info" element={<ProductServiceInfo profile={props.profile} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[3]} />} />
-                    <Route path="/additional-info" element={<AdditionalInfo profile={props.profile} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[4]} />} />
-                    <Route path="/startup" element={<StartupInfo profile={props.profile} onUpdate={props.onUpdate} currentFormNameHandler={props.currentFormNameHandler} curForm={FORM_NAMES[5]} />} /> */}
+                    <Route
+                        path="/products-service-info"
+                        element={<ProductServiceInfo
+                            profile={props.profile}
+                            onUpdate={props.onProductServiceInfoUpdate}
+                            currentFormNameHandler={props.currentFormNameHandler}
+                            curForm={FORM_NAMES[3]} />} />
+                    <Route
+                        path="/additional-info"
+                        element={<AdditionalInfo
+                            profile={props.profile}
+                            onUpdate={props.onAdditionalInfoUpdate}
+                            currentFormNameHandler={props.currentFormNameHandler}
+                            curForm={FORM_NAMES[4]} />} />
+                    <Route
+                        path="/startup"
+                        element={<StartupInfo
+                            profile={props.profile}
+                            onUpdate={props.onStartupInfoUpdate}
+                            currentFormNameHandler={props.currentFormNameHandler}
+                            curForm={FORM_NAMES[5]} />} />
                 </Routes>
             </div>
 

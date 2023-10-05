@@ -71,7 +71,7 @@ const ProfilePage = () => {
         }
     };
 
-    const profileGeneralInfoUpdateHandler = (myProfile) => {
+    const generalInfoUpdateHandler = (myProfile) => {
         axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${backUser.profile_id}`, {
             name: myProfile.name,
             official_name: myProfile.official_name,
@@ -89,10 +89,44 @@ const ProfilePage = () => {
             .catch(error => console.error(error));
     };
 
-    const profileContactInfoUpdateHandler = (myProfile) => {
+    const contactInfoUpdateHandler = (myProfile) => {
         axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${backUser.profile_id}`, {
             phone: myProfile.phone,
             address: myProfile.address,
+        })
+            .then(response => {
+                console.log(response.data);
+                setMainProfile(response.data);
+            })
+            .catch(error => console.error(error));
+    };
+
+    const productServiceInfoUpdateHandler = (myProfile) => {
+        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${backUser.profile_id}`, {
+            service_info: myProfile.service_info,
+            product_info: myProfile.product_info,
+        })
+            .then(response => {
+                console.log(response.data);
+                setMainProfile(response.data);
+            })
+            .catch(error => console.error(error));
+    };
+
+    const additionalInfoUpdateHandler = (myProfile) => {
+        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${backUser.profile_id}`, {
+            founded: myProfile.founded,
+        })
+            .then(response => {
+                console.log(response.data);
+                setMainProfile(response.data);
+            })
+            .catch(error => console.error(error));
+    };
+
+    const startupInfoUpdateHandler = (myProfile) => {
+        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${backUser.profile_id}`, {
+            startup_idea: myProfile.startup_idea,
         })
             .then(response => {
                 console.log(response.data);
@@ -113,8 +147,11 @@ const ProfilePage = () => {
                         user={backUser}
                         profile={mainProfile}
                         onUserInfoUpdate={userInfoUpdateHandler}
-                        onGeneralInfoUpdate={profileGeneralInfoUpdateHandler}
-                        onContactInfoUpdate={profileContactInfoUpdateHandler}
+                        onGeneralInfoUpdate={generalInfoUpdateHandler}
+                        onContactInfoUpdate={contactInfoUpdateHandler}
+                        onProductServiceInfoUpdate={productServiceInfoUpdateHandler}
+                        onAdditionalInfoUpdate={additionalInfoUpdateHandler}
+                        onStartupInfoUpdate ={startupInfoUpdateHandler}
                         currentFormNameHandler={currentFormNameHandler}
                         formName={formName} />
                 </>}

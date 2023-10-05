@@ -2,37 +2,18 @@ import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
 
 import HalfFormField from './FormFields/HalfFormField';
-import TextField from './FormFields/TextField';
 
 const LABELS = {
-    'foundationYear': 'Рік заснування',
-    'companySize': 'Розмір компанії',
-    'topClients': 'Топ клієнти',
-    'passedAudit': 'Пройдений аудит',
+    'founded': 'Рік заснування',
 };
 
-const TEXT_AREA_MAX_LENGTH = 1000;
-
 const AdditionalInfo = (props) => {
-    const [user, setUser] = useState(props.user);
+    const [profile, setProfile] = useState(props.profile);
     const [foundationYearError, setFoundationYearError] = useState(null);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
     }, []);
-
-    const onUpdateTextAreaField = e => {
-        if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
-            setUser((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
-            });
-    };
-
-    const onUpdateField = e => {
-        setUser((prevState) => {
-            return { ...prevState, [e.target.name]: e.target.value };
-        });
-    };
 
     const onUpdateFoundationYearField = e => {
         const currentYear = new Date().getFullYear();
@@ -42,7 +23,7 @@ const AdditionalInfo = (props) => {
         } else {
             setFoundationYearError(`Рік заснування не в діапазоні 1800-${currentYear}`);
         }
-        setUser((prevState) => {
+        setProfile((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
     };
@@ -50,8 +31,8 @@ const AdditionalInfo = (props) => {
     const validateForm = () => {
         let isValid = true;
         const currentYear = new Date().getFullYear();
-        const year = Number(user.foundationYear);
-        if ((1800 > year || year > currentYear) && user.foundationYear) {
+        const year = Number(profile.founded);
+        if ((1800 > year || year > currentYear) && profile.founded) {
             isValid = false;
         }
         return isValid;
@@ -60,10 +41,9 @@ const AdditionalInfo = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (validateForm()) {
-            props.onUpdate(user);
-            // TODO something
+            props.onUpdate(profile);
         } else {
-            // TODO something
+            console.log('error');
         }
     };
 
@@ -74,38 +54,14 @@ const AdditionalInfo = (props) => {
                     <div className={css['fields-groups']}>
                         <HalfFormField
                             inputType="number"
-                            name="foundationYear"
-                            label={LABELS.foundationYear}
+                            name="founded"
+                            label={LABELS.founded}
                             updateHandler={onUpdateFoundationYearField}
                             requredField={false}
-                            value={user.foundationYear}
+                            value={profile.founded ?? ''}
                             error={foundationYearError}
                         />
-                        <HalfFormField
-                            inputType="number"
-                            name="companySize"
-                            label={LABELS.companySize}
-                            updateHandler={onUpdateField}
-                            requredField={false}
-                            value={user.companySize}
-                        />
                     </div>
-                    <TextField
-                        name="topClients"
-                        label={LABELS.topClients}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.topClients}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <TextField
-                        name="passedAudit"
-                        label={LABELS.passedAudit}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.passedAudit}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
                 </div>
             </form>
         </div>

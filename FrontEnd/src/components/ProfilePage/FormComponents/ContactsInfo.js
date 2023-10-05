@@ -6,14 +6,7 @@ import HalfFormField from './FormFields/HalfFormField';
 
 const LABELS = {
     'phone': 'Телефон',
-    'companyEmail': 'Електронна пошта',
-    'companySite': 'Сайт',
     'address': 'Адрес(и)',
-    'Facebook': 'Facebook',
-    'Instagram': 'Instagram',
-    'Tiktok': 'Tiktok',
-    'LinkedIn': 'LinkedIn',
-    'Youtube': 'Youtube',
 };
 
 const ContactsInfo = (props) => {
@@ -50,7 +43,8 @@ const ContactsInfo = (props) => {
 
     const validateForm = () => {
         let isValid = true;
-        if (profile.phoneNumber && (profile.phoneNumber.length !== 12 || !Number.isInteger(Number(profile.phoneNumber)))) {
+        if (profile.phoneNumber &&
+            (profile.phoneNumber.length !== 12 || !Number.isInteger(Number(profile.phoneNumber)))) {
             isValid = false;
         }
         return isValid;
@@ -60,9 +54,8 @@ const ContactsInfo = (props) => {
         event.preventDefault();
         if (validateForm()) {
             props.onUpdate(profile);
-            // TODO something
         } else {
-            // TODO something
+            console.log('error');
         }
     };
 
@@ -81,23 +74,7 @@ const ContactsInfo = (props) => {
                             value={profile.phone ?? ''}
                             error={phoneNumberError}
                         />
-                        {/* <HalfFormField
-                            inputType="text"
-                            name="companyEmail"
-                            label={LABELS.companyEmail}
-                            updateHandler={onUpdateField}
-                            requredField={false}
-                            value={profile.companyEmail}
-                        /> */}
                     </div>
-                    {/* <FullField
-                        name="companySite"
-                        label={LABELS.companySite}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={profile.companySite}
-                        fieldPlaceholder="Введіть URL"
-                    /> */}
                     <FullField
                         name="address"
                         label={LABELS.address}
@@ -105,46 +82,6 @@ const ContactsInfo = (props) => {
                         requredField={false}
                         value={profile.address ?? ''}
                     />
-                    {/* <FullField
-                        name="Facebook"
-                        label={LABELS.Facebook}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={profile.Facebook}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="Instagram"
-                        label={LABELS.Instagram}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={profile.Instagram}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="Tiktok"
-                        label={LABELS.Tiktok}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={profile.Tiktok}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="LinkedIn"
-                        label={LABELS.LinkedIn}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={profile.LinkedIn}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="Youtube"
-                        label={LABELS.Youtube}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={profile.Youtube}
-                        fieldPlaceholder="Введіть URL"
-                    /> */}
                 </div>
             </form>
         </div>
