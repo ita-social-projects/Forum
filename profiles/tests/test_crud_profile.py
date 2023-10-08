@@ -28,11 +28,9 @@ class TestProfileDetailAPIView(APITestCase):
         image.save(file, formatext)
         file.name = f"test.{formatext}"
         file.seek(0)
-        # print(file.name, sys.getsizeof(file), sys.getsizeof(image), type(image))
         return file
 
     def setUp(self) -> None:
-        # self.right_image = self._generate_image("jpeg", (10, 10))
         self.right_image = self._generate_image("png", (100, 100))
         self.wrong_image = self._generate_image("png", (5, 5))
         self.user = UserFactory(email="test1@test.com")
@@ -531,13 +529,6 @@ class TestProfileDetailAPIView(APITestCase):
                 "activities": [activity.id],
             },
         )
-        # print(image.size, '#'*10)
-        print(self.right_image)
-        max_right = sys.getsizeof(self.right_image)
-        print(max_right, "$" * 10)
-        max_wrong = sys.getsizeof(self.wrong_image)
-        print(max_wrong, '*'*10)
-        # print(response.content, '*'*10)
         self.assertEqual(status.HTTP_200_OK, response.status_code, response.content)
 
     def test_full_update_profile_unauthorized(self):
