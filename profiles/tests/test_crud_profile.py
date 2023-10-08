@@ -20,7 +20,7 @@ from utils.unittest_helper import AnyInt
 class TestProfileDetailAPIView(APITestCase):
     @staticmethod
     def _generate_image(ext, size):
-    # =(100, 100)):
+        # =(100, 100)):
         """for mocking png and jpeg files"""
         file = BytesIO()
         image = Image.new("RGB", size=size)
@@ -500,7 +500,6 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_full_update_profile_authorized_with_full_data(self):
-        import sys
         category = CategoryFactory()
         activity = ActivityFactory()
         self.client.force_authenticate(self.user)
@@ -529,7 +528,9 @@ class TestProfileDetailAPIView(APITestCase):
                 "activities": [activity.id],
             },
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEqual(
+            status.HTTP_200_OK, response.status_code, response.content
+        )
 
     def test_full_update_profile_unauthorized(self):
         category = CategoryFactory()
