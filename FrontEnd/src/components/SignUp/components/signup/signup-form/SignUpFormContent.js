@@ -84,18 +84,15 @@ export function SignUpFormContentComponent(props) {
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
-      withCredentials: false,
       data: dataToSend,
     })
-      .then((res) => console.log(res.data))
+      .then()
       .catch((error) => {
         if (error.response.data.email) {
-          setError(
-            'email', {
-              type: 'manual',
-              message: 'Вже зареєстрована пошта'
-            }
-          );
+          setError('email', {
+            type: 'manual',
+            message: 'Вже зареєстрована пошта',
+          });
         }
       });
   };
