@@ -1,8 +1,12 @@
+import axios from 'axios';
 import css from './DeleteProfileModal.module.css';
+import { useAuth } from '../../../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
+
 const DeleteProfileModal = (props) => {
+    const auth = useAuth();
     const [typePassword, setTypePassword] = useState('password');
     const [isCorrectEmail, setIsCorrectEmail] = useState(false);
     const [isCorrectPassword, setIsCorrectPassword] = useState(false);
@@ -12,7 +16,15 @@ const DeleteProfileModal = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
         props.onCancel();
-        // TODO logic of deleting
+        axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${props.user.profile_id}`)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => console.error(error));
+        axios.post(
+            `${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`
+        );
+        auth.logout();
         navigate('/');
     };
 
@@ -32,7 +44,7 @@ const DeleteProfileModal = (props) => {
         }
     };
 
-    useEffect (() => {
+    useEffect(() => {
         if (isCorrectEmail && isCorrectPassword) {
             setIsDisabled(false);
         } else {
@@ -42,22 +54,22 @@ const DeleteProfileModal = (props) => {
 
     const passwordVisisbilityHandler = () => {
         if (typePassword === 'password') {
-          setTypePassword('text');
+            setTypePassword('text');
         } else setTypePassword('password');
-      };
+    };
 
     return (
         <div>
             <div className={css['delete-header']}>Ви впевнені, що хочете видалити профіль?
-            <img
-            src={`${process.env.PUBLIC_URL}/profilepage/Vectorcancel.png`}
-            className={css['delete__cancelButton']}
-            alt=""
-            onClick={props.onCancel}/>
+                <img
+                    src={`${process.env.PUBLIC_URL}/profilepage/Vectorcancel.png`}
+                    className={css['delete__cancelButton']}
+                    alt=""
+                    onClick={props.onCancel} />
             </div>
             <div >
-                <div className={css['delete__description']}>Текст, який описує, що профіль буде видалено.</div>
-                <div className={css['delete__description']}>Також можуть бути перераховані способи відновити профіль.</div>
+                <div className={css['delete__description']}>Цей профіль буде видалено.
+                    Для того, щоб підтвердити видалення, будь-ласка, введіть вашу почту та пароль</div>
             </div>
             <form onSubmit={submitHandler}>
                 <div className={css['form__body']}>
@@ -83,21 +95,24 @@ const DeleteProfileModal = (props) => {
                         />
                         <span onClick={passwordVisisbilityHandler}>
                             <img
-                            src={typePassword==='password'
-                            ?
-                            `${process.env.PUBLIC_URL}/profilepage/hidden_eye_icon.png`
-                            :
-                            `${process.env.PUBLIC_URL}/profilepage/eye_icon.png`
-                            }
-                            alt=""
-                            className={css['password__eye']}
+                                src={typePassword === 'password'
+                                    ?
+                                    `${process.env.PUBLIC_URL}/profilepage/hidden_eye_icon.png`
+                                    :
+                                    `${process.env.PUBLIC_URL}/profilepage/eye_icon.png`
+                                }
+                                alt=""
+                                className={css['password__eye']}
                             />
                         </span>
                     </div>
                 </div>
                 <div className={css['buttons__section']}>
                     <button type="button" className={css['button__cancel']} onClick={props.onCancel}>Скасувати</button>
-                    <button type="submit" className={isDisabled ? css['button__delete__disabled'] : css['button__delete']} disabled={isDisabled}>Видалити</button>
+                    <button
+                        type="submit"
+                        className={isDisabled ? css['button__delete__disabled'] : css['button__delete']}
+                        disabled={isDisabled}>Видалити</button>
                 </div>
             </form>
         </div>
