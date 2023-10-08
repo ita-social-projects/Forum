@@ -29,7 +29,8 @@ class TestProfileDetailAPIView(APITestCase):
         return file
 
     def setUp(self) -> None:
-        self.right_image = self._generate_image("jpeg", (10, 10))
+        # self.right_image = self._generate_image("jpeg", (10, 10))
+        self.right_image = self._generate_image("jpeg", (5, 5))
         self.wrong_image = self._generate_image("png", (3000, 3000))
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
