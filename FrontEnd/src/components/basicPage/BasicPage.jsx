@@ -12,8 +12,7 @@ import React from 'react';
 import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
 import { useAuth } from '../../hooks';
 import { ConfigProvider } from 'antd';
-import ProfileListPage from '../profileList/ProfileListPage';
-// import { ConfigProvider } from 'antd';
+
 
 function BasicPage() {
   const auth = useAuth();
