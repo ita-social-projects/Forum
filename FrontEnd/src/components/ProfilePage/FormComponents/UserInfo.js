@@ -1,6 +1,9 @@
 import css from './FormComponents.module.css';
 import HalfFormField from './FormFields/HalfFormField';
 import { useState, useEffect } from 'react';
+import { useUser, useProfile } from '../../../hooks/';
+import Loader from '../../loader/Loader';
+
 
 const LABELS = {
     'surname': 'Прізвище',
@@ -21,8 +24,10 @@ const ERRORS = {
 };
 
 const UserInfo = (props) => {
-    const [user, setUser] = useState(props.user);
-    const [profile, setProfile] = useState(props.profile);
+    const { user, mutate: userMutate } = useUser();
+    const { profile, mutate: profileMutate } = useProfile();
+    const [updateUser, setUpdateUser] = useState(props.user);
+    const [updateProfile, setUpdateProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
 
     useEffect(() => {
@@ -32,8 +37,8 @@ const UserInfo = (props) => {
     const checkRequiredFields = () => {
         let isValid = true;
         const newFormState = {};
-        for (const key in user) {
-            if (!user[key] && key in ERRORS) {
+        for (const key in updateUser) {
+            if (!updateUser[key] && key in ERRORS) {
                 isValid = false;
                 newFormState[key] = {
                     'error': true,
@@ -52,69 +57,112 @@ const UserInfo = (props) => {
 
     const onUpdateField = e => {
         if (e.target.name === 'person_position') {
-            setProfile((prevState) => {
+            setUpdateProfile((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
         } else {
-            setUser((prevState) => {
+            setUpdateUser((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkRequiredFields()) {
-            props.onUpdate(user, profile);
-            // TODO something
-        } else {
-            // TODO something
+            const token = localStorage.getItem('Token');
+
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ surname: updateUser.surname, name: updateUser.name }),
+                });
+
+                if (response.status === 200) {
+                    const updatedUserData = await response.json();
+                    userMutate(updatedUserData);
+                } else {
+                    console.error('Помилка');
+                }
+            } catch (error) {
+                console.error('Помилка:', error);
+            }
+
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ person_position: updateProfile.person_position }),
+                });
+
+                if (response.status === 200) {
+                    const updatedProfileData = await response.json();
+                    profileMutate(updatedProfileData);
+                } else {
+                    console.error('Помилка');
+                }
+            } catch (error) {
+                console.error('Помилка:', error);
+            }
         }
     };
 
     return (
         <div className={css['form__container']}>
-            <form id="UserInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                <div className={css['fields']}>
-                    <div className={css['fields-groups']}>
-                        <HalfFormField
-                            inputType="text"
-                            name="surname"
-                            label={LABELS.surname}
-                            updateHandler={onUpdateField}
-                            error={formStateErr['surname']['error'] ? formStateErr['surname']['message'] : null}
-                            requredField={true}
-                            value={user.surname}
-                        />
-                        <HalfFormField
-                            inputType="text"
-                            name="name"
-                            label={LABELS.name}
-                            updateHandler={onUpdateField}
-                            error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
-                            requredField={true}
-                            value={user.name}
-                        />
-                    </div>
-                    <div className={css['fields-groups']}>
-                        <HalfFormField
-                            inputType="text"
-                            name="person_position"
-                            label={LABELS.person_position}
-                            updateHandler={onUpdateField}
-                            requredField={false}
-                            value={profile.person_position ?? ''}
-                        />
-                        <HalfFormField
-                            inputType="text"
-                            name="email"
-                            label={LABELS.email}
-                            requredField={true}
-                            value={user.email}
-                        />
-                    </div>
-                </div>
-            </form>
+            {(updateUser && user && profile && updateProfile)
+                ?
+                <>
+                    <form id="UserInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                        <div className={css['fields']}>
+                            <div className={css['fields-groups']}>
+                                <HalfFormField
+                                    inputType="text"
+                                    name="surname"
+                                    label={LABELS.surname}
+                                    updateHandler={onUpdateField}
+                                    error={formStateErr['surname']['error'] ? formStateErr['surname']['message'] : null}
+                                    requredField={true}
+                                    value={updateUser.surname}
+                                />
+                                <HalfFormField
+                                    inputType="text"
+                                    name="name"
+                                    label={LABELS.name}
+                                    updateHandler={onUpdateField}
+                                    error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
+                                    requredField={true}
+                                    value={updateUser.name}
+                                />
+                            </div>
+                            <div className={css['fields-groups']}>
+                                <HalfFormField
+                                    inputType="text"
+                                    name="person_position"
+                                    label={LABELS.person_position}
+                                    updateHandler={onUpdateField}
+                                    requredField={false}
+                                    value={updateProfile.person_position ?? ''}
+                                />
+                                <HalfFormField
+                                    inputType="text"
+                                    name="email"
+                                    label={LABELS.email}
+                                    requredField={true}
+                                    value={updateUser.email}
+                                />
+                            </div>
+                        </div>
+                    </form>
+                </>
+                : <Loader />
+            }
         </div>
     );
 };

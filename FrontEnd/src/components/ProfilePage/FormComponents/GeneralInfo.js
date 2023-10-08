@@ -1,27 +1,25 @@
 import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
+import { useUser, useProfile } from '../../../hooks/';
 
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 // import ImageField from './FormFields/ImageField';
-// import MultipleSelectChip from './FormFields/MultipleSelectChip';
+import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
 
 const LABELS = {
     'name': 'Назва компанії',
-    'brend': 'Бренд',
     'official_name': 'Юридична назва компанії',
     'edrpou': 'ЄДРПОУ / ІПН',
     'region': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
     'bannerImage': 'Зображення для банера',
-    'logo': 'Логотип',
-    'slogan': 'Візія, слоган',
     'common_info': 'Інформація про компанію',
     'is_registered': 'Зареєстрована компанія',
     'is_startup': 'Стартап проект, який шукає інвестиції',
@@ -32,14 +30,14 @@ const ERRORS = {
         'error': false,
         'message': ''
     },
-    // categories: {
-    //     'error': false,
-    //     'message': ''
-    // },
-    // activities: {
-    //     'error': false,
-    //     'message': ''
-    // },
+    categories: {
+        'error': false,
+        'message': ''
+    },
+    activities: {
+        'error': false,
+        'message': ''
+    },
 };
 
 const TEXT_AREA_MAX_LENGTH = 1000;
@@ -48,18 +46,16 @@ const TEXT_AREA_MAX_LENGTH = 1000;
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 const GeneralInfo = (props) => {
+    const { user } = useUser();
+    const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
-    // const organizedActivities = props.profile.activities;
-    // console.log(organizedActivities);
-    // fetchedActivities.find((el) => el.key === profile.activities)?.value
     const [formStateErr, setFormStateErr] = useState(ERRORS);
-    // const [imageBannerError, setImageBannerError] = useState(null);
-    // const [imageLogoError, setImageLogoError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
+    // const [imageBannerError, setImageBannerError] = useState(null);
 
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
-
-    // const { data: fetchedActivities, isLoading: isActivitiesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/activities/`, fetcher);
+    const { data: fetchedActivities, isLoading: isActivitiesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/activities/`, fetcher);
+    const { data: fetchedCategories, isLoading: isCategoriesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/categories/`, fetcher);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -69,7 +65,7 @@ const GeneralInfo = (props) => {
         let isValid = true;
         const newFormState = {};
         for (const key in profile) {
-            if ((!profile[key] || (typeof profile[key] === 'object' && profile[key].length === 0)) && key in ERRORS) {
+            if (key in ERRORS && (!profile[key] || (Array.isArray(profile[key]) && profile[key].length === 0))) {
                 isValid = false;
                 newFormState[key] = {
                     'error': true,
@@ -83,7 +79,7 @@ const GeneralInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
-        if (profile.edrpou && profile.edrpou.length !== 8) {
+        if (profile.edrpou && profile.edrpou.toString().length !== 8) {
             isValid = false;
         }
         return isValid;
@@ -163,110 +159,159 @@ const GeneralInfo = (props) => {
             });
     };
 
-    // const onUpdateSelectField = e => {
-    //     const selectName = e.target.name;
-    //     const selectedValues = Array.from(e.target.value, option => option);
-    //     setProfile((prevState) => {
-    //         return { ...prevState, [selectName]: selectedValues };
-    //     });
-    // };
+    const onUpdateSelectField = e => {
+        const selectName = e.target.name;
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        // let selectedActivities = [];
-        // for (let activity of profile.activities) {
-        //     let item = fetchedActivities.find((el) => el.name === activity);
-        //     if (item) {
-        //         selectedActivities.push(item.id);
-        //     }
-        // }
-        // if (checkRequiredFields()) {
-        //     props.onUpdate({ ...profile, 'activities': selectedActivities });
-        // } else {
-        //     console.log('error');
-        // }
-
-        if (checkRequiredFields()) {
-            props.onUpdate(profile);
+        if (selectName === 'activities') {
+            let selectedActivities = [];
+            for (let activity of e.target.value) {
+                let item = fetchedActivities.find((el) => el.name === activity);
+                if (item) {
+                    selectedActivities.push({ id: item.id, name: activity });
+                }
+            }
+            setProfile((prevState) => {
+                return { ...prevState, [selectName]: selectedActivities };
+            });
         } else {
-            console.log('error');
+            let selectedCategories = [];
+            for (let category of e.target.value) {
+                let item = fetchedCategories.find((el) => el.name === category);
+                if (item) {
+                    selectedCategories.push({ id: item.id, name: category });
+                }
+            }
+            setProfile((prevState) => {
+                return { ...prevState, [selectName]: selectedCategories };
+            });
+        }
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (checkRequiredFields()) {
+            const token = localStorage.getItem('Token');
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: profile.name,
+                        official_name: profile.official_name,
+                        edrpou: profile.edrpou,
+                        region: profile.region,
+                        common_info: profile.common_info,
+                        is_startup: profile.is_startup,
+                        is_registered: profile.is_registered,
+                        activities: profile.activities.map(obj => obj.id),
+                        categories: profile.categories.map(obj => obj.id),
+                    }),
+                });
+
+                if (response.status === 200) {
+                    const updatedProfileData = await response.json();
+                    profileMutate(updatedProfileData);
+                } else {
+                    console.error('Помилка');
+                }
+            } catch (error) {
+                console.error('Помилка:', error);
+            }
         }
     };
     return (
         <div className={css['form__container']}>
-            <form id="GeneralInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                <div className={css['fields']}>
-                    <div className={css['fields-groups']}>
-                        <HalfFormField
-                            name="name"
-                            label={LABELS.name}
-                            updateHandler={onUpdateField}
-                            error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
-                            requredField={true}
-                            value={profile.name}
-                        />
-                    </div>
-                    <FullField
-                        name="official_name"
-                        label={LABELS.official_name}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={profile.official_name ?? ''}
-                    />
-                    <div className={css['fields-groups']}>
-                        <HalfFormField
-                            inputType="text"
-                            name="edrpou"
-                            label={LABELS.edrpou}
-                            updateHandler={onUpdateEdrpouField}
-                            requredField={false}
-                            value={profile.edrpou ?? ''}
-                            error={edrpouError}
-                        />
-                        {isRegionLoading
-                            ?
-                            <Loader />
-                            :
-                            <OneSelectChip
-                                name="region"
-                                options={fetchedRegions}
-                                label={LABELS.region}
-                                updateHandler={onUpdateOneSelectField}
+            {(user && profile && mainProfile)
+                ?
+                <>
+                    <form id="GeneralInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                        <div className={css['fields']}>
+                            <div className={css['fields-groups']}>
+                                <HalfFormField
+                                    name="name"
+                                    label={LABELS.name}
+                                    updateHandler={onUpdateField}
+                                    error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
+                                    requredField={true}
+                                    value={profile.name}
+                                />
+                            </div>
+                            <FullField
+                                name="official_name"
+                                label={LABELS.official_name}
+                                updateHandler={onUpdateField}
                                 requredField={false}
-                                defaultValue="Оберіть"
-                                value={fetchedRegions.find((el) => el.key === profile.region)?.value ?? ''}
+                                value={profile.official_name ?? ''}
                             />
-                        }
-                    </div>
-                    <div className={css['fields-groups']}>
-                        {/* {isActivitiesLoading
-                            ?
-                            <Loader />
-                            :
-                        <MultipleSelectChip
-                            name="activities"
-                            options={fetchedActivities}
-                            label={LABELS.activities}
-                            updateHandler={onUpdateSelectField}
-                            requredField={true}
-                            value={profile.activities.map(obj => obj.name) ?? ''}
-                            defaultValue="Оберіть"
-                            error={formStateErr['activities']['error'] ? formStateErr['activities']['message'] : null}
-                        />
-                    } */}
-                        {/* <MultipleSelectChip
-                            name="categories"
-                            options={CATEGORIES}
-                            label={LABELS.categories}
-                            updateHandler={onUpdateSelectField}
-                            requredField={true}
-                            value={profile.categories}
-                            defaultValue="Оберіть"
-                            error={formStateErr['categories']['error'] ? formStateErr['categories']['message'] : null}
-                        /> */}
-                    </div>
-                    {/* <ImageField
+                            <div className={css['fields-groups']}>
+                                <HalfFormField
+                                    inputType="text"
+                                    name="edrpou"
+                                    label={LABELS.edrpou}
+                                    updateHandler={onUpdateEdrpouField}
+                                    requredField={false}
+                                    value={profile.edrpou ?? ''}
+                                    error={edrpouError}
+                                />
+                                {isRegionLoading
+                                    ?
+                                    <Loader />
+                                    :
+                                    <OneSelectChip
+                                        name="region"
+                                        options={fetchedRegions}
+                                        label={LABELS.region}
+                                        updateHandler={onUpdateOneSelectField}
+                                        requredField={false}
+                                        defaultValue="Оберіть"
+                                        value={fetchedRegions.find((el) => el.key === profile.region)?.value ?? ''}
+                                    />
+                                }
+                            </div>
+                            <div className={css['fields-groups']}>
+                                {isActivitiesLoading
+                                    ?
+                                    <Loader />
+                                    :
+                                    <MultipleSelectChip
+                                        name="activities"
+                                        options={fetchedActivities}
+                                        label={LABELS.activities}
+                                        updateHandler={onUpdateSelectField}
+                                        requredField={true}
+                                        value={profile.activities.map(obj => obj.name) ?? ''}
+                                        defaultValue="Оберіть"
+                                        error={formStateErr['activities']['error']
+                                            ?
+                                            formStateErr['activities']['message']
+                                            :
+                                            null}
+                                    />
+                                }
+                                {isCategoriesLoading
+                                    ?
+                                    <Loader />
+                                    :
+                                    <MultipleSelectChip
+                                        name="categories"
+                                        options={fetchedCategories}
+                                        label={LABELS.categories}
+                                        updateHandler={onUpdateSelectField}
+                                        requredField={true}
+                                        value={profile.categories.map(obj => obj.name) ?? ''}
+                                        defaultValue="Оберіть"
+                                        error={formStateErr['categories']['error']
+                                            ?
+                                            formStateErr['categories']['message']
+                                            :
+                                            null}
+                                    />
+                                }
+                            </div>
+                            {/* <ImageField
                         inputType="file"
                         name="bannerImage"
                         label={LABELS.bannerImage}
@@ -275,36 +320,28 @@ const GeneralInfo = (props) => {
                         value={profile.bannerImage.name}
                         error={imageBannerError}
                         onDeleteImage={deleteImageHandler}
-                    />
-                    <ImageField
-                        inputType="file"
-                        name="logo"
-                        label={LABELS.logo}
-                        updateHandler={onUpdateImageField}
-                        requredField={false}
-                        value={profile.logo.name}
-                        error={imageLogoError}
-                        onDeleteImage={deleteImageHandler}
                     /> */}
-                    <TextField
-                        name="common_info"
-                        label={LABELS.common_info}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={profile.common_info ?? ''}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <CheckBoxField
-                        name="companyType"
-                        nameRegister="is_registered"
-                        valueRegister={profile.is_registered}
-                        nameStartup="is_startup"
-                        valueStartup={profile.is_startup}
-                        updateHandler={onChangeCheckbox}
-                        requredField={true}
-                    />
-                </div>
-            </form>
+                            <TextField
+                                name="common_info"
+                                label={LABELS.common_info}
+                                updateHandler={onUpdateTextAreaField}
+                                requredField={false}
+                                value={profile.common_info ?? ''}
+                                maxLength={TEXT_AREA_MAX_LENGTH}
+                            />
+                            <CheckBoxField
+                                name="companyType"
+                                nameRegister="is_registered"
+                                valueRegister={profile.is_registered}
+                                nameStartup="is_startup"
+                                valueStartup={profile.is_startup}
+                                updateHandler={onChangeCheckbox}
+                                requredField={true}
+                            />
+                        </div>
+                    </form>
+                </>
+                : <Loader />}
         </div>
     );
 };

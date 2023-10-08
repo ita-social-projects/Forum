@@ -59,7 +59,7 @@ export default function MultipleSelectChip(props) {
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
                 <Chip
-                  key={value}
+                key={Math.random()}
                   label={value}
                   sx={{ color: '#1F9A7C', backgroundColor: 'white', border: '1px solid #1F9A7C' }}
                 />

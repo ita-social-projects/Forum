@@ -1,11 +1,11 @@
 import css from './ProfileContent.module.css';
 import { NavLink, Route, Routes } from 'react-router-dom';
-import AdditionalInfo from '../FormComponents/AdditionalInfo';
-import ContactsInfo from '../FormComponents/ContactsInfo';
+// import AdditionalInfo from '../FormComponents/AdditionalInfo';
+// import ContactsInfo from '../FormComponents/ContactsInfo';
 // import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
 import GeneralInfo from '../FormComponents/GeneralInfo';
-import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
-import StartupInfo from '../FormComponents/StartupInfo';
+// import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
+// import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
@@ -60,7 +60,11 @@ const ProfileContent = (props) => {
                         >{element.title}</NavLink>
                     ))}
                     <div className={css['divider']}></div>
-                    {/* <Link to="/profile/delete" className={`${css['infolink']} ${css['delete']}`}>Видалити профіль</Link> */}
+                    {/* <Link
+                        to="/profile/delete"
+                        className={`${css['infolink']} ${css['delete']}`}>
+                        Видалити профіль
+                    </Link> */}
                 </div>
 
                 <Routes>
@@ -75,7 +79,6 @@ const ProfileContent = (props) => {
                         path="/user-info"
                         element={<UserInfo user={props.user}
                             profile={props.profile}
-                            onUpdate={props.onUserInfoUpdate}
                             currentFormNameHandler={props.currentFormNameHandler}
                             curForm={FORM_NAMES[0]} />} />
                     <Route
@@ -85,7 +88,7 @@ const ProfileContent = (props) => {
                             onUpdate={props.onGeneralInfoUpdate}
                             currentFormNameHandler={props.currentFormNameHandler}
                             curForm={FORM_NAMES[1]} />} />
-                    <Route path="/contacts"
+                    {/*<Route path="/contacts"
                         element={<ContactsInfo
                             profile={props.profile}
                             onUpdate={props.onContactInfoUpdate}
@@ -111,7 +114,7 @@ const ProfileContent = (props) => {
                             profile={props.profile}
                             onUpdate={props.onStartupInfoUpdate}
                             currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[5]} />} />
+                            curForm={FORM_NAMES[5]} />} /> */}
                 </Routes>
             </div>
 
