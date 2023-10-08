@@ -526,6 +526,7 @@ class TestProfileDetailAPIView(APITestCase):
                 "activities": [activity.id],
             },
         )
+        print(response.content, '*'*10)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
     def test_full_update_profile_unauthorized(self):
