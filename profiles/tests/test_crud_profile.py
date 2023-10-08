@@ -537,7 +537,7 @@ class TestProfileDetailAPIView(APITestCase):
         max_wrong = sys.getsizeof(self.wrong_image)
         print(max_wrong, '*'*10)
         # print(response.content, '*'*10)
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(status.HTTP_200_OK, response.status_code, response.content)
 
     def test_full_update_profile_unauthorized(self):
         category = CategoryFactory()
