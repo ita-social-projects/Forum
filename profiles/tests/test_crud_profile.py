@@ -526,7 +526,9 @@ class TestProfileDetailAPIView(APITestCase):
                 "activities": [activity.id],
             },
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEqual(
+            status.HTTP_200_OK, response.status_code, response.content
+        )
 
     def test_full_update_profile_unauthorized(self):
         category = CategoryFactory()
