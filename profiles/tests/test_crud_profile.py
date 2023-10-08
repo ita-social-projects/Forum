@@ -28,11 +28,12 @@ class TestProfileDetailAPIView(APITestCase):
         image.save(file, formatext)
         file.name = f"test.{formatext}"
         file.seek(0)
+        # print(file.name, sys.getsizeof(file), sys.getsizeof(image), type(image))
         return file
 
     def setUp(self) -> None:
         # self.right_image = self._generate_image("jpeg", (10, 10))
-        self.right_image = self._generate_image("png", (1, 1))
+        self.right_image = self._generate_image("png", (100, 100))
         self.wrong_image = self._generate_image("png", (5, 5))
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(

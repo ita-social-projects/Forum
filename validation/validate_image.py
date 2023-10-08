@@ -12,10 +12,12 @@ def validate_image_format(image: Image):
         )
 
 
-def validate_image_size(image: Image):
+def validate_image_size(image_file):
     import sys
 
-    max_size = sys.getsizeof(image)
-    print(f"{max_size=}")
-    if max_size > 50:
+    max_size = sys.getsizeof(image_file.file)
+    # print(image_file, f"{max_size=}", f"{type(image_file)}")
+    # print(sys.getsizeof(image_file.file))
+    # print(image_file.__dict__)
+    if max_size > 50000:
         raise ValidationError("Image size exceeds the maximum allowed (50MB).")
