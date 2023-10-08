@@ -531,6 +531,7 @@ class TestProfileDetailAPIView(APITestCase):
             },
         )
         # print(image.size, '#'*10)
+        print(self.right_image)
         max_right = sys.getsizeof(self.right_image)
         print(max_right, "$" * 10)
         max_wrong = sys.getsizeof(self.wrong_image)
