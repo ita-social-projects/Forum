@@ -1,13 +1,16 @@
 import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
-
+import { useUser, useProfile } from '../../../hooks/';
 import HalfFormField from './FormFields/HalfFormField';
+import Loader from '../../loader/Loader';
 
 const LABELS = {
     'founded': 'Рік заснування',
 };
 
 const AdditionalInfo = (props) => {
+    const { user } = useUser();
+    const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [foundationYearError, setFoundationYearError] = useState(null);
 
@@ -38,34 +41,58 @@ const AdditionalInfo = (props) => {
         return isValid;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (validateForm()) {
-            props.onUpdate(profile);
-        } else {
-            console.log('error');
+            const token = localStorage.getItem('Token');
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        founded: profile.founded,
+                    }),
+                });
+
+                if (response.status === 200) {
+                    const updatedProfileData = await response.json();
+                    profileMutate(updatedProfileData);
+                } else {
+                    console.error('Помилка');
+                }
+            } catch (error) {
+                console.error('Помилка:', error);
+            }
         }
     };
 
-    return (
-        <div className={css['form__container']}>
-            <form id="AdditionalInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                <div className={css['fields']}>
-                    <div className={css['fields-groups']}>
-                        <HalfFormField
-                            inputType="number"
-                            name="founded"
-                            label={LABELS.founded}
-                            updateHandler={onUpdateFoundationYearField}
-                            requredField={false}
-                            value={profile.founded ?? ''}
-                            error={foundationYearError}
-                        />
-                    </div>
-                </div>
-            </form>
-        </div>
-    );
-};
+        return (
+            <div className={css['form__container']}>
+                {(user && profile && mainProfile)
+                    ?
+                    <>
+                        <form id="AdditionalInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                            <div className={css['fields']}>
+                                <div className={css['fields-groups']}>
+                                    <HalfFormField
+                                        inputType="number"
+                                        name="founded"
+                                        label={LABELS.founded}
+                                        updateHandler={onUpdateFoundationYearField}
+                                        requredField={false}
+                                        value={profile.founded ?? ''}
+                                        error={foundationYearError}
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </>
+                    : <Loader />}
+            </div>
+        );
+    };
 
-export default AdditionalInfo;
+    export default AdditionalInfo;
