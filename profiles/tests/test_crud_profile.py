@@ -4,6 +4,7 @@ from io import BytesIO
 from PIL import Image
 from rest_framework import status
 from rest_framework.test import APITestCase
+import sys
 
 from authentication.factories import UserFactory
 from profiles.factories import (
@@ -18,7 +19,8 @@ from utils.unittest_helper import AnyInt
 
 class TestProfileDetailAPIView(APITestCase):
     @staticmethod
-    def _generate_image(ext, size=(100, 100)):
+    def _generate_image(ext, size):
+    # =(100, 100)):
         """for mocking png and jpeg files"""
         file = BytesIO()
         image = Image.new("RGB", size=size)
@@ -30,8 +32,8 @@ class TestProfileDetailAPIView(APITestCase):
 
     def setUp(self) -> None:
         # self.right_image = self._generate_image("jpeg", (10, 10))
-        self.right_image = self._generate_image("jpeg", (5, 5))
-        self.wrong_image = self._generate_image("png", (3000, 3000))
+        self.right_image = self._generate_image("png", (1, 1))
+        self.wrong_image = self._generate_image("png", (5, 5))
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
@@ -499,6 +501,7 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_full_update_profile_authorized_with_full_data(self):
+        import sys
         category = CategoryFactory()
         activity = ActivityFactory()
         self.client.force_authenticate(self.user)
@@ -527,7 +530,12 @@ class TestProfileDetailAPIView(APITestCase):
                 "activities": [activity.id],
             },
         )
-        print(response.content, '*'*10)
+        # print(image.size, '#'*10)
+        max_right = sys.getsizeof(self.right_image)
+        print(max_right, "$" * 10)
+        max_wrong = sys.getsizeof(self.wrong_image)
+        print(max_wrong, '*'*10)
+        # print(response.content, '*'*10)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
     def test_full_update_profile_unauthorized(self):
