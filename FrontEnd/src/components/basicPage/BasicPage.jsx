@@ -1,18 +1,19 @@
-import Header from '../HeaderFooter/header/Header';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import MainPage from '../landing-page/MainPage';
-import ProfilePage from '../ProfilePage/ProfilePage';
-import AuthorizationPage from '../authorization/AuthorizationPage';
-import { SignUpPage } from '../SignUp/pages/SignUpPage';
-import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
-import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
-import Footer from '../HeaderFooter/footer/Footer';
-import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import React from 'react';
-import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
-import { useAuth } from '../../hooks';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+
+import AuthorizationPage from '../authorization/AuthorizationPage';
+import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
+import Footer from '../HeaderFooter/footer/Footer';
+import Header from '../HeaderFooter/header/Header';
+import MainPage from '../landing-page/MainPage';
+import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
 import ProfileListPage from '../profileList/ProfileListPage';
+import ProfilePage from '../ProfilePage/ProfilePage';
+import { SignUpPage } from '../SignUp/pages/SignUpPage';
+import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
+import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
+import { useAuth } from '../../hooks';
 
 
 function BasicPage() {
