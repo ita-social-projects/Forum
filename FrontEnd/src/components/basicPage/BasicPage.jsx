@@ -13,7 +13,7 @@ import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent'
 import { useAuth } from '../../hooks';
 import { ConfigProvider } from 'antd';
 import ProfileListPage from '../profileList/ProfileListPage';
-import { ConfigProvider } from 'antd';
+// import { ConfigProvider } from 'antd';
 
 function BasicPage() {
   const auth = useAuth();
@@ -22,31 +22,31 @@ function BasicPage() {
       theme={{
         components: {
           Carousel: {
-            colorBgContainer: "#40af85",
+            colorBgContainer: '#40af85',
             dotActiveWidth: 32,
             dotWidth: 32,
             dotHeight: 6,
             lineHeight: 1,
           },
           Button: {
-            defaultColor: "#1F9A7C",
-            colorPrimaryHover: "#0b6c61",
+            defaultColor: '#1F9A7C',
+            colorPrimaryHover: '#0b6c61',
             fontWeight: 600,
             contentFontSize: 16,
-            fontFamilyCode: "Inter",
+            fontFamilyCode: 'Inter',
           },
           Radio: {
-            colorPrimary: "#1f9a7c",
+            colorPrimary: '#1f9a7c',
             borderRadius: 2,
-            colorBorder: "#DEE1E8",
-            buttonColor: "#25292C",
-            fontFamily: "Inter",
+            colorBorder: '#DEE1E8',
+            buttonColor: '#25292C',
+            fontFamily: 'Inter',
             fontSize: 16,
             algorithm: true, // Enable algorithm
           },
           Pagination: {
-            colorPrimary: "#1F9A7C",
-            colorPrimaryHover: "#0b6c61",
+            colorPrimary: '#1F9A7C',
+            colorPrimaryHover: '#0b6c61',
           },
         },
       }}
@@ -67,7 +67,7 @@ function BasicPage() {
       </Routes>
       <Footer />
       <ScrollToTopButton />
-   </ConfigProvider>
+    </ConfigProvider>
   );
 }
 
