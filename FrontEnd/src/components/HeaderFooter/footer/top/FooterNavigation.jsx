@@ -1,6 +1,6 @@
-import css from './FooterNavigation.module.css';
 import { HashLink } from 'react-router-hash-link';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import css from './FooterNavigation.module.css';
 
 const PAGE_NAVIGATION_LINKS = [
   {
