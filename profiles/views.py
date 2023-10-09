@@ -180,9 +180,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         user = self.request.user
         password = self.request.data.get("password")
-        if not password:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        if not check_password(password, user.password):
+        if not password or not check_password(password, user.password):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
             self.perform_destroy(instance)
