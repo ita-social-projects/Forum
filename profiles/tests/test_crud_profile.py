@@ -29,8 +29,8 @@ class TestProfileDetailAPIView(APITestCase):
         return file
 
     def setUp(self) -> None:
-        self.right_image = self._generate_image("jpeg", (10, 10))
-        self.wrong_image = self._generate_image("png", (3000, 3000))
+        self.right_image = self._generate_image("jpeg", (100, 100))
+        self.wrong_image = self._generate_image("png", (7000, 7000))
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
@@ -526,7 +526,9 @@ class TestProfileDetailAPIView(APITestCase):
                 "activities": [activity.id],
             },
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(
+            status.HTTP_200_OK, response.status_code, response.content
+        )
 
     def test_full_update_profile_unauthorized(self):
         category = CategoryFactory()
