@@ -1,23 +1,26 @@
-# too many errors in our frontend for usage this action, keep it for future...
-#name: EsLint
-#
-#on: pull_request
-#
-#jobs:
-#  linting:
-#    name: Linting # job name (unique id)
-#    runs-on: ubuntu-latest # on which machine to run
-#    steps: # list of steps
-#      - name: Install NodeJS
-#        uses: actions/setup-node@v2
-#        with:
-#          node-version: '14'
-#
-#      - name: Code Checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Install Dependencies
-#        run: npm ci
-#
-#      - name: Code Linting
-#        run: npm run lint
+name: EsLint
+
+on: pull_request
+
+jobs:
+  linting:
+    name: Linting # job name (unique id)
+    runs-on: ubuntu-latest # on which machine to run
+    steps: # list of steps
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Code Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          cd FrontEnd
+          npm install
+
+      - name: Code Linting
+        run: |
+          cd FrontEnd
+          npm run lint

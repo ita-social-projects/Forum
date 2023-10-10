@@ -29,8 +29,8 @@ class TestProfileDetailAPIView(APITestCase):
         return file
 
     def setUp(self) -> None:
-        self.right_image = self._generate_image("jpeg", (10, 10))
-        self.wrong_image = self._generate_image("png", (3000, 3000))
+        self.right_image = self._generate_image("jpeg", (100, 100))
+        self.wrong_image = self._generate_image("png", (7000, 7000))
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
@@ -360,14 +360,16 @@ class TestProfileDetailAPIView(APITestCase):
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-    def test_delete_profile_authorized(self):
+    def test_delete_profile_authorized_with_correct_password(self):
+        self.user.set_password("Test1234")
         self.client.force_authenticate(self.user)
 
         # del profile
         response = self.client.delete(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
-            )
+            ),
+            data={"password": "Test1234"},
         )
         self.assertEqual(204, response.status_code)
 
@@ -383,12 +385,38 @@ class TestProfileDetailAPIView(APITestCase):
         )
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
+    def test_delete_profile_authorized_with_wrong_password(self):
+        self.user.set_password("Test1234")
+        self.client.force_authenticate(self.user)
+
+        # del profile
+        response = self.client.delete(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"password": "Test5678"},
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+
+    def test_delete_profile_authorized_without_password(self):
+        self.client.force_authenticate(self.user)
+
+        # del profile
+        response = self.client.delete(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            )
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+
     def test_delete_profile_of_other_user_authorized(self):
+        self.user.set_password("Test1234")
         profile2 = ProfileStartupFactory()
         self.client.force_authenticate(self.user)
 
         response = self.client.delete(
-            path="/api/profiles/{profile_id}".format(profile_id=profile2.id)
+            path="/api/profiles/{profile_id}".format(profile_id=profile2.id),
+            data={"password": "Test1234"},
         )
         self.assertEqual(403, response.status_code)
 
@@ -526,7 +554,9 @@ class TestProfileDetailAPIView(APITestCase):
                 "activities": [activity.id],
             },
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(
+            status.HTTP_200_OK, response.status_code, response.content
+        )
 
     def test_full_update_profile_unauthorized(self):
         category = CategoryFactory()
