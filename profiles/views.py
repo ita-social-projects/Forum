@@ -1,4 +1,3 @@
-import stat
 import django_filters
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.hashers import check_password
