@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "authentication",
     "profiles",
     "administration",
+    "search",
 ]
 
 MIDDLEWARE = [
