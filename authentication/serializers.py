@@ -88,13 +88,10 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
 
 
 class UserListSerializer(UserSerializer):
-    profile_id = serializers.PrimaryKeyRelatedField(source='profile', read_only=True)
+    profile_id = serializers.PrimaryKeyRelatedField(
+        source="profile", read_only=True
+    )
+
     class Meta(UserSerializer.Meta):
         model = User
-        fields = (
-            "id",
-            "email",
-            "name",
-            "surname",
-            'profile_id'
-        )
+        fields = ("id", "email", "name", "surname", "profile_id")
