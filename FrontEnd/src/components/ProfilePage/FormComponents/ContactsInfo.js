@@ -86,31 +86,30 @@ const ContactsInfo = (props) => {
         <div className={css['form__container']}>
             {(user && profile && mainProfile)
                 ?
-                <>
-                    <form id="ContactsInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                        <div className={css['fields']}>
-                            <div className={css['fields-groups']}>
-                                <HalfFormField
-                                    inputType="tel"
-                                    name="phone"
-                                    fieldPlaceholder="38"
-                                    label={LABELS.phone}
-                                    updateHandler={onUpdatePhoneNumberField}
-                                    requredField={false}
-                                    value={profile.phone ?? ''}
-                                    error={phoneNumberError}
-                                />
-                            </div>
-                            <FullField
-                                name="address"
-                                label={LABELS.address}
-                                updateHandler={onUpdateField}
+
+                <form id="ContactsInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <div className={css['fields-groups']}>
+                            <HalfFormField
+                                inputType="tel"
+                                name="phone"
+                                fieldPlaceholder="38"
+                                label={LABELS.phone}
+                                updateHandler={onUpdatePhoneNumberField}
                                 requredField={false}
-                                value={profile.address ?? ''}
+                                value={profile.phone ?? ''}
+                                error={phoneNumberError}
                             />
                         </div>
-                    </form>
-                </>
+                        <FullField
+                            name="address"
+                            label={LABELS.address}
+                            updateHandler={onUpdateField}
+                            requredField={false}
+                            value={profile.address ?? ''}
+                        />
+                    </div>
+                </form>
                 : <Loader />}
         </div>
     );

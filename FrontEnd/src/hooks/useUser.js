@@ -26,5 +26,5 @@ export default function useUser() {
         }
     }, [data, error]);
 
-    return { user, mutate };
+    return { user, mutate, error };
 }

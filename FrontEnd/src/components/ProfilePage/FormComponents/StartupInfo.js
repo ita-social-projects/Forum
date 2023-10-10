@@ -56,20 +56,18 @@ const StartupInfo = (props) => {
         <div className={css['form__container']}>
             {(user && profile && mainProfile)
                 ?
-                <>
-                    <form id="StartupInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                        <div className={css['fields']}>
-                            <TextField
-                                name="startup_idea"
-                                label={LABELS.startup_idea}
-                                updateHandler={onUpdateTextAreaField}
-                                requredField={false}
-                                value={profile.startup_idea ?? ''}
-                                maxLength={TEXT_AREA_MAX_LENGTH}
-                            />
-                        </div>
-                    </form>
-                </>
+                <form id="StartupInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <TextField
+                            name="startup_idea"
+                            label={LABELS.startup_idea}
+                            updateHandler={onUpdateTextAreaField}
+                            requredField={false}
+                            value={profile.startup_idea ?? ''}
+                            maxLength={TEXT_AREA_MAX_LENGTH}
+                        />
+                    </div>
+                </form>
                 : <Loader />}
         </div>
     );

@@ -118,49 +118,47 @@ const UserInfo = (props) => {
         <div className={css['form__container']}>
             {(updateUser && user && profile && updateProfile)
                 ?
-                <>
-                    <form id="UserInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                        <div className={css['fields']}>
-                            <div className={css['fields-groups']}>
-                                <HalfFormField
-                                    inputType="text"
-                                    name="surname"
-                                    label={LABELS.surname}
-                                    updateHandler={onUpdateField}
-                                    error={formStateErr['surname']['error'] ? formStateErr['surname']['message'] : null}
-                                    requredField={true}
-                                    value={updateUser.surname}
-                                />
-                                <HalfFormField
-                                    inputType="text"
-                                    name="name"
-                                    label={LABELS.name}
-                                    updateHandler={onUpdateField}
-                                    error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
-                                    requredField={true}
-                                    value={updateUser.name}
-                                />
-                            </div>
-                            <div className={css['fields-groups']}>
-                                <HalfFormField
-                                    inputType="text"
-                                    name="person_position"
-                                    label={LABELS.person_position}
-                                    updateHandler={onUpdateField}
-                                    requredField={false}
-                                    value={updateProfile.person_position ?? ''}
-                                />
-                                <HalfFormField
-                                    inputType="text"
-                                    name="email"
-                                    label={LABELS.email}
-                                    requredField={true}
-                                    value={updateUser.email}
-                                />
-                            </div>
+                <form id="UserInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <div className={css['fields-groups']}>
+                            <HalfFormField
+                                inputType="text"
+                                name="surname"
+                                label={LABELS.surname}
+                                updateHandler={onUpdateField}
+                                error={formStateErr['surname']['error'] ? formStateErr['surname']['message'] : null}
+                                requredField={true}
+                                value={updateUser.surname}
+                            />
+                            <HalfFormField
+                                inputType="text"
+                                name="name"
+                                label={LABELS.name}
+                                updateHandler={onUpdateField}
+                                error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
+                                requredField={true}
+                                value={updateUser.name}
+                            />
                         </div>
-                    </form>
-                </>
+                        <div className={css['fields-groups']}>
+                            <HalfFormField
+                                inputType="text"
+                                name="person_position"
+                                label={LABELS.person_position}
+                                updateHandler={onUpdateField}
+                                requredField={false}
+                                value={updateProfile.person_position ?? ''}
+                            />
+                            <HalfFormField
+                                inputType="text"
+                                name="email"
+                                label={LABELS.email}
+                                requredField={true}
+                                value={updateUser.email}
+                            />
+                        </div>
+                    </div>
+                </form>
                 : <Loader />
             }
         </div>

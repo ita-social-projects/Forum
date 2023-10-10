@@ -29,5 +29,5 @@ export default function useProfile() {
         }
     }, [data, error]);
 
-    return { profile, mutate };
+    return { profile, mutate, error };
 }

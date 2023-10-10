@@ -58,28 +58,26 @@ const ProductServiceInfo = (props) => {
         <div className={css['form__container']}>
             {(user && profile && mainProfile)
                 ?
-                <>
-                    <form id="ProductServiceInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                        <div className={css['fields']}>
-                            <TextField
-                                name="product_info"
-                                label={LABELS.product_info}
-                                updateHandler={onUpdateTextAreaField}
-                                requredField={false}
-                                value={profile.product_info ?? ''}
-                                maxLength={TEXT_AREA_MAX_LENGTH}
-                            />
-                            <TextField
-                                name="service_info"
-                                label={LABELS.service_info}
-                                updateHandler={onUpdateTextAreaField}
-                                requredField={false}
-                                value={profile.service_info ?? ''}
-                                maxLength={TEXT_AREA_MAX_LENGTH}
-                            />
-                        </div>
-                    </form>
-                </>
+                <form id="ProductServiceInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <TextField
+                            name="product_info"
+                            label={LABELS.product_info}
+                            updateHandler={onUpdateTextAreaField}
+                            requredField={false}
+                            value={profile.product_info ?? ''}
+                            maxLength={TEXT_AREA_MAX_LENGTH}
+                        />
+                        <TextField
+                            name="service_info"
+                            label={LABELS.service_info}
+                            updateHandler={onUpdateTextAreaField}
+                            requredField={false}
+                            value={profile.service_info ?? ''}
+                            maxLength={TEXT_AREA_MAX_LENGTH}
+                        />
+                    </div>
+                </form>
                 : <Loader />}
         </div>
     );

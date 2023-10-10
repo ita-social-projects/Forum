@@ -1,8 +1,8 @@
 import css from './ProfileContent.module.css';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { Link, NavLink, Route, Routes } from 'react-router-dom';
 import AdditionalInfo from '../FormComponents/AdditionalInfo';
 import ContactsInfo from '../FormComponents/ContactsInfo';
-// import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
+import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
 import GeneralInfo from '../FormComponents/GeneralInfo';
 import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
 import StartupInfo from '../FormComponents/StartupInfo';
@@ -60,21 +60,19 @@ const ProfileContent = (props) => {
                         >{element.title}</NavLink>
                     ))}
                     <div className={css['divider']}></div>
-                    {/* <Link
+                    <Link
                         to="/profile/delete"
                         className={`${css['infolink']} ${css['delete']}`}>
                         Видалити профіль
-                    </Link> */}
+                    </Link>
                 </div>
 
                 <Routes>
-                    {/* <Route
+                    <Route
                         path="/delete"
                         element={<DeleteProfilePage
-                            user={props.user}
-                            profile={props.profile}
                             currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[6]} />} /> */}
+                            curForm={FORM_NAMES[6]} />} />
                     <Route
                         path="/user-info"
                         element={<UserInfo user={props.user}

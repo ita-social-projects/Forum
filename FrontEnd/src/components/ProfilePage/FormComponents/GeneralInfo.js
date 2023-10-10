@@ -6,7 +6,6 @@ import { useUser, useProfile } from '../../../hooks/';
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
-// import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
@@ -41,7 +40,6 @@ const ERRORS = {
 };
 
 const TEXT_AREA_MAX_LENGTH = 1000;
-// const IMAGE_SIZE = 50 * 1024 * 1024;
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
@@ -51,7 +49,6 @@ const GeneralInfo = (props) => {
     const [profile, setProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const [edrpouError, setEdrpouError] = useState(null);
-    // const [imageBannerError, setImageBannerError] = useState(null);
 
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
     const { data: fetchedActivities, isLoading: isActivitiesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/activities/`, fetcher);
@@ -111,34 +108,6 @@ const GeneralInfo = (props) => {
             });
         }
     };
-
-    // const onUpdateImageField = e => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         if (file.size > IMAGE_SIZE) {
-    //             if (e.target.name === 'logo') {
-    //                 setImageLogoError('Максимальний розмір файлу 50Mb');
-    //             } else {
-    //                 setImageBannerError('Максимальний розмір файлу 50Mb');
-    //             }
-    //         } else {
-    //             if (e.target.name === 'logo') {
-    //                 setImageLogoError(null);
-    //             } else {
-    //                 setImageBannerError(null);
-    //             }
-    //             setProfile((prevState) => {
-    //                 return { ...prevState, [e.target.name]: file };
-    //             });
-    //         }
-    //     }
-    // };
-
-    // const deleteImageHandler = (name) => {
-    //     setProfile((prevState) => {
-    //         return { ...prevState, [name]: '' };
-    //     });
-    // };
 
     const onChangeCheckbox = e => {
         if (e.target.name === 'is_startup') {
@@ -226,121 +195,109 @@ const GeneralInfo = (props) => {
         <div className={css['form__container']}>
             {(user && profile && mainProfile)
                 ?
-                <>
-                    <form id="GeneralInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                        <div className={css['fields']}>
-                            <div className={css['fields-groups']}>
-                                <HalfFormField
-                                    name="name"
-                                    label={LABELS.name}
-                                    updateHandler={onUpdateField}
-                                    error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
-                                    requredField={true}
-                                    value={profile.name}
-                                />
-                            </div>
-                            <FullField
-                                name="official_name"
-                                label={LABELS.official_name}
+                <form id="GeneralInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <div className={css['fields-groups']}>
+                            <HalfFormField
+                                name="name"
+                                label={LABELS.name}
                                 updateHandler={onUpdateField}
-                                requredField={false}
-                                value={profile.official_name ?? ''}
-                            />
-                            <div className={css['fields-groups']}>
-                                <HalfFormField
-                                    inputType="text"
-                                    name="edrpou"
-                                    label={LABELS.edrpou}
-                                    updateHandler={onUpdateEdrpouField}
-                                    requredField={false}
-                                    value={profile.edrpou ?? ''}
-                                    error={edrpouError}
-                                />
-                                {isRegionLoading
-                                    ?
-                                    <Loader />
-                                    :
-                                    <OneSelectChip
-                                        name="region"
-                                        options={fetchedRegions}
-                                        label={LABELS.region}
-                                        updateHandler={onUpdateOneSelectField}
-                                        requredField={false}
-                                        defaultValue="Оберіть"
-                                        value={fetchedRegions.find((el) => el.key === profile.region)?.value ?? ''}
-                                    />
-                                }
-                            </div>
-                            <div className={css['fields-groups']}>
-                                {isActivitiesLoading
-                                    ?
-                                    <Loader />
-                                    :
-                                    <MultipleSelectChip
-                                        name="activities"
-                                        options={fetchedActivities}
-                                        label={LABELS.activities}
-                                        updateHandler={onUpdateSelectField}
-                                        requredField={true}
-                                        value={profile.activities.map(obj => obj.name) ?? ''}
-                                        defaultValue="Оберіть"
-                                        error={formStateErr['activities']['error']
-                                            ?
-                                            formStateErr['activities']['message']
-                                            :
-                                            null}
-                                    />
-                                }
-                                {isCategoriesLoading
-                                    ?
-                                    <Loader />
-                                    :
-                                    <MultipleSelectChip
-                                        name="categories"
-                                        options={fetchedCategories}
-                                        label={LABELS.categories}
-                                        updateHandler={onUpdateSelectField}
-                                        requredField={true}
-                                        value={profile.categories.map(obj => obj.name) ?? ''}
-                                        defaultValue="Оберіть"
-                                        error={formStateErr['categories']['error']
-                                            ?
-                                            formStateErr['categories']['message']
-                                            :
-                                            null}
-                                    />
-                                }
-                            </div>
-                            {/* <ImageField
-                        inputType="file"
-                        name="bannerImage"
-                        label={LABELS.bannerImage}
-                        updateHandler={onUpdateImageField}
-                        requredField={false}
-                        value={profile.bannerImage.name}
-                        error={imageBannerError}
-                        onDeleteImage={deleteImageHandler}
-                    /> */}
-                            <TextField
-                                name="common_info"
-                                label={LABELS.common_info}
-                                updateHandler={onUpdateTextAreaField}
-                                requredField={false}
-                                value={profile.common_info ?? ''}
-                                maxLength={TEXT_AREA_MAX_LENGTH}
-                            />
-                            <CheckBoxField
-                                name="companyType"
-                                nameRegister="is_registered"
-                                valueRegister={profile.is_registered}
-                                nameStartup="is_startup"
-                                valueStartup={profile.is_startup}
-                                updateHandler={onChangeCheckbox}
+                                error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
                                 requredField={true}
+                                value={profile.name}
                             />
                         </div>
-                    </form>
-                </>
+                        <FullField
+                            name="official_name"
+                            label={LABELS.official_name}
+                            updateHandler={onUpdateField}
+                            requredField={false}
+                            value={profile.official_name ?? ''}
+                        />
+                        <div className={css['fields-groups']}>
+                            <HalfFormField
+                                inputType="text"
+                                name="edrpou"
+                                label={LABELS.edrpou}
+                                updateHandler={onUpdateEdrpouField}
+                                requredField={false}
+                                value={profile.edrpou ?? ''}
+                                error={edrpouError}
+                            />
+                            {isRegionLoading
+                                ?
+                                <Loader />
+                                :
+                                <OneSelectChip
+                                    name="region"
+                                    options={fetchedRegions}
+                                    label={LABELS.region}
+                                    updateHandler={onUpdateOneSelectField}
+                                    requredField={false}
+                                    defaultValue="Оберіть"
+                                    value={fetchedRegions.find((el) => el.key === profile.region)?.value ?? ''}
+                                />
+                            }
+                        </div>
+                        <div className={css['fields-groups']}>
+                            {isActivitiesLoading
+                                ?
+                                <Loader />
+                                :
+                                <MultipleSelectChip
+                                    name="activities"
+                                    options={fetchedActivities}
+                                    label={LABELS.activities}
+                                    updateHandler={onUpdateSelectField}
+                                    requredField={true}
+                                    value={profile.activities.map(obj => obj.name) ?? ''}
+                                    defaultValue="Оберіть"
+                                    error={formStateErr['activities']['error']
+                                        ?
+                                        formStateErr['activities']['message']
+                                        :
+                                        null}
+                                />
+                            }
+                            {isCategoriesLoading
+                                ?
+                                <Loader />
+                                :
+                                <MultipleSelectChip
+                                    name="categories"
+                                    options={fetchedCategories}
+                                    label={LABELS.categories}
+                                    updateHandler={onUpdateSelectField}
+                                    requredField={true}
+                                    value={profile.categories.map(obj => obj.name) ?? ''}
+                                    defaultValue="Оберіть"
+                                    error={formStateErr['categories']['error']
+                                        ?
+                                        formStateErr['categories']['message']
+                                        :
+                                        null}
+                                />
+                            }
+                        </div>
+                        <TextField
+                            name="common_info"
+                            label={LABELS.common_info}
+                            updateHandler={onUpdateTextAreaField}
+                            requredField={false}
+                            value={profile.common_info ?? ''}
+                            maxLength={TEXT_AREA_MAX_LENGTH}
+                        />
+                        <CheckBoxField
+                            name="companyType"
+                            nameRegister="is_registered"
+                            valueRegister={profile.is_registered}
+                            nameStartup="is_startup"
+                            valueStartup={profile.is_startup}
+                            updateHandler={onChangeCheckbox}
+                            requredField={true}
+                        />
+                    </div>
+                </form>
                 : <Loader />}
         </div>
     );

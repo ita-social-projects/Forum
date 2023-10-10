@@ -69,30 +69,28 @@ const AdditionalInfo = (props) => {
         }
     };
 
-        return (
-            <div className={css['form__container']}>
-                {(user && profile && mainProfile)
-                    ?
-                    <>
-                        <form id="AdditionalInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                            <div className={css['fields']}>
-                                <div className={css['fields-groups']}>
-                                    <HalfFormField
-                                        inputType="number"
-                                        name="founded"
-                                        label={LABELS.founded}
-                                        updateHandler={onUpdateFoundationYearField}
-                                        requredField={false}
-                                        value={profile.founded ?? ''}
-                                        error={foundationYearError}
-                                    />
-                                </div>
-                            </div>
-                        </form>
-                    </>
-                    : <Loader />}
-            </div>
-        );
-    };
+    return (
+        <div className={css['form__container']}>
+            {(user && profile && mainProfile)
+                ?
+                <form id="AdditionalInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <div className={css['fields-groups']}>
+                            <HalfFormField
+                                inputType="number"
+                                name="founded"
+                                label={LABELS.founded}
+                                updateHandler={onUpdateFoundationYearField}
+                                requredField={false}
+                                value={profile.founded ?? ''}
+                                error={foundationYearError}
+                            />
+                        </div>
+                    </div>
+                </form>
+                : <Loader />}
+        </div>
+    );
+};
 
-    export default AdditionalInfo;
+export default AdditionalInfo;
