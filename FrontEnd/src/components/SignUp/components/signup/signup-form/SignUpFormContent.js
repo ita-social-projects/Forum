@@ -34,6 +34,7 @@ export function SignUpFormContentComponent(props) {
     handleSubmit,
     watch,
     getValues,
+    setError,
     formState: { errors, isValid },
   } = useForm({
     mode: 'all',
@@ -83,12 +84,18 @@ export function SignUpFormContentComponent(props) {
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
-      withCredentials: false,
-      data: dataToSend
-    }).then(res => console.log(res.data)).catch(error => console.log(error));
-    console.log(process.env.REACT_APP_BASE_API_URL);
+      data: dataToSend,
+    })
+      .then()
+      .catch((error) => {
+        if (error.response.data.email) {
+          setError('email', {
+            type: 'manual',
+            message: 'Вже зареєстрована пошта',
+          });
+        }
+      });
   };
-  // TODO: add error hndling (separate task)
   // TODO: add modal about email being sent
 
   return (

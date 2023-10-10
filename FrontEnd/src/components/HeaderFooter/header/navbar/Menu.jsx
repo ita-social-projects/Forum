@@ -23,11 +23,12 @@ const MENU_LINKS = [
 ];
 
 function Menu() {
+  console.log(MENU_LINKS.map((element) => (element.title.startsWith('/#'))));
   return (
     <div className={css['header-menu-section']}>
       {MENU_LINKS.map((element) => (
         <div className={css['header-menu-element']} key={element.link}>
-          {element.title.startsWith('/#') ? (
+          {element.link.startsWith('/#') ? (
             <HashLink
               className={css['header-menu-element__text']}
               to={element.link}
