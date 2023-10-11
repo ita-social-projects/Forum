@@ -47,7 +47,7 @@ const AboutSectionCards = () => {
           </div>
         </div>
       </div>
-    )
-}
+    );
+};
 
 export default AboutSectionCards;

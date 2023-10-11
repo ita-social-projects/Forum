@@ -19,16 +19,10 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
-            }
-        )
-        self.assertEqual(response.status_code,
-                         status.HTTP_200_OK)
-        self.assertEqual(
-            {
-                "auth_token": AnyStr()
             },
-            response.json()
         )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual({"auth_token": AnyStr()}, response.json())
         self.assertContains(response, "auth_token")
 
     def test_login_email_incorrect(self):
@@ -40,13 +34,13 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "tost@test.com",
                 "password": "Test1234",
-            }
+            },
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
-                "error": [
-                    "Email or password is incorrect"
+                "non_field_errors": [
+                    "Unable to log in with provided credentials."
                 ]
             },
             response.json(),
@@ -61,13 +55,13 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test5678",
-            }
+            },
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             {
-                "error": [
-                    "Email or password is incorrect"
+                "non_field_errors": [
+                    "Unable to log in with provided credentials."
                 ]
             },
             response.json(),

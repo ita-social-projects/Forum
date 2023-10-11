@@ -1,5 +1,5 @@
 import './Text.css';
-import {privacyPolicy} from "./Text";
+import {privacyPolicy} from './Text';
 export function PrivacyPolicy() {
   return (
     <div>

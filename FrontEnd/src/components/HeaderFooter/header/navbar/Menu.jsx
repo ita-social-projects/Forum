@@ -1,39 +1,52 @@
-import css from "./Menu.module.css"
+import { Link } from 'react-router-dom';
+import css from './Menu.module.css';
 import { HashLink } from 'react-router-hash-link';
 
 const MENU_LINKS = [
     {
-        id: "m0",
-        title: "Головна",
-        link: "/"
+        id: 'm0',
+        title: 'Головна',
+        link: '/'
     },
     {
-        id: "m1",
-        title: "Компанії",
-        link: "/"
+        title: 'Компанії',
+        link: '/profiles/companies'
     },
     {
-        id: "m2",
-        title: "Стартапи",
-        link: "/"
+        title: 'Стартапи',
+        link: '/profiles/startups'
     },
     {
-        id: "m3",
-        title: "Про нас",
-        link: "/#about-us"
+        title: 'Про нас',
+        link: '/#about-us'
     },
-]
+];
 
-function Menu () {
-    return (
-        <div className={css["header-menu-section"]}>
-            {MENU_LINKS.map( (element) => (
-                <div className={css["header-menu-element"]} key={element.id}>
-                    <HashLink className={css["header-menu-element__text"]} to={element.link}>{element.title}</HashLink>
-                </div>
-            ))}
+function Menu() {
+  console.log(MENU_LINKS.map((element) => (element.title.startsWith('/#'))));
+  return (
+    <div className={css['header-menu-section']}>
+      {MENU_LINKS.map((element) => (
+        <div className={css['header-menu-element']} key={element.link}>
+          {element.link.startsWith('/#') ? (
+            <HashLink
+              className={css['header-menu-element__text']}
+              to={element.link}
+            >
+              {element.title}
+            </HashLink>
+          ) : (
+            <Link
+              className={css['header-menu-element__text']}
+              to={element.link}
+            >
+              {element.title}
+            </Link>
+          )}
         </div>
-    );
-};
+      ))}
+    </div>
+  );
+}
 
 export default Menu;

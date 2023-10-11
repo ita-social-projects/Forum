@@ -13,7 +13,7 @@ const MainPage = () => {
     <div className="main-app">
       <div className="main-app-header">
         <MainBanner />
-        <div className={css["main-app-body"]}>
+        <div className={css['main-app-body']}>
           <MainPartners />
           <MainCompanies />
           <MainLoginBanner />

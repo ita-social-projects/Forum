@@ -27,7 +27,7 @@ const MainPartners = () => {
                 <img className="partners-section__image6" src={`${process.env.PUBLIC_URL}/partners-images/6.jpeg`} alt=""/>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default MainPartners;
