@@ -97,7 +97,7 @@ export function SignUpFormContentComponent(props) {
           });
         }
       });
-      navigate("/sign-up/modal");
+      navigate('/sign-up/modal');
   };
 
   return (

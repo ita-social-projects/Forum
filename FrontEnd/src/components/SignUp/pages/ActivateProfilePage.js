@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import AuthorizationPage from "../../authorization/AuthorizationPage";
-import styles from "./ActivateProfileModal.module.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import AuthorizationPage from '../../authorization/AuthorizationPage';
+import styles from './ActivateProfileModal.module.css';
 
 export function ActivationProfilePage() {
   const { uid, token } = useParams();
-  const [activationStatus, setActivationStatus] = useState("");
+  const [activationStatus, setActivationStatus] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleActivation = async () => {
@@ -22,7 +22,7 @@ export function ActivationProfilePage() {
       setActivationStatus(response.data.message);
       setModalVisible(true);
     } catch (error) {
-      setActivationStatus("Помилка активації");
+      setActivationStatus('Помилка активації');
       setModalVisible(true);
     }
   };
@@ -39,17 +39,17 @@ export function ActivationProfilePage() {
     <div>
       <AuthorizationPage />
       {modalVisible && (
-        <div className={styles["modal"]}>
-          <div className={styles["modal__overlay"]} onClick={closeModal}></div>
-          <div className={styles["modal__body"]}>
-            <div className={styles["container-modal"]}>
-              <div className={styles["modal__header"]}>
-                {activationStatus === "Помилка активації"
-                  ? "Помилка активації"
-                  : "Реєстрація завершена!"}
+        <div className={styles['modal']}>
+          <div className={styles['modal__overlay']} onClick={closeModal}></div>
+          <div className={styles['modal__body']}>
+            <div className={styles['container-modal']}>
+              <div className={styles['modal__header']}>
+                {activationStatus === 'Помилка активації'
+                  ? 'Помилка активації'
+                  : 'Реєстрація завершена!'}
               </div>
-              <div className={styles["modal__content"]}>
-                {activationStatus === "Помилка активації" ? (
+              <div className={styles['modal__content']}>
+                {activationStatus === 'Помилка активації' ? (
                   <p>
                     Під час активації сталася помилка.
                     Спробуйте ще раз або зв'яжіться з підтримкою.
@@ -60,10 +60,10 @@ export function ActivationProfilePage() {
                     </a>
                 )}
               </div>
-              <div className={styles["modal__footer"]}>
-                <div className={styles["button-container"]}>
+              <div className={styles['modal__footer']}>
+                <div className={styles['button-container']}>
                   <button
-                    className={styles["signup-page__button"]}
+                    className={styles['signup-page__button']}
                     onClick={closeModal}
                   >
                     Закрити
@@ -74,7 +74,7 @@ export function ActivationProfilePage() {
           </div>
         </div>
       )}
-      {modalVisible && <div className={styles["blur-background"]}></div>}
+      {modalVisible && <div className={styles['blur-background']}></div>}
     </div>
   );
 }

@@ -1,16 +1,16 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate  } from 'react-router-dom';
 
-import axios from "axios";
-import styles from "./ResendActivationFormContent.module.css";
+import axios from 'axios';
+import styles from './ResendActivationFormContent.module.css';
 
 export function ResendActivationFormContentComponent(props) {
   const navigate = useNavigate();
 
   const errorMessageTemplates = {
-    required: "Обов’язкове поле",
-    email: "Email не відповідає вимогам",
+    required: 'Обов’язкове поле',
+    email: 'Email не відповідає вимогам',
   };
 
   const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -21,7 +21,7 @@ export function ResendActivationFormContentComponent(props) {
     getValues,
     formState: { errors, isValid },
   } = useForm({
-    mode: "all",
+    mode: 'all',
   });
 
   const { setIsValid } = props;
@@ -33,7 +33,7 @@ export function ResendActivationFormContentComponent(props) {
 
   const onSubmit = (event) => {
     const dataToSend = {
-      email: getValues("email"),
+      email: getValues('email'),
     };
 
     axios({
@@ -41,36 +41,36 @@ export function ResendActivationFormContentComponent(props) {
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/resend_activation/`,
       withCredentials: false,
       data: dataToSend
-    }).then(res => console.log(res.data)).catch(error => console.log(error))
-    console.log(process.env.REACT_APP_BASE_API_URL)
-    navigate("/login");
+    }).then(res => console.log(res.data)).catch(error => console.log(error));
+    console.log(process.env.REACT_APP_BASE_API_URL);
+    navigate('/login');
   };
 
   return (
-    <div className={styles["resend-activation-form"]}>
+    <div className={styles['resend-activation-form']}>
       <form
         id="signUpForm"
-        className={styles["resend-activation-form__container"]}
+        className={styles['resend-activation-form__container']}
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
-        <div className={styles["resend-activation-form__row"]}>
-          <div className={styles["resend-activation-form__column"]}>
-            <div className={styles["resend-activation-form__label"]}>
-              <label className={styles["resend-activation-form__label--required"]}>
+        <div className={styles['resend-activation-form__row']}>
+          <div className={styles['resend-activation-form__column']}>
+            <div className={styles['resend-activation-form__label']}>
+              <label className={styles['resend-activation-form__label--required']}>
                 *
               </label>
-              <label className={styles["resend-activation-form__label--text"]}>
+              <label className={styles['resend-activation-form__label--text']}>
                 Електронна пошта
               </label>
             </div>
-            <div className={styles["resend-activation-form__field"]}>
+            <div className={styles['resend-activation-form__field']}>
               <input
-                className={styles["resend-activation-form__input"]}
+                className={styles['resend-activation-form__input']}
                 placeholder="Електронна пошта"
                 type="email"
-                {...register("email", {
+                {...register('email', {
                   required: errorMessageTemplates.required,
                   pattern: {
                     value: emailPattern,
@@ -79,7 +79,7 @@ export function ResendActivationFormContentComponent(props) {
                 })}
               />
             </div>
-            <div className={styles["resend-activation-form__error"]}>
+            <div className={styles['resend-activation-form__error']}>
               {errors.email && errors.email.message}
             </div>
           </div>
