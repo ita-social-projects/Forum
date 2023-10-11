@@ -31,7 +31,7 @@ export function ResendActivationFormContentComponent(props) {
     setIsValid(formIsValid);
   }, [isValid, setIsValid]);
 
-  const onSubmit = (event) => {
+  const onSubmit = () => {
     const dataToSend = {
       email: getValues('email'),
     };
