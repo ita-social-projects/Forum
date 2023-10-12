@@ -208,9 +208,6 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
 class ProfileDeleteSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)
 
-    # class Meta:
-    #     fields = ("password",)
-
     def validate(self, data):
         password = data.get("password")
         user = self.context["request"].user
