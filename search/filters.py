@@ -1,5 +1,5 @@
 from django_filters import filters
-from django_filters.rest_framework import FilterSet
+from django_filters.rest_framework import FilterSet, OrderingFilter
 
 
 class CompanyFilter(FilterSet):
