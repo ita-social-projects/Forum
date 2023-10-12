@@ -1,9 +1,7 @@
 name: Lint
 
-on: 
-  pull_request:
-    paths:
-      - '!FrontEnd/**'
+on: pull_request
+
 
 jobs:
   lint:

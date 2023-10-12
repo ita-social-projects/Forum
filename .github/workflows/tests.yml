@@ -2,7 +2,7 @@ name: Testing BE
 on: 
   pull_request:
     paths:
-      - '!FrontEnd/**'
+      - '**.py'
 
 env:
   SECRET_KEY: django-insecure-8p_=_(i8$#=t_n26md(d7=gpc%5sss!4-1a0cp(lir3-0x^$8%
