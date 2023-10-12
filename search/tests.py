@@ -7,8 +7,7 @@ from profiles.factories import (
     ProfileCompanyFactory,
     ActivityFactory,
 )
-from profiles.factories import SavedCompanyFactory, SavedStartupFactory
-from profiles.models import Profile
+
 from utils.dump_response import dump  # noqa
 
 
