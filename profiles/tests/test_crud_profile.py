@@ -397,6 +397,10 @@ class TestProfileDetailAPIView(APITestCase):
             data={"password": "Test5678"},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            {"password": ["Invalid password"]},
+            response.json(),
+        )
 
     def test_delete_profile_authorized_without_password(self):
         self.client.force_authenticate(self.user)
@@ -408,6 +412,10 @@ class TestProfileDetailAPIView(APITestCase):
             )
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            {"password": ["This field is required."]},
+            response.json(),
+        )
 
     def test_delete_profile_of_other_user_authorized(self):
         self.user.set_password("Test1234")
