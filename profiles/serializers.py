@@ -204,13 +204,18 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("person",)
 
-    def validate_for_delete(self, data):
+
+class ProfileDeleteSerializer(serializers.Serializer):
+    password = serializers.CharField(write_only=True, required=True)
+
+    # class Meta:
+    #     fields = ("password",)
+
+    def validate(self, data):
         password = data.get("password")
-        if not password:
-            raise serializers.ValidationError("Password is required")
         user = self.context["request"].user
         if not user.check_password(password):
-            raise serializers.ValidationError("Invalid password")
+            raise serializers.ValidationError({"password": "Invalid password"})
         return data
 
 

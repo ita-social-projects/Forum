@@ -33,6 +33,7 @@ from .serializers import (
     ProfileDetailSerializer,
     ProfileOwnerDetailViewSerializer,
     ProfileOwnerDetailEditSerializer,
+    ProfileDeleteSerializer,
     CategorySerializer,
     ActivitySerializer,
     RegionSerializer,
@@ -171,13 +172,14 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
                 if get_contacts
                 else ProfileDetailSerializer
             )
+        elif self.request.method == "DELETE":
+            return ProfileDeleteSerializer
         else:
             return ProfileOwnerDetailEditSerializer
 
     def perform_destroy(self, instance):
-        request_data = {"password": self.request.data.get("password")}
-        serializer = self.get_serializer(instance)
-        if serializer.validate_for_delete(request_data):
+        serializer = self.get_serializer(data=self.request.data)
+        if serializer.is_valid(raise_exception=True):
             instance.is_deleted = True
             instance.save()
 
