@@ -286,16 +286,48 @@ class TestCompanyFilter(APITestCase):
     def test_get_profile_ordered_by_name_asc_unauthorized(
         self,
     ):
-        ordered_response_data = [{'id': self.company_charkiv.id, 'name': 'Charkivmarket', 'categories': [], 'region': 'Charkiv',
-                          'founded': 2022, 'service_info': 'test service info',
-                          'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                         {'id': self.company_chernigiv.id, 'name': 'Chernigivtravel', 'categories': [], 'region': 'Chernigiv', 'founded': 2022,
-                          'service_info': 'test service info', 'address': 'Test Country, Test City, St. Test, 1',
-                          'banner_image': None}, {'id': self.company_dnipro.id, 'name': 'Dniprotrans', 'categories': [], 'region': 'Dnipro',
-                          'founded': 2022, 'service_info': 'test service info',
-                          'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}, {'id': self.company_kiev.id,
-                          'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv', 'founded': 2022,
-                          'service_info': 'test service info', 'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}]
+        ordered_response_data = [
+            {
+                "id": self.company_charkiv.id,
+                "name": "Charkivmarket",
+                "categories": [],
+                "region": "Charkiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_chernigiv.id,
+                "name": "Chernigivtravel",
+                "categories": [],
+                "region": "Chernigiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_dnipro.id,
+                "name": "Dniprotrans",
+                "categories": [],
+                "region": "Dnipro",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_kiev.id,
+                "name": "Kyivbud",
+                "categories": [],
+                "region": "Kyiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+        ]
 
         response = self.client.get(path="/api/search/?ordering=name")
         self.assertEqual(200, response.status_code)
@@ -306,16 +338,48 @@ class TestCompanyFilter(APITestCase):
         self,
     ):
         self.client.force_authenticate(self.user)
-        ordered_response_data = [{'id': self.company_charkiv.id, 'name': 'Charkivmarket', 'categories': [], 'region': 'Charkiv',
-                          'founded': 2022, 'service_info': 'test service info',
-                          'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                         {'id': self.company_chernigiv.id, 'name': 'Chernigivtravel', 'categories': [], 'region': 'Chernigiv', 'founded': 2022,
-                          'service_info': 'test service info', 'address': 'Test Country, Test City, St. Test, 1',
-                          'banner_image': None}, {'id': self.company_dnipro.id, 'name': 'Dniprotrans', 'categories': [], 'region': 'Dnipro',
-                          'founded': 2022, 'service_info': 'test service info',
-                          'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}, {'id': self.company_kiev.id,
-                          'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv', 'founded': 2022,
-                          'service_info': 'test service info', 'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}]
+        ordered_response_data = [
+            {
+                "id": self.company_charkiv.id,
+                "name": "Charkivmarket",
+                "categories": [],
+                "region": "Charkiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_chernigiv.id,
+                "name": "Chernigivtravel",
+                "categories": [],
+                "region": "Chernigiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_dnipro.id,
+                "name": "Dniprotrans",
+                "categories": [],
+                "region": "Dnipro",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_kiev.id,
+                "name": "Kyivbud",
+                "categories": [],
+                "region": "Kyiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+        ]
 
         response = self.client.get(path="/api/search/?ordering=name")
         self.assertEqual(200, response.status_code)
@@ -325,19 +389,48 @@ class TestCompanyFilter(APITestCase):
     def test_get_profile_ordered_by_name_dsc_unauthorized(
         self,
     ):
-        ordered_response_data = [{'id': self.company_kiev.id, 'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_dnipro.id, 'name': 'Dniprotrans', 'categories': [],
-                                  'region': 'Dnipro', 'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_chernigiv.id, 'name': 'Chernigivtravel', 'categories': [], 'region': 'Chernigiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_charkiv.id, 'name': 'Charkivmarket', 'categories': [], 'region': 'Charkiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}]
-
+        ordered_response_data = [
+            {
+                "id": self.company_kiev.id,
+                "name": "Kyivbud",
+                "categories": [],
+                "region": "Kyiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_dnipro.id,
+                "name": "Dniprotrans",
+                "categories": [],
+                "region": "Dnipro",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_chernigiv.id,
+                "name": "Chernigivtravel",
+                "categories": [],
+                "region": "Chernigiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_charkiv.id,
+                "name": "Charkivmarket",
+                "categories": [],
+                "region": "Charkiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+        ]
 
         response = self.client.get(path="/api/search/?ordering=-name")
         self.assertEqual(200, response.status_code)
@@ -348,18 +441,48 @@ class TestCompanyFilter(APITestCase):
         self,
     ):
         self.client.force_authenticate(self.user)
-        ordered_response_data = [{'id': self.company_kiev.id, 'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_dnipro.id, 'name': 'Dniprotrans', 'categories': [],
-                                  'region': 'Dnipro', 'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_chernigiv.id, 'name': 'Chernigivtravel', 'categories': [], 'region': 'Chernigiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_charkiv.id, 'name': 'Charkivmarket', 'categories': [], 'region': 'Charkiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}]
+        ordered_response_data = [
+            {
+                "id": self.company_kiev.id,
+                "name": "Kyivbud",
+                "categories": [],
+                "region": "Kyiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_dnipro.id,
+                "name": "Dniprotrans",
+                "categories": [],
+                "region": "Dnipro",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_chernigiv.id,
+                "name": "Chernigivtravel",
+                "categories": [],
+                "region": "Chernigiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_charkiv.id,
+                "name": "Charkivmarket",
+                "categories": [],
+                "region": "Charkiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+        ]
 
         response = self.client.get(path="/api/search/?ordering=-name")
         self.assertEqual(200, response.status_code)
@@ -369,16 +492,48 @@ class TestCompanyFilter(APITestCase):
     def test_get_profile_ordered_by_region_asc_unauthorized(
         self,
     ):
-        ordered_response_data = [{'id': self.company_charkiv.id, 'name': 'Charkivmarket', 'categories': [], 'region': 'Charkiv',
-                          'founded': 2022, 'service_info': 'test service info',
-                          'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                         {'id': self.company_chernigiv.id, 'name': 'Chernigivtravel', 'categories': [], 'region': 'Chernigiv', 'founded': 2022,
-                          'service_info': 'test service info', 'address': 'Test Country, Test City, St. Test, 1',
-                          'banner_image': None}, {'id': self.company_dnipro.id, 'name': 'Dniprotrans', 'categories': [], 'region': 'Dnipro',
-                          'founded': 2022, 'service_info': 'test service info',
-                          'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}, {'id': self.company_kiev.id,
-                          'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv', 'founded': 2022,
-                          'service_info': 'test service info', 'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}]
+        ordered_response_data = [
+            {
+                "id": self.company_charkiv.id,
+                "name": "Charkivmarket",
+                "categories": [],
+                "region": "Charkiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_chernigiv.id,
+                "name": "Chernigivtravel",
+                "categories": [],
+                "region": "Chernigiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_dnipro.id,
+                "name": "Dniprotrans",
+                "categories": [],
+                "region": "Dnipro",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_kiev.id,
+                "name": "Kyivbud",
+                "categories": [],
+                "region": "Kyiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+        ]
 
         response = self.client.get(path="/api/search/?ordering=region")
         self.assertEqual(200, response.status_code)
@@ -389,16 +544,48 @@ class TestCompanyFilter(APITestCase):
         self,
     ):
         self.client.force_authenticate(self.user)
-        ordered_response_data = [{'id': self.company_charkiv.id, 'name': 'Charkivmarket', 'categories': [], 'region': 'Charkiv',
-                          'founded': 2022, 'service_info': 'test service info',
-                          'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                         {'id': self.company_chernigiv.id, 'name': 'Chernigivtravel', 'categories': [], 'region': 'Chernigiv', 'founded': 2022,
-                          'service_info': 'test service info', 'address': 'Test Country, Test City, St. Test, 1',
-                          'banner_image': None}, {'id': self.company_dnipro.id, 'name': 'Dniprotrans', 'categories': [], 'region': 'Dnipro',
-                          'founded': 2022, 'service_info': 'test service info',
-                          'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}, {'id': self.company_kiev.id,
-                          'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv', 'founded': 2022,
-                          'service_info': 'test service info', 'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}]
+        ordered_response_data = [
+            {
+                "id": self.company_charkiv.id,
+                "name": "Charkivmarket",
+                "categories": [],
+                "region": "Charkiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_chernigiv.id,
+                "name": "Chernigivtravel",
+                "categories": [],
+                "region": "Chernigiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_dnipro.id,
+                "name": "Dniprotrans",
+                "categories": [],
+                "region": "Dnipro",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_kiev.id,
+                "name": "Kyivbud",
+                "categories": [],
+                "region": "Kyiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+        ]
 
         response = self.client.get(path="/api/search/?ordering=region")
         self.assertEqual(200, response.status_code)
@@ -408,18 +595,48 @@ class TestCompanyFilter(APITestCase):
     def test_get_profile_ordered_by_region_dsc_unauthorized(
         self,
     ):
-        ordered_response_data = [{'id': self.company_kiev.id, 'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_dnipro.id, 'name': 'Dniprotrans', 'categories': [],
-                                  'region': 'Dnipro', 'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_chernigiv.id, 'name': 'Chernigivtravel', 'categories': [], 'region': 'Chernigiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_charkiv.id, 'name': 'Charkivmarket', 'categories': [], 'region': 'Charkiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}]
+        ordered_response_data = [
+            {
+                "id": self.company_kiev.id,
+                "name": "Kyivbud",
+                "categories": [],
+                "region": "Kyiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_dnipro.id,
+                "name": "Dniprotrans",
+                "categories": [],
+                "region": "Dnipro",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_chernigiv.id,
+                "name": "Chernigivtravel",
+                "categories": [],
+                "region": "Chernigiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_charkiv.id,
+                "name": "Charkivmarket",
+                "categories": [],
+                "region": "Charkiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+        ]
 
         response = self.client.get(path="/api/search/?ordering=-region")
         self.assertEqual(200, response.status_code)
@@ -430,18 +647,48 @@ class TestCompanyFilter(APITestCase):
         self,
     ):
         self.client.force_authenticate(self.user)
-        ordered_response_data = [{'id': self.company_kiev.id, 'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_dnipro.id, 'name': 'Dniprotrans', 'categories': [],
-                                  'region': 'Dnipro', 'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_chernigiv.id, 'name': 'Chernigivtravel', 'categories': [], 'region': 'Chernigiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None},
-                                 {'id': self.company_charkiv.id, 'name': 'Charkivmarket', 'categories': [], 'region': 'Charkiv',
-                                  'founded': 2022, 'service_info': 'test service info',
-                                  'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}]
+        ordered_response_data = [
+            {
+                "id": self.company_kiev.id,
+                "name": "Kyivbud",
+                "categories": [],
+                "region": "Kyiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_dnipro.id,
+                "name": "Dniprotrans",
+                "categories": [],
+                "region": "Dnipro",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_chernigiv.id,
+                "name": "Chernigivtravel",
+                "categories": [],
+                "region": "Chernigiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+            {
+                "id": self.company_charkiv.id,
+                "name": "Charkivmarket",
+                "categories": [],
+                "region": "Charkiv",
+                "founded": 2022,
+                "service_info": "test service info",
+                "address": "Test Country, Test City, St. Test, 1",
+                "banner_image": None,
+            },
+        ]
 
         response = self.client.get(path="/api/search/?ordering=-region")
         self.assertEqual(200, response.status_code)

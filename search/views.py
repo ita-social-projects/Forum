@@ -10,6 +10,9 @@ from search.filters import CompanyFilter
 class SearchCompanyView(ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = CompanySerializers
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.OrderingFilter]
+    filter_backends = [
+        django_filters.rest_framework.DjangoFilterBackend,
+        filters.OrderingFilter,
+    ]
     filterset_class = CompanyFilter
-    ordering_fields = ['name', 'region']
+    ordering_fields = ["name", "region"]
