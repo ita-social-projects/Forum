@@ -208,8 +208,8 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
         password = data.get("password")
         if not password:
             raise serializers.ValidationError("Password is required")
-        request_user = self.context["request"].user
-        if not request_user.check_password(password):
+        user = self.context["request"].user
+        if not user.check_password(password):
             raise serializers.ValidationError("Invalid password")
         return data
 
