@@ -8,14 +8,14 @@ class CompanyFilter(FilterSet):
 
     def by_name_filter(self, queryset, name, value):
         if value:
-            name = self.request.query_params.get("name", "").strip()
-            return queryset.filter(name__icontains=name).order_by("name")
+            name = value.strip()
+            return queryset.filter(name__icontains=name)
         else:
             return queryset.none()
 
     def by_region_filter(self, queryset, name, value):
         if value:
-            region = self.request.query_params.get("region", "").strip()
-            return queryset.filter(region__icontains=region).order_by("region")
+            region = value.strip()
+            return queryset.filter(region__icontains=region)
         else:
             return queryset.none()
