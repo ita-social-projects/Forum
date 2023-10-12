@@ -84,7 +84,7 @@ class TestCompanyFilter(APITestCase):
         self.assertEqual(1, len(response.data))
         self.assertEqual([{'id': self.company_kiev.id, 'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv',
                            'founded': 2022, 'service_info': 'test service info',
-                           'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}], response.data)
+                           'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}], response.json())
 
     def test_get_profile_filtered_by_wrong_name_and_region_authorized(self):
         self.client.force_authenticate(self.user)
@@ -121,6 +121,50 @@ class TestCompanyFilter(APITestCase):
 
     def test_get_profile_filtered_by_wrong_name_and_wrong_region_unauthorized(self):
         response = self.client.get(path="/api/search/?name=Pizza&region=Ghernigiv")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
+
+    def test_get_profile_filtered_by_region_partially_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?region=Dnip")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+
+    def test_get_profile_filtered_by_region_partially_unauthorized(self):
+        response = self.client.get(path="/api/search/?region=Dnip")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+
+    def test_get_profile_filtered_by_name_partially_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?name=Kyiv")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual([{'id': self.company_kiev.id, 'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv',
+                           'founded': 2022, 'service_info': 'test service info',
+                           'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}], response.json())
+
+    def test_get_profile_filtered_by_name_partially_unauthorized(self):
+        response = self.client.get(path="/api/search/?name=Kyiv")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual([{'id': self.company_kiev.id, 'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv',
+                           'founded': 2022, 'service_info': 'test service info',
+                           'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}], response.json())
+
+    def test_get_profile_filtered_by_name_and_region_partialyy_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?name=Kyiv&region=Ky")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual([{'id': self.company_kiev.id, 'name': 'Kyivbud', 'categories': [], 'region': 'Kyiv',
+                           'founded': 2022, 'service_info': 'test service info',
+                           'address': 'Test Country, Test City, St. Test, 1', 'banner_image': None}], response.json())
+
+    def test_get_profile_filtered_by_wrong_name_and_wrong_region_partially_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?name=Kyivf&region=Kyif")
         self.assertEqual(200, response.status_code)
         self.assertEqual(0, len(response.data))
         self.assertEqual([], response.json())
