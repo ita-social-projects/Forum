@@ -5,7 +5,6 @@ from authentication.factories import UserFactory
 from profiles.factories import (
     ProfileStartupFactory,
     ProfileCompanyFactory,
-    ActivityFactory,
 )
 
 from utils.dump_response import dump  # noqa
