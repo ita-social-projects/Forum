@@ -24,4 +24,5 @@ urlpatterns = [
         "api/admin/",
         include("administration.urls", namespace="administration"),
     ),
+    path("api/", include("search.urls", namespace="search")),
 ]
