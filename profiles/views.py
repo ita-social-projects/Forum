@@ -179,9 +179,9 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def perform_destroy(self, instance):
         serializer = self.get_serializer(data=self.request.data)
-        if serializer.is_valid(raise_exception=True):
-            instance.is_deleted = True
-            instance.save()
+        serializer.is_valid(raise_exception=True)
+        instance.is_deleted = True
+        instance.save()
 
 
 class ViewedCompanyList(ListCreateAPIView):
