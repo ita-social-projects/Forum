@@ -11,7 +11,7 @@ function SearchBox() {
 
   const handleSearch = (searchTerm, searchPage) => {
     if (searchTerm.trim() !== '') {
-      navigate(`/${searchPage}/?search_field=${searchTerm}`);
+      navigate(`/${searchPage}/?name=${searchTerm}`);
     }
   };
   return (

@@ -17,7 +17,7 @@ export function Search(props) {
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const searchTerm = searchParams.get('search_field');
+  const searchTerm = searchParams.get('name');
   const servedAddress = process.env.REACT_APP_BASE_API_URL;
   const searchUrl = 'search';
 
@@ -25,7 +25,7 @@ export function Search(props) {
     if (searchTerm) {
       // Make an AJAX request to Django API to get search results
       axios
-        .get(`${servedAddress}/api/${searchUrl}/?name=${searchTerm}`)
+        .get(`${servedAddress}/api/search/?name=${searchTerm}`)
         .then((response) => {
           setSearchResults(response.data);
           setSearchPerformed(true);

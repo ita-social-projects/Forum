@@ -30,9 +30,10 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
         <div className="product-card__text-block">
           <div className="product-card__text-block__header">
             <div className="product-card__category-text align_items_left">
-              {companyData.comp_category
-                .map((category) => category.name)
-                .join(' ')}
+              {companyData.comp_category &&
+                companyData.comp_category
+                  .map((category) => category.name)
+                  .join(' ')}
             </div>
             <div className="product-card__name-text align_items_left">
               <Link
