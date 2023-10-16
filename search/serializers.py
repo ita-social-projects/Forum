@@ -5,8 +5,8 @@ from profiles.serializers import CategorySerializer
 
 
 class CompanySerializers(serializers.ModelSerializer):
-    # activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
+
     class Meta:
         model = Profile
         fields = (
