@@ -23,37 +23,36 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
         <div className="product-card__image-frame">
           <img
             className="product-card__image"
-            src={companyData.comp_banner_image}
-            alt={companyData.comp_name}
+            src={companyData.banner_image}
+            alt={companyData.name}
           />
         </div>
         <div className="product-card__text-block">
           <div className="product-card__text-block__header">
             <div className="product-card__category-text align_items_left">
-              {companyData.comp_category &&
-                companyData.comp_category
+              {companyData.categories &&
+                companyData.categories
                   .map((category) => category.name)
                   .join(' ')}
             </div>
             <div className="product-card__name-text align_items_left">
               <Link
                 className="product-card__name-text_link"
-                to={`/profile/${companyData.profile_id}`}
+                to={`/profile/${companyData.id}`}
               >
-                {companyData.comp_name}
+                {companyData.name}
               </Link>
               <br />
             </div>
           </div>
           <div className="product-card__address-text align_items_left">
-            {companyData.comp_address}
+            {companyData.address}
           </div>
           <div className="product-card__badges-block">
             <div className="product-card__badges">
               <div className="product-card__badge">
                 <div className="product-card__badge-text">
-                  {currentYear - companyData.comp_year_of_foundation} років
-                  досвіду
+                  {currentYear - companyData.founded} років досвіду
                 </div>
               </div>
             </div>
@@ -62,7 +61,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
             {isAuthorized === true && (
               <>
                 {/* Add checking if company is in user list */}
-                {usersSavedList.includes(companyData.profile_id) ? (
+                {usersSavedList.includes(companyData.id) ? (
                   <>
                     <div>
                       {/* if company added - del from saved list */}
@@ -96,7 +95,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
         <div className="product-card__logo-ellipse">
           <img
             className="product-card__logo-image"
-            alt={`${companyData.comp_name} logo`}
+            alt={`${companyData.name} logo`}
           />
         </div>
       </div>
