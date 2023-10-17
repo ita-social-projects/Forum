@@ -1,5 +1,5 @@
 import MainCompanies from './companies/Companies';
-import './Text.css';
+import styles from './Text.module.css';
 
 const SearchResults = ({ results, displayedResults, isAuthorized }) => {
   let error = null;
@@ -11,10 +11,10 @@ const SearchResults = ({ results, displayedResults, isAuthorized }) => {
   return (
     <div>
       {!error && (
-        <div className="new-companies-block">
-          <div className="row">
+        <div className={styles['new-companies-block']}>
+          <div className={styles['row']}>
             {displayedResults.map((result, resultIndex) => (
-              <div key={resultIndex} className="col-md-4">
+              <div key={resultIndex} className={styles['col-md-4']}>
                 <MainCompanies
                   companyData={result}
                   isAuthorized={isAuthorized}

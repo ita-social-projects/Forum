@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import wish_list_checklist from './img/wish_list_checklist.svg';
 import wish_list_checklist_added from './img/wish_list_checklist_added.svg';
-import './CompaniesCards.css';
+import styles from './CompaniesCards.module.css';
 
 const MainCompanies = ({ companyData, isAuthorized }) => {
   const currentDate = new Date();
@@ -10,26 +10,28 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
   const usersSavedList = [];
 
   return (
-    <div className="product-card">
-      <div className="product-card__block">
-        <div className="product-card__image-frame">
+    <div className={styles['product-card']}>
+      <div className={styles['product-card__block']}>
+        <div className={styles['product-card__image-frame']}>
           <img
-            className="product-card__image"
+            className={styles['product-card__image']}
             src={companyData.banner_image}
             alt={companyData.name}
           />
         </div>
-        <div className="product-card__text-block">
-          <div className="product-card__text-block__header">
-            <div className="product-card__category-text align_items_left">
+        <div className={styles['product-card__text-block']}>
+          <div className={styles['product-card__text-block__header']}>
+            <div
+              className={styles['product-card__category-text align_items_left']}
+            >
               {companyData.categories &&
                 companyData.categories
                   .map((category) => category.name)
                   .join(' ')}
             </div>
-            <div className="product-card__name-text align_items_left">
+            <div className={styles['product-card__name-text align_items_left']}>
               <Link
-                className="product-card__name-text_link"
+                className={styles['product-card__name-text_link']}
                 to={`/profile/${companyData.id}`}
               >
                 {companyData.name}
@@ -37,13 +39,15 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
               <br />
             </div>
           </div>
-          <div className="product-card__address-text align_items_left">
+          <div
+            className={styles['product-card__address-text align_items_left']}
+          >
             {companyData.address}
           </div>
-          <div className="product-card__badges-block">
-            <div className="product-card__badges">
-              <div className="product-card__badge">
-                <div className="product-card__badge-text">
+          <div className={styles['product-card__badges-block']}>
+            <div className={styles['product-card__badges']}>
+              <div className={styles['product-card__badge']}>
+                <div className={styles['product-card__badge-text']}>
                   {currentYear - companyData.founded} років досвіду
                 </div>
               </div>
@@ -58,7 +62,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                     <div>
                       {/* if company added - del from saved list */}
                       <button
-                        className="product-card__buttons"
+                        className={styles['product-card__buttons']}
                         // onClick={() => delFromSavedList(companyData.profile_id)}
                       >
                         <img src={wish_list_checklist_added} alt="" />
@@ -70,7 +74,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
                     <div>
                       {/* if compony not added - add to saved list */}
                       <button
-                        className="product-card__buttons"
+                        className={styles['product-card__buttons']}
                         // onClick={() => addToSavedList(companyData.profile_id)}
                       >
                         <img src={wish_list_checklist} alt="Add to wish list" />
@@ -83,10 +87,10 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
           </div>
         </div>
       </div>
-      <div className="product-card__logo">
-        <div className="product-card__logo-ellipse">
+      <div className={styles['product-card__logo']}>
+        <div className={styles['product-card__logo-ellipse']}>
           <img
-            className="product-card__logo-image"
+            className={styles['product-card__logo-image']}
             alt={`${companyData.name} logo`}
           />
         </div>

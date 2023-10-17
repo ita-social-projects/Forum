@@ -6,7 +6,7 @@ import SearchResults from './search_field/SearchResults';
 import frame42 from './img/frame42.png';
 import link_to_left from './img/link_to_left.svg';
 import link_to_right from './img/link_to_right.svg';
-import './search_page.css';
+import './search_page.module.css';
 
 const ITEMS_PER_PAGE = 6;
 
