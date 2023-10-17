@@ -6,7 +6,7 @@ import SearchResults from './search_field/SearchResults';
 import frame42 from './img/frame42.png';
 import link_to_left from './img/link_to_left.svg';
 import link_to_right from './img/link_to_right.svg';
-import './search_page.module.css';
+import styles from './search_page.module.css';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -51,21 +51,23 @@ export function Search(props) {
   };
 
   return (
-    <div className="main_block_outer">
+    <div className={styles['main_block_outer']}>
       <BreadCrumbs currentPage="Пошук" />
-      <div className="main_block">
-        <img className="frame-img-right" src={frame42} alt="frame" />
-        <div className="new-companies-search_count">
+      <div className={styles['main_block']}>
+        <img className={styles['frame-img-right']} src={frame42} alt="frame" />
+        <div className={styles['new-companies-search_count']}>
           {searchResults && (
-            <h3 className="search_results_text">
+            <h3 className={styles['search_results_text']}>
               РЕЗУЛЬТАТІВ ЗА ПОШУКОМ{' '}
-              <span className="search_field_entered_value">{searchTerm}</span> :{' '}
-              {searchResults.length > 0 ? searchResults.length : 0}
+              <span className={styles['search_field_entered_value']}>
+                {searchTerm}
+              </span>{' '}
+              : {searchResults.length > 0 ? searchResults.length : 0}
             </h3>
           )}
           <br />
         </div>
-        <div className="new-companies-main">
+        <div className={styles['new-companies-main']}>
           {!error && searchResults.length > 0 ? (
             <>
               <SearchResults
@@ -77,18 +79,24 @@ export function Search(props) {
               <br />
             </>
           ) : (
-            <p className="search_result_error">
+            <p className={styles['search_result_error']}>
               Пошук не дав результатів: компанії з іменем{' '}
-              <span className=".search_result_error search_result_error_search_value">
+              <span
+                className={
+                  styles[
+                    '.search_result_error search_result_error_search_value'
+                  ]
+                }
+              >
                 {searchTerm}
               </span>{' '}
               не було виявлено на даний момент
             </p>
           )}
         </div>
-        <div className="new-companies-result_pages">
+        <div className={styles['new-companies-result_pages']}>
           {totalPages > 1 && (
-            <div className="pagination">
+            <div className={styles['pagination']}>
               {currentPage > 1 && (
                 <button onClick={() => handlePageChange(currentPage - 1)}>
                   <img src={link_to_left} alt="Link to Left" />
@@ -97,7 +105,9 @@ export function Search(props) {
               {currentPage > 1 && (
                 <>
                   <button onClick={() => handlePageChange(1)}>1</button>
-                  {currentPage > 2 && <span className="ellipsis">...</span>}
+                  {currentPage > 2 && (
+                    <span className={styles['ellipsis']}>...</span>
+                  )}
                 </>
               )}
               {Array.from({ length: totalPages }, (_, i) => {
@@ -121,7 +131,7 @@ export function Search(props) {
               {currentPage < totalPages - 1 && (
                 <>
                   {currentPage < totalPages - 1 && (
-                    <span className="ellipsis">...</span>
+                    <span className={styles['ellipsis']}>...</span>
                   )}
                   <button onClick={() => handlePageChange(totalPages)}>
                     {totalPages}
