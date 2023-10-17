@@ -11,20 +11,18 @@ const SearchResults = ({ results, displayedResults, isAuthorized }) => {
   return (
     <div>
       {!error && (
-        <>
-          <div className="new-companies-block">
-            <div className="row">
-              {displayedResults.map((result, resultIndex) => (
-                <div key={resultIndex} className="col-md-4">
-                  <MainCompanies
-                    companyData={result}
-                    isAuthorized={isAuthorized}
-                  />
-                </div>
-              ))}
-            </div>
+        <div className="new-companies-block">
+          <div className="row">
+            {displayedResults.map((result, resultIndex) => (
+              <div key={resultIndex} className="col-md-4">
+                <MainCompanies
+                  companyData={result}
+                  isAuthorized={isAuthorized}
+                />
+              </div>
+            ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   );

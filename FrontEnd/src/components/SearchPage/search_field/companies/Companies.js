@@ -7,15 +7,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
-  // those variables we would use for axios to get data from beckend
-  // get saved list code here
   const usersSavedList = [];
-
-  // add company to saved list code here
-  // const addToSavedList = (profile_id) => {};
-
-  // del company from saved list code here
-  // const delFromSavedList = (profile_id) => {};
 
   return (
     <div className="product-card">
