@@ -21,15 +21,13 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
         </div>
         <div className={styles['product-card__text-block']}>
           <div className={styles['product-card__text-block__header']}>
-            <div
-              className={styles['product-card__category-text align_items_left']}
-            >
+            <div className={styles['product-card__category-text']}>
               {companyData.categories &&
                 companyData.categories
                   .map((category) => category.name)
                   .join(' ')}
             </div>
-            <div className={styles['product-card__name-text align_items_left']}>
+            <div className={styles['product-card__name-text']}>
               <Link
                 className={styles['product-card__name-text_link']}
                 to={`/profile/${companyData.id}`}
@@ -39,9 +37,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
               <br />
             </div>
           </div>
-          <div
-            className={styles['product-card__address-text align_items_left']}
-          >
+          <div className={styles['product-card__address-text']}>
             {companyData.address}
           </div>
           <div className={styles['product-card__badges-block']}>

@@ -2,6 +2,7 @@
 
 .main_block_outer {
   padding-top: 10px;
+  width: 1512px;
 }
 
 .new-companies-main {
@@ -15,7 +16,7 @@
 .new-companies-search_count {
   display: flex;
   margin: auto;
-  padding-left: 7%;
+  padding-left: 10%;
 }
 
 .search_field_entered_value {
@@ -36,10 +37,10 @@
   font: Inter;
 }
 
-.search_result_error_search_value {
+/* .search_result_error_search_value {
   color: var(--main-style-signs-color);
 }
-
+ */
 .frame-img-right {
   position: absolute;
   top: 30px;

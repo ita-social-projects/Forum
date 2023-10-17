@@ -1,46 +1,17 @@
 @import './companies/variables.css';
 
-.new-companies-main {
-  width: 1304px;
-  display: flex;
-  padding: 80px 104px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  background: var(--main_light-color);
-}
-.new-companies {
-  display: flex;
-  align-items: center;
-  gap: 800px;
-}
-.new-companies-main__header {
-  width: 444px;
-  color: var(--text-color);
-  text-transform: uppercase;
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%;
-}
 .new-companies-block {
   display: flex;
-  width: 1304px;
+  width: 1412px;
   padding: 16px 8px;
   flex-direction: column;
-  align-items: left;
-  gap: 36px;
-}
-.new-companies-block__row {
-  display: flex;
-  align-items: flex-start;
-  gap: 60px;
+  align-items: center;
+  gap: 26px;
 }
 
 .row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-content: space-between;
   margin: -10px; /* spacess beetwen ecompanies */
 }

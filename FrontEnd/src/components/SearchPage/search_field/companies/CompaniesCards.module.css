@@ -51,6 +51,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: 120%; /* 19.2px */
+  text-align: left;
 }
 .product-card__name-text {
   width: 328px;
@@ -62,6 +63,7 @@
   font-weight: 700;
   line-height: 120%; /* 24px */
   text-transform: uppercase;
+  text-align: left;
 }
 
 .product-card__name-text_link {
@@ -83,6 +85,7 @@
   font-weight: 400;
   line-height: 20px; /* 142.857% */
   letter-spacing: -0.14px;
+  text-align: left;
 }
 .product-card__badges-block {
   width: 100%;
@@ -143,10 +146,6 @@
   left: 5px;
   top: 5px;
   position: absolute;
-}
-
-.align_items_left {
-  text-align: left;
 }
 
 .product-card__buttons {
