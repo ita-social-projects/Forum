@@ -23,6 +23,11 @@ function SearchBox() {
           type="text"
           placeholder="Пошук"
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSearch(searchTerm, searchPage);
+            }
+          }}
         />
       </div>
       <button
