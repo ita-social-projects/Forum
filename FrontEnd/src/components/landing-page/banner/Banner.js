@@ -3,7 +3,7 @@ import Ellipses from '../ellipses/Ellipses';
 import { Link } from 'react-router-dom';
 
 
-const MainBanner = () => {
+const MainBanner = (props) => {
     return (
         <div className="main-banner-group">
             <div className="main-banner-group__main-rectangle"/>
@@ -24,6 +24,7 @@ const MainBanner = () => {
             <div className="main-banner-group__frame-rectangle13"/>
             <div className="main-banner-group__frame-description">
                 <div className="main-banner-group__banner-text">Це унікальний майданчик <br/>для обміну інформацією і досвідом з тими, хто втілює свої ідеї в життя.</div>
+                {!props.isAuthorized ?
                 <div className="main-banner-group__frame-login">
                     <div className="main-banner-group__login-button">
                         <Link className="main-banner-group__login-button-text" to="/login">Увійти</Link>
@@ -31,7 +32,7 @@ const MainBanner = () => {
                     <div className="main-banner-group__register-button">
                         <Link className="main-banner-group__register-button-text" to="/sign-up">Зареєстуватися</Link>
                     </div>
-                </div>
+                </div> : (null)}
             </div>
             <div className="main-banner-group__white-ellipses">
                 <Ellipses type="white" count={7} />
