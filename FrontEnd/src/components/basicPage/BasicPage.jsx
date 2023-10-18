@@ -54,7 +54,7 @@ function BasicPage() {
     >
       <Header isAuthorized={auth.isAuth} />
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<MainPage isAuthorized={auth.isAuth}/>} />
         <Route path="/profile/*" element={<ProfilePage />} />
         <Route path="/profiles/:filter" element={<ProfileListPage isAuthorized={auth.isAuth} />}/>
         {auth.isAuth ? (
@@ -62,7 +62,11 @@ function BasicPage() {
         ) : (
           <Route path="/login" element={<AuthorizationPage />} />
         )}
-        <Route path="/sign-up" element={<SignUpPage />} />
+        {auth.isAuth ? (
+          <Route path="/sign-up" element={<Navigate to="/profile/user-info" />} />
+        ) : (
+          <Route path="/sign-up" element={<SignUpPage />} />
+        )}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
