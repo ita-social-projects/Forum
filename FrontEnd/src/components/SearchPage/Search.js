@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import { useSWRConfig } from 'swr';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
@@ -21,6 +22,23 @@ export function Search(props) {
   const servedAddress = process.env.REACT_APP_BASE_API_URL;
   const searchUrl = 'search';
 
+  // useEffect(() => {
+  //   if (searchTerm) {
+  //     // Make an AJAX request to Django API to get search results
+  //     axios
+  //       .get(`${servedAddress}/api/search/?name=${searchTerm}`)
+  //       .then((response) => {
+  //         setSearchResults(response.data);
+  //         setSearchPerformed(true);
+  //         setError(null); // Clear error on successful response
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error fetching search results:', error);
+  //         setError(error.response ? error.response.data : 'An error occurred');
+  //       });
+  //   }
+  // }, [searchTerm, servedAddress, searchUrl]);
+
   useEffect(() => {
     if (searchTerm) {
       // Make an AJAX request to Django API to get search results
@@ -37,6 +55,13 @@ export function Search(props) {
         });
     }
   }, [searchTerm, servedAddress, searchUrl]);
+
+  // const fetcher = url => axios.get(url).then(res => res.data)
+
+  // function fetchSearchResults () {
+  //   const { data, error } = useSWR('/api/data', fetcher)
+  //   // ...
+  // }
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalItems = searchResults.length;
@@ -81,13 +106,7 @@ export function Search(props) {
           ) : (
             <p className={styles['search_result_error']}>
               Пошук не дав результатів: компанії з іменем{' '}
-              <span
-                className={
-                  styles[
-                    '.search_result_error search_result_error_search_value'
-                  ]
-                }
-              >
+              <span className={styles['.search_result_error']}>
                 {searchTerm}
               </span>{' '}
               не було виявлено на даний момент

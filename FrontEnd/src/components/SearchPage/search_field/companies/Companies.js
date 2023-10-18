@@ -8,6 +8,9 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
   const currentYear = currentDate.getFullYear();
 
   const usersSavedList = [];
+  const yearsOfExperiense = companyData.founded
+    ? currentYear - companyData.founded
+    : 0;
 
   return (
     <div className={styles['product-card']}>
@@ -15,7 +18,8 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
         <div className={styles['product-card__image-frame']}>
           <img
             className={styles['product-card__image']}
-            src={companyData.banner_image}
+            // src={companyData.banner_image}
+            src={`${process.env.PUBLIC_URL}/companies-logos/defaultcompanybanner.png`}
             alt={companyData.name}
           />
         </div>
@@ -44,7 +48,7 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
             <div className={styles['product-card__badges']}>
               <div className={styles['product-card__badge']}>
                 <div className={styles['product-card__badge-text']}>
-                  {currentYear - companyData.founded} років досвіду
+                  {yearsOfExperiense} років досвіду
                 </div>
               </div>
             </div>
@@ -87,8 +91,13 @@ const MainCompanies = ({ companyData, isAuthorized }) => {
         <div className={styles['product-card__logo-ellipse']}>
           <img
             className={styles['product-card__logo-image']}
-            alt={`${companyData.name} logo`}
+            src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
+            alt=""
           />
+          {/* <img
+            className={styles['product-card__logo-image']}
+            alt={`${companyData.name} logo`}
+          /> */}
         </div>
       </div>
     </div>
