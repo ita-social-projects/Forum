@@ -27,7 +27,7 @@
   flex-shrink: 0;
   border-radius: 11px;
   object-fit: cover;
-  opacity: 0.5;
+  opacity: 0.7;
 }
 .product-card__text-block {
   display: flex;
