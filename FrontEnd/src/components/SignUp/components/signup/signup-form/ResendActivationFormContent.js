@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 import styles from './ResendActivationFormContent.module.css';
 
-export function ResendActivationFormContentComponent(props) {
+export function ResendActivationFormContentComponent({ setIsValid }) {
   const navigate = useNavigate();
 
   const errorMessageTemplates = {
@@ -24,8 +24,6 @@ export function ResendActivationFormContentComponent(props) {
     mode: 'all',
   });
 
-  const { setIsValid } = props;
-
   useEffect(() => {
     const formIsValid = isValid;
     setIsValid(formIsValid);
@@ -40,10 +38,13 @@ export function ResendActivationFormContentComponent(props) {
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/resend_activation/`,
       withCredentials: false,
-      data: dataToSend
-    }).then(res => console.log(res.data)).catch(error => console.log(error));
-    console.log(process.env.REACT_APP_BASE_API_URL);
-    navigate('/login');
+      data: dataToSend,
+    })
+      .then(() => {
+        setIsValid(true);
+        navigate('/login');
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -58,7 +59,9 @@ export function ResendActivationFormContentComponent(props) {
         <div className={styles['resend-activation-form__row']}>
           <div className={styles['resend-activation-form__column']}>
             <div className={styles['resend-activation-form__label']}>
-              <label className={styles['resend-activation-form__label--required']}>
+              <label
+                className={styles['resend-activation-form__label--required']}
+              >
                 *
               </label>
               <label className={styles['resend-activation-form__label--text']}>
