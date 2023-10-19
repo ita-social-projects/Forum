@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path="/*" element={<BasicPage />} />
             <Route path="/admin/*" element={<AdminPage />} />
-            <Route path="/search" element={<Search isAuthorized={false} />} />
+            <Route path="/search" element={<Search isAuthorized={auth} />} />
           </Routes>
         </div>
       </BrowserRouter>

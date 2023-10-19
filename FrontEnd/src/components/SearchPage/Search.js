@@ -1,5 +1,6 @@
 import axios from 'axios';
-// import { useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
+import useSWRMutation from 'swr/mutation';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
@@ -21,47 +22,35 @@ export function Search(props) {
   const searchTerm = searchParams.get('name');
   const servedAddress = process.env.REACT_APP_BASE_API_URL;
   const searchUrl = 'search';
+  const { mutate } = useSWRConfig();
 
-  // useEffect(() => {
-  //   if (searchTerm) {
-  //     // Make an AJAX request to Django API to get search results
-  //     axios
-  //       .get(`${servedAddress}/api/search/?name=${searchTerm}`)
-  //       .then((response) => {
-  //         setSearchResults(response.data);
-  //         setSearchPerformed(true);
-  //         setError(null); // Clear error on successful response
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error fetching search results:', error);
-  //         setError(error.response ? error.response.data : 'An error occurred');
-  //       });
-  //   }
-  // }, [searchTerm, servedAddress, searchUrl]);
+  const fetcher = (url) => axios.get(url).then((res) => res.data);
+
+  async function getRequest(url) {
+    const data = await fetcher(url);
+    setSearchResults(data);
+    setSearchPerformed(true);
+    setError(null);
+  }
+
+  const { trigger } = useSWRMutation(
+    `${servedAddress}/api/search/?name=${searchTerm}`,
+    getRequest
+  );
+
+  mutate((key) => typeof key === 'string' && key.startsWith('/api/search/'), {
+    revalidate: true,
+  });
 
   useEffect(() => {
     if (searchTerm) {
-      // Make an AJAX request to Django API to get search results
-      axios
-        .get(`${servedAddress}/api/search/?name=${searchTerm}`)
-        .then((response) => {
-          setSearchResults(response.data);
-          setSearchPerformed(true);
-          setError(null); // Clear error on successful response
-        })
-        .catch((error) => {
-          console.error('Error fetching search results:', error);
-          setError(error.response ? error.response.data : 'An error occurred');
-        });
+      try {
+        trigger();
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, [searchTerm, servedAddress, searchUrl]);
-
-  // const fetcher = url => axios.get(url).then(res => res.data)
-
-  // function fetchSearchResults () {
-  //   const { data, error } = useSWR('/api/data', fetcher)
-  //   // ...
-  // }
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalItems = searchResults.length;
