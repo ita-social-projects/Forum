@@ -15,7 +15,7 @@ const ITEMS_PER_PAGE = 6;
 
 export function Search({ isAuthorized }) {
   Search.propTypes = {
-    isAuthorized: PropTypes.object,
+    isAuthorized: PropTypes.any.isRequired,
   };
 
   const [searchResults, setSearchResults] = useState([]);

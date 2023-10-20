@@ -5,13 +5,14 @@ import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import axios from 'axios';
 import styles from './CompanyCard.module.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const CompanyCard = ({ companyData, isAuthorized }) => {
-  CompanyCard.propTypes = {
-    companyData: PropTypes.object,
-    isAythorized: PropTypes.object,
-  };
+  // CompanyCard.propTypes = {
+  //   companyData: PropTypes.object,
+  //   isAythorized: PropTypes.object,
+  // };
+  // console.log(companyData['id']);
 
   const { mutate } = useSWRConfig();
   const authToken = localStorage.getItem('Token');

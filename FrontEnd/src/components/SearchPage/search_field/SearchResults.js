@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 const SearchResults = ({ results, displayedResults, isAuthorized }) => {
   SearchResults.propTypes = {
-    results: PropTypes.object,
-    displayedResults: PropTypes.object,
-    isAythorized: PropTypes.object,
+    results: PropTypes.array,
+    displayedResults: PropTypes.array,
+    isAuthorized: PropTypes.object,
   };
 
   let error = null;
