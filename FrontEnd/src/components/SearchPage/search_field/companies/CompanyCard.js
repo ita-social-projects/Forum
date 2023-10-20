@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
+// import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
+// import useSWRImmutable from 'swr/immutable'
 // import useSWR from 'swr';
 import axios from 'axios';
 import styles from './CompanyCard.module.css';
@@ -30,9 +32,46 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
     }).then();
   }
 
+  async function getRequest(url) {
+    // if (isAuthorized.isAuth) {
+    const data = await axios
+      .get(url, {
+        withCredentials: true,
+        headers: {
+          Authorization: 'Token ' + authToken,
+        },
+      })
+      .then((response) => {
+        return response.data;
+      });
+    const NewList = [];
+    for (let item of data.results) {
+      NewList.push(item['id']);
+    }
+
+    setUsersSavedList(NewList);
+    if (usersSavedList.includes(companyData.id)) {
+      console.log(
+        companyData.id,
+        usersSavedList,
+        usersSavedList.includes(companyData.id)
+      );
+      setStar(filledStar);
+      setIsSaved(true);
+    } else {
+      setIsSaved(false);
+      setStar(outlinedStar);
+    }
+  }
+
   const { trigger } = useSWRMutation(
     `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
     sendRequest
+  );
+
+  const { trigger: triggerget } = useSWRMutation(
+    `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?is_saved=True`,
+    getRequest
   );
 
   const handleClick = async () => {
@@ -58,59 +97,37 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
   );
 
   useEffect(() => {
-    if (isAuthorized)
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?is_saved=True`,
-          {
-            withCredentials: true,
-            headers: {
-              Authorization: 'Token ' + authToken,
-            },
-          }
-        )
-        .then((response) => {
-          const NewList = [];
-          for (let item of response.data.results) {
-            NewList.push(item['id']);
-          }
-
-          setUsersSavedList(NewList);
-          if (usersSavedList.includes(companyData.id)) {
-            setStar(filledStar);
-            setIsSaved(true);
-          } else {
-            setIsSaved(false);
-            setStar(outlinedStar);
-          }
-        })
-        .catch((error) => {
-          console.error('Error fetching search results:', error);
-        });
-  }, [usersSavedList]);
+    if (isAuthorized.isAuth) {
+      try {
+        triggerget();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [companyData, isAuthorized, isSaved]);
 
   return (
-    <div className={styles['product-card']}>
-      <div className={styles['product-card__block']}>
-        <div className={styles['product-card__image-frame']}>
+    <div className={styles['company-card']}>
+      <div className={styles['company-card__block']}>
+        <div className={styles['company-card__image-frame']}>
           <img
-            className={styles['product-card__image']}
+            className={styles['company-card__image']}
             // src={companyData.banner_image}
             src={`${process.env.PUBLIC_URL}/companies-logos/defaultcompanybanner.png`}
             alt={companyData.name}
           />
         </div>
-        <div className={styles['product-card__text-block']}>
-          <div className={styles['product-card__text-block__header']}>
-            <div className={styles['product-card__category-text']}>
+        <div className={styles['company-card__text-block']}>
+          <div className={styles['company-card__text-block__header']}>
+            <div className={styles['company-card__category-text']}>
               {companyData.categories &&
                 companyData.categories
                   .map((category) => category.name)
                   .join(' ')}
             </div>
-            <div className={styles['product-card__name-text']}>
+            <div className={styles['company-card__name-text']}>
               <Link
-                className={styles['product-card__name-text_link']}
+                className={styles['company-card__name-text_link']}
                 to={`/profile/${companyData.id}`}
               >
                 {companyData.name}
@@ -118,13 +135,13 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
               <br />
             </div>
           </div>
-          <div className={styles['product-card__address-text']}>
+          <div className={styles['company-card__address-text']}>
             {companyData.address}
           </div>
-          <div className={styles['product-card__badges-block']}>
-            <div className={styles['product-card__badges']}>
-              <div className={styles['product-card__badge']}>
-                <div className={styles['product-card__badge-text']}>
+          <div className={styles['company-card__badges-block']}>
+            <div className={styles['company-card__badges']}>
+              <div className={styles['company-card__badge']}>
+                <div className={styles['company-card__badge-text']}>
                   {yearsOfExperiense} років досвіду
                 </div>
               </div>
@@ -135,10 +152,10 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
           </div>
         </div>
       </div>
-      <div className={styles['product-card__logo']}>
-        <div className={styles['product-card__logo-ellipse']}>
+      <div className={styles['company-card__logo']}>
+        <div className={styles['company-card__logo-ellipse']}>
           <img
-            className={styles['product-card__logo-image']}
+            className={styles['company-card__logo-image']}
             src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
             alt=""
           />
