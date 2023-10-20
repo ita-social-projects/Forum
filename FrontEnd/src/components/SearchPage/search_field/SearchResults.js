@@ -1,7 +1,14 @@
 import CompanyCard from './companies/CompanyCard';
 import styles from './Text.module.css';
+import PropTypes from 'prop-types';
 
 const SearchResults = ({ results, displayedResults, isAuthorized }) => {
+  SearchResults.propTypes = {
+    results: PropTypes.object,
+    displayedResults: PropTypes.object,
+    isAythorized: PropTypes.object,
+  };
+
   let error = null;
 
   if (results && results.error) {

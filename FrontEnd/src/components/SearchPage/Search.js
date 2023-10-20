@@ -9,10 +9,15 @@ import frame42 from './img/frame42.png';
 import link_to_left from './img/link_to_left.svg';
 import link_to_right from './img/link_to_right.svg';
 import styles from './search_page.module.css';
+import PropTypes from 'prop-types';
 
 const ITEMS_PER_PAGE = 6;
 
-export function Search(props) {
+export function Search({ isAuthorized }) {
+  Search.propTypes = {
+    isAuthorized: PropTypes.object,
+  };
+
   const [searchResults, setSearchResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [error, setError] = useState(null);
@@ -88,7 +93,7 @@ export function Search(props) {
                 results={searchResults}
                 searchPerformed={searchPerformed}
                 displayedResults={displayedResults}
-                isAuthorized={props.isAuthorized}
+                isAuthorized={isAuthorized}
               />
               <br />
             </>
