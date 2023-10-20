@@ -20,14 +20,16 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
   const [searchPerformed, setSearchPerformed] = useState(false);
 
   async function sendRequest(url, { arg: data }) {
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${authToken}`,
-      },
-      body: JSON.stringify(data),
-    });
+    return await axios.post(
+      url,
+      { company_pk: data['company_pk'] },
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      }
+    );
   }
 
   async function getRequest(url) {
