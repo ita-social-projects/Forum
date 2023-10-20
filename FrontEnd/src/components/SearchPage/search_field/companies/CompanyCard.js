@@ -1,11 +1,8 @@
 import { Link } from 'react-router-dom';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
-// import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
-// import useSWRImmutable from 'swr/immutable'
-// import useSWR from 'swr';
 import axios from 'axios';
 import styles from './CompanyCard.module.css';
 
@@ -20,6 +17,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
   const [usersSavedList, setUsersSavedList] = useState([]);
   const [star, setStar] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
   async function sendRequest(url, { arg: data }) {
     return fetch(url, {
@@ -33,7 +31,6 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
   }
 
   async function getRequest(url) {
-    // if (isAuthorized.isAuth) {
     const data = await axios
       .get(url, {
         withCredentials: true,
@@ -51,17 +48,13 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
 
     setUsersSavedList(NewList);
     if (usersSavedList.includes(companyData.id)) {
-      console.log(
-        companyData.id,
-        usersSavedList,
-        usersSavedList.includes(companyData.id)
-      );
       setStar(filledStar);
       setIsSaved(true);
     } else {
       setIsSaved(false);
       setStar(outlinedStar);
     }
+    setSearchPerformed(true);
   }
 
   const { trigger } = useSWRMutation(
@@ -104,7 +97,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
         console.error(error);
       }
     }
-  }, [companyData, isAuthorized, isSaved]);
+  }, [companyData, isAuthorized, isSaved, searchPerformed]);
 
   return (
     <div className={styles['company-card']}>
