@@ -27,7 +27,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
         Authorization: `Token ${authToken}`,
       },
       body: JSON.stringify(data),
-    }).then();
+    });
   }
 
   async function getRequest(url) {
@@ -105,7 +105,6 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
         <div className={styles['company-card__image-frame']}>
           <img
             className={styles['company-card__image']}
-            // src={companyData.banner_image}
             src={`${process.env.PUBLIC_URL}/companies-logos/defaultcompanybanner.png`}
             alt={companyData.name}
           />
