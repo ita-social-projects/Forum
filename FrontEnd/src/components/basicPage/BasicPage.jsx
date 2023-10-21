@@ -14,7 +14,7 @@ import { SignUpPage } from '../SignUp/pages/SignUpPage';
 import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
-
+import { Search } from '../SearchPage/Search';
 
 function BasicPage() {
   const auth = useAuth();
@@ -56,7 +56,10 @@ function BasicPage() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/profile/*" element={<ProfilePage />} />
-        <Route path="/profiles/:filter" element={<ProfileListPage isAuthorized={auth.isAuth} />}/>
+        <Route
+          path="/profiles/:filter"
+          element={<ProfileListPage isAuthorized={auth.isAuth} />}
+        />
         {auth.isAuth ? (
           <Route path="/login" element={<Navigate to="/profile/user-info" />} />
         ) : (
@@ -66,10 +69,11 @@ function BasicPage() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
+        <Route path="/search" element={<Search isAuthorized={auth.isAuth} />} />
       </Routes>
       <Footer />
       <ScrollToTopButton />
-   </ConfigProvider>
+    </ConfigProvider>
   );
 }
 
