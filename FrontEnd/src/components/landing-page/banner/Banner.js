@@ -1,6 +1,7 @@
 import './Banner.css';
 import Ellipses from '../ellipses/Ellipses';
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 
 const MainBanner = (props) => {
@@ -87,3 +88,6 @@ const MainBanner = (props) => {
 };
 
 export default MainBanner;
+
+MainBanner.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired};
