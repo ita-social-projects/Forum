@@ -1,0 +1,217 @@
+.profile-view-image {
+    width: 1512px;
+    height: 200px;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+.image-placeholder {
+    width: 1512px;
+    height: 200px;
+    flex-shrink: 0;
+}
+.image-placeholder__rectangle {
+    width: 1512px;
+    height: 200px;
+    flex-shrink: 0;
+    background: #DEE1E8;
+}
+.profile-view-empty-image {
+    width: 102.588px;
+    height: 80px;
+    flex-shrink: 0;
+    fill: #BFC6CF;
+    left: 705px;
+    top: 160px;
+    position: absolute;
+}
+.profile-view-title__empty {
+    left: 50px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+}
+.profile-view-title-block__empty {
+    left: 50px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.profile-view-title-content__empty {
+    display: flex;
+    /*width: 1304px;*/
+    padding: 16px 12px 8px 12px;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.profile-view__logo {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+.profile-view__logo-ellipse {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    fill: #FFF;
+}
+.profile-view__logo-image {
+    width: 33.75px;
+    height: 33.75px;
+    flex-shrink: 0;
+    border-radius: 26px;
+    background: lightgray 50% / cover no-repeat;
+}
+.profile-view-company-data-block {
+    display: flex;
+    width: 1010px;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+.profile-view-company-data-block__services {
+    display: flex;
+    align-items: center;
+}
+.profile-view-company-data-block__services-text {
+    color: #25292C;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: -0.14px;
+}
+.profile-view-company-data-block__company {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.profile-view-company-data-block__company-name {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+}
+.profile-view-company-data-block__company-name-text {
+    color: #25292C;
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 24px */
+    text-transform: uppercase;
+}
+.profile-view-company-data-block__company-badges {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+.profile-view-company-data-block__company-badges-count {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #FFF;
+}
+.profile-view-company-data-block__company-badge {
+    display: flex;
+    padding: 2px 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    background: #1F9A7C;
+}
+.profile-view-company-data-block__badge-text {
+    color: #FFF;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 160% */
+    text-transform: uppercase;
+}
+
+.profile-view__like-button {
+    display: flex;
+    height: 32px;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    border: 1px solid #1F9A7C;
+    background: #FFF;
+}
+
+.profile-view__like-button-text {
+    color: #1F9A7C;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 125% */
+    letter-spacing: -0.16px;
+}
+.profile-view__like-button-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.profile-view-info__empty {
+    display: flex;
+    align-items: flex-start;
+    gap: 134px;
+}
+.profile-view-info-content__empty {
+    display: flex;
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+.profile-view-info-text__empty {
+    width: 776px;
+    color: #A3AAB0;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: -0.14px;
+}
+
+.profile-view-nav-bar {
+    display: flex;
+    align-items: flex-start;
+}
+.profile-view-nav-bar__item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.profile-view-nav-bar__item-content {
+    display: flex;
+    padding: 8px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 4px;
+}
+.profile-view-nav-bar__item-text {
+    color: #25292C;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 125% */
+    letter-spacing: -0.16px;
+}

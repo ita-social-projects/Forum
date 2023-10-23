@@ -1,0 +1,334 @@
+.signup-form {
+  display: flex;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.signup-form__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.signup-form__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.signup-form__column {
+  display: flex;
+  width: 257px;
+  height: 84px;
+  padding-bottom: 0px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.signup-form__label {
+  display: flex;
+  gap: 4px;
+  align-self: stretch;
+
+  color: var(--main-black-90, #292e32);
+  font-feature-settings: "calt" off;
+
+  /* Text/Body/14-Regular */
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.14px;
+  text-align: left;
+}
+
+.signup-form__label--password {
+  display: flex;
+  align-self: stretch;
+  flex-direction: column;
+  color: var(--main-black-90, #292e32);
+  font-feature-settings: "calt" off;
+
+  /* Text/Body/14-Regular */
+  text-align: left;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 10px;
+  letter-spacing: -0.14px;
+}
+
+.signup-form__label--hint {
+  align-self: stretch;
+  font-size: 8px;
+  line-height: 16px;
+  position: relative;
+  top: 0px;
+}
+
+.signup-form__label--required {
+  color: var(--dust-red-5, #ff4d4f);
+  text-align: right;
+  font-family: SimSong;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22.001px;
+}
+
+.signup-form__label--text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 0 0;
+}
+
+.signup-form__field {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 2px;
+  background: var(--main-white, #fff);
+}
+
+.signup-form__field__password {
+  display: flex;
+  height: 22px;
+  padding: 5px 12px;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+  border-radius: 2px;
+  border: 1px solid var(--neutral-5, #D9D9D9);
+  background: var(--main-white, #FFF);
+}
+
+.signup-form__input__password {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 4px;
+  flex: 1 0 0;
+  border: none;
+}
+
+.signup-form__input__password:focus {
+  outline: none;
+} 
+
+.signup-form__input {
+  display: flex;
+  height: 22px;
+  padding: 5px 12px;
+  align-items: center;
+  gap: 4px;
+  flex: 1 0 0;
+  border-radius: 2px;
+  border: 1px solid var(--neutral-5, #d9d9d9);
+  background: var(--main-white, #fff);
+  color: var(--character-title-85, rgba(0, 0, 0, 0.85));
+
+  /* Body/regular */
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.signup-form__input:focus {
+  outline: none;
+}
+
+.signup-form__error {
+  display: flex;
+  padding: 1px 0px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  color: var(--red-red-100, #f34444);
+
+  /* Body/regular */
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.signup-form__checkboxes-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.signup-form__checkboxes-container--rules {
+  display: flex;
+  width: 328px;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.rules__container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+}
+
+.rules__line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rules__line--text {
+  color: var(--main-black-90, #292e32);
+  font-feature-settings: "calt" off;
+
+  /* Text/Body/14-Regular */
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.14px;
+}
+
+.rules__line--link {
+  color: #00a3cf;
+  font-feature-settings: "calt" off;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.14px;
+  text-decoration-line: underline;
+}
+
+.rules__checkbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.representative {
+  display: flex;
+  height: 100px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.representative__title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--main-black-90, #292e32);
+  font-feature-settings: "calt" off;
+
+  /* Text/Body/14-Semi bold */
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.14px;
+}
+
+.representative__container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex: 1 0 0;
+}
+
+.representative__content {
+  display: flex;
+  padding: 0px 11px;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.representative__column {
+  display: flex;
+  width: 246px;
+  align-items: flex-start;
+  gap: 273px;
+}
+
+.representative__option {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.representative__checkbox-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.representative__label {
+  color: var(--main-black-90, #292e32);
+  font-feature-settings: "calt" off;
+
+  /* Text/Body/14-Regular */
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.14px;
+  text-align: left;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  display: grid;
+  place-content: center;
+  border-radius: 2px;
+  border: 1px solid var(--main-black-20, #e2e5eb);
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--primary-green-80, #1f9a7c);
+  border-radius: 2px;
+  border: 1px solid var(--primary-green-80, #1f9a7c);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+  content: "\2713";
+  font-size: 17px;
+  text-align: center;
+  position: relative;
+  bottom: 3px;
+  color: #f0f0f0;
+}
+
+.password-visibility {
+  cursor: pointer;
+}

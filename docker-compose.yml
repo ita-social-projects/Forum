@@ -3,7 +3,7 @@ version: '3.9'
 services:
   web:
     build: .
-    command: gunicorn forum.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./:/Forum
     ports:
