@@ -2,9 +2,9 @@ from rest_framework.generics import ListAPIView
 import django_filters
 from rest_framework import filters
 
-from profiles.models import Profile
+from apps.profiles.models import Profile
 from backend.apps.search.api.serializers import CompanySerializers
-from search.filters import CompanyFilter
+from apps.search.api.filters import CompanyFilter
 
 
 class SearchCompanyView(ListAPIView):
