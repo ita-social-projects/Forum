@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from profiles.models import Profile, Category
-from profiles.serializers import CategorySerializer
+from apps.profiles.models import Profile
+from apps.profiles.api.serializers import CategorySerializer
 
 
 class CompanySerializers(serializers.ModelSerializer):
