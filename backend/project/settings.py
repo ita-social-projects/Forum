@@ -45,10 +45,10 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "django_filters",
     "djoser",
-    "authentication",
-    "profiles",
-    "administration",
-    "search",
+    "apps.authentication",
+    "apps.profiles",
+    "apps.administration",
+    "apps.search",
 ]
 
 MIDDLEWARE = [
@@ -88,7 +88,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     "Content-Type",
 ]
 
-ROOT_URLCONF = "forum.urls"
+ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
     {
@@ -106,7 +106,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "forum.wsgi.application"
+WSGI_APPLICATION = "project.wsgi.application"
 
 DATABASES = {
     "default": {
