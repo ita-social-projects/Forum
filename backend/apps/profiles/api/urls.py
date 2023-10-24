@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import SavedCompaniesCreate, SavedCompaniesDestroy
-from .views import (
+from backend.apps.profiles.api.views import SavedCompaniesCreate, SavedCompaniesDestroy
+from backend.apps.profiles.api.views import (
     ProfileList,
     ProfileDetail,
     ViewedCompanyList,
@@ -15,6 +15,7 @@ from .views import (
 app_name = "profiles"
 
 urlpatterns = [
+    # /api/profiles/...
     path(r"profiles/", ProfileList.as_view(), name="profile-list"),
     path(r"profiles/<pk>", ProfileDetail.as_view(), name="profile-detail"),
     path(

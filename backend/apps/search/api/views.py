@@ -3,7 +3,7 @@ import django_filters
 from rest_framework import filters
 
 from profiles.models import Profile
-from .serializers import CompanySerializers
+from backend.apps.search.api.serializers import CompanySerializers
 from search.filters import CompanyFilter
 
 
