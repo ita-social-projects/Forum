@@ -167,7 +167,7 @@ AUTH_USER_MODEL = "authentication.CustomUser"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "authentication.authentication.DjoserTokenAuthentication",
+        "apps.authentication.authentication.DjoserTokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
 }
@@ -196,9 +196,9 @@ DJOSER = {
         "user_list": ["rest_framework.permissions.IsAdminUser"],
     },
     "SERIALIZERS": {
-        "user_create_password_retype": "authentication.serializers.UserRegistrationSerializer",
-        "user": "authentication.serializers.UserListSerializer",
-        "current_user": "authentication.serializers.UserListSerializer",
+        "user_create_password_retype": "apps.authentication.api.serializers.UserRegistrationSerializer",
+        "user": "apps.authentication.api.serializers.UserListSerializer",
+        "current_user": "apps.authentication.api.serializers.UserListSerializer",
     },
 }
 
