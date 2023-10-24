@@ -5,13 +5,13 @@ from PIL import Image
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from authentication.factories import UserFactory
-from profiles.factories import (
+from apps.authentication.factories import UserFactory
+from apps.profiles.factories import (
     ProfileStartupFactory,
     CategoryFactory,
     ActivityFactory,
 )
-from profiles.models import Region
+from apps.profiles.models import Region
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
 

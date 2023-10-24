@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from backend.apps.profiles.models import Profile, Activity, Category, SavedCompany, ViewedCompany
+from apps.profiles.models import Profile, Activity, Category, SavedCompany, ViewedCompany
 
 
 class ActivitySerializer(serializers.ModelSerializer):

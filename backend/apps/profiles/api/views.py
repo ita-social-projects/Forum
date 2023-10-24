@@ -16,7 +16,7 @@ from rest_framework.permissions import (
 from rest_framework.response import Response
 
 from api.pagination import ForumPagination
-from backend.apps.profiles.models import (
+from apps.profiles.models import (
     SavedCompany,
     Profile,
     ViewedCompany,
@@ -24,8 +24,8 @@ from backend.apps.profiles.models import (
     Activity,
     Region,
 )
-from backend.apps.profiles.api.permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, IsOwnCompany
-from backend.apps.profiles.api.serializers import (
+from apps.profiles.api.permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, IsOwnCompany
+from apps.profiles.api.serializers import (
     SavedCompanySerializer,
     ProfileListSerializer,
     ViewedCompanySerializer,
@@ -39,7 +39,7 @@ from backend.apps.profiles.api.serializers import (
     RegionSerializer,
     ProfileCreateSerializer,
 )
-from backend.apps.profiles.api.filters import ProfileFilter
+from apps.profiles.api.filters import ProfileFilter
 
 
 class SavedCompaniesCreate(CreateAPIView):

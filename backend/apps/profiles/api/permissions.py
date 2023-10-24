@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from django.core.exceptions import ObjectDoesNotExist
-from profiles.models import Profile
+from apps.profiles.models import Profile
 
 
 class UserIsProfileOwnerOrReadOnly(BasePermission):

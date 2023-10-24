@@ -1,14 +1,14 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from authentication.factories import UserFactory
-from profiles.factories import (
+from apps.authentication.factories import UserFactory
+from apps.profiles.factories import (
     ProfileStartupFactory,
     ProfileCompanyFactory,
     ActivityFactory,
 )
-from profiles.factories import SavedCompanyFactory, SavedStartupFactory
-from profiles.models import Profile
+from apps.profiles.factories import SavedCompanyFactory, SavedStartupFactory
+from apps.profiles.models import Profile
 from utils.dump_response import dump  # noqa
 
 

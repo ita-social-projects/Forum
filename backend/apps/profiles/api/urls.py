@@ -1,6 +1,6 @@
 from django.urls import path
-from backend.apps.profiles.api.views import SavedCompaniesCreate, SavedCompaniesDestroy
-from backend.apps.profiles.api.views import (
+from apps.profiles.api.views import SavedCompaniesCreate, SavedCompaniesDestroy
+from apps.profiles.api.views import (
     ProfileList,
     ProfileDetail,
     ViewedCompanyList,

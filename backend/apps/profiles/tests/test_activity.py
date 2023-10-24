@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 
-from authentication.factories import UserFactory
-from profiles.factories import ActivityFactory
+from apps.authentication.factories import UserFactory
+from apps.profiles.factories import ActivityFactory
 
 
 class TestActivityList(APITestCase):

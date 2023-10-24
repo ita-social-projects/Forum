@@ -1,6 +1,6 @@
 import factory.fuzzy
 
-from .models import (
+from apps.profiles.models import (
     Profile,
     Activity,
     Category,

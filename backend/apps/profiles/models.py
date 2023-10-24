@@ -1,13 +1,13 @@
 from django.db import models
 
-from authentication.models import CustomUser
-from validation.validate_edrpou import validate_edrpou
-from validation.validate_foundation_year import validate_foundation_year_range
-from validation.validate_image import (
+from apps.authentication.models import CustomUser
+from api.validation.validate_edrpou import validate_edrpou
+from api.validation.validate_foundation_year import validate_foundation_year_range
+from api.validation.validate_image import (
     validate_image_size,
     validate_image_format,
 )
-from validation.validate_phone_number import (
+from api.validation.validate_phone_number import (
     validate_phone_number_len,
     validate_phone_number_is_digit,
 )

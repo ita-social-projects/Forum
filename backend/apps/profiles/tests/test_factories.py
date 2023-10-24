@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from profiles.factories import (
+from apps.profiles.factories import (
     ProfileFactory,
     ProfileStartupFactory,
     ProfileCompanyFactory,
