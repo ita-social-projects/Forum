@@ -1,8 +1,9 @@
 from django.urls import path, re_path, include
-from views import (AdminProfileList,
-                   AdminProfileDetail,
-                   UsersListView,
-                   UserDetailView, )
+
+from apps.administration.api.views import (AdminProfileList,
+                                           AdminProfileDetail,
+                                           UsersListView,
+                                           UserDetailView, )
 
 app_name = "administration"
 

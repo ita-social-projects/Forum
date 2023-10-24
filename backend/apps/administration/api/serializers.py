@@ -3,8 +3,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from djoser.serializers import UserSerializer
 
-from authentication.models import CustomUser
-from profiles.models import Profile
+from apps.authentication.models import CustomUser
+from apps.profiles.models import Profile
 
 
 User = get_user_model()

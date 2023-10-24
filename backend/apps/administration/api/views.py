@@ -5,14 +5,14 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
 )
 
-from serializers import (
+from apps.administration.api.serializers import (
     AdminUserSerializer,
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
 )
-from administration.pagination import ListPagination
-from authentication.models import CustomUser
-from profiles.models import Profile
+from apps.administration.pagination import ListPagination
+from apps.authentication.models import CustomUser
+from apps.profiles.models import Profile
 
 
 class UsersListView(ListAPIView):
