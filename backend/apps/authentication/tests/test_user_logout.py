@@ -14,7 +14,7 @@ class UserLogoutAPITests(APITestCase):
         self.user.save()
 
         self.test_user_token = self.client.post(
-            path="/api/auth/token/login/",
+            path="/api/authentication/auth/token/login/",
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
@@ -23,11 +23,11 @@ class UserLogoutAPITests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION=f"Token {self.test_user_token}"
         )
-        response = self.client.post(path="/api/auth/token/logout/")
+        response = self.client.post(path="/api/authentication/auth/token/logout/")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_logout_not_logged_in(self):
-        response = self.client.post(path="/api/auth/token/logout/")
+        response = self.client.post(path="/api/authentication/auth/token/logout/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(
             {"detail": "Authentication credentials were not provided."},

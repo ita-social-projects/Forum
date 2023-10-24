@@ -16,7 +16,7 @@ class UserSelfAPITests(APITestCase):
 
     def test_user_retreive_data_successful(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path="/api/auth/users/me/")
+        response = self.client.get(path="/api/authentication/auth/users/me/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
             {
@@ -29,7 +29,7 @@ class UserSelfAPITests(APITestCase):
         )
 
     def test_user_retreive_data_not_logged_in(self):
-        response = self.client.get(path="/api/auth/users/me/")
+        response = self.client.get(path="/api/authentication/auth/users/me/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(
             {"detail": "Authentication credentials were not provided."},
@@ -39,7 +39,7 @@ class UserSelfAPITests(APITestCase):
     def test_user_update_all_fields_successful(self):
         self.client.force_authenticate(self.user)
         response = self.client.put(
-            path="/api/auth/users/me/",
+            path="/api/authentication/auth/users/me/",
             data={
                 "id": AnyInt(),
                 "email": "test@test.com",
@@ -61,7 +61,7 @@ class UserSelfAPITests(APITestCase):
     def test_user_update_one_field_successful(self):
         self.client.force_authenticate(self.user)
         response = self.client.patch(
-            path="/api/auth/users/me/",
+            path="/api/authentication/auth/users/me/",
             data={
                 "surname": "Petrenko",
             },
@@ -79,7 +79,7 @@ class UserSelfAPITests(APITestCase):
 
     def test_user_delete(self):
         response = self.client.get(
-            path="/api/auth/users/me/", data={"password": "Test1234"}
+            path="/api/authentication/auth/users/me/", data={"password": "Test1234"}
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(

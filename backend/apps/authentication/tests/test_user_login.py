@@ -15,7 +15,7 @@ class UserLoginAPITests(APITestCase):
         self.user.save()
 
         response = self.client.post(
-            path="/api/auth/token/login/",
+            path="/api/authentication/auth/token/login/",
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
@@ -30,7 +30,7 @@ class UserLoginAPITests(APITestCase):
         self.user.save()
 
         response = self.client.post(
-            path="/api/auth/token/login/",
+            path="/api/authentication/auth/token/login/",
             data={
                 "email": "tost@test.com",
                 "password": "Test1234",
@@ -51,7 +51,7 @@ class UserLoginAPITests(APITestCase):
         self.user.save()
 
         response = self.client.post(
-            path="/api/auth/token/login/",
+            path="/api/authentication/auth/token/login/",
             data={
                 "email": "test@test.com",
                 "password": "Test5678",
