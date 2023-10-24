@@ -5,7 +5,7 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
 )
 
-from administration.serializers import (
+from serializers import (
     AdminUserSerializer,
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
