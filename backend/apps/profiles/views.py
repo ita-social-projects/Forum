@@ -15,7 +15,7 @@ from rest_framework.permissions import (
 )
 from rest_framework.response import Response
 
-from forum.pagination import ForumPagination
+from project.pagination import ForumPagination
 from .models import (
     SavedCompany,
     Profile,

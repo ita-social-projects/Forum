@@ -3,7 +3,7 @@
 /workspace.xml
 /.idea
 /venv
-/.venv
+/*/.venv/
 /.env
 env
 /*/.env
