@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from authentication.factories import UserFactory
+from apps.authentication.factories import UserFactory
 
 
 class TestFactories(TestCase):
