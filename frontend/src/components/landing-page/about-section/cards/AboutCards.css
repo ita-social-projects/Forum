@@ -1,0 +1,109 @@
+.about-us-cards-section {
+    display: flex;
+    width: 1304px;
+    padding: 80px 104px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    background: #F0F1F3;
+}
+.about-us-cards-section__header-text {
+    color: #292E32;
+    font-family: Inter, sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 38.4px */
+}
+.about-us-cards-section__cards {
+    display: flex;
+    width: 884px;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+.about-us-cards-section__first-card {
+    display: flex;
+    width: 430px;
+    height: 128px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.20);
+    border-radius: 9999px;
+    transition: transform 0.2s ease;
+}
+.about-us-cards-section__cards-content {
+    display: flex;
+    padding: 36px 16px 16px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    border-radius: 12px;
+    background: #FFF;
+}
+.about-us-cards-section__cards-logo {
+    width: 54px;
+    height: 50px;
+    position: relative;
+    right: 0;
+}
+.about-us-cards-section__cards-logo__intersect {
+    width: 54px;
+    height: 50px;
+    flex-shrink: 0;
+    fill: #F1FFF7;
+    position: relative;
+    right: -360px;
+    top: -36.2px;
+}
+.about-us-cards-section__cards-logo__expert {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    position: absolute;
+    right: -350px;
+    top: -28px;
+}
+.about-us-cards-section__cards-content__text-header {
+    align-self: stretch;
+    color: #292E32;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 125% */
+    letter-spacing: -0.16px;
+    position: absolute;
+}
+
+.about-us-cards-section__cards-content__text {
+    width: 398px;
+    height: 40px;
+    color: #292E32;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 125% */
+    letter-spacing: -0.16px;
+    position: relative;
+    top: -20px;
+}
+.about-us-cards-section__next-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 9999px;
+    box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.20);
+    transition: transform 0.2s ease;
+}
+.about-us-cards-section__next-card:hover, .about-us-cards-section__first-card:hover {
+    transform: scale(1.1);
+}

@@ -1,0 +1,120 @@
+:root {
+    --dark-gray: #292E32;
+    --white: #F8F8F8;
+    --blue: #4A73E2;
+    --green: #1F9A7C;
+
+}
+
+.profile-info-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    position: absolute;
+    left: 930px;
+}
+.profile-info-block__main {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 36px;
+    border-radius: 2px;
+    border: 1px solid var(--white);
+    background: var(--white);
+}
+.profile-info-block__main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+.profile-info-block__main-content-data {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    gap: 8px;
+}
+.profile-info-block__main-content-data2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.profile-info-block__main-content-bold-title {
+    width: 130px;
+    color: var(--dark-gray);
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: -0.14px;
+}
+.profile-info-block__main-content-title {
+    width: 130px;
+    color: var(--dark-gray);
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: -0.14px;
+}
+.profile-info-block__main-content-text {
+    width: 200px;
+    color: var(--dark-gray);
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: -0.14px;
+}
+.profile-info-block__main-content-url {
+    width: 200px;
+    color: var(--blue);
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: -0.14px;
+}
+
+.profile-info__button {
+    display: flex;
+    width: 160px;
+    /* height: 32px; */
+    max-width: 200px;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    border: 1px solid var(--green);
+    background: var(--white);
+    position: absolute;
+    left: 154px;
+}
+.profile-info__button-text {
+    flex: 1 0 0;
+    color: var(--green);
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 125% */
+    letter-spacing: -0.16px;
+}
+.profile-info-block__main-content-icons {
+    width: 24px;
+    height: 24px;
+    display: flex;
+}

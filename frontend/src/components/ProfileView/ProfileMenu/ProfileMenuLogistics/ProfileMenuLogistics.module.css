@@ -1,0 +1,54 @@
+.profile-menu-logistics-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    border-radius: 8px;
+}
+.profile-menu-logistics {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    box-shadow: 0 4px 8px 0 rgba(65, 64, 69, 0.10);
+}
+.profile-menu-logistics__title {
+    display: flex;
+    padding: 8px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 4px;
+}
+.profile-menu-logistics__title-text {
+    width: 742px;
+    color: #25292C;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 125% */
+    text-transform: uppercase;
+}
+.profile-logistics-divider {
+    align-self: stretch;
+    height: 1px;
+    background: #DEE1E8;
+}
+.profile-menu-logistics__content {
+    display: flex;
+    padding: 12px;
+    align-items: flex-start;
+    gap: 10px;
+}
+.profile-menu-logistics__content-text {
+    width: 776px;
+    color: #25292C;
+    font-feature-settings: 'calt' off;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: -0.14px;
+}

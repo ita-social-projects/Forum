@@ -1,0 +1,27 @@
+.header-menu-section {
+    display: flex;
+    padding: 0px 64px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+}
+
+.header-menu-element {
+    display: flex;
+    padding: 0px 12px;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.header-menu-element__text {
+    color: #292E32;
+    font-feature-settings: 'calt' off;
+    text-decoration: none;
+
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+}

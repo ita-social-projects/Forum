@@ -1,0 +1,58 @@
+.header-content {
+    display: flex;
+    padding: 8px 104px;
+    justify-content: space-between;
+    align-items: center;
+    width: 1304px;
+    gap: 24px;
+}
+
+.header-divider {
+    width: 1512px;
+    height: 1px;
+
+    background: var(--main-black-20, #E2E5EB);
+}
+
+.header-logo__text {
+    color: #292E32;
+    font-feature-settings: 'calt' off;
+    text-decoration: none;
+    font-family: Geologica;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.24px;
+}
+
+.header-view__button {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 4px;
+    border: 1px solid #1F9A7C;
+    background: #1F9A7C;
+
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+
+    /* Button Text */
+    color: #FFF;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    text-decoration: none;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+}
+
+.header-view__button:hover {
+    background: #FFF;
+    color: #1F9A7C;
+}

@@ -9,8 +9,8 @@ env
 /*/.env
 /.DS_Store
 __pycache__/
-/FrontEnd/node_modules
+/frontend/node_modules
 
-public/*
-!public/media/.gitkeep
-!public/static/.gitkeep
+backend/public/*
+!backend/public/media/.gitkeep
+!backend/public/static/.gitkeep

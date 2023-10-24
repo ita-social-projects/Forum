@@ -1,0 +1,11 @@
+.profile-menu-main-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 134px;
+}
+.profile-menu-main-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
