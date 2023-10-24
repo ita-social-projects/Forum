@@ -20,7 +20,7 @@ class UserLogoutAPITests(APITestCase):
         self.user.save()
 
         self.test_user_token = self.client.post(
-            path="/api/auth/token/login/",
+            path="/api/authentication/auth/token/login/",
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
@@ -32,7 +32,7 @@ class UserLogoutAPITests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION=f"Token {self.test_user_token}"
         )
-        response = self.client.get(path="/api/auth/users/me/")
+        response = self.client.get(path="/api/authentication/auth/users/me/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(
             {"detail": "Your session has expired. Please login again."},
@@ -44,7 +44,7 @@ class UserLogoutAPITests(APITestCase):
         self.user.save()
 
         self.test_user_token = self.client.post(
-            path="/api/auth/token/login/",
+            path="/api/authentication/auth/token/login/",
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
@@ -56,7 +56,7 @@ class UserLogoutAPITests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION=f"Token {self.test_user_token}"
         )
-        response = self.client.get(path="/api/auth/users/me/")
+        response = self.client.get(path="/api/authentication/auth/users/me/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
             {
