@@ -12,11 +12,11 @@ const MainPage = (props) => {
   return (
     <div className="main-app">
       <div className="main-app-header">
-        <MainBanner isAuthorized={props.isAuthorized}/>
+        <MainBanner isAuthorized={props.isAuthorized} />
         <div className={css['main-app-body']}>
           <MainCompanies />
           <MainPartners />
-          {!props.isAuthorized ? <MainLoginBanner /> : (null)}
+          {!props.isAuthorized ? <MainLoginBanner /> : null}
           <MainAboutSection />
           <div>
             <CookieMod
