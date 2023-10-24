@@ -9,8 +9,8 @@ from djoser.serializers import (
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from profiles.models import Profile
-from validation.validate_password import (
+from apps.profiles.models import Profile
+from api.validation.validate_password import (
     validate_password_long,
     validate_password_include_symbols,
 )

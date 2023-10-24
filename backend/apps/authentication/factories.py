@@ -1,6 +1,6 @@
 import factory.django
 
-from .models import CustomUser
+from apps.authentication.models import CustomUser
 
 
 class UserFactory(factory.django.DjangoModelFactory):
