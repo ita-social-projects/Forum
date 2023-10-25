@@ -8,6 +8,7 @@ import Footer from '../HeaderFooter/footer/Footer';
 import Header from '../HeaderFooter/header/Header';
 import MainPage from '../landing-page/MainPage';
 import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
+import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../profileList/ProfileListPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import { SignUpPage } from '../SignUp/pages/SignUpPage';
@@ -56,6 +57,7 @@ function BasicPage() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/profile/*" element={<ProfilePage />} />
+        <Route path="/profile-detail/:id" element={<ProfileDetailPage isAuthorized={auth.isAuth}/>}/>
         <Route path="/profiles/:filter" element={<ProfileListPage isAuthorized={auth.isAuth} />}/>
         {auth.isAuth ? (
           <Route path="/login" element={<Navigate to="/profile/user-info" />} />
