@@ -9,7 +9,6 @@ import useSWRMutation from 'swr/mutation';
 import classes from './Title.module.css';
 
 function Title({ isAuthorized, data }) {
-  console.log('DATA', data);
   const { mutate } = useSWRConfig();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
@@ -113,13 +112,13 @@ function Title({ isAuthorized, data }) {
         </div>
         <div className={classes['title-block__company_region']}>{profile.region}</div>
       </div>
-      <button onClick={handleClick}
+      {isAuthorized && (<button onClick={handleClick}
         type="button"
         className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
       >
           <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
         {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
-      </button>
+      </button>)}
     </div>
   );
 }

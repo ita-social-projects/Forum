@@ -2,8 +2,7 @@ import { useMemo } from 'react';
 import PhoneEmail from './PhoneEmail';
 import classes from './DataContacts.module.css';
 
-function DataContacts ({ data }) {
-
+function DataContacts ({ isAuthorized, data }) {
     const profile = useMemo(() => {
         return {
           id: data.id,
@@ -39,7 +38,7 @@ function DataContacts ({ data }) {
                         <p className={classes['data-block__field--title']}>Сайт</p>
                         <p className={classes['data-block__field--site']}></p>
                     </div>
-                    <PhoneEmail profileId={data.id}/>
+                    <PhoneEmail isAuthorized={isAuthorized} profileId={data.id}/>
                     <div className={classes['data-block__field--address']}>
                         <p className={classes['data-block__field--title']}>Адрес(и)</p>
                         <p className={classes['data-block__field--address--value']}>{profile.address}</p>

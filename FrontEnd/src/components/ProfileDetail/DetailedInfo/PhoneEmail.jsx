@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import { PropTypes } from 'prop-types';
 import classes from './PhoneEmail.module.css';
 
-function PhoneEmail ({ profileId }) {
+function PhoneEmail ({ isAuthorized, profileId }) {
     const [isPhoneShown, setPhoneShown] = useState(false);
     const [isEmailShown, setEmailShown] = useState(false);
     const [user, setUser] = useState(null);
@@ -22,7 +22,7 @@ function PhoneEmail ({ profileId }) {
     );
 
     const { data: profileData, error: profileError } = useSWR(
-        authToken ? `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True` : null,
+        `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,
         url =>
             fetch(url, {
                 method: 'GET',
@@ -95,7 +95,7 @@ function PhoneEmail ({ profileId }) {
                 {isPhoneShown ?
                 (
                 <p className={classes['data-block__field--phone']}>{profile.phone}</p> ) : (
-                <button type="button" onClick={handlePhoneClick} className={classes['data-block__field--show--phone']}>
+                <button type="button" onClick={handlePhoneClick} disabled={!isAuthorized} className={classes['data-block__field--show--phone']}>
                         Показати телефон
                 </button>
                 )}
@@ -104,7 +104,7 @@ function PhoneEmail ({ profileId }) {
                 <p className={classes['data-block__field--title']}>Електронна пошта</p>
                 {isEmailShown ? (
                 <p className={classes['data-block__field--email']}>{profile.email}</p> ) : (
-                <button type="button" onClick={handleEmailClick} className={classes['data-block__field--show--email']}>Показати ел. пошту</button>
+                <button type="button" onClick={handleEmailClick} disabled={!isAuthorized} className={classes['data-block__field--show--email']}>Показати ел. пошту</button>
                 )}
             </div>
         </>
@@ -114,5 +114,6 @@ function PhoneEmail ({ profileId }) {
 export default PhoneEmail;
 
 PhoneEmail.propTypes = {
+    isAuthorized: PropTypes.bool.isRequired,
     profileId: PropTypes.number.isRequired
   };
