@@ -1,0 +1,67 @@
+.data-block__field {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    gap: 8px;
+}
+
+.data-block__field--title {
+    width: 130px;
+    color: var(--main-black-90, #292E32);
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.14px;
+}
+
+.data-block__field button {
+    display: flex;
+    width: 200px;
+    height: 32px;
+    max-width: 200px;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    border: 1px solid var(--primary-green-80, #1F9A7C);
+    background: var(--neutral-1, #FFF);
+    cursor: pointer;
+}
+
+.data-block__field--phone,
+.data-block__field--email {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    gap: 8px;
+}
+
+.data-block__field--show--phone,
+.data-block__field--show--email {
+    flex: 1 0 0;
+    color: var(--primary-green-80, #1F9A7C);
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+}
+
+.data-block__field--shown--phone {
+    width: 200px;
+    color: var(--main-black-90, #292E32);
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    letter-spacing: -0.14px;
+}
