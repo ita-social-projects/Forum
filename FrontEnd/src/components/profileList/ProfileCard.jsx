@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Badge, Typography } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
@@ -104,32 +105,34 @@ export default function ProfileCard({ isAuthorized, data }) {
 
   return (
     <div className={css['company-card']}>
-      <div className={css['logo-box']}>
-        <img
-          className={css.logo}
-          src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
-          alt=""
-        />
-      </div>
-      <div className={css.content}>
-        <div className={css['content-header']}>
-          <div className={css['content-header__activity']}>
-            <p className={css['content-header__activity--text']}>
-              {profile.activities}
-            </p>
+      <Link className={css['company-card__link']} to={`/profile-detail/${profile.id}`}>
+        <div className={css['logo-box']}>
+          <img
+            className={css.logo}
+            src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
+            alt=""
+          />
+        </div>
+        <div className={css.content}>
+          <div className={css['content-header']}>
+            <div className={css['content-header__activity']}>
+              <p className={css['content-header__activity--text']}>
+                {profile.activities}
+              </p>
+            </div>
+            <div className={css['content-header__name']}>{profile.name}</div>
+            <div className={css['content-header__address']}>{profile.region}</div>
           </div>
-          <div className={css['content-header__name']}>{profile.name}</div>
-          <div className={css['content-header__address']}>{profile.region}</div>
+          <div className={css['content__common-info']}>
+            <Paragraph ellipsis={{ rows: 3, expandable: false }}>
+              {profile.commonInfo}
+            </Paragraph>
+          </div>
+          <div className={css['content__categories']}>
+            <CategoryBadges categories={profile.categories} />
+          </div>
         </div>
-        <div className={css['content__common-info']}>
-          <Paragraph ellipsis={{ rows: 3, expandable: false }}>
-            {profile.commonInfo}
-          </Paragraph>
-        </div>
-        <div className={css['content__categories']}>
-          <CategoryBadges categories={profile.categories} />
-        </div>
-      </div>
+      </Link>
       {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
     </div>
   );
