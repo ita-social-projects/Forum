@@ -69,25 +69,28 @@ function PhoneEmail ({ isAuthorized, profileId }) {
     };
 
     return (
-        <>
-            <div className={classes['data-block__field']}>
-                <p className={classes['data-block__field--title']}>Телефон</p>
-                {isPhoneShown ?
-                (
-                <p className={classes['data-block__field--phone']}>{profileData.phone}</p> ) : (
-                <button type="button" onClick={handlePhoneClick} disabled={!isAuthorized} className={classes['data-block__field--show--phone']}>
-                        Показати телефон
-                </button>
-                )}
-            </div>
-            <div className={classes['data-block__field']}>
-                <p className={classes['data-block__field--title']}>Електронна пошта</p>
-                {isEmailShown ? (
-                <p className={classes['data-block__field--email']}>{profileData.email}</p> ) : (
-                <button type="button" onClick={handleEmailClick} disabled={!isAuthorized} className={classes['data-block__field--show--email']}>Показати ел. пошту</button>
-                )}
-            </div>
-        </>
+        profileData ? (
+            <>
+                <div className={classes['data-block__field']}>
+                    <p className={classes['data-block__field--title']}>Телефон</p>
+                    {isPhoneShown ?
+                    (
+                    <p className={classes['data-block__field--phone']}>{profileData.phone}</p> ) : (
+                    <button type="button" onClick={handlePhoneClick} disabled={!isAuthorized} className={classes['data-block__field--show--phone']}>
+                            Показати телефон
+                    </button>
+                    )}
+                </div>
+                <div className={classes['data-block__field']}>
+                    <p className={classes['data-block__field--title']}>Електронна пошта</p>
+                    {isEmailShown ? (
+                    <p className={classes['data-block__field--email']}>{profileData.email}</p> ) : (
+                    <button type="button" onClick={handleEmailClick} disabled={!isAuthorized} className={classes['data-block__field--show--email']}>Показати ел. пошту</button>
+                    )}
+                </div>
+
+            </>
+        ) : null
     );
 }
 

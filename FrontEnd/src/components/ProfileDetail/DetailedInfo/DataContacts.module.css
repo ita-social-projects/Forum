@@ -76,16 +76,3 @@
     align-items: flex-start;
     gap: 8px;
 }
-
-.data-block__field--address--value,
-.data-block__field--cooperate--value {
-    width: 200px;
-    color: var(--main-black-90, #292E32);
-    font-feature-settings: 'calt' off;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 22px;
-    letter-spacing: -0.14px;
-}
