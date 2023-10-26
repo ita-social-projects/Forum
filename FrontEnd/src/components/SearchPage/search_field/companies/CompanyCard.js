@@ -91,7 +91,11 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
   });
 
   const filledStar = (
-    <StarFilled className={styles['star']} onClick={handleClick} />
+    <StarFilled
+      className={styles['star']}
+      onClick={handleClick}
+      data-testid="star"
+    />
   );
   const outlinedStar = (
     <StarOutlined className={styles['star']} onClick={handleClick} />
@@ -146,9 +150,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
                 </div>
               </div>
             </div>
-            {/* {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null} */}
             {star}
-            {/* <div>{}</div> */}
           </div>
         </div>
       </div>
