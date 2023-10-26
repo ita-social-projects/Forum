@@ -1,31 +1,31 @@
-// import { useMemo } from 'react';
-// import { PropTypes } from 'prop-types';
 import classes from './Cooperation.module.css';
 import ReadMore from './ReadMore';
 
 function Cooperation () {
-    // const profile = useMemo(() => {
-    //     return {
-    //     };
-    //   }, [data]);
+    const cooperationData = '';
+
+    // TODO: implement logic for getting data from db when it's added on server side
 
     return (
-        <div id="cooperation" className={classes['cooperation-wrapper']}>
-            <div className={classes['cooperation']}>
-                <div className={classes['cooperation__title']}>
-                    <div className={classes['cooperation__title--block']}>
-                        <p className={classes['cooperation__title--text']}>Формат співпраці</p>
+        cooperationData ? (
+            <div id="cooperation" className={classes['cooperation-wrapper']}>
+                <div className={classes['cooperation']}>
+                    <div className={classes['cooperation__title']}>
+                        <div className={classes['cooperation__title--block']}>
+                            <p className={classes['cooperation__title--text']}>Формат співпраці</p>
+                        </div>
+                        <div className={classes['cooperation__title--divider']}></div>
                     </div>
-                    <div className={classes['cooperation__title--divider']}></div>
-                </div>
-                <div className={classes['cooperation__content--block']}>
-                        <p className={classes['cooperation__content--description']}>
-                            <ReadMore>
-                            </ReadMore>
-                        </p>
+                    <div className={classes['cooperation__content--block']}>
+                            <p className={classes['cooperation__content--description']}>
+                                <ReadMore>
+                                    {cooperationData}
+                                </ReadMore>
+                            </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        ) : null
     );
 }
 

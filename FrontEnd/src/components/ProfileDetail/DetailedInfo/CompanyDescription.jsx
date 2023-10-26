@@ -10,7 +10,7 @@ function CompanyDescription ({ data }) {
         <div className={classes['company-description-block']}>
             <Company data={data} />
             <Startup data={data} />
-            <ProductsServices />
+            <ProductsServices data={data} />
             <Logistics />
             <Cooperation />
         </div>

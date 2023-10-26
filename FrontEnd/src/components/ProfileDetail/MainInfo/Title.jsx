@@ -2,14 +2,13 @@ import { useState, useMemo } from 'react';
 
 import { Badge } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
-import { useSWRConfig } from 'swr';
 import { PropTypes } from 'prop-types';
 import useSWRMutation from 'swr/mutation';
 
+import DefaultLogo from './DefaultLogo';
 import classes from './Title.module.css';
 
 function Title({ isAuthorized, data }) {
-  const { mutate } = useSWRConfig();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
@@ -55,10 +54,6 @@ function Title({ isAuthorized, data }) {
     }
   };
 
-  mutate((key) => typeof key === 'string' && key.startsWith('/api/profiles/'), {
-    revalidate: true,
-  });
-
   const filledStar = (
     <StarFilled
       style={{ color: '#FFD800', fontSize: '24px' }}
@@ -94,13 +89,21 @@ function Title({ isAuthorized, data }) {
     );
   };
 
+  // TODO: add logo from db once it's implemented on the server side
+
+  const logo = '';
+
   return (
     <div className={classes['title-block']}>
       <div className={classes['title-block__logo']}>
-        <img className={classes['logo']}
-          src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
-          alt=""
-        />
+        {!logo ? (
+          <DefaultLogo />
+        ) : (
+          <img className={classes['logo']}
+            src=""
+            alt="Company logo"
+          />
+        )}
       </div>
       <div className={classes['title-block__about']}>
         <div className={classes['title-block__activity']}>{profile.activities}</div>

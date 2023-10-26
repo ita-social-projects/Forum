@@ -10,66 +10,50 @@ function Startup ({ data }) {
         };
       }, [data]);
 
+    // TODO: implement logic for getting data from db when it's added on server side
+
+    const startupData = {
+        'Ідея стартапу': profile.startup_idea,
+        'Розмір інвестицій': '',
+        'Ціль співпраці': '',
+        'Кінцевий результат': '',
+        'Конкурентна перевага ідеї': '',
+        'Ризики': '',
+        'Пошук партнерів': '',
+    };
+
+    const renderedSections = Object.entries(startupData).map(([key, value]) => {
+        if (value) {
+          return (
+            <div key={key} className={classes['startup__content--block']}>
+              <p className={classes['startup__content--title']}>{key}</p>
+              <p className={classes['startup__content--description']}>
+                <ReadMore>{value}</ReadMore>
+              </p>
+            </div>
+          );
+        }
+        return null;
+      });
+
+    const hasSections = renderedSections.some((section) => section !== null);
+
     return (
-        <div id="startup" className={classes['startup-wrapper']}>
-            <div className={classes['startup']}>
-                <div className={classes['startup__title']}>
-                    <div className={classes['startup__title--block']}>
-                        <p className={classes['startup__title--text']}>Стартап</p>
+        hasSections ? (
+            <div id="startup" className={classes['startup-wrapper']}>
+                <div className={classes['startup']}>
+                    <div className={classes['startup__title']}>
+                        <div className={classes['startup__title--block']}>
+                            <p className={classes['startup__title--text']}>Стартап</p>
+                        </div>
+                        <div className={classes['startup__title--divider']}></div>
                     </div>
-                    <div className={classes['startup__title--divider']}></div>
-                </div>
-                <div className={classes['startup__content']}>
-                    <div className={classes['startup__content--block']}>
-                        <p className={classes['startup__content--title']}>Ідея стартапу</p>
-                        <p className={classes['startup__content--description']}>
-                            <ReadMore>
-                                {profile.startup_idea}
-                            </ReadMore>
-                        </p>
-                    </div>
-                    <div className={classes['startup__content--block']}>
-                        <p className={classes['startup__content--title']}>Розмір інвестиції</p>
-                        <p className={classes['startup__content--description']}></p>
-                    </div>
-                    <div className={classes['startup__content--block']}>
-                        <p className={classes['startup__content--title']}>Ціль співпраці</p>
-                        <p className={classes['startup__content--description']}>
-                            <ReadMore>
-                            </ReadMore>
-                        </p>
-                    </div>
-                    <div className={classes['startup__content--block']}>
-                        <p className={classes['startup__content--title']}>Кінцевий результат</p>
-                        <p className={classes['startup__content--description']}>
-                            <ReadMore>
-                            </ReadMore>
-                        </p>
-                    </div>
-                    <div className={classes['startup__content--block']}>
-                        <p className={classes['startup__content--title']}>Конкурентна перевага ідеї</p>
-                        <p className={classes['startup__content--description']}>
-                            <ReadMore>
-                            </ReadMore>
-                        </p>
-                    </div>
-                    <div className={classes['startup__content--block']}>
-                        <p className={classes['startup__content--title']}>Ризики</p>
-                        <p className={classes['startup__content--description']}>
-                            <ReadMore>
-                            </ReadMore>
-                        </p>
-                    </div>
-                    <div className={classes['startup__content--block']}>
-                        <p className={classes['startup__content--title']}>Пошук партнерів</p>
-                        <p className={classes['startup__content--description']}>
-                            <ReadMore>
-                            </ReadMore>
-                        </p>
+                    <div className={classes['startup__content']}>
+                        {renderedSections}
                     </div>
                 </div>
             </div>
-        </div>
+        ) : null
     );
 }
 

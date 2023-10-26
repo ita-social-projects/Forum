@@ -12,7 +12,7 @@ function BannerImage ({ data }) {
         <div className={classes['banner-image__block']}>
             <div className={classes['banner-image']}>
                 {profile.banner ? (
-                    <img src={profile.banner} alt="Profile Banner" />
+                    <img src={profile.banner} alt="Company Banner" />
                     ) : (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

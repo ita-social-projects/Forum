@@ -9,15 +9,19 @@ const ReadMore = ({ children }) => {
   const toggleReadMore = () => {
     setReadMore(!readMore);
   };
-  const displayText = text && (readMore ? text : `${text.slice(0, 150)}...`);
+  const maxTextLength = 150;
+
+  const displayText = text && (readMore || text.length <= maxTextLength ? text : `${text.slice(0, maxTextLength)}...`);
 
   return (
     text ? (
     <p className={classes['read-more']}>
         {displayText}
-      <span onClick={toggleReadMore} className={classes['read-or-hide']}>
-        {!readMore ? 'читати далі' : 'приховати'}
-      </span>
+        {text.length > maxTextLength && (
+          <span onClick={toggleReadMore} className={classes['read-or-hide']}>
+            {!readMore ? 'читати далі' : 'приховати'}
+          </span>
+      )}
     </p>) : null
   );
 };

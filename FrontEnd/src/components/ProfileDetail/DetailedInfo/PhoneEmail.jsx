@@ -31,7 +31,7 @@ function PhoneEmail ({ isAuthorized, profileId }) {
     );
 
     const urlViewed = `${process.env.REACT_APP_BASE_API_URL}/api/viewed-list/`;
-    const viewedData = {user: userData.id, company: profileId,};
+    const viewedData = userData && {user: userData.id, company: profileId,};
 
     async function sendRequest(url, data ) {
         return fetch(url, {
