@@ -120,6 +120,3 @@ class ViewedCompany(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     company = models.ForeignKey(Profile, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = (("user", "company"),)
