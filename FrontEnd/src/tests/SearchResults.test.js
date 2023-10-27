@@ -93,6 +93,7 @@ describe('SearchResults component unit tests', () => {
         banner_image: null,
       },
     ];
+
     const displayedResults = results.slice(0, 7);
     render(
       <MemoryRouter>

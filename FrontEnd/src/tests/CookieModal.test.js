@@ -32,6 +32,7 @@ describe('CookieMod component unit tests', () => {
         <CookieMod active={true} />
       </MemoryRouter>
     );
+
     const linkElement = screen.getByText(/про кукі-файли/i);
     expect(linkElement).toBeInTheDocument();
     expect(linkElement).toHaveAttribute('href', '/cookies-policy');
