@@ -1,8 +1,8 @@
-import classes from './DetailedInfo.module.css';
+import classes from './DetailedInfoSection.module.css';
 import CompanyDescription from './CompanyDescription';
 import DataContacts from './DataContacts';
 
-function DetailedInfo ({ isAuthorized, data }) {
+function DetailedInfoSection ({ isAuthorized, data }) {
     return (
         <div className={classes['detail-info-page']}>
             <CompanyDescription isAuthorized={isAuthorized} data={data} />
@@ -11,4 +11,4 @@ function DetailedInfo ({ isAuthorized, data }) {
     );
 }
 
-export default DetailedInfo;
+export default DetailedInfoSection;
