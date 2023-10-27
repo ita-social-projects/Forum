@@ -1,8 +1,8 @@
 .App {
   /*for footer correct work*/
-  /* min-height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
-  display: flex; */ 
+  display: flex;
 }
 
 .App-logo {
@@ -35,6 +35,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

@@ -10,8 +10,8 @@ import css from './MainPage.module.css';
 const MainPage = () => {
   const [modalActive, setModalActive] = useState(true);
   return (
-    <div className="main-app">
-      <div className="main-app-header">
+    <div className={css['main-app']}>
+      <div className={css['main-app-header']}>
         <MainBanner />
         <div className={css['main-app-body']}>
           <MainPartners />
