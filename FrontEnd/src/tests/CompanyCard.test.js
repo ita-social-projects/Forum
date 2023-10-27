@@ -41,6 +41,7 @@ describe('CompanyCard component unit tests', () => {
       banner_image: '',
     };
     jest.mock('axios');
+    const axios = require('axios');
 
     async () => {
       await axios.get.mockResolvedValue({
@@ -100,6 +101,7 @@ describe('CompanyCard component unit tests', () => {
       banner_image: '',
     };
     jest.mock('axios');
+    const axios = require('axios');
 
     async () => {
       await axios.get.mockResolvedValue({
