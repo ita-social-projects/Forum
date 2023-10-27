@@ -1,18 +1,19 @@
 import { useState, useMemo } from 'react';
-
+import useSWR from 'swr';
 import { Badge } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
 import useSWRMutation from 'swr/mutation';
 
 import DefaultLogo from './DefaultLogo';
-import classes from './Title.module.css';
+import classes from './TitleInfo.module.css';
 
-function Title({ isAuthorized, data }) {
+function TitleInfo({ isAuthorized, data }) {
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
       id: data.id,
+      personId: data.person,
       name: data.name,
       activities: !data.activities.length
         ? null
@@ -25,6 +26,20 @@ function Title({ isAuthorized, data }) {
       isSaved: data.is_saved,
     };
   }, [data]);
+
+  // TODO: change the logic of getting user.id when PR with hooks will be merged
+
+  const authToken = localStorage.getItem('Token');
+  const { data: userData } = useSWR(
+    authToken ? `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/` : null,
+    url =>
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${authToken}`,
+            },
+        }).then(res => res.json()),
+  );
 
   async function sendRequest(url, { arg: data }) {
     const authToken = localStorage.getItem('Token');
@@ -115,8 +130,11 @@ function Title({ isAuthorized, data }) {
         </div>
         <div className={classes['title-block__company_region']}>{profile.region}</div>
       </div>
-      {isAuthorized && (<button onClick={handleClick}
+      {isAuthorized && (
+      <button
+        onClick={handleClick}
         type="button"
+        disabled={userData && userData.id === profile.personId}
         className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
       >
           <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
@@ -126,13 +144,14 @@ function Title({ isAuthorized, data }) {
   );
 }
 
-export default Title;
+export default TitleInfo;
 
-Title.propTypes = {
+TitleInfo.propTypes = {
   isAuthorized: PropTypes.bool,
   data: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    person: PropTypes.number,
     address: PropTypes.string,
     region_display: PropTypes.string,
     categories: PropTypes.arrayOf(
