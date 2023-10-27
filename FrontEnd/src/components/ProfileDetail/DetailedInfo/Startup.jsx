@@ -27,9 +27,9 @@ function Startup ({ data }) {
           return (
             <div key={key} className={classes['startup__content--block']}>
               <p className={classes['startup__content--title']}>{key}</p>
-              <p className={classes['startup__content--description']}>
+              <div className={classes['startup__content--description']}>
                 <ReadMore>{value}</ReadMore>
-              </p>
+              </div>
             </div>
           );
         }

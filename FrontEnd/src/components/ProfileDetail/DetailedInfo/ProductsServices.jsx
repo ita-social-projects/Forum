@@ -24,20 +24,20 @@ function ProductsServices ({ data }) {
                     {profile.products &&
                     <div className={classes['products-services__content--block']}>
                         <p className={classes['products-services__content--title']}>Товари</p>
-                        <p className={classes['products-services__content--description']}>
+                        <div className={classes['products-services__content--description']}>
                             <ReadMore>
                                 {profile.products}
                             </ReadMore>
-                        </p>
+                        </div>
                     </div>}
                     {profile.services &&
                     <div className={classes['products-services__content--block']}>
                         <p className={classes['products-services__content--title']}>Послуги</p>
-                        <p className={classes['products-services__content--description']}>
+                        <div className={classes['products-services__content--description']}>
                             <ReadMore>
                                 {profile.services}
                             </ReadMore>
-                        </p>
+                        </div>
                     </div>}
                 </div>
             </div>
@@ -47,7 +47,7 @@ function ProductsServices ({ data }) {
 
 export default ProductsServices;
 
-ProductsServices.PropTypes = {
+ProductsServices.propTypes = {
     data: PropTypes.shape({
         product_info: PropTypes.string,
         service_info: PropTypes.string,

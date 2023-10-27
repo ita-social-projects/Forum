@@ -17,11 +17,11 @@ function Cooperation () {
                         <div className={classes['cooperation__title--divider']}></div>
                     </div>
                     <div className={classes['cooperation__content--block']}>
-                            <p className={classes['cooperation__content--description']}>
+                            <div className={classes['cooperation__content--description']}>
                                 <ReadMore>
                                     {cooperationData}
                                 </ReadMore>
-                            </p>
+                            </div>
                     </div>
                 </div>
             </div>

@@ -17,11 +17,11 @@ function Logistics () {
                         <div className={classes['logistics__title--divider']}></div>
                     </div>
                     <div className={classes['logistics__content--block']}>
-                        <p className={classes['logistics__content--description']}>
+                        <div className={classes['logistics__content--description']}>
                             <ReadMore>
                                 {logisticsData}
                             </ReadMore>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
