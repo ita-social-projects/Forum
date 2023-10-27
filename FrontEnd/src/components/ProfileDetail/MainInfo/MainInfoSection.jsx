@@ -1,22 +1,24 @@
 import { PropTypes } from 'prop-types';
-import Title from './Title';
+import TitleInfo from './TitleInfo';
 import ProfileDetailNavBar from './ProfileDetailNavBar';
-import classes from './MainInfo.module.css';
+import classes from './MainInfoSection.module.css';
 
-function MainInfo ({ isAuthorized, data }) {
+function MainInfoSection ({ isAuthorized, data, containsNotRequiredData }) {
 
     return (
         <div className={classes['basic-info-content']}>
-            <Title isAuthorized={isAuthorized} data={data}/>
+            <TitleInfo isAuthorized={isAuthorized} data={data}/>
+            {containsNotRequiredData ? (
             <ProfileDetailNavBar />
+            ) : null}
         </div>
 
 );
 }
 
-export default MainInfo;
+export default MainInfoSection;
 
-MainInfo.propTypes = {
+MainInfoSection.propTypes = {
     isAuthorized: PropTypes.bool,
     data: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -38,4 +40,5 @@ MainInfo.propTypes = {
       common_info: PropTypes.string,
       is_saved: PropTypes.bool.isRequired,
     }).isRequired,
+    containsNotRequiredData: PropTypes.bool,
   };
