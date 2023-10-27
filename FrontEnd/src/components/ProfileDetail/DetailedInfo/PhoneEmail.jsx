@@ -8,6 +8,8 @@ function PhoneEmail ({ isAuthorized, profileId }) {
     const [isEmailShown, setEmailShown] = useState(false);
     const authToken = localStorage.getItem('Token');
 
+    // TODO: change the logic of getting user.id when PR with hooks will be merged
+
     const { data: userData } = useSWR(
         authToken ? `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/` : null,
         url =>
