@@ -11,6 +11,9 @@ import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
 import ProfileListPage from '../profileList/ProfileListPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import { SignUpPage } from '../SignUp/pages/SignUpPage';
+import { SignUpModalPage } from '../SignUp/pages/SignUpModalPage';
+import { ResendActivationPage } from '../SignUp/pages/ResendActivationPage';
+import { ActivationProfilePage } from '../SignUp/pages/ActivateProfilePage';
 import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
@@ -70,6 +73,9 @@ function BasicPage() {
         ) : (
           <Route path="/sign-up" element={<SignUpPage />} />
         )}
+        <Route path="/sign-up/modal" element={<SignUpModalPage />} />
+        <Route path="/sign-up/resend-activation" element={<ResendActivationPage />} />
+        <Route path="/activate/:uid/:token" element={<ActivationProfilePage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
