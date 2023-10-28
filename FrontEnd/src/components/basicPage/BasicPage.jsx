@@ -14,6 +14,9 @@ import { SignUpPage } from '../SignUp/pages/SignUpPage';
 import { SignUpModalPage } from '../SignUp/pages/SignUpModalPage';
 import { ResendActivationPage } from '../SignUp/pages/ResendActivationPage';
 import { ActivationProfilePage } from '../SignUp/pages/ActivateProfilePage';
+import { SendEmailRestorePasswordPage } from '../RestorePassword/pages/SendEmailRestorePasswordPage';
+import { RestorePasswordPage } from '../RestorePassword/pages/RestorePasswordPage';
+import { RestorePasswordModalPage } from '../RestorePassword/pages/RestorePasswordModalPage';
 import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
@@ -76,6 +79,9 @@ function BasicPage() {
         <Route path="/sign-up/modal" element={<SignUpModalPage />} />
         <Route path="/sign-up/resend-activation" element={<ResendActivationPage />} />
         <Route path="/activate/:uid/:token" element={<ActivationProfilePage />} />
+        <Route path="/reset-password" element={<SendEmailRestorePasswordPage />} />
+        <Route path="/reset-password/modal" element={<RestorePasswordModalPage />} />
+        <Route path="/password/reset/confirm/:uid/:token" element={<RestorePasswordPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
