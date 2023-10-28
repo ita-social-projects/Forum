@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import styles from './ResendActivationFormContent.module.css';
 
@@ -44,7 +45,9 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
         setIsValid(true);
         navigate('/login');
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        toast.error('Activation failed. Please try again.');
+      });
   };
 
   return (
@@ -88,6 +91,11 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
           </div>
         </div>
       </form>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
+
+ResendActivationFormContentComponent.propTypes = {
+  setIsValid: PropTypes.func.isRequired,
+};
