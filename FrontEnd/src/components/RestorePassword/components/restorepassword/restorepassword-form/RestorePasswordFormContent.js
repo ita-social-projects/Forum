@@ -57,10 +57,10 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
       )
       .then(() => {
         setIsValid(true);
-        navigate('/login');
+        navigate('/reset-password/successfully');
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        navigate('/reset-password/failed');
       });
   };
 
