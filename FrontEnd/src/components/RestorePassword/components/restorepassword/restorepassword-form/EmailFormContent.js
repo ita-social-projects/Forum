@@ -47,7 +47,7 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
         navigate('/reset-password/modal');
       })
       .catch(() => {
-        toast.error('Activation failed. Please try again.');
+        toast.error('Формат електронної пошти некоректний.');
       });
   };
 
