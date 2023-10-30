@@ -21,7 +21,7 @@ export function SendEmailRestorePasswordFormComponent() {
       <SendEmailRestorePasswordFormContentComponent setIsValid={setIsValid} />
       <div className={styles['form__footer']}>
         <div className={styles['button-container']}>
-          <Link className={styles['signup-page__button']} to="/sign-up">
+          <Link className={styles['login-page__button']} to="/login">
             Скасувати
           </Link>
           <button
@@ -29,8 +29,8 @@ export function SendEmailRestorePasswordFormComponent() {
             form="signUpForm"
             className={
               isValid
-                ? styles['resend-activation__button']
-                : styles['resend-activation__button__disabled']
+                ? styles['send-email__button']
+                : styles['send-email__button__disabled']
             }
             type="submit"
           >

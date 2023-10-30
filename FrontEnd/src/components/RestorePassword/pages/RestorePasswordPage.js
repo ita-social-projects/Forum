@@ -4,8 +4,8 @@ import { RestorePasswordFormComponent } from '../components/restorepassword/Rest
 
 export function RestorePasswordPage() {
   return (
-    <div className={styles['sign-up']}>
-      <div className={styles['sign-up__body']}>
+    <div className={styles['reset-password']}>
+      <div className={styles['reset-password__body']}>
         <DotDecorComponent position={'up-right'} />
         <div className={styles.container}>
           <RestorePasswordFormComponent />

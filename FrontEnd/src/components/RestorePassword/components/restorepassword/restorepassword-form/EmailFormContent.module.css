@@ -1,4 +1,4 @@
-.resend-activation-form {
+.send-email-form {
     display: flex;
     padding: 24px;
     flex-direction: column;
@@ -7,20 +7,20 @@
     align-self: stretch;
 }
   
-.resend-activation-form__container {
+.send-email-form__container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
 }
   
-.resend-activation-form__row {
+.send-email-form__row {
     display: flex;
     align-items: flex-start;
     gap: 8px;
 }
   
-.resend-activation-form__column {
+.send-email-form__column {
     display: flex;
     width: 257px;
     height: 84px;
@@ -29,7 +29,7 @@
     align-items: flex-start;
 }
   
-.resend-activation-form__label {
+.send-email-form__label {
     display: flex;
     gap: 4px;
     align-self: stretch;
@@ -47,7 +47,7 @@
     text-align: left;
 }
   
-.resend-activation-form__label--required {
+.send-email-form__label--required {
     color: var(--dust-red-5, #ff4d4f);
     text-align: right;
     font-family: SimSong;
@@ -57,14 +57,14 @@
     line-height: 22.001px;
 }
   
-.resend-activation-form__label--text {
+.send-email-form__label--text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex: 1 0 0;
 }
   
-.resend-activation-form__field {
+.send-email-form__field {
     display: flex;
     width: 520px;
     align-items: center;
@@ -73,7 +73,7 @@
     background: var(--main-white, #fff);
 }
   
-.resend-activation-form__input {
+.send-email-form__input {
     display: flex;
     height: 22px;
     padding: 5px 12px;
@@ -93,11 +93,11 @@
     line-height: 22px;
 }
   
-.resend-activation-form__input:focus {
+.send-email-form__input:focus {
     outline: none;
 }
   
-.resend-activation-form__error {
+.send-email-form__error {
     display: flex;
     padding: 1px 0px;
     align-items: flex-start;

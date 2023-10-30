@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './RestorePasswordFormContent.module.css';
@@ -66,28 +67,28 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
   return (
     <div>
 
-    <div className={styles['signup-form']}>
+    <div className={styles['reset-password-form']}>
       <form
         id="resetPasswordForm"
-        className={styles['signup-form__container']}
+        className={styles['reset-password-form__container']}
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
-        <div className={styles['signup-form__column']}>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>*</label>
-              <div className={styles['signup-form__label--password']}>
+        <div className={styles['reset-password-form__row']}>
+          <div className={styles['reset-password-form__column']}>
+            <div className={styles['reset-password-form__label']}>
+              <label className={styles['reset-password-form__label--required']}>*</label>
+              <div className={styles['reset-password-form__label--password']}>
                 <label>Новий пароль</label>
-                <label className={styles['signup-form__label--hint']}>
+                <label className={styles['reset-password-form__label--hint']}>
                   (Повинен містити A-Z, a-z, 0-9)
                 </label>
               </div>
             </div>
-            <div className={styles['signup-form__field__password']}>
+            <div className={styles['reset-password-form__field__password']}>
               <input
-                className={styles['signup-form__input__password']}
+                className={styles['reset-password-form__input__password']}
                 placeholder="Новий пароль"
                 type={showPassword ? 'text' : 'password'}
                 {...register('new_password', {
@@ -105,22 +106,24 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
                 {!showPassword ? <EyeInvisible /> : <EyeVisible />}
               </span>
             </div>
-            <div className={styles['signup-form__error']}>
+            <div className={styles['reset-password-form__error']}>
               {errors.new_password && errors.new_password.message}
             </div>
           </div>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>*</label>
-              <div className={styles['signup-form__label--password']}>
-                <label className={styles['signup-form__label--text']}>
+        </div>
+        <div className={styles['reset-password-form__row']}>
+          <div className={styles['reset-password-form__column']}>
+            <div className={styles['reset-password-form__label']}>
+              <label className={styles['reset-password-form__label--required']}>*</label>
+              <div className={styles['reset-password-form__label--password']}>
+                <label className={styles['reset-password-form__label--text']}>
                   Повторіть пароль
                 </label>
               </div>
             </div>
-            <div className={styles['signup-form__field__password']}>
+            <div className={styles['reset-password-form__field__password']}>
               <input
-                className={styles['signup-form__input__password']}
+                className={styles['reset-password-form__input__password']}
                 placeholder="Повторіть пароль"
                 type={showConfirmPassword ? 'text' : 'password'}
                 {...register('confirmPassword', {
@@ -137,7 +140,7 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
                 {!showConfirmPassword ? <EyeInvisible /> : <EyeVisible />}
               </span>
             </div>
-            <div className={styles['signup-form__error']}>
+            <div className={styles['reset-password-form__error']}>
               {errors.confirmPassword && errors.confirmPassword.message}
             </div>
           </div>
@@ -147,3 +150,7 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
     </div>
   );
 }
+
+RestorePasswordFormContentComponent.propTypes = {
+  setIsValid: PropTypes.func.isRequired,
+};

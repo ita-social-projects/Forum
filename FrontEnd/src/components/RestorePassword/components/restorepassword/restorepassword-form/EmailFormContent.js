@@ -52,29 +52,29 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
   };
 
   return (
-    <div className={styles['resend-activation-form']}>
+    <div className={styles['send-email-form']}>
       <form
         id="signUpForm"
-        className={styles['resend-activation-form__container']}
+        className={styles['send-email-form__container']}
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
-        <div className={styles['resend-activation-form__row']}>
-          <div className={styles['resend-activation-form__column']}>
-            <div className={styles['resend-activation-form__label']}>
+        <div className={styles['send-email-form__row']}>
+          <div className={styles['send-email-form__column']}>
+            <div className={styles['send-email-form__label']}>
               <label
-                className={styles['resend-activation-form__label--required']}
+                className={styles['send-email-form__label--required']}
               >
                 *
               </label>
-              <label className={styles['resend-activation-form__label--text']}>
+              <label className={styles['send-email-form__label--text']}>
                 Електронна пошта
               </label>
             </div>
-            <div className={styles['resend-activation-form__field']}>
+            <div className={styles['send-email-form__field']}>
               <input
-                className={styles['resend-activation-form__input']}
+                className={styles['send-email-form__input']}
                 placeholder="Електронна пошта"
                 type="email"
                 {...register('email', {
@@ -86,7 +86,7 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
                 })}
               />
             </div>
-            <div className={styles['resend-activation-form__error']}>
+            <div className={styles['send-email-form__error']}>
               {errors.email && errors.email.message}
             </div>
           </div>

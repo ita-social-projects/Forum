@@ -16,7 +16,7 @@ export function RestorePasswordModalPage() {
             </div>
             <div className={styles['modal__footer']}>
               <div className={styles['button-container']}>
-                <Link className={styles['signup-page__button']} to="/login">
+                <Link className={styles['login-page__button']} to="/login">
                   Закрити
                 </Link>
               </div>

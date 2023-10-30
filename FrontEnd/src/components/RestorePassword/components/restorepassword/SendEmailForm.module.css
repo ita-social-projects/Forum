@@ -54,7 +54,7 @@
     gap: 12px;
 }
   
-.signup-page__button {
+.login-page__button {
     display: flex;
     padding: 5px 15px;
     justify-content: center;
@@ -84,14 +84,14 @@
     cursor: pointer;
 }
   
-.signup-page__button:hover {
+.login-page__button:hover {
     border: 1px solid var(--primary-green-80, #1f9a7c);
     background: var(--primary-green-80, #1f9a7c);
     color: var(--main-white, #fff);
 }
   
-.resend-activation__button,
-.resend-activation__button__disabled {
+.send-email__button,
+.send-email__button__disabled {
     display: flex;
     padding: 5px 15px;
     justify-content: center;
@@ -119,12 +119,12 @@
     cursor: pointer;
 }
   
-.resend-activation__button__disabled {
+.send-email__button__disabled {
     opacity: 50%;
     cursor: default;
 }
   
-.resend-activation__button:hover {
+.send-email__button:hover {
     border: 1px solid var(--primary-green-80, #1f9a7c);
     background: var(--main-white, #fff);
     color: var(--primary-green-80, #1f9a7c);
