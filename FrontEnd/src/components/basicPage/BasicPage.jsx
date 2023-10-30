@@ -12,10 +12,13 @@ import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../profileList/ProfileListPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import { SignUpPage } from '../SignUp/pages/SignUpPage';
+import { SignUpModalPage } from '../SignUp/pages/SignUpModalPage';
+import { ResendActivationPage } from '../SignUp/pages/ResendActivationPage';
+import { ActivationProfilePage } from '../SignUp/pages/ActivateProfilePage';
 import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
-
+import { Search } from '../SearchPage/Search';
 
 function BasicPage() {
   const auth = useAuth();
@@ -55,7 +58,7 @@ function BasicPage() {
     >
       <Header isAuthorized={auth.isAuth} />
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<MainPage isAuthorized={auth.isAuth}/>} />
         <Route path="/profile/*" element={<ProfilePage />} />
         <Route path="/profile-detail/:id" element={<ProfileDetailPage isAuthorized={auth.isAuth}/>}/>
         <Route path="/profiles/:filter" element={<ProfileListPage isAuthorized={auth.isAuth} />}/>
@@ -64,14 +67,22 @@ function BasicPage() {
         ) : (
           <Route path="/login" element={<AuthorizationPage />} />
         )}
-        <Route path="/sign-up" element={<SignUpPage />} />
+        {auth.isAuth ? (
+          <Route path="/sign-up" element={<Navigate to="/profile/user-info" />} />
+        ) : (
+          <Route path="/sign-up" element={<SignUpPage />} />
+        )}
+        <Route path="/sign-up/modal" element={<SignUpModalPage />} />
+        <Route path="/sign-up/resend-activation" element={<ResendActivationPage />} />
+        <Route path="/activate/:uid/:token" element={<ActivationProfilePage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
+        <Route path="/search" element={<Search isAuthorized={auth.isAuth} />} />
       </Routes>
       <Footer />
       <ScrollToTopButton />
-   </ConfigProvider>
+    </ConfigProvider>
   );
 }
 

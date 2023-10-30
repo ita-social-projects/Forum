@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate  } from 'react-router-dom';
 
 import axios from 'axios';
 import EyeInvisible from '../../../../authorization/EyeInvisible';
@@ -9,6 +10,7 @@ import styles from './SignUpFormContent.module.css';
 export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -95,8 +97,8 @@ export function SignUpFormContentComponent(props) {
           });
         }
       });
+      navigate('/sign-up/modal');
   };
-  // TODO: add modal about email being sent
 
   return (
     <div className={styles['signup-form']}>
