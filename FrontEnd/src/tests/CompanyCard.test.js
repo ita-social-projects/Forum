@@ -7,19 +7,19 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
+const company = {
+  id: 1,
+  name: 'Testname',
+  categories: [1, 2],
+  region: 'Testregion',
+  founded: 2005,
+  service_info: 'Testinfo',
+  address: 'Testadress',
+  banner_image: '',
+};
+
 describe('CompanyCard component unit tests', () => {
   test('renders years of experiense', () => {
-    const company = {
-      id: 1,
-      name: 'Testname',
-      categories: [1, 2],
-      region: 'Testregion',
-      founded: 2005,
-      service_info: 'Testinfo',
-      address: 'Testadress',
-      banner_image: '',
-    };
-
     render(
       <MemoryRouter>
         <CompanyCard isAuthorized={{ isAuth: true }} companyData={company} />
@@ -30,21 +30,11 @@ describe('CompanyCard component unit tests', () => {
   });
 
   test('testing stars', () => {
-    const company = {
-      id: 1,
-      name: 'Testname',
-      categories: [1, 2],
-      region: 'Testregion',
-      founded: 2005,
-      service_info: 'Testinfo',
-      address: 'Testadress',
-      banner_image: '',
-    };
     jest.mock('axios');
     const axios = require('axios');
 
-    async () => {
-      await axios.get.mockResolvedValue({
+    () => {
+      axios.get.mockResolvedValue({
         results: [
           {
             id: 1,
@@ -68,8 +58,8 @@ describe('CompanyCard component unit tests', () => {
       });
     };
 
-    async () => {
-      await axios.post.mockResolvedValue({
+    () => {
+      axios.post.mockResolvedValue({
         company_pk: 1,
       });
 
@@ -90,21 +80,11 @@ describe('CompanyCard component unit tests', () => {
   });
 
   test('testing empty stars', () => {
-    const company = {
-      id: 1,
-      name: 'Testname',
-      categories: [1, 2],
-      region: 'Testregion',
-      founded: 2005,
-      service_info: 'Testinfo',
-      address: 'Testadress',
-      banner_image: '',
-    };
     jest.mock('axios');
     const axios = require('axios');
 
-    async () => {
-      await axios.get.mockResolvedValue({
+    () => {
+      axios.get.mockResolvedValue({
         results: [
           {
             id: 2,
@@ -128,8 +108,8 @@ describe('CompanyCard component unit tests', () => {
       });
     };
 
-    async () => {
-      await axios.post.mockResolvedValue({
+    () => {
+      axios.post.mockResolvedValue({
         company_pk: 1,
       });
 

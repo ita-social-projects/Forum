@@ -98,7 +98,11 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
     />
   );
   const outlinedStar = (
-    <StarOutlined className={styles['star']} onClick={handleClick} />
+    <StarOutlined
+      className={styles['star']}
+      onClick={handleClick}
+      data-testid="emptystar"
+    />
   );
 
   useEffect(() => {

@@ -22,12 +22,12 @@ describe('Search component unit tests', () => {
 
   test('testing search', () => {
     jest.mock('axios');
-    // const axios = require('axios');
-    const axios = require('axios', () => {
-      jest.fn().mockResolvedValue({});
 
-      async () => {
-        await axios.get.mockResolvedValue({
+    const axios = require('axios', () => {
+      get: jest.fn().mockResolvedValue({});
+
+      () => {
+        axios.get.mockResolvedValue({
           data: [
             {
               id: 1,

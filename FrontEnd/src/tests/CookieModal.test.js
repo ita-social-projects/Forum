@@ -6,7 +6,7 @@ import CookieMod from '../components/cookieacception/CookieMod';
 afterEach(cleanup);
 
 describe('CookieMod component unit tests', () => {
-  test('renders agry button', () => {
+  test('renders agree button', () => {
     render(
       <MemoryRouter>
         <CookieMod active={true} />
