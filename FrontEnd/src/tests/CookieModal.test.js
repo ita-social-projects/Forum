@@ -45,5 +45,6 @@ describe('CookieMod component unit tests', () => {
       </MemoryRouter>
     );
     const cookieElement = screen.queryByTestId('cookiemodal', { hidden: true });
+    expect(cookieElement).toBeInTheDocument();
   });
 });

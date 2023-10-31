@@ -24,7 +24,7 @@ describe('Search component unit tests', () => {
     jest.mock('axios');
 
     const axios = require('axios', () => {
-      get: jest.fn().mockResolvedValue({});
+      jest.fn().mockResolvedValue({});
 
       () => {
         axios.get.mockResolvedValue({
