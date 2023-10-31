@@ -37,4 +37,13 @@ describe('CookieMod component unit tests', () => {
     expect(linkElement).toBeInTheDocument();
     expect(linkElement).toHaveAttribute('href', '/cookies-policy');
   });
+
+  test('renders hidden cookie modal window', () => {
+    render(
+      <MemoryRouter>
+        <CookieMod active={false} />
+      </MemoryRouter>
+    );
+    const cookieElement = screen.queryByTestId('cookiemodal', { hidden: true });
+  });
 });
