@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import classes from './CompanyDescription.module.css';
 import Company from './Company';
 import Startup from './Startup';
@@ -18,3 +19,12 @@ function CompanyDescription ({ data }) {
 }
 
 export default CompanyDescription;
+
+CompanyDescription.PropTypes = {
+    data: PropTypes.shape({
+        common_info: PropTypes.string,
+        startup_idea: PropTypes.string,
+        product_info: PropTypes.string,
+        service_info: PropTypes.string,
+      }),
+};
