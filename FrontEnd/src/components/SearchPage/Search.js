@@ -163,3 +163,5 @@ export function Search({ isAuthorized }) {
     </div>
   );
 }
+
+export default Search;

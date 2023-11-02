@@ -2,6 +2,12 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
+  },
+  "test": "react-app-rewired test --transformIgnorePatterns 'node_modules/(?!axios)/'",
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@emotion/react": "^11.11.1",
@@ -56,6 +62,7 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.50.0",
     "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jest-mock-axios": "^4.7.3"
   }
 }
