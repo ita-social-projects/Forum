@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import PhoneEmail from './PhoneEmail';
 import { ReactComponent as FacebookSvg } from './SvgFiles/facebook.svg';
@@ -6,20 +6,12 @@ import { ReactComponent as InstagramSvg } from './SvgFiles/instagram.svg';
 import classes from './DataContacts.module.css';
 
 function DataContacts ({ isAuthorized, data }) {
-    const profile = useMemo(() => {
-        return {
-          id: data.id,
-          edrpou: data.edrpou,
-          founded: data.founded,
-          address: data.address,
-        };
-      }, [data]);
 
     // TODO: implement logic for getting data from db when it's added on server side
 
     const companyData = {
-        'ЄДРПОУ': profile.edrpou,
-        'Рік заснування': profile.founded,
+        'ЄДРПОУ': data.edrpou,
+        'Рік заснування': data.founded,
         'Розмір компанії': '',
         'Аудит': ''
     };
@@ -27,7 +19,7 @@ function DataContacts ({ isAuthorized, data }) {
     const companyContacts = {
         'Сайт': '',
         'PhoneEmail': <PhoneEmail isAuthorized={isAuthorized} profileId={data.id}/>,
-        'Адрес(и)': profile.address,
+        'Адрес(и)': data.address,
         'Соціальні мережі': [
             {
                 name: 'facebook',
