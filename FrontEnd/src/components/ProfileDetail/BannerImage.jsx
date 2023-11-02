@@ -1,18 +1,13 @@
-import { useMemo } from 'react';
+import { PropTypes } from 'prop-types';
 import classes from './BannerImage.module.css';
 
 function BannerImage ({ data }) {
-    const profile = useMemo(() => {
-        return {
-          banner: data.banner_image,
-        };
-      }, [data]);
 
     return (
         <div className={classes['banner-image__block']}>
             <div className={classes['banner-image']}>
-                {profile.banner ? (
-                    <img src={profile.banner} alt="Company Banner" />
+                {data.banner_image ? (
+                    <img src={data.banner_image} alt="Company Banner" />
                     ) : (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -30,3 +25,9 @@ function BannerImage ({ data }) {
 }
 
 export default BannerImage;
+
+BannerImage.PropTypes = {
+    data: PropTypes.shape({
+        banner_image: PropTypes.string,
+    }),
+};
