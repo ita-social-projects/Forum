@@ -29,7 +29,20 @@ export function Search({ isAuthorized }) {
   const searchUrl = 'search';
   const { mutate } = useSWRConfig();
 
-  const fetcher = (url) => axios.get(url).then((res) => res.data);
+  const fetcher = (url) =>
+    axios
+      .get(url)
+      .then((res) => res.data)
+      .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
 
   async function getRequest(url) {
     const data = await fetcher(url);

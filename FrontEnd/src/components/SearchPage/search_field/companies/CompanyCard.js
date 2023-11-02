@@ -48,6 +48,15 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
       })
       .then((response) => {
         return response.data;
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
       });
     const NewList = [];
     for (let item of data.results) {
