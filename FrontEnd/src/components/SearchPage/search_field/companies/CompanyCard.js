@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 const CompanyCard = ({ companyData, isAuthorized }) => {
   CompanyCard.propTypes = {
     companyData: PropTypes.object,
-    isAythorized: PropTypes.object,
+    isAuthorized: PropTypes.object,
   };
 
   const { mutate } = useSWRConfig();

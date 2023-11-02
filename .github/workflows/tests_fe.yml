@@ -1,4 +1,4 @@
-name: Build and Test
+name: Testing FE
 
 on: pull_request
 
