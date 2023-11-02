@@ -1,20 +1,14 @@
-import { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 import classes from './Company.module.css';
 import ReadMore from './ReadMore';
 
 function Company ({ data }) {
-    const profile = useMemo(() => {
-        return {
-          common_info: data.common_info,
-        };
-      }, [data]);
 
     // TODO: implement logic for getting data from db when it's added on server side
 
     const competitiveEdge = '';
     const slogan = '';
-    const companyData = profile.common_info || competitiveEdge || slogan;
+    const companyData = data.common_info || competitiveEdge || slogan;
 
     return (
         companyData ? (
@@ -26,10 +20,10 @@ function Company ({ data }) {
                     <div className={classes['about-company__title--divider']}></div>
                 </div>
                 <div className={classes['about-company__content']}>
-                    {profile.common_info ? (
+                    {data.common_info ? (
                         <div className={classes['about-company__content--common']}>
                             <ReadMore >
-                                {profile.common_info}
+                                {data.common_info}
                             </ReadMore>
                         </div>
                     ) : null}
