@@ -26,7 +26,7 @@ function BannerImage ({ data }) {
 
 export default BannerImage;
 
-BannerImage.PropTypes = {
+BannerImage.propTypes = {
     data: PropTypes.shape({
         banner_image: PropTypes.string,
     }),

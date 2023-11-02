@@ -20,7 +20,7 @@ function CompanyDescription ({ data }) {
 
 export default CompanyDescription;
 
-CompanyDescription.PropTypes = {
+CompanyDescription.propTypes = {
     data: PropTypes.shape({
         common_info: PropTypes.string,
         startup_idea: PropTypes.string,
