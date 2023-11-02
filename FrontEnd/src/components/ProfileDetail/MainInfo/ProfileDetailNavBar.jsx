@@ -13,7 +13,6 @@ const MENU_LINKS = {
 function ProfileDetailNavBar() {
 
   const { hash } = useLocation ();
-  console.log('HASH', hash);
 
   return  (
     <div className={classes['navbar-menu']}>
