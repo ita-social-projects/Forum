@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "process.env.REACT_APP_BASE_API_URL",
   "jest": {
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs"
