@@ -1,8 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import PhoneEmail from './PhoneEmail';
-import { ReactComponent as FacebookSvg } from './SvgFiles/facebook.svg';
-import { ReactComponent as InstagramSvg } from './SvgFiles/instagram.svg';
 import classes from './DataContacts.module.css';
 
 function DataContacts ({ isAuthorized, data }) {
@@ -23,13 +21,13 @@ function DataContacts ({ isAuthorized, data }) {
         'Соціальні мережі': [
             {
                 name: 'facebook',
-                url: '',
-                svgPath: <FacebookSvg />,
+                url: 's',
+                svgPath: <img src={`${process.env.PUBLIC_URL}/svg/facebook.svg`} />,
             },
             {
                 name: 'instagram',
-                url: '',
-                svgPath: <InstagramSvg />,
+                url: 'a',
+                svgPath: <img src={`${process.env.PUBLIC_URL}/svg/instagram.svg`} />,
             },
         ],
         'Співпрацюємо з': ''
