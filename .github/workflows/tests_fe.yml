@@ -10,7 +10,7 @@ jobs:
       - name: Install NodeJS
         uses: actions/setup-node@v2
         with:
-          node-version: '15'
+          node-version: '16'
 
       - name: Code Checkout
         uses: actions/checkout@v3
