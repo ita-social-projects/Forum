@@ -1,10 +1,13 @@
-name: EsLint
+name: Testing FE
 
 on: pull_request
 
+env:
+  REACT_APP_BASE_API_URL: http://localhost:8000
+
 jobs:
-  linting:
-    name: Linting # job name (unique id)
+  build_and_test:
+    name: Testing # job name (unique id)
     runs-on: ubuntu-latest # on which machine to run
     steps: # list of steps
       - name: Install NodeJS
@@ -20,7 +23,7 @@ jobs:
           cd FrontEnd
           npm install
 
-      - name: Code Linting
+      - name: Code Testing
         run: |
           cd FrontEnd
-          npm run lint
+          npm test

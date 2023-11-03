@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 const CompanyCard = ({ companyData, isAuthorized }) => {
   CompanyCard.propTypes = {
     companyData: PropTypes.object,
-    isAythorized: PropTypes.object,
+    isAuthorized: PropTypes.object,
   };
 
   const { mutate } = useSWRConfig();
@@ -49,6 +49,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
       .then((response) => {
         return response.data;
       });
+
     const NewList = [];
     for (let item of data.results) {
       NewList.push(item['id']);
