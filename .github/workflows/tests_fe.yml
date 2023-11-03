@@ -2,6 +2,9 @@ name: Testing FE
 
 on: pull_request
 
+env:
+  REACT_APP_BASE_API_URL: http://localhost:8000
+
 jobs:
   build_and_test:
     name: Testing # job name (unique id)
