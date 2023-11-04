@@ -1,6 +1,4 @@
 import { useState, useMemo } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Badge } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
@@ -41,7 +39,7 @@ function TitleInfo({ isAuthorized, data }) {
       body: JSON.stringify(data),
     }).then((res) => {
       if (!res.ok && res.status === 403) {
-        const error = new Error('Ви не можете додати власну комапнію до списку збережених.');
+        const error = new Error('Own company cannot be added to the saved list.');
               error.info = res.json();
               error.status = res.status;
               throw error;
@@ -49,7 +47,6 @@ function TitleInfo({ isAuthorized, data }) {
     })
       .catch(error => {
         console.error(error);
-        toast.error(error.message);
       });
   }
 
@@ -142,7 +139,6 @@ function TitleInfo({ isAuthorized, data }) {
       >
           <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
         {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
-        <ToastContainer position="top-right" autoClose={3000} />
       </button>)}
     </div>
   );
