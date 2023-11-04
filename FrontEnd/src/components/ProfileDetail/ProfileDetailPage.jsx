@@ -4,7 +4,6 @@ import { PropTypes } from 'prop-types';
 
 import Loader from '../loader/Loader';
 import ErrorPage404 from '../errorPages/ErrorPage404';
-import EmptyData from './EmptyData';
 import MainInfoSection from './MainInfo/MainInfoSection';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 import BannerImage from './BannerImage';
@@ -34,8 +33,7 @@ function ProfileDetailPage({ isAuthorized }) {
     isLoading,
   } = useSWR(urlProfile, fetcher);
 
-  console.log('DATA', fetchedProfile);
-  const notRequiredData = ['address', 'banner_image', 'common_info', 'edrpou', 'founded', 'official_name', 'phone', 'product_info', 'service_info', 'startup_idea'];
+  const notRequiredData = ['address', 'banner_image', 'common_info', 'edrpou', 'founded', 'official_name', 'product_info', 'service_info', 'startup_idea'];
   const containsNotRequiredData = fetchedProfile ? Object.keys(fetchedProfile).some(key => notRequiredData.includes(key) && fetchedProfile[key] !== null) : false;
 
   return error ? (
@@ -51,11 +49,11 @@ function ProfileDetailPage({ isAuthorized }) {
             isAuthorized={isAuthorized}
             data={fetchedProfile}
           />
-          {containsNotRequiredData ? (
-            <DetailedInfoSection
-              isAuthorized={isAuthorized}
-              data={fetchedProfile}/>
-          ) : <EmptyData /> }
+          <DetailedInfoSection
+            containsNotRequiredData ={containsNotRequiredData }
+            isAuthorized={isAuthorized}
+            data={fetchedProfile}
+            />
         </div>
         </>
       )
