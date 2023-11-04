@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import PhoneEmail from './PhoneEmail';
 import classes from './DataContacts.module.css';
 
-function DataContacts ({ isAuthorized, data }) {
+function DataContacts ({ data }) {
 
     // TODO: implement logic for getting data from db when it's added on server side
 
@@ -16,17 +16,17 @@ function DataContacts ({ isAuthorized, data }) {
 
     const companyContacts = {
         'Сайт': '',
-        'PhoneEmail': <PhoneEmail isAuthorized={isAuthorized} profileId={data.id}/>,
+        'PhoneEmail': <PhoneEmail profileId={data.id} personId={data.person}/>,
         'Адрес(и)': data.address,
         'Соціальні мережі': [
             {
                 name: 'facebook',
-                url: 's',
+                url: '',
                 svgPath: <img src={`${process.env.PUBLIC_URL}/svg/facebook.svg`} />,
             },
             {
                 name: 'instagram',
-                url: 'a',
+                url: '',
                 svgPath: <img src={`${process.env.PUBLIC_URL}/svg/instagram.svg`} />,
             },
         ],
@@ -116,6 +116,7 @@ DataContacts.propTypes = {
   isAuthorized: PropTypes.bool,
   data: PropTypes.shape({
     id: PropTypes.number.isRequired,
+    person: PropTypes.number.isRequired,
     edrpou: PropTypes.number,
     founded: PropTypes.number,
     address: PropTypes.string,
