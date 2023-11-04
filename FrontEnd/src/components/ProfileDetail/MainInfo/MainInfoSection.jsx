@@ -36,5 +36,5 @@ MainInfoSection.propTypes = {
       common_info: PropTypes.string,
       is_saved: PropTypes.bool.isRequired,
     }).isRequired,
-    containsNotRequiredData: PropTypes.bool,
+    containsNotRequiredData: PropTypes.bool.isRequired,
   };
