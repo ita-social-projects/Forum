@@ -1,14 +1,17 @@
 import { useState, useMemo } from 'react';
-import useSWR from 'swr';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Badge } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
 import useSWRMutation from 'swr/mutation';
 
+import { useUser } from '../../../hooks';
 import DefaultLogo from './DefaultLogo';
 import classes from './TitleInfo.module.css';
 
 function TitleInfo({ isAuthorized, data }) {
+  const { user } = useUser();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
@@ -27,20 +30,6 @@ function TitleInfo({ isAuthorized, data }) {
     };
   }, [data]);
 
-  // TODO: change the logic of getting user.id when PR with hooks will be merged
-
-  const authToken = localStorage.getItem('Token');
-  const { data: userData } = useSWR(
-    authToken ? `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/` : null,
-    url =>
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Token ${authToken}`,
-            },
-        }).then(res => res.json()),
-  );
-
   async function sendRequest(url, { arg: data }) {
     const authToken = localStorage.getItem('Token');
     return fetch(url, {
@@ -50,7 +39,18 @@ function TitleInfo({ isAuthorized, data }) {
         Authorization: `Token ${authToken}`,
       },
       body: JSON.stringify(data),
-    }).then();
+    }).then((res) => {
+      if (!res.ok && res.status === 403) {
+        const error = new Error('Ви не можете додати власну комапнію до списку збережених.');
+              error.info = res.json();
+              error.status = res.status;
+              throw error;
+      }
+    })
+      .catch(error => {
+        console.error(error);
+        toast.error(error.message);
+      });
   }
 
   const { trigger } = useSWRMutation(
@@ -62,7 +62,11 @@ function TitleInfo({ isAuthorized, data }) {
     try {
       await trigger(
         { company_pk: profile.id },
-        { optimisticData: () => setIsSaved(!isSaved) }
+        { optimisticData: () => {
+          if (user.id !== profile.personId)
+            {setIsSaved(!isSaved);
+            }}
+        }
       );
     } catch (error) {
       console.error(error);
@@ -134,11 +138,11 @@ function TitleInfo({ isAuthorized, data }) {
       <button
         onClick={handleClick}
         type="button"
-        disabled={userData && userData.id === profile.personId}
         className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
       >
           <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
         {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
+        <ToastContainer position="top-right" autoClose={3000} />
       </button>)}
     </div>
   );
