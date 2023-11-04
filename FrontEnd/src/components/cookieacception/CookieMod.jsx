@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import styles from './CookieMod.module.css';
@@ -26,7 +25,7 @@ const CookieMod = ({ active, setActive }) => {
       className={`${styles['modal-window']} ${active && styles['active']}`}
       onClick={() => setActive(false)}
     >
-      <div className={styles['modal-content']}>
+      <div className={styles['modal-content']} data-testid="cookiemodal">
         <p className={styles['cookie-text']}>
           Наш веб-сайт використовує файли cookie, щоб покращити ваш досвід. Ви
           можете відмовитися, якщо хочете. Дізнатися більше{' '}
