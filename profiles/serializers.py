@@ -252,15 +252,6 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
     def get_company_name(self, obj):
         return obj.company_name
     
-    def validate(self, attrs):
-        user = attrs.get("user")
-        company = attrs.get("company")
-        if user and company.person == user:
-            raise serializers.ValidationError(
-                {"error": "You can not view your company."}
-            )
-        return attrs
-    
     def create(self, validated_data):
         user = validated_data.get("user")
         profile = Profile.objects.get(id=validated_data.get("company"))
