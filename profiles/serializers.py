@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
+from django.contrib.auth.models import AnonymousUser
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -237,18 +238,35 @@ class SavedCompanySerializer(serializers.ModelSerializer):
 
 
 class ViewedCompanySerializer(serializers.ModelSerializer):
+    user_profile_name = serializers.SerializerMethodField()
+    company_name = serializers.SerializerMethodField()
     class Meta:
         model = ViewedCompany
-        fields = ("id", "user", "company", "date")
+        fields = ("id", "user", "company", "date", "user_profile_name", "company_name",)
 
+    def get_user_profile_name(self, obj):
+        if obj.user:
+            return obj.user_profile_name
+        return None
+
+    def get_company_name(self, obj):
+        return obj.company_name
+    
     def validate(self, attrs):
         user = attrs.get("user")
         company = attrs.get("company")
-        if company.person == user:
+        if user and company.person == user:
             raise serializers.ValidationError(
                 {"error": "You can not view your company."}
             )
         return attrs
+    
+    def create(self, validated_data):
+        user = validated_data.get("user")
+        profile = Profile.objects.get(id=validated_data.get("company"))
+        if isinstance(user, AnonymousUser):
+            user = None
+        return ViewedCompany.objects.create(company=profile, user=user)
 
 
 class RegionSerializer(serializers.Serializer):

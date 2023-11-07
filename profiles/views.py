@@ -1,4 +1,5 @@
 import django_filters
+from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import (
@@ -184,9 +185,8 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         instance.save()
 
 
-class ViewedCompanyList(ListCreateAPIView):
+class ViewedCompanyCreate(CreateAPIView):
     serializer_class = ViewedCompanySerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = ForumPagination
 
     def get_queryset(self):
@@ -194,6 +194,12 @@ class ViewedCompanyList(ListCreateAPIView):
         return ViewedCompany.objects.filter(user=user_id).order_by(
             "company_id"
         )
+    
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user,
+            company=self.request.data.get("company")
+            )
 
 
 class CategoryList(ListCreateAPIView):
