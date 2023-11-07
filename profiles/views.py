@@ -187,7 +187,6 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
 class ViewedCompanyCreate(CreateAPIView):
     serializer_class = ViewedCompanySerializer
-    pagination_class = ForumPagination
 
     def get_queryset(self):
         user_id = self.request.user.id
