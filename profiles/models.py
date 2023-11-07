@@ -120,3 +120,11 @@ class ViewedCompany(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
     company = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    @property
+    def user_profile_name(self):
+        return self.user.profile.name
+
+    @property
+    def company_name(self):
+        return self.company.name
