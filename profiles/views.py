@@ -195,7 +195,13 @@ class ViewedCompanyList(ListCreateAPIView):
             "company_id"
         )
 
-
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user,
+            company=self.request.data.get("company")
+            )
+        
+        
 class CategoryList(ListCreateAPIView):
     serializer_class = CategorySerializer
     permission_classes = (ReadOnly | IsAdminUser,)
