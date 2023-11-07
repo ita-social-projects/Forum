@@ -3,7 +3,7 @@ from .views import SavedCompaniesCreate, SavedCompaniesDestroy
 from .views import (
     ProfileList,
     ProfileDetail,
-    ViewedCompanyList,
+    ViewedCompanyCreate,
     CategoryList,
     ActivityList,
     RegionListView,
@@ -28,7 +28,7 @@ urlpatterns = [
         name="saved_companies_destroy",
     ),
     path(
-        "viewed-list/", ViewedCompanyList.as_view(), name="viewed_company_list"
+        "viewed-list/", ViewedCompanyCreate.as_view(), name="viewed_company_create"
     ),
     path("regions/", RegionListView.as_view(), name="region-list"),
     path("categories/", CategoryList.as_view(), name="category_list"),

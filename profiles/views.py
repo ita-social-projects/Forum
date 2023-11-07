@@ -184,16 +184,9 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         instance.save()
 
 
-class ViewedCompanyList(ListCreateAPIView):
+class ViewedCompanyCreate(CreateAPIView):
     serializer_class = ViewedCompanySerializer
-    permission_classes = (IsAuthenticated,)
-    pagination_class = ForumPagination
-
-    def get_queryset(self):
-        user_id = self.request.user.id
-        return ViewedCompany.objects.filter(user=user_id).order_by(
-            "company_id"
-        )
+    queryset = ViewedCompany.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(
@@ -201,7 +194,7 @@ class ViewedCompanyList(ListCreateAPIView):
             company=self.request.data.get("company")
             )
         
-        
+
 class CategoryList(ListCreateAPIView):
     serializer_class = CategorySerializer
     permission_classes = (ReadOnly | IsAdminUser,)
