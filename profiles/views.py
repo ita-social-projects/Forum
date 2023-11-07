@@ -24,7 +24,7 @@ from .models import (
     Activity,
     Region,
 )
-from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, IsOwnCompany
+from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, IsOwnCompany, IsOwner, RequestIsCreate
 from .serializers import (
     SavedCompanySerializer,
     ProfileListSerializer,
@@ -187,6 +187,12 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 class ViewedCompanyCreate(CreateAPIView):
     serializer_class = ViewedCompanySerializer
     queryset = ViewedCompany.objects.all()
+    permission_classes = [(RequestIsCreate &  (~IsOwner | ~IsAuthenticated)), ]
+
+    # @cached_property
+    # def _get_profile(self):
+    #     self._track_contacts_request()
+    #     return self.get_object()
 
     def perform_create(self, serializer):
         serializer.save(
