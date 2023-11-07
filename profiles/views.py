@@ -196,7 +196,7 @@ class ViewedCompanyCreate(CreateAPIView):
     permission_classes = [
         (RequestIsCreate & (~IsOwner | ~IsAuthenticated)),
     ]
-    
+
     def perform_create(self, serializer):
         serializer.save(
             user=self.request.user, company=self.request.data.get("company")
