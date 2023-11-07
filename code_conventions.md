@@ -1,5 +1,5 @@
 
-# Genaral code conventions (suggestion)
+# General code conventions (suggestion)
 
 > There are only two hard problems in Computer Science: cache invalidation and naming things — Phil Karlton
 
