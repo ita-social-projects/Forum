@@ -11,6 +11,17 @@ class UserIsProfileOwnerOrReadOnly(BasePermission):
             return True
 
         return obj.person == request.user
+    
+
+class RequestIsCreate(BasePermission):
+    def has_permission(self, request, view):
+        return request.method == 'POST'
+
+
+class IsOwner(BasePermission):
+    def has_permission(self, request, view):
+        profile = Profile.objects.get(id=request.data.get("company"))
+        return request.user == profile.person
 
 
 class ReadOnly(BasePermission):
