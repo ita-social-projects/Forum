@@ -28,7 +28,9 @@ urlpatterns = [
         name="saved_companies_destroy",
     ),
     path(
-        "viewed-list/", ViewedCompanyCreate.as_view(), name="viewed_company_create"
+        "viewed-list/",
+        ViewedCompanyCreate.as_view(),
+        name="viewed_company_create",
     ),
     path("regions/", RegionListView.as_view(), name="region-list"),
     path("categories/", CategoryList.as_view(), name="category_list"),

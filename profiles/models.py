@@ -118,7 +118,9 @@ class SavedCompany(models.Model):
 
 class ViewedCompany(models.Model):
     date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, blank=True, null=True
+    )
     company = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     @property

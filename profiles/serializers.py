@@ -240,9 +240,17 @@ class SavedCompanySerializer(serializers.ModelSerializer):
 class ViewedCompanySerializer(serializers.ModelSerializer):
     user_profile_name = serializers.SerializerMethodField()
     company_name = serializers.SerializerMethodField()
+
     class Meta:
         model = ViewedCompany
-        fields = ("id", "user", "company", "date", "user_profile_name", "company_name",)
+        fields = (
+            "id",
+            "user",
+            "company",
+            "date",
+            "user_profile_name",
+            "company_name",
+        )
 
     def get_user_profile_name(self, obj):
         if obj.user:
@@ -251,7 +259,7 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 
     def get_company_name(self, obj):
         return obj.company_name
-    
+
     def create(self, validated_data):
         user = validated_data.get("user")
         profile = Profile.objects.get(id=validated_data.get("company"))

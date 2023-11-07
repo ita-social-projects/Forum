@@ -30,7 +30,9 @@ class TestViewedCompanyAPI(APITestCase):
         )
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(self.user.id, response.data["user"])
-        self.assertEqual(self.user_profile.name, response.data["user_profile_name"])
+        self.assertEqual(
+            self.user_profile.name, response.data["user_profile_name"]
+        )
         self.assertEqual(profile.id, response.data["company"])
         self.assertEqual(profile.name, response.data["company_name"])
 

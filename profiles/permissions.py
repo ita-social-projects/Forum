@@ -11,11 +11,11 @@ class UserIsProfileOwnerOrReadOnly(BasePermission):
             return True
 
         return obj.person == request.user
-    
+
 
 class RequestIsCreate(BasePermission):
     def has_permission(self, request, view):
-        return request.method == 'POST'
+        return request.method == "POST"
 
 
 class IsOwner(BasePermission):
