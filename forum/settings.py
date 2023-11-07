@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "profiles",
     "administration",
     "search",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -170,6 +171,14 @@ REST_FRAMEWORK = {
         "authentication.authentication.DjoserTokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Forum Project",
+    "DESCRIPTION": "Your project description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 TOKEN_EXPIRATION_TIME = timedelta(days=14)
