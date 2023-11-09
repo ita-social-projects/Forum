@@ -16,7 +16,7 @@ const MainPage = (props) => {
         <div className={css['main-app-body']}>
           <MainCompanies />
           <MainPartners />
-          {!props.isAuthorized ? <MainLoginBanner /> : (null)}
+          {!props.isAuthorized ? <MainLoginBanner /> : null}
           <MainAboutSection />
           <div>
             <CookieMod

@@ -5,14 +5,13 @@ import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import axios from 'axios';
 import styles from './CompanyCard.module.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const CompanyCard = ({ companyData, isAuthorized }) => {
-  // CompanyCard.propTypes = {
-  //   companyData: PropTypes.object,
-  //   isAythorized: PropTypes.object,
-  // };
-  // console.log(companyData['id']);
+  CompanyCard.propTypes = {
+    companyData: PropTypes.object,
+    isAuthorized: PropTypes.object,
+  };
 
   const { mutate } = useSWRConfig();
   const authToken = localStorage.getItem('Token');
@@ -50,6 +49,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
       .then((response) => {
         return response.data;
       });
+
     const NewList = [];
     for (let item of data.results) {
       NewList.push(item['id']);
@@ -92,10 +92,18 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
   });
 
   const filledStar = (
-    <StarFilled className={styles['star']} onClick={handleClick} />
+    <StarFilled
+      className={styles['star']}
+      onClick={handleClick}
+      data-testid="star"
+    />
   );
   const outlinedStar = (
-    <StarOutlined className={styles['star']} onClick={handleClick} />
+    <StarOutlined
+      className={styles['star']}
+      onClick={handleClick}
+      data-testid="emptystar"
+    />
   );
 
   useEffect(() => {
@@ -147,9 +155,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
                 </div>
               </div>
             </div>
-            {/* {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null} */}
             {star}
-            {/* <div>{}</div> */}
           </div>
         </div>
       </div>
