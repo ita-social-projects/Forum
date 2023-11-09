@@ -104,5 +104,5 @@ export default PhoneEmail;
 
 PhoneEmail.propTypes = {
     profileId: PropTypes.number.isRequired,
-    personId: PropTypes.number.isRequired,
+    personId: PropTypes.number,
   };

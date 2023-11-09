@@ -116,7 +116,7 @@ DataContacts.propTypes = {
   isAuthorized: PropTypes.bool,
   data: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    person: PropTypes.number.isRequired,
+    person: PropTypes.number,
     edrpou: PropTypes.number,
     founded: PropTypes.number,
     address: PropTypes.string,
