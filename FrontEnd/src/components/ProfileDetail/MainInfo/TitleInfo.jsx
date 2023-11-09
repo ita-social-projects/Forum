@@ -1,36 +1,31 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-
-import { Badge, Typography } from 'antd';
+import { Badge } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
-import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import css from './ProfileCard.module.css';
+import { useUser } from '../../../hooks';
+import DefaultLogo from './DefaultLogo';
+import classes from './TitleInfo.module.css';
 
-const { Paragraph } = Typography;
-
-
-export default function ProfileCard({ isAuthorized, data }) {
-  const { mutate } = useSWRConfig();
+function TitleInfo({ isAuthorized, data }) {
+  const { user } = useUser();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
       id: data.id,
+      personId: data.person,
       name: data.name,
-      activities: !data.activities.length
-        ? null
-        : data.activities.map((activity) => activity.name).join(', '),
-      region: data.region_display
-        ? data.region_display
-        : '',
+      activities: data.activities && data.activities.length
+        ? data.activities.map((activity) => activity.name).join(', ')
+        : null,
+      region: data.region_display ? data.region_display : '',
       categories:
+        data.categories &&
         data.categories.length > 4
           ? data.categories.slice(0, 4)
           : data.categories,
       isSaved: data.is_saved,
-      commonInfo: data.common_info,
     };
   }, [data]);
 
@@ -43,7 +38,17 @@ export default function ProfileCard({ isAuthorized, data }) {
         Authorization: `Token ${authToken}`,
       },
       body: JSON.stringify(data),
-    }).then();
+    }).then((res) => {
+      if (!res.ok && res.status === 403) {
+        const error = new Error('Own company cannot be added to the saved list.');
+              error.info = res.json();
+              error.status = res.status;
+              throw error;
+      }
+    })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   const { trigger } = useSWRMutation(
@@ -55,16 +60,16 @@ export default function ProfileCard({ isAuthorized, data }) {
     try {
       await trigger(
         { company_pk: profile.id },
-        { optimisticData: () => setIsSaved(!isSaved) }
+        { optimisticData: () => {
+          if (user.id !== profile.personId)
+            {setIsSaved(!isSaved);
+            }}
+        }
       );
     } catch (error) {
       console.error(error);
     }
   };
-
-  mutate((key) => typeof key === 'string' && key.startsWith('/api/profiles/'), {
-    revalidate: true,
-  });
 
   const filledStar = (
     <StarFilled
@@ -103,46 +108,51 @@ export default function ProfileCard({ isAuthorized, data }) {
 
   // TODO: add logo from db once it's implemented on the server side
 
+  const logo = '';
+
   return (
-    <div className={css['company-card']}>
-      <Link className={css['company-card__link']} to={`/profile-detail/${profile.id}`}>
-        <div className={css['logo-box']}>
-          <img
-            className={css.logo}
-            src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
-            alt=""
+    <div className={classes['title-block']}>
+      <div className={classes['title-block__logo']}>
+        {!logo ? (
+          <DefaultLogo />
+        ) : (
+          <img className={classes['logo']}
+            src=""
+            alt="Company logo"
           />
-        </div>
-        <div className={css.content}>
-          <div className={css['content-header']}>
-            <div className={css['content-header__activity']}>
-              <p className={css['content-header__activity--text']}>
-                {profile.activities}
-              </p>
-            </div>
-            <div className={css['content-header__name']}>{profile.name}</div>
-            <div className={css['content-header__address']}>{profile.region}</div>
-          </div>
-          <div className={css['content__common-info']}>
-            <Paragraph ellipsis={{ rows: 3, expandable: false }}>
-              {profile.commonInfo}
-            </Paragraph>
-          </div>
-          <div className={css['content__categories']}>
+        )}
+      </div>
+      <div className={classes['title-block__about']}>
+        <div className={classes['title-block__activity']}>{profile.activities}</div>
+        <div className={classes['title-block__company']}>
+          <div className={classes['title-block__company_name']}>{profile.name}</div>
+          <div className={classes['title-block__company_category']}>
             <CategoryBadges categories={profile.categories} />
           </div>
         </div>
-      </Link>
-      {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
+        <div className={classes['title-block__company_region']}>{profile.region}</div>
+      </div>
+      {isAuthorized && (
+      <button
+        onClick={handleClick}
+        type="button"
+        className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
+      >
+          <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
+        {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
+      </button>)}
     </div>
   );
 }
 
-ProfileCard.propTypes = {
+export default TitleInfo;
+
+TitleInfo.propTypes = {
   isAuthorized: PropTypes.bool,
   data: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    person: PropTypes.number,
     address: PropTypes.string,
     region_display: PropTypes.string,
     categories: PropTypes.arrayOf(
@@ -157,7 +167,6 @@ ProfileCard.propTypes = {
         name: PropTypes.string,
       })
     ),
-    common_info: PropTypes.string,
     is_saved: PropTypes.bool.isRequired,
   }).isRequired,
 };
