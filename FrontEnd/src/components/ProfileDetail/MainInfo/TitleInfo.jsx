@@ -16,11 +16,12 @@ function TitleInfo({ isAuthorized, data }) {
       id: data.id,
       personId: data.person,
       name: data.name,
-      activities: !data.activities.length
-        ? null
-        : data.activities.map((activity) => activity.name).join(', '),
+      activities: data.activities && data.activities.length
+        ? data.activities.map((activity) => activity.name).join(', ')
+        : null,
       region: data.region_display ? data.region_display : '',
       categories:
+        data.categories &&
         data.categories.length > 4
           ? data.categories.slice(0, 4)
           : data.categories,
