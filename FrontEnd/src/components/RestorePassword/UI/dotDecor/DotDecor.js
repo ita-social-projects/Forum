@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import css from './DotDecor.module.css';
 
 const DotRow = () => {
@@ -31,5 +32,9 @@ function DotDecorComponent(props) {
     </div>
   );
 }
+
+DotDecorComponent.propTypes = {
+  position: PropTypes.string.isRequired,
+};
 
 export default DotDecorComponent;
