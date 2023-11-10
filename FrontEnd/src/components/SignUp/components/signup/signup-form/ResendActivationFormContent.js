@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import styles from './ResendActivationFormContent.module.css';
+import { EMAIL_PATTERN } from '../../../../../constants/constants';
 
 export function ResendActivationFormContentComponent({ setIsValid }) {
   const navigate = useNavigate();
@@ -14,8 +15,6 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
     required: 'Обов’язкове поле',
     email: 'Email не відповідає вимогам',
   };
-
-  const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
   const {
     register,
@@ -80,7 +79,7 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
                 {...register('email', {
                   required: errorMessageTemplates.required,
                   pattern: {
-                    value: emailPattern,
+                    value: EMAIL_PATTERN,
                     message: errorMessageTemplates.email,
                   },
                 })}

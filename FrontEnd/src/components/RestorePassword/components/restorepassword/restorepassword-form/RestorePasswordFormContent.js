@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import { PASSWORD_PATTERN } from '../../../../../constants/constants';
 import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './RestorePasswordFormContent.module.css';
@@ -27,8 +28,6 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
     password: 'Пароль не відповідає вимогам',
     confirmPassword: 'Паролі не збігаються',
   };
-
-  const passwordPattern = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{8,20}$/;
 
   const {
     register,
@@ -97,7 +96,7 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
                   {...register('new_password', {
                     required: errorMessageTemplates.required,
                     pattern: {
-                      value: passwordPattern,
+                      value: PASSWORD_PATTERN,
                       message: errorMessageTemplates.password,
                     },
                   })}
