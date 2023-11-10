@@ -1,7 +1,7 @@
-import styles from './RestorePasswordForm.module.css';
-import { RestorePasswordFormContentComponent } from './restorepassword-form/RestorePasswordFormContent';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { RestorePasswordFormContentComponent } from './restorepassword-form/RestorePasswordFormContent';
+import styles from './RestorePasswordForm.module.css';
 
 
 export function RestorePasswordFormComponent() {
