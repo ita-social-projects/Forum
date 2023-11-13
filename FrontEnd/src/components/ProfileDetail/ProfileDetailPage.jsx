@@ -10,6 +10,7 @@ import BannerImage from './BannerImage';
 import classes from './ProfileDetailPage.module.css';
 
 function ProfileDetailPage({ isAuthorized }) {
+  const authToken = localStorage.getItem('Token');
   const { id } = useParams();
   const urlProfile = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${id}`;
 
@@ -17,8 +18,7 @@ function ProfileDetailPage({ isAuthorized }) {
     const headers = {
       'Content-Type': 'application/json',
     };
-    if (isAuthorized) {
-      const authToken = localStorage.getItem('Token');
+    if (authToken) {
       headers.Authorization = `Token ${authToken}`;
     }
     return fetch(url, {
