@@ -38,7 +38,7 @@ services:
     environment:
       - REACT_APP_BASE_API_URL=${REACT_APP_BASE_API_URL}
     ports:
-      - 80:80
+      - 3000:80
     build:
       context: ./FrontEnd
       target: production

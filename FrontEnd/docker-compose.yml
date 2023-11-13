@@ -1,3 +1,15 @@
+# version: "3.8"
+
+# services:
+#   app:
+#     container_name: frontend
+#     image: frontend
+#     ports:
+#       - 80:80
+#     build:
+#       context: .
+#       target: production
+
 version: "3.8"
 
 services:
@@ -11,15 +23,5 @@ services:
       target: production
     networks:
       - forum_network
-
-
-  nginx:
-    build: .
-    container_name: nginx
-    ports:
-      - 8080:80
-    networks:
-      - forum_network
-
 networks:
   forum_network:
