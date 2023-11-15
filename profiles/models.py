@@ -49,7 +49,7 @@ class Region(models.TextChoices):
 class Profile(models.Model):
     id = models.AutoField(primary_key=True)
 
-    name = models.CharField(max_length=50, default=None, null=True)
+    name = models.CharField(max_length=100, default=None, null=True)
     is_registered = models.BooleanField(default=None, null=True)
     is_startup = models.BooleanField(default=None, null=True)
 
@@ -65,7 +65,7 @@ class Profile(models.Model):
     region = models.CharField(
         max_length=128, choices=Region.choices, default=None, null=True
     )
-    common_info = models.CharField(max_length=255, default=None, null=True)
+    common_info = models.CharField(max_length=2000, default=None, null=True)
     phone = models.CharField(
         max_length=12,
         validators=[validate_phone_number_is_digit, validate_phone_number_len],
