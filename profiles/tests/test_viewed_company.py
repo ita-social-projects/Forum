@@ -14,7 +14,7 @@ class TestViewedCompanyAPI(APITestCase):
     def test_create_viewed_company_unauthorized(self):
         profile = ProfileStartupFactory()
         response = self.client.post(
-            path="/api/viewed-list/", data={"company": profile.id}
+            path=f"/api/company-view/{profile.id}/"
         )
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertIsNone(response.data["user"])
@@ -26,7 +26,7 @@ class TestViewedCompanyAPI(APITestCase):
         profile = ProfileStartupFactory()
         self.client.force_authenticate(self.user)
         response = self.client.post(
-            path="/api/viewed-list/", data={"company": profile.id}
+            path=f"/api/company-view/{profile.id}/",
         )
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(self.user.id, response.data["user"])
@@ -39,7 +39,5 @@ class TestViewedCompanyAPI(APITestCase):
     def test_create_viewed_company_authorized_own_company(self):
         self.client.force_authenticate(self.user)
         response = self.client.post(
-            path="/api/viewed-list/",
-            data={"company": self.user_profile.id},
-        )
+            path=f"/api/company-view/{self.user_profile.id}/")
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
