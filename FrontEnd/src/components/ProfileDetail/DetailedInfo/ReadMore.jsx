@@ -1,28 +1,42 @@
 import { useState } from 'react';
+import { Typography } from 'antd';
 import { PropTypes } from 'prop-types';
 import classes from './ReadMore.module.css';
 
+const { Paragraph } = Typography;
+
+const ELLIPSIS_PARAMETERS = {
+  rows: 6,
+  expandable: true,
+  symbol: 'читати далі',
+};
+
 const ReadMore = ({ children }) => {
   const text = children;
-  const [readMore, setReadMore] = useState(false);
+  const [ellipsis, setEllipsis] = useState(true);
 
   const toggleReadMore = () => {
-    setReadMore(!readMore);
+    setEllipsis(!ellipsis);
   };
-  const maxTextLength = 150;
 
-  const displayText = text && (readMore || text.length <= maxTextLength ? text : `${text.slice(0, maxTextLength)}...`);
+  const ellipsisSymbol = ellipsis ? (
+    <span className={classes['read-more-symbol']} onClick={toggleReadMore}>
+    {ELLIPSIS_PARAMETERS.symbol}
+    </span>
+  ) : null;
 
   return (
-    text ? (
-    <p className={classes['read-more']}>
-        {displayText}
-        {text.length > maxTextLength && (
-          <span onClick={toggleReadMore} className={classes['read-or-hide']}>
-            {!readMore ? 'читати далі' : 'приховати'}
-          </span>
-      )}
-    </p>) : null
+    <Paragraph
+      className={classes['read-more']}
+      onClick={toggleReadMore}
+      ellipsis={
+        ellipsis
+          ? { ...ELLIPSIS_PARAMETERS, symbol: ellipsisSymbol }
+          : false
+      }
+    >
+      {text}
+    </Paragraph>
   );
 };
 
