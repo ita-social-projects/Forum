@@ -5,10 +5,10 @@ import { PropTypes } from 'prop-types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import styles from './ResendActivationFormContent.module.css';
+import styles from './EmailFormContent.module.css';
 import { EMAIL_PATTERN } from '../../../../../constants/constants';
 
-export function ResendActivationFormContentComponent({ setIsValid }) {
+export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
   const navigate = useNavigate();
 
   const errorMessageTemplates = {
@@ -37,43 +37,41 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
 
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/resend_activation/`,
+      url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/reset_password/`,
       withCredentials: false,
       data: dataToSend,
     })
       .then(() => {
         setIsValid(true);
-        navigate('/login');
+        navigate('/reset-password/modal');
       })
       .catch(() => {
-        toast.error('Activation failed. Please try again.');
+        toast.error('Формат електронної пошти некоректний.');
       });
   };
 
   return (
-    <div className={styles['resend-activation-form']}>
+    <div className={styles['send-email-form']}>
       <form
         id="signUpForm"
-        className={styles['resend-activation-form__container']}
+        className={styles['send-email-form__container']}
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
-        <div className={styles['resend-activation-form__row']}>
-          <div className={styles['resend-activation-form__column']}>
-            <div className={styles['resend-activation-form__label']}>
-              <label
-                className={styles['resend-activation-form__label--required']}
-              >
+        <div className={styles['send-email-form__row']}>
+          <div className={styles['send-email-form__column']}>
+            <div className={styles['send-email-form__label']}>
+              <label className={styles['send-email-form__label--required']}>
                 *
               </label>
-              <label className={styles['resend-activation-form__label--text']}>
+              <label className={styles['send-email-form__label--text']}>
                 Електронна пошта
               </label>
             </div>
-            <div className={styles['resend-activation-form__field']}>
+            <div className={styles['send-email-form__field']}>
               <input
-                className={styles['resend-activation-form__input']}
+                className={styles['send-email-form__input']}
                 placeholder="Електронна пошта"
                 type="email"
                 {...register('email', {
@@ -85,7 +83,7 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
                 })}
               />
             </div>
-            <div className={styles['resend-activation-form__error']}>
+            <div className={styles['send-email-form__error']}>
               {errors.email && errors.email.message}
             </div>
           </div>
@@ -96,6 +94,6 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
   );
 }
 
-ResendActivationFormContentComponent.propTypes = {
+SendEmailRestorePasswordFormContentComponent.propTypes = {
   setIsValid: PropTypes.func.isRequired,
 };
