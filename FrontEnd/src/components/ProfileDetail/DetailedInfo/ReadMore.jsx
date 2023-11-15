@@ -5,6 +5,12 @@ import classes from './ReadMore.module.css';
 
 const { Paragraph } = Typography;
 
+const ELLIPSIS_PARAMETERS = {
+  rows: 6,
+  expandable: true,
+  symbol: 'читати далі',
+};
+
 const ReadMore = ({ children }) => {
   const text = children;
   const [ellipsis, setEllipsis] = useState(true);
@@ -15,7 +21,7 @@ const ReadMore = ({ children }) => {
 
   const ellipsisSymbol = ellipsis ? (
     <span className={classes['read-more-symbol']} onClick={toggleReadMore}>
-    читати далі
+    {ELLIPSIS_PARAMETERS.symbol}
     </span>
   ) : null;
 
@@ -25,11 +31,7 @@ const ReadMore = ({ children }) => {
       onClick={toggleReadMore}
       ellipsis={
         ellipsis
-          ? {
-              rows: 6,
-              expandable: true,
-              symbol: ellipsisSymbol,
-            }
+          ? { ...ELLIPSIS_PARAMETERS, symbol: ellipsisSymbol }
           : false
       }
     >
