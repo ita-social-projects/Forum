@@ -20,23 +20,21 @@ const ReadMore = ({ children }) => {
   ) : null;
 
   return (
-    <>
-      <Paragraph
-        className={classes['read-more']}
-        onClick={toggleReadMore}
-        ellipsis={
-          ellipsis
-            ? {
-                rows: 6,
-                expandable: true,
-                symbol: ellipsisSymbol,
-              }
-            : false
-        }
-      >
-        {text}
-      </Paragraph>
-    </>
+    <Paragraph
+      className={classes['read-more']}
+      onClick={toggleReadMore}
+      ellipsis={
+        ellipsis
+          ? {
+              rows: 6,
+              expandable: true,
+              symbol: ellipsisSymbol,
+            }
+          : false
+      }
+    >
+      {text}
+    </Paragraph>
   );
 };
 
