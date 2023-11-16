@@ -237,47 +237,32 @@ class SavedCompanySerializer(serializers.ModelSerializer):
         fields = ("id", "user", "company", "added_at")
 
 
-# class ViewedCompanySerializer(serializers.ModelSerializer):
-#     user_profile_name = serializers.SerializerMethodField()
-#     company_name = serializers.SerializerMethodField()
+class ViewedCompanySerializer(serializers.ModelSerializer):
+    user_profile_name = serializers.SerializerMethodField()
+    company_name = serializers.SerializerMethodField()
 
-#     class Meta:
-#         model = ViewedCompany
-#         fields = (
-#             "id",
-#             "user",
-#             "company",
-#             "date",
-#             "user_profile_name",
-#             "company_name",
-#         )
-#         read_only_fields = ("user", "company",)
+    class Meta:
+        model = ViewedCompany
+        fields = (
+            "id",
+            "user",
+            "company",
+            "date",
+            "user_profile_name",
+            "company_name",
+        )
+        read_only_fields = (
+            "user",
+            "company",
+        )
 
-#     def get_user_profile_name(self, obj):
-#         if obj.user:
-#             return obj.user_profile_name
-#         return None
+    def get_user_profile_name(self, obj):
+        if obj.user:
+            return obj.user_profile_name
+        return None
 
-#     def get_company_name(self, obj):
-#         return obj.company_name
-
-
-class ProfileBriefSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    is_registered = serializers.BooleanField()
-    is_startup = serializers.BooleanField()
-
-
-class UserBriefSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    surname = serializers.CharField()
-    profile = ProfileBriefSerializer()
-
-
-class ProfileViewSerializer(serializers.Serializer):
-    date = serializers.DateTimeField(read_only=True)
-    user = UserBriefSerializer(read_only=True)
-    company = ProfileBriefSerializer(read_only=True)
+    def get_company_name(self, obj):
+        return obj.company_name
 
 
 class RegionSerializer(serializers.Serializer):

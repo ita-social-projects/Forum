@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from authentication.factories import UserFactory
-from profiles.factories import ProfileStartupFactory, ViewedCompanyFactory
+from profiles.factories import ProfileStartupFactory
 from utils.dump_response import dump  # noqa
 
 
@@ -13,9 +13,7 @@ class TestViewedCompanyAPI(APITestCase):
 
     def test_create_viewed_company_unauthorized(self):
         profile = ProfileStartupFactory()
-        response = self.client.post(
-            path=f"/api/company-view/{profile.id}/"
-        )
+        response = self.client.post(path=f"/api/company-view/{profile.id}/")
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertIsNone(response.data["user"])
         self.assertIsNone(response.data["user_profile_name"])
@@ -39,5 +37,6 @@ class TestViewedCompanyAPI(APITestCase):
     def test_create_viewed_company_authorized_own_company(self):
         self.client.force_authenticate(self.user)
         response = self.client.post(
-            path=f"/api/company-view/{self.user_profile.id}/")
+            path=f"/api/company-view/{self.user_profile.id}/"
+        )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)

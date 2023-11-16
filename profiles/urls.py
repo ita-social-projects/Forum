@@ -8,7 +8,7 @@ from .views import (
     RegionListView,
     CategoryDetail,
     ActivityDetail,
-    ProfileViewCreate
+    ProfileViewCreate,
 )
 
 
@@ -28,9 +28,9 @@ urlpatterns = [
         name="saved_companies_destroy",
     ),
     path(
-       "company-view/<int:profile_id>/",
+        "company-view/<int:profile_id>/",
         ProfileViewCreate.as_view(),
-        name='company_details_request',
+        name="company_details_request",
     ),
     path("regions/", RegionListView.as_view(), name="region-list"),
     path("categories/", CategoryList.as_view(), name="category_list"),
