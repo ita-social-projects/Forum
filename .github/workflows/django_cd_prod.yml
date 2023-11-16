@@ -2,15 +2,15 @@ name: Django CD PROD
 on: workflow_dispatch
 
 env:
-    DEBUG: ${{ vars.PROD_DEBUG }}
-    SECRET_KEY: ${{ secrets.PROD_SECRET_KEY }}
-    ENGINE: ${{ vars.ENGINE }}
-    HOST: ${{ vars.POSTGRES_HOST }}
-    PORT: ${{ vars.POSTGRES_PORT }}
-    DB: ${{ vars.PROD_DB }}
-    USER: ${{ vars.POSTGRES_USER }}
-    PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-    DATABASE: ${{ vars.POSTGRES_DB }}
+  DEBUG: ${{ vars.PROD_DEBUG }}
+  SECRET_KEY: ${{ secrets.PROD_SECRET_KEY }}
+  ENGINE: ${{ vars.ENGINE }}
+  HOST: ${{ vars.POSTGRES_HOST }}
+  PORT: ${{ vars.POSTGRES_PORT }}
+  DB: ${{ vars.PROD_DB }}
+  USER: ${{ vars.POSTGRES_USER }}
+  PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+  DATABASE: ${{ vars.POSTGRES_DB }}
 
 jobs:
   deploy:
@@ -21,16 +21,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Docker compouse DOWN old Django container
-        run:  docker compose -f docker-compose.dev.yml down -v
-      - name: Docker compouse UP Django container
+        run: docker compose -f docker-compose.dev.yml down -v
+      - name: Docker compouse UP Django container and frontend container (+internal nginx)
         run: docker compose -f docker-compose.dev.yml up -d --build
       - name: Docker compouse MIGRATE models
         run: docker compose -f docker-compose.dev.yml exec api-dev python manage.py migrate --noinput
-
-      - name: Docker compouse DOWN old Fronend container
-        run:  docker compose -f FrontEnd/docker-compose.yml down -v
-      - name: Docker compouse UP Fronend container
-        run: docker compose -f FrontEnd/docker-compose.yml up -d --build
 
       - name: Clean up old docker resources
         run: |

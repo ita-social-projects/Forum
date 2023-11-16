@@ -29,9 +29,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Docker compouse DOWN old Django container
+      - name: Docker compouse DOWN old Django container and frontend container (+internal nginx)
         run:  docker compose -f docker-compose.dev.yml down -v
-      - name: Docker compouse UP Django container
+      - name: Docker compouse UP Django container and frontend container (+internal nginx)
         run: docker compose -f docker-compose.dev.yml up -d --build
       - name: Docker compouse MIGRATE models
         run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py migrate --noinput

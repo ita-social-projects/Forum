@@ -1,10 +1,6 @@
 name: Django CI
 on:
   workflow_dispatch
-  # push:
-  #   branches: ["main"]
-  # pull_request:
-  #   branches: ["main"]
 env:
   DEBUG: ${{ vars.DEV_DEBUG }}
   SECRET_KEY: ${{ secrets.DEV_SECRET_KEY }}
