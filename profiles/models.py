@@ -66,7 +66,9 @@ class Profile(models.Model):
     region = models.CharField(
         max_length=128, choices=Region.choices, default=None, null=True
     )
-    common_info = models.TextField(validators=[MaxLengthValidator(2000)], default=None, null=True)
+    common_info = models.TextField(
+        validators=[MaxLengthValidator(2000)], default=None, null=True
+    )
     phone = models.CharField(
         max_length=12,
         validators=[validate_phone_number_is_digit, validate_phone_number_len],
