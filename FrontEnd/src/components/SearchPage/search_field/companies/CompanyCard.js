@@ -122,7 +122,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
         <div className={styles['company-card__image-frame']}>
           <img
             className={styles['company-card__image']}
-            src={`${process.env.PUBLIC_URL}/companies-logos/defaultcompanybanner.png`}
+            src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/defaultcompanybanner.png`}
             alt={companyData.name}
           />
         </div>
@@ -163,7 +163,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
         <div className={styles['company-card__logo-ellipse']}>
           <img
             className={styles['company-card__logo-image']}
-            src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
+            src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/1.png`}
             alt=""
           />
         </div>

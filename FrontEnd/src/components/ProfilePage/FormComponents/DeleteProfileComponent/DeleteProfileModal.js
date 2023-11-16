@@ -50,7 +50,7 @@ const DeleteProfileModal = (props) => {
         <div>
             <div className={css['delete-header']}>Ви впевнені, що хочете видалити профіль?
             <img
-            src={`${process.env.PUBLIC_URL}/profilepage/Vectorcancel.png`}
+            src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectorcancel.png`}
             className={css['delete__cancelButton']}
             alt=""
             onClick={props.onCancel}/>
@@ -85,9 +85,9 @@ const DeleteProfileModal = (props) => {
                             <img
                             src={typePassword==='password'
                             ?
-                            `${process.env.PUBLIC_URL}/profilepage/hidden_eye_icon.png`
+                            `${process.env.REACT_APP_PUBLIC_URL}/profilepage/hidden_eye_icon.png`
                             :
-                            `${process.env.PUBLIC_URL}/profilepage/eye_icon.png`
+                            `${process.env.REACT_APP_PUBLIC_URL}/profilepage/eye_icon.png`
                             }
                             alt=""
                             className={css['password__eye']}

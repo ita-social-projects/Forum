@@ -22,12 +22,12 @@ function DataContacts ({ data }) {
             {
                 name: 'facebook',
                 url: '',
-                svgPath: <img src={`${process.env.PUBLIC_URL}/svg/facebook.svg`} />,
+                svgPath: <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/facebook.svg`} />,
             },
             {
                 name: 'instagram',
                 url: '',
-                svgPath: <img src={`${process.env.PUBLIC_URL}/svg/instagram.svg`} />,
+                svgPath: <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/instagram.svg`} />,
             },
         ],
         'Співпрацюємо з': ''
