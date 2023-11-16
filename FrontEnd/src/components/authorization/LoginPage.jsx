@@ -150,7 +150,7 @@ const LoginContent = (props) => {
                     {errors.unspecifiedError && errors.unspecifiedError.message}
               </span>
             </div>
-            <a href="/" className={classes['forget-password']}>Забули пароль?</a>
+            <a href="/reset-password" className={classes['forget-password']}>Забули пароль?</a>
           </div>
 
         </div>

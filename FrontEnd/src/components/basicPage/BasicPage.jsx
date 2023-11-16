@@ -8,12 +8,18 @@ import Footer from '../HeaderFooter/footer/Footer';
 import Header from '../HeaderFooter/header/Header';
 import MainPage from '../landing-page/MainPage';
 import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
+import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../profileList/ProfileListPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import { SignUpPage } from '../SignUp/pages/SignUpPage';
 import { SignUpModalPage } from '../SignUp/pages/SignUpModalPage';
 import { ResendActivationPage } from '../SignUp/pages/ResendActivationPage';
 import { ActivationProfilePage } from '../SignUp/pages/ActivateProfilePage';
+import { SendEmailRestorePasswordPage } from '../RestorePassword/pages/SendEmailRestorePasswordPage';
+import { RestorePasswordPage } from '../RestorePassword/pages/RestorePasswordPage';
+import { RestorePasswordModalPage } from '../RestorePassword/pages/RestorePasswordModalPage';
+import { RestorePasswordSuccessPage } from '../RestorePassword/pages/RestorePasswordSuccessPage';
+import { RestorePasswordFailedPage } from '../RestorePassword/pages/RestorePasswordFailedPage';
 import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
@@ -59,10 +65,8 @@ function BasicPage() {
       <Routes>
         <Route path="/" element={<MainPage isAuthorized={auth.isAuth}/>} />
         <Route path="/profile/*" element={<ProfilePage />} />
-        <Route
-          path="/profiles/:filter"
-          element={<ProfileListPage isAuthorized={auth.isAuth} />}
-        />
+        <Route path="/profile-detail/:id" element={<ProfileDetailPage isAuthorized={auth.isAuth}/>}/>
+        <Route path="/profiles/:filter" element={<ProfileListPage isAuthorized={auth.isAuth} />}/>
         {auth.isAuth ? (
           <Route path="/login" element={<Navigate to="/profile/user-info" />} />
         ) : (
@@ -76,6 +80,11 @@ function BasicPage() {
         <Route path="/sign-up/modal" element={<SignUpModalPage />} />
         <Route path="/sign-up/resend-activation" element={<ResendActivationPage />} />
         <Route path="/activate/:uid/:token" element={<ActivationProfilePage />} />
+        <Route path="/reset-password" element={<SendEmailRestorePasswordPage />} />
+        <Route path="/reset-password/modal" element={<RestorePasswordModalPage />} />
+        <Route path="/password/reset/confirm/:uid/:token" element={<RestorePasswordPage />} />
+        <Route path="/reset-password/successfully" element={<RestorePasswordSuccessPage />} />
+        <Route path="/reset-password/failed" element={<RestorePasswordFailedPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
