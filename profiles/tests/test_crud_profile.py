@@ -328,7 +328,17 @@ class TestProfileDetailAPIView(APITestCase):
                 profile_id=self.profile.id
             )
         )
-        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(
+            self.profile.phone,
+            response.data.get("phone"),
+            msg="Phone numbers do not match.",
+        )
+        self.assertEqual(
+            self.profile.person.email,
+            response.data.get("email"),
+            msg="Emails do not match.",
+        )
 
     def test_get_contact_info_authorized(self):
         user2 = UserFactory()
