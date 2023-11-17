@@ -67,14 +67,14 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost",
+    "http://localhost:8080",
     "http://127.0.0.1",
     "http://0.0.0.0",
     config("CORS_ORIGIN_WHITELIST"),
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost",
+    "http://localhost:8080",
     "http://127.0.0.1",
     "http://0.0.0.0",
 ]
