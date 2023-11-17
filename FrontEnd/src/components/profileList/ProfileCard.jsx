@@ -109,7 +109,7 @@ export default function ProfileCard({ isAuthorized, data }) {
         <div className={css['logo-box']}>
           <img
             className={css.logo}
-            src={`${process.env.PUBLIC_URL}/companies-logos/1.png`}
+            src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/1.png`}
             alt=""
           />
         </div>
