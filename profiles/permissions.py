@@ -6,17 +6,24 @@ from profiles.models import Profile
 class UserIsProfileOwnerOrReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
-            if request.query_params.get("with_contacts"):
-                return True if request.user.is_authenticated else False
             return True
-
         return obj.person == request.user
 
 
-class ReadOnly(BasePermission):
+class RequestIsCreate(BasePermission):
+    def has_permission(self, request, view):
+        return request.method == "POST"
+
+
+class RequestIsReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True
+
+
+class IsOwner(BasePermission):
+    def has_permission(self, request, view):
+        return request.user == view._profile.person
 
 
 class IsOwnCompany(BasePermission):
