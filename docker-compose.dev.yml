@@ -29,6 +29,7 @@ services:
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       - CORS_ORIGIN_WHITELIST=${CORS_ORIGIN_WHITELIST}
+      - ALLOWED_ENV_HOST=${ALLOWED_ENV_HOST}
     networks:
       - forum_network
   frontend:
