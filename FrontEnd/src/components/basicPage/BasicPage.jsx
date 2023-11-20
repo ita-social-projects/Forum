@@ -62,6 +62,8 @@ function BasicPage() {
       }}
     >
       <Header isAuthorized={auth.isAuth} />
+      <h1>{process.env.REACT_APP_BASE_API_URL}</h1>
+      <h1>{process.env.REACT_APP_PUBLIC_URL}</h1>
       <Routes>
         <Route path="/" element={<MainPage isAuthorized={auth.isAuth}/>} />
         <Route path="/profile/*" element={<ProfilePage />} />
