@@ -29,6 +29,8 @@ function TitleInfo({ isAuthorized, data }) {
     };
   }, [data]);
 
+  const ownProfile = user && user.id === profile.personId;
+
   async function sendRequest(url, { arg: data }) {
     const authToken = localStorage.getItem('Token');
     return fetch(url, {
@@ -61,9 +63,8 @@ function TitleInfo({ isAuthorized, data }) {
       await trigger(
         { company_pk: profile.id },
         { optimisticData: () => {
-          if (user.id !== profile.personId)
-            {setIsSaved(!isSaved);
-            }}
+            setIsSaved(!isSaved);
+            }
         }
       );
     } catch (error) {
@@ -132,15 +133,16 @@ function TitleInfo({ isAuthorized, data }) {
         </div>
         <div className={classes['title-block__company_region']}>{profile.region}</div>
       </div>
-      {isAuthorized && (
-      <button
-        onClick={handleClick}
-        type="button"
-        className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
-      >
-          <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
-        {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
-      </button>)}
+      {isAuthorized && !ownProfile ? (
+        <button
+          onClick={handleClick}
+          type="button"
+          className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
+        >
+            <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
+          {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
+        </button>
+      ) : null}
     </div>
   );
 }
