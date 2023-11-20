@@ -28,8 +28,13 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '0.0.0.0']
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "[::1]",
+    "0.0.0.0",
+    config("ALLOWED_ENV_HOST"),
+]
 
 # Application definition
 
@@ -78,9 +83,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1",
     "http://0.0.0.0",
 ]
-
-# For future:
-# CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST').split(',')
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "Access-Control-Expose-Headers",

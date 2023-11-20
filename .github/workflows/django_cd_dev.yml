@@ -20,6 +20,7 @@ env:
     CORS_ORIGIN_WHITELIST: ${{ vars.CORS_ORIGIN_WHITELIST }}
     REACT_APP_BASE_API_URL: ${{ vars.REACT_APP_BASE_API_URL }}
     REACT_APP_PUBLIC_URL: ${{ vars.REACT_APP_PUBLIC_URL }}
+    ALLOWED_ENV_HOST: ${{ vars.ALLOWED_ENV_HOST }}
 
 jobs:
   deploy:
@@ -37,6 +38,10 @@ jobs:
         run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py migrate --noinput
       - name: Docker compouse COLLECTSTATIC
         run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py collectstatic --no-input
+      - name: nginx
+        run: docker compose -f docker-compose.nginx.yml down -v
+      - name: nginx
+        run: docker compose -f docker-compose.nginx.yml up -d --build
 
       - name: Clean up old docker resources
         run: |

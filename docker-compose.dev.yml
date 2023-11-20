@@ -5,7 +5,7 @@ services:
     build: .
     container_name: api-dev
     restart: on-failure
-    command: gunicorn forum.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn --log-level debug forum.wsgi:application --bind 0.0.0.0:8000
     volumes:
       # - ./:/Forum
       - static:/home/forum/app/public/static
@@ -29,6 +29,7 @@ services:
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       - CORS_ORIGIN_WHITELIST=${CORS_ORIGIN_WHITELIST}
+      - ALLOWED_ENV_HOST=${ALLOWED_ENV_HOST}
     networks:
       - forum_network
   frontend:
@@ -37,6 +38,7 @@ services:
       - static:/home/forum/app/public/static
     environment:
       - REACT_APP_BASE_API_URL=${REACT_APP_BASE_API_URL}
+      - REACT_APP_PUBLIC_URL=${REACT_APP_PUBLIC_URL}
     ports:
       - 3000:80
     build:
