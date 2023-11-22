@@ -2,18 +2,35 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 export default function useUser() {
-    const token = localStorage.getItem('Token');
+    const authToken = localStorage.getItem('Token');
     const [user, setUser] = useState(null);
 
     const { data, error, mutate } = useSWR(
-        token ? `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/` : null,
+        authToken ? `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/` : null,
         url =>
             fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Token ${token}`,
+                    'Authorization': `Token ${authToken}`,
                 },
-            }).then(res => res.json()),
+            }).then((res) => {
+                if (!res.ok && res.status === 401) {
+                  const error = new Error('Unauthorized user.');
+                        error.info = res.json();
+                        error.status = res.status;
+                        throw error;
+                }
+                if (!res.ok) {
+                    const error = new Error('An error occurred while fetching the data.');
+                          error.info = res.json();
+                          error.status = res.status;
+                          throw error;
+                  }
+                return res.json();
+              })
+            .catch(error => {
+                console.error(error);
+            }),
         { revalidateOnFocus: false }
     );
 

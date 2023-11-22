@@ -1,12 +1,10 @@
 from collections import defaultdict
 
-from django.conf import settings
-from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from djoser.serializers import (
     UserCreatePasswordRetypeSerializer,
     UserSerializer,
-    TokenCreateSerializer,
 )
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator

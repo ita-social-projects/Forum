@@ -3,23 +3,23 @@ import css from './Menu.module.css';
 import { HashLink } from 'react-router-hash-link';
 
 const MENU_LINKS = [
-    {
-        id: 'm0',
-        title: 'Головна',
-        link: '/'
-    },
-    {
-        title: 'Компанії',
-        link: '/profiles/companies'
-    },
-    {
-        title: 'Стартапи',
-        link: '/profiles/startups'
-    },
-    {
-        title: 'Про нас',
-        link: '/#about-us'
-    },
+  {
+    id: 'm0',
+    title: 'Головна',
+    link: '/',
+  },
+  {
+    title: 'Компанії',
+    link: '/profiles/companies',
+  },
+  {
+    title: 'Стартапи',
+    link: '/profiles/startups',
+  },
+  {
+    title: 'Про нас',
+    link: '/#about-us',
+  },
 ];
 
 function Menu() {
@@ -27,7 +27,7 @@ function Menu() {
     <div className={css['header-menu-section']}>
       {MENU_LINKS.map((element) => (
         <div className={css['header-menu-element']} key={element.link}>
-          {element.title.startsWith('/#') ? (
+          {element.link.startsWith('/#') ? (
             <HashLink
               className={css['header-menu-element__text']}
               to={element.link}

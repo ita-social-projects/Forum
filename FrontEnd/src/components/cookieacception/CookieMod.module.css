@@ -8,11 +8,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: scale(0);
+  visibility: hidden;
 }
 
 .modal-window.active {
-  transform: scale(1);
+  visibility: visible;
 }
 
 .modal-content {

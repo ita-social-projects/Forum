@@ -1,0 +1,103 @@
+.about-company {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    border-radius: 8px;
+}
+
+.about-company__title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.about-company__title--block {
+    display: flex;
+    padding: 8px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 4px;
+}
+
+.about-company__title--text {
+    width: 742px;
+    color: var(--main-grey-90, #25292C);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    text-transform: uppercase;
+}
+
+.about-company__title--divider {
+    width: 795px;
+    height: 1px;
+    background: var(--main-grey-20, #DEE1E8);
+}
+
+.about-company__content {
+    display: flex;
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.about-company__content--common {
+    width: 776px;
+    color: var(--main-grey-90, #25292C);
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.14px;
+}
+
+.about-company__content--advantage,
+.about-company__content--slogan {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.about-company__content--advantage--title {
+    color: var(--main-grey-90, #25292C);
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+}
+
+.about-company__content--advantage--description {
+    width: 776px;
+    color: var(--main-grey-90, #25292C);
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.14px;
+}
+
+.about-company__content--slogan--title,
+.about-company__content--slogan--text {
+    color: var(--main-grey-90, #25292C);
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+}

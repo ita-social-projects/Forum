@@ -1,7 +1,5 @@
-import stat
 import django_filters
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.hashers import check_password
 from rest_framework import status
 from rest_framework.generics import (
     CreateAPIView,
@@ -35,6 +33,7 @@ from .serializers import (
     ProfileDetailSerializer,
     ProfileOwnerDetailViewSerializer,
     ProfileOwnerDetailEditSerializer,
+    ProfileDeleteSerializer,
     CategorySerializer,
     ActivitySerializer,
     RegionSerializer,
@@ -173,20 +172,14 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
                 if get_contacts
                 else ProfileDetailSerializer
             )
+        elif self.request.method == "DELETE":
+            return ProfileDeleteSerializer
         else:
             return ProfileOwnerDetailEditSerializer
 
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        user = self.request.user
-        password = self.request.data.get("password")
-        if not password or not check_password(password, user.password):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        else:
-            self.perform_destroy(instance)
-            return Response(status=status.HTTP_204_NO_CONTENT)
-
     def perform_destroy(self, instance):
+        serializer = self.get_serializer(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
         instance.is_deleted = True
         instance.save()
 

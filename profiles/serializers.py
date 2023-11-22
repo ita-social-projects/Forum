@@ -205,6 +205,16 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
         read_only_fields = ("person",)
 
 
+class ProfileDeleteSerializer(serializers.Serializer):
+    password = serializers.CharField(write_only=True, required=True)
+
+    def validate_password(self, data):
+        user = self.context["request"].user
+        if not user.check_password(data):
+            raise serializers.ValidationError("Invalid password")
+        return data
+
+
 class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField(source="person.email")
 
