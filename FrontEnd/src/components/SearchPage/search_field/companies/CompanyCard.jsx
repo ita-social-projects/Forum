@@ -120,11 +120,6 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
     <div className={styles['company-card']}>
       <div className={styles['company-card__block']}>
         <div className={styles['company-card__image-frame']}>
-          <img
-            className={styles['company-card__image']}
-            src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/defaultcompanybanner.png`}
-            alt={companyData.name}
-          />
         </div>
         <div className={styles['company-card__text-block']}>
           <div className={styles['company-card__text-block__header']}>
