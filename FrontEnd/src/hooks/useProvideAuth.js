@@ -4,16 +4,19 @@ import axios from 'axios';
 export default function useProvideAuth() {
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [UserId, setUserId] = useState(null);
   const validateToken = async (authToken) => {
     try {
-      await axios.get(
+      const userData = await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
         {
           headers: {
             Authorization: `Token ${authToken}`,
           },
         }
-      );
+      )
+      .then((res) => res.data);
+      setUserId(userData.id);
       return true;
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -62,6 +65,5 @@ export default function useProvideAuth() {
       }
     });
   });
-
-  return { login, logout, isAuth, isLoading };
+  return { login, logout, isAuth, isLoading, UserId };
 }

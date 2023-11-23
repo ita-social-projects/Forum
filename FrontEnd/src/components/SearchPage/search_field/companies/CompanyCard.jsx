@@ -56,6 +56,11 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
     }
 
     setUsersSavedList(NewList);
+    if (companyData.id == isAuthorized.UserId) {
+    setStar(false);
+    setIsSaved(false);
+    setSearchPerformed(true);
+    } else {
     if (usersSavedList.includes(companyData.id)) {
       setStar(filledStar);
       setIsSaved(true);
@@ -64,7 +69,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
       setStar(outlinedStar);
     }
     setSearchPerformed(true);
-  }
+  }}
 
   const { trigger } = useSWRMutation(
     `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
