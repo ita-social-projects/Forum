@@ -7,7 +7,7 @@ function MainInfoSection({ isAuthorized, data, containsNotRequiredData }) {
   return (
     <div className={classes['basic-info-content']}>
       <TitleInfo isAuthorized={isAuthorized} data={data} />
-      {containsNotRequiredData ? <ProfileDetailNavBar /> : null}
+      {containsNotRequiredData ? <ProfileDetailNavBar data={data}/> : null}
     </div>
   );
 }
@@ -35,6 +35,8 @@ MainInfoSection.propTypes = {
       ),
       common_info: PropTypes.string,
       is_saved: PropTypes.bool.isRequired,
+      is_registered: PropTypes.bool.isRequired,
+      is_startup: PropTypes.bool.isRequired,
     }).isRequired,
     containsNotRequiredData: PropTypes.bool.isRequired,
   };
