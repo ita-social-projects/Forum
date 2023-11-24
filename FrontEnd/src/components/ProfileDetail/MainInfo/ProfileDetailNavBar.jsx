@@ -54,7 +54,7 @@ function ProfileDetailNavBar({ data }) {
                 </div>
                 <div
                   className={
-                    link === activeLink && `${classes['active-devider']}`
+                    link === activeLink ? `${classes['active-devider']}` : null
                   }
                 />
               </div>
