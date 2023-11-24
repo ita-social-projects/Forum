@@ -7,10 +7,11 @@ import axios from 'axios';
 import styles from './CompanyCard.module.css';
 import PropTypes from 'prop-types';
 
-const CompanyCard = ({ companyData, isAuthorized }) => {
+const CompanyCard = ({ companyData, isAuthorized, userData }) => {
   CompanyCard.propTypes = {
     companyData: PropTypes.object,
     isAuthorized: PropTypes.object,
+    userData: PropTypes.any.isRequired,
   };
 
   const { mutate } = useSWRConfig();
@@ -56,7 +57,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
     }
 
     setUsersSavedList(NewList);
-    if (companyData.id == isAuthorized.UserId) {
+    if (companyData.id == userData.id) {
     setStar(false);
     setIsSaved(false);
     setSearchPerformed(true);
