@@ -2,6 +2,8 @@ import { HashLink } from 'react-router-hash-link';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
+import { useContext } from 'react';
+import { DataContext } from '../../../context/DataContext';
 import classes from './ProfileDetailNavBar.module.css';
 
 const MENU_LINKS = {
@@ -15,6 +17,7 @@ const MENU_LINKS = {
 function ProfileDetailNavBar({ data }) {
   const { hash } = useLocation ();
   const navigate = useNavigate ();
+  const { dataInComponents } = useContext(DataContext);
   const [activeLink, setActiveLink] = useState('');
 
   useEffect(() => {
@@ -22,11 +25,11 @@ function ProfileDetailNavBar({ data }) {
       setActiveLink(hash.substring(1));
     } else {
       setActiveLink(
-        data.is_registered && document.getElementById('about-company') ? 'about-company' :
-        data.is_startup && document.getElementById('startup') ? 'startup' : ''
+        data.is_registered && dataInComponents.includes('about-company') ? 'about-company' :
+        data.is_startup && dataInComponents.includes('startup') ? 'startup' : ''
       );
     }
-  }, [hash, data.is_registered, data.is_startup]);
+  }, [hash, data.is_registered, data.is_startup, dataInComponents]);
 
   useEffect(() => {
     navigate(hash.pathname, {replace: true});
@@ -37,7 +40,7 @@ function ProfileDetailNavBar({ data }) {
       <div className={classes['navbar-menu']}>
         {Object.entries(MENU_LINKS).map(
           ([link, label]) =>
-            document.getElementById(link) && (
+            dataInComponents.includes(link) && (
               <div key={link} className={classes['navbar-menu__block']}>
                 <div className={classes['navbar-menu__item']}>
                   <HashLink

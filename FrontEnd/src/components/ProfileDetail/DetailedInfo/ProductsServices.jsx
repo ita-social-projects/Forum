@@ -1,15 +1,27 @@
 import { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { DataContext } from '../../../context/DataContext';
 import classes from './ProductsServices.module.css';
 import ReadMore from './ReadMore';
 
 function ProductsServices ({ data }) {
+    const { setDataInComponents } = useContext(DataContext);
     const profile = useMemo(() => {
         return {
             products: data.product_info,
             services: data.service_info
         };
       }, [data]);
+
+    useEffect(() => {
+    if (profile.products || profile.services) {
+        setDataInComponents(prevData => [
+            ...prevData,
+            'products-services']);
+        }
+    }, [setDataInComponents, profile.products, profile.services]);
 
     return (
         (profile.products || profile.services) ? (
