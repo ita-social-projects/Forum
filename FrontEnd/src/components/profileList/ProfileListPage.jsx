@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { Radio } from 'antd';
 import useSWR from 'swr';
@@ -9,27 +8,42 @@ import Loader from '../loader/Loader';
 import ProfileList from './ProfileList';
 
 import css from './ProfileListPage.module.css';
+import { useParams } from 'react-router-dom';
 
 export default function ProfileListPage({ isAuthorized }) {
-  const location = useLocation();
-  const filterParam = location.pathname.substring('/profiles/'.length);
-
+  // const location = useLocation();
+  // const filterParam = location.pathname.substring('/profiles/'.length);
+  const { filter } = useParams();
   const [filterSaved, setFilterSaved] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [profileFilter, setProfileFilter] = useState('');
+
   useEffect(() => {
-    const FILTER_MAP = {
-      companies: 'is_registered=True',
-      startups: 'is_startup=True',
-      producers: 'activities__name=Виробник',
-      importers: 'activities__name=Імпортер',
-      retailers: 'activities__name=Роздрібна мережа',
-      horeca: 'activities__name=HORECA'
-    };
-    setProfileFilter(FILTER_MAP[filterParam]);
+    switch (filter) {
+      case 'companies':
+        setProfileFilter('is_registered=True');
+        break;
+      case 'startups':
+        setProfileFilter('is_startup=True');
+        break;
+      case 'producers':
+        setProfileFilter('activities__name=Виробник');
+        break;
+      case 'importers':
+        setProfileFilter('activities__name=Імпортер');
+        break;
+      case 'retailers':
+        setProfileFilter('activities__name=Роздрібна мережа');
+        break;
+      case 'horeca':
+        setProfileFilter('activities__name=HORECA');
+        break;
+      default:
+        break;
+    }
     setFilterSaved(false);
-  }, [location, filterParam]);
+  }, [filter]);
 
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
 
