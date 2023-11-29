@@ -12,7 +12,6 @@ import css from './ProfileListPage.module.css';
 
 export default function ProfileListPage({ isAuthorized }) {
   const { filter } = useParams();
-
   const [filterSaved, setFilterSaved] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [profileFilter, setProfileFilter] = useState('');
@@ -28,6 +27,7 @@ export default function ProfileListPage({ isAuthorized }) {
     setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);
   }, [filter]);
+  console.log(filter);
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
   const urlForSaved = `${
     process.env.REACT_APP_BASE_API_URL
