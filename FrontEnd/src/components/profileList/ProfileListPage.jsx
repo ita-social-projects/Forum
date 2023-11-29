@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { Radio } from 'antd';
 import useSWR from 'swr';
@@ -11,9 +11,12 @@ import ProfileList from './ProfileList';
 import css from './ProfileListPage.module.css';
 
 export default function ProfileListPage({ isAuthorized }) {
-  const { filter } = useParams();
+  const location = useLocation();
+  const filterParam = location.pathname.substring('/profiles/'.length);
+
   const [filterSaved, setFilterSaved] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+
   const [profileFilter, setProfileFilter] = useState('');
   useEffect(() => {
     const FILTER_MAP = {
@@ -24,11 +27,12 @@ export default function ProfileListPage({ isAuthorized }) {
       retailers: 'activities__name=Роздрібна мережа',
       horeca: 'activities__name=HORECA'
     };
-    setProfileFilter(FILTER_MAP[filter]);
+    setProfileFilter(FILTER_MAP[filterParam]);
     setFilterSaved(false);
-  }, [filter]);
-  console.log(filter);
+  }, [location, filterParam]);
+
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
+
   const urlForSaved = `${
     process.env.REACT_APP_BASE_API_URL
   }/api/profiles/?${profileFilter}${
@@ -48,11 +52,12 @@ export default function ProfileListPage({ isAuthorized }) {
       headers: headers,
     }).then((res) => res.json());
   }
+
   const {
     data: fetchedProfiles,
     error,
     isLoading,
-  } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher, {revalidateOnFocus: false});
+  } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
 
   const handleRadioSelect = () => {
     if (!filterSaved) {
