@@ -43,7 +43,8 @@ export default function ProfileListPage({ isAuthorized }) {
         break;
     }
     setFilterSaved(false);
-  }, [filter]);
+    setCurrentPage(1);
+  }, [filter, profileFilter, filterSaved, currentPage]);
 
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
 
@@ -71,7 +72,7 @@ export default function ProfileListPage({ isAuthorized }) {
     data: fetchedProfiles,
     error,
     isLoading,
-  } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
+  } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher, {revalidateOnFocus: false});
 
   const handleRadioSelect = () => {
     if (!filterSaved) {
