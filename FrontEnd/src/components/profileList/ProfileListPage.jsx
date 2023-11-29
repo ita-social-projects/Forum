@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Radio } from 'antd';
+import axios from 'axios';
 import useSWR from 'swr';
 
 import ErrorPage404 from '../errorPages/ErrorPage404';
@@ -39,25 +40,13 @@ export default function ProfileListPage({ isAuthorized }) {
     filterSaved ? '&is_saved=True' : ''
   }&page=${currentPage}`;
 
-  async function fetcher(url) {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    if (isAuthorized) {
-      const authToken = localStorage.getItem('Token');
-      headers.Authorization = `Token ${authToken}`;
-    }
-    return fetch(url, {
-      method: 'GET',
-      headers: headers,
-    }).then((res) => res.json());
-  }
+  const fetcher = (url) => axios.get(url).then(res => res.data).catch(error => console.error(error));
 
   const {
     data: fetchedProfiles,
     error,
     isLoading,
-  } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
+  } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher, {revalidateOnFocus: false});
 
   const handleRadioSelect = () => {
     if (!filterSaved) {
