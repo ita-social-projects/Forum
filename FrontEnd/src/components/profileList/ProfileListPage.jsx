@@ -16,22 +16,19 @@ export default function ProfileListPage({ isAuthorized }) {
   const [filterSaved, setFilterSaved] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [profileFilter, setProfileFilter] = useState('');
-  const FILTER_MAP = {
-    companies: 'is_registered=True',
-    startups: 'is_startup=True',
-    producers: 'activities__name=Виробник',
-    importers: 'activities__name=Імпортер',
-    retailers: 'activities__name=Роздрібна мережа',
-    horeca: 'activities__name=HORECA'
-  };
-
   useEffect(() => {
+    const FILTER_MAP = {
+      companies: 'is_registered=True',
+      startups: 'is_startup=True',
+      producers: 'activities__name=Виробник',
+      importers: 'activities__name=Імпортер',
+      retailers: 'activities__name=Роздрібна мережа',
+      horeca: 'activities__name=HORECA'
+    };
     setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);
-  }, );
-
+  }, [filter]);
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
-
   const urlForSaved = `${
     process.env.REACT_APP_BASE_API_URL
   }/api/profiles/?${profileFilter}${
