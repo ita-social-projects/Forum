@@ -48,6 +48,10 @@
 }
 
 .cooperation__content--description {
+    display: flex;
+    padding: 12px;
+    align-items: flex-start;
+    gap: 10px;
     width: 776px;
     color: var(--main-grey-90, #25292C);
     font-feature-settings: 'calt' off;
