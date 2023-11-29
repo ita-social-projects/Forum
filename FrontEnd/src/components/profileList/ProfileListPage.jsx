@@ -30,7 +30,10 @@ export default function ProfileListPage({ isAuthorized }) {
   useEffect(() => {
     setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);
-  }, [filter, filterSaved]);
+    console.log("in use effect");
+  },);
+
+  console.log("outside");
 
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
 
