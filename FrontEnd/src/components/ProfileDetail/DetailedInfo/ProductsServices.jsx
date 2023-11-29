@@ -2,12 +2,12 @@ import { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { DataContext } from '../../../context/DataContext';
+import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 import classes from './ProductsServices.module.css';
 import ReadMore from './ReadMore';
 
 function ProductsServices ({ data }) {
-    const { setDataInComponents } = useContext(DataContext);
+    const { setActiveLinks } = useContext(ActiveLinksContext);
     const profile = useMemo(() => {
         return {
             products: data.product_info,
@@ -17,11 +17,11 @@ function ProductsServices ({ data }) {
 
     useEffect(() => {
     if (profile.products || profile.services) {
-        setDataInComponents(prevData => [
+        setActiveLinks(prevData => [
             ...prevData,
             'products-services']);
         }
-    }, [setDataInComponents, profile.products, profile.services]);
+    }, [setActiveLinks, profile.products, profile.services]);
 
     return (
         (profile.products || profile.services) ? (

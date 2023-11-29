@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { DataContext } from '../../../context/DataContext';
+import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 import classes from './Cooperation.module.css';
 import ReadMore from './ReadMore';
 
 function Cooperation () {
-    const { setDataInComponents } = useContext(DataContext);
+    const { setActiveLinks } = useContext(ActiveLinksContext);
     const cooperationData = '';
 
     useEffect(() => {
         if (cooperationData) {
-          setDataInComponents(prevData => [
+            setActiveLinks(prevData => [
               ...prevData,
               'cooperation']);
           }
-        }, [cooperationData, setDataInComponents]);
+        }, [cooperationData, setActiveLinks]);
 
     // TODO: implement logic for getting data from db when it's added on server side
 

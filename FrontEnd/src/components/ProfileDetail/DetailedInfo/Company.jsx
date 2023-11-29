@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import classes from './Company.module.css';
 import ReadMore from './ReadMore';
 import { useContext } from 'react';
-import { DataContext } from '../../../context/DataContext';
+import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 
 function Company ({ data }) {
-    const { setDataInComponents } = useContext(DataContext);
+    const { setActiveLinks } = useContext(ActiveLinksContext);
 
     // TODO: implement logic for getting data from db when it's added on server side
 
@@ -16,12 +16,12 @@ function Company ({ data }) {
 
     useEffect(() => {
         if (companyData) {
-            setDataInComponents(prevData => [
+            setActiveLinks(prevData => [
                 ...prevData,
                 'about-company',
                ]);
             }
-        }, [setDataInComponents, companyData]);
+        }, [setActiveLinks, companyData]);
 
     return (
         companyData ? (

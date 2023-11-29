@@ -8,11 +8,11 @@ import ErrorPage404 from '../errorPages/ErrorPage404';
 import MainInfoSection from './MainInfo/MainInfoSection';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 import BannerImage from './BannerImage';
-import { DataContext } from '../../context/DataContext';
+import { ActiveLinksContext } from '../../context/ActiveLinksContext';
 import classes from './ProfileDetailPage.module.css';
 
 function ProfileDetailPage({ isAuthorized }) {
-  const [dataInComponents, setDataInComponents] = useState([]);
+  const [activeLinks, setActiveLinks] = useState([]);
   const authToken = localStorage.getItem('Token');
   const { id } = useParams();
   const urlProfile = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${id}`;
@@ -45,7 +45,7 @@ function ProfileDetailPage({ isAuthorized }) {
       isLoading ? (
         <Loader />
       ) : ( <>
-      <DataContext.Provider value={{ dataInComponents, setDataInComponents }}>
+      <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
         <BannerImage data={fetchedProfile}/>
           <div className={classes['profile-page']}>
             <MainInfoSection
@@ -59,7 +59,7 @@ function ProfileDetailPage({ isAuthorized }) {
               data={fetchedProfile}
               />
           </div>
-        </DataContext.Provider>
+        </ActiveLinksContext.Provider>
         </>
       )
   );

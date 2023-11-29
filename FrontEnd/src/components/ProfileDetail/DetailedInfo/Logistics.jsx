@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { DataContext } from '../../../context/DataContext';
+import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 import classes from './Logistics.module.css';
 import ReadMore from './ReadMore';
 
 function Logistics () {
-    const { setDataInComponents } = useContext(DataContext);
+    const { setActiveLinks } = useContext(ActiveLinksContext);
     const logisticsData = '';
 
     useEffect(() => {
         if (logisticsData) {
-          setDataInComponents(prevData => [
+            setActiveLinks(prevData => [
               ...prevData,
               'logistics']);
           }
-        }, [logisticsData, setDataInComponents]);
+        }, [logisticsData, setActiveLinks]);
 
     // TODO: implement logic for getting data from db when it's added on server side
 

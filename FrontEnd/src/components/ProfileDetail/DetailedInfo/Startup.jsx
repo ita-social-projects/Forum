@@ -2,12 +2,12 @@ import { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { DataContext } from '../../../context/DataContext';
+import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 import classes from './Startup.module.css';
 import ReadMore from './ReadMore';
 
 function Startup ({ data }) {
-    const { setDataInComponents } = useContext(DataContext);
+    const { setActiveLinks } = useContext(ActiveLinksContext);
     const profile = useMemo(() => {
         return {
           startup_idea: data.startup_idea,
@@ -44,11 +44,11 @@ function Startup ({ data }) {
 
     useEffect(() => {
       if (hasSections) {
-          setDataInComponents(prevData => [
+        setActiveLinks(prevData => [
               ...prevData,
               'startup']);
           }
-      }, [hasSections, setDataInComponents]);
+      }, [hasSections, setActiveLinks]);
 
     return (
         hasSections ? (
