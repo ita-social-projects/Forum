@@ -15,7 +15,6 @@ export default function ProfileListPage({ isAuthorized }) {
 
   const [filterSaved, setFilterSaved] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [profileFilter, setProfileFilter] = useState('');
   const FILTER_MAP = {
     companies: 'is_registered=True',
@@ -29,7 +28,7 @@ export default function ProfileListPage({ isAuthorized }) {
   useEffect(() => {
     setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);
-  }, [filter]);
+  }, );
 
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
 
