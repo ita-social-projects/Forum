@@ -9,6 +9,7 @@ import ProfileList from './ProfileList';
 
 import css from './ProfileListPage.module.css';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function ProfileListPage({ isAuthorized }) {
   const { filter } = useParams();
@@ -17,19 +18,17 @@ export default function ProfileListPage({ isAuthorized }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [profileFilter, setProfileFilter] = useState('');
-  const FILTER_MAP = {
-    companies: 'is_registered=True',
-    startups: 'is_startup=True',
-    producers: 'activities__name=Виробник',
-    importers: 'activities__name=Імпортер',
-    retailers: 'activities__name=Роздрібна мережа',
-    horeca: 'activities__name=HORECA'
-  };
 
   useEffect(() => {
-    if (FILTER_MAP[filter] !== profileFilter) {
-      setProfileFilter(FILTER_MAP[filter]);
-    }
+    const FILTER_MAP = {
+      companies: 'is_registered=True',
+      startups: 'is_startup=True',
+      producers: 'activities__name=Виробник',
+      importers: 'activities__name=Імпортер',
+      retailers: 'activities__name=Роздрібна мережа',
+      horeca: 'activities__name=HORECA'
+    };
+    setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);
   }, [filter]);
 
@@ -41,27 +40,21 @@ export default function ProfileListPage({ isAuthorized }) {
     filterSaved ? '&is_saved=True' : ''
   }&page=${currentPage}`;
 
-  async function fetcher(url) {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    if (isAuthorized) {
-      const authToken = localStorage.getItem('Token');
-      headers.Authorization = `Token ${authToken}`;
-    }
-    return fetch(url, {
-      method: 'GET',
-      headers: headers,
-    }).then((res) => res.json());
-  }
-
+  const fetcher = (url) => axios.get(url).then((res) => res.data);
   const fetchUrl = filterSaved ? urlForSaved : urlForAll;
 
   const {
     data: fetchedProfiles,
     error,
     isLoading,
-  } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false});
+  } = useSWR(
+    fetchUrl,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
 
   const handleRadioSelect = () => {
     if (!filterSaved) {
