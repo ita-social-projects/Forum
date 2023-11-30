@@ -19,7 +19,7 @@
   padding: 20px;
   border-radius: 12px;
   background-color: white;
-  height: 230px;
+  /* height: 230px; */
   width: 300px;
 }
 
@@ -30,8 +30,8 @@
   border-style: solid;
   font-size: 15px;
   border-radius: 4px;
-  margin: 10px;
-  margin-right: 40px;
+  margin: 14px;
+  margin-right: 50px;
   padding: 4px;
 }
 
