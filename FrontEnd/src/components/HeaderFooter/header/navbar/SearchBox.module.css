@@ -15,6 +15,16 @@
   align-items: flex-start;
   gap: 10px;
   flex: 1 0 0;
+  position: relative;
+}
+
+.header-search-form::after {
+  content: "";
+  position: absolute;
+  border-right: 1px solid #d9d9d9;
+  height: 32px;
+  top: -3.5px;
+  right: 0;
 }
 
 .header-search-form__input {
@@ -27,9 +37,15 @@
 }
 
 .header-search-form__addon {
+  display: flex;
+  padding: 6px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
   background-color: transparent;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.25);
+  border: none;
 }
 
 .header-search-form__addon img {

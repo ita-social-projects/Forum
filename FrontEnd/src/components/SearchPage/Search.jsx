@@ -77,13 +77,15 @@ export function Search({ isAuthorized, userData }) {
         <img className={styles['frame-img-right']} src={frame42} alt="frame" />
         <div className={styles['new-companies-search_count']}>
           {searchResults && (
-            <h3 className={styles['search_results_text']}>
+            <div><h3 className={styles['search_results_text']}>
               РЕЗУЛЬТАТІВ ЗА ПОШУКОМ{' '}
               <span className={styles['search_field_entered_value']}>
                 {searchTerm}
               </span>{' '}
               : {searchResults.length > 0 ? searchResults.length : 0}
             </h3>
+            <br/>
+            </div>
           )}
           <br />
         </div>
@@ -99,7 +101,8 @@ export function Search({ isAuthorized, userData }) {
               />
               <br />
             </>
-          ) : (
+          ) : ( <div>
+          <br />
             <p className={styles['search_result_error']}>
               Пошук не дав результатів: компанії з іменем{' '}
               <span className={styles['.search_result_error']}>
@@ -107,6 +110,8 @@ export function Search({ isAuthorized, userData }) {
               </span>{' '}
               не було виявлено на даний момент
             </p>
+             <br />
+          </div>
           )}
         </div>
         <div className={styles['new-companies-result_pages']}>
