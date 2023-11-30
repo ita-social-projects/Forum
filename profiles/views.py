@@ -1,4 +1,5 @@
 import django_filters
+from django.utils.functional import cached_property
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import (
@@ -16,19 +17,18 @@ from rest_framework.permissions import (
 from rest_framework.response import Response
 
 from forum.pagination import ForumPagination
-from .models import (
-    SavedCompany,
-    Profile,
-    ViewedCompany,
-    Category,
-    Activity,
-    Region,
+from .models import SavedCompany, Profile, Category, Activity, Region
+from .permissions import (
+    UserIsProfileOwnerOrReadOnly,
+    IsOwnCompany,
+    IsOwner,
+    RequestIsReadOnly,
+    RequestIsCreate,
 )
-from .permissions import UserIsProfileOwnerOrReadOnly, ReadOnly, IsOwnCompany
 from .serializers import (
     SavedCompanySerializer,
-    ProfileListSerializer,
     ViewedCompanySerializer,
+    ProfileListSerializer,
     ProfileSensitiveDataROSerializer,
     ProfileDetailSerializer,
     ProfileOwnerDetailViewSerializer,
@@ -184,27 +184,36 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         instance.save()
 
 
-class ViewedCompanyList(ListCreateAPIView):
+class ProfileViewCreate(CreateAPIView):
     serializer_class = ViewedCompanySerializer
-    permission_classes = (IsAuthenticated,)
-    pagination_class = ForumPagination
+    permission_classes = ((RequestIsCreate & (~IsAuthenticated | ~IsOwner)),)
 
-    def get_queryset(self):
-        user_id = self.request.user.id
-        return ViewedCompany.objects.filter(user=user_id).order_by(
-            "company_id"
+    @cached_property
+    def current_user(self):
+        return (
+            self.request.user if self.request.user.is_authenticated else None
         )
+
+    @cached_property
+    def _profile(self):
+        return get_object_or_404(
+            Profile.objects.filter(is_deleted=False),
+            pk=self.kwargs["profile_id"],
+        )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.current_user, company=self._profile)
 
 
 class CategoryList(ListCreateAPIView):
     serializer_class = CategorySerializer
-    permission_classes = (ReadOnly | IsAdminUser,)
+    permission_classes = (RequestIsReadOnly | IsAdminUser,)
     queryset = Category.objects.all()
 
 
 class ActivityList(ListCreateAPIView):
     serializer_class = ActivitySerializer
-    permission_classes = (ReadOnly | IsAdminUser,)
+    permission_classes = (RequestIsReadOnly | IsAdminUser,)
     queryset = Activity.objects.all()
 
 

@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
@@ -7,9 +8,11 @@ import ErrorPage404 from '../errorPages/ErrorPage404';
 import MainInfoSection from './MainInfo/MainInfoSection';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 import BannerImage from './BannerImage';
+import { ActiveLinksContext } from '../../context/ActiveLinksContext';
 import classes from './ProfileDetailPage.module.css';
 
 function ProfileDetailPage({ isAuthorized }) {
+  const [activeLinks, setActiveLinks] = useState([]);
   const authToken = localStorage.getItem('Token');
   const { id } = useParams();
   const urlProfile = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${id}`;
@@ -42,19 +45,21 @@ function ProfileDetailPage({ isAuthorized }) {
       isLoading ? (
         <Loader />
       ) : ( <>
+      <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
         <BannerImage data={fetchedProfile}/>
-        <div className={classes['profile-page']}>
-          <MainInfoSection
-            containsNotRequiredData={containsNotRequiredData}
-            isAuthorized={isAuthorized}
-            data={fetchedProfile}
-          />
-          <DetailedInfoSection
-            containsNotRequiredData ={containsNotRequiredData }
-            isAuthorized={isAuthorized}
-            data={fetchedProfile}
+          <div className={classes['profile-page']}>
+            <MainInfoSection
+              containsNotRequiredData={containsNotRequiredData}
+              isAuthorized={isAuthorized}
+              data={fetchedProfile}
             />
-        </div>
+            <DetailedInfoSection
+              containsNotRequiredData ={containsNotRequiredData }
+              isAuthorized={isAuthorized}
+              data={fetchedProfile}
+              />
+          </div>
+        </ActiveLinksContext.Provider>
         </>
       )
   );

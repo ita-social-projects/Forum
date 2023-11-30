@@ -5,12 +5,12 @@ const MENU = [
     {
         id: 'am1',
         title: 'Користувачі',
-        link: '/admin/users/'
+        link: '/customadmin/users/'
     },
     {
         id: 'am2',
         title: 'Компанії',
-        link: '/admin/companies/'
+        link: '/customadmin/companies/'
     },
 ];
 

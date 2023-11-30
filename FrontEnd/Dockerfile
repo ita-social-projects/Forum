@@ -4,6 +4,12 @@ WORKDIR /app
 # Copy app files
 COPY . .
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
+ARG REACT_APP_BASE_API_URL
+ARG REACT_APP_PUBLIC_URL
+
+ENV REACT_APP_BASE_API_URL=$REACT_APP_BASE_API_URL
+ENV REACT_APP_PUBLIC_URL=$REACT_APP_PUBLIC_URL
+
 RUN npm ci 
 # Build the app
 RUN npm run build

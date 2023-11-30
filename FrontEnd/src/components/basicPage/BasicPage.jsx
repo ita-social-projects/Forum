@@ -23,10 +23,13 @@ import { RestorePasswordFailedPage } from '../RestorePassword/pages/RestorePassw
 import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
+import { useUser } from '../../hooks';
 import { Search } from '../SearchPage/Search';
 
 function BasicPage() {
   const auth = useAuth();
+  const user = useUser();
+  const userData = user.user;
   return (
     <ConfigProvider
       theme={{
@@ -63,32 +66,62 @@ function BasicPage() {
     >
       <Header isAuthorized={auth.isAuth} />
       <Routes>
-        <Route path="/" element={<MainPage isAuthorized={auth.isAuth}/>} />
+        <Route path="/" element={<MainPage isAuthorized={auth.isAuth} />} />
         <Route path="/profile/*" element={<ProfilePage />} />
-        <Route path="/profile-detail/:id" element={<ProfileDetailPage isAuthorized={auth.isAuth}/>}/>
-        <Route path="/profiles/:filter" element={<ProfileListPage isAuthorized={auth.isAuth} />}/>
+        <Route
+          path="/profile-detail/:id"
+          element={<ProfileDetailPage isAuthorized={auth.isAuth} />}
+        />
+        <Route
+          path="/profiles/:filter"
+          element={<ProfileListPage isAuthorized={auth.isAuth} />}
+        />
         {auth.isAuth ? (
           <Route path="/login" element={<Navigate to="/profile/user-info" />} />
         ) : (
           <Route path="/login" element={<AuthorizationPage />} />
         )}
         {auth.isAuth ? (
-          <Route path="/sign-up" element={<Navigate to="/profile/user-info" />} />
+          <Route
+            path="/sign-up"
+            element={<Navigate to="/profile/user-info" />}
+          />
         ) : (
           <Route path="/sign-up" element={<SignUpPage />} />
         )}
         <Route path="/sign-up/modal" element={<SignUpModalPage />} />
-        <Route path="/sign-up/resend-activation" element={<ResendActivationPage />} />
-        <Route path="/activate/:uid/:token" element={<ActivationProfilePage />} />
-        <Route path="/reset-password" element={<SendEmailRestorePasswordPage />} />
-        <Route path="/reset-password/modal" element={<RestorePasswordModalPage />} />
-        <Route path="/password/reset/confirm/:uid/:token" element={<RestorePasswordPage />} />
-        <Route path="/reset-password/successfully" element={<RestorePasswordSuccessPage />} />
-        <Route path="/reset-password/failed" element={<RestorePasswordFailedPage />} />
+        <Route
+          path="/sign-up/resend-activation"
+          element={<ResendActivationPage />}
+        />
+        <Route
+          path="/activate/:uid/:token"
+          element={<ActivationProfilePage />}
+        />
+        <Route
+          path="/reset-password"
+          element={<SendEmailRestorePasswordPage />}
+        />
+        <Route
+          path="/reset-password/modal"
+          element={<RestorePasswordModalPage />}
+        />
+        <Route
+          path="/password/reset/confirm/:uid/:token"
+          element={<RestorePasswordPage />}
+        />
+        <Route
+          path="/reset-password/successfully"
+          element={<RestorePasswordSuccessPage />}
+        />
+        <Route
+          path="/reset-password/failed"
+          element={<RestorePasswordFailedPage />}
+        />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
-        <Route path="/search" element={<Search isAuthorized={auth.isAuth} />} />
+        <Route path="/search" element={<Search isAuthorized={auth} userData={userData} />} />
       </Routes>
       <Footer />
       <ScrollToTopButton />

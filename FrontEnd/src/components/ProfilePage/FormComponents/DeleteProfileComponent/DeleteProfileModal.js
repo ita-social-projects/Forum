@@ -57,11 +57,11 @@ const DeleteProfileModal = (props) => {
     return (
         <div>
             <div className={css['delete-header']}>Ви впевнені, що хочете видалити профіль?
-                <img
-                    src={`${process.env.PUBLIC_URL}/profilepage/Vectorcancel.png`}
-                    className={css['delete__cancelButton']}
-                    alt=""
-                    onClick={props.onCancel} />
+            <img
+            src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectorcancel.png`}
+            className={css['delete__cancelButton']}
+            alt=""
+            onClick={props.onCancel}/>
             </div>
             <div >
                 <div className={css['delete__description']}>Цей профіль буде видалено.
@@ -96,14 +96,14 @@ const DeleteProfileModal = (props) => {
                         />
                         <span onClick={passwordVisisbilityHandler}>
                             <img
-                                src={typePassword === 'password'
-                                    ?
-                                    `${process.env.PUBLIC_URL}/profilepage/hidden_eye_icon.png`
-                                    :
-                                    `${process.env.PUBLIC_URL}/profilepage/eye_icon.png`
-                                }
-                                alt=""
-                                className={css['password__eye']}
+                            src={typePassword==='password'
+                            ?
+                            `${process.env.REACT_APP_PUBLIC_URL}/profilepage/hidden_eye_icon.png`
+                            :
+                            `${process.env.REACT_APP_PUBLIC_URL}/profilepage/eye_icon.png`
+                            }
+                            alt=""
+                            className={css['password__eye']}
                             />
                         </span>
                     </div>

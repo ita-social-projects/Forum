@@ -62,6 +62,5 @@ export default function useProvideAuth() {
       }
     });
   });
-
   return { login, logout, isAuth, isLoading };
 }
