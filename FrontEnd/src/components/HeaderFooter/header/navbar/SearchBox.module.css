@@ -29,12 +29,12 @@
 .header-search-form__addon {
   background-color: transparent;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-left: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .header-search-form__addon img {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
 }
 
 .header-search-form__input::placeholder {

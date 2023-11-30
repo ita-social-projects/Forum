@@ -20,7 +20,7 @@
 }
 
 .search_field_entered_value {
-  color: var(----main-style-signs-color);
+  color: #0b6c61;
   font: Inter;
   font-weight: 600;
   font-style: italic;
@@ -35,6 +35,7 @@
   font-weight: 600;
   color: var(--text-color);
   font: Inter;
+  margin: 145px;
 }
 
 .frame-img-right {
