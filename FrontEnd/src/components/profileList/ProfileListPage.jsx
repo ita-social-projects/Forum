@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { Radio } from 'antd';
 import useSWR from 'swr';
@@ -8,8 +9,6 @@ import Loader from '../loader/Loader';
 import ProfileList from './ProfileList';
 
 import css from './ProfileListPage.module.css';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
 export default function ProfileListPage({ isAuthorized }) {
   const { filter } = useParams();
@@ -40,21 +39,25 @@ export default function ProfileListPage({ isAuthorized }) {
     filterSaved ? '&is_saved=True' : ''
   }&page=${currentPage}`;
 
-  const fetcher = (url) => axios.get(url).then((res) => res.data);
-  const fetchUrl = filterSaved ? urlForSaved : urlForAll;
+  async function fetcher(url) {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    if (isAuthorized) {
+      const authToken = localStorage.getItem('Token');
+      headers.Authorization = `Token ${authToken}`;
+    }
+    return fetch(url, {
+      method: 'GET',
+      headers: headers,
+    }).then((res) => res.json());
+  }
 
   const {
     data: fetchedProfiles,
     error,
     isLoading,
-  } = useSWR(
-    fetchUrl,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  );
+  } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
 
   const handleRadioSelect = () => {
     if (!filterSaved) {
