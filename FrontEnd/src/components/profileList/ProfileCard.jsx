@@ -61,15 +61,14 @@ export default function ProfileCard({ isAuthorized, data }) {
       await trigger(
         { company_pk: profile.id },
         { optimisticData: () => setIsSaved(!isSaved) }
-      );
-    } catch (error) {
+        );
+        mutate((key) => typeof key === 'string' && key.startsWith('/api/profiles/'), {
+          revalidate: true,
+        });
+      } catch (error) {
       console.error(error);
     }
   };
-
-  mutate((key) => typeof key === 'string' && key.startsWith('/api/profiles/'), {
-    revalidate: true,
-  });
 
   const filledStar = (
     <StarFilled
