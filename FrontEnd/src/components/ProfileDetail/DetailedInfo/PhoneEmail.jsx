@@ -5,8 +5,7 @@ import { PropTypes } from 'prop-types';
 import classes from './PhoneEmail.module.css';
 
 function PhoneEmail ({ profileId, personId }) {
-    const [isPhoneShown, setPhoneShown] = useState(false);
-    const [isEmailShown, setEmailShown] = useState(false);
+    const [isContactsShown, setContactsShown] = useState(false);
     const authToken = localStorage.getItem('Token');
     const { user } = useUser();
 
@@ -14,14 +13,11 @@ function PhoneEmail ({ profileId, personId }) {
       `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,
       (url) =>
         fetch(url, {
-          method: 'GET',
-          headers: {
-            Authorization: `Token ${authToken}`,
-          },
+          method: 'GET'
         })
           .then((res) => {
-            if (!res.ok && res.status === 401) {
-              const error = new Error('Unauthorized user');
+            if (!res.ok) {
+              const error = new Error('Cannot get profile contact data');
               error.info = res.json();
               error.status = res.status;
               throw error;
@@ -29,44 +25,27 @@ function PhoneEmail ({ profileId, personId }) {
             return res.json();
           })
           .catch((error) => {
-            if (error.status === 401) {
               console.error(error);
-            }
           })
     );
 
-    const urlViewed = `${process.env.REACT_APP_BASE_API_URL}/api/viewed-list/`;
-    const viewedData = user && {user: user.id, company: profileId,};
+    const urlViewed = `${process.env.REACT_APP_BASE_API_URL}/api/company-view/${profileId}/`;
 
-    async function addToViewed(url, data ) {
+    async function addToViewed(url) {
         return fetch(url, {
           method: 'POST',
           headers: {
-            Authorization: `Token ${authToken}`,
+            Authorization: authToken ? `Token ${authToken}` : '',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
         }).then();
     }
 
-    const handlePhoneClick = async () => {
-        setPhoneShown(true);
+    const handleContactsClick = async () => {
+        setContactsShown(true);
         try {
             await addToViewed(
-                urlViewed,
-                viewedData
-            );
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handleEmailClick = async () => {
-        setEmailShown(true);
-        try {
-            await addToViewed(
-                urlViewed,
-                viewedData
+                urlViewed
             );
         } catch (error) {
             console.error(error);
@@ -74,29 +53,23 @@ function PhoneEmail ({ profileId, personId }) {
     };
 
     return (
-            <>
-              {profileData && profileData.phone ? (
-                <div className={classes['data-block__field']}>
-                    <p className={classes['data-block__field--title']}>Телефон</p>
-                    {(isPhoneShown || user && user.id === personId) ?
-                    (
-                    <p className={classes['data-block__field--phone']}>{profileData.phone}</p> ) : (
-                    <button type="button" onClick={handlePhoneClick} className={classes['data-block__field--show--phone']}>
-                            Показати телефон
-                    </button>
-                    )}
-                </div>
-              ) : null }
-              {profileData && profileData.email ? (
-                <div className={classes['data-block__field']}>
-                    <p className={classes['data-block__field--title']}>Електронна пошта</p>
-                    {(isEmailShown || user && user.id === personId) ? (
-                    <p className={classes['data-block__field--email']}>{profileData.email}</p> ) : (
-                    <button type="button" onClick={handleEmailClick} className={classes['data-block__field--show--email']}>Показати ел. пошту</button>
-                    )}
-                </div>
-              ) : null}
-            </>
+      <>
+        {profileData && (profileData.phone || profileData.email) ? (
+              <div className={classes['data-block__field']}>
+                <p className={classes['data-block__field--title']}>Контакти</p>
+                {isContactsShown || (user && user.id === personId) ? (
+                  <div className={classes['data-block__field--contacts']}>
+                    <p>{profileData.phone}</p>
+                    <p>{profileData.email}</p>
+                  </div>
+                  ) : (
+                  <button type="button" onClick={handleContactsClick} className={classes['data-block__field--show--contacts']}>
+                    Показати контакти
+                  </button>
+                )}
+              </div>
+        ) : null}
+      </>
     );
 }
 
