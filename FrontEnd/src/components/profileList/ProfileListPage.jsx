@@ -29,6 +29,7 @@ export default function ProfileListPage({ isAuthorized }) {
     };
     setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);
+    setCurrentPage(1);
   }, [filter]);
 
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
