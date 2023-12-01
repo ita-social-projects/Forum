@@ -1,9 +1,13 @@
 import { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 import classes from './Startup.module.css';
 import ReadMore from './ReadMore';
 
 function Startup ({ data }) {
+    const { setActiveLinks } = useContext(ActiveLinksContext);
     const profile = useMemo(() => {
         return {
           startup_idea: data.startup_idea,
@@ -37,6 +41,14 @@ function Startup ({ data }) {
       });
 
     const hasSections = renderedSections.some((section) => section !== null);
+
+    useEffect(() => {
+      if (hasSections) {
+        setActiveLinks(prevData => [
+              ...prevData,
+              'startup']);
+          }
+      }, [hasSections, setActiveLinks]);
 
     return (
         hasSections ? (

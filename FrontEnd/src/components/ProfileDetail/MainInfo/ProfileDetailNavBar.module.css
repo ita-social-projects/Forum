@@ -44,6 +44,12 @@
     letter-spacing: -0.16px;
 }
 
+.devider {
+    width: 795px;
+    height: 1px;
+    background: var(--main-grey-20, #DEE1E8);
+}
+
 .inactive-devider {
     height: 1px;
     align-self: stretch;

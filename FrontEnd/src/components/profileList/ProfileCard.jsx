@@ -7,6 +7,7 @@ import { PropTypes } from 'prop-types';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 
+import { useUser } from '../../hooks';
 import css from './ProfileCard.module.css';
 
 const { Paragraph } = Typography;
@@ -14,10 +15,12 @@ const { Paragraph } = Typography;
 
 export default function ProfileCard({ isAuthorized, data }) {
   const { mutate } = useSWRConfig();
+  const { user } = useUser();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
       id: data.id,
+      personId: data.person,
       name: data.name,
       activities: !data.activities.length
         ? null
@@ -33,6 +36,8 @@ export default function ProfileCard({ isAuthorized, data }) {
       commonInfo: data.common_info,
     };
   }, [data]);
+
+  const ownProfile = user && user.id === profile.personId;
 
   async function sendRequest(url, { arg: data }) {
     const authToken = localStorage.getItem('Token');
@@ -132,7 +137,7 @@ export default function ProfileCard({ isAuthorized, data }) {
           </div>
         </div>
       </Link>
-      {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
+      {isAuthorized && !ownProfile ? (isSaved ? filledStar : outlinedStar) : null}
     </div>
   );
 }
@@ -141,6 +146,7 @@ ProfileCard.propTypes = {
   isAuthorized: PropTypes.bool,
   data: PropTypes.shape({
     id: PropTypes.number.isRequired,
+    person: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     address: PropTypes.string,
     region_display: PropTypes.string,

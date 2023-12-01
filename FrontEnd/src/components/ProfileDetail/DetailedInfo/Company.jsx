@@ -1,14 +1,27 @@
 import { PropTypes } from 'prop-types';
+import { useEffect } from 'react';
 import classes from './Company.module.css';
 import ReadMore from './ReadMore';
+import { useContext } from 'react';
+import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 
 function Company ({ data }) {
+    const { setActiveLinks } = useContext(ActiveLinksContext);
 
     // TODO: implement logic for getting data from db when it's added on server side
 
     const competitiveEdge = '';
     const slogan = '';
     const companyData = data.common_info || competitiveEdge || slogan;
+
+    useEffect(() => {
+        if (companyData) {
+            setActiveLinks(prevData => [
+                ...prevData,
+                'about-company',
+               ]);
+            }
+        }, [setActiveLinks, companyData]);
 
     return (
         companyData ? (

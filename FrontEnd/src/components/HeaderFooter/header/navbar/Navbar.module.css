@@ -1,12 +1,12 @@
 .navbar-content {
-    display: flex;
-    width: 1305px;
-    padding: 8px 104px;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  width: 1305px;
+  padding: 8px 104px;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.navbar-logo__text {
+/* .navbar-logo__text {
     color: #292E32;
     font-feature-settings: 'calt' off;
     font-family: Geologica;
@@ -15,9 +15,14 @@
     font-weight: 500;
     line-height: 24px;
     letter-spacing: -0.24px;
+} */
+
+.navbar-logo__img {
+  width: 600px;
+  height: 400px;
 }
 
 .navbar-utility-bar {
-    display: flex;
-    gap: 24px;
+  display: flex;
+  gap: 24px;
 }

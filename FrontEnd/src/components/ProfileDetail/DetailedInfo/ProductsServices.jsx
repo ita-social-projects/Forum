@@ -1,15 +1,27 @@
 import { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 import classes from './ProductsServices.module.css';
 import ReadMore from './ReadMore';
 
 function ProductsServices ({ data }) {
+    const { setActiveLinks } = useContext(ActiveLinksContext);
     const profile = useMemo(() => {
         return {
             products: data.product_info,
             services: data.service_info
         };
       }, [data]);
+
+    useEffect(() => {
+    if (profile.products || profile.services) {
+        setActiveLinks(prevData => [
+            ...prevData,
+            'products-services']);
+        }
+    }, [setActiveLinks, profile.products, profile.services]);
 
     return (
         (profile.products || profile.services) ? (

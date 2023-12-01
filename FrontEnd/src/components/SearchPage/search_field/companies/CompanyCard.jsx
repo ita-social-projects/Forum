@@ -7,10 +7,11 @@ import axios from 'axios';
 import styles from './CompanyCard.module.css';
 import PropTypes from 'prop-types';
 
-const CompanyCard = ({ companyData, isAuthorized }) => {
+const CompanyCard = ({ companyData, isAuthorized, userData }) => {
   CompanyCard.propTypes = {
     companyData: PropTypes.object,
     isAuthorized: PropTypes.object,
+    userData: PropTypes.any.isRequired,
   };
 
   const { mutate } = useSWRConfig();
@@ -56,6 +57,11 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
     }
 
     setUsersSavedList(NewList);
+    if (companyData.id == userData.id) {
+    setStar(false);
+    setIsSaved(false);
+    setSearchPerformed(true);
+    } else {
     if (usersSavedList.includes(companyData.id)) {
       setStar(filledStar);
       setIsSaved(true);
@@ -64,7 +70,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
       setStar(outlinedStar);
     }
     setSearchPerformed(true);
-  }
+  }}
 
   const { trigger } = useSWRMutation(
     `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
@@ -120,11 +126,15 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
     <div className={styles['company-card']}>
       <div className={styles['company-card__block']}>
         <div className={styles['company-card__image-frame']}>
-          <img
+        {companyData.banner_image ? (
+                    <img src={companyData.banner_image} alt="Company Banner" />
+                    ) : (
+                <img
             className={styles['company-card__image']}
-            src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/defaultcompanybanner.png`}
+            src={`${process.env.REACT_APP_PUBLIC_URL}/svg/profile-view-image-empty.svg`}
             alt={companyData.name}
           />
+                )}
         </div>
         <div className={styles['company-card__text-block']}>
           <div className={styles['company-card__text-block__header']}>
@@ -137,7 +147,7 @@ const CompanyCard = ({ companyData, isAuthorized }) => {
             <div className={styles['company-card__name-text']}>
               <Link
                 className={styles['company-card__name-text_link']}
-                to={`/profile/${companyData.id}`}
+                to={`/profile-detail/${companyData.id}`}
               >
                 {companyData.name}
               </Link>

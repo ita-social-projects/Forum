@@ -20,8 +20,8 @@
 }
 
 .search_field_entered_value {
-  color: var(----main-style-signs-color);
-  font: Inter;
+  color: #0b6c61;
+  font: normal normal normal 20px/2 Inter;
   font-weight: 600;
   font-style: italic;
 }
@@ -34,7 +34,8 @@
 .search_result_error {
   font-weight: 600;
   color: var(--text-color);
-  font: Inter;
+  font: normal normal bold 20px/2 Inter;
+  margin: 145px;
 }
 
 .frame-img-right {
