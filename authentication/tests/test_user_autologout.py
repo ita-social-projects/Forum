@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
 from authentication.factories import UserFactory
+from profiles.factories import ProfileCompanyFactory
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
 
@@ -13,6 +14,10 @@ class UserLogoutAPITests(APITestCase):
     def setUp(self):
         self.user = UserFactory(
             email="test@test.com", name="Test", surname="Test"
+        )
+        self.profile = ProfileCompanyFactory.create(
+            person=self.user,
+            official_name="Test Official Startup",
         )
 
     def test_user_autologout_after_14_days(self):
@@ -64,6 +69,7 @@ class UserLogoutAPITests(APITestCase):
                 "email": "test@test.com",
                 "name": "Test",
                 "surname": "Test",
+                "profile_id": AnyInt(),
             },
             response.json(),
         )

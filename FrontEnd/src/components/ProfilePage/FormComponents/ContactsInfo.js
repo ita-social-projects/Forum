@@ -1,23 +1,19 @@
 import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
-
+import { useUser, useProfile } from '../../../hooks/';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
+import Loader from '../../loader/Loader';
 
 const LABELS = {
-    'phoneNumber': 'Телефон',
-    'companyEmail': 'Електронна пошта',
-    'companySite': 'Сайт',
+    'phone': 'Телефон',
     'address': 'Адрес(и)',
-    'Facebook': 'Facebook',
-    'Instagram': 'Instagram',
-    'Tiktok': 'Tiktok',
-    'LinkedIn': 'LinkedIn',
-    'Youtube': 'Youtube',
 };
 
 const ContactsInfo = (props) => {
-    const [user, setUser] = useState(props.user);
+    const { user } = useUser();
+    const { profile: mainProfile, mutate: profileMutate } = useProfile();
+    const [profile, setProfile] = useState(props.profile);
     const [phoneNumberError, setPhoneNumberError] = useState(null);
 
     useEffect(() => {
@@ -25,7 +21,7 @@ const ContactsInfo = (props) => {
     }, []);
 
     const onUpdateField = e => {
-        setUser((prevState) => {
+        setProfile((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
     };
@@ -35,118 +31,86 @@ const ContactsInfo = (props) => {
         const parsedNumber = Number(receivedPhoneNumber);
         const isInteger = Number.isInteger(parsedNumber);
         if (isInteger) {
-            if (receivedPhoneNumber && receivedPhoneNumber.length !== 10) {
-                setPhoneNumberError('Номер повинен містити 10 цифр');
+            if (receivedPhoneNumber && receivedPhoneNumber.length !== 12) {
+                setPhoneNumberError('Номер повинен містити 12 цифр');
             } else {
                 setPhoneNumberError(null);
             }
         } else {
             setPhoneNumberError('Номер повинен містити лише цифри');
         }
-        setUser((prevState) => {
+        setProfile((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
     };
 
     const validateForm = () => {
         let isValid = true;
-        if (user.phoneNumber && (user.phoneNumber.length !== 10 || !Number.isInteger(Number(user.phoneNumber)))) {
+        if (profile.phoneNumber &&
+            (profile.phoneNumber.length !== 12 || !Number.isInteger(Number(profile.phoneNumber)))) {
             isValid = false;
         }
         return isValid;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (validateForm()) {
-            props.onUpdate(user);
-            // TODO something
-        } else {
-            // TODO something
+            const token = localStorage.getItem('Token');
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        phone: profile.phone,
+                        address: profile.address,
+                    }),
+                });
+
+                if (response.status === 200) {
+                    const updatedProfileData = await response.json();
+                    profileMutate(updatedProfileData);
+                } else {
+                    console.error('Помилка');
+                }
+            } catch (error) {
+                console.error('Помилка:', error);
+            }
         }
     };
 
     return (
         <div className={css['form__container']}>
-            <form id="ContactsInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                <div className={css['fields']}>
-                    <div className={css['fields-groups']}>
-                        <HalfFormField
-                            inputType="tel"
-                            name="phoneNumber"
-                            fieldPlaceholder="+38"
-                            label={LABELS.phoneNumber}
-                            updateHandler={onUpdatePhoneNumberField}
-                            requredField={false}
-                            value={user.phoneNumber}
-                            error={phoneNumberError}
-                        />
-                        <HalfFormField
-                            inputType="text"
-                            name="companyEmail"
-                            label={LABELS.companyEmail}
+            {(user && profile && mainProfile)
+                ?
+
+                <form id="ContactsInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <div className={css['fields-groups']}>
+                            <HalfFormField
+                                inputType="tel"
+                                name="phone"
+                                fieldPlaceholder="38"
+                                label={LABELS.phone}
+                                updateHandler={onUpdatePhoneNumberField}
+                                requredField={false}
+                                value={profile.phone ?? ''}
+                                error={phoneNumberError}
+                            />
+                        </div>
+                        <FullField
+                            name="address"
+                            label={LABELS.address}
                             updateHandler={onUpdateField}
                             requredField={false}
-                            value={user.companyEmail}
+                            value={profile.address ?? ''}
                         />
                     </div>
-                    <FullField
-                        name="companySite"
-                        label={LABELS.companySite}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.companySite}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="address"
-                        label={LABELS.address}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.address}
-                    />
-                    <FullField
-                        name="Facebook"
-                        label={LABELS.Facebook}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.Facebook}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="Instagram"
-                        label={LABELS.Instagram}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.Instagram}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="Tiktok"
-                        label={LABELS.Tiktok}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.Tiktok}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="LinkedIn"
-                        label={LABELS.LinkedIn}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.LinkedIn}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                    <FullField
-                        name="Youtube"
-                        label={LABELS.Youtube}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.Youtube}
-                        fieldPlaceholder="Введіть URL"
-                    />
-                </div>
-            </form>
+                </form>
+                : <Loader />}
         </div>
     );
 };

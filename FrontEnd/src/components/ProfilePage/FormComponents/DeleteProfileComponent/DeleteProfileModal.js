@@ -1,50 +1,58 @@
+import axios from 'axios';
 import css from './DeleteProfileModal.module.css';
+import { useAuth } from '../../../../hooks';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useUser } from '../../../../hooks/';
+
 
 const DeleteProfileModal = (props) => {
+    const { user } = useUser();
+    const auth = useAuth();
     const [typePassword, setTypePassword] = useState('password');
-    const [isCorrectEmail, setIsCorrectEmail] = useState(false);
-    const [isCorrectPassword, setIsCorrectPassword] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(true);
+    const [inputEmail, setInputEmail] = useState('');
+    const [inputPassword, setInputPassword] = useState('');
+    const [isCorrectEmail, setIsCorrectEmail] = useState(true);
     const navigate = useNavigate();
 
     const submitHandler = (event) => {
         event.preventDefault();
-        props.onCancel();
-        // TODO logic of deleting
-        navigate('/');
-    };
-
-    const emailChangeHandler = (e) => {
-        if (e.target.value === props.user.email) {
+        if (user.email === inputEmail) {
             setIsCorrectEmail(true);
+            axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                data: {password: inputPassword}
+            })
+                .then(response => {
+                    console.log(response.data);
+                    props.onCancel();
+
+                    axios.post(
+                        `${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`
+                    );
+                    auth.logout();
+                    navigate('/');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         } else {
             setIsCorrectEmail(false);
         }
     };
 
     const passwordChangeHandler = (e) => {
-        if (e.target.value === props.user.password) {
-            setIsCorrectPassword(true);
-        } else {
-            setIsCorrectPassword(false);
-        }
+        setInputPassword(e.target.value);
     };
 
-    useEffect (() => {
-        if (isCorrectEmail && isCorrectPassword) {
-            setIsDisabled(false);
-        } else {
-            setIsDisabled(true);
-        }
-    }, [isCorrectEmail, isCorrectPassword]);
+    const emailChangeHandler = (e) => {
+        setInputEmail(e.target.value);
+    };
 
     const passwordVisisbilityHandler = () => {
         if (typePassword === 'password') {
-          setTypePassword('text');
+            setTypePassword('text');
         } else setTypePassword('password');
-      };
+    };
 
     return (
         <div>
@@ -56,12 +64,12 @@ const DeleteProfileModal = (props) => {
             onClick={props.onCancel}/>
             </div>
             <div >
-                <div className={css['delete__description']}>Текст, який описує, що профіль буде видалено.</div>
-                <div className={css['delete__description']}>Також можуть бути перераховані способи відновити профіль.</div>
+                <div className={css['delete__description']}>Цей профіль буде видалено.
+                    Для того, щоб підтвердити видалення, будь-ласка, введіть вашу почту та пароль</div>
             </div>
             <form onSubmit={submitHandler}>
                 <div className={css['form__body']}>
-                    <div className={css['fields__label--text']}><label >Електронна пошта</label></div>
+                    <div className={css['fields__label--text']}><label>Електронна пошта</label></div>
                     <div className={css['fields__field']}>
                         <input
                             type="text"
@@ -71,6 +79,11 @@ const DeleteProfileModal = (props) => {
                             onChange={emailChangeHandler}
                         />
                     </div>
+                    {(!isCorrectEmail) &&
+                        <div className={css['error-message']}>
+                            Некоректна пошта
+                        </div>
+                    }
                     <div className={css['fields__label--text']}><label >Пароль</label></div>
                     <div className={css['fields__field']}>
                         <input
@@ -97,7 +110,7 @@ const DeleteProfileModal = (props) => {
                 </div>
                 <div className={css['buttons__section']}>
                     <button type="button" className={css['button__cancel']} onClick={props.onCancel}>Скасувати</button>
-                    <button type="submit" className={isDisabled ? css['button__delete__disabled'] : css['button__delete']} disabled={isDisabled}>Видалити</button>
+                    <button type="submit" className={css['button__delete']}>Видалити</button>
                 </div>
             </form>
         </div>

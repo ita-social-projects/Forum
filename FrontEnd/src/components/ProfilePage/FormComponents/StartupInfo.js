@@ -1,133 +1,74 @@
 import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
-
-import FullField from './FormFields/FullField';
-import MultipleSelectChip from './FormFields/MultipleSelectChip';
+import { useUser, useProfile } from '../../../hooks/';
 import TextField from './FormFields/TextField';
+import Loader from '../../loader/Loader';
 
 const LABELS = {
-    'startupName': 'Назва стартапу',
-    'investmentAmount': 'Розмір інвестицій (в гривнях)',
-    'cooperationGoals': 'Ціль співпраці',
-    'endResult': 'Кінцевий результат',
-    'competitiveAdvantageIdea': 'Конкурентна перевага ідеї',
-    'risks': 'Ризики',
-    'searchPartners': 'Пошук партнерів',
-    'startupIdea': 'Опис ідеї стартапу'
+    'startup_idea': 'Опис ідеї стартапу'
 };
-
-const COOPERATION_GOALS = [
-    { name: 'Гроші' },
-    { name: 'Партнерство' },
-];
 
 const TEXT_AREA_MAX_LENGTH = 1000;
 
 const StartupInfo = (props) => {
-    const [user, setUser] = useState(props.user);
+    const { user } = useUser();
+    const { profile: mainProfile, mutate: profileMutate } = useProfile();
+    const [profile, setProfile] = useState(props.profile);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
     }, []);
 
-    const onUpdateField = e => {
-        setUser((prevState) => {
-            return { ...prevState, [e.target.name]: e.target.value };
-        });
-    };
-
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
-            setUser((prevState) => {
+            setProfile((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
     };
 
-    const onUpdateSelectField = e => {
-        const selectName = e.target.name;
-        const selectedValues = Array.from(e.target.value, option => option);
-        setUser((prevState) => {
-            return { ...prevState, [selectName]: selectedValues };
-        });
-    };
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        props.onUpdate(user);
-        // TODO something
+        const token = localStorage.getItem('Token');
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    startup_idea: profile.startup_idea,
+                }),
+            });
+
+            if (response.status === 200) {
+                const updatedProfileData = await response.json();
+                profileMutate(updatedProfileData);
+            } else {
+                console.error('Помилка');
+            }
+        } catch (error) {
+            console.error('Помилка:', error);
+        }
     };
 
     return (
         <div className={css['form__container']}>
-            <form id="StartupInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                <div className={css['fields']}>
-                    <FullField
-                        name="startupName"
-                        label={LABELS.startupName}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.startupName}
-                    />
-                    <TextField
-                        name="startupIdea"
-                        label={LABELS.startupIdea}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.startupIdea}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <FullField
-                        inputType="number"
-                        name="investmentAmount"
-                        label={LABELS.investmentAmount}
-                        updateHandler={onUpdateField}
-                        requredField={false}
-                        value={user.investmentAmount}
-                    />
-                    <MultipleSelectChip
-                        selectedWidth="530px"
-                        name="cooperationGoals"
-                        options={COOPERATION_GOALS}
-                        label={LABELS.cooperationGoals}
-                        updateHandler={onUpdateSelectField}
-                        requredField={false}
-                        value={user.cooperationGoals}
-                        defaultValue="Оберіть"
-                    />
-                    <TextField
-                        name="endResult"
-                        label={LABELS.endResult}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.endResult}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <TextField
-                        name="competitiveAdvantageIdea"
-                        label={LABELS.competitiveAdvantageIdea}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.competitiveAdvantageIdea}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <TextField
-                        name="risks"
-                        label={LABELS.risks}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.risks}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <TextField
-                        name="searchPartners"
-                        label={LABELS.searchPartners}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.searchPartners}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                </div>
-            </form>
+            {(user && profile && mainProfile)
+                ?
+                <form id="StartupInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <TextField
+                            name="startup_idea"
+                            label={LABELS.startup_idea}
+                            updateHandler={onUpdateTextAreaField}
+                            requredField={false}
+                            value={profile.startup_idea ?? ''}
+                            maxLength={TEXT_AREA_MAX_LENGTH}
+                        />
+                    </div>
+                </form>
+                : <Loader />}
         </div>
     );
 };
