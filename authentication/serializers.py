@@ -58,10 +58,6 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
             custom_errors["comp_status"].append(
                 "Please choose who you represent."
             )
-        elif is_registered and is_startup:
-            custom_errors["comp_status"].append(
-                "Please choose either registered or startup."
-            )
         try:
             validate_password_long(password)
         except ValidationError as error:
