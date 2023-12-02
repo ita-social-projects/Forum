@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate  } from 'react-router-dom';
 
 import axios from 'axios';
+
 import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
@@ -40,34 +41,15 @@ export function SignUpFormContentComponent(props) {
     mode: 'all',
   });
 
-  const [isChecked, setIsChecked] = useState({
-    startup: false,
-    company: false,
-  });
-
-  const onChangeCheckbox = (event) => {
-    if (event.target.name === 'startup') {
-      setIsChecked({
-        startup: true,
-        company: false,
-      });
-    } else if (event.target.name === 'company') {
-      setIsChecked({
-        startup: false,
-        company: true,
-      });
-    }
-  };
-
   const { setIsValid } = props;
 
   useEffect(() => {
-    const companyOrStartup = isChecked.company || isChecked.startup;
-    const formIsValid = companyOrStartup && isValid;
-    setIsValid(formIsValid);
-  }, [isValid, setIsValid, isChecked.company, isChecked.startup]);
+    setIsValid(isValid);
+  }, [isValid, setIsValid]);
+
 
   const onSubmit = () => {
+
     const dataToSend = {
       email: getValues('email'),
       password: getValues('password'),
@@ -76,11 +58,11 @@ export function SignUpFormContentComponent(props) {
       surname: getValues('surname'),
       company: {
         name: getValues('companyName'),
-        is_registered: isChecked.company,
-        is_startup: isChecked.startup,
+        is_registered: (getValues('representative').indexOf('company') > -1),
+        is_startup: (getValues('representative').indexOf('startup') > -1),
       },
     };
-
+    console.log(dataToSend);
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
@@ -299,8 +281,10 @@ export function SignUpFormContentComponent(props) {
                       <input
                         type="checkbox"
                         name="company"
-                        onChange={onChangeCheckbox}
-                        checked={isChecked.company}
+                        value={'company'}
+                        {...register('representative', {
+                          required: errorMessageTemplates.required
+                        })}
                       />
                     </div>
                     <label className={styles['representative__label']}>
@@ -316,8 +300,10 @@ export function SignUpFormContentComponent(props) {
                       <input
                         type="checkbox"
                         name="startup"
-                        onChange={onChangeCheckbox}
-                        checked={isChecked.startup}
+                        value={'startup'}
+                        {...register('representative', {
+                          required: errorMessageTemplates.required
+                        })}
                       />
                     </div>
                     <label className={styles['representative__label']}>
@@ -326,6 +312,9 @@ export function SignUpFormContentComponent(props) {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className={styles['signup-form__error']}>
+              {errors.representative && errors.representative.message}
             </div>
           </div>
           <div className={styles['signup-form__checkboxes-container--rules']}>
