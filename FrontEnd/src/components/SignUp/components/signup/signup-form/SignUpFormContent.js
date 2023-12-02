@@ -7,6 +7,8 @@ import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 
+import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../../constants/constants';
+
 export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -26,10 +28,6 @@ export function SignUpFormContentComponent(props) {
     password: 'Пароль не відповідає вимогам',
     confirmPassword: 'Паролі не збігаються',
   };
-
-  const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-
-  const passwordPattern = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{8,20}$/;
 
   const {
     register,
@@ -127,7 +125,7 @@ export function SignUpFormContentComponent(props) {
                 {...register('email', {
                   required: errorMessageTemplates.required,
                   pattern: {
-                    value: emailPattern,
+                    value: EMAIL_PATTERN,
                     message: errorMessageTemplates.email,
                   },
                 })}
@@ -182,7 +180,7 @@ export function SignUpFormContentComponent(props) {
                 {...register('password', {
                   required: errorMessageTemplates.required,
                   pattern: {
-                    value: passwordPattern,
+                    value: PASSWORD_PATTERN,
                     message: errorMessageTemplates.password,
                   },
                 })}
