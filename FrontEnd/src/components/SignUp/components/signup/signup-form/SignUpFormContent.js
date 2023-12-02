@@ -62,7 +62,6 @@ export function SignUpFormContentComponent(props) {
         is_startup: (getValues('representative').indexOf('startup') > -1),
       },
     };
-    console.log(dataToSend);
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
