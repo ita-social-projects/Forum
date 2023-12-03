@@ -33,3 +33,7 @@
     cursor: pointer;
     margin-left: 430px;
 }
+
+.sign-up__button:active {
+    transform: translateY(2px);
+}
