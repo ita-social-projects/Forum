@@ -49,6 +49,7 @@ const GeneralInfo = (props) => {
     const [profile, setProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const [edrpouError, setEdrpouError] = useState(null);
+    const [companyTypeError, setCompanyTypeError] = useState(null);
 
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
     const { data: fetchedActivities, isLoading: isActivitiesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/activities/`, fetcher);
@@ -77,6 +78,9 @@ const GeneralInfo = (props) => {
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
         if (profile.edrpou && profile.edrpou.toString().length !== 8) {
+            isValid = false;
+        }
+        if (!profile.is_registered && !profile.is_startup) {
             isValid = false;
         }
         return isValid;
@@ -109,16 +113,19 @@ const GeneralInfo = (props) => {
         }
     };
 
-    const onChangeCheckbox = e => {
-        if (e.target.name === 'is_startup') {
-            setProfile((prevState) => {
-                return { ...prevState, [e.target.name]: true, 'is_registered': false };
-            });
-        } else if (e.target.name === 'is_registered') {
-            setProfile((prevState) => {
-                return { ...prevState, [e.target.name]: true, 'is_startup': false };
-            });
-        }
+    const onChangeCheckbox = (e) => {
+      const isAnyChecked =
+        (profile.is_registered && e.target.name === 'is_startup') ||
+        (profile.is_startup && e.target.name === 'is_registered') ||
+        e.target.checked;
+      if (!isAnyChecked) {
+        setCompanyTypeError('Оберіть тип компанії, яку Ви представляєте');
+      } else {
+        setCompanyTypeError(null);
+      }
+      setProfile((prevState) => {
+        return { ...prevState, [e.target.name]: e.target.checked };
+      });
     };
 
     const onUpdateTextAreaField = e => {
@@ -294,6 +301,7 @@ const GeneralInfo = (props) => {
                             nameStartup="is_startup"
                             valueStartup={profile.is_startup}
                             updateHandler={onChangeCheckbox}
+                            error={companyTypeError}
                             requredField={true}
                         />
                     </div>
