@@ -38,6 +38,11 @@ const CheckBoxField = (props) => {
                 </label>
             </div>
         </div>
+        {(props.requredField || props.error) &&
+            <div className={css['error-message']}>
+                {props.error}
+            </div>
+            }
     </div>);
 };
 
