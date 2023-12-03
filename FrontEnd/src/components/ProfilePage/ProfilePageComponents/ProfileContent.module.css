@@ -2,8 +2,8 @@
     margin-top: 40px;
     display: flex;
     align-items: flex-start;
-    gap: 80px;  
-    flex-direction: column; 
+    gap: 80px;
+    flex-direction: column;
 }
 
 .content {
@@ -38,6 +38,17 @@
     font-weight: 600;
     color: #000000;
     text-decoration: none;
+}
+
+.infolink__disabled {
+    color: var(--main-grey-50, #8D959C);
+    font-feature-settings: 'calt' off;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.14px;
 }
 
 .delete {
