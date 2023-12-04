@@ -1,5 +1,5 @@
 import { Tooltip } from 'antd';
-import css from './ProfileContent.module.css';
+import { PropTypes } from 'prop-types';
 import { Link, NavLink, Route, Routes } from 'react-router-dom';
 import AdditionalInfo from '../FormComponents/AdditionalInfo';
 import ContactsInfo from '../FormComponents/ContactsInfo';
@@ -9,6 +9,7 @@ import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
 import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
+import css from './ProfileContent.module.css';
 
 
 const INFOLINKS = [
@@ -71,6 +72,7 @@ const ProfileContent = (props) => {
                         </NavLink>
                     ) : (
                         <Tooltip
+                            key={element.title}
                             placement="bottomLeft"
                             title={element.tooltipText}
                             overlayInnerStyle={{
@@ -151,3 +153,41 @@ const ProfileContent = (props) => {
 };
 
 export default ProfileContent;
+
+ProfileContent.propTypes = {
+    user: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        surname: PropTypes.string.isRequired,
+        profile_id: PropTypes.number.isRequired,
+    }).isRequired,
+    profile: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        official_name: PropTypes.string,
+        edrpou: PropTypes.number,
+        region: PropTypes.string,
+        common_info: PropTypes.string,
+        phone: PropTypes.string,
+        address: PropTypes.string,
+        phounded: PropTypes.number,
+        person_position: PropTypes.string,
+        startup_idea: PropTypes.string,
+        product_info: PropTypes.string,
+        service_info: PropTypes.string,
+        is_registered: PropTypes.bool,
+        is_startup: PropTypes.bool,
+        categories: PropTypes.arrayOf(
+            PropTypes.shape({
+              id: PropTypes.number,
+              name: PropTypes.string,
+            })
+          ),
+        activities: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+        })
+          ),
+    }).isRequired,
+    currentFormNameHandler: PropTypes.func,
+    formName: PropTypes.string,
+  };

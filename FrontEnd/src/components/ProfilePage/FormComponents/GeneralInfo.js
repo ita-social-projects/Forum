@@ -1,7 +1,8 @@
-import css from './FormComponents.module.css';
+import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { useUser, useProfile } from '../../../hooks/';
+import css from './FormComponents.module.css';
 
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
@@ -312,3 +313,29 @@ const GeneralInfo = (props) => {
 };
 
 export default GeneralInfo;
+
+GeneralInfo.propTypes = {
+    profile: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        official_name: PropTypes.string,
+        edrpou: PropTypes.number,
+        region: PropTypes.string,
+        common_info: PropTypes.string,
+        is_registered: PropTypes.bool,
+        is_startup: PropTypes.bool,
+        categories: PropTypes.arrayOf(
+            PropTypes.shape({
+              id: PropTypes.number,
+              name: PropTypes.string,
+            })
+          ),
+        activities: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+        })
+          ),
+    }).isRequired,
+    currentFormNameHandler: PropTypes.func,
+    curForm: PropTypes.string,
+  };
