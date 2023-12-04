@@ -119,7 +119,6 @@
     border-radius: 2px;
     background: var(--main-white, #FFF);
     border: 1px solid #D9D9D9;
-    margin-bottom: 30px;
 }
 
 .fields__field--input {
@@ -149,4 +148,19 @@
 
 .delete__cancelButton {
     cursor: pointer;
+}
+
+.error-message {
+    display: flex;
+    padding: 1px 0px;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    flex: 1 0 0;
+    color: var(--red-red-100, #F34444);
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
 }

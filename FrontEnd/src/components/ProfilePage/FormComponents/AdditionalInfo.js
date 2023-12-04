@@ -1,38 +1,22 @@
 import css from './FormComponents.module.css';
 import { useState, useEffect } from 'react';
-
+import { useUser, useProfile } from '../../../hooks/';
 import HalfFormField from './FormFields/HalfFormField';
-import TextField from './FormFields/TextField';
+import Loader from '../../loader/Loader';
 
 const LABELS = {
-    'foundationYear': 'Рік заснування',
-    'companySize': 'Розмір компанії',
-    'topClients': 'Топ клієнти',
-    'passedAudit': 'Пройдений аудит',
+    'founded': 'Рік заснування',
 };
 
-const TEXT_AREA_MAX_LENGTH = 1000;
-
 const AdditionalInfo = (props) => {
-    const [user, setUser] = useState(props.user);
+    const { user } = useUser();
+    const { profile: mainProfile, mutate: profileMutate } = useProfile();
+    const [profile, setProfile] = useState(props.profile);
     const [foundationYearError, setFoundationYearError] = useState(null);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
     }, []);
-
-    const onUpdateTextAreaField = e => {
-        if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
-            setUser((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
-            });
-    };
-
-    const onUpdateField = e => {
-        setUser((prevState) => {
-            return { ...prevState, [e.target.name]: e.target.value };
-        });
-    };
 
     const onUpdateFoundationYearField = e => {
         const currentYear = new Date().getFullYear();
@@ -42,7 +26,7 @@ const AdditionalInfo = (props) => {
         } else {
             setFoundationYearError(`Рік заснування не в діапазоні 1800-${currentYear}`);
         }
-        setUser((prevState) => {
+        setProfile((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
     };
@@ -50,64 +34,61 @@ const AdditionalInfo = (props) => {
     const validateForm = () => {
         let isValid = true;
         const currentYear = new Date().getFullYear();
-        const year = Number(user.foundationYear);
-        if ((1800 > year || year > currentYear) && user.foundationYear) {
+        const year = Number(profile.founded);
+        if ((1800 > year || year > currentYear) && profile.founded) {
             isValid = false;
         }
         return isValid;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (validateForm()) {
-            props.onUpdate(user);
-            // TODO something
-        } else {
-            // TODO something
+            const token = localStorage.getItem('Token');
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        founded: profile.founded,
+                    }),
+                });
+
+                if (response.status === 200) {
+                    const updatedProfileData = await response.json();
+                    profileMutate(updatedProfileData);
+                } else {
+                    console.error('Помилка');
+                }
+            } catch (error) {
+                console.error('Помилка:', error);
+            }
         }
     };
 
     return (
         <div className={css['form__container']}>
-            <form id="AdditionalInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                <div className={css['fields']}>
-                    <div className={css['fields-groups']}>
-                        <HalfFormField
-                            inputType="number"
-                            name="foundationYear"
-                            label={LABELS.foundationYear}
-                            updateHandler={onUpdateFoundationYearField}
-                            requredField={false}
-                            value={user.foundationYear}
-                            error={foundationYearError}
-                        />
-                        <HalfFormField
-                            inputType="number"
-                            name="companySize"
-                            label={LABELS.companySize}
-                            updateHandler={onUpdateField}
-                            requredField={false}
-                            value={user.companySize}
-                        />
+            {(user && profile && mainProfile)
+                ?
+                <form id="AdditionalInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    <div className={css['fields']}>
+                        <div className={css['fields-groups']}>
+                            <HalfFormField
+                                inputType="number"
+                                name="founded"
+                                label={LABELS.founded}
+                                updateHandler={onUpdateFoundationYearField}
+                                requredField={false}
+                                value={profile.founded ?? ''}
+                                error={foundationYearError}
+                            />
+                        </div>
                     </div>
-                    <TextField
-                        name="topClients"
-                        label={LABELS.topClients}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.topClients}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                    <TextField
-                        name="passedAudit"
-                        label={LABELS.passedAudit}
-                        updateHandler={onUpdateTextAreaField}
-                        requredField={false}
-                        value={user.passedAudit}
-                        maxLength={TEXT_AREA_MAX_LENGTH}
-                    />
-                </div>
-            </form>
+                </form>
+                : <Loader />}
         </div>
     );
 };

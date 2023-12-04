@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from authentication.factories import UserFactory
+from profiles.factories import ProfileCompanyFactory
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
 
@@ -12,6 +13,10 @@ class UserSelfAPITests(APITestCase):
             email="test@test.com",
             name="Test",
             surname="Test",
+        )
+        self.profile = ProfileCompanyFactory.create(
+            person=self.user,
+            official_name="Test Official Startup",
         )
 
     def test_user_retreive_data_successful(self):
@@ -24,6 +29,7 @@ class UserSelfAPITests(APITestCase):
                 "email": "test@test.com",
                 "name": "Test",
                 "surname": "Test",
+                "profile_id": AnyInt(),
             },
             response.json(),
         )
@@ -45,6 +51,7 @@ class UserSelfAPITests(APITestCase):
                 "email": "test@test.com",
                 "name": "Ivan",
                 "surname": "Ivanenko",
+                "profile_id": AnyInt(),
             },
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -54,6 +61,7 @@ class UserSelfAPITests(APITestCase):
                 "email": "test@test.com",
                 "name": "Ivan",
                 "surname": "Ivanenko",
+                "profile_id": AnyInt(),
             },
             response.json(),
         )
@@ -73,6 +81,7 @@ class UserSelfAPITests(APITestCase):
                 "email": "test@test.com",
                 "name": "Test",
                 "surname": "Petrenko",
+                "profile_id": AnyInt(),
             },
             response.json(),
         )
