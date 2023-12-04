@@ -175,18 +175,8 @@ ProfileContent.propTypes = {
         service_info: PropTypes.string,
         is_registered: PropTypes.bool,
         is_startup: PropTypes.bool,
-        categories: PropTypes.arrayOf(
-            PropTypes.shape({
-              id: PropTypes.number,
-              name: PropTypes.string,
-            })
-          ),
-        activities: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number,
-            name: PropTypes.string,
-        })
-          ),
+        categories: PropTypes.array,
+        activities: PropTypes.array,
     }).isRequired,
     currentFormNameHandler: PropTypes.func,
     formName: PropTypes.string,
