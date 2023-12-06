@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Badge } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
@@ -10,6 +11,7 @@ import classes from './TitleInfo.module.css';
 
 function TitleInfo({ isAuthorized, data }) {
   const { user } = useUser();
+  const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
@@ -70,6 +72,10 @@ function TitleInfo({ isAuthorized, data }) {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const navigateToEditProfile = () => {
+    navigate('/profile/user-info');
   };
 
   const filledStar = (
@@ -133,15 +139,30 @@ function TitleInfo({ isAuthorized, data }) {
         </div>
         <div className={classes['title-block__company_region']}>{profile.region}</div>
       </div>
-      {isAuthorized && !ownProfile ? (
-        <button
-          onClick={handleClick}
-          type="button"
-          className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
-        >
-            <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
-          {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
-        </button>
+      {isAuthorized ? (
+        <>
+          {!ownProfile && (
+            <button
+              onClick={handleClick}
+              type="button"
+              className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
+            >
+              <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>
+                {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
+              </span>
+              {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
+            </button>
+          )}
+          {ownProfile && (
+            <button
+              type="button"
+              className={`${classes['title-block__button']}`}
+              onClick={navigateToEditProfile}
+            >
+              <span className={`${classes['title-block__button--text']}`}>Редагувати профіль</span>
+            </button>
+          )}
+        </>
       ) : null}
     </div>
   );
