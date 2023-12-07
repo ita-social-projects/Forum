@@ -42,26 +42,27 @@ function ProfileDetailPage({ isAuthorized }) {
   return error ? (
     <ErrorPage404 />
   ) : (
-      isLoading ? (
+    <div className={isLoading ? classes['loader-content'] : null}>
+      {isLoading ? (
         <Loader />
-      ) : ( <>
-      <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
-        <BannerImage data={fetchedProfile}/>
-          <div className={classes['profile-page']}>
-            <MainInfoSection
-              containsNotRequiredData={containsNotRequiredData}
-              isAuthorized={isAuthorized}
-              data={fetchedProfile}
-            />
-            <DetailedInfoSection
-              containsNotRequiredData ={containsNotRequiredData }
-              isAuthorized={isAuthorized}
-              data={fetchedProfile}
+      ) : (
+          <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
+            <BannerImage data={fetchedProfile} />
+            <div className={classes['profile-page']}>
+              <MainInfoSection
+                containsNotRequiredData={containsNotRequiredData}
+                isAuthorized={isAuthorized}
+                data={fetchedProfile}
               />
-          </div>
-        </ActiveLinksContext.Provider>
-        </>
-      )
+              <DetailedInfoSection
+                containsNotRequiredData={containsNotRequiredData}
+                isAuthorized={isAuthorized}
+                data={fetchedProfile}
+              />
+            </div>
+          </ActiveLinksContext.Provider>
+      )}
+    </div>
   );
 
 }
