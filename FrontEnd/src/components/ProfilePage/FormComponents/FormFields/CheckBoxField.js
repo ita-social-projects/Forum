@@ -40,9 +40,9 @@ const CheckBoxField = (props) => {
             </div>
         </div>
         {(props.requredField || props.error) &&
-            <div className={css['error-message']}>
+            <span className={css['error-message']}>
                 {props.error}
-            </div>
+            </span>
             }
     </div>);
 };
