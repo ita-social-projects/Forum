@@ -15,6 +15,7 @@ from rest_framework.permissions import (
     IsAdminUser,
 )
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -145,6 +146,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     queryset = Profile.objects.filter(is_deleted=False)
     permission_classes = [UserIsProfileOwnerOrReadOnly]
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
