@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Badge } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
+import classNames from 'classnames';
 import useSWRMutation from 'swr/mutation';
 
 import { useUser } from '../../../hooks';
@@ -145,9 +146,9 @@ function TitleInfo({ isAuthorized, data }) {
             <button
               onClick={handleClick}
               type="button"
-              className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
+              className={classNames(classes['title-block__button'], {[classes['added_to_saved__button']]: isSaved})}
             >
-              <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>
+              <span className={classNames(classes['title-block__button--text'], {[classes['added_to_saved__button--text']]: isSaved})}>
                 {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
               </span>
               {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
