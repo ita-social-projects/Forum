@@ -53,6 +53,17 @@ const FORM_NAMES = [
 ];
 
 const ProfileContent = (props) => {
+
+    const tooltipInnerContentStyles = {
+            display: 'flex',
+            borderRadius: '2px',
+            background: 'var(--main-grey-90, #25292C)',
+            color: 'var(--main-white, #FFF)',
+            fontFeatureSettings: 'calt',
+            fontFamily: 'Inter',
+            letterSpacing: '-0.14px',
+    };
+
     return (
         <div className={css['content__container']}>
             <div className={css['content']}>
@@ -75,15 +86,7 @@ const ProfileContent = (props) => {
                             key={element.title}
                             placement="bottomLeft"
                             title={element.tooltipText}
-                            overlayInnerStyle={{
-                                display: 'flex',
-                                borderRadius: '2px',
-                                background: 'var(--main-grey-90, #25292C)',
-                                color: 'var(--main-white, #FFF)',
-                                fontFeatureSettings: 'calt',
-                                fontFamily: 'Inter',
-                                letterSpacing: '-0.14px',
-                            }}
+                            overlayInnerStyle={tooltipInnerContentStyles}
                         >
                                 <NavLink
                                     className={`${css['infolink']} ${css['infolink__disabled']}`}
