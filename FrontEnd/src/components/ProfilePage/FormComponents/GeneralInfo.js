@@ -1,7 +1,8 @@
-import css from './FormComponents.module.css';
+import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { useUser, useProfile } from '../../../hooks/';
+import css from './FormComponents.module.css';
 
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
@@ -49,6 +50,7 @@ const GeneralInfo = (props) => {
     const [profile, setProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const [edrpouError, setEdrpouError] = useState(null);
+    const [companyTypeError, setCompanyTypeError] = useState(null);
 
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
     const { data: fetchedActivities, isLoading: isActivitiesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/activities/`, fetcher);
@@ -77,6 +79,9 @@ const GeneralInfo = (props) => {
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
         if (profile.edrpou && profile.edrpou.toString().length !== 8) {
+            isValid = false;
+        }
+        if (!profile.is_registered && !profile.is_startup) {
             isValid = false;
         }
         return isValid;
@@ -109,16 +114,19 @@ const GeneralInfo = (props) => {
         }
     };
 
-    const onChangeCheckbox = e => {
-        if (e.target.name === 'is_startup') {
-            setProfile((prevState) => {
-                return { ...prevState, [e.target.name]: true, 'is_registered': false };
-            });
-        } else if (e.target.name === 'is_registered') {
-            setProfile((prevState) => {
-                return { ...prevState, [e.target.name]: true, 'is_startup': false };
-            });
-        }
+    const onChangeCheckbox = (e) => {
+      const isAnyChecked =
+        (profile.is_registered && e.target.name === 'is_startup') ||
+        (profile.is_startup && e.target.name === 'is_registered') ||
+        e.target.checked;
+      if (!isAnyChecked) {
+        setCompanyTypeError('Оберіть тип компанії, яку Ви представляєте');
+      } else {
+        setCompanyTypeError(null);
+      }
+      setProfile((prevState) => {
+        return { ...prevState, [e.target.name]: e.target.checked };
+      });
     };
 
     const onUpdateTextAreaField = e => {
@@ -294,6 +302,7 @@ const GeneralInfo = (props) => {
                             nameStartup="is_startup"
                             valueStartup={profile.is_startup}
                             updateHandler={onChangeCheckbox}
+                            error={companyTypeError}
                             requredField={true}
                         />
                     </div>
@@ -304,3 +313,19 @@ const GeneralInfo = (props) => {
 };
 
 export default GeneralInfo;
+
+GeneralInfo.propTypes = {
+    profile: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        official_name: PropTypes.string,
+        edrpou: PropTypes.number,
+        region: PropTypes.string,
+        common_info: PropTypes.string,
+        is_registered: PropTypes.bool,
+        is_startup: PropTypes.bool,
+        categories: PropTypes.array,
+        activities: PropTypes.array,
+    }).isRequired,
+    currentFormNameHandler: PropTypes.func,
+    curForm: PropTypes.string,
+  };

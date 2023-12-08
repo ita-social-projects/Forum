@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import css from './CheckBoxField.module.css';
 
 const CheckBoxField = (props) => {
@@ -38,7 +39,22 @@ const CheckBoxField = (props) => {
                 </label>
             </div>
         </div>
+        {(props.requredField || props.error) &&
+            <span className={css['error-message']}>
+                {props.error}
+            </span>
+            }
     </div>);
 };
 
 export default CheckBoxField;
+
+CheckBoxField.propTypes = {
+    requredField: PropTypes.bool.isRequired,
+    nameRegister: PropTypes.string.isRequired,
+    valueRegister: PropTypes.bool.isRequired,
+    nameStartup: PropTypes.string.isRequired,
+    valueStartup: PropTypes.bool.isRequired,
+    updateHandler: PropTypes.func.isRequired,
+    error:PropTypes.string,
+  };
