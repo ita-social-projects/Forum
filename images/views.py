@@ -8,7 +8,7 @@ from profiles.models import Profile
 from .serializers import BannerSerializer
 
 
-class BannerChangeAPIView(RetrieveUpdateAPIView):
+class BannerRetrieveUpdate(RetrieveUpdateAPIView):
     permission_classes = (UserIsProfileOwnerOrReadOnly,)
     serializer_class = BannerSerializer
     parser_classes = (MultiPartParser, FormParser)
