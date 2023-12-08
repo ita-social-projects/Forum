@@ -1,7 +1,5 @@
 from django.urls import path
-from .views import (
-    BannerChangeAPIView
-)
+from .views import BannerChangeAPIView
 
 app_name = "images"
 

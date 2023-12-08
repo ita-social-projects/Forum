@@ -86,8 +86,10 @@ class Profile(models.Model):
     address = models.TextField(default=None, null=True)
     startup_idea = models.TextField(default=None, null=True)
 
-    banner_image = models.ImageField(upload_to='banners',
-                                     validators=[validate_image_format, validate_image_size], null=True
+    banner_image = models.ImageField(
+        upload_to="banners",
+        validators=[validate_image_format, validate_image_size],
+        null=True,
     )
 
     is_deleted = models.BooleanField(default=False)

@@ -5,4 +5,4 @@ from profiles.models import Profile
 class BannerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('banner_image',)
+        fields = ("banner_image",)
