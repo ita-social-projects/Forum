@@ -8,7 +8,6 @@ from rest_framework.generics import (
     DestroyAPIView,
     RetrieveUpdateDestroyAPIView,
     ListAPIView,
-    RetrieveUpdateAPIView,
 )
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
@@ -16,7 +15,6 @@ from rest_framework.permissions import (
     IsAdminUser,
 )
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -40,7 +38,6 @@ from .serializers import (
     ActivitySerializer,
     RegionSerializer,
     ProfileCreateSerializer,
-    BannerSerializer,
 )
 from .filters import ProfileFilter
 
@@ -235,21 +232,3 @@ class ActivityDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = ActivitySerializer
     permission_classes = (IsAdminUser,)
     queryset = Activity.objects.all()
-
-class BannerChangeAPIView(RetrieveUpdateAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-    serializer_class = BannerSerializer
-    parser_classes = (MultiPartParser, FormParser)
-    queryset = Profile.objects.all()
-
-    # def post(self, request, pk, format=None):
-    #     # user = request.user
-    #     # profile_pk = self.kwargs.get("pk")
-    #     profile_pk = pk
-    #     profile = Profile.objects.filter(id=profile_pk)
-    #     # user_pk = self.request.user.id
-    #     # profile = Profile.objects.filter(user=user)
-    #     serializer = BannerSerializer(profile=profile, data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #

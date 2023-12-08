@@ -269,13 +269,3 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 class RegionSerializer(serializers.Serializer):
     def to_representation(self, obj):
         return {"key": obj[0], "value": obj[1]}
-
-class BannerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ('banner_image',)
-
-    # def update(self, profile, validated_data):
-    #     profile.banner_image = validated_data.get('banner_image', profile.banner_image)
-    #     profile.save()
-    #     # return profile

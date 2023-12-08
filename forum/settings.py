@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "administration",
     "search",
     "drf_spectacular",
+    "images",
 ]
 
 MIDDLEWARE = [

@@ -28,6 +28,7 @@ urlpatterns = [
         include("administration.urls", namespace="administration"),
     ),
     path("api/", include("search.urls", namespace="search")),
+    path("api/", include("images.urls", namespace="images")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/schema/docs/",
