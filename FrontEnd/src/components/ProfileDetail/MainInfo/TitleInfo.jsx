@@ -92,6 +92,13 @@ function TitleInfo({ isAuthorized, data }) {
     />
   );
 
+  const getStarVisibility = () => {
+    if (isAuthorized) {
+        return isSaved ? filledStar : outlinedStar;
+      }
+    return null;
+  };
+
   const CategoryBadges = ({ categories }) => {
     return (
       <>
@@ -151,7 +158,7 @@ function TitleInfo({ isAuthorized, data }) {
               <span className={classNames(classes['title-block__button--text'], {[classes['added_to_saved__button--text']]: isSaved})}>
                 {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
               </span>
-              {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
+              {getStarVisibility()}
             </button>
           )}
           {ownProfile && (
