@@ -162,13 +162,13 @@ function TitleInfo({ isAuthorized, data }) {
             </button>
           )}
           {ownProfile && (
-            <button
-              type="button"
-              className={`${classes['title-block__button']}`}
+            <a
+              role="link"
+              className={`${classes['title-block__button']} ${classes['title-block__link']}`}
               onClick={navigateToEditProfile}
             >
               <span className={`${classes['title-block__button--text']}`}>Редагувати профіль</span>
-            </button>
+            </a>
           )}
         </>
       ) : null}
