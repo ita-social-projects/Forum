@@ -37,7 +37,7 @@ class TestBannerChange(APITestCase):
             banner_image=f"banners/{self.right_image.name}",
         )
 
-        self.company_kiev = ProfileCompanyFactory(name="Kyivbud")
+        self.company_kyiv = ProfileCompanyFactory(name="Kyivbud")
 
     def tearDown(self) -> None:
         if os.path.exists(self.right_image.name):
@@ -46,7 +46,7 @@ class TestBannerChange(APITestCase):
             os.remove(self.wrong_image.name)
 
     def test_get_empty_banner_unauthorized(self):
-        response = self.client.get(path=f"/api/banner/{self.company_kiev.id}/")
+        response = self.client.get(path=f"/api/banner/{self.company_kyiv.id}/")
         self.assertEqual(200, response.status_code)
         self.assertEqual({"banner_image": None}, response.json())
 
@@ -77,7 +77,7 @@ class TestBannerChange(APITestCase):
 
     def test_get_empty_banner_authorized(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path=f"/api/banner/{self.company_kiev.id}/")
+        response = self.client.get(path=f"/api/banner/{self.company_kyiv.id}/")
         self.assertEqual(200, response.status_code)
         self.assertEqual({"banner_image": None}, response.json())
 
@@ -95,7 +95,7 @@ class TestBannerChange(APITestCase):
     def test_put_banner_authorized_not_owner(self):
         self.client.force_authenticate(self.user)
         response = self.client.put(
-            path=f"/api/banner/{self.company_kiev.id}/",
+            path=f"/api/banner/{self.company_kyiv.id}/",
             data={"banner_image": self.right_image},
         )
         self.assertEqual(403, response.status_code)
