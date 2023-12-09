@@ -47,6 +47,7 @@ class TestCompanyFilter(APITestCase):
                     "service_info": "test service info",
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
+                    "logo_image": None,
                 }
             ],
             response.json(),
@@ -68,6 +69,7 @@ class TestCompanyFilter(APITestCase):
                     "service_info": "test service info",
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
+                    "logo_image": None,
                 }
             ],
             response.json(),
@@ -120,6 +122,7 @@ class TestCompanyFilter(APITestCase):
                     "service_info": "test service info",
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
+                    "logo_image": None,
                 }
             ],
             response.json(),
@@ -143,6 +146,7 @@ class TestCompanyFilter(APITestCase):
                     "service_info": "test service info",
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
+                    "logo_image": None,
                 }
             ],
             response.json(),
@@ -226,6 +230,7 @@ class TestCompanyFilter(APITestCase):
                     "service_info": "test service info",
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
+                    "logo_image": None,
                 }
             ],
             response.json(),
@@ -246,6 +251,7 @@ class TestCompanyFilter(APITestCase):
                     "service_info": "test service info",
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
+                    "logo_image": None,
                 }
             ],
             response.json(),
@@ -269,6 +275,7 @@ class TestCompanyFilter(APITestCase):
                     "service_info": "test service info",
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
+                    "logo_image": None,
                 }
             ],
             response.json(),
@@ -296,6 +303,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_chernigiv.id,
@@ -306,6 +314,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_dnipro.id,
@@ -316,6 +325,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_kiev.id,
@@ -326,6 +336,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
         ]
 
@@ -348,6 +359,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_chernigiv.id,
@@ -358,6 +370,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_dnipro.id,
@@ -368,6 +381,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_kiev.id,
@@ -378,6 +392,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
         ]
 
@@ -399,6 +414,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_dnipro.id,
@@ -409,6 +425,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_chernigiv.id,
@@ -419,6 +436,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_charkiv.id,
@@ -429,6 +447,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
         ]
 
@@ -451,6 +470,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_dnipro.id,
@@ -461,6 +481,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_chernigiv.id,
@@ -471,6 +492,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_charkiv.id,
@@ -481,6 +503,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
         ]
 
@@ -502,6 +525,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_chernigiv.id,
@@ -512,6 +536,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_dnipro.id,
@@ -522,6 +547,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_kiev.id,
@@ -532,6 +558,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
         ]
 
@@ -554,6 +581,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_chernigiv.id,
@@ -564,6 +592,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_dnipro.id,
@@ -574,6 +603,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_kiev.id,
@@ -584,6 +614,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
         ]
 
@@ -605,6 +636,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_dnipro.id,
@@ -615,6 +647,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_chernigiv.id,
@@ -625,6 +658,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_charkiv.id,
@@ -635,6 +669,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
         ]
 
@@ -657,6 +692,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_dnipro.id,
@@ -667,6 +703,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_chernigiv.id,
@@ -677,6 +714,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
             {
                 "id": self.company_charkiv.id,
@@ -687,6 +725,7 @@ class TestCompanyFilter(APITestCase):
                 "service_info": "test service info",
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
+                "logo_image": None,
             },
         ]
 

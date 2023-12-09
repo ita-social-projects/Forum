@@ -92,6 +92,12 @@ class Profile(models.Model):
         null=True,
     )
 
+    logo_image = models.ImageField(
+        upload_to="logos",
+        validators=[validate_image_format, validate_image_size],
+        null=True,
+    )
+
     is_deleted = models.BooleanField(default=False)
 
 
