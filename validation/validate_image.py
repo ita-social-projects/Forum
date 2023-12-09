@@ -4,7 +4,7 @@ import sys
 
 MAX_ALLOWED_BANNER_IMAGE_SIZE = 50 * 1024
 MAX_ALLOWED_LOGO_IMAGE_SIZE = 10 * 1024
-#ToDo: discuss problem with MB-sized pictures with mentors, experts and BAs
+# ToDo: discuss problem with MB-sized pictures with mentors, experts and BAs
 
 
 def validate_image_format(image: Image):
