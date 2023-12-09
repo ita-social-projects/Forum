@@ -61,6 +61,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
     region_display = serializers.SerializerMethodField()
+    banner_image = serializers.ImageField(required=False)
 
     class Meta:
         model = Profile
