@@ -67,7 +67,9 @@ export function SignUpFormContentComponent(props) {
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
       data: dataToSend,
     })
-      .then()
+      .then(() => {
+        navigate('/sign-up/modal');
+      })
       .catch((error) => {
         if (error.response.data.email) {
           setError('email', {
@@ -76,7 +78,6 @@ export function SignUpFormContentComponent(props) {
           });
         }
       });
-      navigate('/sign-up/modal');
   };
 
   return (
