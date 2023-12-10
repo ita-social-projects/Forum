@@ -67,10 +67,8 @@ export function SignUpFormContentComponent(props) {
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
       data: dataToSend,
     })
-      .then((res) => {
-        if (res.status === 201) {
-          navigate('/sign-up/modal');
-        }
+      .then(() => {
+        navigate('/sign-up/modal');
       })
       .catch((error) => {
         if (error.response.data.email) {
