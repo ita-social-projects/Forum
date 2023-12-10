@@ -96,7 +96,6 @@ function TitleInfo({ isAuthorized, data }) {
     if (isAuthorized) {
         return isSaved ? filledStar : outlinedStar;
       }
-    return null;
   };
 
   const CategoryBadges = ({ categories }) => {
