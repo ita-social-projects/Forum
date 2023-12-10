@@ -1,7 +1,9 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Badge } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
+import classNames from 'classnames';
 import useSWRMutation from 'swr/mutation';
 
 import { useUser } from '../../../hooks';
@@ -10,6 +12,7 @@ import classes from './TitleInfo.module.css';
 
 function TitleInfo({ isAuthorized, data }) {
   const { user } = useUser();
+  const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
@@ -72,6 +75,10 @@ function TitleInfo({ isAuthorized, data }) {
     }
   };
 
+  const navigateToEditProfile = () => {
+    navigate('/profile/user-info');
+  };
+
   const filledStar = (
     <StarFilled
       style={{ color: '#FFD800', fontSize: '24px' }}
@@ -84,6 +91,12 @@ function TitleInfo({ isAuthorized, data }) {
       onClick={handleClick}
     />
   );
+
+  const getStarVisibility = () => {
+    if (isAuthorized) {
+        return isSaved ? filledStar : outlinedStar;
+      }
+  };
 
   const CategoryBadges = ({ categories }) => {
     return (
@@ -133,15 +146,30 @@ function TitleInfo({ isAuthorized, data }) {
         </div>
         <div className={classes['title-block__company_region']}>{profile.region}</div>
       </div>
-      {isAuthorized && !ownProfile ? (
-        <button
-          onClick={handleClick}
-          type="button"
-          className={`${classes['title-block__button']} ${isSaved && classes['added_to_saved__button']}`}
-        >
-            <span className={`${classes['title-block__button--text']} ${isSaved && classes['added_to_saved__button--text']}`}>{!isSaved ? 'Додати в збережені' : 'Додано в збережені'}</span>
-          {isAuthorized ? (isSaved ? filledStar : outlinedStar) : null}
-        </button>
+      {isAuthorized ? (
+        <>
+          {!ownProfile && (
+            <button
+              onClick={handleClick}
+              type="button"
+              className={classNames(classes['title-block__button'], {[classes['added_to_saved__button']]: isSaved})}
+            >
+              <span className={classNames(classes['title-block__button--text'], {[classes['added_to_saved__button--text']]: isSaved})}>
+                {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
+              </span>
+              {getStarVisibility()}
+            </button>
+          )}
+          {ownProfile && (
+            <a
+              role="link"
+              className={`${classes['title-block__button']} ${classes['title-block__link']}`}
+              onClick={navigateToEditProfile}
+            >
+              <span className={`${classes['title-block__button--text']}`}>Редагувати профіль</span>
+            </a>
+          )}
+        </>
       ) : null}
     </div>
   );
