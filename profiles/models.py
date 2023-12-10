@@ -6,6 +6,7 @@ from validation.validate_edrpou import validate_edrpou
 from validation.validate_foundation_year import validate_foundation_year_range
 from validation.validate_image import (
     validate_image_size,
+    validate_logo_size,
     validate_image_format,
 )
 from validation.validate_phone_number import (
@@ -89,6 +90,12 @@ class Profile(models.Model):
     banner_image = models.ImageField(
         upload_to="banners",
         validators=[validate_image_format, validate_image_size],
+        null=True,
+    )
+
+    logo_image = models.ImageField(
+        upload_to="logos",
+        validators=[validate_image_format, validate_logo_size],
         null=True,
     )
 

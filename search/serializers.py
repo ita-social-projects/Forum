@@ -18,4 +18,5 @@ class CompanySerializers(serializers.ModelSerializer):
             "service_info",
             "address",
             "banner_image",
+            "logo_image",
         )

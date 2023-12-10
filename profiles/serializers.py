@@ -37,6 +37,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
             "categories",
             "activities",
             "banner_image",
+            "logo_image",
             "is_saved",
         )
 
@@ -83,6 +84,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "service_info",
             "product_info",
             "banner_image",
+            "logo_image",
             "is_saved",
         )
         read_only_fields = (
@@ -103,6 +105,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "service_info",
             "product_info",
             "banner_image",
+            "logo_image",
         )
 
     def get_is_saved(self, obj):
@@ -145,6 +148,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "address",
             "startup_idea",
             "banner_image",
+            "logo_image",
             "is_deleted",
         )
         read_only_fields = (
@@ -169,6 +173,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "address",
             "startup_idea",
             "banner_image",
+            "logo_image",
             "is_deleted",
         )
 
@@ -202,6 +207,7 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             "address",
             "startup_idea",
             "banner_image",
+            "logo_image",
             "is_deleted",
         )
         read_only_fields = ("person",)
