@@ -488,7 +488,7 @@ class TestProfileDetailAPIView(APITestCase):
                 profile_id=self.profile.id
             ),
             data={
-                "banner_image": f"/Forum/{self.wrong_image}",
+                "banner_image": self.wrong_image,
                 "founded": 2005,
             },
         )
@@ -502,7 +502,7 @@ class TestProfileDetailAPIView(APITestCase):
                 profile_id=self.profile.id
             ),
             data={
-                "logo_image": f"/Forum/{self.wrong_image}",
+                "logo_image": self.wrong_image,
                 "founded": 2005,
             },
         )
