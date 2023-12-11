@@ -50,9 +50,7 @@ class TestLogoChange(APITestCase):
         self.assertEqual({"logo_image": None}, response.json())
 
     def test_get_logo_unauthorized(self):
-        response = self.client.get(
-            path=f"/api/logo/{self.company_dnipro.id}/"
-        )
+        response = self.client.get(path=f"/api/logo/{self.company_dnipro.id}/")
         self.assertEqual(200, response.status_code)
         self.assertEqual(
             {
@@ -63,9 +61,7 @@ class TestLogoChange(APITestCase):
 
     def test_get_logo_authorized(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(
-            path=f"/api/logo/{self.company_dnipro.id}/"
-        )
+        response = self.client.get(path=f"/api/logo/{self.company_dnipro.id}/")
         self.assertEqual(200, response.status_code)
         self.assertEqual(
             {
@@ -119,10 +115,6 @@ class TestLogoChange(APITestCase):
         )
         self.assertEqual(400, response.status_code)
         self.assertEqual(
-            {
-                "logo_image": [
-                    "Image size exceeds the maximum allowed (10MB)."
-                ]
-            },
+            {"logo_image": ["Image size exceeds the maximum allowed (10MB)."]},
             response.json(),
         )
