@@ -1,5 +1,6 @@
 import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import useSWR from 'swr';
 import { useUser, useProfile } from '../../../hooks/';
 import css from './FormComponents.module.css';
@@ -191,8 +192,11 @@ const GeneralInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
-                } else {
-                    console.error('Помилка');
+                } else if (response.status === 400 ) {
+                    const errorData = await response.json();
+                    if (errorData.edrpou) {
+                        toast.error('Компанія з таким ЄДРПОУ вже існує');
+                    }
                 }
             } catch (error) {
                 console.error('Помилка:', error);
@@ -308,6 +312,7 @@ const GeneralInfo = (props) => {
                     </div>
                 </form>
                 : <Loader />}
+                <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 };
