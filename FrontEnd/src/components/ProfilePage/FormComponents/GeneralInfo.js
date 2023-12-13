@@ -40,7 +40,7 @@ const ERRORS = {
     },
 };
 
-const TEXT_AREA_MAX_LENGTH = 1000;
+const TEXT_AREA_MAX_LENGTH = 2000;
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
