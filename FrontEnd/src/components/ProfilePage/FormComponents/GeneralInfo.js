@@ -194,7 +194,7 @@ const GeneralInfo = (props) => {
                     profileMutate(updatedProfileData);
                 } else if (response.status === 400 ) {
                     const errorData = await response.json();
-                    if (errorData.edrpou) {
+                    if (errorData.edrpou[0] === 'profile with this edrpou already exists.') {
                         toast.error('Компанія з таким ЄДРПОУ вже існує');
                     }
                 }
