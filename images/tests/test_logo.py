@@ -13,7 +13,7 @@ from profiles.factories import (
 from utils.dump_response import dump  # noqa
 
 
-class TestBannerChange(APITestCase):
+class TestLogoChange(APITestCase):
     @staticmethod
     def _generate_image(ext, size=(100, 100)):
         """for mocking png and jpeg files"""
@@ -33,7 +33,7 @@ class TestBannerChange(APITestCase):
         self.company_dnipro = ProfileStartupFactory.create(
             person=self.user,
             name="Dnipro",
-            banner_image=f"banners/{self.right_image.name}",
+            logo_image=f"logos/{self.right_image.name}",
         )
 
         self.company_kyiv = ProfileCompanyFactory(name="Kyivbud")
@@ -44,46 +44,42 @@ class TestBannerChange(APITestCase):
         if os.path.exists(self.wrong_image.name):
             os.remove(self.wrong_image.name)
 
-    def test_get_empty_banner_unauthorized(self):
-        response = self.client.get(path=f"/api/banner/{self.company_kyiv.id}/")
+    def test_get_empty_logo_unauthorized(self):
+        response = self.client.get(path=f"/api/logo/{self.company_kyiv.id}/")
         self.assertEqual(200, response.status_code)
-        self.assertEqual({"banner_image": None}, response.json())
+        self.assertEqual({"logo_image": None}, response.json())
 
-    def test_get_banner_unauthorized(self):
-        response = self.client.get(
-            path=f"/api/banner/{self.company_dnipro.id}/"
-        )
+    def test_get_logo_unauthorized(self):
+        response = self.client.get(path=f"/api/logo/{self.company_dnipro.id}/")
         self.assertEqual(200, response.status_code)
         self.assertEqual(
             {
-                "banner_image": f"http://testserver/media/banners/{self.right_image.name}"
+                "logo_image": f"http://testserver/media/logos/{self.right_image.name}"
             },
             response.json(),
         )
 
-    def test_get_banner_authorized(self):
+    def test_get_logo_authorized(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(
-            path=f"/api/banner/{self.company_dnipro.id}/"
-        )
+        response = self.client.get(path=f"/api/logo/{self.company_dnipro.id}/")
         self.assertEqual(200, response.status_code)
         self.assertEqual(
             {
-                "banner_image": f"http://testserver/media/banners/{self.right_image.name}"
+                "logo_image": f"http://testserver/media/logos/{self.right_image.name}"
             },
             response.json(),
         )
 
-    def test_get_empty_banner_authorized(self):
+    def test_get_empty_logo_authorized(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path=f"/api/banner/{self.company_kyiv.id}/")
+        response = self.client.get(path=f"/api/logo/{self.company_kyiv.id}/")
         self.assertEqual(200, response.status_code)
-        self.assertEqual({"banner_image": None}, response.json())
+        self.assertEqual({"logo_image": None}, response.json())
 
-    def test_put_banner_unauthorized(self):
+    def test_put_logo_unauthorized(self):
         response = self.client.put(
-            path=f"/api/banner/{self.company_dnipro.id}/",
-            data={"banner_image": self.right_image},
+            path=f"/api/logo/{self.company_dnipro.id}/",
+            data={"logo_image": self.right_image},
         )
         self.assertEqual(401, response.status_code)
         self.assertEqual(
@@ -91,11 +87,11 @@ class TestBannerChange(APITestCase):
             response.json(),
         )
 
-    def test_put_banner_authorized_not_owner(self):
+    def test_put_logo_authorized_not_owner(self):
         self.client.force_authenticate(self.user)
         response = self.client.put(
-            path=f"/api/banner/{self.company_kyiv.id}/",
-            data={"banner_image": self.right_image},
+            path=f"/api/logo/{self.company_kyiv.id}/",
+            data={"logo_image": self.right_image},
         )
         self.assertEqual(403, response.status_code)
         self.assertEqual(
@@ -103,26 +99,22 @@ class TestBannerChange(APITestCase):
             response.json(),
         )
 
-    def test_put_banner_authorized_owner_right_image(self):
+    def test_put_logo_authorized_owner_right_image(self):
         self.client.force_authenticate(self.user)
         response = self.client.put(
-            path=f"/api/banner/{self.company_dnipro.id}/",
-            data={"banner_image": self.right_image},
+            path=f"/api/logo/{self.company_dnipro.id}/",
+            data={"logo_image": self.right_image},
         )
         self.assertEqual(200, response.status_code)
 
-    def test_put_banner_authorized_owner_wrong_image(self):
+    def test_put_logo_authorized_owner_wrong_image(self):
         self.client.force_authenticate(self.user)
         response = self.client.put(
-            path=f"/api/banner/{self.company_dnipro.id}/",
-            data={"banner_image": self.wrong_image},
+            path=f"/api/logo/{self.company_dnipro.id}/",
+            data={"logo_image": self.wrong_image},
         )
         self.assertEqual(400, response.status_code)
         self.assertEqual(
-            {
-                "banner_image": [
-                    "Image size exceeds the maximum allowed (50MB)."
-                ]
-            },
+            {"logo_image": ["Image size exceeds the maximum allowed (10MB)."]},
             response.json(),
         )
