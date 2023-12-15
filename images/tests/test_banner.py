@@ -12,10 +12,15 @@ from utils.dump_response import dump  # noqa
 
 
 class TestBannerChange(APITestCase):
-
     def setUp(self) -> None:
-        self.right_image = open(os.path.join(os.getcwd(), "images", "tests", "img", "img_2mb.png"), "rb")
-        self.wrong_image = open(os.path.join(os.getcwd(), "images", "tests", "img", "img_7mb.png"), "rb")
+        self.right_image = open(
+            os.path.join(os.getcwd(), "images", "tests", "img", "img_2mb.png"),
+            "rb",
+        )
+        self.wrong_image = open(
+            os.path.join(os.getcwd(), "images", "tests", "img", "img_7mb.png"),
+            "rb",
+        )
 
         self.user = UserFactory(email="test1@test.com")
         self.company_dnipro = ProfileStartupFactory.create(
