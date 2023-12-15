@@ -1,8 +1,6 @@
 from rest_framework.test import APITestCase
 
 import os
-from io import BytesIO
-from PIL import Image
 
 from authentication.factories import UserFactory
 from profiles.factories import (
@@ -14,21 +12,11 @@ from utils.dump_response import dump  # noqa
 
 
 class TestLogoChange(APITestCase):
-    @staticmethod
-    def _generate_image(ext, size=(100, 100)):
-        """for mocking png and jpeg files"""
-        file = BytesIO()
-        image = Image.new("RGB", size=size)
-        formatext = ext.upper()
-        image.save(file, formatext)
-        file.name = f"test.{formatext}"
-        file.seek(0)
-        return file
 
     def setUp(self) -> None:
-        self.right_image = self._generate_image("jpeg", (100, 100))
-        self.wrong_image = self._generate_image("png", (8000, 10000))
 
+        self.right_image = open(os.path.join(os.getcwd(), "images", "tests", "img", "img_300kb.png"), "rb")
+        self.wrong_image = open(os.path.join(os.getcwd(), "images", "tests", "img", "img_7mb.png"), "rb")
         self.user = UserFactory(email="test1@test.com")
         self.company_dnipro = ProfileStartupFactory.create(
             person=self.user,
@@ -39,10 +27,8 @@ class TestLogoChange(APITestCase):
         self.company_kyiv = ProfileCompanyFactory(name="Kyivbud")
 
     def tearDown(self) -> None:
-        if os.path.exists(self.right_image.name):
-            os.remove(self.right_image.name)
-        if os.path.exists(self.wrong_image.name):
-            os.remove(self.wrong_image.name)
+        self.right_image.close()
+        self.wrong_image.close()
 
     def test_get_empty_logo_unauthorized(self):
         response = self.client.get(path=f"/api/logo/{self.company_kyiv.id}/")
@@ -54,7 +40,7 @@ class TestLogoChange(APITestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(
             {
-                "logo_image": f"http://testserver/media/logos/{self.right_image.name}"
+                "logo_image": f"http://testserver/media/logos{self.right_image.name}"
             },
             response.json(),
         )
@@ -65,7 +51,7 @@ class TestLogoChange(APITestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(
             {
-                "logo_image": f"http://testserver/media/logos/{self.right_image.name}"
+                "logo_image": f"http://testserver/media/logos{self.right_image.name}"
             },
             response.json(),
         )
