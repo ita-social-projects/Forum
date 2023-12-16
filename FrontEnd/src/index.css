@@ -7,3 +7,12 @@ body {
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
+
+:root {
+  --toastify-color-light: var(--Dust-Red-1, #FFF1F0);
+  --toastify-color-error: none;
+  --toastify-font-family: Inter;
+  --toastify-toast-width: 395px;
+  --toastify-toast-min-height: 22px;
+  --toastify-text-color-light: var(--character-title-85, rgba(0, 0, 0, 0.85));
+}

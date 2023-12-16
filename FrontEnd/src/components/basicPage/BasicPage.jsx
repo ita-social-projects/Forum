@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 
@@ -30,6 +32,23 @@ function BasicPage() {
   const auth = useAuth();
   const user = useUser();
   const userData = user.user;
+
+  const StyledToastContainer = styled(ToastContainer)`
+  &&& .Toastify__toast-container {
+    padding: 0;
+  }
+  .Toastify__toast {
+    font-size: 14px;
+    border-radius: 2px;
+    box-shadow: none;
+    border: 1px solid var(--Dust-Red-2, #FFCCC7);
+    padding: 9px 16px;
+    gap: 10px;
+  }
+  .Toastify__toast-body {
+    padding: 0;
+  }`;
+
   return (
     <ConfigProvider
       theme={{
@@ -125,6 +144,7 @@ function BasicPage() {
       </Routes>
       <Footer />
       <ScrollToTopButton />
+      <StyledToastContainer position="top-right" autoClose={3000} icon={false} />
     </ConfigProvider>
   );
 }
