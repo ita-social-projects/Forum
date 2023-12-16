@@ -7,11 +7,23 @@ import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 import classes from './ProfileDetailNavBar.module.css';
 
 const MENU_LINKS = {
-    'about-company': 'Про компанію',
-    'startup': 'Стартап',
-    'products-services': 'Товари / послуги',
-    'logistics': 'Логістика товарів / послуг',
-    'cooperation': 'Формат співпраці',
+    registeredAndStartup: {
+      'about-company': 'Про компанію',
+      'startup': 'Стартап',
+      'products-services': 'Товари / послуги',
+      'logistics': 'Логістика товарів / послуг',
+      'cooperation': 'Формат співпраці',
+    },
+    registered: {
+      'about-company': 'Про компанію',
+      'products-services': 'Товари / послуги',
+      'logistics': 'Логістика товарів / послуг',
+      'cooperation': 'Формат співпраці',
+    },
+    startup: {
+      'about-company': 'Про компанію',
+      'startup': 'Стартап',
+    }
 };
 
 function ProfileDetailNavBar({ data }) {
@@ -19,6 +31,16 @@ function ProfileDetailNavBar({ data }) {
   const navigate = useNavigate ();
   const { activeLinks } = useContext(ActiveLinksContext);
   const [activeLink, setActiveLink] = useState('');
+
+  const companyType = () => {
+    if (data.is_registered && data.is_startup) {
+      return MENU_LINKS.registeredAndStartup;
+    } else if (data.is_registered) {
+      return MENU_LINKS.registered;
+    } else if (data.is_startup) {
+      return MENU_LINKS.startup;
+    }
+  };
 
   useEffect(() => {
     if (hash) {
@@ -38,7 +60,7 @@ function ProfileDetailNavBar({ data }) {
   return (
     <div>
       <div className={classes['navbar-menu']}>
-        {Object.entries(MENU_LINKS).map(
+        {Object.entries(companyType()).map(
           ([link, label]) =>
             activeLinks.includes(link) && (
               <div key={link} className={classes['navbar-menu__block']}>
