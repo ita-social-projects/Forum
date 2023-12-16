@@ -21,12 +21,21 @@
   width: 360px;
   height: 220px;
 }
-.company-card__image {
+.company-card__empty-image {
   width: 103px;
   height: 80px;
   flex-shrink: 0;
   margin-top: 80px;
   margin-left: 125px;
+  object-fit: cover;
+  opacity: 0.7;
+}
+.company-card__image {
+  width: 360px;
+  height: 220px;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+  flex-shrink: 0;
   object-fit: cover;
   opacity: 0.7;
 }

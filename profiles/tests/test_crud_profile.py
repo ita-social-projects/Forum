@@ -1,7 +1,5 @@
 import os
-from io import BytesIO
 
-from PIL import Image
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -17,21 +15,22 @@ from utils.unittest_helper import AnyInt
 
 
 class TestProfileDetailAPIView(APITestCase):
-    @staticmethod
-    def _generate_image(ext, size=(100, 100)):
-        """for mocking png and jpeg files"""
-        file = BytesIO()
-        image = Image.new("RGB", size=size)
-        formatext = ext.upper()
-        image.save(file, formatext)
-        file.name = f"test.{formatext}"
-        file.seek(0)
-        return file
-
     def setUp(self) -> None:
-        self.right_image = self._generate_image("jpeg", (100, 100))
-        self.right_image_logo = self._generate_image("jpeg", (80, 80))
-        self.wrong_image = self._generate_image("png", (7000, 7000))
+        self.right_image = open(
+            os.path.join(os.getcwd(), "images", "tests", "img", "img_2mb.png"),
+            "rb",
+        )
+        self.wrong_image = open(
+            os.path.join(os.getcwd(), "images", "tests", "img", "img_7mb.png"),
+            "rb",
+        )
+        self.right_image_logo = open(
+            os.path.join(
+                os.getcwd(), "images", "tests", "img", "img_300kb.png"
+            ),
+            "rb",
+        )
+
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
@@ -41,12 +40,9 @@ class TestProfileDetailAPIView(APITestCase):
         )
 
     def tearDown(self) -> None:
-        if os.path.exists(self.right_image.name):
-            os.remove(self.right_image.name)
-        if os.path.exists(self.wrong_image.name):
-            os.remove(self.wrong_image.name)
-        if os.path.exists(self.right_image_logo.name):
-            os.remove(self.right_image_logo.name)
+        self.right_image.close()
+        self.wrong_image.close()
+        self.right_image_logo.close()
 
     # GET requests section
     def test_get_profile_nonexistent(self):

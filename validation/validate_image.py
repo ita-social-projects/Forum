@@ -1,9 +1,10 @@
 from django.core.exceptions import ValidationError
 from PIL import Image
-import sys
 
-MAX_ALLOWED_BANNER_IMAGE_SIZE = 50 * 1024
-MAX_ALLOWED_LOGO_IMAGE_SIZE = 10 * 1024
+Image.MAX_IMAGE_PIXELS = None
+
+MAX_ALLOWED_BANNER_IMAGE_SIZE = 5 * 1024 * 1024
+MAX_ALLOWED_LOGO_IMAGE_SIZE = 1 * 1024 * 1024
 # ToDo: discuss problem with MB-sized pictures with mentors, experts and BAs
 
 
@@ -18,12 +19,12 @@ def validate_image_format(image: Image):
 
 
 def validate_image_size(image_file):
-    max_size = sys.getsizeof(image_file.file)
+    max_size = image_file.size
     if max_size > MAX_ALLOWED_BANNER_IMAGE_SIZE:
         raise ValidationError("Image size exceeds the maximum allowed (50MB).")
 
 
 def validate_logo_size(image_file):
-    max_size = sys.getsizeof(image_file.file)
+    max_size = image_file.size
     if max_size > MAX_ALLOWED_LOGO_IMAGE_SIZE:
         raise ValidationError("Image size exceeds the maximum allowed (10MB).")

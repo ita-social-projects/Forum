@@ -127,10 +127,10 @@ const CompanyCard = ({ companyData, isAuthorized, userData }) => {
       <div className={styles['company-card__block']}>
         <div className={styles['company-card__image-frame']}>
         {companyData.banner_image ? (
-                    <img src={companyData.banner_image} alt="Company Banner" />
+                    <img src={companyData.banner_image} alt="Company Banner" className={styles['company-card__image']}/>
                     ) : (
                 <img
-            className={styles['company-card__image']}
+            className={styles['company-card__empty-image']}
             src={`${process.env.REACT_APP_PUBLIC_URL}/svg/profile-view-image-empty.svg`}
             alt={companyData.name}
           />
@@ -171,11 +171,15 @@ const CompanyCard = ({ companyData, isAuthorized, userData }) => {
       </div>
       <div className={styles['company-card__logo']}>
         <div className={styles['company-card__logo-ellipse']}>
-          <img
+        {companyData.logo_image ? (
+                    <img src={companyData.logo_image} alt="Logo" className={styles['company-card__logo-image']}/>
+                    ) : (
+                <img
             className={styles['company-card__logo-image']}
             src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/1.png`}
             alt=""
           />
+                )}
         </div>
       </div>
     </div>
