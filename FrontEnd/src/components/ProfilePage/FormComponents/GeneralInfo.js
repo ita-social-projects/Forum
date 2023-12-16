@@ -1,6 +1,6 @@
 import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { useUser, useProfile } from '../../../hooks/';
 import css from './FormComponents.module.css';
@@ -312,7 +312,6 @@ const GeneralInfo = (props) => {
                     </div>
                 </form>
                 : <Loader />}
-                <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 };
