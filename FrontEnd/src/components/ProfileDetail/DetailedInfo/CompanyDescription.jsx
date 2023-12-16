@@ -10,10 +10,10 @@ function CompanyDescription ({ data }) {
     return (
         <div className={classes['company-description-block']}>
             <Company data={data} />
-            {data.is_startup ? <Startup data={data} /> : null}
-            {data.is_registered ? <ProductsServices data={data} /> : null}
-            {data.is_registered ? <Logistics /> : null}
-            {data.is_registered ? <Cooperation /> : null}
+            {data.is_startup && <Startup data={data} />}
+            {data.is_registered && <ProductsServices data={data} />}
+            {data.is_registered && <Logistics />}
+            {data.is_registered && <Cooperation />}
         </div>
     );
 }
