@@ -34,6 +34,7 @@ export default function ProfileCard({ isAuthorized, data }) {
           : data.categories,
       isSaved: data.is_saved,
       commonInfo: data.common_info,
+      logo: data.logo_image,
     };
   }, [data]);
 
@@ -105,16 +106,14 @@ export default function ProfileCard({ isAuthorized, data }) {
     );
   };
 
-  // TODO: add logo from db once it's implemented on the server side
-
   return (
     <div className={css['company-card']}>
       <Link className={css['company-card__link']} to={`/profile-detail/${profile.id}`}>
         <div className={css['logo-box']}>
           <img
             className={css.logo}
-            src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/1.png`}
-            alt=""
+            src={profile.logo || `${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
+            alt="Company logo"
           />
         </div>
         <div className={css.content}>
@@ -164,5 +163,6 @@ ProfileCard.propTypes = {
     ),
     common_info: PropTypes.string,
     is_saved: PropTypes.bool.isRequired,
+    logo_image: PropTypes.string,
   }).isRequired,
 };

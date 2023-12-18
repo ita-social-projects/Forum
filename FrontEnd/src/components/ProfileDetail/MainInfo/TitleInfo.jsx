@@ -29,6 +29,7 @@ function TitleInfo({ isAuthorized, data }) {
           ? data.categories.slice(0, 4)
           : data.categories,
       isSaved: data.is_saved,
+      logo: data.logo_image,
     };
   }, [data]);
 
@@ -120,18 +121,14 @@ function TitleInfo({ isAuthorized, data }) {
     );
   };
 
-  // TODO: add logo from db once it's implemented on the server side
-
-  const logo = '';
-
   return (
     <div className={classes['title-block']}>
       <div className={classes['title-block__logo']}>
-        {!logo ? (
+        {!profile.logo ? (
           <DefaultLogo />
         ) : (
           <img className={classes['logo']}
-            src=""
+            src={profile.logo}
             alt="Company logo"
           />
         )}
@@ -198,5 +195,6 @@ TitleInfo.propTypes = {
       })
     ),
     is_saved: PropTypes.bool.isRequired,
+    logo_image: PropTypes.string,
   }).isRequired,
 };

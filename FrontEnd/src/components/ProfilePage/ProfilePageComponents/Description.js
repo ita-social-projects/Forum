@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import css from './Description.module.css';
 
 const DESCRIPTIONS = {
@@ -12,7 +13,7 @@ const Description = (props) => {
         <div className={css['description__section']}>
             <img
                 className={css['description__avatar']}
-                src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/initialCompanyLogo.png`}
+                src={props.companyLogo || `${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
                 alt=""
             />
             <div className={css['description__content']}>
@@ -26,3 +27,9 @@ const Description = (props) => {
 };
 
 export default Description;
+
+Description.propTypes = {
+    companyName: PropTypes.string,
+    companyLogo: PropTypes.string,
+    formName: PropTypes.string,
+  };

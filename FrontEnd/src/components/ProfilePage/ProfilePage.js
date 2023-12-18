@@ -23,7 +23,7 @@ const ProfilePage = () => {
                 ? <Loader />
                 :
                 <>
-                    <Description companyName={profile.name} formName={formName} />
+                    <Description companyName={profile.name} companyLogo={profile.logo_image} formName={formName} />
                     <ProfileContent
                         user={user}
                         profile={profile}
