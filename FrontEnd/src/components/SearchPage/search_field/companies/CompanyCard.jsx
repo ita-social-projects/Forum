@@ -176,7 +176,7 @@ const CompanyCard = ({ companyData, isAuthorized, userData }) => {
                     ) : (
                 <img
             className={styles['company-card__logo-image']}
-            src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/1.png`}
+            src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
             alt=""
           />
                 )}

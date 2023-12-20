@@ -3,7 +3,6 @@
   width: 100%;
   padding: 8px;
   align-items: flex-start;
-  gap: 16px;
   border-radius: 12px;
   border: 1px solid var(--main-grey-10, #eeeff1);
   background: var(--main-white, #fff);
@@ -12,6 +11,7 @@
 
 .company-card__link {
   display: flex;
+  gap: 16px;
 }
 
 .logo-box {
@@ -28,6 +28,7 @@
   width: 54px;
   height: 54px;
   border-radius: 26px;
+  object-fit: cover;
 }
 
 .description__avatar {

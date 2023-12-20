@@ -9,18 +9,22 @@
   transition: transform 0.2s ease;
   position: relative;
 }
+
 .company-card:hover {
   transform: scale(1.1);
 }
+
 .company-card__block {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
+
 .company-card__image-frame {
   width: 360px;
   height: 220px;
 }
+
 .company-card__empty-image {
   width: 103px;
   height: 80px;
@@ -30,6 +34,7 @@
   object-fit: cover;
   opacity: 0.7;
 }
+
 .company-card__image {
   width: 360px;
   height: 220px;
@@ -39,6 +44,7 @@
   object-fit: cover;
   opacity: 0.7;
 }
+
 .company-card__text-block {
   display: flex;
   padding: 20px 16.02px;
@@ -48,12 +54,14 @@
   border-radius: 0 0 12px 12px;
   background: var(--main_light-color);
 }
+
 .company-card__text-block__header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
 }
+
 .company-card__category-text {
   color: var(--companies-card-lover-text);
   text-align: center;
@@ -61,9 +69,11 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  line-height: 120%; /* 19.2px */
+  line-height: 120%;
+  /* 19.2px */
   text-align: left;
 }
+
 .company-card__name-text {
   width: 328px;
   height: 48px;
@@ -72,13 +82,15 @@
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
-  line-height: 120%; /* 24px */
+  line-height: 120%;
+  /* 24px */
   text-transform: uppercase;
   text-align: left;
 }
 
 .company-card__name-text_link {
-  text-decoration: none; /* delete underline */
+  text-decoration: none;
+  /* delete underline */
   color: var(--text-color);
 }
 
@@ -94,10 +106,12 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 142.857% */
+  line-height: 20px;
+  /* 142.857% */
   letter-spacing: -0.14px;
   text-align: left;
 }
+
 .company-card__badges-block {
   width: 100%;
   display: flex;
@@ -105,6 +119,7 @@
   align-items: flex-start;
   gap: 8px;
 }
+
 .company-card__badges {
   display: flex;
   flex-direction: column;
@@ -112,6 +127,7 @@
   align-items: center;
   background: var(--main_light-color);
 }
+
 .company-card__badge {
   display: flex;
   padding: 2px 8px;
@@ -120,6 +136,7 @@
   border-radius: 100px;
   background: var(--pagination-style-color);
 }
+
 .company-card__badge-text {
   color: var(--main_light-color);
   text-align: center;
@@ -128,9 +145,11 @@
   font-size: 10px;
   font-style: normal;
   font-weight: 600;
-  line-height: 16px; /* 160% */
+  line-height: 16px;
+  /* 160% */
   text-transform: uppercase;
 }
+
 .company-card__logo {
   width: 64px;
   height: 64px;
@@ -138,6 +157,7 @@
   right: 16px;
   bottom: 159.5px;
 }
+
 .company-card__logo-ellipse {
   width: 64px;
   height: 64px;
@@ -148,6 +168,7 @@
   border-radius: 9999px;
   box-shadow: 0 0 2px rgba(65, 64, 69, 0.2);
 }
+
 .company-card__logo-image {
   width: 54px;
   height: 54px;
@@ -157,6 +178,7 @@
   left: 5px;
   top: 5px;
   position: absolute;
+  object-fit: cover;
 }
 
 .company-card__buttons {

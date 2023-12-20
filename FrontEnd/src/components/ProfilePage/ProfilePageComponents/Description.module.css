@@ -3,17 +3,17 @@
     align-items: flex-start;
     width: 400px;
     height: 40px;
-    gap: 12px; 
-    padding-left: 192px;    
+    gap: 12px;
+    padding-left: 192px;
 }
 
 .description__avatar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    border-radius: 100px;
-    border: 3px solid #E2E5EB;
-    background: #FFF;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 26px;
+    box-shadow: 0px 0px 2px 0px rgba(65, 64, 69, 0.20);
+    object-fit: cover;
 }
 
 .description__content {
@@ -25,7 +25,7 @@
 .company__attributes {
     display: flex;
     align-items: flex-start;
-    gap: 16px;    
+    gap: 16px;
 }
 
 .companyName {
@@ -55,5 +55,5 @@
     line-height: 16px;
     letter-spacing: 0em;
     text-align: left;
-    color: #292E32;   
+    color: #292E32;
 }
