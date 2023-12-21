@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxLengthValidator
+from datetime import date
 
 from authentication.models import CustomUser
 from validation.validate_edrpou import validate_edrpou
@@ -100,6 +101,10 @@ class Profile(models.Model):
     )
 
     is_deleted = models.BooleanField(default=False)
+    # create_at = models.DateField(auto_now_add=True)
+    create_at = models.DateField(default=date.today)
+    # update_at = models.DateField(auto_now=True)
+    update_at = models.DateField(default=date.today)
 
 
 class Activity(models.Model):
