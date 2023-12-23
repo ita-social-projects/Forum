@@ -194,8 +194,10 @@ const GeneralInfo = (props) => {
                     profileMutate(updatedProfileData);
                 } else if (response.status === 400 ) {
                     const errorData = await response.json();
-                    if (errorData.edrpou[0] === 'profile with this edrpou already exists.') {
+                    if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
                         toast.error('Компанія з таким ЄДРПОУ вже існує');
+                    } else {
+                        toast.error('Не вдалося зберегти зміни, сталася помилка');
                     }
                 }
             } catch (error) {
