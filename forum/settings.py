@@ -83,6 +83,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1",
     "http://0.0.0.0",
+    config("CORS_ALLOWED_ORIGINS"),
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
