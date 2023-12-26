@@ -1,5 +1,6 @@
 import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { useUser, useProfile } from '../../../hooks/';
 import css from './FormComponents.module.css';
@@ -191,8 +192,13 @@ const GeneralInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
-                } else {
-                    console.error('Помилка');
+                } else if (response.status === 400 ) {
+                    const errorData = await response.json();
+                    if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
+                        toast.error('Компанія з таким ЄДРПОУ вже існує');
+                    } else {
+                        toast.error('Не вдалося зберегти зміни, сталася помилка');
+                    }
                 }
             } catch (error) {
                 console.error('Помилка:', error);
