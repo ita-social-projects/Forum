@@ -1,0 +1,15 @@
+.toast-container {
+    padding: 0;
+}
+
+.toast {
+    font-size: 14px;
+    border-radius: 2px;
+    box-shadow: none;
+    border: 1px solid var(--Dust-Red-2, #FFCCC7);
+    padding: 9px 16px;
+}
+
+.toast-body {
+    padding: 0;
+}

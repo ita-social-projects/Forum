@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 
@@ -25,11 +26,13 @@ import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/Ter
 import { useAuth } from '../../hooks';
 import { useUser } from '../../hooks';
 import { Search } from '../SearchPage/Search';
+import classes from './BasicPage.module.css';
 
 function BasicPage() {
   const auth = useAuth();
   const user = useUser();
   const userData = user.user;
+
   return (
     <ConfigProvider
       theme={{
@@ -121,10 +124,21 @@ function BasicPage() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
-        <Route path="/search" element={<Search isAuthorized={auth} userData={userData} />} />
+        <Route
+          path="/search"
+          element={<Search isAuthorized={auth} userData={userData} />}
+        />
       </Routes>
       <Footer />
       <ScrollToTopButton />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        icon={false}
+        className={classes.toastContainer}
+        toastClassName={classes.toast}
+        bodyClassName={classes.toastBody}
+      />
     </ConfigProvider>
   );
 }
