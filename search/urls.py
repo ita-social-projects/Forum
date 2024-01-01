@@ -1,6 +1,6 @@
 from django.urls import path
 
-from search.views import SearchCompanyView, NewMembersList
+from search.views import SearchCompanyView
 
 app_name = "search"
 
@@ -8,5 +8,5 @@ urlpatterns = [
     path(
         "search/", SearchCompanyView.as_view(), name="search-company"
     ),  # localhost:8000/api/search/
-    path("new_members/", NewMembersList.as_view(), name="new-members-list"),
+    # path("new_members/", NewMembersList.as_view(), name="new-members-list"),
 ]

@@ -15,6 +15,7 @@ from rest_framework.permissions import (
     IsAdminUser,
 )
 from rest_framework.response import Response
+from rest_framework import filters
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -97,8 +98,10 @@ class ProfileList(ListCreateAPIView):
 
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = ForumPagination
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = ProfileFilter
+    # ordering_fields = ["completeness"]
+    ordering = ['completeness', '-created_at']
 
     def get_serializer_class(self):
         if self.request.method == "GET":
@@ -181,6 +184,27 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
         instance.is_deleted = True
+        instance.save()
+
+    # def partial_update(self, request):
+    #     profile = Profile.objects.filter(person_id=self.request.user)
+    #     print(request, '*'*100)
+    #     profile.completeness +=1
+    #     return super().partial_update(request)
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        instance.completeness = 0
+        if instance.banner_image:
+            instance.completeness += 100
+        if instance.logo_image:
+            instance.completeness += 1
+        if instance.region:
+            instance.completeness += 1
+        if instance.activities:
+            instance.completeness += 1
+        if instance.categories:
+            instance.completeness += 1
         instance.save()
 
 

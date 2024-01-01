@@ -101,10 +101,9 @@ class Profile(models.Model):
     )
 
     is_deleted = models.BooleanField(default=False)
-    # create_at = models.DateField(auto_now_add=True)
-    create_at = models.DateField(default=date.today)
-    # update_at = models.DateField(auto_now=True)
-    update_at = models.DateField(default=date.today)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    completeness = models.SmallIntegerField(default=None, null=True)
 
 
 class Activity(models.Model):
