@@ -226,3 +226,4 @@ if running_tests():
     # For tests execution, the fastest password hasher is used
     # (may increase execution speed ×10 and more)
     PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
+    
