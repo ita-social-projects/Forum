@@ -8,7 +8,7 @@
 
 >  Business-to-business solution B2B
 
-> Django backend serves, Custom Administrative Panel
+> Django backend serves
 
 **Badges will go here**
 
@@ -100,7 +100,7 @@ EMAIL_HOST_PASSWORD= key ... user password
 
 Origin hostnames allowed to make cross-site HTTP requests
 CORS_ORIGIN_WHITELIST="frontend address:port" #docker-compose and settings.py
-CORS_ALLOWED_ORIGINS= sample filling => http://localhost:3000 #settings.py
+CORS_ALLOWED_ORIGINS= sample filling => http://localhost:8080 #settings.py
 ALLOWED_ENV_HOST="frontend address:port" #docker-compose and settings.py
 
 Used by Docker
@@ -113,7 +113,7 @@ Global variables frontend and sample filling
 
 ```properties
 REACT_APP_BASE_API_URL= sample filling => http://localhost:8000 #Path to the backend API server
-REACT_APP_PUBLIC_URL= sample filling => http://localhost:3000 #Path to the frontend visualization
+REACT_APP_PUBLIC_URL= sample filling => http://localhost:8080 #Path to the frontend visualization
 ```
 
 ### Clone
@@ -164,8 +164,8 @@ EMAIL_HOST_USER= sample filling =>test@test.com
 EMAIL_HOST_PASSWORD= sample filling => 'key ...'
 
 #origin hostnames allowed to make cross-site HTTP requests
-CORS_ORIGIN_WHITELIST= sample filling => "http://localhost:3000"
-CORS_ALLOWED_ORIGINS= sample filling => "http://localhost:3000"
+CORS_ORIGIN_WHITELIST= sample filling => "http://localhost:8080"
+#CORS_ALLOWED_ORIGINS= sample filling => "http://localhost:8080"
 
 PGADMIN_DEFAULT_PASSWORD= 'key ...'
 PGADMIN_DEFAULT_EMAIL=  sample filling => admin@admin.com
@@ -173,7 +173,7 @@ PGADMIN_DEFAULT_EMAIL=  sample filling => admin@admin.com
 DEBUG=True or False  
 ENGINE= # docker-compose.dev.yml
 POSTGRES_DB= sample filling =>  forum  # docker-compose
-ALLOWED_ENV_HOST=sample filling => "http://localhost:3000" # docker-compose and settings.py
+ALLOWED_ENV_HOST=sample filling => "http://localhost:8080" # docker-compose and settings.py
 ```
 - User, run the local server on port localhost:8000
 ``` shell
@@ -187,15 +187,15 @@ $ python manage.py runserver
 
 ``` shell
 REACT_APP_BASE_API_URL= sample filling => http://localhost:8000 # Path to the backend API server
-REACT_APP_PUBLIC_URL= sample filling => http://localhost:3000 # Path to the frontend visualization
-```
-- User, run the local server on port localhost:3000
-``` shell
-npm start
-or
-npm restart
+REACT_APP_PUBLIC_URL= sample filling => http://localhost:8080 # Path to the frontend visualization
 ```
 
+- User, run the local server on port localhost:8080 
+``` shell
+PORT=8080 npm start
+or
+PORT=8080 npm restart
+```
 ### How to run Docker
 
 - Setup Docker  
