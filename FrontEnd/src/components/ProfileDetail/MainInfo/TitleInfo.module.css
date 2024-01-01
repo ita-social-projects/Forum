@@ -45,11 +45,16 @@
 
 .title-block__company {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    max-width: 72%;
     gap: 16px;
 }
 
 .title-block__company_name {
+    display: flex;
+    align-items: flex-start;
+    min-width: fit-content;
+    gap: 4px;
     color: var(--main-grey-90, #25292C);
     font-family: Inter;
     font-size: 20px;
@@ -61,8 +66,9 @@
 
 .title-block__company_category {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
-    gap: 6px;
+    gap: 8px;
 }
 
 .title-block__company_region {
