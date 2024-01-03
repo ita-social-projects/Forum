@@ -4,11 +4,11 @@
 
 # Repository Title Goes Here
 
-> Subtitle or Short Description Goes Here
+> This project aims to facilitate the collaboration between startups and investors, providing a platform for them to discover and connect with each other. It serves as a business-to-business solution, enabling the exchange of information between startups and potential investors.
 
-> ideally one sentence
+>  Business-to-business solution B2B
 
-> include terms/tags that can be searched
+> Django backend serves
 
 **Badges will go here**
 
@@ -23,13 +23,13 @@
 - license
 - etc.
 
-[![Build Status](https://img.shields.io/travis/ita-social-projects/GreenCity/master?style=flat-square)](https://travis-ci.org/github/ita-social-projects/GreenCity)
-[![Coverage Status](https://img.shields.io/gitlab/coverage/ita-social-projects/GreenCity/master?style=flat-square)](https://coveralls.io)
-[![Github Issues](https://img.shields.io/github/issues/ita-social-projects/GreenCity?style=flat-square)](https://github.com/ita-social-projects/GreenCity/issues)
-[![Pending Pull-Requests](https://img.shields.io/github/issues-pr/ita-social-projects/GreenCity?style=flat-square)](https://github.com/ita-social-projects/GreenCity/pulls)
+[![Build Status](https://img.shields.io/travis/ita-social-projects/Forum/master?style=flat-square)](https://travis-ci.org/github/ita-social-projects/Forum)
+[![Coverage Status](https://img.shields.io/gitlab/coverage/ita-social-projects/Forum/master?style=flat-square)](https://coveralls.io)
+[![Github Issues](https://img.shields.io/github/issues/ita-social-projects/Forum?style=flat-square)](https://github.com/ita-social-projects/Forum/issues)
+[![Pending Pull-Requests](https://img.shields.io/github/issues-pr/ita-social-projects/Forum?style=flat-square)](https://github.com/ita-social-projects/Forum/pulls)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
-- For more on these wonderful  badges, refer to <a href="https://shields.io/" target="_blank">shields.io</a>.
+- For more on these wonderful  badges, refer to <a href="#" target="_blank">#</a>.
 
 ---
 
@@ -64,82 +64,197 @@
 - Images of what it should look like
 
 ### Required to install
-* Python (3.6.3)
-* PostgreSQL (9.5.9)
-* Django (1.11.6)
-* NodeJS (6.11.4)
-* Redis (3.0.6)
+* Python 3.9
+* PostgreSQL 14
+* Django 4.2.3
+* NodeJS Frontend
+
+```shell
+$ pip install -r requirements.txt
+```
+
 
 ### Environment
-environmental variables
+
+Global variables backend and sample filling
+Django
+
 ```properties
-spring.datasource.url=${DATASOURCE_URL}
-spring.datasource.username=${DATASOURCE_USER}
-spring.datasource.password=${DATASOURCE_PASSWORD}
-spring.mail.username=${EMAIL_ADDRESS}
-spring.mail.password=${EMAIL_PASSWORD}
-cloud.name=${CLOUD_NAME}
-api.key=${API_KEY}
-api.secret=${API_SECRET}
+DEBUG=True or False #Django backend debug mode
+
+db details
+SECRET_KEY= key ... # Use rules for hashed data
+PG_DB= Database name
+PG_USER= Database user
+PG_PASSWORD= Database user password
+DB_HOST=sample filling => localhost or '127.0.0.1' # Database host
+DB_PORT=sample filling => 5432 # Database port
+
+SMTP
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST="mail server address"
+EMAIL_PORT=sample filling => 523 # Server port
+EMAIL_USE_TLS=sample filling => 1
+EMAIL_HOST_USER= User login
+EMAIL_HOST_PASSWORD= key ... user password
+
+Origin hostnames allowed to make cross-site HTTP requests
+CORS_ORIGIN_WHITELIST="frontend address:port" #docker-compose and settings.py
+CORS_ALLOWED_ORIGINS= sample filling => http://localhost:8080 #settings.py
+ALLOWED_ENV_HOST="frontend address:port" #docker-compose and settings.py
+
+Used by Docker
+PGADMIN_DEFAULT_PASSWORD= key ... #Use rules for hashed data. Used by Docker
+PGADMIN_DEFAULT_EMAIL= "user login" sample filling admin@admin.com . Used by Docker
+POSTGRES_DB= database name
+ENGINE= #docker-compose.dev.yml
+```
+Global variables frontend and sample filling
+
+```properties
+REACT_APP_BASE_API_URL= sample filling => http://localhost:8000 #Path to the backend API server
+REACT_APP_PUBLIC_URL= sample filling => http://localhost:8080 #Path to the frontend visualization
 ```
 
 ### Clone
 
-- Clone this repo to your local machine using `https://github.com/ita-social-projects/SOMEREPO`
+- Clone this repo to your local machine using `https://github.com/ita-social-projects/Forum.git`
 
 ### Setup
 
 - If you want more syntax highlighting, format your code like this:
+- Localhost
 
 > update and install this package first
 
 ```shell
-$ brew update
-$ brew install SOMEREPOproductions
+$ pip install -r requirements.txt
 ```
 
 > now install npm and bower packages
 
 ```shell
-$ npm install
-$ bower install
+$ sudo apt update
+$ sudo apt install nodejs
+$ sudo apt install npm
+
 ```
 
 - For all the possible languages that support syntax highlithing on GitHub (which is basically all of them), refer <a href="https://github.com/github/linguist/blob/master/lib/linguist/languages.yml" target="_blank">here</a>.
 
 ### How to run local
+### Django backend server
+- Setup  .env
+> Setup .env
+``` shell
+#db details
+SECRET_KEY= 'key ...'
+PG_DB= sample filling => forum
+PG_USER= sample filling => postgres
+PG_PASSWORD= sample filling => postgres
+DB_HOST=  sample filling => localhost
+DB_PORT=  sample filling => 5432
 
+#SMTP
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST= sample filling => "127.0.0.1"
+EMAIL_PORT= sample filling => 1025
+EMAIL_USE_TLS= sample filling => 1
+EMAIL_HOST_USER= sample filling =>test@test.com
+EMAIL_HOST_PASSWORD= sample filling => 'key ...'
+
+#origin hostnames allowed to make cross-site HTTP requests
+CORS_ORIGIN_WHITELIST= sample filling => "http://localhost:8080"
+#CORS_ALLOWED_ORIGINS= sample filling => "http://localhost:8080"
+
+PGADMIN_DEFAULT_PASSWORD= 'key ...'
+PGADMIN_DEFAULT_EMAIL=  sample filling => admin@admin.com
+
+DEBUG=True or False  
+ENGINE= # docker-compose.dev.yml
+POSTGRES_DB= sample filling =>  forum  # docker-compose
+ALLOWED_ENV_HOST=sample filling => "http://localhost:8080" # docker-compose and settings.py
+```
+- User, run the local server on port localhost:8000
+``` shell
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py runserver
+```
+### Node JS  frontend server
+- Setup frontend .env
+> Setup frontend .env
+
+``` shell
+REACT_APP_BASE_API_URL= sample filling => http://localhost:8000 # Path to the backend API server
+REACT_APP_PUBLIC_URL= sample filling => http://localhost:8080 # Path to the frontend visualization
+```
+
+- User, run the local server on port localhost:8080 
+``` shell
+PORT=8080 npm start
+or
+PORT=8080 npm restart
+```
 ### How to run Docker
-- 1). Install Docker
-- 2). Make sure you put your cradentials in .env
-- 3). Use command in terminal: docker-compose up -d --build
-- 4). Running your containers
-- 5). Follow the link
-- 6). In some cases of mistakes you need to put line 30 in settings.py in comment and uncomment line 31, then delete containers and images and repeat 3, 4, 5 steps
+
+- Setup Docker  
+> Setup .env
+``` shell
+
+```
+> Run Docker comands
+```shell
+$ docker compose build
+$ docker compose up
+$ docker exec -i contener-name-exemple python manage.py makemigrations
+$ docker exec -i contener-name-exemple python manage.py migrate
+```
+
+> Stop Docker comands
+```shell
+ctrl + c
+$ docker stop $(docker ps -q)
+```
 ---
 
 ## Usage
 ### How to work with swagger UI
 ### How to run tests
+- User, run test:
+```shell
+$ python manage.py test
+```
+
 ### How to Checkstyle
 
 ---
 
 ## Documentation
+- 🔃 Documentation <a href="https://github.com/ita-social-projects/Forum/wiki" target="_blank">Forum/wiki</a>.
 
 ---
 
 ## Contributing
 
 ### Git flow
-> To get started...
+We are using simplest GitHub flow to organize our work:
+![Git Flow Ilustration](https://camo.githubusercontent.com/249bd600310c01188d4daf366519c24044e9883e/68747470733a2f2f7363696c6966656c61622e6769746875622e696f2f736f6674776172652d646576656c6f706d656e742f696d672f6769746875622d666c6f772e706e67)
+
+
+### Note! Contribution rules:
+1. All Pull Requests should start from prefix #xxx-yyy where xxx - task number and yyy - short description e.g. #020-CreateAdminPanel
+2. Pull requests should not contain any files not required by the task.
+
+In case of any violations, the pull request will be rejected.
+
 #### Step 1
 
 - **Option 1**
     - 🍴 Fork this repo!
 
 - **Option 2**
-    - 👯 Clone this repo to your local machine using `https://github.com/ita-social-projects/SOMEREPO.git`
+    - 👯 Clone this repo to your local machine using `https://github.com/ita-social-projects/Forum.git`
 
 #### Step 2
 
@@ -147,7 +262,7 @@ $ bower install
 
 #### Step 3
 
-- 🔃 Create a new pull request using <a href="https://github.com/ita-social-projects/SOMEREPO/compare/" target="_blank">github.com/ita-social-projects/SOMEREPO</a>.
+- 🔃 Create a new pull request using <a href="#" target="_blank">https://github.com/ita-social-projects/Forum.git</a>.
 
 ### Issue flow
 
@@ -159,12 +274,7 @@ $ bower install
 
 [![@lhalam](https://avatars3.githubusercontent.com/u/3837059?s=100&v=4)](https://github.com/lhalam)
 [![@lhalam](https://avatars3.githubusercontent.com/u/3837059?s=100&v=4)](https://github.com/lhalam)
-[![@lhalam](https://avatars3.githubusercontent.com/u/3837059?s=100&v=4)](https://github.com/lhalam)
-[![@lhalam](https://avatars3.githubusercontent.com/u/3837059?s=100&v=4)](https://github.com/lhalam) 
-[![@lhalam](https://avatars3.githubusercontent.com/u/3837059?s=100&v=4)](https://github.com/lhalam)
-[![@lhalam](https://avatars3.githubusercontent.com/u/3837059?s=100&v=4)](https://github.com/lhalam)
-[![@lhalam](https://avatars3.githubusercontent.com/u/3837059?s=100&v=4)](https://github.com/lhalam)
-[![@lhalam](https://avatars3.githubusercontent.com/u/3837059?s=100&v=4)](https://github.com/lhalam)  
+ 
 
 - You can just grab their GitHub profile image URL
 - You should probably resize their picture using `?s=200` at the end of the image URL.
@@ -182,8 +292,8 @@ $ bower install
 
 Reach out to me at one of the following places!
 
-- Website at <a href="http://Website.com" target="_blank">`Website.com`</a>
-- Facebook at <a href="https://www.facebook.com/LiubomyrHalamaha/" target="_blank">`Liubomyr Halamaha`</a>
+- Website at <a href="#" target="_blank">`#`</a>
+- Facebook at <a href="#" target="_blank">`#`</a>
 - Insert more social links here.
 
 ---
