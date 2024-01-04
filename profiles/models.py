@@ -103,7 +103,7 @@ class Profile(models.Model):
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    completeness = models.SmallIntegerField(default=None, null=True)
+    completeness = models.SmallIntegerField(default=0)
 
 
 class Activity(models.Model):
