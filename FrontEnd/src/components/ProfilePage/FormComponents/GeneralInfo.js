@@ -8,6 +8,7 @@ import css from './FormComponents.module.css';
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
+import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
@@ -20,7 +21,8 @@ const LABELS = {
     'region': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
-    'bannerImage': 'Зображення для банера',
+    'banner_image': 'Зображення для банера',
+    'logo_image': 'Логотип',
     'common_info': 'Інформація про компанію',
     'is_registered': 'Зареєстрована компанія',
     'is_startup': 'Стартап проект, який шукає інвестиції',
@@ -42,6 +44,8 @@ const ERRORS = {
 };
 
 const TEXT_AREA_MAX_LENGTH = 2000;
+const BANNER_IMAGE_SIZE = 5 * 1024 * 1024;
+const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
@@ -50,6 +54,8 @@ const GeneralInfo = (props) => {
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
+    const [bannerImageError, setBannerImageError] = useState(null);
+    const [logoImageError, setLogoImageError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
     const [companyTypeError, setCompanyTypeError] = useState(null);
 
@@ -165,6 +171,66 @@ const GeneralInfo = (props) => {
         }
     };
 
+    const uploadImage = async (url, imageKey, image) => {
+        const formData = new FormData();
+        formData.append(imageKey, image);
+        const token = localStorage.getItem('Token');
+        try{
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+                body: formData,
+            });
+            if (response.status === 200) {
+                const data = await response.json();
+                setProfile((prevState) => {
+                    const newState = { ...prevState, [imageKey]: data[imageKey] };
+                    return newState;
+                });
+                profileMutate((prevState) => {
+                    return { ...prevState, [imageKey]: data[imageKey] };
+                });
+                data[imageKey] === null ? toast.success('Зображення видалено з профілю') : toast.success('Зображення успішно додано у профіль');
+            } else if (response.status === 400) {
+                toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    };
+
+    const onUpdateImageField = (e) => {
+        const file = e.target.files[0];
+        e.target.value = '';
+        if (file) {
+            if (e.target.name === 'banner_image') {
+                if (file.size > BANNER_IMAGE_SIZE) {
+                    setBannerImageError('Максимальний розмір файлу 5 Mb');
+                } else {
+                    setBannerImageError(null);
+                    uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, e.target.name, file);
+                }
+            } else {
+                if (file.size > LOGO_IMAGE_SIZE) {
+                    setLogoImageError('Максимальний розмір файлу 1 Mb');
+                } else {
+                    setLogoImageError(null);
+                    uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, e.target.name, file);
+                }
+            }
+        }
+    };
+
+    const deleteImageHandler = (name) => {
+        if (name === 'logo_image') {
+            uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, name, '');
+        } else {
+            uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, name, '');
+        }
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkRequiredFields()) {
@@ -192,6 +258,7 @@ const GeneralInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
+                    toast.success('Зміни успішно збережено');
                 } else if (response.status === 400 ) {
                     const errorData = await response.json();
                     if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
@@ -205,6 +272,7 @@ const GeneralInfo = (props) => {
             }
         }
     };
+
     return (
         <div className={css['form__container']}>
             {(user && profile && mainProfile)
@@ -293,6 +361,27 @@ const GeneralInfo = (props) => {
                                 />
                             }
                         </div>
+                        <ImageField
+                            accept="image/jpeg, image/jpeg"
+                            inputType="file"
+                            name="banner_image"
+                            label={LABELS.banner_image}
+                            updateHandler={onUpdateImageField}
+                            requredField={false}
+                            value={profile.banner_image ?? ''}
+                            error={bannerImageError}
+                            onDeleteImage={deleteImageHandler}
+                        />
+                        <ImageField
+                            inputType="file"
+                            name="logo_image"
+                            label={LABELS.logo_image}
+                            updateHandler={onUpdateImageField}
+                            requredField={false}
+                            value={profile.logo_image ?? ''}
+                            error={logoImageError}
+                            onDeleteImage={deleteImageHandler}
+                        />
                         <TextField
                             name="common_info"
                             label={LABELS.common_info}
