@@ -18,7 +18,7 @@ const Description = (props) => {
             />
             <div className={css['description__content']}>
                 <div className={css['company__attributes']}>
-                    <div className={css['companyName']}>{props.companyName.toUpperCase()}</div>
+                    <div className={css['companyName']}>{props.companyName}</div>
                 </div>
                 <div className={css['description__text']}>{props.formName in DESCRIPTIONS ?  DESCRIPTIONS[props.formName] : generalDesc}</div>
             </div>
