@@ -10,8 +10,7 @@ const ImageField = (props) => {
             <div className={css['fields__label']}>
                 {props.requredField && <label className={css['fields__label--required']}>*</label>}
                 <label
-                    className={`${css['fields__label--text']} ${!props.requredField && css['fields__field--notrequired']}`}
-                >
+                    className={classNames(css['fields__label--text'], {[css['fields__field--notrequired']] : !props.requiredField})}>
                     {props.label}
                 </label>
                 {props.name === 'banner_image' && props.value &&
@@ -22,7 +21,7 @@ const ImageField = (props) => {
             </div>
             <div>
                 <input
-                    accept="image/*,.png,.jpg,.jpeg"
+                    accept={props.accept}
                     id={props.name}
                     type={props.inputType ? props.inputType : 'text'}
                     className={css['upload-file__input']}

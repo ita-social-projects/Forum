@@ -385,7 +385,7 @@ const GeneralInfo = (props) => {
                             }
                         </div>
                         <ImageField
-                            accept="image/jpeg, image/jpeg"
+                            accept="image/png, image/jpeg"
                             inputType="file"
                             name="banner_image"
                             label={LABELS.banner_image}
@@ -396,6 +396,7 @@ const GeneralInfo = (props) => {
                             onDeleteImage={deleteImageHandler}
                         />
                         <ImageField
+                            accept="image/png, image/jpeg"
                             inputType="file"
                             name="logo_image"
                             label={LABELS.logo_image}
