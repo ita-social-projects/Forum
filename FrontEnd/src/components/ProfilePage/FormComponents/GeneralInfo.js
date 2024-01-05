@@ -93,6 +93,9 @@ const GeneralInfo = (props) => {
         if (!profile.is_registered && !profile.is_startup) {
             isValid = false;
         }
+        if (bannerImageError || logoImageError) {
+            isValid = false;
+        }
         return isValid;
     };
 
@@ -240,19 +243,11 @@ const GeneralInfo = (props) => {
     };
 
     const deleteImageHandler = (name) => {
-        if (name === 'logo_image') {
-            setLogoImage('');
-            setProfile((prevState) => {
-                const newState = { ...prevState, [name]: '' };
-                return newState;
-            });
-        } else {
-            setBannerImage('');
-            setProfile((prevState) => {
-                const newState = { ...prevState, [name]: '' };
-                return newState;
-            });
-        }
+        name === 'logo_image' ? setLogoImage('') : setBannerImage('');
+        setProfile((prevState) => {
+            const newState = { ...prevState, [name]: '' };
+            return newState;
+        });
     };
 
     const handleSubmit = async (event) => {
