@@ -29,9 +29,7 @@ export default function ProfileCard({ isAuthorized, data }) {
         ? data.region_display
         : '',
       categories:
-        data.categories.length > 4
-          ? data.categories.slice(0, 4)
-          : data.categories,
+        data.categories,
       isSaved: data.is_saved,
       commonInfo: data.common_info,
       logo: data.logo_image,
