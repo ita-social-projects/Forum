@@ -24,10 +24,9 @@ function TitleInfo({ isAuthorized, data }) {
         : null,
       region: data.region_display ? data.region_display : '',
       categories:
-        data.categories &&
-        data.categories.length > 4
-          ? data.categories.slice(0, 4)
-          : data.categories,
+        data.categories
+          ? data.categories
+          : null,
       isSaved: data.is_saved,
       logo: data.logo_image,
     };
