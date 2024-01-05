@@ -54,6 +54,8 @@ const GeneralInfo = (props) => {
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
+    const [bannerImage, setBannerImage] = useState(props.profile.banner_image);
+    const [logoImage, setLogoImage] = useState(props.profile.logo_image);
     const [bannerImageError, setBannerImageError] = useState(null);
     const [logoImageError, setLogoImageError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
@@ -172,52 +174,66 @@ const GeneralInfo = (props) => {
     };
 
     const uploadImage = async (url, imageKey, image) => {
-        const formData = new FormData();
-        formData.append(imageKey, image);
-        const token = localStorage.getItem('Token');
-        try{
-            const response = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Token ${token}`,
-                },
-                body: formData,
-            });
-            if (response.status === 200) {
-                const data = await response.json();
-                setProfile((prevState) => {
-                    const newState = { ...prevState, [imageKey]: data[imageKey] };
-                    return newState;
+        if (image instanceof File || image === '') {
+            const formData = new FormData();
+            formData.append(imageKey, image);
+            const token = localStorage.getItem('Token');
+            try{
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                    },
+                    body: formData,
                 });
-                profileMutate((prevState) => {
-                    return { ...prevState, [imageKey]: data[imageKey] };
-                });
-                data[imageKey] === null ? toast.success('Зображення видалено з профілю') : toast.success('Зображення успішно додано у профіль');
-            } else if (response.status === 400) {
-                toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+                if (response.status === 200) {
+                    const data = await response.json();
+                    profileMutate((prevState) => {
+                        return { ...prevState, [imageKey]: data[imageKey] };
+                    });
+                    if (imageKey === 'banner_image') {
+                        setBannerImage(mainProfile.banner_image);
+                    } else {
+                        setLogoImage(mainProfile.logo_image);
+                    }
+                    data[imageKey] === null
+                        ? toast.success(imageKey === 'banner_image' ? 'Банер видалено з профілю' : 'Логотип видалено з профілю')
+                        : toast.success(imageKey === 'banner_image' ? 'Банер успішно додано у профіль' : 'Логотип успішно додано у профіль');
+                } else if (response.status === 400) {
+                    toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
             }
-        } catch (error) {
-            console.error('Error uploading image:', error);
         }
     };
 
     const onUpdateImageField = (e) => {
         const file = e.target.files[0];
         e.target.value = '';
+        const imageUrl = URL.createObjectURL(file);
         if (file) {
             if (e.target.name === 'banner_image') {
                 if (file.size > BANNER_IMAGE_SIZE) {
                     setBannerImageError('Максимальний розмір файлу 5 Mb');
                 } else {
                     setBannerImageError(null);
-                    uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, e.target.name, file);
+                    setBannerImage(file);
+                    setProfile((prevState) => {
+                        const newState = { ...prevState, [e.target.name]: imageUrl };
+                        return newState;
+                    });
                 }
             } else {
                 if (file.size > LOGO_IMAGE_SIZE) {
                     setLogoImageError('Максимальний розмір файлу 1 Mb');
                 } else {
                     setLogoImageError(null);
-                    uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, e.target.name, file);
+                    setLogoImage(file);
+                    setProfile((prevState) => {
+                        const newState = { ...prevState, [e.target.name]: imageUrl };
+                        return newState;
+                    });
                 }
             }
         }
@@ -225,9 +241,17 @@ const GeneralInfo = (props) => {
 
     const deleteImageHandler = (name) => {
         if (name === 'logo_image') {
-            uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, name, '');
+            setLogoImage('');
+            setProfile((prevState) => {
+                const newState = { ...prevState, [name]: '' };
+                return newState;
+            });
         } else {
-            uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, name, '');
+            setBannerImage('');
+            setProfile((prevState) => {
+                const newState = { ...prevState, [name]: '' };
+                return newState;
+            });
         }
     };
 
@@ -267,6 +291,10 @@ const GeneralInfo = (props) => {
                         toast.error('Не вдалося зберегти зміни, сталася помилка');
                     }
                 }
+
+                uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, 'banner_image', bannerImage);
+                uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
+
             } catch (error) {
                 console.error('Помилка:', error);
             }
