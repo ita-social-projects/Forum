@@ -207,7 +207,20 @@ const GeneralInfo = (props) => {
                 }
             } catch (error) {
                 console.error('Error uploading image:', error);
+                toast.error('Не вдалося завантажити банер/лого, сталася помилка');
             }
+        }
+    };
+
+    const checkMaxImageSize = (name, image) => {
+        const maxSize = name === 'banner_image' ? BANNER_IMAGE_SIZE : LOGO_IMAGE_SIZE;
+        if (image.size > maxSize) {
+            name === 'banner_image' && setBannerImageError('Максимальний розмір файлу 5 Mb');
+            name === 'logo_image' && setLogoImageError('Максимальний розмір файлу 1 Mb');
+        } else {
+            name === 'banner_image' && setBannerImageError(null);
+            name === 'logo_image' && setLogoImageError(null);
+            return true;
         }
     };
 
@@ -215,30 +228,13 @@ const GeneralInfo = (props) => {
         const file = e.target.files[0];
         e.target.value = '';
         const imageUrl = URL.createObjectURL(file);
-        if (file) {
-            if (e.target.name === 'banner_image') {
-                if (file.size > BANNER_IMAGE_SIZE) {
-                    setBannerImageError('Максимальний розмір файлу 5 Mb');
-                } else {
-                    setBannerImageError(null);
-                    setBannerImage(file);
-                    setProfile((prevState) => {
-                        const newState = { ...prevState, [e.target.name]: imageUrl };
-                        return newState;
-                    });
-                }
-            } else {
-                if (file.size > LOGO_IMAGE_SIZE) {
-                    setLogoImageError('Максимальний розмір файлу 1 Mb');
-                } else {
-                    setLogoImageError(null);
-                    setLogoImage(file);
-                    setProfile((prevState) => {
-                        const newState = { ...prevState, [e.target.name]: imageUrl };
-                        return newState;
-                    });
-                }
-            }
+        if (file && checkMaxImageSize(e.target.name, file)) {
+            e.target.name === 'banner_image' && setBannerImage(file);
+            e.target.name === 'logo_image' && setLogoImage(file);
+            setProfile((prevState) => {
+                const newState = { ...prevState, [e.target.name]: imageUrl };
+                return newState;
+            });
         }
     };
 
@@ -287,11 +283,12 @@ const GeneralInfo = (props) => {
                     }
                 }
 
-                uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, 'banner_image', bannerImage);
-                uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
+                await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, 'banner_image', bannerImage);
+                await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
 
             } catch (error) {
                 console.error('Помилка:', error);
+                toast.error('Не вдалося зберегти зміни, сталася помилка');
             }
         }
     };
