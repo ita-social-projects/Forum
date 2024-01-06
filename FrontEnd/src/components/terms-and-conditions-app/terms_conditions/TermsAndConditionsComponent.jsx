@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 import { termsConditions } from './Text';
 
 export function TermsAndConditions() {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="block-terms_and_conditions block-size">
       <div className="root-container">
@@ -31,4 +34,5 @@ export function TermsAndConditions() {
     </div>
   );
 }
+
 export default TermsAndConditions;
