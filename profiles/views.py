@@ -98,9 +98,12 @@ class ProfileList(ListCreateAPIView):
 
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = ForumPagination
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.OrderingFilter]
+    filter_backends = [
+        django_filters.rest_framework.DjangoFilterBackend,
+        filters.OrderingFilter,
+    ]
     filterset_class = ProfileFilter
-    ordering = ['-completeness', '-created_at']
+    ordering = ["-completeness", "-created_at"]
 
     def get_serializer_class(self):
         if self.request.method == "GET":

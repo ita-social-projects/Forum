@@ -28,25 +28,4 @@ class Migration(migrations.Migration):
             name='updated_at',
             field=models.DateField(auto_now=True),
         ),
-        # migrations.AddField(
-        #     model_name='profile',
-        #     name='created_at',
-        #     field=models.DateField(default=datetime.date.today),
-        # ),
-        # migrations.AddField(
-        #     model_name='profile',
-        #     name='updated_at',
-        #     field=models.DateField(default=datetime.date.today),
-        # ),
-        #
-        # migrations.AddField(
-        #     model_name='profile',
-        #     name='created_at',
-        #     field=models.DateField(auto_now_add=True),
-        # ),
-        # migrations.AddField(
-        #     model_name='profile',
-        #     name='updated_at',
-        #     field=models.DateField(auto_now=True),
-        # ),
     ]
