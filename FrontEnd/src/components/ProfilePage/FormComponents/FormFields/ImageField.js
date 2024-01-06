@@ -15,7 +15,7 @@ const ImageField = (props) => {
                 </label>
                 {props.name === 'banner_image' && props.value &&
                     (<button className={css['upload-file__delete--wrapper']} onClick={() => (props.onDeleteImage(props.name))}>
-                        <img className={css['upload-file__delete--trashBin']} src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`} alt="" />
+                        <img className={css['upload-file__delete--trashBin']} src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`} alt="Delete icon" />
                         <span className={css['upload-file__delete--text']}>видалити зображення</span>
                     </button>)}
             </div>
@@ -54,7 +54,7 @@ const ImageField = (props) => {
                     <div className={css['upload-file__wrapper--logo']}>
                         <div className={css['upload-file__logo']} style={backgroundImage}/>
                         <button className={css['upload-file__delete--wrapper']} onClick={() => (props.onDeleteImage(props.name))}>
-                            <img className={css['upload-file__delete--trashBin']} src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`} alt="" />
+                            <img className={css['upload-file__delete--trashBin']} src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`} alt="Delete icon" />
                             <span className={css['upload-file__delete--text']}>видалити логотип</span>
                         </button>
                     </div>
