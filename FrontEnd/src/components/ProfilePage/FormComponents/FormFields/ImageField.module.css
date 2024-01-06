@@ -178,6 +178,11 @@
     border: 1px solid #C3C3C3;
 }
 
+button {
+    border: none;
+    background-color: inherit;
+}
+
 .upload-file__delete--wrapper {
     display: flex;
     padding: 0px 4px 0px 16px;
