@@ -1,4 +1,5 @@
 import css from './FormComponents.module.css';
+import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useUser, useProfile } from '../../../hooks/';
 import HalfFormField from './FormFields/HalfFormField';
@@ -60,6 +61,7 @@ const AdditionalInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
+                    toast.success('Зміни успішно збережено');
                 } else {
                     console.error('Помилка');
                 }

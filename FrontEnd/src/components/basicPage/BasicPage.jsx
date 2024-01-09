@@ -2,6 +2,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+import 'react-toastify/dist/ReactToastify.css';
 
 import AuthorizationPage from '../authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
@@ -26,7 +27,7 @@ import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/Ter
 import { useAuth } from '../../hooks';
 import { useUser } from '../../hooks';
 import { Search } from '../SearchPage/Search';
-import classes from './BasicPage.module.css';
+import './customToastStyles.css';
 
 function BasicPage() {
   const auth = useAuth();
@@ -134,10 +135,8 @@ function BasicPage() {
       <ToastContainer
         position="top-right"
         autoClose={3000}
+        theme="colored"
         icon={false}
-        className={classes.toastContainer}
-        toastClassName={classes.toast}
-        bodyClassName={classes.toastBody}
       />
     </ConfigProvider>
   );

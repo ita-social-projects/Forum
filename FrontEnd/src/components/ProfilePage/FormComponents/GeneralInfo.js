@@ -8,6 +8,7 @@ import css from './FormComponents.module.css';
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
+import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
@@ -20,7 +21,8 @@ const LABELS = {
     'region': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
-    'bannerImage': 'Зображення для банера',
+    'banner_image': 'Зображення для банера',
+    'logo_image': 'Логотип',
     'common_info': 'Інформація про компанію',
     'is_registered': 'Зареєстрована компанія',
     'is_startup': 'Стартап проект, який шукає інвестиції',
@@ -42,6 +44,8 @@ const ERRORS = {
 };
 
 const TEXT_AREA_MAX_LENGTH = 2000;
+const BANNER_IMAGE_SIZE = 5 * 1024 * 1024;
+const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
@@ -50,6 +54,10 @@ const GeneralInfo = (props) => {
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
+    const [bannerImage, setBannerImage] = useState(props.profile.banner_image);
+    const [logoImage, setLogoImage] = useState(props.profile.logo_image);
+    const [bannerImageError, setBannerImageError] = useState(null);
+    const [logoImageError, setLogoImageError] = useState(null);
     const [edrpouError, setEdrpouError] = useState(null);
     const [companyTypeError, setCompanyTypeError] = useState(null);
 
@@ -83,6 +91,9 @@ const GeneralInfo = (props) => {
             isValid = false;
         }
         if (!profile.is_registered && !profile.is_startup) {
+            isValid = false;
+        }
+        if (bannerImageError || logoImageError) {
             isValid = false;
         }
         return isValid;
@@ -165,6 +176,76 @@ const GeneralInfo = (props) => {
         }
     };
 
+    const uploadImage = async (url, imageKey, image) => {
+        if (image instanceof File || image === '') {
+            const formData = new FormData();
+            formData.append(imageKey, image);
+            const token = localStorage.getItem('Token');
+            try{
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                    },
+                    body: formData,
+                });
+                if (response.status === 200) {
+                    const data = await response.json();
+                    profileMutate((prevState) => {
+                        return { ...prevState, [imageKey]: data[imageKey] };
+                    });
+                    if (imageKey === 'banner_image') {
+                        setBannerImage(mainProfile.banner_image);
+                    } else {
+                        setLogoImage(mainProfile.logo_image);
+                    }
+                    data[imageKey] === null
+                        ? toast.success(imageKey === 'banner_image' ? 'Банер видалено з профілю' : 'Логотип видалено з профілю')
+                        : toast.success(imageKey === 'banner_image' ? 'Банер успішно додано у профіль' : 'Логотип успішно додано у профіль');
+                } else if (response.status === 400) {
+                    toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+            }
+        }
+    };
+
+    const checkMaxImageSize = (name, image) => {
+        const maxSize = name === 'banner_image' ? BANNER_IMAGE_SIZE : LOGO_IMAGE_SIZE;
+        if (image.size > maxSize) {
+            name === 'banner_image' && setBannerImageError('Максимальний розмір файлу 5 Mb');
+            name === 'logo_image' && setLogoImageError('Максимальний розмір файлу 1 Mb');
+        } else {
+            name === 'banner_image' && setBannerImageError(null);
+            name === 'logo_image' && setLogoImageError(null);
+            return true;
+        }
+    };
+
+    const onUpdateImageField = (e) => {
+        const file = e.target.files[0];
+        e.target.value = '';
+        const imageUrl = URL.createObjectURL(file);
+        if (file && checkMaxImageSize(e.target.name, file)) {
+            e.target.name === 'banner_image' && setBannerImage(file);
+            e.target.name === 'logo_image' && setLogoImage(file);
+            setProfile((prevState) => {
+                const newState = { ...prevState, [e.target.name]: imageUrl };
+                return newState;
+            });
+        }
+    };
+
+    const deleteImageHandler = (name) => {
+        name === 'logo_image' ? setLogoImage('') : setBannerImage('');
+        setProfile((prevState) => {
+            const newState = { ...prevState, [name]: '' };
+            return newState;
+        });
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkRequiredFields()) {
@@ -192,6 +273,7 @@ const GeneralInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
+                    toast.success('Зміни успішно збережено');
                 } else if (response.status === 400 ) {
                     const errorData = await response.json();
                     if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
@@ -200,11 +282,17 @@ const GeneralInfo = (props) => {
                         toast.error('Не вдалося зберегти зміни, сталася помилка');
                     }
                 }
+
+                await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, 'banner_image', bannerImage);
+                await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
+
             } catch (error) {
                 console.error('Помилка:', error);
+                toast.error('Не вдалося зберегти зміни, сталася помилка');
             }
         }
     };
+
     return (
         <div className={css['form__container']}>
             {(user && profile && mainProfile)
@@ -293,6 +381,28 @@ const GeneralInfo = (props) => {
                                 />
                             }
                         </div>
+                        <ImageField
+                            accept="image/png, image/jpeg"
+                            inputType="file"
+                            name="banner_image"
+                            label={LABELS.banner_image}
+                            updateHandler={onUpdateImageField}
+                            requredField={false}
+                            value={profile.banner_image ?? ''}
+                            error={bannerImageError}
+                            onDeleteImage={deleteImageHandler}
+                        />
+                        <ImageField
+                            accept="image/png, image/jpeg"
+                            inputType="file"
+                            name="logo_image"
+                            label={LABELS.logo_image}
+                            updateHandler={onUpdateImageField}
+                            requredField={false}
+                            value={profile.logo_image ?? ''}
+                            error={logoImageError}
+                            onDeleteImage={deleteImageHandler}
+                        />
                         <TextField
                             name="common_info"
                             label={LABELS.common_info}
