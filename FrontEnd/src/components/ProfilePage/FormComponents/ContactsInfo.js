@@ -18,7 +18,7 @@ const ContactsInfo = (props) => {
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [phoneNumberError, setPhoneNumberError] = useState(null);
-    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+    const { setFormIsDirty } = useContext(DirtyFormContext);
 
     const defaultValues = {
         'phone': mainProfile?.phone ?? '',
@@ -39,8 +39,6 @@ const ContactsInfo = (props) => {
     useEffect(() => {
         checkFormIsDirty();
       }, [mainProfile, profile]);
-
-    console.log('IS DIRTY IN CONTACTS INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);

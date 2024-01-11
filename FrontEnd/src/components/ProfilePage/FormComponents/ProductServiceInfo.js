@@ -18,7 +18,7 @@ const ProductServiceInfo = (props) => {
     const { user } = useUser();
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
-    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+    const { setFormIsDirty } = useContext(DirtyFormContext);
 
     const defaultValues = {
         'product_info': mainProfile?.product_info ?? '',
@@ -39,8 +39,6 @@ const ProductServiceInfo = (props) => {
     useEffect(() => {
         checkFormIsDirty();
       }, [mainProfile, profile]);
-
-    console.log('IS DIRTY IN PRODUCT SERVICE INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);

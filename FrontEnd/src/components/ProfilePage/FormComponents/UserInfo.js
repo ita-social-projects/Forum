@@ -31,7 +31,7 @@ const UserInfo = (props) => {
     const [updateUser, setUpdateUser] = useState(props.user);
     const [updateProfile, setUpdateProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
-    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+    const { setFormIsDirty } = useContext(DirtyFormContext);
 
     const defaultValues = {
         'surname': user?.surname ?? '',
@@ -58,8 +58,6 @@ const UserInfo = (props) => {
     useEffect(() => {
         checkFormIsDirty();
       }, [user, profile, updateProfile, updateUser]);
-
-    console.log('IS DIRTY IN USER INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);

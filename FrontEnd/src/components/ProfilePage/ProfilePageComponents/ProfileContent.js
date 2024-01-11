@@ -107,8 +107,6 @@ const ProfileContent = (props) => {
           };
         }, [formIsDirty]);
 
-    console.log('IS DIRTY IN PROFILE CONTENT', formIsDirty);
-
     return (
         <div className={css['content__container']}>
             <div className={css['content']}>

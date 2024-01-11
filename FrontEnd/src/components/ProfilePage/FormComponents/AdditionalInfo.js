@@ -16,7 +16,7 @@ const AdditionalInfo = (props) => {
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [foundationYearError, setFoundationYearError] = useState(null);
-    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+    const { setFormIsDirty } = useContext(DirtyFormContext);
 
     const defaultValues = {
         'founded': mainProfile?.founded ?? '',
@@ -36,8 +36,6 @@ const AdditionalInfo = (props) => {
     useEffect(() => {
         checkFormIsDirty();
       }, [mainProfile, profile]);
-
-    console.log('IS DIRTY IN ADDITIONAL INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);

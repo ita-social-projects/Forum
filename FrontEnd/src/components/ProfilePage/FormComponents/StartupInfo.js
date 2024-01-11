@@ -17,7 +17,7 @@ const StartupInfo = (props) => {
     const { user } = useUser();
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
-    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+    const { setFormIsDirty } = useContext(DirtyFormContext);
 
     const defaultValues = {
         'startup_idea': mainProfile?.startup_idea ?? '',
@@ -37,8 +37,6 @@ const StartupInfo = (props) => {
     useEffect(() => {
         checkFormIsDirty();
       }, [mainProfile, profile]);
-
-    console.log('IS DIRTY IN STARTUP INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
