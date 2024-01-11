@@ -1,6 +1,8 @@
 import css from './FormComponents.module.css';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import { useUser, useProfile } from '../../../hooks/';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
@@ -15,6 +17,28 @@ const StartupInfo = (props) => {
     const { user } = useUser();
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
+    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+
+    const defaultValues = {
+        'startup_idea': mainProfile?.startup_idea ?? '',
+    };
+
+    const checkFormIsDirty = () => {
+        let isDirty = false;
+        Object.keys(defaultValues).forEach((key) => {
+            if (defaultValues[key] !== profile[key]) {
+                isDirty = true;
+                return;
+          }
+        });
+        setFormIsDirty(isDirty);
+      };
+
+    useEffect(() => {
+        checkFormIsDirty();
+      }, [mainProfile, profile]);
+
+    console.log('IS DIRTY IN STARTUP INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -45,6 +69,7 @@ const StartupInfo = (props) => {
             if (response.status === 200) {
                 const updatedProfileData = await response.json();
                 profileMutate(updatedProfileData);
+                setFormIsDirty(false);
                 toast.success('Зміни успішно збережено');
             } else {
                 console.error('Помилка');
