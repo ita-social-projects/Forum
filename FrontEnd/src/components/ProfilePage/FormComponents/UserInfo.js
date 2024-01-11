@@ -1,10 +1,11 @@
-import css from './FormComponents.module.css';
 import { toast } from 'react-toastify';
-import HalfFormField from './FormFields/HalfFormField';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import { useUser, useProfile } from '../../../hooks/';
+import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
-
+import css from './FormComponents.module.css';
 
 const LABELS = {
     'surname': 'Прізвище',
@@ -30,6 +31,35 @@ const UserInfo = (props) => {
     const [updateUser, setUpdateUser] = useState(props.user);
     const [updateProfile, setUpdateProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
+    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+
+    const defaultValues = {
+        'surname': user?.surname ?? '',
+        'name': user?.name ?? '',
+        'person_position': profile?.person_position ?? null,
+    };
+
+    const checkFormIsDirty = () => {
+        let isDirty = false;
+        Object.keys(defaultValues).forEach((key) => {
+            if (key === 'name' || key === 'surname') {
+                if (defaultValues[key] !== updateUser[key]) {
+                    isDirty = true;
+                    return;
+              }
+            } else if (defaultValues[key] !== updateProfile[key]) {
+                isDirty = true;
+                return;
+          }
+        });
+        setFormIsDirty(isDirty);
+      };
+
+    useEffect(() => {
+        checkFormIsDirty();
+      }, [user, profile, updateProfile, updateUser]);
+
+    console.log('IS DIRTY IN USER INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -86,6 +116,7 @@ const UserInfo = (props) => {
                 if (response.status === 200) {
                     const updatedUserData = await response.json();
                     userMutate(updatedUserData);
+                    setFormIsDirty(false);
                     toast.success('Зміни успішно збережено');
                 } else {
                     console.error('Помилка');
@@ -107,6 +138,8 @@ const UserInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
+                    setFormIsDirty(false);
+                    toast.success('Зміни успішно збережено');
                 } else {
                     console.error('Помилка');
                 }
