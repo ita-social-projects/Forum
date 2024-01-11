@@ -1,6 +1,8 @@
 import { Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
-import { Link, NavLink, Route, Routes } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import AdditionalInfo from '../FormComponents/AdditionalInfo';
 import ContactsInfo from '../FormComponents/ContactsInfo';
 import DeleteProfilePage from '../FormComponents/DeleteProfileComponent/DeleteProfilePage';
@@ -64,6 +66,38 @@ const ProfileContent = (props) => {
             letterSpacing: '-0.14px',
     };
 
+    const [formIsDirty, setFormIsDirty] = useState(false);
+    const navigate = useNavigate();
+
+    const onClickHandler = (e) => {
+        const target_link = e.currentTarget.getAttribute('href');
+        if (formIsDirty) {
+            e.preventDefault();
+            const confirmLeave = window.confirm('Ввдені дані не є збережені. При переході на іншу сторінку вони будуть втрачені. Перейти на іншу сторінку?');
+            if (!confirmLeave) {
+                return;
+            } else {
+                setFormIsDirty(false);
+                navigate(target_link);
+            }
+        }
+    };
+
+    useEffect (() => {
+        const onBeforeUnload = (e) => {
+            if (formIsDirty) {
+              e.preventDefault();
+              e.returnValue = '';
+            }
+          };
+          window.addEventListener('beforeunload', onBeforeUnload);
+          return () => {
+            window.removeEventListener('beforeunload', onBeforeUnload);
+          };
+        }, [formIsDirty]);
+
+    console.log('IS DIRTY IN PROFILE CONTENT', formIsDirty);
+
     return (
         <div className={css['content__container']}>
             <div className={css['content']}>
@@ -75,6 +109,7 @@ const ProfileContent = (props) => {
                         (props.profile.is_startup && element.title !== 'Інформація про товари/ послуги' && element.title !== 'Додаткова інформація');
                     return isLinkEnabled ? (
                         <NavLink
+                            onClick={onClickHandler}
                             className={({ isActive }) => (`${css['infolink']} ${isActive && css['infolink__active']}`)}
                             to={`/profile${element.link}`}
                             key={element.title}
@@ -105,49 +140,50 @@ const ProfileContent = (props) => {
                         Видалити профіль
                     </Link>
                 </div>
-
-                <Routes>
-                    <Route
-                        path="/delete"
-                        element={<DeleteProfilePage
-                            currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[6]} />} />
-                    <Route
-                        path="/user-info"
-                        element={<UserInfo user={props.user}
-                            profile={props.profile}
-                            currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[0]} />} />
-                    <Route
-                        path="/general-info"
-                        element={<GeneralInfo
-                            profile={props.profile}
-                            currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[1]} />} />
-                    <Route path="/contacts"
-                        element={<ContactsInfo
-                            profile={props.profile}
-                            currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[2]} />} />
-                    <Route
-                        path="/products-service-info"
-                        element={<ProductServiceInfo
-                            profile={props.profile}
-                            currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[3]} />} />
-                    <Route
-                        path="/additional-info"
-                        element={<AdditionalInfo
-                            profile={props.profile}
-                            currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[4]} />} />
-                    <Route
-                        path="/startup"
-                        element={<StartupInfo
-                            profile={props.profile}
-                            currentFormNameHandler={props.currentFormNameHandler}
-                            curForm={FORM_NAMES[5]} />} />
-                </Routes>
+                <DirtyFormContext.Provider value={{ formIsDirty, setFormIsDirty }}>
+                    <Routes>
+                        <Route
+                            path="/delete"
+                            element={<DeleteProfilePage
+                                currentFormNameHandler={props.currentFormNameHandler}
+                                curForm={FORM_NAMES[6]} />} />
+                        <Route
+                            path="/user-info"
+                            element={<UserInfo user={props.user}
+                                profile={props.profile}
+                                currentFormNameHandler={props.currentFormNameHandler}
+                                curForm={FORM_NAMES[0]} />} />
+                        <Route
+                            path="/general-info"
+                            element={<GeneralInfo
+                                profile={props.profile}
+                                currentFormNameHandler={props.currentFormNameHandler}
+                                curForm={FORM_NAMES[1]} />} />
+                        <Route path="/contacts"
+                            element={<ContactsInfo
+                                profile={props.profile}
+                                currentFormNameHandler={props.currentFormNameHandler}
+                                curForm={FORM_NAMES[2]} />} />
+                        <Route
+                            path="/products-service-info"
+                            element={<ProductServiceInfo
+                                profile={props.profile}
+                                currentFormNameHandler={props.currentFormNameHandler}
+                                curForm={FORM_NAMES[3]} />} />
+                        <Route
+                            path="/additional-info"
+                            element={<AdditionalInfo
+                                profile={props.profile}
+                                currentFormNameHandler={props.currentFormNameHandler}
+                                curForm={FORM_NAMES[4]} />} />
+                        <Route
+                            path="/startup"
+                            element={<StartupInfo
+                                profile={props.profile}
+                                currentFormNameHandler={props.currentFormNameHandler}
+                                curForm={FORM_NAMES[5]} />} />
+                    </Routes>
+                </DirtyFormContext.Provider>
             </div>
 
             {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} />}
