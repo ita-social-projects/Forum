@@ -1,10 +1,12 @@
 import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { useUser, useProfile } from '../../../hooks/';
 import css from './FormComponents.module.css';
 
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
@@ -64,6 +66,58 @@ const GeneralInfo = (props) => {
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
     const { data: fetchedActivities, isLoading: isActivitiesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/activities/`, fetcher);
     const { data: fetchedCategories, isLoading: isCategoriesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/categories/`, fetcher);
+
+    const { setFormIsDirty } = useContext(DirtyFormContext);
+
+    const defaultValues = {
+        'name': mainProfile?.name,
+        'official_name': mainProfile?.official_name ?? '',
+        'edrpou': mainProfile?.edrpou ?? '',
+        'region': mainProfile?.region ?? '',
+        'categories': mainProfile?.categories ?? '',
+        'activities': mainProfile?.activities ?? '',
+        'banner_image': mainProfile?.banner_image ?? '',
+        'logo_image': mainProfile?.logo_image ?? '',
+        'common_info': mainProfile?.common_info ?? '',
+        'is_registered': mainProfile?.is_registered ?? '',
+        'is_startup': mainProfile?.is_startup ?? '',
+    };
+
+    const compareActivitisCategories = (array1, array2) => {
+        return (
+            array1.length === array2.length &&
+            array1.every((element_1) =>
+                array2.some((element_2) =>
+                    Object.keys(element_1).every((key) => element_1[key] === element_2[key])
+                )
+            )
+        );
+      };
+
+    const checkFormIsDirty = () => {
+        let isDirty = false;
+        Object.keys(defaultValues).forEach((key) => {
+          if (key === 'categories' || key === 'activities') {
+            if (!compareActivitisCategories(defaultValues[key], profile[key])) {
+                isDirty = true;
+                return;
+            }
+          } else if (key === 'edrpou') {
+            if (defaultValues[key].toString() !== profile[key].toString())
+                isDirty = true;
+                return;
+          } else if (defaultValues[key] !== profile[key]) {
+                isDirty = true;
+                return;
+          }
+        });
+        setFormIsDirty(isDirty);
+      };
+
+
+    useEffect(() => {
+        checkFormIsDirty();
+      }, [mainProfile, profile]);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -274,6 +328,7 @@ const GeneralInfo = (props) => {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
                     toast.success('Зміни успішно збережено');
+                    setFormIsDirty(false);
                 } else if (response.status === 400 ) {
                     const errorData = await response.json();
                     if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
