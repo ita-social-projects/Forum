@@ -1,6 +1,8 @@
 import css from './FormComponents.module.css';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import { useUser, useProfile } from '../../../hooks/';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
@@ -16,6 +18,29 @@ const ContactsInfo = (props) => {
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [phoneNumberError, setPhoneNumberError] = useState(null);
+    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+
+    const defaultValues = {
+        'phone': mainProfile?.phone ?? '',
+        'address': mainProfile?.address ?? '',
+    };
+
+    const checkFormIsDirty = () => {
+        let isDirty = false;
+        Object.keys(defaultValues).forEach((key) => {
+            if (defaultValues[key] !== profile[key]) {
+                isDirty = true;
+                return;
+          }
+        });
+        setFormIsDirty(isDirty);
+      };
+
+    useEffect(() => {
+        checkFormIsDirty();
+      }, [mainProfile, profile]);
+
+    console.log('IS DIRTY IN CONTACTS INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -74,6 +99,7 @@ const ContactsInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
+                    setFormIsDirty(false);
                     toast.success('Зміни успішно збережено');
                 } else {
                     console.error('Помилка');
