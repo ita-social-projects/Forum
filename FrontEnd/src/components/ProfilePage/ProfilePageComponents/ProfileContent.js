@@ -11,6 +11,8 @@ import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
 import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
+import MyModal from '../UI/MyModal/MyModal';
+import WarnUnsavedDataModal from '../FormComponents/WarnUnsavedDataModal';
 import css from './ProfileContent.module.css';
 
 
@@ -66,22 +68,31 @@ const ProfileContent = (props) => {
             letterSpacing: '-0.14px',
     };
 
+    const [modal, setModal] = useState(false);
+    const [targetLink, setTargetLink] = useState('');
     const [formIsDirty, setFormIsDirty] = useState(false);
     const navigate = useNavigate();
 
     const onClickHandler = (e) => {
-        const target_link = e.currentTarget.getAttribute('href');
+        const targetLink = e.currentTarget.getAttribute('href');
         if (formIsDirty) {
-            e.preventDefault();
-            const confirmLeave = window.confirm('Ввдені дані не є збережені. При переході на іншу сторінку вони будуть втрачені. Перейти на іншу сторінку?');
-            if (!confirmLeave) {
-                return;
-            } else {
-                setFormIsDirty(false);
-                navigate(target_link);
-            }
+          e.preventDefault();
+          setTargetLink(targetLink);
+          setModal(true);
+        } else {
+          navigate(targetLink);
         }
-    };
+      };
+
+    const confirmNavigation = () => {
+        setFormIsDirty(false);
+        navigate(targetLink);
+        setModal(false);
+      };
+
+    const cancelNavigation = () => {
+        setModal(false);
+      };
 
     useEffect (() => {
         const onBeforeUnload = (e) => {
@@ -187,6 +198,11 @@ const ProfileContent = (props) => {
             </div>
 
             {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} />}
+
+            <MyModal visible={modal} setVisisble={setModal}>
+                <WarnUnsavedDataModal onCancel={cancelNavigation} onConfirm={confirmNavigation} />
+            </MyModal>
+
         </div>
     );
 };
