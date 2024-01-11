@@ -9,7 +9,6 @@
 * {
   margin: 0;
   padding: 0;
-  /*box-sizing: border-box;*/
 }
 
 :root {
@@ -44,8 +43,3 @@ a {
   text-decoration: none;
 }
 
-/*img {
-  display: block;
-  width: 100%;
-}
-*/
