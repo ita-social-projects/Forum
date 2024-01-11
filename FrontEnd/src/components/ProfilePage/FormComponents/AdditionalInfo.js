@@ -1,6 +1,8 @@
 import css from './FormComponents.module.css';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import { useUser, useProfile } from '../../../hooks/';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
@@ -14,6 +16,28 @@ const AdditionalInfo = (props) => {
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [foundationYearError, setFoundationYearError] = useState(null);
+    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
+
+    const defaultValues = {
+        'founded': mainProfile?.founded ?? '',
+    };
+
+    const checkFormIsDirty = () => {
+        let isDirty = false;
+        Object.keys(defaultValues).forEach((key) => {
+            if (defaultValues[key] !== profile[key]) {
+                isDirty = true;
+                return;
+          }
+        });
+        setFormIsDirty(isDirty);
+      };
+
+    useEffect(() => {
+        checkFormIsDirty();
+      }, [mainProfile, profile]);
+
+    console.log('IS DIRTY IN ADDITIONAL INFO', formIsDirty);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -61,6 +85,7 @@ const AdditionalInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
+                    setFormIsDirty(false);
                     toast.success('Зміни успішно збережено');
                 } else {
                     console.error('Помилка');
