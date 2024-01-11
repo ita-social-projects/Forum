@@ -55,7 +55,7 @@
 .form-control {
     display: flex;
     align-items: flex-start;
-    justify-content: start;
+    justify-content: flex-start;
     gap: 8px;
     color: var(--main-black-90, #292E32);
     font-feature-settings: 'calt' off;
@@ -69,7 +69,7 @@
 }
 
 .checkbox__input {
-    justify-content: start;
+    justify-content: flex-start;
     accent-color: #1F9A7C;
 }
 
