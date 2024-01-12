@@ -9,10 +9,29 @@ class Migration(migrations.Migration):
         ('profiles', '0006_profile_created_at_profile_updated_at'),
     ]
 
+    def add_completeness_value(app, schema_editor):
+        Profile = app.get_model("profiles", "Profile")
+        Activity = app.get_model("profiles", "Activity")
+        Category = app.get_model("profiles", "Category")
+        for instance in Profile.objects.all():
+            instance.completeness = 0
+            if instance.banner_image:
+                instance.completeness += 100
+            if instance.logo_image:
+                instance.completeness += 1
+            if instance.region:
+                instance.completeness += 1
+            if Activity.objects.all().filter(profile=instance.id):
+                instance.completeness += 1
+            if Category.objects.all().filter(profile=instance.id):
+                instance.completeness += 1
+            instance.save()
+
     operations = [
         migrations.AddField(
             model_name='profile',
             name='completeness',
             field=models.SmallIntegerField(default=0),
         ),
+        migrations.RunPython(add_completeness_value, reverse_code=migrations.RunPython.noop),
     ]

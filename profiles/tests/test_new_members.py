@@ -145,7 +145,9 @@ class TestCompanyOrder(APITestCase):
         self.right_image.close()
 
     def test_get_less_companies(self):
-        response = self.client.get(path="/api/profiles/")
+        response = self.client.get(
+            path="/api/profiles/?new_members=-completeness,-created_at"
+        )
         self.assertEqual(200, response.status_code)
         ids_from_response = [prof["id"] for prof in response.data["results"]]
         self.assertEqual(
@@ -170,7 +172,9 @@ class TestCompanyOrder(APITestCase):
             created_at="2023-12-07",
             completeness=5,
         )
-        response = self.client.get(path="/api/profiles/")
+        response = self.client.get(
+            path="/api/profiles/?new_members=-completeness,-created_at"
+        )
         self.assertEqual(200, response.status_code)
         ids_from_response = [prof["id"] for prof in response.data["results"]]
 
@@ -204,7 +208,9 @@ class TestCompanyOrder(APITestCase):
             completeness=5,
         )
 
-        response = self.client.get(path="/api/profiles/")
+        response = self.client.get(
+            path="/api/profiles/?new_members=-completeness,-created_at"
+        )
         self.assertEqual(200, response.status_code)
         ids_from_response = [prof["id"] for prof in response.data["results"]]
         self.assertEqual(
@@ -222,5 +228,6 @@ class TestCompanyOrder(APITestCase):
         self.assertEqual(1, response.data["current"])
         self.assertEqual(2, response.data["total_pages"])
         self.assertEqual(
-            "http://testserver/api/profiles/?page=2", response.data["next"]
+            "http://testserver/api/profiles/?new_members=-completeness%2C-created_at&page=2",
+            response.data["next"],
         )

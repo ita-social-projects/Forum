@@ -103,7 +103,6 @@ class ProfileList(ListCreateAPIView):
         filters.OrderingFilter,
     ]
     filterset_class = ProfileFilter
-    ordering = ["-completeness", "-created_at"]
 
     def get_serializer_class(self):
         if self.request.method == "GET":
