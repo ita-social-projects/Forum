@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -10,15 +10,12 @@ import styles from './SignUpFormContent.module.css';
 
 import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../../constants/constants';
 
+import RulesModal from './RulesModal';
+import PropTypes from 'prop-types';
+
 export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const navigate = useNavigate();
-
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   const toggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
@@ -42,7 +39,25 @@ export function SignUpFormContentComponent(props) {
   });
 
   const { setIsValid } = props;
+  // modal start
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  SignUpFormContentComponent.propTypes = {
+    setIsValid: PropTypes.func.isRequired,
+  };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  // modal end
+  const navigate = useNavigate();
+
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
   useEffect(() => {
     setIsValid(isValid);
   }, [isValid, setIsValid]);
@@ -332,7 +347,7 @@ export function SignUpFormContentComponent(props) {
                 />
                 <label className={styles['rules__line--text']}>
                   Погоджуюсь з{' '}
-                  <a href="#" className={styles['rules__line--link']}>
+                  <a href="#" onClick={openModal} className={styles['rules__line--link']}>
                     правилами використання
                   </a>
                 </label>
@@ -341,6 +356,9 @@ export function SignUpFormContentComponent(props) {
           </div>
         </div>
       </form>
+      <div className={styles['signup-form']}>
+        {isModalOpen && <RulesModal closeModal={closeModal} />}
+      </div>
     </div>
   );
 }
