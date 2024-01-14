@@ -1,1 +1,26 @@
-/* rules */
+.rules-modal {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  max-height: 10vh;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.rules-modal__title {
+  margin-bottom: 20px;
+}
+
+.rules-modal__button {
+  cursor: pointer;
+  background-color: #1f9a7c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+}
