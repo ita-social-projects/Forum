@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
-import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, unstable_useBlocker as useBlocker } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import AdditionalInfo from '../FormComponents/AdditionalInfo';
@@ -69,28 +69,29 @@ const ProfileContent = (props) => {
     };
 
     const [modal, setModal] = useState(false);
-    const [targetLink, setTargetLink] = useState('');
     const [formIsDirty, setFormIsDirty] = useState(false);
-    const navigate = useNavigate();
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) =>
+          formIsDirty &&
+          currentLocation.pathname !== nextLocation.pathname
+      );
 
-    const onClickHandler = (e) => {
-        const targetLink = e.currentTarget.getAttribute('href');
-        if (formIsDirty) {
-          e.preventDefault();
-          setTargetLink(targetLink);
-          setModal(true);
+    useEffect(() => {
+        if (blocker.state === 'blocked') {
+            setModal(true);
         } else {
-          navigate(targetLink);
+            setModal(false);
         }
-      };
+    }, [blocker.state]);
 
     const confirmNavigation = () => {
         setFormIsDirty(false);
-        navigate(targetLink);
+        blocker.proceed();
         setModal(false);
       };
 
     const cancelNavigation = () => {
+        blocker.reset();
         setModal(false);
       };
 
@@ -118,7 +119,6 @@ const ProfileContent = (props) => {
                         (props.profile.is_startup && element.title !== 'Інформація про товари/ послуги' && element.title !== 'Додаткова інформація');
                     return isLinkEnabled ? (
                         <NavLink
-                            onClick={onClickHandler}
                             className={({ isActive }) => (`${css['infolink']} ${isActive && css['infolink__active']}`)}
                             to={`/profile${element.link}`}
                             key={element.title}
@@ -197,9 +197,12 @@ const ProfileContent = (props) => {
 
             {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} />}
 
-            <MyModal visible={modal} setVisisble={setModal}>
-                <WarnUnsavedDataModal onCancel={cancelNavigation} onConfirm={confirmNavigation} />
-            </MyModal>
+            {blocker.state === 'blocked' &&
+                (
+                <MyModal visible={modal} setVisisble={setModal}>
+                    <WarnUnsavedDataModal onCancel={cancelNavigation} onConfirm={confirmNavigation} />
+                </MyModal>)
+            }
 
         </div>
     );
