@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
-import { Link, NavLink, Route, Routes, unstable_useBlocker as useBlocker } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, useBlocker } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import AdditionalInfo from '../FormComponents/AdditionalInfo';
