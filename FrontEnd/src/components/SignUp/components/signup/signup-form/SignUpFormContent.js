@@ -347,7 +347,7 @@ export function SignUpFormContentComponent(props) {
                 />
                 <label className={styles['rules__line--text']}>
                   Погоджуюсь з{' '}
-                  <a href="#" onClick={openModal} className={styles['rules__line--link']}>
+                  <a onClick={openModal} className={styles['rules__line--link']}>
                     правилами використання
                   </a>
                 </label>
