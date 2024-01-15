@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState ,  Suspense} from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
-
 import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
-
-import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../../constants/constants';
-
-import RulesModal from './RulesModal';
 import PropTypes from 'prop-types';
+import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../../constants/constants';
 
 export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,15 +35,14 @@ export function SignUpFormContentComponent(props) {
 
   const { setIsValid } = props;
   // modal start
+  const RulesModal = React.lazy(() => import('./RulesModal'));
   const [isModalOpen, setIsModalOpen] = useState(false);
   SignUpFormContentComponent.propTypes = {
     setIsValid: PropTypes.func.isRequired,
   };
-
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -356,9 +350,9 @@ export function SignUpFormContentComponent(props) {
           </div>
         </div>
       </form>
-      <div className={styles['signup-form']}>
+      <Suspense fallback={<div>Loading...</div>}>
         {isModalOpen && <RulesModal closeModal={closeModal} />}
-      </div>
+      </Suspense>
     </div>
   );
 }
