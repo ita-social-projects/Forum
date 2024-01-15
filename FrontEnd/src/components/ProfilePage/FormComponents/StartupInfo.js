@@ -19,8 +19,10 @@ const StartupInfo = (props) => {
     const [profile, setProfile] = useState(props.profile);
     const { setFormIsDirty } = useContext(DirtyFormContext);
 
+    // TODO: update default values as new fields added
+
     const defaultValues = {
-        'startup_idea': mainProfile?.startup_idea ?? '',
+        'startup_idea': mainProfile?.startup_idea ?? null,
     };
 
     const checkFormIsDirty = () => {

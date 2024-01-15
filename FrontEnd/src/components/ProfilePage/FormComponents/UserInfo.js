@@ -33,6 +33,8 @@ const UserInfo = (props) => {
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const { setFormIsDirty } = useContext(DirtyFormContext);
 
+    // TODO: update default values as new fields added
+
     const defaultValues = {
         'surname': user?.surname ?? '',
         'name': user?.name ?? '',

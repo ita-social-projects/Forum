@@ -18,8 +18,10 @@ const AdditionalInfo = (props) => {
     const [foundationYearError, setFoundationYearError] = useState(null);
     const { setFormIsDirty } = useContext(DirtyFormContext);
 
+    // TODO: update default values as new fields added
+
     const defaultValues = {
-        'founded': mainProfile?.founded ?? '',
+        'founded': mainProfile?.founded ?? null,
     };
 
     const checkFormIsDirty = () => {

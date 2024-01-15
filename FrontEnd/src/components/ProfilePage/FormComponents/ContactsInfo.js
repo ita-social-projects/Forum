@@ -20,9 +20,11 @@ const ContactsInfo = (props) => {
     const [phoneNumberError, setPhoneNumberError] = useState(null);
     const { setFormIsDirty } = useContext(DirtyFormContext);
 
+    // TODO: update default values as new fields added
+
     const defaultValues = {
-        'phone': mainProfile?.phone ?? '',
-        'address': mainProfile?.address ?? '',
+        'phone': mainProfile?.phone ?? null,
+        'address': mainProfile?.address ?? null,
     };
 
     const checkFormIsDirty = () => {

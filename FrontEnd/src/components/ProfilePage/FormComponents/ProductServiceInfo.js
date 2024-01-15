@@ -20,9 +20,11 @@ const ProductServiceInfo = (props) => {
     const [profile, setProfile] = useState(props.profile);
     const { setFormIsDirty } = useContext(DirtyFormContext);
 
+    // TODO: update default values as new fields added
+
     const defaultValues = {
-        'product_info': mainProfile?.product_info ?? '',
-        'service_info': mainProfile?.service_info ?? '',
+        'product_info': mainProfile?.product_info ?? null,
+        'service_info': mainProfile?.service_info ?? null,
     };
 
     const checkFormIsDirty = () => {

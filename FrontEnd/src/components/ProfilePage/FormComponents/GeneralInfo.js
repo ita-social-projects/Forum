@@ -69,16 +69,18 @@ const GeneralInfo = (props) => {
 
     const { setFormIsDirty } = useContext(DirtyFormContext);
 
+    // TODO: update default values as new fields added
+
     const defaultValues = {
         'name': mainProfile?.name,
-        'official_name': mainProfile?.official_name ?? '',
-        'edrpou': mainProfile?.edrpou ?? '',
-        'region': mainProfile?.region ?? '',
-        'categories': mainProfile?.categories ?? '',
-        'activities': mainProfile?.activities ?? '',
-        'banner_image': mainProfile?.banner_image ?? '',
-        'logo_image': mainProfile?.logo_image ?? '',
-        'common_info': mainProfile?.common_info ?? '',
+        'official_name': mainProfile?.official_name ?? null,
+        'edrpou': mainProfile?.edrpou ?? null,
+        'region': mainProfile?.region ?? null,
+        'categories': mainProfile?.categories ?? [],
+        'activities': mainProfile?.activities ?? [],
+        'banner_image': mainProfile?.banner_image ?? null,
+        'logo_image': mainProfile?.logo_image ?? null,
+        'common_info': mainProfile?.common_info ?? null,
         'is_registered': mainProfile?.is_registered ?? '',
         'is_startup': mainProfile?.is_startup ?? '',
     };
@@ -94,6 +96,8 @@ const GeneralInfo = (props) => {
         );
       };
 
+    // TODO: remove logic for 'edrpou' field check when it  will be replaced with char field on server side
+
     const checkFormIsDirty = () => {
         let isDirty = false;
         Object.keys(defaultValues).forEach((key) => {
@@ -103,7 +107,7 @@ const GeneralInfo = (props) => {
                 return;
             }
           } else if (key === 'edrpou') {
-            if (defaultValues[key].toString() !== profile[key].toString())
+            if ((defaultValues[key] || profile[key] !== null) && (defaultValues[key].toString() !== profile[key].toString()))
                 isDirty = true;
                 return;
           } else if (defaultValues[key] !== profile[key]) {
