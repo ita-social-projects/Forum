@@ -107,9 +107,11 @@ const GeneralInfo = (props) => {
                 return;
             }
           } else if (key === 'edrpou') {
-            if ((defaultValues[key] || profile[key] !== null) && (defaultValues[key].toString() !== profile[key].toString()))
-                isDirty = true;
-                return;
+                if (((defaultValues[key] && profile[key] !== null) && (defaultValues[key].toString() !== profile[key].toString())) ||
+                    (defaultValues[key] === null && profile[key] !== null)) {
+                    isDirty = true;
+                    return;
+                }
           } else if (defaultValues[key] !== profile[key]) {
                 isDirty = true;
                 return;
