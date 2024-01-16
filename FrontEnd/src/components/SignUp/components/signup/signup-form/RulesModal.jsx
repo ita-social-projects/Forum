@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './RulesModal.css';
+import styles from './RulesModal.module.css';
 import rulesText from './Rules_text';
 
 const RulesModal = ({ closeModal }) => {
   return (
     <div className={styles.modal}>
-      <div className="rules-modal">
-        <h2 className="rules-modal__title">{rulesText.title}</h2>
+      <div className={styles['rules-modal']}>
+        <h2 className={styles['rules-modal__title']}>{rulesText.title}</h2>
         {rulesText.content.map((item, index) => {
           if (item.type === 'paragraph') {
             return <p key={index}>{item.text}</p>;
@@ -16,7 +16,7 @@ const RulesModal = ({ closeModal }) => {
           }
           return null;
         })}
-        <button className="rules-modal__button" onClick={closeModal}>Закрити</button>
+        <button className={styles['rules-modal__button']} onClick={closeModal}>Закрити</button>
       </div>
     </div>
   );
@@ -27,4 +27,3 @@ RulesModal.propTypes = {
 };
 
 export default RulesModal;
-
