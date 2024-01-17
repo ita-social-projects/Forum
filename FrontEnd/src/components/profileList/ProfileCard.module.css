@@ -121,6 +121,9 @@
 
 .content__categories {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
-  gap: 15px;
+  align-self: stretch;
+  max-width: 100%;
+  gap: 8px;
 }

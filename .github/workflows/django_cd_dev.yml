@@ -49,5 +49,7 @@ jobs:
 
       - name: Clean up old docker resources
         run: |
+          docker system df
           docker container prune -f
           docker image prune -f
+          docker buildx prune -f

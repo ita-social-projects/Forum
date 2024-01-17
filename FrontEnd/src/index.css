@@ -9,10 +9,11 @@ body {
 }
 
 :root {
-  --toastify-color-light: var(--Dust-Red-1, #FFF1F0);
-  --toastify-color-error: none;
+  --toastify-color-error: var(--Dust-Red-1, #FFF1F0);
+  --toastify-color-success: #F1FFF7;
   --toastify-font-family: Inter;
   --toastify-toast-width: 395px;
   --toastify-toast-min-height: 22px;
-  --toastify-text-color-light: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  --toastify-text-color-error: var(--character-title-85, rgba(0, 0, 0, 0.85));
 }

@@ -12,7 +12,7 @@ const company = {
   name: 'Testname',
   categories: [1, 2],
   region: 'Testregion',
-  founded: 2005,
+  founded: 2006,
   service_info: 'Testinfo',
   address: 'Testadress',
   banner_image: '',

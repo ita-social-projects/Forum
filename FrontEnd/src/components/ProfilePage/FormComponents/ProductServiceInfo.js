@@ -1,4 +1,5 @@
 import css from './FormComponents.module.css';
+import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useUser, useProfile } from '../../../hooks/';
 import TextField from './FormFields/TextField';
@@ -46,6 +47,7 @@ const ProductServiceInfo = (props) => {
             if (response.status === 200) {
                 const updatedProfileData = await response.json();
                 profileMutate(updatedProfileData);
+                toast.success('Зміни успішно збережено');
             } else {
                 console.error('Помилка');
             }
