@@ -9,7 +9,7 @@
 - model: profiles.category
   pk: 3
   fields:
-    name: Робота з деревом
+    name: Деревообробка
 - model: profiles.category
   pk: 4
   fields:
