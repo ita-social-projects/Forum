@@ -1,0 +1,16 @@
+- model: profiles.category
+  pk: 1
+  fields:
+    name: Виноробство
+- model: profiles.category
+  pk: 2
+  fields:
+    name: Сироваріння
+- model: profiles.category
+  pk: 3
+  fields:
+    name: Деревообробка
+- model: profiles.category
+  pk: 4
+  fields:
+    name: Пакування з паперу
