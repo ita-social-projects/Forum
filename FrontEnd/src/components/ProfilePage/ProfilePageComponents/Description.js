@@ -3,10 +3,13 @@ import css from './Description.module.css';
 
 const DESCRIPTIONS = {
     'UserInfo': 'Інформація про користувача платформи',
+    'GeneralInfo': 'Інформація про компанію',
+    'ContactsInfo': 'Інформація про компанію',
+    'ProductServiceInfo': 'Інформація про компанію',
+    'AdditionalInfo': 'Інформація про компанію',
+    'StartupInfo': 'Інформація про стартап',
     'Delete': 'Видалення профілю',
 };
-
-const generalDesc = 'Зробіть зміни для електронної пошти та особистиї інформації';
 
 const Description = (props) => {
     return (
@@ -20,7 +23,7 @@ const Description = (props) => {
                 <div className={css['company__attributes']}>
                     <div className={css['companyName']}>{props.companyName}</div>
                 </div>
-                <div className={css['description__text']}>{props.formName in DESCRIPTIONS ?  DESCRIPTIONS[props.formName] : generalDesc}</div>
+                <div className={css['description__text']}>{DESCRIPTIONS[props.formName]}</div>
             </div>
         </div>
     );
