@@ -1,13 +1,16 @@
 const rulesText = {
+    id: 1,
     title: 'Правила користування сайтом',
     level: 2,
     content: [
         {
+            id: 2,
             type: 'heading',
             level: 3,
             text: 'Ще більше тексту. Ще більше тексту. Ще більше тексту.Ще більше тексту.'
         },
         {
+            id: 3,
             type: 'paragraph',
             text: `
                 We collect personal information relating to you (“Personal Information”) as follows:
@@ -29,9 +32,10 @@ const rulesText = {
             `
         },
         {
+            id: 4,
             type: 'paragraph',
             level: 2,
-            text: 'Ще більше тексту. Ще більше тексту. Ще більше тексту.Ще більше тексту.'
+            text: 'Ще більше тексту 2. Ще більше тексту. Ще більше тексту.Ще більше тексту.'
         },
     ],
 };
