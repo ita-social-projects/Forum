@@ -17,7 +17,7 @@ const Description = (props) => {
             <img
                 className={css['description__avatar']}
                 src={props.companyLogo || `${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
-                alt=""
+                alt="Company logo"
             />
             <div className={css['description__content']}>
                 <div className={css['company__attributes']}>
