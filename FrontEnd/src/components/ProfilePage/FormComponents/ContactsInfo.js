@@ -31,6 +31,9 @@ const ContactsInfo = (props) => {
         let isDirty = false;
         Object.keys(defaultValues).forEach((key) => {
             if (defaultValues[key] !== profile[key]) {
+                if (defaultValues[key] === null && profile[key] === '') {
+                    return;
+                }
                 isDirty = true;
                 return;
           }

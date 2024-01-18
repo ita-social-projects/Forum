@@ -113,6 +113,9 @@ const GeneralInfo = (props) => {
                     return;
                 }
           } else if (defaultValues[key] !== profile[key]) {
+                if (defaultValues[key] === null && profile[key] === '') {
+                    return;
+                }
                 isDirty = true;
                 return;
           }
