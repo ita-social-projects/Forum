@@ -50,7 +50,7 @@ const UserInfo = (props) => {
                     return;
               }
             } else if (defaultValues[key] !== updateProfile[key]) {
-                if (defaultValues[key] === null && profile[key] === '') {
+                if (defaultValues[key] === null && updateProfile[key] === '') {
                     return;
                 }
                 isDirty = true;
