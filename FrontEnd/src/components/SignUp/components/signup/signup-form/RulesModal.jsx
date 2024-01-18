@@ -1,4 +1,3 @@
-import { createElement } from 'react';
 import PropTypes from 'prop-types';
 import styles from './RulesModal.module.css';
 import rulesText from './Rules_text';
@@ -11,7 +10,8 @@ const RulesModal = ({ closeModal }) => {
           if (item.type === 'paragraph') {
             return <p key={index}>{item.text}</p>;
           } else if (item.type === 'heading') {
-            return createElement(`h${item.level}`, { key: index }, item.text);
+            const HeadingTag = `h${item.level}`;
+            return <HeadingTag key={index}>{item.text}</HeadingTag>;
           }
           return null;
         })}
