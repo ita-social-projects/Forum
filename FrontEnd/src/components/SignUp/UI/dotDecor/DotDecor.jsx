@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import css from './DotDecor.module.css';
 
@@ -16,14 +16,13 @@ const DotRow = () => {
   );
 
   const dots = [...Array(7)].map((_, index) => (
-    <React.Fragment key={index}>{circle}</React.Fragment>
+    <Fragment key={index}>{circle}</Fragment>
   ));
 
   return <div className={css['dot-row']}>{dots}</div>;
 };
 
-function DotDecorComponent(props) {
-  const { position } = props;
+function DotDecorComponent({ position }) {
   return (
     <div className={`${css['dot-block']} ${css[position]}`}>
       <DotRow />

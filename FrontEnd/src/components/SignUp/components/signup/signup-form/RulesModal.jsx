@@ -5,7 +5,6 @@ import rulesText from './Rules_text';
 
 const RulesModal = ({ closeModal }) => {
   return (
-    <div className={styles.modal}>
       <div className={styles['rules-modal']}>
         <h2 className={styles['rules-modal__title']}>{rulesText.title}</h2>
         {rulesText.content.map((item, index) => {
@@ -18,7 +17,6 @@ const RulesModal = ({ closeModal }) => {
         })}
         <button className={styles['rules-modal__button']} onClick={closeModal}>Закрити</button>
       </div>
-    </div>
   );
 };
 
