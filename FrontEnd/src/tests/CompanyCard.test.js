@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import CompanyCard from '../components/SearchPage/search_field/companies/CompanyCard';
+import CompanyCard from '../components/CompanyCard/CompanyCard';
 
 afterEach(() => {
   jest.resetAllMocks();

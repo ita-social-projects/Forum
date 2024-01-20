@@ -7,16 +7,16 @@ import MainAboutSection from './about-section/About';
 import CookieMod from '../cookieacception/CookieMod';
 import css from './MainPage.module.css';
 
-const MainPage = (props) => {
+const MainPage = (isAuthorized, userData) => {
   const [modalActive, setModalActive] = useState(true);
   return (
     <div className={css['main-app']}>
       <div className={css['main-app-header']}>
-        <MainBanner isAuthorized={props.isAuthorized}/>
+        <MainBanner isAuthorized={isAuthorized} />
         <div className={css['main-app-body']}>
-          <MainCompanies />
+          <MainCompanies isAuthorized={isAuthorized} userData={userData} />
           <MainPartners />
-          {!props.isAuthorized ? <MainLoginBanner /> : null}
+          {!isAuthorized ? <MainLoginBanner /> : null}
           <MainAboutSection />
           <div>
             <CookieMod

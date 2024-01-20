@@ -70,7 +70,10 @@ function BasicPage() {
     >
       <Header isAuthorized={auth.isAuth} />
       <Routes>
-        <Route path="/" element={<MainPage isAuthorized={auth.isAuth} />} />
+        <Route
+          path="/"
+          element={<MainPage isAuthorized={auth.isAuth} userData={userData} />}
+        />
         <Route path="/profile/*" element={<ProfilePage />} />
         <Route
           path="/profile-detail/:id"

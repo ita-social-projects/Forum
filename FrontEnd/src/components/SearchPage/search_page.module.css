@@ -1,4 +1,4 @@
-@import './search_field/companies/variables.css';
+@import '../CompanyCard/variables.css';
 
 .main_block_outer {
   padding-top: 10px;
