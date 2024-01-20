@@ -30,16 +30,12 @@
   align-items: center;
   gap: 36px;
 }
-.new-companies-block__row {
-  display: flex;
-  align-items: flex-start;
-  gap: 60px;
-}
+
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  justify-content: space-between;
-  margin: -10px; /* spacess beetwen ecompanies */
+  column-gap: 40px;
+  row-gap: 18px;
 }
 
 .col-md-4 {
