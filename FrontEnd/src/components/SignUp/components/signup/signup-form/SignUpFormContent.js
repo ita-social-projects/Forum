@@ -36,7 +36,6 @@ export function SignUpFormContentComponent(props) {
 
   const { setIsValid } = props;
   // modal start
-  // const RulesModal = React.lazy(() => import('./RulesModal'));
   const [isModalOpen, setIsModalOpen] = useState(false);
   SignUpFormContentComponent.propTypes = {
     setIsValid: PropTypes.func.isRequired,
