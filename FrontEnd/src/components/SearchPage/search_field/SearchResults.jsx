@@ -16,8 +16,8 @@ const SearchResults = ({
   SearchResults.propTypes = {
     results: PropTypes.array,
     displayedResults: PropTypes.array,
-    isAuthorized: PropTypes.object,
-    userData: PropTypes.any.isRequired,
+    isAuthorized: PropTypes.any,
+    userData: PropTypes.any,
   };
 
   const baseUrl = process.env.REACT_APP_BASE_API_URL;

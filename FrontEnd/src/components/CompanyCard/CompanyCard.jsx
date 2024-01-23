@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import axios from 'axios';
@@ -10,8 +10,8 @@ import PropTypes from 'prop-types';
 const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
   CompanyCard.propTypes = {
     companyData: PropTypes.object,
-    isAuthorized: PropTypes.any.isRequired,
-    userData: PropTypes.any.isRequired,
+    isAuthorized: PropTypes.any,
+    userData: PropTypes.any,
     savedList: PropTypes.array,
   };
 
@@ -22,15 +22,13 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
   const yearsOfExperiense = companyData.founded
     ? currentYear - companyData.founded
     : 0;
-  // const [usersSavedList, setUsersSavedList] = useState([]);
   const [star, setStar] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  // const [searchPerformed, setSearchPerformed] = useState(false);
 
   async function sendRequest(url) {
     return await axios.post(
       url,
-      { user: userData.id, company: companyData.id },
+      { user: userData.id, company: companyData['id'] },
       {
         withCredentials: true,
         headers: {
@@ -40,86 +38,65 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
     );
   }
 
-  function getRequest() {
-    // const data = await axios
-    //   .get(url, {
-    //     withCredentials: true,
-    //     headers: {
-    //       Authorization: 'Token ' + authToken,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     return response.data;
-    //   });
-
-    // const NewList = [];
-    // for (let item of saved) {
-    //   NewList.push(item['id']);
-    // }
-
-    // setUsersSavedList(NewList);
-    if (companyData.id == userData.id) {
-      setStar(false);
-      setIsSaved(false);
-      // setSearchPerformed(true);
-    } else {
-      if (savedList.includes(companyData.id)) {
-        setStar(filledStar);
-        setIsSaved(true);
-      } else {
-        setIsSaved(false);
-        setStar(outlinedStar);
-      }
-      // setSearchPerformed(true);
-    }
-  }
-
   const { trigger } = useSWRMutation(
     `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
     sendRequest
   );
 
-  const { trigger: triggerget } = useSWRMutation(
-    `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?is_saved=True`,
-    getRequest
-  );
-
-  const handleClick = async () => {
-    try {
-      await trigger({ optimisticData: () => setIsSaved(!isSaved) });
-    } catch (error) {
-      console.error(error);
+  const getRequest = useCallback(() => {
+    const handleClick = async () => {
+      try {
+        await trigger({ optimisticData: () => setIsSaved(!isSaved) });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const filledStar = (
+      <StarFilled
+        className={styles['star']}
+        onClick={handleClick}
+        data-testid="star"
+      />
+    );
+    const outlinedStar = (
+      <StarOutlined
+        className={styles['star']}
+        onClick={handleClick}
+        data-testid="emptystar"
+      />
+    );
+    if (isAuthorized) {
+      if (companyData.id == userData.id) {
+        setStar(false);
+        setIsSaved(false);
+      } else {
+        if (savedList.includes(companyData.id)) {
+          setStar(filledStar);
+          setIsSaved(true);
+        } else {
+          setIsSaved(false);
+          setStar(outlinedStar);
+        }
+      }
     }
-  };
+  }, [companyData, savedList, userData, isSaved, trigger, isAuthorized]);
 
-  mutate((key) => typeof key === 'string' && key.startsWith('/api/profiles/'), {
-    revalidate: true,
-  });
-
-  const filledStar = (
-    <StarFilled
-      className={styles['star']}
-      onClick={handleClick}
-      data-testid="star"
-    />
-  );
-  const outlinedStar = (
-    <StarOutlined
-      className={styles['star']}
-      onClick={handleClick}
-      data-testid="emptystar"
-    />
+  mutate(
+    (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
+    {
+      revalidate: true,
+    }
   );
 
   useEffect(() => {
     if (isAuthorized) {
       try {
-        triggerget();
+        getRequest();
       } catch (error) {
         console.error(error);
       }
     }
-  }, [isAuthorized, triggerget]);
+  }, [isAuthorized, getRequest]);
 
   return (
     <div className={styles['company-card']}>

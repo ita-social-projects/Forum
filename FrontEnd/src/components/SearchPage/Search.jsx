@@ -15,8 +15,8 @@ const ITEMS_PER_PAGE = 6;
 
 export function Search({ isAuthorized, userData }) {
   Search.propTypes = {
-    isAuthorized: PropTypes.any.isRequired,
-    userData: PropTypes.any.isRequired,
+    isAuthorized: PropTypes.any,
+    userData: PropTypes.any,
   };
 
   const [searchResults, setSearchResults] = useState([]);
@@ -56,7 +56,7 @@ export function Search({ isAuthorized, userData }) {
         console.error(error);
       }
     }
-  }, [searchTerm, servedAddress, searchUrl]);
+  }, [searchTerm, servedAddress, searchUrl, trigger]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalItems = searchResults.length;
@@ -77,14 +77,15 @@ export function Search({ isAuthorized, userData }) {
         <img className={styles['frame-img-right']} src={frame42} alt="frame" />
         <div className={styles['new-companies-search_count']}>
           {searchResults && (
-            <div><h3 className={styles['search_results_text']}>
-              РЕЗУЛЬТАТІВ ЗА ПОШУКОМ{' '}
-              <span className={styles['search_field_entered_value']}>
-                {searchTerm}
-              </span>{' '}
-              : {searchResults.length > 0 ? searchResults.length : 0}
-            </h3>
-            <br/>
+            <div>
+              <h3 className={styles['search_results_text']}>
+                РЕЗУЛЬТАТІВ ЗА ПОШУКОМ{' '}
+                <span className={styles['search_field_entered_value']}>
+                  {searchTerm}
+                </span>{' '}
+                : {searchResults.length > 0 ? searchResults.length : 0}
+              </h3>
+              <br />
             </div>
           )}
           <br />
@@ -101,17 +102,18 @@ export function Search({ isAuthorized, userData }) {
               />
               <br />
             </>
-          ) : ( <div>
-          <br />
-            <p className={styles['search_result_error']}>
-              Пошук не дав результатів: компанії з іменем{' '}
-              <span className={styles['.search_result_error']}>
-                {searchTerm}
-              </span>{' '}
-              не було виявлено на даний момент
-            </p>
-             <br />
-          </div>
+          ) : (
+            <div>
+              <br />
+              <p className={styles['search_result_error']}>
+                Пошук не дав результатів: компанії з іменем{' '}
+                <span className={styles['.search_result_error']}>
+                  {searchTerm}
+                </span>{' '}
+                не було виявлено на даний момент
+              </p>
+              <br />
+            </div>
           )}
         </div>
         <div className={styles['new-companies-result_pages']}>

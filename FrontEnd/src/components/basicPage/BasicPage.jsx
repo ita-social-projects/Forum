@@ -130,7 +130,7 @@ function BasicPage() {
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
         <Route
           path="/search"
-          element={<Search isAuthorized={auth} userData={userData} />}
+          element={<Search isAuthorized={auth.isAuth} userData={userData} />}
         />
       </Routes>
       <Footer />

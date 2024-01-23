@@ -7,7 +7,7 @@ import MainAboutSection from './about-section/About';
 import CookieMod from '../cookieacception/CookieMod';
 import css from './MainPage.module.css';
 
-const MainPage = (isAuthorized, userData) => {
+const MainPage = ({ isAuthorized, userData }) => {
   const [modalActive, setModalActive] = useState(true);
   return (
     <div className={css['main-app']}>
