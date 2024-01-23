@@ -26,10 +26,16 @@ class IsOwner(BasePermission):
         return request.user == view._profile.person
 
 
+class OnlyRequestUser(BasePermission):
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        return str(request.user.id) == str(request.data.get("user"))
+
 class IsOwnCompany(BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        pk = request.data.get("company_pk")
+        pk = request.data.get("company")
         try:
             profile = Profile.objects.get(id=pk)
         except ObjectDoesNotExist:

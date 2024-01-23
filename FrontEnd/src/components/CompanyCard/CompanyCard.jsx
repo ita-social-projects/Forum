@@ -7,11 +7,12 @@ import axios from 'axios';
 import styles from './CompanyCard.module.css';
 import PropTypes from 'prop-types';
 
-const CompanyCard = ({ companyData, isAuthorized, userData }) => {
+const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
   CompanyCard.propTypes = {
     companyData: PropTypes.object,
-    isAuthorized: PropTypes.object,
+    isAuthorized: PropTypes.any.isRequired,
     userData: PropTypes.any.isRequired,
+    savedList: PropTypes.array,
   };
 
   const { mutate } = useSWRConfig();
@@ -21,15 +22,15 @@ const CompanyCard = ({ companyData, isAuthorized, userData }) => {
   const yearsOfExperiense = companyData.founded
     ? currentYear - companyData.founded
     : 0;
-  const [usersSavedList, setUsersSavedList] = useState([]);
+  // const [usersSavedList, setUsersSavedList] = useState([]);
   const [star, setStar] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [searchPerformed, setSearchPerformed] = useState(false);
+  // const [searchPerformed, setSearchPerformed] = useState(false);
 
-  async function sendRequest(url, { arg: data }) {
+  async function sendRequest(url) {
     return await axios.post(
       url,
-      { company_pk: data['company_pk'] },
+      { user: userData.id, company: companyData.id },
       {
         withCredentials: true,
         headers: {
@@ -39,37 +40,37 @@ const CompanyCard = ({ companyData, isAuthorized, userData }) => {
     );
   }
 
-  async function getRequest(url) {
-    const data = await axios
-      .get(url, {
-        withCredentials: true,
-        headers: {
-          Authorization: 'Token ' + authToken,
-        },
-      })
-      .then((response) => {
-        return response.data;
-      });
+  function getRequest() {
+    // const data = await axios
+    //   .get(url, {
+    //     withCredentials: true,
+    //     headers: {
+    //       Authorization: 'Token ' + authToken,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     return response.data;
+    //   });
 
-    const NewList = [];
-    for (let item of data.results) {
-      NewList.push(item['id']);
-    }
+    // const NewList = [];
+    // for (let item of saved) {
+    //   NewList.push(item['id']);
+    // }
 
-    setUsersSavedList(NewList);
+    // setUsersSavedList(NewList);
     if (companyData.id == userData.id) {
       setStar(false);
       setIsSaved(false);
-      setSearchPerformed(true);
+      // setSearchPerformed(true);
     } else {
-      if (usersSavedList.includes(companyData.id)) {
+      if (savedList.includes(companyData.id)) {
         setStar(filledStar);
         setIsSaved(true);
       } else {
         setIsSaved(false);
         setStar(outlinedStar);
       }
-      setSearchPerformed(true);
+      // setSearchPerformed(true);
     }
   }
 
@@ -85,10 +86,7 @@ const CompanyCard = ({ companyData, isAuthorized, userData }) => {
 
   const handleClick = async () => {
     try {
-      await trigger(
-        { company_pk: companyData.id },
-        { optimisticData: () => setIsSaved(!isSaved) }
-      );
+      await trigger({ optimisticData: () => setIsSaved(!isSaved) });
     } catch (error) {
       console.error(error);
     }
@@ -114,14 +112,14 @@ const CompanyCard = ({ companyData, isAuthorized, userData }) => {
   );
 
   useEffect(() => {
-    if (isAuthorized.isAuth) {
+    if (isAuthorized) {
       try {
         triggerget();
       } catch (error) {
         console.error(error);
       }
     }
-  }, [companyData, isAuthorized, isSaved, searchPerformed]);
+  }, [isAuthorized, triggerget]);
 
   return (
     <div className={styles['company-card']}>

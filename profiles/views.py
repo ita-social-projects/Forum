@@ -25,6 +25,7 @@ from .permissions import (
     IsOwner,
     RequestIsReadOnly,
     RequestIsCreate,
+    OnlyRequestUser,
 )
 from .serializers import (
     SavedCompanySerializer,
@@ -43,32 +44,51 @@ from .serializers import (
 from .filters import ProfileFilter
 
 
-class SavedCompaniesCreate(CreateAPIView):
+class SavedCompaniesCreate(ListCreateAPIView):
     """
     List of saved companies.
     Add a company to the saved list.
     """
 
-    permission_classes = [IsAuthenticated, IsOwnCompany]
+    # queryset = SavedCompany.objects.filter(user=self.request.user)
+    permission_classes = [IsAuthenticated, IsOwnCompany, OnlyRequestUser]
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
 
-    def post(self, request):
-        user = request.user
-        pk = request.data.get("company_pk")
+    def get_queryset(self):
+        return SavedCompany.objects.filter(user=self.request.user)
 
-        # Check if the company is already in the user's saved list
-        if SavedCompany.objects.filter(user=user, company_id=pk).exists():
+    def create(self, request):
+        # if self.request.user.id != request.data.get("user"):
+        # user = self.request.user if self.request.user.id == request.data.get("user") else None
+        saved_company = SavedCompany.objects.filter(user=self.request.user, company=request.data.get("company"))
+        if saved_company.exists():
             saved_company_destroyer = SavedCompaniesDestroy()
-            return saved_company_destroyer.destroy(request, pk)
+            return saved_company_destroyer.destroy(request, request.data.get("company"))
 
-        serializer = SavedCompanySerializer(
-            data={"company": pk, "user": user.id}
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"Company added": serializer.data})
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return super().create(request)
+
+    # def post(self, request):
+    #     user = request.user
+    #     pk = request.data.get("company_pk")
+    #
+    #     # Check if the company is already in the user's saved list
+    #     if SavedCompany.objects.filter(user=user, company_id=pk).exists():
+    #         saved_company_destroyer = SavedCompaniesDestroy()
+    #         return saved_company_destroyer.destroy(request, pk)
+    #
+    #     serializer = SavedCompanySerializer(
+    #         data={"company": pk, "user": user.id}
+    #     )
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response({"Company added": serializer.data})
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def list(self, request):
+    #     user = self.request.user
+    #     if user.is_authenticated:
+    #         return Response({'saved_list': SavedCompany.objects.filter(user=self.request.user)})
 
 
 class SavedCompaniesDestroy(DestroyAPIView):

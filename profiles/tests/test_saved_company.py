@@ -17,7 +17,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(
+                "company": "{profile_id}".format(
                     profile_id=self.profile.id
                 ),
             },
@@ -29,12 +29,13 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=self.profile.id)
+                "user": self.user.id,
+                "company": "{profile_id}".format(profile_id=self.profile.id)
             },
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        company_added_info = response.data["Company added"]
-        self.assertEqual(company_added_info["company"], self.profile.id)
+        self.assertEqual(201, response.status_code)
+        company_added_info = response.data["company"]
+        self.assertEqual(company_added_info, self.profile.id)
 
     def test_add_own_company_to_saved_authenticated(self):
         own_profile = ProfileCompanyFactory(person_id=self.user.id)
@@ -42,7 +43,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=own_profile.id),
+                "user": self.user.id,
+                "company": "{profile_id}".format(profile_id=own_profile.id),
             },
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
@@ -53,7 +55,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": 0,
+                "user": self.user.id,
+                "company": 0,
             },
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
@@ -80,7 +83,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_pk}".format(
+                "user": self.user.id,
+                "company": "{profile_pk}".format(
                     profile_pk=self.profile.id
                 ),
             },
@@ -88,7 +92,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_pk}".format(
+                "user": self.user.id,
+                "company": "{profile_pk}".format(
                     profile_pk=self.profile.id
                 ),
             },
@@ -96,3 +101,32 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(0, response.data["total_items"])
+
+    def test_add_company_to_other_user(self):
+        other_user = UserFactory()
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            path="/api/saved-list/",
+            data={
+                "user": other_user.id,
+                "company": "{profile_pk}".format(
+                    profile_pk=self.profile.id
+                ),
+            },
+        )
+        self.assertEqual(403, response.status_code)
+
+    def test_get_saved_company_list(self):
+        self.client.force_authenticate(self.user)
+        self.client.post(
+            path="/api/saved-list/",
+            data={
+                "user": self.user.id,
+                "company": "{profile_pk}".format(
+                    profile_pk=self.profile.id
+                ),
+            },
+        )
+        response = self.client.get(path="/api/saved-list/")
+        self.assertEqual(1, response.data["total_items"])
+        self.assertEqual(1, response.data["total_pages"])
