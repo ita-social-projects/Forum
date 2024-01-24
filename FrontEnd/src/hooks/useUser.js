@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import { useAuth } from './useAuth';
 
 export default function useUser() {
     const authToken = localStorage.getItem('Token');
     const [user, setUser] = useState(null);
+    const { logout } = useAuth();
 
     const { data, error, mutate } = useSWR(
         authToken ? `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/` : null,
@@ -15,6 +17,7 @@ export default function useUser() {
                 },
             }).then((res) => {
                 if (!res.ok && res.status === 401) {
+                    logout();
                   const error = new Error('Unauthorized user.');
                         error.info = res.json();
                         error.status = res.status;
