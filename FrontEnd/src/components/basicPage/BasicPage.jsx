@@ -71,7 +71,11 @@ function BasicPage() {
       <Header isAuthorized={auth.isAuth} />
       <Routes>
         <Route path="/" element={<MainPage isAuthorized={auth.isAuth} />} />
-        <Route path="/profile/*" element={<ProfilePage />} />
+        {auth.isAuth ? (
+          <Route path="/profile/*" element={<ProfilePage />} />
+          ) : (
+          <Route path="/profile/*" element={<Navigate to="/" />} />
+          )}
         <Route
           path="/profile-detail/:id"
           element={<ProfileDetailPage isAuthorized={auth.isAuth} />}

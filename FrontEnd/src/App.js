@@ -3,23 +3,21 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminPage from './components/adminPage/AdminPage';
 import BasicPage from './components/basicPage/BasicPage';
-import { AuthContext } from './context';
-import { useProvideAuth } from './hooks';
+import { AuthProvider } from './hooks';
 
 function App() {
-  const auth = useProvideAuth();
 
   return (
-    <AuthContext.Provider value={auth}>
       <BrowserRouter>
-        <div className="App">
-          <Routes>
-            <Route path="/*" element={<BasicPage />} />
-            <Route path="/customadmin/*" element={<AdminPage />} />
-          </Routes>
-        </div>
+        <AuthProvider>
+          <div className="App">
+            <Routes>
+              <Route path="/*" element={<BasicPage />} />
+              <Route path="/customadmin/*" element={<AdminPage />} />
+            </Routes>
+          </div>
+          </AuthProvider>
       </BrowserRouter>
-    </AuthContext.Provider>
   );
 }
 
