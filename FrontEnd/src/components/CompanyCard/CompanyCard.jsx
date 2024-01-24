@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import axios from 'axios';
@@ -14,21 +14,37 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
     userData: PropTypes.any,
     savedList: PropTypes.array,
   };
+  const company = useMemo(() => {
+    return {
+      id: companyData.id,
+      name: companyData.name,
+      categories: companyData.categories,
+      logo: companyData.logo_image,
+      banner: companyData.banner_image,
+      founded: companyData.founded,
+      address: companyData.address,
+    };
+  }, [companyData]);
 
+  // const user = useMemo(() => {
+  //   return {
+  //     id: userData.id,
+  //   };
+  // }, [userData]);
+
+  // console.log(companyData.id in savedList);
   const { mutate } = useSWRConfig();
   const authToken = localStorage.getItem('Token');
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  const yearsOfExperiense = companyData.founded
-    ? currentYear - companyData.founded
-    : 0;
+  const yearsOfExperiense = company.founded ? currentYear - company.founded : 0;
   const [star, setStar] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   async function sendRequest(url) {
     return await axios.post(
       url,
-      { user: userData.id, company: companyData['id'] },
+      { user: userData.id, company: company['id'] },
       {
         withCredentials: true,
         headers: {
@@ -66,11 +82,11 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
       />
     );
     if (isAuthorized) {
-      if (companyData.id == userData.id) {
+      if (company.id == userData.id) {
         setStar(false);
         setIsSaved(false);
       } else {
-        if (savedList.includes(companyData.id)) {
+        if (company.id in savedList) {
           setStar(filledStar);
           setIsSaved(true);
         } else {
@@ -79,7 +95,7 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
         }
       }
     }
-  }, [companyData, savedList, userData, isSaved, trigger, isAuthorized]);
+  }, [savedList, userData, isSaved, trigger, isAuthorized, company.id]);
 
   mutate(
     (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
@@ -102,9 +118,9 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
     <div className={styles['company-card']}>
       <div className={styles['company-card__block']}>
         <div className={styles['company-card__image-frame']}>
-          {companyData.banner_image ? (
+          {company.banner_image ? (
             <img
-              src={companyData.banner_image}
+              src={company.banner_image}
               alt="Company Banner"
               className={styles['company-card__image']}
             />
@@ -112,30 +128,28 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
             <img
               className={styles['company-card__empty-image']}
               src={`${process.env.REACT_APP_PUBLIC_URL}/svg/profile-view-image-empty.svg`}
-              alt={companyData.name}
+              alt={company.name}
             />
           )}
         </div>
         <div className={styles['company-card__text-block']}>
           <div className={styles['company-card__text-block__header']}>
             <div className={styles['company-card__category-text']}>
-              {companyData.categories &&
-                companyData.categories
-                  .map((category) => category.name)
-                  .join(' ')}
+              {company.categories &&
+                company.categories.map((category) => category.name).join(' ')}
             </div>
             <div className={styles['company-card__name-text']}>
               <Link
                 className={styles['company-card__name-text_link']}
-                to={`/profile-detail/${companyData.id}`}
+                to={`/profile-detail/${company.id}`}
               >
-                {companyData.name}
+                {company.name}
               </Link>
               <br />
             </div>
           </div>
           <div className={styles['company-card__address-text']}>
-            {companyData.address}
+            {company.address}
           </div>
           <div className={styles['company-card__badges-block']}>
             <div className={styles['company-card__badges']}>
@@ -151,9 +165,9 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
       </div>
       <div className={styles['company-card__logo']}>
         <div className={styles['company-card__logo-ellipse']}>
-          {companyData.logo_image ? (
+          {company.logo_image ? (
             <img
-              src={companyData.logo_image}
+              src={company.logo_image}
               alt="Logo"
               className={styles['company-card__logo-image']}
             />

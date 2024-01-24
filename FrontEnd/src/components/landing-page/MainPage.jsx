@@ -6,14 +6,20 @@ import MainLoginBanner from './login-banner/LoginBanner';
 import MainAboutSection from './about-section/About';
 import CookieMod from '../cookieacception/CookieMod';
 import css from './MainPage.module.css';
+import PropTypes from 'prop-types';
 
 const MainPage = ({ isAuthorized, userData }) => {
+  MainPage.propTypes = {
+    isAuthorized: PropTypes.any,
+    userData: PropTypes.any,
+  };
   const [modalActive, setModalActive] = useState(true);
   return (
     <div className={css['main-app']}>
       <div className={css['main-app-header']}>
         <MainBanner isAuthorized={isAuthorized} />
         <div className={css['main-app-body']}>
+          {/* <MainCompanies isAuthorized={isAuthorized} /> */}
           <MainCompanies isAuthorized={isAuthorized} userData={userData} />
           <MainPartners />
           {!isAuthorized ? <MainLoginBanner /> : null}

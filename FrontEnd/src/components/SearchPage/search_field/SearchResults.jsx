@@ -24,6 +24,9 @@ const SearchResults = ({
   const authToken = localStorage.getItem('Token');
   const [savedList, setSavedList] = useState([]);
   const { mutate } = useSWRConfig();
+  const [savedResults, setSavedResults] = useState(true);
+  // console.log('search', isAuthorized, isAuthorized.isAuth);
+
   const fetcher = (url) =>
     axios
       .get(url, {
@@ -33,17 +36,47 @@ const SearchResults = ({
         },
       })
       .then((res) => res.data.results);
+
   async function useSavedList(url) {
-    const data = await fetcher(url);
-    setSavedList(data);
+    const NewList = [];
+    if (isAuthorized) {
+      const data = await fetcher(url);
+      for (let item of data) {
+        NewList.push(item['company']);
+      }
+      setSavedList(NewList);
+      setSavedResults(false);
+      // console.log(NewList);
+    }
   }
+
+  // async function useSavedList(url) {
+  //   const NewList = [];
+  //   if (isAuthorized) {
+  //     const datasavedlist = await axios
+  //       .get(url, {
+  //         withCredentials: true,
+  //         headers: {
+  //           Authorization: `Token ${authToken}`,
+  //         },
+  //       })
+  //       .then((res) => res.data);
+  //     for (let item of datasavedlist.results) {
+  //       NewList.push(item['id']);
+  //     }
+  //     setSavedList(NewList);
+  //   }
+  //   console.log(NewList);
+  //   return NewList;
+  // }
+  // console.log(!savedList);
 
   const { trigger } = useSWRMutation(
     `${baseUrl}/api/saved-list/`,
     useSavedList
   );
   mutate(
-    (key) => typeof key === 'string' && key.startsWith('/api/saved-list'),
+    (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
     {
       revalidate: true,
     }
@@ -55,14 +88,14 @@ const SearchResults = ({
     error = results.error;
   }
   useEffect(() => {
-    if (isAuthorized.isAuth) {
+    if (savedResults) {
       try {
         trigger();
       } catch (error) {
         console.error(error);
       }
     }
-  });
+  }, [savedList, trigger, savedResults]);
 
   return (
     <div>

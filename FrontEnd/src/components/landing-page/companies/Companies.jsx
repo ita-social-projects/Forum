@@ -19,24 +19,27 @@ const MainCompanies = ({ isAuthorized, userData }) => {
   const [newMembers, setNewMembers] = useState(true);
   const [savedList, setSavedList] = useState([]);
 
+  const fetchersavedList = (url) =>
+    axios
+      .get(url, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      })
+      .then((res) => res.data.results);
+
   async function useSavedList(url) {
     const NewList = [];
     if (isAuthorized) {
-      const datasavedlist = await axios
-        .get(url, {
-          withCredentials: true,
-          headers: {
-            Authorization: `Token ${authToken}`,
-          },
-        })
-        .then((res) => res.data);
-      for (let item of datasavedlist.results) {
-        NewList.push(item['id']);
+      const data = await fetchersavedList(url);
+      for (let item of data) {
+        NewList.push(item['company']);
       }
       setSavedList(NewList);
     }
-    return NewList;
   }
+
   const { trigger: triggerget } = useSWRMutation(
     `${baseUrl}/api/saved-list/`,
     useSavedList
