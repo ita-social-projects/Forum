@@ -1,6 +1,5 @@
-import useAuth from './useAuth';
-import useProvideAuth from './useProvideAuth';
+import { useAuth, AuthProvider } from './useAuth';
 import useUser from './useUser';
 import useProfile from './useProfile';
 
-export { useAuth, useProvideAuth, useUser, useProfile };
+export { useAuth, AuthProvider, useUser, useProfile };
