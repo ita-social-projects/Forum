@@ -6,8 +6,8 @@ import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
-import RulesModal from './RulesModal';
 import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../../constants/constants';
+const RulesModal = React.lazy(() => import('./RulesModal'));
 
 export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
