@@ -15,8 +15,8 @@ class CompanySerializers(serializers.ModelSerializer):
             "categories",
             "region",
             "founded",
-            "service_info",
             "address",
             "banner_image",
             "logo_image",
+            "person",
         )

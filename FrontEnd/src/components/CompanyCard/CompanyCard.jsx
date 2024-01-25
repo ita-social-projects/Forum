@@ -1,50 +1,58 @@
 import { Link } from 'react-router-dom';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect } from 'react';
+// import { useState, useMemo, useEffect } from 'react';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import axios from 'axios';
 import styles from './CompanyCard.module.css';
 import PropTypes from 'prop-types';
 
-const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
+const CompanyCard = ({ companyData, isAuthorized, userData, issaved }) => {
   CompanyCard.propTypes = {
     companyData: PropTypes.object,
     isAuthorized: PropTypes.any,
     userData: PropTypes.any,
-    savedList: PropTypes.array,
+    issaved: PropTypes.bool,
   };
-  const company = useMemo(() => {
-    return {
-      id: companyData.id,
-      name: companyData.name,
-      categories: companyData.categories,
-      logo: companyData.logo_image,
-      banner: companyData.banner_image,
-      founded: companyData.founded,
-      address: companyData.address,
-    };
-  }, [companyData]);
-
-  // const user = useMemo(() => {
+  // const saved = useMemo(() => {
   //   return {
-  //     id: userData.id,
+  //     is_saved: issaved,
   //   };
-  // }, [userData]);
+  // }, [issaved]);
+  // console.log(saved);
+  // const company = useMemo(() => {
+  //   return {
+  //     id: companyData.id,
+  //     name: companyData.name,
+  //     categories: companyData.categories,
+  //     logo: companyData.logo_image,
+  //     banner: companyData.banner_image,
+  //     founded: companyData.founded,
+  //     address: companyData.address,
+  //     personId: companyData.person,
+  //   };
+  // }, [companyData]);
+  const company = companyData;
+  company.issaved = issaved;
 
-  // console.log(companyData.id in savedList);
   const { mutate } = useSWRConfig();
   const authToken = localStorage.getItem('Token');
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const yearsOfExperiense = company.founded ? currentYear - company.founded : 0;
+  const [isSaved, setIsSaved] = useState(company.is_saved);
   const [star, setStar] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  // const ownCompany = userData && company.personId == userData.id;
+  // console.log(isSaved);
+  // console.log(issaved, 'prop');
+  console.log(isSaved);
+  console.log(company.issaved);
 
   async function sendRequest(url) {
     return await axios.post(
       url,
-      { user: userData.id, company: company['id'] },
+      { user: userData?.id, company: company['id'] },
       {
         withCredentials: true,
         headers: {
@@ -59,60 +67,123 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
     sendRequest
   );
 
-  const getRequest = useCallback(() => {
-    const handleClick = async () => {
-      try {
-        await trigger({ optimisticData: () => setIsSaved(!isSaved) });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    const filledStar = (
-      <StarFilled
-        className={styles['star']}
-        onClick={handleClick}
-        data-testid="star"
-      />
-    );
-    const outlinedStar = (
-      <StarOutlined
-        className={styles['star']}
-        onClick={handleClick}
-        data-testid="emptystar"
-      />
-    );
-    if (isAuthorized) {
-      if (company.id == userData.id) {
-        setStar(false);
-        setIsSaved(false);
-      } else {
-        if (company.id in savedList) {
-          setStar(filledStar);
-          setIsSaved(true);
-        } else {
-          setIsSaved(false);
-          setStar(outlinedStar);
+  const handleClick = async () => {
+    try {
+      await trigger({ optimisticData: () => setIsSaved(!isSaved) });
+      mutate(
+        (key) => typeof key === 'string' && key.startsWith('/api/profiles/'),
+        {
+          revalidate: true,
         }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // mutate(
+  //   (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
+  //   {
+  //     revalidate: true,
+  //   }
+  // );
+
+  // const getRequest = useCallback(() => {
+  // const handleClick = async () => {
+  //   try {
+  //     await trigger({ optimisticData: () => setIsSaved(!isSaved) });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const getStar = () => {
+    if (userData && company.personId == userData.id) {
+      setStar(false);
+      setIsSaved(false);
+      // return null;
+    } else {
+      if (isSaved) {
+        setStar(filledStar);
+        setIsSaved(true);
+        // return filledStar;
+      } else {
+        setIsSaved(false);
+        setStar(outlinedStar);
+        // return outlinedStar;
       }
     }
-  }, [savedList, userData, isSaved, trigger, isAuthorized, company.id]);
-
-  mutate(
-    (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
-    {
-      revalidate: true,
-    }
+  };
+  const filledStar = (
+    <StarFilled
+      className={styles['star']}
+      onClick={handleClick}
+      data-testid="star"
+    />
+  );
+  const outlinedStar = (
+    <StarOutlined
+      className={styles['star']}
+      onClick={handleClick}
+      data-testid="emptystar"
+    />
   );
 
+  // const getStar = () => {
+  // if (isAuthorized) {
+  //   if (ownCompany) {
+  //     setStar(false);
+  //   } else {
+  //     if (isSaved) {
+  //       setStar(filledStar);
+  //     } else {
+  //       setStar(outlinedStar);
+  //     }
+  //   }
+  // }
+  // };
+  // }, [savedList, userData, isSaved, trigger, isAuthorized, company.id]);
+
+  // mutate(
+  //   (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
+  //   {
+  //     revalidate: true,
+  //   }
+  // );
+  // useEffect(() => {}, [trigger]);
+  const { trigger: triggerget } = useSWRMutation(
+    `${process.env.REACT_APP_BASE_API_URL}/api/profiles`,
+    getStar
+  );
   useEffect(() => {
     if (isAuthorized) {
       try {
-        getRequest();
+        triggerget();
       } catch (error) {
         console.error(error);
       }
     }
-  }, [isAuthorized, getRequest]);
+  }, [isAuthorized, triggerget]);
+  // useEffect(() => {
+  //   if (isAuthorized) {
+  //     try {
+  //       trigger();
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  // }, [isAuthorized, trigger]);
+
+  // useEffect(() => {
+  //   try {
+  //     trigger();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, [trigger]);
+
+  // useEffect(() => {
+  //   setIsSaved(!isSaved);
+  // }, [isSaved, trigger]);
 
   return (
     <div className={styles['company-card']}>
@@ -159,7 +230,13 @@ const CompanyCard = ({ companyData, isAuthorized, userData, savedList }) => {
                 </div>
               </div>
             </div>
+            {/* {getRequest} */}
             {star}
+            {/* {isAuthorized && !ownCompany
+              ? isSaved
+                ? filledStar
+                : outlinedStar
+              : null} */}
           </div>
         </div>
       </div>

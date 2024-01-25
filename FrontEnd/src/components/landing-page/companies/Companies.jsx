@@ -95,7 +95,8 @@ const MainCompanies = ({ isAuthorized, userData }) => {
                 companyData={result}
                 isAuthorized={isAuthorized}
                 userData={userData}
-                savedList={savedList}
+                // savedList={savedList}
+                issaved={savedList.includes(result.id)}
               />
             </div>
           ))}
