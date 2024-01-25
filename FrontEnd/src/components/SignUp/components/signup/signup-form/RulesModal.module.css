@@ -1,0 +1,25 @@
+.rules-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: white;
+  z-index: 100;
+}
+
+.rules-modal__title {
+  margin-bottom: 20px;
+}
+
+.rules-modal__button {
+  cursor: pointer;
+  background-color: #1f9a7c;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+}
