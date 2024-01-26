@@ -66,8 +66,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path="/api/saved-list/{profile_pk}/".format(
-                profile_pk=saved_company.company.id
+            path="/api/saved-list/{saved_company_pk}/".format(
+                saved_company_pk=saved_company.id
             ),
             data={},
         )
@@ -116,7 +116,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         )
         self.assertEqual(403, response.status_code)
 
-    def test_get_saved_company_list(self):
+    def test_get_saved_company_list_by_admin(self):
+        self.user.is_staff = True
         self.client.force_authenticate(self.user)
         self.client.post(
             path="/api/saved-list/",
@@ -130,3 +131,18 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.get(path="/api/saved-list/")
         self.assertEqual(1, response.data["total_items"])
         self.assertEqual(1, response.data["total_pages"])
+
+    def test_get_saved_company_list_by_user(self):
+        self.client.force_authenticate(self.user)
+        self.client.post(
+            path="/api/saved-list/",
+            data={
+                "user": self.user.id,
+                "company": "{profile_pk}".format(
+                    profile_pk=self.profile.id
+                ),
+            },
+        )
+        response = self.client.get(path="/api/saved-list/")
+        self.assertEqual(403, response.status_code)
+

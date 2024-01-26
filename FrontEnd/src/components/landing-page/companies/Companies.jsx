@@ -6,57 +6,21 @@ import styles from './Companies.module.css';
 import CompanyCard from '../../CompanyCard/CompanyCard';
 import PropTypes from 'prop-types';
 
-const MainCompanies = ({ isAuthorized, userData }) => {
+const MainCompanies = ({ isAuthorized }) => {
   MainCompanies.propTypes = {
-    isAuthorized: PropTypes.any,
-    userData: PropTypes.any,
+    isAuthorized: PropTypes.bool,
   };
 
   const baseUrl = process.env.REACT_APP_BASE_API_URL;
-  const authToken = localStorage.getItem('Token');
   const [searchResults, setSearchResults] = useState([]);
   const { mutate } = useSWRConfig();
   const [newMembers, setNewMembers] = useState(true);
-  const [savedList, setSavedList] = useState([]);
-
-  const fetchersavedList = (url) =>
-    axios
-      .get(url, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Token ${authToken}`,
-        },
-      })
-      .then((res) => res.data.results);
-
-  async function useSavedList(url) {
-    const NewList = [];
-    if (isAuthorized) {
-      const data = await fetchersavedList(url);
-      for (let item of data) {
-        NewList.push(item['company']);
-      }
-      setSavedList(NewList);
-    }
-  }
-
-  const { trigger: triggerget } = useSWRMutation(
-    `${baseUrl}/api/saved-list/`,
-    useSavedList
-  );
-  mutate(
-    (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
-    {
-      revalidate: true,
-    }
-  );
 
   const fetcher = (url) => axios.get(url).then((res) => res.data.results);
   async function useNewMembers(url) {
     const data = await fetcher(url);
     setSearchResults(data);
     setNewMembers(false);
-    triggerget();
   }
 
   const { trigger } = useSWRMutation(
@@ -91,13 +55,7 @@ const MainCompanies = ({ isAuthorized, userData }) => {
         <div className={styles['row']}>
           {companyDataList.map((result, resultIndex) => (
             <div key={resultIndex} className={styles['col-md-4']}>
-              <CompanyCard
-                companyData={result}
-                isAuthorized={isAuthorized}
-                userData={userData}
-                // savedList={savedList}
-                issaved={savedList.includes(result.id)}
-              />
+              <CompanyCard data={result} isAuthorized={isAuthorized} />
             </div>
           ))}
         </div>

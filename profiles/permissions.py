@@ -26,11 +26,13 @@ class IsOwner(BasePermission):
         return request.user == view._profile.person
 
 
-class OnlyRequestUser(BasePermission):
+class OnlyRequestUserOrAdmin(BasePermission):
     def has_permission(self, request, view):
-        if request.method in SAFE_METHODS:
+        user = request.user
+        if request.method in SAFE_METHODS and user.is_staff:
             return True
         return str(request.user.id) == str(request.data.get("user"))
+
 
 class IsOwnCompany(BasePermission):
     def has_permission(self, request, view):

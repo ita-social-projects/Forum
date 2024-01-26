@@ -8,10 +8,9 @@ import CookieMod from '../cookieacception/CookieMod';
 import css from './MainPage.module.css';
 import PropTypes from 'prop-types';
 
-const MainPage = ({ isAuthorized, userData }) => {
+const MainPage = ({ isAuthorized }) => {
   MainPage.propTypes = {
-    isAuthorized: PropTypes.any,
-    userData: PropTypes.any,
+    isAuthorized: PropTypes.bool,
   };
   const [modalActive, setModalActive] = useState(true);
   return (
@@ -19,8 +18,7 @@ const MainPage = ({ isAuthorized, userData }) => {
       <div className={css['main-app-header']}>
         <MainBanner isAuthorized={isAuthorized} />
         <div className={css['main-app-body']}>
-          {/* <MainCompanies isAuthorized={isAuthorized} /> */}
-          <MainCompanies isAuthorized={isAuthorized} userData={userData} />
+          <MainCompanies isAuthorized={isAuthorized} />
           <MainPartners />
           {!isAuthorized ? <MainLoginBanner /> : null}
           <MainAboutSection />

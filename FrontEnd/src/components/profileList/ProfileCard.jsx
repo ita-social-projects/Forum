@@ -15,7 +15,7 @@ const { Paragraph } = Typography;
 export default function ProfileCard({ isAuthorized, data }) {
   const { mutate } = useSWRConfig();
   const { user } = useUser();
-  // const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
       id: data.id,
@@ -31,7 +31,7 @@ export default function ProfileCard({ isAuthorized, data }) {
       logo: data.logo_image,
     };
   }, [data]);
-  const [isSaved, setIsSaved] = useState(profile.isSaved);
+
   const ownProfile = user && user.id === profile.personId;
 
   async function sendRequest(url, { arg: data }) {
@@ -54,7 +54,7 @@ export default function ProfileCard({ isAuthorized, data }) {
   const handleClick = async () => {
     try {
       await trigger(
-        { company_pk: profile.id },
+        { user: user.id, company: profile.id },
         { optimisticData: () => setIsSaved(!isSaved) }
       );
       mutate(

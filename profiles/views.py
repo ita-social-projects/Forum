@@ -25,7 +25,7 @@ from .permissions import (
     IsOwner,
     RequestIsReadOnly,
     RequestIsCreate,
-    OnlyRequestUser,
+    OnlyRequestUserOrAdmin,
 )
 from .serializers import (
     SavedCompanySerializer,
@@ -50,19 +50,21 @@ class SavedCompaniesCreate(ListCreateAPIView):
     Add a company to the saved list.
     """
 
-    permission_classes = [IsAuthenticated, IsOwnCompany, OnlyRequestUser]
+    permission_classes = [IsAuthenticated, IsOwnCompany, OnlyRequestUserOrAdmin]
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
 
     def get_queryset(self):
+        if self.request.method == "GET":
+            return SavedCompany.objects.all()
         return SavedCompany.objects.filter(user=self.request.user)
 
     def create(self, request):
         saved_company = SavedCompany.objects.filter(user=self.request.user, company=request.data.get("company"))
         if saved_company.exists():
             saved_company_destroyer = SavedCompaniesDestroy()
-            return saved_company_destroyer.destroy(request, request.data.get("company"))
-
+            saved_company_destroyer.perform_destroy(saved_company)
+            return Response(status=status.HTTP_204_NO_CONTENT)
         return super().create(request)
 
 
@@ -72,14 +74,7 @@ class SavedCompaniesDestroy(DestroyAPIView):
     """
 
     permission_classes = [IsAuthenticated]
-
-    def destroy(self, request, pk):
-        user = request.user
-        saved_company = get_object_or_404(
-            SavedCompany, company=pk, user=user
-        )
-        saved_company.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    queryset = SavedCompany.objects.all()
 
 
 class ProfileList(ListCreateAPIView):

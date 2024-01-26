@@ -13,10 +13,9 @@ import PropTypes from 'prop-types';
 
 const ITEMS_PER_PAGE = 6;
 
-export function Search({ isAuthorized, userData }) {
+export function Search({ isAuthorized }) {
   Search.propTypes = {
-    isAuthorized: PropTypes.any,
-    userData: PropTypes.any,
+    isAuthorized: PropTypes.bool,
   };
 
   const [searchResults, setSearchResults] = useState([]);
@@ -98,7 +97,6 @@ export function Search({ isAuthorized, userData }) {
                 searchPerformed={searchPerformed}
                 displayedResults={displayedResults}
                 isAuthorized={isAuthorized}
-                userData={userData}
               />
               <br />
             </>

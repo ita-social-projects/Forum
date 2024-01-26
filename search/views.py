@@ -16,3 +16,14 @@ class SearchCompanyView(ListAPIView):
     ]
     filterset_class = CompanyFilter
     ordering_fields = ["name", "region"]
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        if self.request.user.is_authenticated:
+            saved_companies_pk = frozenset(
+                SavedCompany.objects.filter(
+                    user=self.request.user.id
+                ).values_list("company_id", flat=True)
+            )
+            context.update({"saved_companies_pk": saved_companies_pk})
+        return context
