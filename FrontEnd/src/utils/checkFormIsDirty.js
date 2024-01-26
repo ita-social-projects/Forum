@@ -21,7 +21,14 @@ const compareArrays = (array1, array2) => {
 const checkFormIsDirty = (fields, userData, profileData) => {
     return Object.keys(fields).some(key => {
       const { defaultValue, type, context } = fields[key];
-      const currentValue = context === 'user' ? userData?.[key] : profileData?.[key];
+      let currentValue;
+
+      if (context) {
+        currentValue = context === 'user' ? userData?.[key] : profileData?.[key];
+      } else {
+        currentValue = profileData?.[key];
+      }
+
       if (type === 'array') {
         return !compareArrays(defaultValue, currentValue);
       } else if (key === 'edrpou') {
