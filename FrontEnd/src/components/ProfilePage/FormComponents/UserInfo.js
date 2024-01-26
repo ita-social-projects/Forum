@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import { useUser, useProfile } from '../../../hooks/';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
 import css from './FormComponents.module.css';
@@ -35,34 +36,16 @@ const UserInfo = (props) => {
 
     // TODO: update default values as new fields added
 
-    const defaultValues = {
-        'surname': user?.surname ?? '',
-        'name': user?.name ?? '',
-        'person_position': profile?.person_position ?? null,
+    const fields = {
+        'surname': {defaultValue: user?.surname ?? '', type: 'text', context: 'user'},
+        'name': {defaultValue: user?.name ?? '', type: 'text', context: 'user'},
+        'person_position': {defaultValue: profile?.person_position ?? null, type: 'text', context: 'profile'},
     };
 
-    const checkFormIsDirty = () => {
-        let isDirty = false;
-        Object.keys(defaultValues).forEach((key) => {
-            if (key === 'name' || key === 'surname') {
-                if (defaultValues[key] !== updateUser[key]) {
-                    isDirty = true;
-                    return;
-              }
-            } else if (defaultValues[key] !== updateProfile[key]) {
-                if (defaultValues[key] === null && updateProfile[key] === '') {
-                    return;
-                }
-                isDirty = true;
-                return;
-          }
-        });
-        setFormIsDirty(isDirty);
-      };
-
     useEffect(() => {
-        checkFormIsDirty();
-      }, [user, profile, updateProfile, updateUser]);
+        const isDirty = checkFormIsDirty(fields, updateUser, updateProfile);
+        setFormIsDirty(isDirty);
+      }, [user, profile, updateUser, updateProfile]);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);

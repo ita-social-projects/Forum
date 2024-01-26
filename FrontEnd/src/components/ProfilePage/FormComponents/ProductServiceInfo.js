@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import { useUser, useProfile } from '../../../hooks/';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
@@ -22,27 +23,14 @@ const ProductServiceInfo = (props) => {
 
     // TODO: update default values as new fields added
 
-    const defaultValues = {
-        'product_info': mainProfile?.product_info ?? null,
-        'service_info': mainProfile?.service_info ?? null,
+    const fields = {
+        'product_info': {defaultValue: mainProfile?.product_info ?? null, type: 'text'},
+        'service_info': {defaultValue: mainProfile?.service_info ?? null, type: 'text'},
     };
 
-    const checkFormIsDirty = () => {
-        let isDirty = false;
-        Object.keys(defaultValues).forEach((key) => {
-            if (defaultValues[key] !== profile[key]) {
-                if (defaultValues[key] === null && profile[key] === '') {
-                    return;
-                }
-                isDirty = true;
-                return;
-          }
-        });
-        setFormIsDirty(isDirty);
-      };
-
     useEffect(() => {
-        checkFormIsDirty();
+        const isDirty = checkFormIsDirty(fields, null, profile);
+        setFormIsDirty(isDirty);
       }, [mainProfile, profile]);
 
     useEffect(() => {

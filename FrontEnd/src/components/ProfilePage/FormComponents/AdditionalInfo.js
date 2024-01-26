@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import { useUser, useProfile } from '../../../hooks/';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
@@ -20,23 +21,13 @@ const AdditionalInfo = (props) => {
 
     // TODO: update default values as new fields added
 
-    const defaultValues = {
-        'founded': mainProfile?.founded ?? null,
+    const fields = {
+        'founded': {defaultValue: mainProfile?.founded ?? null, type: 'number'},
     };
 
-    const checkFormIsDirty = () => {
-        let isDirty = false;
-        Object.keys(defaultValues).forEach((key) => {
-            if (defaultValues[key] !== profile[key]) {
-                isDirty = true;
-                return;
-          }
-        });
-        setFormIsDirty(isDirty);
-      };
-
     useEffect(() => {
-        checkFormIsDirty();
+        const isDirty = checkFormIsDirty(fields, null, profile);
+        setFormIsDirty(isDirty);
       }, [mainProfile, profile]);
 
     useEffect(() => {

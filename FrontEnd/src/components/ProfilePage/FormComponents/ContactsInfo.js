@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import { useUser, useProfile } from '../../../hooks/';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
@@ -22,27 +23,14 @@ const ContactsInfo = (props) => {
 
     // TODO: update default values as new fields added
 
-    const defaultValues = {
-        'phone': mainProfile?.phone ?? null,
-        'address': mainProfile?.address ?? null,
+    const fields = {
+        'phone': {defaultValue: mainProfile?.phone ?? null, type: 'text'},
+        'address': {defaultValue: mainProfile?.address ?? null, type: 'text'},
     };
 
-    const checkFormIsDirty = () => {
-        let isDirty = false;
-        Object.keys(defaultValues).forEach((key) => {
-            if (defaultValues[key] !== profile[key]) {
-                if (defaultValues[key] === null && profile[key] === '') {
-                    return;
-                }
-                isDirty = true;
-                return;
-          }
-        });
-        setFormIsDirty(isDirty);
-      };
-
     useEffect(() => {
-        checkFormIsDirty();
+        const isDirty = checkFormIsDirty(fields, null, profile);
+        setFormIsDirty(isDirty);
       }, [mainProfile, profile]);
 
     useEffect(() => {

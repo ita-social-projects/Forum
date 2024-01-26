@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { useUser, useProfile } from '../../../hooks/';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import css from './FormComponents.module.css';
 
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
@@ -71,61 +72,23 @@ const GeneralInfo = (props) => {
 
     // TODO: update default values as new fields added
 
-    const defaultValues = {
-        'name': mainProfile?.name,
-        'official_name': mainProfile?.official_name ?? null,
-        'edrpou': mainProfile?.edrpou ?? null,
-        'region': mainProfile?.region ?? null,
-        'categories': mainProfile?.categories ?? [],
-        'activities': mainProfile?.activities ?? [],
-        'banner_image': mainProfile?.banner_image ?? null,
-        'logo_image': mainProfile?.logo_image ?? null,
-        'common_info': mainProfile?.common_info ?? null,
-        'is_registered': mainProfile?.is_registered ?? '',
-        'is_startup': mainProfile?.is_startup ?? '',
+    const fields = {
+        'name': {defaultValue: mainProfile?.name, type: 'text'},
+        'official_name': {defaultValue: mainProfile?.official_name ?? null, type: 'text'},
+        'edrpou': {defaultValue: mainProfile?.edrpou ?? null, type: 'number'},
+        'region': {defaultValue: mainProfile?.region ?? null, type: 'text'},
+        'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
+        'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
+        'banner_image': {defaultValue: mainProfile?.banner_image ?? null, type: 'file'},
+        'logo_image': {defaultValue: mainProfile?.logo_image ?? null, type: 'file'},
+        'common_info': {defaultValue: mainProfile?.common_info ?? null, type: 'text'},
+        'is_registered': {defaultValue: mainProfile?.is_registered ?? '', type: 'boolean'},
+        'is_startup': {defaultValue: mainProfile?.is_startup ?? '', type: 'boolean'},
     };
 
-    const compareActivitisCategories = (array1, array2) => {
-        return (
-            array1.length === array2.length &&
-            array1.every((element_1) =>
-                array2.some((element_2) =>
-                    Object.keys(element_1).every((key) => element_1[key] === element_2[key])
-                )
-            )
-        );
-      };
-
-    // TODO: remove logic for 'edrpou' field check when it  will be replaced with char field on server side
-
-    const checkFormIsDirty = () => {
-        let isDirty = false;
-        Object.keys(defaultValues).forEach((key) => {
-          if (key === 'categories' || key === 'activities') {
-            if (!compareActivitisCategories(defaultValues[key], profile[key])) {
-                isDirty = true;
-                return;
-            }
-          } else if (key === 'edrpou') {
-                if (((defaultValues[key] && profile[key] !== null) && (defaultValues[key].toString() !== profile[key].toString())) ||
-                    (defaultValues[key] === null && profile[key] !== null)) {
-                    isDirty = true;
-                    return;
-                }
-          } else if (defaultValues[key] !== profile[key]) {
-                if (defaultValues[key] === null && profile[key] === '') {
-                    return;
-                }
-                isDirty = true;
-                return;
-          }
-        });
-        setFormIsDirty(isDirty);
-      };
-
-
     useEffect(() => {
-        checkFormIsDirty();
+        const isDirty = checkFormIsDirty(fields, null, profile);
+        setFormIsDirty(isDirty);
       }, [mainProfile, profile]);
 
     useEffect(() => {
