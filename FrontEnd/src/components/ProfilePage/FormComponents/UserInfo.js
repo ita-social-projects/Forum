@@ -1,10 +1,12 @@
-import css from './FormComponents.module.css';
 import { toast } from 'react-toastify';
-import HalfFormField from './FormFields/HalfFormField';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import { useUser, useProfile } from '../../../hooks/';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
+import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
-
+import css from './FormComponents.module.css';
 
 const LABELS = {
     'surname': 'Прізвище',
@@ -30,6 +32,20 @@ const UserInfo = (props) => {
     const [updateUser, setUpdateUser] = useState(props.user);
     const [updateProfile, setUpdateProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
+    const { setFormIsDirty } = useContext(DirtyFormContext);
+
+    // TODO: update default values as new fields added
+
+    const fields = {
+        'surname': {defaultValue: user?.surname ?? '', context: 'user'},
+        'name': {defaultValue: user?.name ?? '', context: 'user'},
+        'person_position': {defaultValue: profile?.person_position ?? null},
+    };
+
+    useEffect(() => {
+        const isDirty = checkFormIsDirty(fields, updateUser, updateProfile);
+        setFormIsDirty(isDirty);
+      }, [user, profile, updateUser, updateProfile]);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -86,6 +102,7 @@ const UserInfo = (props) => {
                 if (response.status === 200) {
                     const updatedUserData = await response.json();
                     userMutate(updatedUserData);
+                    setFormIsDirty(false);
                     toast.success('Зміни успішно збережено');
                 } else {
                     console.error('Помилка');
@@ -107,6 +124,8 @@ const UserInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
+                    setFormIsDirty(false);
+                    toast.success('Зміни успішно збережено');
                 } else {
                     console.error('Помилка');
                 }

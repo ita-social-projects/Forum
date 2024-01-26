@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../../../hooks';
 
 import DropdownMenu from './DropdownMenu';
-import Logout from './Logout';
 import css from './Profile.module.css';
 import avatar_image from './Avatar.png';
 
@@ -25,7 +24,7 @@ function Profile() {
       />
       <DropdownMenu toggleText="Профіль">
         <Link to="/profile/user-info">Профіль</Link>
-        <Logout />
+        <Link to="/logout">Вихід</Link>
       </DropdownMenu>
     </div>
   );

@@ -8,6 +8,7 @@ import AuthorizationPage from '../authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../HeaderFooter/footer/Footer';
 import Header from '../HeaderFooter/header/Header';
+import Logout from '../HeaderFooter/header/navbar/Logout';
 import MainPage from '../landing-page/MainPage';
 import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
 import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
@@ -85,6 +86,11 @@ function BasicPage() {
         ) : (
           <Route path="/login" element={<AuthorizationPage />} />
         )}
+        {!auth.isAuth ? (
+          <Route path="/logout" element={<Navigate to="/" />} />
+        ) : (
+          <Route path="/logout" element={<Logout />} />
+          )}
         {auth.isAuth ? (
           <Route
             path="/sign-up"
