@@ -73,17 +73,17 @@ const GeneralInfo = (props) => {
     // TODO: update default values as new fields added
 
     const fields = {
-        'name': {defaultValue: mainProfile?.name, type: 'text'},
-        'official_name': {defaultValue: mainProfile?.official_name ?? null, type: 'text'},
-        'edrpou': {defaultValue: mainProfile?.edrpou ?? null, type: 'number'},
-        'region': {defaultValue: mainProfile?.region ?? null, type: 'text'},
+        'name': {defaultValue: mainProfile?.name},
+        'official_name': {defaultValue: mainProfile?.official_name ?? null},
+        'edrpou': {defaultValue: mainProfile?.edrpou ?? null},
+        'region': {defaultValue: mainProfile?.region ?? null},
         'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
         'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
-        'banner_image': {defaultValue: mainProfile?.banner_image ?? null, type: 'file'},
-        'logo_image': {defaultValue: mainProfile?.logo_image ?? null, type: 'file'},
-        'common_info': {defaultValue: mainProfile?.common_info ?? null, type: 'text'},
-        'is_registered': {defaultValue: mainProfile?.is_registered ?? '', type: 'boolean'},
-        'is_startup': {defaultValue: mainProfile?.is_startup ?? '', type: 'boolean'},
+        'banner_image': {defaultValue: mainProfile?.banner_image ?? null},
+        'logo_image': {defaultValue: mainProfile?.logo_image ?? null},
+        'common_info': {defaultValue: mainProfile?.common_info ?? null},
+        'is_registered': {defaultValue: mainProfile?.is_registered ?? ''},
+        'is_startup': {defaultValue: mainProfile?.is_startup ?? ''},
     };
 
     useEffect(() => {

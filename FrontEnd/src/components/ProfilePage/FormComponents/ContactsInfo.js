@@ -24,8 +24,8 @@ const ContactsInfo = (props) => {
     // TODO: update default values as new fields added
 
     const fields = {
-        'phone': {defaultValue: mainProfile?.phone ?? null, type: 'text'},
-        'address': {defaultValue: mainProfile?.address ?? null, type: 'text'},
+        'phone': {defaultValue: mainProfile?.phone ?? null},
+        'address': {defaultValue: mainProfile?.address ?? null},
     };
 
     useEffect(() => {

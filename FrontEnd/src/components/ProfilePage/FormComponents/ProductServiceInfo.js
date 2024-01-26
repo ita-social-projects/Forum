@@ -24,8 +24,8 @@ const ProductServiceInfo = (props) => {
     // TODO: update default values as new fields added
 
     const fields = {
-        'product_info': {defaultValue: mainProfile?.product_info ?? null, type: 'text'},
-        'service_info': {defaultValue: mainProfile?.service_info ?? null, type: 'text'},
+        'product_info': {defaultValue: mainProfile?.product_info ?? null},
+        'service_info': {defaultValue: mainProfile?.service_info ?? null},
     };
 
     useEffect(() => {
