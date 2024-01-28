@@ -15,8 +15,15 @@ const MainCompanies = ({ isAuthorized }) => {
   const [searchResults, setSearchResults] = useState([]);
   const { mutate } = useSWRConfig();
   const [newMembers, setNewMembers] = useState(true);
-
-  const fetcher = (url) => axios.get(url).then((res) => res.data.results);
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  if (isAuthorized) {
+    const authToken = localStorage.getItem('Token');
+    headers.Authorization = `Token ${authToken}`;
+  }
+  const fetcher = (url) =>
+    axios.get(url, headers).then((res) => res.data.results);
   async function useNewMembers(url) {
     const data = await fetcher(url);
     setSearchResults(data);

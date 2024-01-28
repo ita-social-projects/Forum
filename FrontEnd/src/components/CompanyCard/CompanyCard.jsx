@@ -5,9 +5,14 @@ import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import styles from './CompanyCard.module.css';
 import { useUser } from '../../hooks';
+import PropTypes from 'prop-types';
 
 export default function CompanyCard({ data, isAuthorized }) {
-  console.log(data.is_saved);
+  CompanyCard.propTypes = {
+    data: PropTypes.object,
+    isAuthorized: PropTypes.bool,
+  };
+
   const [isSaved, setIsSaved] = useState(data && data.is_saved);
   const { mutate } = useSWRConfig();
   const profile = useMemo(() => {
@@ -123,7 +128,6 @@ export default function CompanyCard({ data, isAuthorized }) {
                 </div>
               </div>
             </div>
-            {/* {star} */}
             {isAuthorized && !ownProfile
               ? isSaved
                 ? filledStar
