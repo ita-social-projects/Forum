@@ -17,9 +17,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company": "{profile_id}".format(
-                    profile_id=self.profile.id
-                ),
+                "company": "{profile_id}".format(profile_id=self.profile.id),
             },
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
@@ -30,7 +28,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={
                 "user": self.user.id,
-                "company": "{profile_id}".format(profile_id=self.profile.id)
+                "company": "{profile_id}".format(profile_id=self.profile.id),
             },
         )
         self.assertEqual(201, response.status_code)
@@ -84,18 +82,14 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={
                 "user": self.user.id,
-                "company": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company": "{profile_pk}".format(profile_pk=self.profile.id),
             },
         )
         self.client.post(
             path="/api/saved-list/",
             data={
                 "user": self.user.id,
-                "company": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company": "{profile_pk}".format(profile_pk=self.profile.id),
             },
         )
         response = self.client.get(path="/api/profiles/?is_saved=True")
@@ -109,9 +103,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={
                 "user": other_user.id,
-                "company": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company": "{profile_pk}".format(profile_pk=self.profile.id),
             },
         )
         self.assertEqual(403, response.status_code)
@@ -123,9 +115,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={
                 "user": self.user.id,
-                "company": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company": "{profile_pk}".format(profile_pk=self.profile.id),
             },
         )
         response = self.client.get(path="/api/saved-list/")
@@ -138,11 +128,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={
                 "user": self.user.id,
-                "company": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company": "{profile_pk}".format(profile_pk=self.profile.id),
             },
         )
         response = self.client.get(path="/api/saved-list/")
         self.assertEqual(403, response.status_code)
-

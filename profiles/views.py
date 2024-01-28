@@ -50,7 +50,11 @@ class SavedCompaniesCreate(ListCreateAPIView):
     Add a company to the saved list.
     """
 
-    permission_classes = [IsAuthenticated, IsOwnCompany, OnlyRequestUserOrAdmin]
+    permission_classes = [
+        IsAuthenticated,
+        IsOwnCompany,
+        OnlyRequestUserOrAdmin,
+    ]
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
 
@@ -60,7 +64,9 @@ class SavedCompaniesCreate(ListCreateAPIView):
         return SavedCompany.objects.filter(user=self.request.user)
 
     def create(self, request):
-        saved_company = SavedCompany.objects.filter(user=self.request.user, company=request.data.get("company"))
+        saved_company = SavedCompany.objects.filter(
+            user=self.request.user, company=request.data.get("company")
+        )
         if saved_company.exists():
             saved_company_destroyer = SavedCompaniesDestroy()
             saved_company_destroyer.perform_destroy(saved_company)
