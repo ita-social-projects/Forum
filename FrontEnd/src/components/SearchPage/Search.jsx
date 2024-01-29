@@ -54,8 +54,8 @@ export function Search({ isAuthorized }) {
   });
 
   useEffect(() => {
-    // if (searchTerm) {
-    if (!searchPerformed) {
+    if (searchTerm) {
+      // if (!searchPerformed) {
       try {
         trigger();
       } catch (error) {
