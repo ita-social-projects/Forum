@@ -2,6 +2,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+import { SWRConfig } from 'swr';
 import 'react-toastify/dist/ReactToastify.css';
 
 import AuthorizationPage from '../authorization/AuthorizationPage';
@@ -68,6 +69,13 @@ function BasicPage() {
         },
       }}
     >
+      <SWRConfig value={{
+        onError: (error) => {
+          if (error.status === 401 && error.message === 'Your session has expired. Please login again.') {
+            auth.logout();
+          }
+        }
+      }}>
       <Header isAuthorized={auth.isAuth} />
       <Routes>
         <Route path="/" element={<MainPage isAuthorized={auth.isAuth} />} />
@@ -142,6 +150,7 @@ function BasicPage() {
         theme="colored"
         icon={false}
       />
+      </SWRConfig>
     </ConfigProvider>
   );
 }
