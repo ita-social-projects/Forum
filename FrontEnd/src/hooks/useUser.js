@@ -9,9 +9,9 @@ export default function useUser() {
 
     const { data, error, mutate } = useSWR(
       authToken
-        ? `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`
+        ? [`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, authToken]
         : null,
-      (url) =>
+      ([url, authToken]) =>
         fetch(url, {
           method: 'GET',
           headers: {

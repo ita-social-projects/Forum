@@ -10,10 +10,10 @@ export default function useProfile() {
     const [profile, setProfile] = useState(null);
 
     const { data, error, mutate } = useSWR(
-      token && user
-        ? `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`
+      (token && user)
+        ? [`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, token]
         : null,
-      (url) =>
+      ([url, token]) =>
         fetch(url, {
           method: 'GET',
           headers: {

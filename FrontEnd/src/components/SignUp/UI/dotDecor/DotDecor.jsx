@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import css from './DotDecor.module.css';
 
 const DotRow = () => {
@@ -13,15 +15,16 @@ const DotRow = () => {
     </svg>
   );
 
-  const dots = [...Array(7)].map(() => circle);
+  const dots = [...Array(7)].map((_, index) => (
+    <Fragment key={index}>{circle}</Fragment>
+  ));
 
   return <div className={css['dot-row']}>{dots}</div>;
 };
 
-function DotDecorComponent(props) {
-  const blockPosition = props.position;
+function DotDecorComponent({ position }) {
   return (
-    <div className={`${css['dot-block']} ${css[blockPosition]}`}>
+    <div className={`${css['dot-block']} ${css[position]}`}>
       <DotRow />
       <DotRow />
       <DotRow />
@@ -32,4 +35,9 @@ function DotDecorComponent(props) {
   );
 }
 
+DotDecorComponent.propTypes = {
+  position: PropTypes.string.isRequired,
+};
+
 export default DotDecorComponent;
+

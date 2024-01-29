@@ -1,10 +1,13 @@
 import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { useUser, useProfile } from '../../../hooks/';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import css from './FormComponents.module.css';
 
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import CheckBoxField from './FormFields/CheckBoxField';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
@@ -64,6 +67,29 @@ const GeneralInfo = (props) => {
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
     const { data: fetchedActivities, isLoading: isActivitiesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/activities/`, fetcher);
     const { data: fetchedCategories, isLoading: isCategoriesLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/categories/`, fetcher);
+
+    const { setFormIsDirty } = useContext(DirtyFormContext);
+
+    // TODO: update default values as new fields added
+
+    const fields = {
+        'name': {defaultValue: mainProfile?.name},
+        'official_name': {defaultValue: mainProfile?.official_name ?? null},
+        'edrpou': {defaultValue: mainProfile?.edrpou ?? null},
+        'region': {defaultValue: mainProfile?.region ?? null},
+        'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
+        'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
+        'banner_image': {defaultValue: mainProfile?.banner_image ?? null},
+        'logo_image': {defaultValue: mainProfile?.logo_image ?? null},
+        'common_info': {defaultValue: mainProfile?.common_info ?? null},
+        'is_registered': {defaultValue: mainProfile?.is_registered ?? ''},
+        'is_startup': {defaultValue: mainProfile?.is_startup ?? ''},
+    };
+
+    useEffect(() => {
+        const isDirty = checkFormIsDirty(fields, null, profile);
+        setFormIsDirty(isDirty);
+      }, [mainProfile, profile]);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -274,6 +300,7 @@ const GeneralInfo = (props) => {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
                     toast.success('Зміни успішно збережено');
+                    setFormIsDirty(false);
                 } else if (response.status === 400 ) {
                     const errorData = await response.json();
                     if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
