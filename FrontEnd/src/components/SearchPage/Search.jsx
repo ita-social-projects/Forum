@@ -28,14 +28,20 @@ export function Search({ isAuthorized }) {
   const servedAddress = process.env.REACT_APP_BASE_API_URL;
   const searchUrl = 'search';
   const { mutate } = useSWRConfig();
-  const headers = {
-    'Content-Type': 'application/json',
+  const authToken = localStorage.getItem('Token');
+  const fetcher = (url) => {
+    const headers = authToken
+      ? {
+          withCredentials: true,
+          headers: {
+            Authorization: `Token ${authToken}`,
+          },
+        }
+      : {
+          'Content-Type': 'application/json',
+        };
+    return axios.get(url, headers).then((res) => res.data);
   };
-  if (isAuthorized) {
-    const authToken = localStorage.getItem('Token');
-    headers.Authorization = `Token ${authToken}`;
-  }
-  const fetcher = (url) => axios.get(url, headers).then((res) => res.data);
 
   async function getRequest(url) {
     const data = await fetcher(url);
@@ -55,14 +61,13 @@ export function Search({ isAuthorized }) {
 
   useEffect(() => {
     if (searchTerm) {
-      // if (!searchPerformed) {
       try {
         trigger();
       } catch (error) {
         console.error(error);
       }
     }
-  }, [searchPerformed, servedAddress, searchUrl, trigger]);
+  }, [searchTerm, servedAddress, searchUrl, trigger, authToken]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalItems = searchResults.length;
