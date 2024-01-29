@@ -54,7 +54,6 @@ export default function ProfileListPage({ isAuthorized }) {
     });
     if (isAuthorized && !res.ok && res.status === 401) {
         const errorInfo = await res.json();
-        console.log('ERROR INFO', errorInfo.detail);
         const error = new Error(errorInfo.detail);
         error.status = res.status;
         error.info = errorInfo;
