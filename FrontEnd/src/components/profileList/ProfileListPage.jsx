@@ -48,10 +48,19 @@ export default function ProfileListPage({ isAuthorized }) {
       const authToken = localStorage.getItem('Token');
       headers.Authorization = `Token ${authToken}`;
     }
-    return fetch(url, {
+    const res =  await fetch(url, {
       method: 'GET',
       headers: headers,
-    }).then((res) => res.json());
+    });
+    if (isAuthorized && !res.ok && res.status === 401) {
+        const errorInfo = await res.json();
+        console.log('ERROR INFO', errorInfo.detail);
+        const error = new Error(errorInfo.detail);
+        error.status = res.status;
+        error.info = errorInfo;
+        throw error;
+    }
+    return res.json();
   }
 
   const {
