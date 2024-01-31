@@ -2,6 +2,7 @@
 
 .company-card {
   width: 360px;
+  height: 415px;
   display: block;
   align-items: center;
   box-shadow: 0 4px 8px 0 var(--companies-card-box-shadow);
@@ -47,6 +48,8 @@
 
 .company-card__text-block {
   display: flex;
+  width: 360;
+  height: 195px;
   padding: 20px 16.02px;
   flex-direction: column;
   align-items: flex-start;
@@ -100,6 +103,7 @@
 
 .company-card__region-text {
   width: 328px;
+  height: 20px;
   color: var(--companies-card-address);
   font-feature-settings: 'calt' off;
   font-family: Inter, sans-serif;
@@ -113,11 +117,14 @@
 }
 
 .company-card__badges-block {
-  width: 100%;
+  /* width: 100%; */
+  width: 328px;
+  height: 24px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 8px;
+  /* gap: 8px; */
+  gap: 16px;
 }
 
 .company-card__badges {
@@ -128,14 +135,31 @@
   background: var(--main_light-color);
 }
 
-.company-card__badge {
-  display: flex;
+/* .company-card__badge {
+  background: var(--pagination-style-color);
+  /* display: flex; */
+/* height: 20px;
+  padding: 2px 8px; */
+/* justify-content: center; */
+/* align-items: center;
+  border-radius: 100px;
+  font-family: Inter, sans-serif;
+  font-size: 10;
+  font-weight: 600;
+} */
+/* backgroundcolor: '#1F9A7C';
+  fontweight: 600;
+  fontfamily: 'Inter';
+  fontsize: 10;
+  margin: 5; */
+/* display: flex;
+  height: 20px;
   padding: 2px 8px;
   justify-content: center;
   align-items: center;
   border-radius: 100px;
-  background: var(--pagination-style-color);
-}
+  background: var(--pagination-style-color); */
+/* } */
 
 .company-card__badge-text {
   color: var(--main_light-color);

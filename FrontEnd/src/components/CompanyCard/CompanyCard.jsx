@@ -31,9 +31,7 @@ export default function CompanyCard({ data, isAuthorized }) {
       isSaved: data?.is_saved,
     };
   }, [data]);
-  // const currentDate = new Date();
-  // const currentYear = currentDate.getFullYear();
-  // const yearsOfExperiense = profile.founded ? currentYear - profile.founded : 0;
+
   const { user } = useUser();
   const ownProfile = user && user.id === profile.personId;
 
@@ -86,25 +84,6 @@ export default function CompanyCard({ data, isAuthorized }) {
     />
   );
 
-  // const TooltipForLongData = ({ data }) => {
-  //   return (
-  //     <>
-  //       {data.length > 0 ? (
-  //         <Tooltip
-  //           title={data && data.map((element) => element.name).join(', ')}
-  //           placement="bottom"
-  //           pointAtCenter={true}
-  //           // trigger="focus"
-  //           // open={true}
-  //           autoAdjustOverflow={true}
-  //         />
-  //       ) : (
-  //         ''
-  //       )}
-  //     </>
-  //   );
-  // };
-
   const CategoryBadges = ({ categories }) => {
     return (
       <>
@@ -114,6 +93,7 @@ export default function CompanyCard({ data, isAuthorized }) {
                 key={category.id}
                 size="medium"
                 count={category.name.toUpperCase()}
+                // className={styles['company-card__badge']}
                 style={{
                   backgroundColor: '#1F9A7C',
                   fontWeight: 600,
@@ -161,19 +141,6 @@ export default function CompanyCard({ data, isAuthorized }) {
             </div>
           </Tooltip>
           <div className={styles['company-card__text-block__header']}>
-            {/* <Tooltip
-              title={
-                profile.categories &&
-                profile.categories.map((element) => element.name).join(', ')
-              }
-              placement="bottom"
-              pointAtCenter={true}
-            >
-              <div className={styles['company-card__category-text']}>
-                {profile.categories &&
-                  profile.categories.map((category) => category.name).join(' ')}
-              </div>
-            </Tooltip> */}
             <div className={styles['company-card__name-text']}>
               <Link
                 className={styles['company-card__name-text_link']}
