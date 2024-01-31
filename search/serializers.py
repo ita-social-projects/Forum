@@ -1,11 +1,12 @@
 from rest_framework import serializers
 
 from profiles.models import Profile, Category, SavedCompany
-from profiles.serializers import CategorySerializer
+from profiles.serializers import CategorySerializer, ActivitySerializer
 
 
 class CompanySerializers(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
+    activities = ActivitySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
 
     class Meta:
@@ -14,6 +15,7 @@ class CompanySerializers(serializers.ModelSerializer):
             "id",
             "name",
             "categories",
+            "activities",
             "region",
             "founded",
             "address",

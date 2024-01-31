@@ -6,6 +6,8 @@ import useSWRMutation from 'swr/mutation';
 import styles from './CompanyCard.module.css';
 import { useUser } from '../../hooks';
 import PropTypes from 'prop-types';
+import { Tooltip, Badge } from 'antd';
+import 'antd/dist/reset.css';
 
 export default function CompanyCard({ data, isAuthorized }) {
   CompanyCard.propTypes = {
@@ -22,15 +24,16 @@ export default function CompanyCard({ data, isAuthorized }) {
       name: data?.name,
       region: data?.region,
       categories: data?.categories,
+      activities: data?.activities,
       logo: data?.logo_image,
       banner: data?.banner_image,
       founded: data?.founded,
       isSaved: data?.is_saved,
     };
   }, [data]);
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const yearsOfExperiense = profile.founded ? currentYear - profile.founded : 0;
+  // const currentDate = new Date();
+  // const currentYear = currentDate.getFullYear();
+  // const yearsOfExperiense = profile.founded ? currentYear - profile.founded : 0;
   const { user } = useUser();
   const ownProfile = user && user.id === profile.personId;
 
@@ -83,6 +86,48 @@ export default function CompanyCard({ data, isAuthorized }) {
     />
   );
 
+  // const TooltipForLongData = ({ data }) => {
+  //   return (
+  //     <>
+  //       {data.length > 0 ? (
+  //         <Tooltip
+  //           title={data && data.map((element) => element.name).join(', ')}
+  //           placement="bottom"
+  //           pointAtCenter={true}
+  //           // trigger="focus"
+  //           // open={true}
+  //           autoAdjustOverflow={true}
+  //         />
+  //       ) : (
+  //         ''
+  //       )}
+  //     </>
+  //   );
+  // };
+
+  const CategoryBadges = ({ categories }) => {
+    return (
+      <>
+        {categories
+          ? categories.map((category) => (
+              <Badge
+                key={category.id}
+                size="medium"
+                count={category.name.toUpperCase()}
+                style={{
+                  backgroundColor: '#1F9A7C',
+                  fontWeight: 600,
+                  fontFamily: 'Inter',
+                  fontSize: 10,
+                  margin: 5,
+                }}
+              />
+            ))
+          : ''}
+      </>
+    );
+  };
+
   return (
     <div className={styles['company-card']}>
       <div className={styles['company-card__block']}>
@@ -102,11 +147,33 @@ export default function CompanyCard({ data, isAuthorized }) {
           )}
         </div>
         <div className={styles['company-card__text-block']}>
-          <div className={styles['company-card__text-block__header']}>
+          <Tooltip
+            title={
+              profile.activities &&
+              profile.activities.map((element) => element.name).join(', ')
+            }
+            placement="bottom"
+            pointAtCenter={true}
+          >
             <div className={styles['company-card__category-text']}>
-              {profile.categories &&
-                profile.categories.map((category) => category.name).join(' ')}
+              {profile.activities &&
+                profile.activities.map((activity) => activity.name).join(' ')}
             </div>
+          </Tooltip>
+          <div className={styles['company-card__text-block__header']}>
+            {/* <Tooltip
+              title={
+                profile.categories &&
+                profile.categories.map((element) => element.name).join(', ')
+              }
+              placement="bottom"
+              pointAtCenter={true}
+            >
+              <div className={styles['company-card__category-text']}>
+                {profile.categories &&
+                  profile.categories.map((category) => category.name).join(' ')}
+              </div>
+            </Tooltip> */}
             <div className={styles['company-card__name-text']}>
               <Link
                 className={styles['company-card__name-text_link']}
@@ -117,15 +184,35 @@ export default function CompanyCard({ data, isAuthorized }) {
               <br />
             </div>
           </div>
-          <div className={styles['company-card__address-text']}>
-            {profile.address}
+          <div className={styles['company-card__region-text']}>
+            {profile.region}
           </div>
           <div className={styles['company-card__badges-block']}>
             <div className={styles['company-card__badges']}>
-              <div className={styles['company-card__badge']}>
-                <div className={styles['company-card__badge-text']}>
-                  {yearsOfExperiense} років досвіду
-                </div>
+              <div>
+                {/* className={styles['company-card__badge']}> */}
+                {/* <div className={styles['company-card__badge-text']}> */}
+                <Tooltip
+                  title={
+                    profile.categories &&
+                    profile.categories.map((element) => element.name).join(', ')
+                  }
+                  placement="bottom"
+                  pointAtCenter={true}
+                >
+                  {/* <div className={styles['company-card__category-text']}> */}
+                  <div>
+                    <CategoryBadges categories={profile.categories} />
+                    {/* <div className={styles['company-card__badge-text']}>
+                    {profile.categories &&
+                      profile.categories
+                        .map((category) => category.name)
+                        .join(' ')}
+                  </div> */}
+                  </div>
+                </Tooltip>
+                {/* {yearsOfExperiense} років досвіду */}
+                {/* </div> */}
               </div>
             </div>
             {isAuthorized && !ownProfile

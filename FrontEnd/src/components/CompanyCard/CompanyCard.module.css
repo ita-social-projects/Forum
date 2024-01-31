@@ -98,7 +98,7 @@
   color: var(--text-color);
 }
 
-.company-card__address-text {
+.company-card__region-text {
   width: 328px;
   color: var(--companies-card-address);
   font-feature-settings: 'calt' off;
