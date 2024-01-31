@@ -1,5 +1,6 @@
 .new-companies-main {
-  width: 1304px;
+  width: 1512px;
+  height: 1106px;
   display: flex;
   padding: 80px 104px;
   flex-direction: column;
@@ -14,6 +15,8 @@
 }
 .new-companies-main__header {
   width: 444px;
+  height: 24px;
+  gap: 800px;
   color: #292e32;
   text-transform: uppercase;
   font-family: Inter;
