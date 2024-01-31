@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
-import { useUser, useProfile } from '../../../hooks/';
+import { useAuth, useProfile } from '../../../hooks/';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
@@ -15,7 +15,7 @@ const LABELS = {
 };
 
 const ContactsInfo = (props) => {
-    const { user } = useUser();
+    const { user } = useAuth();
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [phoneNumberError, setPhoneNumberError] = useState(null);

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import useSWR from 'swr';
-import { useUser } from '../../../hooks';
+import { useAuth } from '../../../hooks';
 import { PropTypes } from 'prop-types';
 import classes from './PhoneEmail.module.css';
 
 function PhoneEmail ({ profileId, personId }) {
     const [isContactsShown, setContactsShown] = useState(false);
     const authToken = localStorage.getItem('Token');
-    const { user } = useUser();
+    const { user } = useAuth();
 
     const { data: profileData } = useSWR(
       `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,

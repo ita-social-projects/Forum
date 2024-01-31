@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
-import { useUser, useProfile } from '../../../hooks/';
+import { useAuth, useProfile } from '../../../hooks/';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
 
@@ -15,7 +15,7 @@ const LABELS = {
 const TEXT_AREA_MAX_LENGTH = 1000;
 
 const StartupInfo = (props) => {
-    const { user } = useUser();
+    const { user } = useAuth();
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const { setFormIsDirty } = useContext(DirtyFormContext);

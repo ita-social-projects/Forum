@@ -7,7 +7,7 @@ import { PropTypes } from 'prop-types';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { useUser } from '../../hooks';
+import { useAuth } from '../../hooks';
 import css from './ProfileCard.module.css';
 
 const { Paragraph } = Typography;
@@ -15,7 +15,7 @@ const { Paragraph } = Typography;
 
 export default function ProfileCard({ isAuthorized, data }) {
   const { mutate } = useSWRConfig();
-  const { user } = useUser();
+  const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {

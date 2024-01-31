@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import useUser from './useUser';
 import { useAuth } from './useAuth';
 
 export default function useProfile() {
     const token = localStorage.getItem('Token');
-    const { user } = useUser();
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
     const [profile, setProfile] = useState(null);
 
     const { data, error, mutate } = useSWR(

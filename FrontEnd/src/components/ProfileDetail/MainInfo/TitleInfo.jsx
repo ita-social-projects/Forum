@@ -6,12 +6,12 @@ import { PropTypes } from 'prop-types';
 import classNames from 'classnames';
 import useSWRMutation from 'swr/mutation';
 
-import { useUser } from '../../../hooks';
+import { useAuth } from '../../../hooks';
 import DefaultLogo from './DefaultLogo';
 import classes from './TitleInfo.module.css';
 
 function TitleInfo({ isAuthorized, data }) {
-  const { user } = useUser();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {

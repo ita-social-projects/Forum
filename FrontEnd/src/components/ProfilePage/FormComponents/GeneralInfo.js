@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
-import { useUser, useProfile } from '../../../hooks/';
+import { useAuth, useProfile } from '../../../hooks/';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import css from './FormComponents.module.css';
 
@@ -53,7 +53,7 @@ const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 const GeneralInfo = (props) => {
-    const { user } = useUser();
+    const { user } = useAuth();
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);

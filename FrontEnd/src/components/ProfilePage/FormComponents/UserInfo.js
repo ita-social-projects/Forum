@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
-import { useUser, useProfile } from '../../../hooks/';
+import { useAuth, useProfile } from '../../../hooks/';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
@@ -27,7 +27,7 @@ const ERRORS = {
 };
 
 const UserInfo = (props) => {
-    const { user, mutate: userMutate } = useUser();
+    const { user, mutate: userMutate } = useAuth();
     const { profile, mutate: profileMutate } = useProfile();
     const [updateUser, setUpdateUser] = useState(props.user);
     const [updateProfile, setUpdateProfile] = useState(props.profile);
