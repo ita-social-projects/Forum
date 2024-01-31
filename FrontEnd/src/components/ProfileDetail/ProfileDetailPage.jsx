@@ -24,18 +24,10 @@ function ProfileDetailPage({ isAuthorized }) {
     if (authToken) {
       headers.Authorization = `Token ${authToken}`;
     }
-    const res =  await fetch(url, {
+    return fetch(url, {
       method: 'GET',
       headers: headers,
-    });
-    if (isAuthorized && !res.ok && res.status === 401) {
-        const errorInfo = await res.json();
-        const error = new Error(errorInfo.detail);
-        error.status = res.status;
-        error.info = errorInfo;
-        throw error;
-    }
-    return res.json();
+    }).then((res) => res.json());
   }
 
   const {
