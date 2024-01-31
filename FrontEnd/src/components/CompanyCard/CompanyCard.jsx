@@ -93,7 +93,6 @@ export default function CompanyCard({ data, isAuthorized }) {
                 key={category.id}
                 size="medium"
                 count={category.name.toUpperCase()}
-                // className={styles['company-card__badge']}
                 style={{
                   backgroundColor: '#1F9A7C',
                   fontWeight: 600,
@@ -137,7 +136,10 @@ export default function CompanyCard({ data, isAuthorized }) {
           >
             <div className={styles['company-card__category-text']}>
               {profile.activities &&
-                profile.activities.map((activity) => activity.name).join(' ')}
+                profile.activities
+                  .slice(0, 3)
+                  .map((activity) => activity.name)
+                  .join(' ')}
             </div>
           </Tooltip>
           <div className={styles['company-card__text-block__header']}>
@@ -151,14 +153,22 @@ export default function CompanyCard({ data, isAuthorized }) {
               <br />
             </div>
           </div>
-          <div className={styles['company-card__region-text']}>
-            {profile.region}
-          </div>
+          <Tooltip
+            title={profile.region}
+            placement="bottom"
+            pointAtCenter={true}
+          >
+            <div className={styles['company-card__region-text']}>
+              {profile.region
+                ? profile.region.length < 35
+                  ? `${profile.region}`
+                  : `${profile.region.substring(0, 35)}...`
+                : ''}
+            </div>
+          </Tooltip>
           <div className={styles['company-card__badges-block']}>
             <div className={styles['company-card__badges']}>
               <div>
-                {/* className={styles['company-card__badge']}> */}
-                {/* <div className={styles['company-card__badge-text']}> */}
                 <Tooltip
                   title={
                     profile.categories &&
@@ -167,19 +177,12 @@ export default function CompanyCard({ data, isAuthorized }) {
                   placement="bottom"
                   pointAtCenter={true}
                 >
-                  {/* <div className={styles['company-card__category-text']}> */}
                   <div>
-                    <CategoryBadges categories={profile.categories} />
-                    {/* <div className={styles['company-card__badge-text']}>
-                    {profile.categories &&
-                      profile.categories
-                        .map((category) => category.name)
-                        .join(' ')}
-                  </div> */}
+                    <CategoryBadges
+                      categories={profile.categories.slice(0, 3)}
+                    />
                   </div>
                 </Tooltip>
-                {/* {yearsOfExperiense} років досвіду */}
-                {/* </div> */}
               </div>
             </div>
             {isAuthorized && !ownProfile
