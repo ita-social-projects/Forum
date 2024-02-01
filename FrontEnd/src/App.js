@@ -19,7 +19,9 @@ function App() {
     {
       path: '/customadmin/*',
       element: (
+        <AuthProvider>
           <AdminPage />
+        </AuthProvider>
       )
     },
   ]);
