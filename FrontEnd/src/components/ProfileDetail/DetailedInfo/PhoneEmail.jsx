@@ -24,9 +24,6 @@ function PhoneEmail ({ profileId, personId }) {
             }
             return res.json();
           })
-          .catch((error) => {
-              console.error(error);
-          })
     );
 
     const urlViewed = `${process.env.REACT_APP_BASE_API_URL}/api/company-view/${profileId}/`;

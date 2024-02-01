@@ -51,7 +51,14 @@ export default function ProfileListPage({ isAuthorized }) {
     return fetch(url, {
       method: 'GET',
       headers: headers,
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (!res.ok && res.status === 401) {
+        const error = new Error('Unauthorized user.');
+        error.status = res.status;
+        throw error;
+      }
+      return res.json();
+    });
   }
 
   const {
