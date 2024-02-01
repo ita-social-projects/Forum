@@ -46,7 +46,7 @@ function ProfileDetailPage({ isAuthorized }) {
   const notRequiredData = ['address', 'banner_image', 'common_info', 'edrpou', 'founded', 'official_name', 'product_info', 'service_info', 'startup_idea'];
   const containsNotRequiredData = fetchedProfile ? Object.keys(fetchedProfile).some(key => notRequiredData.includes(key) && fetchedProfile[key] !== null) : false;
 
-  return error ? (
+  return (error && error.status !== 401) ? (
     <ErrorPage404 />
   ) : (
     <div className={isLoading ? classes['loader-content'] : null}>
