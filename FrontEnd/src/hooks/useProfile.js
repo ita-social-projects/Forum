@@ -4,7 +4,7 @@ import { useAuth } from './useAuth';
 
 export default function useProfile() {
     const token = localStorage.getItem('Token');
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
     const [profile, setProfile] = useState(null);
 
     const { data, error, mutate } = useSWR(
@@ -20,7 +20,6 @@ export default function useProfile() {
         })
           .then((res) => {
             if (!res.ok && res.status === 401) {
-              logout();
               const error = new Error('Unauthorized user.');
               error.info = res.json();
               error.status = res.status;
@@ -35,9 +34,6 @@ export default function useProfile() {
               throw error;
             }
             return res.json();
-          })
-          .catch((error) => {
-            console.error(error);
           }),
       { revalidateOnFocus: false }
     );
