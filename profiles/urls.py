@@ -18,7 +18,7 @@ urlpatterns = [
     path(r"profiles/", ProfileList.as_view(), name="profile-list"),
     path(r"profiles/<pk>", ProfileDetail.as_view(), name="profile-detail"),
     path(
-        "saved-list/",
+        "<company_pk>/saved-list/",
         SavedCompaniesCreate.as_view(),
         name="saved_companies_create",
     ),

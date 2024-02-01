@@ -15,23 +15,18 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
     def test_add_company_to_saved_unauthenticated(self):
         response = self.client.post(
-            path="/api/saved-list/",
-            data={
-                "company": "{profile_id}".format(profile_id=self.profile.id),
-            },
+            path=f"/api/{self.profile.id}/saved-list/",
+            data={},
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_add_company_to_saved_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.post(
-            path="/api/saved-list/",
-            data={
-                "user": self.user.id,
-                "company": "{profile_id}".format(profile_id=self.profile.id),
-            },
+            path=f"/api/{self.profile.id}/saved-list/",
+            data={},
         )
-        self.assertEqual(201, response.status_code)
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         company_added_info = response.data["company"]
         self.assertEqual(company_added_info, self.profile.id)
 
@@ -39,11 +34,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         own_profile = ProfileCompanyFactory(person_id=self.user.id)
         self.client.force_authenticate(self.user)
         response = self.client.post(
-            path="/api/saved-list/",
-            data={
-                "user": self.user.id,
-                "company": "{profile_id}".format(profile_id=own_profile.id),
-            },
+            path=f"/api/{own_profile.id}/saved-list/",
+            data={},
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
@@ -51,13 +43,10 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.post(
-            path="/api/saved-list/",
-            data={
-                "user": self.user.id,
-                "company": 0,
-            },
+            path=f"/api/10000/saved-list/",
+            data={},
         )
-        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
     def test_delete_company_from_saved_authenticated(self):
         self.client.force_authenticate(self.user)
@@ -79,57 +68,44 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.force_authenticate(self.user)
 
         self.client.post(
-            path="/api/saved-list/",
-            data={
-                "user": self.user.id,
-                "company": "{profile_pk}".format(profile_pk=self.profile.id),
-            },
+            path=f"/api/{self.profile.id}/saved-list/",
+            data={},
         )
         self.client.post(
-            path="/api/saved-list/",
-            data={
-                "user": self.user.id,
-                "company": "{profile_pk}".format(profile_pk=self.profile.id),
-            },
+            path=f"/api/{self.profile.id}/saved-list/",
+            data={},
         )
         response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(0, response.data["total_items"])
 
-    def test_add_company_to_other_user(self):
-        other_user = UserFactory()
-        self.client.force_authenticate(self.user)
-        response = self.client.post(
-            path="/api/saved-list/",
-            data={
-                "user": other_user.id,
-                "company": "{profile_pk}".format(profile_pk=self.profile.id),
-            },
-        )
-        self.assertEqual(403, response.status_code)
-
     def test_get_saved_company_list_by_admin(self):
         self.user.is_staff = True
         self.client.force_authenticate(self.user)
         self.client.post(
-            path="/api/saved-list/",
-            data={
-                "user": self.user.id,
-                "company": "{profile_pk}".format(profile_pk=self.profile.id),
-            },
+            path=f"/api/{self.profile.id}/saved-list/",
+            data={},
         )
-        response = self.client.get(path="/api/saved-list/")
+        response = self.client.get(path=f"/api/{self.profile.id}/saved-list/")
         self.assertEqual(1, response.data["total_items"])
+        self.assertEqual(1, response.data["total_pages"])
+
+    def test_get_non_existent_company_list_by_admin(self):
+        self.user.is_staff = True
+        self.client.force_authenticate(self.user)
+        self.client.post(
+            path="/api/10000/saved-list/",
+            data={},
+        )
+        response = self.client.get(path=f"/api/{self.profile.id}/saved-list/")
+        self.assertEqual(0, response.data["total_items"])
         self.assertEqual(1, response.data["total_pages"])
 
     def test_get_saved_company_list_by_user(self):
         self.client.force_authenticate(self.user)
         self.client.post(
-            path="/api/saved-list/",
-            data={
-                "user": self.user.id,
-                "company": "{profile_pk}".format(profile_pk=self.profile.id),
-            },
+            path=f"/api/{self.profile.id}/saved-list/",
+            data={},
         )
-        response = self.client.get(path="/api/saved-list/")
-        self.assertEqual(403, response.status_code)
+        response = self.client.get(path=f"/api/{self.profile.id}/saved-list/")
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)

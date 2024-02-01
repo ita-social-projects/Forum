@@ -25,7 +25,7 @@ from .permissions import (
     IsOwner,
     RequestIsReadOnly,
     RequestIsCreate,
-    OnlyRequestUserOrAdmin,
+    OnlyAdminRead,
 )
 from .serializers import (
     SavedCompanySerializer,
@@ -53,25 +53,28 @@ class SavedCompaniesCreate(ListCreateAPIView):
     permission_classes = [
         IsAuthenticated,
         IsOwnCompany,
-        OnlyRequestUserOrAdmin,
+        OnlyAdminRead,
     ]
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
 
     def get_queryset(self):
-        if self.request.method == "GET":
-            return SavedCompany.objects.all()
-        return SavedCompany.objects.filter(user=self.request.user)
+        company_pk = self.kwargs['company_pk']
+        return SavedCompany.objects.filter(company=company_pk)
 
-    def create(self, request):
+    def create(self, request, company_pk):
         saved_company = SavedCompany.objects.filter(
-            user=self.request.user, company=request.data.get("company")
+            user=self.request.user, company=company_pk
         )
         if saved_company.exists():
             saved_company_destroyer = SavedCompaniesDestroy()
             saved_company_destroyer.perform_destroy(saved_company)
             return Response(status=status.HTTP_204_NO_CONTENT)
-        return super().create(request)
+        serializer = SavedCompanySerializer(
+            data={"company": company_pk, "user": self.request.user.id}
+        )
+        if serializer.is_valid():
+            return super().create(serializer)
 
 
 class SavedCompaniesDestroy(DestroyAPIView):

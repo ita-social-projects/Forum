@@ -26,20 +26,20 @@ class IsOwner(BasePermission):
         return request.user == view._profile.person
 
 
-class OnlyRequestUserOrAdmin(BasePermission):
+class OnlyAdminRead(BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        if request.method in SAFE_METHODS and user.is_staff:
-            return True
-        return str(request.user.id) == str(request.data.get("user"))
+        if request.method in SAFE_METHODS:
+            return user.is_staff
+        return True
 
 
 class IsOwnCompany(BasePermission):
     def has_permission(self, request, view):
-        user = request.user
-        pk = request.data.get("company")
-        try:
-            profile = Profile.objects.get(id=pk)
-        except ObjectDoesNotExist:
+        if request.method in SAFE_METHODS:
             return True
-        return str(profile.person_id) != str(user.id)
+        pk = view.kwargs['company_pk']
+        profile = Profile.objects.filter(id=pk).first()
+        if profile:
+            return str(profile.person_id) != str(request.user.id)
+        return False
