@@ -69,6 +69,7 @@ function BasicPage() {
     >
       <SWRConfig value={{
         onError: (error) => {
+          console.error(error);
           if (error.status === 401) {
             logout();
           }
