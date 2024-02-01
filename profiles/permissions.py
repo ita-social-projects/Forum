@@ -38,7 +38,7 @@ class IsOwnCompany(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True
-        pk = view.kwargs['company_pk']
+        pk = view.kwargs["company_pk"]
         profile = Profile.objects.filter(id=pk).first()
         if profile:
             return str(profile.person_id) != str(request.user.id)

@@ -59,7 +59,7 @@ class SavedCompaniesCreate(ListCreateAPIView):
     pagination_class = ForumPagination
 
     def get_queryset(self):
-        company_pk = self.kwargs['company_pk']
+        company_pk = self.kwargs["company_pk"]
         return SavedCompany.objects.filter(company=company_pk)
 
     def create(self, request, company_pk):
