@@ -25,8 +25,8 @@ export function AuthProvider ({ children }) {
       })
       .then((res) => {
         if (!res.ok && res.status === 401) {
+          logout();
           const error = new Error('Unauthorized user.');
-          error.info = res.json();
           error.status = res.status;
           throw error;
         }
@@ -34,12 +34,14 @@ export function AuthProvider ({ children }) {
           const error = new Error(
             'An error occurred while fetching the data.'
           );
-          error.info = res.json();
           error.status = res.status;
           throw error;
         }
         return res.json();
-        }),
+        })
+      .catch((error) => {
+        console.error(error);
+      }),
     { revalidateOnFocus: false }
   );
 
@@ -63,7 +65,6 @@ export function AuthProvider ({ children }) {
     axios.interceptors.response.use(
       response => response,
       error => {
-        console.log('INTERCEPTOR');
         if (error.response && error.response.status === 401) {
           logout();
         }
