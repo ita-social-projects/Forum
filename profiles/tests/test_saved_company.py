@@ -15,7 +15,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
     def test_add_company_to_saved_unauthenticated(self):
         response = self.client.post(
-            path=f"/api/{self.profile.id}/saved-list/",
+            path=f"/api/profiles/{self.profile.id}/like/",
             data={},
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
@@ -23,7 +23,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
     def test_add_company_to_saved_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.post(
-            path=f"/api/{self.profile.id}/saved-list/",
+            path=f"/api/profiles/{self.profile.id}/like/",
             data={},
         )
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
@@ -34,7 +34,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         own_profile = ProfileCompanyFactory(person_id=self.user.id)
         self.client.force_authenticate(self.user)
         response = self.client.post(
-            path=f"/api/{own_profile.id}/saved-list/",
+            path=f"/api/profiles/{own_profile.id}/like/",
             data={},
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
@@ -43,7 +43,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.post(
-            path=f"/api/10000/saved-list/",
+            path=f"/api/profiles/10000/like/",
             data={},
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
@@ -53,7 +53,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path="/api/saved-list/{saved_company_pk}/".format(
+            path="/api/profiles/dislike/{saved_company_pk}/".format(
                 saved_company_pk=saved_company.id
             ),
             data={},
@@ -68,11 +68,11 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.force_authenticate(self.user)
 
         self.client.post(
-            path=f"/api/{self.profile.id}/saved-list/",
+            path=f"/api/profiles/{self.profile.id}/like/",
             data={},
         )
         self.client.post(
-            path=f"/api/{self.profile.id}/saved-list/",
+            path=f"/api/profiles/{self.profile.id}/like/",
             data={},
         )
         response = self.client.get(path="/api/profiles/?is_saved=True")
@@ -83,10 +83,10 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.user.is_staff = True
         self.client.force_authenticate(self.user)
         self.client.post(
-            path=f"/api/{self.profile.id}/saved-list/",
+            path=f"/api/profiles/{self.profile.id}/like/",
             data={},
         )
-        response = self.client.get(path=f"/api/{self.profile.id}/saved-list/")
+        response = self.client.get(path=f"/api/profiles/{self.profile.id}/like/")
         self.assertEqual(1, response.data["total_items"])
         self.assertEqual(1, response.data["total_pages"])
 
@@ -94,18 +94,18 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.user.is_staff = True
         self.client.force_authenticate(self.user)
         self.client.post(
-            path="/api/10000/saved-list/",
+            path="/api/profiles/10000/like/",
             data={},
         )
-        response = self.client.get(path=f"/api/{self.profile.id}/saved-list/")
+        response = self.client.get(path=f"/api/profiles/{self.profile.id}/like/")
         self.assertEqual(0, response.data["total_items"])
         self.assertEqual(1, response.data["total_pages"])
 
     def test_get_saved_company_list_by_user(self):
         self.client.force_authenticate(self.user)
         self.client.post(
-            path=f"/api/{self.profile.id}/saved-list/",
+            path=f"/api/profiles/{self.profile.id}/like/",
             data={},
         )
-        response = self.client.get(path=f"/api/{self.profile.id}/saved-list/")
+        response = self.client.get(path=f"/api/profiles/{self.profile.id}/like/")
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)

@@ -18,12 +18,12 @@ urlpatterns = [
     path(r"profiles/", ProfileList.as_view(), name="profile-list"),
     path(r"profiles/<pk>", ProfileDetail.as_view(), name="profile-detail"),
     path(
-        "<company_pk>/saved-list/",
+        "profiles/<company_pk>/like/",
         SavedCompaniesCreate.as_view(),
         name="saved_companies_create",
     ),
     path(
-        "saved-list/<pk>/",
+        "profiles/dislike/<pk>/",
         SavedCompaniesDestroy.as_view(),
         name="saved_companies_destroy",
     ),
