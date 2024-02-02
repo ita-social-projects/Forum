@@ -86,7 +86,9 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path=f"/api/profiles/{self.profile.id}/like/",
             data={},
         )
-        response = self.client.get(path=f"/api/profiles/{self.profile.id}/like/")
+        response = self.client.get(
+            path=f"/api/profiles/{self.profile.id}/like/"
+        )
         self.assertEqual(1, response.data["total_items"])
         self.assertEqual(1, response.data["total_pages"])
 
@@ -97,7 +99,9 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/profiles/10000/like/",
             data={},
         )
-        response = self.client.get(path=f"/api/profiles/{self.profile.id}/like/")
+        response = self.client.get(
+            path=f"/api/profiles/{self.profile.id}/like/"
+        )
         self.assertEqual(0, response.data["total_items"])
         self.assertEqual(1, response.data["total_pages"])
 
@@ -107,5 +111,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path=f"/api/profiles/{self.profile.id}/like/",
             data={},
         )
-        response = self.client.get(path=f"/api/profiles/{self.profile.id}/like/")
+        response = self.client.get(
+            path=f"/api/profiles/{self.profile.id}/like/"
+        )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
