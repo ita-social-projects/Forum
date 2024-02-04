@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { useSWRConfig } from 'swr';
-import useSWRMutation from 'swr/mutation';
 import { useState, useEffect } from 'react';
 import styles from './Companies.module.css';
 import CompanyCard from '../../CompanyCard/CompanyCard';
 import PropTypes from 'prop-types';
+import useSWR from 'swr';
 
 const MainCompanies = ({ isAuthorized }) => {
   MainCompanies.propTypes = {
@@ -13,7 +12,6 @@ const MainCompanies = ({ isAuthorized }) => {
 
   const baseUrl = process.env.REACT_APP_BASE_API_URL;
   const [searchResults, setSearchResults] = useState([]);
-  const { mutate } = useSWRConfig();
   const [newMembers, setNewMembers] = useState(true);
   const authToken = localStorage.getItem('Token');
   const headers = authToken
@@ -26,33 +24,23 @@ const MainCompanies = ({ isAuthorized }) => {
     : {
         'Content-Type': 'application/json',
       };
-  const fetcher = (url) =>
-    axios.get(url, headers).then((res) => res.data.results);
-  async function useNewMembers(url) {
-    const data = await fetcher(url);
-    setSearchResults(data);
-    setNewMembers(false);
-  }
+  const fetcher = async (url) => {
+    await axios.get(url, headers).then((res) => {
+      setSearchResults(res.data.results);
+      return res.data.results;
+    });
+  };
 
-  const { trigger } = useSWRMutation(
+  const { data: companylist } = useSWR(
     `${baseUrl}/api/profiles/?new_members=-completeness,-created_at`,
-    useNewMembers
+    fetcher
   );
-
-  mutate((key) => typeof key === 'string' && key.startsWith('/api/profiles/'), {
-    revalidate: true,
-  });
 
   useEffect(() => {
     if (newMembers) {
-      try {
-        trigger();
-        setNewMembers(false);
-      } catch (error) {
-        console.error(error);
-      }
+      setNewMembers(false);
     }
-  }, [newMembers, trigger, authToken]);
+  }, [newMembers, authToken, companylist]);
   const companyDataList = searchResults;
 
   return (

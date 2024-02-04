@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { useSWRConfig } from 'swr';
-import useSWRMutation from 'swr/mutation';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
@@ -10,6 +8,7 @@ import link_to_left from './img/link_to_left.svg';
 import link_to_right from './img/link_to_right.svg';
 import styles from './search_page.module.css';
 import PropTypes from 'prop-types';
+import useSWR from 'swr';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -20,54 +19,41 @@ export function Search({ isAuthorized }) {
 
   const [searchResults, setSearchResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  const [error, setError] = useState(null);
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get('name');
   const servedAddress = process.env.REACT_APP_BASE_API_URL;
   const searchUrl = 'search';
-  const { mutate } = useSWRConfig();
   const authToken = localStorage.getItem('Token');
-  const fetcher = (url) => {
-    const headers = authToken
-      ? {
-          withCredentials: true,
-          headers: {
-            Authorization: `Token ${authToken}`,
-          },
-        }
-      : {
-          'Content-Type': 'application/json',
-        };
-    return axios.get(url, headers).then((res) => res.data);
+  const headers = authToken
+    ? {
+        withCredentials: true,
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      }
+    : {
+        'Content-Type': 'application/json',
+      };
+
+  const fetcher = async (url) => {
+    await axios.get(url, headers).then((res) => {
+      setSearchResults(res.data.results);
+      return res.data.results;
+    });
   };
 
-  async function getRequest(url) {
-    const data = await fetcher(url);
-    setSearchResults(data);
-    setSearchPerformed(true);
-    setError(null);
-  }
-
-  const { trigger } = useSWRMutation(
-    `${servedAddress}/api/search/?name=${searchTerm}`,
-    getRequest
+  const { data: companylist, error } = useSWR(
+    `${servedAddress}/api/profiles/?new_members=-completeness,-created_at`,
+    fetcher
   );
-
-  mutate((key) => typeof key === 'string' && key.startsWith('/api/search/'), {
-    revalidate: true,
-  });
 
   useEffect(() => {
     if (searchTerm) {
-      try {
-        trigger();
-      } catch (error) {
-        console.error(error);
-      }
+      setSearchPerformed(true);
     }
-  }, [searchTerm, servedAddress, searchUrl, trigger, authToken]);
+  }, [searchTerm, servedAddress, searchUrl, authToken, companylist]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalItems = searchResults.length;

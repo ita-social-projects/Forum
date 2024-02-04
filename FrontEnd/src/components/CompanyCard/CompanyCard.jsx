@@ -14,7 +14,6 @@ export default function CompanyCard({ data, isAuthorized }) {
     data: PropTypes.object,
     isAuthorized: PropTypes.bool,
   };
-
   const [isSaved, setIsSaved] = useState(data && data.is_saved);
   const { mutate } = useSWRConfig();
   const profile = useMemo(() => {
