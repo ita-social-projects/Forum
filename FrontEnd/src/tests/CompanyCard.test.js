@@ -8,7 +8,6 @@ afterEach(cleanup);
 const company_liked = {
   id: 1,
   name: 'Testname',
-  categories: [1, 2],
   region: 'Testregion',
   founded: 2006,
   service_info: 'Testinfo',
@@ -36,7 +35,6 @@ const company_liked = {
 const company_unliked = {
   id: 1,
   name: 'Testname_unlike',
-  categories: [1, 2],
   region: 'Testregion_unlike',
   founded: 2006,
   service_info: 'Testinfo_unlike',
