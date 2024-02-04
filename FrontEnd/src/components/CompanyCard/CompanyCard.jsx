@@ -48,13 +48,16 @@ export default function CompanyCard({ data, isAuthorized }) {
   }
 
   const { trigger } = useSWRMutation(
-    `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profile.id}/like/`,
+    `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
     sendRequest
   );
 
   const handleClick = async () => {
     try {
-      await trigger({}, { optimisticData: () => setIsSaved(!isSaved) });
+      await trigger(
+        { company_pk: profile.id },
+        { optimisticData: () => setIsSaved(!isSaved) }
+      );
       mutate(
         (key) => typeof key === 'string' && key.startsWith('/api/profiles/'),
         {

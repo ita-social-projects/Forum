@@ -25,7 +25,6 @@ from .permissions import (
     IsOwner,
     RequestIsReadOnly,
     RequestIsCreate,
-    OnlyAdminRead,
 )
 from .serializers import (
     SavedCompanySerializer,
@@ -44,37 +43,32 @@ from .serializers import (
 from .filters import ProfileFilter
 
 
-class SavedCompaniesCreate(ListCreateAPIView):
+class SavedCompaniesCreate(CreateAPIView):
     """
     List of saved companies.
     Add a company to the saved list.
     """
 
-    permission_classes = [
-        IsAuthenticated,
-        IsOwnCompany,
-        OnlyAdminRead,
-    ]
+    permission_classes = [IsAuthenticated, IsOwnCompany]
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
 
-    def get_queryset(self):
-        company_pk = self.kwargs["company_pk"]
-        return SavedCompany.objects.filter(company=company_pk)
+    def post(self, request):
+        user = request.user
+        pk = request.data.get("company_pk")
 
-    def create(self, request, company_pk):
-        saved_company = SavedCompany.objects.filter(
-            user=self.request.user, company=company_pk
-        )
-        if saved_company.exists():
+        # Check if the company is already in the user's saved list
+        if SavedCompany.objects.filter(user=user, company_id=pk).exists():
             saved_company_destroyer = SavedCompaniesDestroy()
-            saved_company_destroyer.perform_destroy(saved_company)
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return saved_company_destroyer.destroy(request, pk)
+
         serializer = SavedCompanySerializer(
-            data={"company": company_pk, "user": self.request.user.id}
+            data={"company": pk, "user": user.id}
         )
         if serializer.is_valid():
-            return super().create(serializer)
+            serializer.save()
+            return Response({"Company added": serializer.data})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SavedCompaniesDestroy(DestroyAPIView):
@@ -83,7 +77,16 @@ class SavedCompaniesDestroy(DestroyAPIView):
     """
 
     permission_classes = [IsAuthenticated]
-    queryset = SavedCompany.objects.all()
+
+    def destroy(self, request, pk):
+        user = request.user
+        saved_company = get_object_or_404(
+            SavedCompany, company_id=pk, user=user
+        )
+        saved_company.delete()
+        return Response(
+            f"Company {pk} deleted", status=status.HTTP_204_NO_CONTENT
+        )
 
 
 class ProfileList(ListCreateAPIView):
