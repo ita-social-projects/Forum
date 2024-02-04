@@ -11,7 +11,7 @@ describe('Search component unit tests', () => {
   test('renders sale search page', () => {
     render(
       <MemoryRouter>
-        <Search isAuthorized={{ isAuth: true }} />
+        <Search isAuthorized={true} />
       </MemoryRouter>
     );
     const counterElement = screen.getByText(/РЕЗУЛЬТАТІВ ЗА ПОШУКОМ/i, {
@@ -79,7 +79,7 @@ describe('Search component unit tests', () => {
 
       render(
         <MemoryRouter>
-          <Search isAuthorized={{ isAuth: true }} />
+          <Search isAuthorized={true} />
         </MemoryRouter>
       );
       expect(axios.get).toBeCalled();
