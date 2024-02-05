@@ -1,5 +1,9 @@
 import css from './FormComponents.module.css';
+import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import { useUser, useProfile } from '../../../hooks/';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
@@ -14,6 +18,18 @@ const StartupInfo = (props) => {
     const { user } = useUser();
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
+    const { setFormIsDirty } = useContext(DirtyFormContext);
+
+    // TODO: update default values as new fields added
+
+    const fields = {
+        'startup_idea': {defaultValue: mainProfile?.startup_idea ?? null},
+    };
+
+    useEffect(() => {
+        const isDirty = checkFormIsDirty(fields, null, profile);
+        setFormIsDirty(isDirty);
+      }, [mainProfile, profile]);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -44,6 +60,8 @@ const StartupInfo = (props) => {
             if (response.status === 200) {
                 const updatedProfileData = await response.json();
                 profileMutate(updatedProfileData);
+                setFormIsDirty(false);
+                toast.success('Зміни успішно збережено');
             } else {
                 console.error('Помилка');
             }

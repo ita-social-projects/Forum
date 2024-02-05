@@ -7,6 +7,9 @@ class ProfileFilter(FilterSet):
     is_registered = filters.BooleanFilter()
     is_startup = filters.BooleanFilter()
     activities__name = filters.CharFilter()
+    new_members = filters.OrderingFilter(
+        fields=("-completeness", "-created_at")
+    )
 
     def is_saved_filter(self, queryset, name, value):
         if value:

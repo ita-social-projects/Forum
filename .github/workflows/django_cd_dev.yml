@@ -36,7 +36,11 @@ jobs:
         run: docker compose -f docker-compose.dev.yml up -d --build
       - name: Docker compouse MIGRATE models
         run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py migrate --noinput
-      - name: Docker compouse COLLECTSTATIC
+      - name: Docker compose LOADDATA activities
+        run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py loaddata activities
+      - name: Docker compose LOADDATA categories
+        run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py loaddata categories
+      - name: Docker compose COLLECTSTATIC
         run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py collectstatic --no-input
       - name: nginx
         run: docker compose -f docker-compose.nginx.yml down -v
@@ -45,5 +49,7 @@ jobs:
 
       - name: Clean up old docker resources
         run: |
+          docker system df
           docker container prune -f
           docker image prune -f
+          docker buildx prune -f

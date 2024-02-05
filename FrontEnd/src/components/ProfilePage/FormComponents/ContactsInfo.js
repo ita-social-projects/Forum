@@ -1,6 +1,10 @@
 import css from './FormComponents.module.css';
+import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import { useUser, useProfile } from '../../../hooks/';
+import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
@@ -15,6 +19,19 @@ const ContactsInfo = (props) => {
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const [phoneNumberError, setPhoneNumberError] = useState(null);
+    const { setFormIsDirty } = useContext(DirtyFormContext);
+
+    // TODO: update default values as new fields added
+
+    const fields = {
+        'phone': {defaultValue: mainProfile?.phone ?? null},
+        'address': {defaultValue: mainProfile?.address ?? null},
+    };
+
+    useEffect(() => {
+        const isDirty = checkFormIsDirty(fields, null, profile);
+        setFormIsDirty(isDirty);
+      }, [mainProfile, profile]);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -73,6 +90,8 @@ const ContactsInfo = (props) => {
                 if (response.status === 200) {
                     const updatedProfileData = await response.json();
                     profileMutate(updatedProfileData);
+                    setFormIsDirty(false);
+                    toast.success('Зміни успішно збережено');
                 } else {
                     console.error('Помилка');
                 }

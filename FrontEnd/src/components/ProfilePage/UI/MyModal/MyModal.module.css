@@ -6,7 +6,7 @@
     left: 0;
     width: 1512px;
     display: none;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .myModal__content {
@@ -21,4 +21,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2;
 }

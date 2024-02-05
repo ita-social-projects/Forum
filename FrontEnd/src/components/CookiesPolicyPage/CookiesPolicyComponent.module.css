@@ -1,3 +1,9 @@
+.block-cookies_policy {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
 .cookies-section {
     width: 1512px;
     text-align: center;
@@ -17,7 +23,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: 65vh;
+    min-height: 20vh;
     padding: 120px 100px 120px;
     color: #fff;
 }

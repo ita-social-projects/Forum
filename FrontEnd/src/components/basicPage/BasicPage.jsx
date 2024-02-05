@@ -2,11 +2,13 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+import 'react-toastify/dist/ReactToastify.css';
 
 import AuthorizationPage from '../authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../HeaderFooter/footer/Footer';
 import Header from '../HeaderFooter/header/Header';
+import Logout from '../HeaderFooter/header/navbar/Logout';
 import MainPage from '../landing-page/MainPage';
 import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
 import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
@@ -26,7 +28,7 @@ import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/Ter
 import { useAuth } from '../../hooks';
 import { useUser } from '../../hooks';
 import { Search } from '../SearchPage/Search';
-import classes from './BasicPage.module.css';
+import './customToastStyles.css';
 
 function BasicPage() {
   const auth = useAuth();
@@ -84,6 +86,11 @@ function BasicPage() {
         ) : (
           <Route path="/login" element={<AuthorizationPage />} />
         )}
+        {!auth.isAuth ? (
+          <Route path="/logout" element={<Navigate to="/" />} />
+        ) : (
+          <Route path="/logout" element={<Logout />} />
+          )}
         {auth.isAuth ? (
           <Route
             path="/sign-up"
@@ -134,10 +141,8 @@ function BasicPage() {
       <ToastContainer
         position="top-right"
         autoClose={3000}
+        theme="colored"
         icon={false}
-        className={classes.toastContainer}
-        toastClassName={classes.toast}
-        bodyClassName={classes.toastBody}
       />
     </ConfigProvider>
   );
