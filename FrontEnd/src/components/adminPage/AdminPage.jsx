@@ -27,9 +27,9 @@ function AdminPage() {
     return (
         <div>
             {/* <Header_main isAuthorized={auth.isAuth} /> */}
-            <Header isAuthorized={auth.isAuth} />
+            <Header />
             <div className={css['content']}>
-                <Menu isAuthorized={auth.isAuth} />
+                <Menu />
                 <Routes >
                     {authRoutes}
                 </Routes>

@@ -22,7 +22,7 @@ class UsersListView(ListAPIView):
 
     queryset = CustomUser.objects.filter(is_superuser=False).order_by("id")
     serializer_class = AdminUserSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    # permission_classes = [IsAuthenticated, IsAdminUser]
     pagination_class = ListPagination
 
 
@@ -32,18 +32,18 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     """
 
     queryset = CustomUser.objects.filter(is_superuser=False).order_by("id")
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    # permission_classes = [IsAuthenticated, IsAdminUser]
     serializer_class = AdminUserSerializer
 
 
 class AdminProfileList(ListCreateAPIView):
-    permission_classes = (IsAuthenticated, IsAdminUser)
+    # permission_classes = (IsAuthenticated, IsAdminUser)
     pagination_class = ListPagination
     serializer_class = AdminCompanyListSerializer
     queryset = Profile.objects.filter(is_deleted=False)
 
 
 class AdminProfileDetail(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated, IsAdminUser)
+    # permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class = AdminCompanyDetailSerializer
     queryset = Profile.objects.filter(is_deleted=False)

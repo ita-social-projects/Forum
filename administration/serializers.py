@@ -45,11 +45,13 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = (
+            "id",
             "name",
             "is_registered",
             "is_startup",
             "person",
             "person_position",
+            "region",
             "official_name",
             "phone",
             "edrpou",
