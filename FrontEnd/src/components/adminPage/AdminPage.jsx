@@ -12,7 +12,7 @@ import { useAuth } from '../../hooks';
 
 function AdminPage() {
     const auth = useAuth();
-    const authRoutes = auth.isAuth ? (
+    const authRoutes = auth.isSuper ? (
         <>
             <Route path="/" element={<MainPage />} />
             <Route path="/users" element={<UserTable />} />

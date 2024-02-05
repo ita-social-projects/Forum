@@ -15,7 +15,7 @@ class AdminUserSerializer(UserSerializer):
 
     def get_phone_number(self, user):
         try:
-            return user.profile.phone_number
+            return user.email
         except ObjectDoesNotExist:
             return None
 
@@ -29,8 +29,9 @@ class AdminUserSerializer(UserSerializer):
             "phone_number",
             "is_active",
             "is_staff",
+            "is_superuser",
         )
-        read_only_fields = ("phone_number", "email")
+        read_only_fields = ( "email", )
 
 
 class UserSerializer(serializers.ModelSerializer):
