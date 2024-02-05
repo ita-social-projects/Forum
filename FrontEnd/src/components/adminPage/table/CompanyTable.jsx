@@ -18,12 +18,16 @@ const ProfilesPage = () => {
         let path = `company=${id}`;
         navigate(path);
     };
+    const token = localStorage.getItem('Token');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/`);
-
+                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/`, {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -38,7 +42,7 @@ const ProfilesPage = () => {
         };
 
         fetchData();
-    }, []);
+    }, [token]);
 
     if (loading) {
         return <p>Loading...</p>;
