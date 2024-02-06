@@ -7,7 +7,6 @@ import styles from './CompanyCard.module.css';
 import { useUser } from '../../hooks';
 import PropTypes from 'prop-types';
 import { Tooltip, Badge } from 'antd';
-import 'antd/dist/reset.css';
 
 export default function CompanyCard({ data, isAuthorized }) {
   CompanyCard.propTypes = {
@@ -85,10 +84,11 @@ export default function CompanyCard({ data, isAuthorized }) {
 
   const CategoryBadges = ({ categories }) => {
     return (
-      <>
+      <div>
         {categories
           ? categories.map((category) => (
               <Badge
+                title=""
                 key={category.id}
                 size="medium"
                 count={category.name.toUpperCase()}
@@ -102,7 +102,7 @@ export default function CompanyCard({ data, isAuthorized }) {
               />
             ))
           : ''}
-      </>
+      </div>
     );
   };
 
@@ -165,25 +165,20 @@ export default function CompanyCard({ data, isAuthorized }) {
                 : ''}
             </div>
           </Tooltip>
-          <div className={styles['company-card__badges-block']}>
-            <div className={styles['company-card__badges']}>
-              <div>
-                <Tooltip
-                  title={
-                    profile.categories &&
-                    profile.categories.map((element) => element.name).join(', ')
-                  }
-                  placement="bottom"
-                  pointAtCenter={true}
-                >
-                  <div>
-                    <CategoryBadges
-                      categories={profile.categories.slice(0, 3)}
-                    />
-                  </div>
-                </Tooltip>
+          <div className={styles['company-card__footer_content']}>
+            <Tooltip
+              title={
+                profile.categories &&
+                profile.categories.map((element) => element.name).join(', ')
+              }
+              placement="bottom"
+              pointAtCenter={true}
+            >
+              <div className={styles['company-card__badges_block']}>
+                <CategoryBadges categories={profile.categories.slice(0, 3)} />
               </div>
-            </div>
+            </Tooltip>
+
             {isAuthorized && !ownProfile
               ? isSaved
                 ? filledStar
