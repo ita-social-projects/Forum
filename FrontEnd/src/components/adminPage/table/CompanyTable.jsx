@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react';
 import css from './Table.module.css';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PaginationButtons from './PaginationButtons';
 
 const COLUMN_NAMES = [
     'ID', 'Person', 'Position', 'Company', 'Region', 'Phone', 'EDRPOU', 'Adress', 'IsDeleted', 'IsApproved'
 ];
 
-
-
-const ProfilesPage = () => {
+function ProfilesPage() {
     const [profiles, setProfiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const routeChange = (id) =>{
+    const routeChange = (id) => {
         let path = `company=${id}`;
         navigate(path);
     };
@@ -84,6 +82,6 @@ const ProfilesPage = () => {
             </table>
         </div >
     );
-};
+}
 
 export default ProfilesPage;

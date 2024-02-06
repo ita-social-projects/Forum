@@ -33,11 +33,11 @@ export default function useProvideAuth() {
         `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
         {headers: {Authorization: `Token ${authToken}`,},}
       );
-      const ponse = await axios.get(
+      const responseId = await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${response.data.id}`,
         {headers: {Authorization: `Token ${authToken}`,},}
       );
-      if (ponse.data.is_staff && ponse.data.is_superuser ) {
+      if (responseId.data.is_staff && responseId.data.is_superuser ) {
         setIsSuper(true);
       }
     } catch (error) {

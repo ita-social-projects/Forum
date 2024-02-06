@@ -1,5 +1,4 @@
 import Header from './header/Header';
-// import Header_main from '../HeaderFooter/header/Header';
 import Menu from './menu/Menu';
 import UserDetail from './detail-view/UserDetail';
 import UserTable from './table/UserTable';
@@ -12,6 +11,11 @@ import { useAuth } from '../../hooks';
 
 function AdminPage() {
     const auth = useAuth();
+    const renderMenu = auth.isSuper ? (
+        <>
+            <Menu />
+        </>
+    ) : null;
     const authRoutes = auth.isSuper ? (
         <>
             <Route path="/" element={<MainPage />} />
@@ -26,15 +30,13 @@ function AdminPage() {
 
     return (
         <div>
-            {/* <Header_main isAuthorized={auth.isAuth} /> */}
-            <Header />
+            <Header disabled={!auth.isSuper} />
             <div className={css['content']}>
-                <Menu />
+                {renderMenu}
                 <Routes >
                     {authRoutes}
                 </Routes>
             </div>
-            {/* <Footer page="admin"></Footer> */}
         </div>
     );
 }
