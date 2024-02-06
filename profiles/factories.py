@@ -1,3 +1,4 @@
+from unittest.util import strclass
 import factory.fuzzy
 
 from .models import (
@@ -36,7 +37,7 @@ class ProfileFactory(factory.django.DjangoModelFactory):
     region = factory.fuzzy.FuzzyChoice(Region, getter=lambda r: r[0])
     common_info = "test common info"
     phone = "380112909099"
-    edrpou = factory.Sequence(lambda n: 10000000 + n)
+    edrpou = factory.Sequence(lambda n: str(10000000 + n))
     founded = 2022
     service_info = "test service info"
     product_info = "test product info"
