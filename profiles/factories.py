@@ -1,4 +1,3 @@
-from unittest.util import strclass
 import factory.fuzzy
 
 from .models import (
