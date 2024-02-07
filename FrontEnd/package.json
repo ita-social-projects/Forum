@@ -23,7 +23,7 @@
     "react-cookie": "^6.1.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
-    "react-router-dom": "^6.4.1",
+    "react-router-dom": "^6.21.2",
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.3",
