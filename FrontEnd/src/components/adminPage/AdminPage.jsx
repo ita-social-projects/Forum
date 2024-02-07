@@ -31,6 +31,7 @@ function AdminPage() {
     return (
         <div>
             <Header disabled={!auth.isSuper} />
+            {/* {auth.isSuper && <Header />} */}
             <div className={css['content']}>
                 {renderMenu}
                 <Routes >
