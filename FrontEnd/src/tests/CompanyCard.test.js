@@ -63,7 +63,7 @@ describe('CompanyCard component unit tests', () => {
   test('renders region', () => {
     render(
       <MemoryRouter>
-        <CompanyCard data={company_liked} isAuthorized={true} />
+        <CompanyCard profile={company_liked} isAuthorized={true} />
       </MemoryRouter>
     );
     const divElement = screen.getByText(/Testregion/i, { exact: false });
@@ -73,7 +73,7 @@ describe('CompanyCard component unit tests', () => {
   test('testing stars', () => {
     render(
       <MemoryRouter>
-        <CompanyCard data={company_liked} isAuthorized={true} />
+        <CompanyCard profile={company_liked} isAuthorized={true} />
       </MemoryRouter>
     );
     expect(screen.getByTestId('star')).toBeInTheDocument();
@@ -82,7 +82,7 @@ describe('CompanyCard component unit tests', () => {
   test('testing empty stars', () => {
     render(
       <MemoryRouter>
-        <CompanyCard isAuthorized={true} data={company_unliked} />
+        <CompanyCard isAuthorized={true} profile={company_unliked} />
       </MemoryRouter>
     );
     expect(screen.getByTestId('emptystar')).toBeInTheDocument();
