@@ -15,7 +15,8 @@ export default function CompanyCard({ profile, isAuthorized }) {
   const { mutate } = useSWRConfig();
 
   const { user } = useUser();
-  const ownProfile = user && user.id === profile.personId;
+
+  const ownProfile = user && user.id === profile.person;
   const activitiesString =
     profile.activities &&
     profile.activities.map((element) => element.name).join(', ');

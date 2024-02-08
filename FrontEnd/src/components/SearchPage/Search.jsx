@@ -13,6 +13,10 @@ import useSWR from 'swr';
 const ITEMS_PER_PAGE = 6;
 
 export function Search({ isAuthorized }) {
+  Search.propTypes = {
+    isAuthorized: PropTypes.bool,
+  };
+
   const [searchResults, setSearchResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
@@ -35,13 +39,13 @@ export function Search({ isAuthorized }) {
 
   const fetcher = async (url) => {
     await axios.get(url, headers).then((res) => {
-      setSearchResults(res.data.results);
-      return res.data.results;
+      setSearchResults(res.data);
+      return res.data;
     });
   };
 
   const { data: companylist, error } = useSWR(
-    `${servedAddress}/api/profiles/?new_members=-completeness,-created_at`,
+    `${servedAddress}/api/search/?name=${searchTerm}`,
     fetcher
   );
 
@@ -78,8 +82,10 @@ export function Search({ isAuthorized }) {
                 </span>
                 : {searchResults.length > 0 ? searchResults.length : 0}
               </h3>
+              <br />
             </div>
           )}
+          <br />
         </div>
         <div className={styles['new-companies-main']}>
           {!error && searchResults.length > 0 ? (
