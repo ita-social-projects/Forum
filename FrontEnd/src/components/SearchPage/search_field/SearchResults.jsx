@@ -22,7 +22,7 @@ const SearchResults = ({ results, displayedResults, isAuthorized }) => {
           <div className={styles['row']}>
             {displayedResults.map((result, resultIndex) => (
               <div key={resultIndex} className={styles['col-md-4']}>
-                <CompanyCard data={result} isAuthorized={isAuthorized} />
+                <CompanyCard profile={result} isAuthorized={isAuthorized} />
               </div>
             ))}
           </div>

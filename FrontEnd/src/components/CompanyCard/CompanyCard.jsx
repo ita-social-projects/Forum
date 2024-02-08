@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import styles from './CompanyCard.module.css';
@@ -8,25 +8,11 @@ import { useUser } from '../../hooks';
 import PropTypes from 'prop-types';
 import { Tooltip, Badge } from 'antd';
 
-export default function CompanyCard({ data, isAuthorized }) {
-  const [isSaved, setIsSaved] = useState(data && data.is_saved);
+export default function CompanyCard({ profile, isAuthorized }) {
+  const [isSaved, setIsSaved] = useState(profile && profile.is_saved);
   const lengthOfRegion = 35;
   const lengthOfCategoryActivityArray = 3;
   const { mutate } = useSWRConfig();
-  const profile = useMemo(() => {
-    return {
-      id: data?.id,
-      personId: data?.person,
-      name: data?.name,
-      region: data?.region,
-      categories: data?.categories,
-      activities: data?.activities,
-      logo: data?.logo_image,
-      banner: data?.banner_image,
-      founded: data?.founded,
-      isSaved: data?.is_saved,
-    };
-  }, [data]);
 
   const { user } = useUser();
   const ownProfile = user && user.id === profile.personId;
