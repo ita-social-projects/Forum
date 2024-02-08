@@ -34,10 +34,9 @@ export function Search({ isAuthorized }) {
       };
 
   const fetcher = async (url) => {
-    await axios.get(url, headers).then((res) => {
-      setSearchResults(res.data);
-      return res.data;
-    });
+    const data = await axios.get(url, headers);
+    setSearchResults(data.data);
+    return data;
   };
 
   const { data: companylist, error } = useSWR(

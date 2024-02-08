@@ -20,11 +20,12 @@ const MainCompanies = ({ isAuthorized }) => {
     : {
         'Content-Type': 'application/json',
       };
+
   const fetcher = async (url) => {
-    await axios.get(url, headers).then((res) => {
-      setSearchResults(res.data.results);
-      return res.data.results;
-    });
+    const data = await axios.get(url, headers);
+    setSearchResults(data.data.results);
+    console.log(data.data.results);
+    return data.data.results;
   };
 
   const { data: companylist } = useSWR(
