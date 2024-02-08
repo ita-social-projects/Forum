@@ -24,7 +24,6 @@ const MainCompanies = ({ isAuthorized }) => {
   const fetcher = async (url) => {
     const data = await axios.get(url, headers);
     setSearchResults(data.data.results);
-    console.log(data.data.results);
     return data.data.results;
   };
 

@@ -2,7 +2,7 @@
 
 .company-card {
   width: 360px;
-  height: 415px;
+  min-height: 415px;
   display: block;
   align-items: center;
   box-shadow: 0 4px 8px 0 var(--companies-card-box-shadow);
