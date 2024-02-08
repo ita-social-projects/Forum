@@ -26,5 +26,5 @@ class Migration(migrations.Migration):
                 validators=[validation.validate_edrpou.validate_edrpou],
             ),
         ),
-        migrations.RunPython(convert_edrpou_int_filed_to_char, migrations.RunPython.noop),
+        migrations.RunPython(convert_edrpou_int_filed_to_char, migrations.RunPython.noop, elidable=True),
     ]
