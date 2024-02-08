@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Tooltip, Badge } from 'antd';
 
 export default function CompanyCard({ profile, isAuthorized }) {
-  const [isSaved, setIsSaved] = useState(profile && profile.is_saved);
+  const [isSaved, setIsSaved] = useState(profile.is_saved);
   const lengthOfRegion = 35;
   const lengthOfCategoryActivityArray = 3;
   const { mutate } = useSWRConfig();
