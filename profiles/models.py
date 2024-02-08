@@ -82,6 +82,7 @@ class Profile(models.Model):
         unique=True,
         validators=[validate_edrpou],
         default=None,
+        blank=True,
         null=True,
     )
     founded = models.SmallIntegerField(

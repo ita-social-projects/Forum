@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
             field=models.CharField(
                 max_length=8,
                 default=None,
+                blank=True,
                 null=True,
                 unique=True,
                 validators=[validation.validate_edrpou.validate_edrpou],
