@@ -13,10 +13,6 @@ import useSWR from 'swr';
 const ITEMS_PER_PAGE = 6;
 
 export function Search({ isAuthorized }) {
-  Search.propTypes = {
-    isAuthorized: PropTypes.bool,
-  };
-
   const [searchResults, setSearchResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
@@ -102,13 +98,12 @@ export function Search({ isAuthorized }) {
             <div>
               <br />
               <p className={styles['search_result_error']}>
-                Пошук не дав результатів: компанії з іменем{' '}
+                Пошук не дав результатів: компанії з іменем
                 <span className={styles['.search_result_error']}>
-                  {searchTerm}
-                </span>{' '}
+                  {` ${searchTerm} `}
+                </span>
                 не було виявлено на даний момент
               </p>
-              <br />
             </div>
           )}
         </div>
@@ -170,6 +165,10 @@ export function Search({ isAuthorized }) {
 }
 
 export default Search;
+
+Search.propTypes = {
+  isAuthorized: PropTypes.bool,
+};
 
 Search.propTypes = {
   isAuthorized: PropTypes.bool,
