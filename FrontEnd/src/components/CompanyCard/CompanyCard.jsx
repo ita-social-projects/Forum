@@ -9,11 +9,9 @@ import PropTypes from 'prop-types';
 import { Tooltip, Badge } from 'antd';
 
 export default function CompanyCard({ data, isAuthorized }) {
-  CompanyCard.propTypes = {
-    data: PropTypes.object,
-    isAuthorized: PropTypes.bool,
-  };
   const [isSaved, setIsSaved] = useState(data && data.is_saved);
+  const lengthOfRegion = 35;
+  const lengthOfCategoryActivityArray = 3;
   const { mutate } = useSWRConfig();
   const profile = useMemo(() => {
     return {
@@ -32,6 +30,16 @@ export default function CompanyCard({ data, isAuthorized }) {
 
   const { user } = useUser();
   const ownProfile = user && user.id === profile.personId;
+  const activitiesString =
+    profile.activities &&
+    profile.activities.map((element) => element.name).join(', ');
+
+  const activitiesSliceString =
+    profile.activities &&
+    profile.activities
+      .slice(0, lengthOfCategoryActivityArray)
+      .map((activity) => activity.name)
+      .join(' ');
 
   async function sendRequest(url, { arg: data }) {
     const authToken = localStorage.getItem('Token');
@@ -42,7 +50,7 @@ export default function CompanyCard({ data, isAuthorized }) {
         Authorization: `Token ${authToken}`,
       },
       body: JSON.stringify(data),
-    }).then();
+    });
   }
 
   const { trigger } = useSWRMutation(
@@ -57,7 +65,11 @@ export default function CompanyCard({ data, isAuthorized }) {
         { optimisticData: () => setIsSaved(!isSaved) }
       );
       mutate(
-        (key) => typeof key === 'string' && key.startsWith('/api/profiles/'),
+        (key) =>
+          typeof key === 'string' &&
+          key.startsWith(
+            '/api/profiles/?new_members=-completeness,-created_at'
+          ),
         {
           revalidate: true,
         }
@@ -81,8 +93,22 @@ export default function CompanyCard({ data, isAuthorized }) {
       data-testid="emptystar"
     />
   );
+  const getStar = () => {
+    return isAuthorized && !ownProfile
+      ? isSaved
+        ? filledStar
+        : outlinedStar
+      : null;
+  };
 
   const CategoryBadges = ({ categories }) => {
+    const style = {
+      backgroundColor: '#1F9A7C',
+      fontWeight: 600,
+      fontFamily: 'Inter',
+      fontSize: 10,
+      margin: 5,
+    };
     return (
       <div>
         {categories
@@ -92,16 +118,10 @@ export default function CompanyCard({ data, isAuthorized }) {
                 key={category.id}
                 size="medium"
                 count={category.name.toUpperCase()}
-                style={{
-                  backgroundColor: '#1F9A7C',
-                  fontWeight: 600,
-                  fontFamily: 'Inter',
-                  fontSize: 10,
-                  margin: 5,
-                }}
+                style={style}
               />
             ))
-          : ''}
+          : null}
       </div>
     );
   };
@@ -126,19 +146,12 @@ export default function CompanyCard({ data, isAuthorized }) {
         </div>
         <div className={styles['company-card__text-block']}>
           <Tooltip
-            title={
-              profile.activities &&
-              profile.activities.map((element) => element.name).join(', ')
-            }
+            title={activitiesString}
             placement="bottom"
             pointAtCenter={true}
           >
             <div className={styles['company-card__category-text']}>
-              {profile.activities &&
-                profile.activities
-                  .slice(0, 3)
-                  .map((activity) => activity.name)
-                  .join(' ')}
+              {activitiesSliceString}
             </div>
           </Tooltip>
           <div className={styles['company-card__text-block__header']}>
@@ -149,7 +162,6 @@ export default function CompanyCard({ data, isAuthorized }) {
               >
                 {profile.name}
               </Link>
-              <br />
             </div>
           </div>
           <Tooltip
@@ -159,7 +171,7 @@ export default function CompanyCard({ data, isAuthorized }) {
           >
             <div className={styles['company-card__region-text']}>
               {profile.region
-                ? profile.region.length < 35
+                ? profile.region.length < lengthOfRegion
                   ? `${profile.region}`
                   : `${profile.region.substring(0, 35)}...`
                 : ''}
@@ -178,12 +190,7 @@ export default function CompanyCard({ data, isAuthorized }) {
                 <CategoryBadges categories={profile.categories.slice(0, 3)} />
               </div>
             </Tooltip>
-
-            {isAuthorized && !ownProfile
-              ? isSaved
-                ? filledStar
-                : outlinedStar
-              : null}
+            {getStar()}
           </div>
         </div>
       </div>
@@ -207,3 +214,8 @@ export default function CompanyCard({ data, isAuthorized }) {
     </div>
   );
 }
+
+CompanyCard.propTypes = {
+  data: PropTypes.object,
+  isAuthorized: PropTypes.bool,
+};

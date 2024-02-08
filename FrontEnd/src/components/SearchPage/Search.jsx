@@ -13,10 +13,6 @@ import useSWR from 'swr';
 const ITEMS_PER_PAGE = 6;
 
 export function Search({ isAuthorized }) {
-  Search.propTypes = {
-    isAuthorized: PropTypes.bool,
-  };
-
   const [searchResults, setSearchResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
@@ -76,16 +72,14 @@ export function Search({ isAuthorized }) {
           {searchResults && (
             <div>
               <h3 className={styles['search_results_text']}>
-                РЕЗУЛЬТАТІВ ЗА ПОШУКОМ{' '}
+                РЕЗУЛЬТАТІВ ЗА ПОШУКОМ
                 <span className={styles['search_field_entered_value']}>
-                  {searchTerm}
-                </span>{' '}
+                  {` ${searchTerm} `}
+                </span>
                 : {searchResults.length > 0 ? searchResults.length : 0}
               </h3>
-              <br />
             </div>
           )}
-          <br />
         </div>
         <div className={styles['new-companies-main']}>
           {!error && searchResults.length > 0 ? (
@@ -170,3 +164,7 @@ export function Search({ isAuthorized }) {
 }
 
 export default Search;
+
+Search.propTypes = {
+  isAuthorized: PropTypes.bool,
+};

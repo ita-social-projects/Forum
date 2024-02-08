@@ -16,6 +16,7 @@
 .new-companies-search_count {
   display: flex;
   margin: auto;
+  margin-bottom: 20px;
   padding-left: 10%;
 }
 

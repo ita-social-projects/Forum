@@ -2,6 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MainCompanies from '../components/landing-page/companies/Companies';
 
+beforeEach(() => {
+  jest.mock('axios');
+  const axios = require('axios');
+});
+
 afterEach(() => {
   jest.resetAllMocks();
 });
@@ -87,8 +92,8 @@ const results = [
 
 describe('MainCompanies component unit tests', () => {
   test('renders new members results', () => {
-    jest.mock('axios');
-    const axios = require('axios');
+    // jest.mock('axios');
+    // const axios = require('axios');
 
     () => {
       axios.get.mockResolvedValue({

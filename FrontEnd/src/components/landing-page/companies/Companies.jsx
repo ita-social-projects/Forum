@@ -6,10 +6,6 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
 const MainCompanies = ({ isAuthorized }) => {
-  MainCompanies.propTypes = {
-    isAuthorized: PropTypes.bool,
-  };
-
   const baseUrl = process.env.REACT_APP_BASE_API_URL;
   const [searchResults, setSearchResults] = useState([]);
   const [newMembers, setNewMembers] = useState(true);
@@ -64,3 +60,7 @@ const MainCompanies = ({ isAuthorized }) => {
 };
 
 export default MainCompanies;
+
+MainCompanies.propTypes = {
+  isAuthorized: PropTypes.bool,
+};

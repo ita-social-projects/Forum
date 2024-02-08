@@ -52,7 +52,6 @@
 }
 
 .company-card__text-block {
-  /* width: 360; */
   height: 155px;
   display: flex;
   padding: 20px 16.02px;
@@ -78,7 +77,6 @@
   font-style: normal;
   font-weight: 700;
   line-height: 120%;
-  /* 19.2px */
   text-align: left;
 }
 
@@ -91,14 +89,13 @@
   font-style: normal;
   font-weight: 700;
   line-height: 120%;
-  /* 24px */
   text-transform: uppercase;
   text-align: left;
+  margin-bottom: 10px;
 }
 
 .company-card__name-text_link {
   text-decoration: none;
-  /* delete underline */
   color: var(--text-color);
 }
 
@@ -116,7 +113,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  /* 142.857% */
   letter-spacing: -0.14px;
   text-align: left;
 }
@@ -142,7 +138,6 @@
   font-style: normal;
   font-weight: 600;
   line-height: 16px;
-  /* 160% */
   text-transform: uppercase;
 }
 
