@@ -23,7 +23,7 @@ class UsersListView(ListAPIView):
     List of users.
     """
 
-    queryset = CustomUser.objects.filter(is_superuser=False).order_by("id")
+    queryset = CustomUser.objects.all().order_by("id")
     serializer_class = AdminUserSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     pagination_class = ListPagination
@@ -34,7 +34,7 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     Retrieve, update or delete a user.
     """
 
-    queryset = CustomUser.objects.filter(is_superuser=True).order_by("id")
+    queryset = CustomUser.objects.all().order_by("id")
     permission_classes = [IsAuthenticated, IsAdminUser]
     serializer_class = AdminUserSerializer
 

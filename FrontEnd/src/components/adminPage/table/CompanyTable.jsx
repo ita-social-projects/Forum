@@ -11,27 +11,38 @@ function ProfilesPage() {
     const [profiles, setProfiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
     const routeChange = (id) => {
-        let path = `company=${id}`;
+        let path = `../../customadmin/company/${id}`;
         navigate(path);
     };
     const token = localStorage.getItem('Token');
+    const [pageSize, setPageSize] = useState(3);
+    const handlePageSizeChange = (size) => {
+        setPageSize(size);
+        setCurrentPage(1);
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/`, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
+                const response = await fetch(
+                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/?page=${currentPage}&page_size=${pageSize}`,
+                    {
+                        headers: {
+                            'Authorization': `Token ${token}`
+                        }
+                    });
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
                 const data = await response.json();
                 setProfiles(data.results);
+                setTotalPages(data.total_pages);
                 setLoading(false);
             } catch (error) {
                 setError(error.message);
@@ -40,7 +51,11 @@ function ProfilesPage() {
         };
 
         fetchData();
-    }, [token]);
+    }, [currentPage, pageSize, token]);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -52,7 +67,9 @@ function ProfilesPage() {
 
     return (
         <div>
-            <PaginationButtons></PaginationButtons>
+            <PaginationButtons totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange}
+                pageSize={pageSize} onPageSizeChange={handlePageSizeChange}
+            />
             <table className={css['table-section']}>
                 <thead>
                     <tr className={css['table-header']}>
