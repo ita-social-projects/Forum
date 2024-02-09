@@ -220,10 +220,13 @@ const GeneralInfo = (props) => {
                     profileMutate((prevState) => {
                         return { ...prevState, [imageKey]: data[imageKey] };
                     });
+                    setProfile((prevState) => {
+                        return { ...prevState, [imageKey]: data[imageKey] };
+                    });
                     if (imageKey === 'banner_image') {
-                        setBannerImage(mainProfile.banner_image);
+                        setBannerImage(data.banner_image);
                     } else {
-                        setLogoImage(mainProfile.logo_image);
+                        setLogoImage(data.logo_image);
                     }
                     data[imageKey] === null
                         ? toast.success(imageKey === 'banner_image' ? 'Банер видалено з профілю' : 'Логотип видалено з профілю')
