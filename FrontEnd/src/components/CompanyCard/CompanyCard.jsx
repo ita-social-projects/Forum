@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import styles from './CompanyCard.module.css';
@@ -8,8 +8,12 @@ import { useUser } from '../../hooks';
 import PropTypes from 'prop-types';
 import { Tooltip, Badge } from 'antd';
 
-export default function CompanyCard({ profile, isAuthorized }) {
-  const [isSaved, setIsSaved] = useState(profile.is_saved);
+export default function CompanyCard({
+  profile,
+  isAuthorized,
+  changeCompanies,
+}) {
+  // const [isSaved, setIsSaved] = useState(profile.is_saved);
   const lengthOfRegion = 35;
   const lengthOfCategoryActivityArray = 3;
   const { mutate } = useSWRConfig();
@@ -49,14 +53,10 @@ export default function CompanyCard({ profile, isAuthorized }) {
     try {
       await trigger(
         { company_pk: profile.id },
-        { optimisticData: () => setIsSaved(!isSaved) }
+        { optimisticData: () => changeCompanies(profile.id, !profile.is_saved) }
       );
       mutate(
-        (key) =>
-          typeof key === 'string' &&
-          key.startsWith(
-            '/api/profiles/?new_members=-completeness,-created_at'
-          ),
+        (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
         {
           revalidate: true,
         }
@@ -82,7 +82,7 @@ export default function CompanyCard({ profile, isAuthorized }) {
   );
   const getStar = () => {
     return isAuthorized && !ownProfile
-      ? isSaved
+      ? profile.is_saved
         ? filledStar
         : outlinedStar
       : null;
@@ -205,4 +205,5 @@ export default function CompanyCard({ profile, isAuthorized }) {
 CompanyCard.propTypes = {
   data: PropTypes.object,
   isAuthorized: PropTypes.bool,
+  changeCompanies: PropTypes.func,
 };

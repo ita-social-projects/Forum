@@ -44,6 +44,16 @@ export function Search({ isAuthorized }) {
     fetcher
   );
 
+  const changeCompanies = (id, isSaved) => {
+    const newCompanies = [...searchResults];
+    for (let company of newCompanies) {
+      if (company.id == id) {
+        company.is_saved = isSaved;
+      }
+    }
+    setSearchResults(newCompanies);
+  };
+
   useEffect(() => {
     if (searchTerm) {
       setSearchPerformed(true);
@@ -90,6 +100,7 @@ export function Search({ isAuthorized }) {
                 searchPerformed={searchPerformed}
                 displayedResults={displayedResults}
                 isAuthorized={isAuthorized}
+                changeCompanies={changeCompanies}
               />
               <br />
             </>

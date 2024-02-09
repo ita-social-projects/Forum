@@ -32,11 +32,21 @@ const MainCompanies = ({ isAuthorized }) => {
     fetcher
   );
 
+  const changeCompanies = (id, isSaved) => {
+    const newCompanies = [...searchResults];
+    for (let company of newCompanies) {
+      if (company.id == id) {
+        company.is_saved = isSaved;
+      }
+    }
+    setSearchResults(newCompanies);
+  };
+
   useEffect(() => {
     if (newMembers) {
       setNewMembers(false);
     }
-  }, [newMembers, authToken, companylist]);
+  }, [newMembers, authToken, companylist, searchResults]);
   const companyDataList = searchResults;
 
   return (
@@ -50,7 +60,11 @@ const MainCompanies = ({ isAuthorized }) => {
         <div className={styles['row']}>
           {companyDataList.map((result, resultIndex) => (
             <div key={resultIndex} className={styles['col-md-4']}>
-              <CompanyCard profile={result} isAuthorized={isAuthorized} />
+              <CompanyCard
+                profile={result}
+                isAuthorized={isAuthorized}
+                changeCompanies={changeCompanies}
+              />
             </div>
           ))}
         </div>
