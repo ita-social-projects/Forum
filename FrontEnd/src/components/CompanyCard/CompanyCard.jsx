@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
-// import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import styles from './CompanyCard.module.css';
@@ -13,7 +12,6 @@ export default function CompanyCard({
   isAuthorized,
   changeCompanies,
 }) {
-  // const [isSaved, setIsSaved] = useState(profile.is_saved);
   const lengthOfRegion = 35;
   const lengthOfCategoryActivityArray = 3;
   const { mutate } = useSWRConfig();
