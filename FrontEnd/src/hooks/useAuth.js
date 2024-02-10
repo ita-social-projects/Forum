@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import axios from 'axios';
@@ -9,7 +8,7 @@ export function AuthProvider ({ children }) {
   const [isAuth, setIsAuth] = useState(!!JSON.parse(localStorage.getItem('isAuth')));
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const authToken = localStorage.getItem('Token');
+  const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
   const navigate = useNavigate();
 
   const { data, error, mutate } = useSWR(
@@ -47,6 +46,7 @@ export function AuthProvider ({ children }) {
 
   const login = (authToken) => {
     localStorage.setItem('Token', authToken);
+    setAuthToken(authToken);
     localStorage.setItem('isAuth', true);
     axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
     setIsAuth(true);
@@ -55,6 +55,7 @@ export function AuthProvider ({ children }) {
   const logout = () => {
     localStorage.removeItem('Token');
     localStorage.removeItem('isAuth');
+    setAuthToken('');
     delete axios.defaults.headers.common['Authorization'];
     setIsAuth(false);
     setUser(null);
@@ -98,7 +99,7 @@ export function AuthProvider ({ children }) {
     });
   });
 
-  const value =  { login, logout, isAuth, isLoading, user, error, mutate };
+  const value = { login, logout, isAuth, authToken, isLoading, user, error, mutate };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
