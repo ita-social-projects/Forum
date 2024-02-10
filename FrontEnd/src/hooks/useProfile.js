@@ -3,19 +3,18 @@ import useSWR from 'swr';
 import { useAuth } from './useAuth';
 
 export default function useProfile() {
-    const token = localStorage.getItem('Token');
-    const { user, logout } = useAuth();
+    const { user, logout, authToken } = useAuth();
     const [profile, setProfile] = useState(null);
 
     const { data, error, mutate } = useSWR(
-      (token && user)
-        ? [`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, token]
+      (authToken && user)
+        ? [`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, authToken]
         : null,
-      ([url, token]) =>
+      ([url, authToken]) =>
         fetch(url, {
           method: 'GET',
           headers: {
-            Authorization: `Token ${token}`,
+            Authorization: `Token ${authToken}`,
           },
         })
           .then((res) => {
