@@ -26,7 +26,8 @@ function UserTable() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`,
+                const response = await fetch(
+                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`,
                     {
                         headers: {
                             'Authorization': `Token ${token}`

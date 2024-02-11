@@ -37,7 +37,7 @@ class AdminUserSerializer(UserSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ("email", "name", "surname")
+        fields = ("email", "name", "surname",)
 
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):
