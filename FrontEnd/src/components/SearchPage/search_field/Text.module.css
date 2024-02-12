@@ -1,4 +1,4 @@
-@import './companies/variables.css';
+@import '../../CompanyCard/variables.css';
 
 .new-companies-block {
   display: flex;

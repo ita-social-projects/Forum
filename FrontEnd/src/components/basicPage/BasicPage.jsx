@@ -26,14 +26,11 @@ import { RestorePasswordFailedPage } from '../RestorePassword/pages/RestorePassw
 import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
-import { useUser } from '../../hooks';
 import { Search } from '../SearchPage/Search';
 import './customToastStyles.css';
 
 function BasicPage() {
   const auth = useAuth();
-  const user = useUser();
-  const userData = user.user;
 
   return (
     <ConfigProvider
@@ -131,10 +128,7 @@ function BasicPage() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
-        <Route
-          path="/search"
-          element={<Search isAuthorized={auth} userData={userData} />}
-        />
+        <Route path="/search" element={<Search isAuthorized={auth.isAuth} />} />
       </Routes>
       <Footer />
       <ScrollToTopButton />
