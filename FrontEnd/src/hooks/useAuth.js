@@ -10,39 +10,26 @@ export function AuthProvider ({ children }) {
   const [isLoading, setLoading] = useState(true);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
   const navigate = useNavigate();
-
   const { data, error, mutate } = useSWR(
     authToken
       ? [`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, authToken]
       : null,
     ([url, authToken]) =>
-      fetch(url, {
-        method: 'GET',
+      axios.get(url, {
         headers: {
           Authorization: `Token ${authToken}`,
         },
       })
-      .then((res) => {
-        if (!res.ok && res.status === 401) {
-          logout();
-          const error = new Error('Unauthorized user.');
-          error.status = res.status;
-          throw error;
-        }
-        if (!res.ok) {
-          const error = new Error(
-            'An error occurred while fetching the data.'
-          );
-          error.status = res.status;
-          throw error;
-        }
-        return res.json();
-        })
+      .then(res => res.data)
       .catch((error) => {
-        console.error(error);
-      }),
+        if (error.response && error.response.status === 401) {
+          logout();
+        }
+        console.error('An error occurred while fetching the data.', error);
+      },
     { revalidateOnFocus: false }
-  );
+  )
+);
 
   const login = (authToken) => {
     localStorage.setItem('Token', authToken);

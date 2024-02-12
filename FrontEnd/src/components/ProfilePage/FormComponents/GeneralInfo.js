@@ -51,7 +51,7 @@ const TEXT_AREA_MAX_LENGTH = 2000;
 const BANNER_IMAGE_SIZE = 5 * 1024 * 1024;
 const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
 
-const fetcher = (...args) => fetch(...args).then(res => res.json());
+const fetcher = (...args) => axios.get(...args).then(res => res.data);
 
 const GeneralInfo = (props) => {
     const { user } = useAuth();
@@ -225,8 +225,10 @@ const GeneralInfo = (props) => {
                     ? toast.success(imageKey === 'banner_image' ? 'Банер видалено з профілю' : 'Логотип видалено з профілю')
                     : toast.success(imageKey === 'banner_image' ? 'Банер успішно додано у профіль' : 'Логотип успішно додано у профіль');
             } catch (error) {
-                console.error('Error uploading image:', error.response.data);
-                error.response.status !== 401 && toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+                console.error('Error uploading image:', error.response ? error.response.data : error.message);
+                if (!error.response || error.response.status !== 401) {
+                    toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+                }
             }
         }
     };
@@ -280,7 +282,6 @@ const GeneralInfo = (props) => {
                     activities: profile.activities.map(obj => obj.id),
                     categories: profile.categories.map(obj => obj.id),
                 });
-
                 profileMutate(response.data);
                 toast.success('Зміни успішно збережено');
                 setFormIsDirty(false);
@@ -289,19 +290,19 @@ const GeneralInfo = (props) => {
                 await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
 
             } catch (error) {
-                if (error.response.status === 400 ) {
+                if (error.response && error.response.status === 400) {
                     const errorData = error.response.data;
                     if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
                         toast.error('Компанія з таким ЄДРПОУ вже існує');
-                    } else {
-                        toast.error('Не вдалося зберегти зміни, сталася помилка');
-                    }
                 }
-                console.error('Помилка:', error.response.data);
-                error.response.status !== 401 && toast.error('Не вдалося зберегти зміни, сталася помилка');
+                console.error('Помилка:', error.response ? error.response.data : error.message);
+                if (!error.response || error.response.status !== 401) {
+                    toast.error('Не вдалося зберегти зміни, сталася помилка');
+                }
             }
         }
-    };
+    }
+};
 
     return (
         <div className={css['form__container']}>

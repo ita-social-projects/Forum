@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
@@ -87,51 +88,27 @@ const UserInfo = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkRequiredFields()) {
-            const token = localStorage.getItem('Token');
-
-            try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ surname: updateUser.surname, name: updateUser.name }),
-                });
-
-                if (response.status === 200) {
-                    const updatedUserData = await response.json();
-                    userMutate(updatedUserData);
-                    setFormIsDirty(false);
-                    toast.success('Зміни успішно збережено');
-                } else {
-                    console.error('Помилка');
+            axios.all([
+                axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
+                    surname: updateUser.surname,
+                    name: updateUser.name
+                    }),
+                axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                person_position: updateProfile.person_position ,
+                })
+            ])
+            .then(axios.spread((updatedUserData , updatedProfileData ) => {
+                userMutate(updatedUserData .data);
+                profileMutate(updatedProfileData .data);
+                setFormIsDirty(false);
+                toast.success('Зміни успішно збережено');
+            }))
+            .catch((error) => {
+                console.error('Помилка:', error.response ? error.response.data : error.message);
+                if (!error.response || error.response.status !== 401) {
+                    toast.error('Не вдалося зберегти зміни, сталася помилка');
                 }
-            } catch (error) {
-                console.error('Помилка:', error);
-            }
-
-            try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ person_position: updateProfile.person_position }),
-                });
-
-                if (response.status === 200) {
-                    const updatedProfileData = await response.json();
-                    profileMutate(updatedProfileData);
-                    setFormIsDirty(false);
-                    toast.success('Зміни успішно збережено');
-                } else {
-                    console.error('Помилка');
-                }
-            } catch (error) {
-                console.error('Помилка:', error);
-            }
+            });
         }
     };
 

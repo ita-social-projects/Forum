@@ -1,4 +1,4 @@
-import css from './FormComponents.module.css';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
@@ -7,6 +7,7 @@ import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import { useAuth, useProfile } from '../../../hooks/';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
+import css from './FormComponents.module.css';
 
 const LABELS = {
     'founded': 'Рік заснування',
@@ -60,29 +61,19 @@ const AdditionalInfo = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (validateForm()) {
-            const token = localStorage.getItem('Token');
             try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        founded: profile.founded,
-                    }),
+                const response = await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                    founded: profile.founded,
                 });
-
-                if (response.status === 200) {
-                    const updatedProfileData = await response.json();
-                    profileMutate(updatedProfileData);
-                    setFormIsDirty(false);
-                    toast.success('Зміни успішно збережено');
-                } else {
-                    console.error('Помилка');
-                }
+                const updatedProfileData = response.data;
+                profileMutate(updatedProfileData);
+                setFormIsDirty(false);
+                toast.success('Зміни успішно збережено');
             } catch (error) {
-                console.error('Помилка:', error);
+                console.error('Помилка:', error.response ? error.response.data : error.message);
+                if (!error.response || error.response.status !== 401) {
+                    toast.error('Не вдалося зберегти зміни, сталася помилка');
+                }
             }
         }
     };

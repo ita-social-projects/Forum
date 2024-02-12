@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import axios from 'axios';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
@@ -13,28 +14,12 @@ import classes from './ProfileDetailPage.module.css';
 
 function ProfileDetailPage({ isAuthorized }) {
   const [activeLinks, setActiveLinks] = useState([]);
-  const authToken = localStorage.getItem('Token');
   const { id } = useParams();
   const urlProfile = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${id}`;
 
   async function fetcher(url) {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    if (authToken) {
-      headers.Authorization = `Token ${authToken}`;
-    }
-    return fetch(url, {
-      method: 'GET',
-      headers: headers,
-    }).then((res) => {
-      if (!res.ok && res.status === 401) {
-        const error = new Error('Unauthorized user.');
-        error.status = res.status;
-        throw error;
-      }
-      return res.json();
-    });
+    return axios.get(url)
+    .then(res => res.data);
   }
 
   const {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import axios from 'axios';
 import { useAuth } from './useAuth';
 
 export default function useProfile() {
@@ -11,33 +12,21 @@ export default function useProfile() {
         ? [`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, authToken]
         : null,
       ([url, authToken]) =>
-        fetch(url, {
-          method: 'GET',
-          headers: {
-            Authorization: `Token ${authToken}`,
-          },
-        })
-          .then((res) => {
-            if (!res.ok && res.status === 401) {
-              logout();
-              const error = new Error('Unauthorized user.');
-              error.status = res.status;
-              throw error;
-            }
-            if (!res.ok) {
-              const error = new Error(
-                'An error occurred while fetching the data.'
-              );
-              error.status = res.status;
-              throw error;
-            }
-            return res.json();
-          })
-          .catch((error) => {
-            console.error(error);
-          }),
-      { revalidateOnFocus: false }
-    );
+      axios.get(url, {
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      })
+      .then(res => res.data)
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          logout();
+        }
+        console.error('An error occurred while fetching the data.', error);
+      },
+    { revalidateOnFocus: false }
+    )
+  );
 
     useEffect(() => {
         if (data) {
