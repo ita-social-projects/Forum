@@ -75,11 +75,31 @@ function UserDetail() {
         return <p>Error: {error}</p>;
     }
 
+    const handleDeleteUser = async () => {
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${users.id}/`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                }
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        } catch (error) {
+            console.error('Failed to delete user:', error);
+        }
+    };
+
     return (
         <div className={css['user-detail-page']}>
             <DeleteModal
                 active={deleteModalActive}
                 setActive={setDeleteModalActive}
+                onDelete={handleDeleteUser}
             />
             <div className={css['user-details-section']}>
                 {updateSuccess && <p>Користувач успішно оновлений!</p>}
