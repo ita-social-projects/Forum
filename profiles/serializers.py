@@ -34,6 +34,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
             "region_display",
             "common_info",
             "address",
+            "founded",
             "categories",
             "activities",
             "banner_image",

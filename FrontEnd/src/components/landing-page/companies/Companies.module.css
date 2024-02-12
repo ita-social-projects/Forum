@@ -1,0 +1,48 @@
+.new-companies-main {
+  width: 1512px;
+  min-height: 1106px;
+  display: flex;
+  padding: 80px 104px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  background: #f1fff7;
+}
+.new-companies {
+  display: flex;
+  align-items: center;
+  gap: 800px;
+}
+.new-companies-main__header {
+  width: 444px;
+  height: 24px;
+  gap: 800px;
+  color: #292e32;
+  text-transform: uppercase;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%;
+  margin-left: 30px;
+}
+.new-companies-block {
+  display: flex;
+  width: 1304px;
+  padding: 16px 8px;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 40px;
+  row-gap: 18px;
+}
+
+.col-md-4 {
+  flex-basis: calc(33, 3% - 80px); /* 3 companies per row */
+  margin: 10px; /* spacess beetwen ecompanies */
+}

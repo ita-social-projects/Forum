@@ -2,6 +2,7 @@
 
 .company-card {
   width: 360px;
+  min-height: 415px;
   display: block;
   align-items: center;
   box-shadow: 0 4px 8px 0 var(--companies-card-box-shadow);
@@ -35,6 +36,11 @@
   opacity: 0.7;
 }
 
+.company-card__tooltip {
+  display: flex;
+  flex-direction: column;
+}
+
 .company-card__image {
   width: 360px;
   height: 220px;
@@ -46,6 +52,7 @@
 }
 
 .company-card__text-block {
+  height: 155px;
   display: flex;
   padding: 20px 16.02px;
   flex-direction: column;
@@ -70,7 +77,6 @@
   font-style: normal;
   font-weight: 700;
   line-height: 120%;
-  /* 19.2px */
   text-align: left;
 }
 
@@ -83,14 +89,12 @@
   font-style: normal;
   font-weight: 700;
   line-height: 120%;
-  /* 24px */
   text-transform: uppercase;
   text-align: left;
 }
 
 .company-card__name-text_link {
   text-decoration: none;
-  /* delete underline */
   color: var(--text-color);
 }
 
@@ -98,8 +102,9 @@
   color: var(--text-color);
 }
 
-.company-card__address-text {
+.company-card__region-text {
   width: 328px;
+  height: 20px;
   color: var(--companies-card-address);
   font-feature-settings: 'calt' off;
   font-family: Inter, sans-serif;
@@ -107,34 +112,20 @@
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  /* 142.857% */
   letter-spacing: -0.14px;
   text-align: left;
 }
 
-.company-card__badges-block {
-  width: 100%;
+.company-card__footer_content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
+  width: 328px;
 }
 
-.company-card__badges {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: var(--main_light-color);
-}
-
-.company-card__badge {
-  display: flex;
-  padding: 2px 8px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-  background: var(--pagination-style-color);
+.company-card__badges_block {
+  height: 24px;
+  display: inline-block;
+  overflow: hidden;
 }
 
 .company-card__badge-text {
@@ -146,7 +137,6 @@
   font-style: normal;
   font-weight: 600;
   line-height: 16px;
-  /* 160% */
   text-transform: uppercase;
 }
 
