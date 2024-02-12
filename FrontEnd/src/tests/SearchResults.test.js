@@ -3,6 +3,19 @@ import { MemoryRouter } from 'react-router-dom';
 
 import SearchResults from '../components/SearchPage/search_field/SearchResults';
 
+const mockedUser = {
+  email: 'test@test.com',
+  id: 1,
+  name: 'Test',
+  profile_id: 1,
+  surname: 'Test'
+};
+jest.mock('../hooks/useAuth', () => ({
+    useAuth: () => {
+      return mockedUser;
+  },
+}));
+
 afterEach(cleanup);
 
 describe('SearchResults component unit tests', () => {
