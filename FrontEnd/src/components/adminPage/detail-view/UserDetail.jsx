@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import css from './UserDetail.module.css';
-import Checkbox from '../../checkbox/Checkbox';
 import DeleteModal from './DeleteModal';
 
 function UserDetail() {
@@ -83,7 +82,7 @@ function UserDetail() {
                 setActive={setDeleteModalActive}
             />
             <div className={css['user-details-section']}>
-            {updateSuccess && <p>Користувач успішно оновлений!</p>}
+                {updateSuccess && <p>Користувач успішно оновлений!</p>}
                 <ul>
                     <li>Ім&apos;я: {users.name}</li>
                     <li>Прізвище: {users.surname}</li>
@@ -107,14 +106,14 @@ function UserDetail() {
                         type="text"
                         className={css['form-input']}
                     />
+                    <label className={css['form-info__text']}>Активний користувач</label>
+                    <input
+                        type="checkbox"
+                        checked={users.is_active}
+                        onChange={(e) => setUsers({ ...users, is_active: e.target.checked })}
+                        className={css['form-input']}
+                    />
                 </div>
-                <Checkbox
-                    id="is_active"
-                    checked={users.is_active}
-                    title="Активний користувач"
-                    onChange={(e) => setUsers({ ...users, is_active: e.target.checked })}
-                />
-
                 <button className={css['save-button']} onClick={handleSaveChanges}>Зберегти зміни</button>
             </div>
             <div className={css['delete-section']}>
