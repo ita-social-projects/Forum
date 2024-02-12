@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
@@ -206,37 +207,26 @@ const GeneralInfo = (props) => {
         if (image instanceof File || image === '') {
             const formData = new FormData();
             formData.append(imageKey, image);
-            const token = localStorage.getItem('Token');
             try{
-                const response = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                    },
-                    body: formData,
+                const response = await axios.put(url, formData);
+                const data = response.data;
+                profileMutate((prevState) => {
+                    return { ...prevState, [imageKey]: data[imageKey] };
                 });
-                if (response.status === 200) {
-                    const data = await response.json();
-                    profileMutate((prevState) => {
-                        return { ...prevState, [imageKey]: data[imageKey] };
-                    });
-                    setProfile((prevState) => {
-                        return { ...prevState, [imageKey]: data[imageKey] };
-                    });
-                    if (imageKey === 'banner_image') {
-                        setBannerImage(data.banner_image);
-                    } else {
-                        setLogoImage(data.logo_image);
-                    }
-                    data[imageKey] === null
-                        ? toast.success(imageKey === 'banner_image' ? 'Банер видалено з профілю' : 'Логотип видалено з профілю')
-                        : toast.success(imageKey === 'banner_image' ? 'Банер успішно додано у профіль' : 'Логотип успішно додано у профіль');
-                } else if (response.status === 400) {
-                    toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+                setProfile((prevState) => {
+                    return { ...prevState, [imageKey]: data[imageKey] };
+                });
+                if (imageKey === 'banner_image') {
+                    setBannerImage(data.banner_image);
+                } else {
+                    setLogoImage(data.logo_image);
                 }
+                data[imageKey] === null
+                    ? toast.success(imageKey === 'banner_image' ? 'Банер видалено з профілю' : 'Логотип видалено з профілю')
+                    : toast.success(imageKey === 'banner_image' ? 'Банер успішно додано у профіль' : 'Логотип успішно додано у профіль');
             } catch (error) {
-                console.error('Error uploading image:', error);
-                toast.error('Не вдалося завантажити банер/лого, сталася помилка');
+                console.error('Error uploading image:', error.response.data);
+                error.response.status !== 401 && toast.error('Не вдалося завантажити банер/лого, сталася помилка');
             }
         }
     };
@@ -278,47 +268,37 @@ const GeneralInfo = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkRequiredFields()) {
-            const token = localStorage.getItem('Token');
             try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: profile.name,
-                        official_name: profile.official_name,
-                        edrpou: profile.edrpou,
-                        region: profile.region,
-                        common_info: profile.common_info,
-                        is_startup: profile.is_startup,
-                        is_registered: profile.is_registered,
-                        activities: profile.activities.map(obj => obj.id),
-                        categories: profile.categories.map(obj => obj.id),
-                    }),
+                const response = await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                    name: profile.name,
+                    official_name: profile.official_name,
+                    edrpou: profile.edrpou,
+                    region: profile.region,
+                    common_info: profile.common_info,
+                    is_startup: profile.is_startup,
+                    is_registered: profile.is_registered,
+                    activities: profile.activities.map(obj => obj.id),
+                    categories: profile.categories.map(obj => obj.id),
                 });
 
-                if (response.status === 200) {
-                    const updatedProfileData = await response.json();
-                    profileMutate(updatedProfileData);
-                    toast.success('Зміни успішно збережено');
-                    setFormIsDirty(false);
-                } else if (response.status === 400 ) {
-                    const errorData = await response.json();
+                profileMutate(response.data);
+                toast.success('Зміни успішно збережено');
+                setFormIsDirty(false);
+
+                await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, 'banner_image', bannerImage);
+                await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
+
+            } catch (error) {
+                if (error.response.status === 400 ) {
+                    const errorData = error.response.data;
                     if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
                         toast.error('Компанія з таким ЄДРПОУ вже існує');
                     } else {
                         toast.error('Не вдалося зберегти зміни, сталася помилка');
                     }
                 }
-
-                await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`, 'banner_image', bannerImage);
-                await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
-
-            } catch (error) {
-                console.error('Помилка:', error);
-                toast.error('Не вдалося зберегти зміни, сталася помилка');
+                console.error('Помилка:', error.response.data);
+                error.response.status !== 401 && toast.error('Не вдалося зберегти зміни, сталася помилка');
             }
         }
     };
@@ -464,7 +444,7 @@ GeneralInfo.propTypes = {
     profile: PropTypes.shape({
         name: PropTypes.string.isRequired,
         official_name: PropTypes.string,
-        edrpou: PropTypes.number,
+        edrpou: PropTypes.string,
         region: PropTypes.string,
         common_info: PropTypes.string,
         is_registered: PropTypes.bool,

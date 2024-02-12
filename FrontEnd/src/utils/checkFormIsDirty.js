@@ -25,15 +25,15 @@ const checkFormIsDirty = (fields, userData, profileData) => {
 
       if (type === 'array') {
         return !compareArrays(defaultValue, currentValue);
-      } else if (key === 'edrpou') {
+      }
+      if (['edrpou', 'founded'].includes(key)) {
         if (((defaultValue && currentValue !== null) && (defaultValue.toString() !== currentValue.toString())) ||
-            (defaultValue === null && currentValue !== null)) {
+        (defaultValue === null && currentValue !== null)) {
           return true;
         }
         return false;
-      } else {
-        return isValueDirty(defaultValue, currentValue);
       }
+      return isValueDirty(defaultValue, currentValue);
     });
   };
 
