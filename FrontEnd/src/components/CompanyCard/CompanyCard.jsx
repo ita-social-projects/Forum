@@ -6,6 +6,7 @@ import styles from './CompanyCard.module.css';
 import { useUser } from '../../hooks';
 import PropTypes from 'prop-types';
 import { Tooltip, Badge } from 'antd';
+import axios from 'axios';
 
 export default function CompanyCard({
   profile,
@@ -17,6 +18,17 @@ export default function CompanyCard({
   const { mutate } = useSWRConfig();
 
   const { user } = useUser();
+  const authToken = localStorage.getItem('Token');
+  const headers = authToken
+    ? {
+        withCredentials: true,
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      }
+    : {
+        'Content-Type': 'application/json',
+      };
 
   const ownProfile = user && user.id === profile.person;
   const activitiesString =
@@ -31,15 +43,7 @@ export default function CompanyCard({
       .join(' ');
 
   async function sendRequest(url, { arg: data }) {
-    const authToken = localStorage.getItem('Token');
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${authToken}`,
-      },
-      body: JSON.stringify(data),
-    });
+    return axios.post(url, data, headers);
   }
 
   const { trigger } = useSWRMutation(
@@ -201,7 +205,7 @@ export default function CompanyCard({
 }
 
 CompanyCard.propTypes = {
-  data: PropTypes.object,
+  profile: PropTypes.object,
   isAuthorized: PropTypes.bool,
   changeCompanies: PropTypes.func,
 };
