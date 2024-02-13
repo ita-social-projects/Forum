@@ -10,7 +10,7 @@ import Footer from '../HeaderFooter/footer/Footer';
 import Header from '../HeaderFooter/header/Header';
 import Logout from '../HeaderFooter/header/navbar/Logout';
 import MainPage from '../landing-page/MainPage';
-import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
+import PrivacyPolicy from '../PrivacyPolicyPage/PrivacyPolicyPage';
 import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../profileList/ProfileListPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
@@ -29,6 +29,7 @@ import { useAuth } from '../../hooks';
 import { useUser } from '../../hooks';
 import { Search } from '../SearchPage/Search';
 import './customToastStyles.css';
+import Contact from '../Contact/Contact';
 
 function BasicPage() {
   const auth = useAuth();
@@ -131,6 +132,7 @@ function BasicPage() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
           path="/search"
           element={<Search isAuthorized={auth} userData={userData} />}
