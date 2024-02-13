@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import css from './UserDetail.module.css';
 import DeleteModal from './DeleteModal';
 

@@ -43,10 +43,9 @@ class AdminProfileList(ListCreateAPIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
     pagination_class = ListPagination
     serializer_class = AdminCompanyListSerializer
-    queryset = Profile.objects.filter(is_deleted=False)
-
+    queryset = Profile.objects.all()
 
 class AdminProfileDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class = AdminCompanyDetailSerializer
-    queryset = Profile.objects.filter(is_deleted=False)
+    queryset = Profile.objects.all()
