@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import css from './Table.module.css';
+import css from './ProfilesTable.module.css';
 import { useNavigate } from 'react-router-dom';
 import PaginationButtons from './PaginationButtons';
 
@@ -7,7 +7,7 @@ const COLUMN_NAMES = [
     'ID', 'Person', 'Position', 'Company', 'Region', 'Phone', 'EDRPOU', 'Adress', 'IsDeleted', 'IsApproved'
 ];
 
-function ProfilesPage() {
+function ProfilesTable() {
     const [profiles, setProfiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,11 +15,11 @@ function ProfilesPage() {
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
     const routeChange = (id) => {
-        let path = `../../customadmin/company/${id}`;
+        let path = `../../customadmin/profile/${id}`;
         navigate(path);
     };
     const token = localStorage.getItem('Token');
-    const [pageSize, setPageSize] = useState(3);
+    const [pageSize, setPageSize] = useState(10);
     const handlePageSizeChange = (size) => {
         setPageSize(size);
         setCurrentPage(1);
@@ -101,4 +101,4 @@ function ProfilesPage() {
     );
 }
 
-export default ProfilesPage;
+export default ProfilesTable;

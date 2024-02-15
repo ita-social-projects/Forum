@@ -13,7 +13,7 @@ const MENU = [
     {
         id: 'am2',
         title: 'Компанії',
-        link: '/customadmin/companies/'
+        link: '/customadmin/profiles/'
     },
 ];
 

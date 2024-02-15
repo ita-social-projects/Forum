@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import DeleteModal from './DeleteModal';
-import css from './CompanyDetail.module.css';
+import css from './ProfileDetail.module.css';
 
 
-function CompanyDetail() {
+function ProfileDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
     const [error, setError] = useState(null);
-    const [company, setCompany] = useState([]);
+    const [profile, setProfile] = useState([]);
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('Token');
     const [updateSuccess, setUpdateSuccess] = useState(false);
-    const companyId = usePathCompanyId();
-
+    const profileId = usePathCompanyId();
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`;
     const companyInfo = [
         { label: 'Ім\'я', key: 'name' },
         { label: 'person_position', key: 'person_position' },
@@ -27,7 +27,7 @@ function CompanyDetail() {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${companyId}/`,
+                   url,
                     {
                         headers: {
                             'Authorization': `Token ${token}`
@@ -38,7 +38,7 @@ function CompanyDetail() {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                setCompany(data);
+                setProfile(data);
                 setLoading(false);
             } catch (error) {
                 setError(error.message);
@@ -47,12 +47,12 @@ function CompanyDetail() {
         };
         fetchData();
 
-    }, [companyId, token ]);
+    }, [profileId, token ]);
 
     const handleSaveChanges = async () => {
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${companyId}/`,
+                url,
                 {
                     method: 'PUT',
                     headers: {
@@ -60,8 +60,8 @@ function CompanyDetail() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        name: company.name,
-                        is_deleted: company.is_deleted,
+                        name: profile.name,
+                        is_deleted: profile.is_deleted,
                     })
                 }
             );
@@ -85,7 +85,7 @@ function CompanyDetail() {
     const handleDeleteUser = async () => {
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${companyId}/`,
+                `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`,
                 {
                     method: 'DELETE',
                     headers: {
@@ -113,24 +113,24 @@ function CompanyDetail() {
                 <ul>
                     {companyInfo.map((info, index) => (
                         <li key={index}>
-                            {info.label}: {company[info.key]}
+                            {info.label}: {profile[info.key]}
                         </li>
                     ))}
-                    <li>Видалений: {company.is_deleted ? 'Так' : 'Ні'}</li>
+                    <li>Видалений: {profile.is_deleted ? 'Так' : 'Ні'}</li>
                 </ul>
                 <div className={css['form-section']}>
                     <label className={css['form-info__text']}>Назва компанії</label>
                     <input
-                        value={company.name}
-                        onChange={(e) => setCompany({ ...company, name: e.target.value })}
+                        value={profile.name}
+                        onChange={(e) => setProfile({ ...profile, name: e.target.value })}
                         type="text"
                         className={css['form-input']}
                     />
                     <label className={css['form-info__text_checkbox']}>Видалений</label>
                     <input
                         type="checkbox"
-                        checked={company.is_deleted}
-                        onChange={(e) => setCompany({ ...company, is_deleted: e.target.checked })}
+                        checked={profile.is_deleted}
+                        onChange={(e) => setProfile({ ...profile, is_deleted: e.target.checked })}
                         className={css['form-input_checkbox']}
                     />
                 </div>
@@ -148,4 +148,4 @@ function usePathCompanyId() {
     const pathname = window.location.pathname;
     return pathname.substring(pathname.lastIndexOf('/') + 1);
 }
-export default CompanyDetail;
+export default ProfileDetail;

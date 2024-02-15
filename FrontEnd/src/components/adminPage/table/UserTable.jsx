@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import css from './Table.module.css';
+import css from './UserTable.module.css';
 import { useNavigate } from 'react-router-dom';
 import PaginationButtons from './PaginationButtons';
 
@@ -17,7 +17,7 @@ function UserTable() {
         let path = `../../customadmin/users/${id}`;
         navigate(path);
     };
-    const [pageSize, setPageSize] = useState(3);
+    const [pageSize, setPageSize] = useState(10);
     const handlePageSizeChange = (size) => {
         setPageSize(size);
         setCurrentPage(1);
