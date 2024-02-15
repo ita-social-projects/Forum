@@ -1,0 +1,7 @@
+:root {
+    --font__admin-panel: "Inter", sans-serif;
+    --font-color__admin-panel: #292E32;
+    --background__admin-panel: #F1FFF7;
+    --background-butons__admin-panel: #0B6C61;
+    --block-size__admin-panel: 1500px;
+}

@@ -13,7 +13,7 @@
 
     /* Text/14-Semi bold */
     text-decoration: none;
-    font-family: Inter;
+    font-family: var(--font__admin-panel);
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -34,7 +34,7 @@
 
     /* Text/14-Regular */
     text-decoration: none;
-    font-family: Inter;
+    font-family: var(--font__admin-panel);
     font-size: 20px;
     font-style: normal;
     font-weight: 400;

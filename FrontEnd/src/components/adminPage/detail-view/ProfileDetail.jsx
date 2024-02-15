@@ -47,7 +47,7 @@ function ProfileDetail() {
         };
         fetchData();
 
-    }, [profileId, token ]);
+    }, [url, profileId, token ]);
 
     const handleSaveChanges = async () => {
         try {
@@ -70,7 +70,7 @@ function ProfileDetail() {
             }
             setUpdateSuccess(true);
         } catch (error) {
-            console.error('Failed to update user:', error);
+            console.error('Failed to update profile:', error);
         }
     };
 
@@ -97,20 +97,20 @@ function ProfileDetail() {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
         } catch (error) {
-            console.error('Failed to delete user:', error);
+            console.error('Failed to delete profile:', error);
         }
     };
 
     return (
-        <div className={css['user-detail-page']}>
+        <div className={css['profile-detail-page']}>
             <DeleteModal
                 active={deleteModalActive}
                 setActive={setDeleteModalActive}
                 onDelete={handleDeleteUser}
             />
-            <div className={css['user-details-section']}>
+            <div className={css['profile-details-section']}>
                 {updateSuccess && <p>Профіль успішно оновлений!</p>}
-                <ul>
+                <ul className={css['profile-details-section_info']}>
                     {companyInfo.map((info, index) => (
                         <li key={index}>
                             {info.label}: {profile[info.key]}

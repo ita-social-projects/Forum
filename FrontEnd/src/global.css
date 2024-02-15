@@ -3,7 +3,7 @@
   font-weight: 400;
   font-style: normal;
   src: local('Inter Regular'), local('Inter-Regular'),
-       url('/public/fonts/Inter-Regular.ttf') format('truetype');
+    url('/public/fonts/Inter-Regular.ttf') format('truetype');
 }
 
 * {
@@ -34,18 +34,11 @@
   /* button color*/
   --main-button-color: #1F9A7C;
   --light-button-color: #FFFFFF;
-  
+
   scroll-behavior: smooth;
   font-family: "Inter", sans-serif;
-
-  /*admin panel*/
-  --font__admin-panel:"Inter", sans-serif;
-  --font-color__admin-panel: #292E32;
-  --background__admin-panel:  #F1FFF7;
-  --background-butons__admin-panel: #0B6C61;
 }
 
 a {
   text-decoration: none;
 }
-

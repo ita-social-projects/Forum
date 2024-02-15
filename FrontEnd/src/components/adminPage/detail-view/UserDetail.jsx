@@ -103,7 +103,7 @@ function UserDetail() {
             />
             <div className={css['user-details-section']}>
                 {updateSuccess && <p>Користувач успішно оновлений!</p>}
-                <ul>
+                <ul className={css['form-info__user_text']}>
                     <li>Ім&apos;я: {users.name}</li>
                     <li>Прізвище: {users.surname}</li>
                     <li>Email: {users.email}</li>

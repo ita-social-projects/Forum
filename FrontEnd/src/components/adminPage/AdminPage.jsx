@@ -1,3 +1,4 @@
+import './AdminGlobal.css';
 import Header from './header/Header';
 import Menu from './menu/Menu';
 import UserDetail from './detail-view/UserDetail';

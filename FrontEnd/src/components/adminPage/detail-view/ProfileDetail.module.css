@@ -1,15 +1,20 @@
-.user-detail-page {
+.profile-detail-page {
     display: flex;
     gap: 50px;
     margin-bottom: 150px;
 }
 
-.user-details-section {
+.profile-details-section {
     padding-top: 10px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 
+}
+
+.profile-details-section_info {
+    font-family: var(--font__admin-panel);    
+    font-size: 16px;
 }
 
 .data-section {
@@ -29,8 +34,7 @@
 .form-info__text {
     color: var(--font-color__admin-panel);
     font-feature-settings: 'calt' off;
-
-    font-family: Inter;
+    font-family: var(--font__admin-panel);
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -57,6 +61,10 @@
     font-family: var(--font-admin-panel);
 }
 
+.form-input_checkbox{
+    font-family: var(--font__admin-panel);
+    font-size: 17px;
+}
 .form-input:focus {
     outline: none;
 }

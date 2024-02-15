@@ -66,7 +66,7 @@ function ProfilesTable() {
     }
 
     return (
-        <div>
+        <div  className={css['table-profiles']}>
             <PaginationButtons totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange}
                 pageSize={pageSize} onPageSizeChange={handlePageSizeChange}
             />

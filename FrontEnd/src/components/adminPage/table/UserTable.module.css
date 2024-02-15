@@ -4,18 +4,20 @@
     min-width: 1050px;
     width: 100%;
     overflow: auto;
+
 }
 
 .table {
     border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
-    text-align: center; /* Вирівнюємо текст по центру в таблиці */
+    text-align: center; 
 }
 
 .table-header {
     text-align: left;
-    background: rgb(214, 243, 234);
+    background: var(--background__admin-panel);
+    font-family: var(--font__admin-panel);
     backdrop-filter: blur(4px);
 }
 
@@ -31,6 +33,7 @@
 .table-element {
     transition: transform 0.2s ease;
     display: table-row;
+    font-family: var(--font__admin-panel);
 }
 
 .table-element:hover {
