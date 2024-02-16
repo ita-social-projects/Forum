@@ -1,7 +1,7 @@
 .privacy_policy {
     display: flex;
     margin: 80px 100px 80px 100px;
-    max-width: 100%;
+    width: 1512px;
     max-height: auto;
     background-color: var(--light-text-color);
     scroll-behavior: smooth;
@@ -23,7 +23,7 @@
     margin-right: 100px;
     max-width: 234px;
 
-    max-height: 1480px;
+    max-height: 1580px;
 }
 
 .link {
@@ -54,42 +54,59 @@
 
 .privacy_policy__img1{
     width: auto;
+    height: 266px;
     margin-left: -100px;
     margin-top: 332px;
     
 }
 
 .privacy_policy__img2{
+    height: 266px;
     margin-top: 688px;
     width: auto;
     margin-left: -100px;
 
     
 }
-.text_contaent{
+.text_content p{
     font-family: Inter;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 20px;
     letter-spacing: -0.01em;
     text-align: left;
-    margin-bottom: 12px;
     
+
 }
 
+.text_content__margin_bottom{
+    margin-bottom: 24px;
+}
+.text_content__heading{
+    margin-top: 24px;
 
-ul {
-    
+}
+
+.custom-list {
+    margin:0px;
     padding-left: 20px; /* Встановлюємо відступ зліва */
-    margin-bottom: 12px;
+
 }
 
-li {
-    padding-left: 10px; /* Встановлюємо відступ для кожного пункту */
+.custom-list__item {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    
+
+
 }
 
 .privacy_policy__text_container{
     display: flex;
     flex-direction: column;
-    width: auto; 
+    max-width: 80%;
 }
