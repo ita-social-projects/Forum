@@ -60,14 +60,6 @@
     margin-top: 332px;
 }
 
-.contact__img2{
-    height: 266px;
-    margin-top: 588px;
-    width: auto;
-    margin-left: -100px;
-   
-}
-
 .contact__text_container{
     display: flex;
     flex-direction: column;
