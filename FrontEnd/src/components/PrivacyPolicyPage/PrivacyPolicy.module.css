@@ -1,0 +1,95 @@
+.privacy_policy {
+    display: flex;
+    margin: 80px 100px 80px 100px;
+    max-width: 100%;
+    max-height: auto;
+    background-color: var(--light-text-color);
+    scroll-behavior: smooth;
+
+}
+  
+.privacy_policy__title{
+    font-family: Inter;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 12px;
+    
+}
+
+.privacy_policy__link_container {
+    margin-right: 100px;
+    max-width: 234px;
+
+    max-height: 1480px;
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.link_text{
+    width: 234px;
+    height: auto;
+    color: var(--main-footer-background);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+.link_text:hover {
+    color: var(--main-header-color);
+}
+
+
+.privacy_policy__img1{
+    width: auto;
+    margin-left: -100px;
+    margin-top: 332px;
+    
+}
+
+.privacy_policy__img2{
+    margin-top: 688px;
+    width: auto;
+    margin-left: -100px;
+
+    
+}
+.text_contaent{
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    margin-bottom: 12px;
+    
+}
+
+
+ul {
+    
+    padding-left: 20px; /* Встановлюємо відступ зліва */
+    margin-bottom: 12px;
+}
+
+li {
+    padding-left: 10px; /* Встановлюємо відступ для кожного пункту */
+}
+
+.privacy_policy__text_container{
+    display: flex;
+    flex-direction: column;
+    width: auto; 
+}
