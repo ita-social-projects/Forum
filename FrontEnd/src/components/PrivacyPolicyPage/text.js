@@ -21,7 +21,7 @@ const privacyPolicyText = {
         {
             id: 5,
             type: 'heading',
-            level: 3,
+            level: 4,
             text: 'Terms:'
         },
         {
@@ -47,7 +47,7 @@ const privacyPolicyText = {
         {
             id: 10,
             type: 'heading',
-            level: 3,
+            level: 4,
             text: 'Changes to This Policy'
         },
         {
@@ -69,7 +69,7 @@ const privacyPolicyText = {
         {
             id: 14,
             type: 'heading',
-            level: 3,
+            level: 4,
             text: 'How This Policy Applies'
         },
         {
@@ -90,7 +90,7 @@ const privacyPolicyText = {
         {
             id: 18,
             type: 'heading',
-            level: 3,
+            level: 4,
             text: 'Information We Collect'
         },
         {
@@ -171,7 +171,7 @@ const privacyPolicyText = {
         {
             id: 34,
             type: 'heading',
-            level: 3,
+            level: 4,
             text: 'How We Use Your Information'
         },
         {

@@ -13,7 +13,7 @@ const PrivacyPolicy = () => {
     <div className={styles['privacy_policy']}>
         <div className={styles['privacy_policy__link_container']}>
             <div className={styles['link']}>
-                <a className={styles['link_text']} href="/privacy-policy/">Privacy Policy<br /></a>
+                <a className={styles['link_text__active']} href="/privacy-policy/">Privacy Policy<br /></a>
                 <a className={styles['link_text']} href="/terms-and-conditions/">Terms & Conditions<br /></a>
                 <a className={styles['link_text']} href="/cookies-policy/">Cookie Policy</a>
                 <a className={styles['link_text']} href="/Contact/">Contact</a>

@@ -1,7 +1,7 @@
 .privacy_policy {
     display: flex;
     margin: 80px 100px 80px 100px;
-    width: 1512px;
+    width: 100%;
     max-height: auto;
     background-color: var(--light-text-color);
     scroll-behavior: smooth;
@@ -22,8 +22,8 @@
 .privacy_policy__link_container {
     margin-right: 100px;
     max-width: 234px;
+    max-height: 1400px;
 
-    max-height: 1580px;
 }
 
 .link {
@@ -35,14 +35,16 @@
     line-height: 24px;
     letter-spacing: 0em;
     text-align: left;
-
 }
 
-.link_text{
-    width: 234px;
-    height: auto;
+.link_text {
     color: var(--main-footer-background);
-    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+.link_text__active{
+    width: 234px;
+    color: var(--main-header-color);
     text-transform: uppercase;
     margin-bottom: 24px;
 }
@@ -51,36 +53,40 @@
     color: var(--main-header-color);
 }
 
-
 .privacy_policy__img1{
     width: auto;
     height: 266px;
     margin-left: -100px;
     margin-top: 332px;
-    
 }
 
 .privacy_policy__img2{
     height: 266px;
     margin-top: 688px;
     width: auto;
-    margin-left: -100px;
-
-    
+    margin-left: -100px;    
 }
-.text_content p{
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.01em;
-    text-align: left;
-    
 
+.privacy_policy__text_container{
+    display: flex;
+    flex-direction: column;
+    max-width: 971px;
+}
+
+
+.text_content {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
 }
 
 .text_content__margin_bottom{
     margin-bottom: 24px;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
 }
 .text_content__heading{
     margin-top: 24px;
@@ -89,24 +95,12 @@
 
 .custom-list {
     margin:0px;
-    padding-left: 20px; /* Встановлюємо відступ зліва */
-
+    padding-left: 16px; 
 }
 
-.custom-list__item {
+.custom-list__item{
     font-family: Inter;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.01em;
-    text-align: left;
-    
-
-
-}
-
-.privacy_policy__text_container{
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
+    line-height: 22px;
 }
