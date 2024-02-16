@@ -26,6 +26,7 @@ describe('SearchResults component unit tests', () => {
         service_info: null,
         address: 'Kyiv',
         banner_image: null,
+        is_saved: true,
       },
       {
         id: 2,
@@ -41,6 +42,7 @@ describe('SearchResults component unit tests', () => {
         service_info: null,
         address: 'Dnipro',
         banner_image: null,
+        is_saved: false,
       },
       {
         id: 3,
@@ -99,9 +101,8 @@ describe('SearchResults component unit tests', () => {
       <MemoryRouter>
         <SearchResults
           results={results}
-          searchPerformed={true}
           displayedResults={displayedResults}
-          isAuthorized={{ isAuth: true }}
+          isAuthorized={true}
         />
       </MemoryRouter>
     );
