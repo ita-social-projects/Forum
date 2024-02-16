@@ -19,7 +19,6 @@ const Contact = () => {
                 <a className={styles['link_text__active']} href="/Contact/">Contact</a>
             </div>
             <img className={styles['contact__img1']} src={reactLogo} alt="Image dots" />
-            <img className={styles['contact__img2']} src={reactLogo} alt="Image dots" />
         </div>
         <div className={styles['contact__text_container']}>
         <h2 className={styles['contact__title']}>{contactText.title} </h2>
