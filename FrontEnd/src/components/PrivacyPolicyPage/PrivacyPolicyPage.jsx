@@ -1,6 +1,6 @@
 import styles from './PrivacyPolicy.module.css';
 import privacyPolicyText from './text';
-import rulesText from './text';
+import Text from './text';
 import { v4 as uuidv4 } from 'uuid';
 import reactLogo from './img/dots.png';
 import { useEffect } from 'react';
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
         </div>
         <div className={styles['privacy_policy__text_container']}>
         <h2 className={styles['privacy_policy__title']}>{privacyPolicyText.title} </h2>
-        {rulesText.content.map((item) => {
+        {Text.content.map((item) => {
             if (item.type === 'paragraph') {
             return <p className={styles['text_content']} key={item.id || uuidv4()}>{item.text}</p>;
             } else if (item.type === 'heading') {
