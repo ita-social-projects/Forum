@@ -1,4 +1,4 @@
-import styles from './CookiesPolicyComponent.module.css';
+import styles from './cookiesPolicyComponent.module.css';
 import CookiesPolicyText from './text';
 import Text from './text';
 import { v4 as uuidv4 } from 'uuid';

@@ -127,7 +127,7 @@ const contactText = {
         },
         {
             id: 26,
-            type: 'paragraphgit',
+            type: 'paragraph',
             text: 'Kickstarter processes Take Down Notices as provided by the DMCA. Please note that Kickstarter reserves the right to request additional information from you to assist us in processing a Take Down Notice, and may not take final action on a Take Down Notice until all requirements are satisfied. Note that we reserve the right to refuse to action a Take Down Notice if any of the attestations are omitted or not substantially complete. The easiest way to ensure that your attestations are complete is to submit using our DMCA form.'
         },
     ],
