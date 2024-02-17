@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from djoser.serializers import UserSerializer
 
@@ -9,16 +8,7 @@ from profiles.models import Profile
 
 User = get_user_model()
 
-
 class AdminUserSerializer(UserSerializer):
-    phone_number = serializers.SerializerMethodField()
-
-    def get_phone_number(self, user):
-        try:
-            return user.email
-        except ObjectDoesNotExist:
-            return None
-
     class Meta(UserSerializer.Meta):
         model = User
         fields = (
@@ -26,13 +16,11 @@ class AdminUserSerializer(UserSerializer):
             "name",
             "surname",
             "email",
-            "phone_number",
             "is_active",
             "is_staff",
             "is_superuser",
         )
-        read_only_fields = ( "email", )
-
+ 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
