@@ -10,8 +10,8 @@ from administration.views import (
 app_name = "administration"
 
 urlpatterns = [
-    path("auth/", include("djoser.urls")),
-    re_path(r"^auth/", include("djoser.urls.authtoken")),
+    # path("auth/", include("djoser.urls")),
+    # re_path(r"^auth/", include("djoser.urls.authtoken")),
     path("users/", UsersListView.as_view(), name="users-list"),
     path("users/<pk>/", UserDetailView.as_view(), name="user"),
     path("profiles/", AdminProfileList.as_view(), name="profile-list"),

@@ -22,21 +22,19 @@ class UsersListView(ListAPIView):
     """
     List of users.
     """
-
-    queryset = CustomUser.objects.all().order_by("id")
-    serializer_class = AdminUserSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     pagination_class = ListPagination
+    serializer_class = AdminUserSerializer
+    queryset = CustomUser.objects.all().order_by("id")
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update or delete a user.
     """
-
-    queryset = CustomUser.objects.all().order_by("id")
     permission_classes = [IsAuthenticated, IsAdminUser]
     serializer_class = AdminUserSerializer
+    queryset = CustomUser.objects.all().order_by("id")
 
 
 class AdminProfileList(ListCreateAPIView):
