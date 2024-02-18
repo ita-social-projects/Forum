@@ -10,9 +10,10 @@ from rest_framework.generics import (
 )
 
 from administration.serializers import (
-    AdminUserSerializer,
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
+    AdminUserListSerializer,
+    AdminUserDetailSerializer,
 )
 from administration.pagination import ListPagination
 from authentication.models import CustomUser
@@ -21,8 +22,7 @@ from profiles.models import Profile
 
 class IsStafUser(BasePermission):
     def has_permission(self, request, view):
-        print(request.user.is_staff)
-        return request.user.is_staff
+       return request.user.is_staff
 
 
 class UsersListView(ListAPIView):
@@ -31,7 +31,7 @@ class UsersListView(ListAPIView):
     """
     permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
     pagination_class = ListPagination
-    serializer_class = AdminUserSerializer
+    serializer_class = AdminUserListSerializer
     queryset = CustomUser.objects.all().order_by("id")
 
 
@@ -40,8 +40,8 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     Retrieve, update or delete a user.
     """
     permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
-    serializer_class = AdminUserSerializer
-    queryset = CustomUser.objects.all().order_by("id")
+    serializer_class = AdminUserDetailSerializer
+    queryset = CustomUser.objects.all()
 
 
 class ProfilesListView(ListCreateAPIView):
@@ -54,4 +54,4 @@ class ProfilesListView(ListCreateAPIView):
 class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
     serializer_class = AdminCompanyDetailSerializer
-    queryset = Profile.objects.all().order_by("id")
+    queryset = Profile.objects.all()

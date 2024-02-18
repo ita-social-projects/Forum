@@ -8,12 +8,10 @@ function UserDetail() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('Token');
+    const userId = usePathUserId();
     const [updateSuccess, setUpdateSuccess] = useState(false);
 
     useEffect(() => {
-        const pathname = window.location.pathname;
-        const userId = pathname.substring(pathname.lastIndexOf('/') + 1);
-
         const fetchData = async () => {
             try {
                 const response = await fetch(
@@ -37,12 +35,12 @@ function UserDetail() {
         };
         fetchData();
 
-    }, [token]);
+    }, [userId, token]);
 
     const handleSaveChanges = async () => {
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${users.id}/`,
+                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`,
                 {
                     method: 'PUT',
                     headers: {
@@ -52,6 +50,7 @@ function UserDetail() {
                     body: JSON.stringify({
                         name: users.name,
                         surname: users.surname,
+                        email: users.email,
                         is_active: users.is_active,
                         is_staff: users.is_staff,
                         is_superuser: users.is_superuser
@@ -78,7 +77,7 @@ function UserDetail() {
     const handleDeleteUser = async () => {
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${users.id}/`,
+                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`,
                 {
                     method: 'DELETE',
                     headers: {
@@ -143,5 +142,8 @@ function UserDetail() {
         </div>
     );
 }
-
+function usePathUserId() {
+    const pathname = window.location.pathname;
+    return pathname.substring(pathname.lastIndexOf('/') + 1);
+}
 export default UserDetail;

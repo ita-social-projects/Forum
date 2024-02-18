@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from djoser.serializers import UserSerializer
 
@@ -6,13 +5,16 @@ from authentication.models import CustomUser
 from profiles.models import Profile
 
 
-User = get_user_model()
-
-class AdminUserSerializer(UserSerializer):
+class AdminUserListSerializer(serializers.ModelSerializer):
     class Meta(UserSerializer.Meta):
-        model = User
+        model = CustomUser
+        fields = ("id", "email", "name", "surname",)
+
+
+class AdminUserDetailSerializer(serializers.ModelSerializer):
+    class Meta(UserSerializer.Meta):
+        model = CustomUser
         fields = (
-            "id",
             "name",
             "surname",
             "email",
@@ -20,16 +22,9 @@ class AdminUserSerializer(UserSerializer):
             "is_staff",
             "is_superuser",
         )
- 
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ("email", "name", "surname",)
-
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):
-    person = UserSerializer(read_only=True)
+    person = AdminUserDetailSerializer(read_only=True)
 
     class Meta:
         model = Profile
@@ -50,7 +45,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
 
 
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
-    person = UserSerializer(read_only=True)
+    person = AdminUserDetailSerializer(read_only=True)
     categories = serializers.SlugRelatedField(
         many=True, slug_field="name", read_only=True
     )
@@ -81,3 +76,4 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
             "banner_image",
             "is_deleted",
         )
+
