@@ -17,8 +17,9 @@ const privacyPolicyText = {
         {
             id: 4,
             type: 'paragraph',
-            text: 'We’ve updated the Privacy Policy (the \'Policy\') to reflect changes in data privacy laws.'+
-            ' We’ve added additional detail about the categories of information you share with us, and the tools'+
+            text: 'We’ve updated the Privacy Policy (the \'Policy\') to reflect changes in'+
+            ' data privacy laws. We’ve added additional detail about the categories'+
+            ' of information you share with us, and the tools'+
             ' we offer to help you manage it. You can read the updated Policy below, and access'+
             ' the previous Privacy Policy that expired on November 1, 2022. As always, thanks for'+
             ' using Kickstarter, and please let us know if you have any questions or feedback.'
