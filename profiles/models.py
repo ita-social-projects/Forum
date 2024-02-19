@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import MaxLengthValidator
-from datetime import date
 
 from authentication.models import CustomUser
 from validation.validate_edrpou import validate_edrpou
@@ -17,6 +16,10 @@ from validation.validate_phone_number import (
 
 
 class Region(models.TextChoices):
+    EMPTY_VALUE = (
+        "",
+        "",
+    )
     KYIV = "Kyiv", "Київ"
     VINNYTSIA_REGION = "Vinnytsia region", "Вінницька область"
     VOLYN_REGION = "Volyn region", "Волинська область"
@@ -60,22 +63,25 @@ class Profile(models.Model):
     activities = models.ManyToManyField("Activity")
 
     person = models.OneToOneField(CustomUser, on_delete=models.PROTECT)
-    person_position = models.CharField(max_length=50, default=None, null=True)
+    person_position = models.CharField(max_length=50, blank=True, default="")
 
     official_name = models.CharField(
-        max_length=255, unique=True, default=None, null=True
+        max_length=255, unique=True, null=True, blank=True, default=None
     )
     region = models.CharField(
-        max_length=128, choices=Region.choices, default=None, null=True
+        max_length=128,
+        choices=Region.choices,
+        blank=True,
+        default=Region.EMPTY_VALUE,
     )
     common_info = models.TextField(
-        validators=[MaxLengthValidator(2000)], default=None, null=True
+        validators=[MaxLengthValidator(2000)], blank=True, default=""
     )
     phone = models.CharField(
         max_length=12,
         validators=[validate_phone_number_is_digit, validate_phone_number_len],
-        default=None,
-        null=True,
+        blank=True,
+        default="",
     )
     edrpou = models.CharField(
         max_length=8,
@@ -88,21 +94,23 @@ class Profile(models.Model):
     founded = models.SmallIntegerField(
         validators=[validate_foundation_year_range], default=None, null=True
     )
-    service_info = models.TextField(default=None, null=True)
-    product_info = models.TextField(default=None, null=True)
-    address = models.TextField(default=None, null=True)
-    startup_idea = models.TextField(default=None, null=True)
+    service_info = models.TextField(blank=True, default="")
+    product_info = models.TextField(blank=True, default="")
+    address = models.TextField(blank=True, default="")
+    startup_idea = models.TextField(blank=True, default="")
 
     banner_image = models.ImageField(
         upload_to="banners",
         validators=[validate_image_format, validate_image_size],
         null=True,
+        blank=True,
     )
 
     logo_image = models.ImageField(
         upload_to="logos",
         validators=[validate_image_format, validate_logo_size],
         null=True,
+        blank=True,
     )
 
     is_deleted = models.BooleanField(default=False)
