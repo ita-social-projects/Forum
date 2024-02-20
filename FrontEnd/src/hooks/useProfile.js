@@ -1,24 +1,32 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import useUser from './useUser';
+import axios from 'axios';
+import { useAuth } from './useAuth';
 
 export default function useProfile() {
-    const token = localStorage.getItem('Token');
-    const { user } = useUser();
-
+    const { user, logout, authToken } = useAuth();
     const [profile, setProfile] = useState(null);
 
     const { data, error, mutate } = useSWR(
-        (token && user) ? [`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, token] : null,
-        ([url, token]) =>
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Token ${token}`,
-                },
-            }).then(res => res.json()),
-        { revalidateOnFocus: false }
-    );
+      (authToken && user)
+        ? [`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, authToken]
+        : null,
+      ([url, authToken]) =>
+      axios.get(url, {
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      })
+      .then(res => res.data)
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          logout();
+        }
+        console.error('An error occurred while fetching the data.', error);
+      },
+    { revalidateOnFocus: false }
+    )
+  );
 
     useEffect(() => {
         if (data) {
