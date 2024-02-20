@@ -1,6 +1,6 @@
 import styles from './cookiesPolicyComponent.module.css';
-import CookiesPolicyText from './text';
-import Text from './text';
+import CookiesPolicyText from './text.js';
+import Text from './text.js';
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 
@@ -31,7 +31,8 @@ const CookiesPolicy = () => {
             return <p className={styles['text_content']} key={item.id || uuidv4()}>{item.text}</p>;
             } else if (item.type === 'heading') {
             const HeadingTag =`h${item.level}`;
-            return <HeadingTag className={styles['text_content__heading']} key={item.id || uuidv4()}>{item.text}</HeadingTag>;
+            return <HeadingTag className={styles['text_content__heading']} key={item.id || uuidv4()}>{item.text}
+            </HeadingTag>;
             }else if (item.type === 'paragraph__margin_bottom') {
             return <p  className={styles['text_content__margin_bottom']} key={item.id || uuidv4()}>{item.text}</p>;
             } else if (item.type === 'list-item') {
