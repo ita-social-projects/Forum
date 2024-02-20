@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import css from './UserTable.module.css';
 import { useNavigate } from 'react-router-dom';
 import PaginationButtons from './PaginationButtons';
+import axios from 'axios';
 
 const COLUMN_NAMES = ['ID', 'ФІО', 'Пошта',];
 
@@ -26,20 +27,18 @@ function UserTable() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(
+                const response = await axios.get(
                     `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`,
                     {
                         headers: {
                             'Authorization': `Token ${token}`
                         }
                     });
-                if (!response.ok) {
+                if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-
-                const data = await response.json();
-                setUsers(data.results);
-                setTotalPages(data.total_pages);
+                setUsers(response.data.results);
+                setTotalPages(response.data.total_pages);
                 setLoading(false);
             } catch (error) {
                 setError(error.message);

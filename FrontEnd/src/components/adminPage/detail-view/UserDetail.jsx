@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import css from './UserDetail.module.css';
 import DeleteModal from './DeleteModal';
+import axios from 'axios';
 
 function UserDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
@@ -10,23 +11,23 @@ function UserDetail() {
     const token = localStorage.getItem('Token');
     const userId = usePathUserId();
     const [updateSuccess, setUpdateSuccess] = useState(false);
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(
-                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`,
+                const response = await axios.get(
+                    url,
                     {
                         headers: {
                             'Authorization': `Token ${token}`
                         }
                     }
                 );
-                if (!response.ok) {
+                if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                const data = await response.json();
-                setUsers(data);
+                setUsers(response.data);
                 setLoading(false);
             } catch (error) {
                 setError(error.message);
@@ -39,25 +40,25 @@ function UserDetail() {
 
     const handleSaveChanges = async () => {
         try {
-            const response = await fetch(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`,
+            const response = await axios.put(
+                url,
                 {
-                    method: 'PUT',
+                    name: users.name,
+                    surname: users.surname,
+                    email: users.email,
+                    is_active: users.is_active,
+                    is_staff: users.is_staff,
+                    is_superuser: users.is_superuser
+                },
+                {
                     headers: {
                         'Authorization': `Token ${token}`,
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: users.name,
-                        surname: users.surname,
-                        email: users.email,
-                        is_active: users.is_active,
-                        is_staff: users.is_staff,
-                        is_superuser: users.is_superuser
-                    })
+                    }
                 }
+
             );
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             setUpdateSuccess(true);
@@ -76,16 +77,15 @@ function UserDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await fetch(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`,
+            const response = await axios.delete(
+                url,
                 {
-                    method: 'DELETE',
                     headers: {
                         'Authorization': `Token ${token}`
                     }
                 }
             );
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
         } catch (error) {

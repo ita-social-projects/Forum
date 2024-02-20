@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import DeleteModal from './DeleteModal';
 import css from './ProfileDetail.module.css';
+import axios from 'axios';
 
 
 function ProfileDetail() {
@@ -26,19 +27,17 @@ function ProfileDetail() {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(
+                const response = await axios.get(
                    url,
                     {
                         headers: {
                             'Authorization': `Token ${token}`
                         }
-                    }
-                );
-                if (!response.ok) {
+                    });
+                if (response.status !==200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                const data = await response.json();
-                setProfile(data);
+                setProfile(response.data);
                 setLoading(false);
             } catch (error) {
                 setError(error.message);
@@ -51,21 +50,20 @@ function ProfileDetail() {
 
     const handleSaveChanges = async () => {
         try {
-            const response = await fetch(
+            const response = await axios.put(
                 url,
                 {
-                    method: 'PUT',
+                    name: profile.name,
+                    is_deleted: profile.is_deleted,
+                },
+                {
                     headers: {
                         'Authorization': `Token ${token}`,
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: profile.name,
-                        is_deleted: profile.is_deleted,
-                    })
+                    }
                 }
             );
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             setUpdateSuccess(true);
@@ -84,16 +82,15 @@ function ProfileDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await fetch(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`,
+            const response = await axios.delete(
+                url,
                 {
-                    method: 'DELETE',
                     headers: {
                         'Authorization': `Token ${token}`
                     }
                 }
             );
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
         } catch (error) {
