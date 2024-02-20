@@ -1,4 +1,4 @@
-const privacyPolicyText = {
+const CookiesPolicyText = {
     id: 1,
     title: 'Cookie Policy',
     level: 2,
@@ -196,4 +196,4 @@ const privacyPolicyText = {
     ],
 };
 
-export default privacyPolicyText;
+export default CookiesPolicyText;
