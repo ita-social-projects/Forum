@@ -25,7 +25,10 @@ class Region(models.TextChoices):
     ZHYTOMYR_REGION = "Zhytomyr region", "Житомирська область"
     ZAKARPATTIA_REGION = "Zakarpattia region", "Закарпатська область"
     ZAPORIZHZHIA_REGION = "Zaporizhzhia region", "Запорізька область"
-    IVANOFRANKIVSK_REGION = "IvanoFrankivsk region", "Івано-Франківська область"
+    IVANOFRANKIVSK_REGION = (
+        "IvanoFrankivsk region",
+        "Івано-Франківська область",
+    )
     KYIV_REGION = "Kyiv region", "Київська область"
     KIROVOHRAD_REGION = "Kirovohrad region", "Кіровоградська область"
     CRIMEA = "Crimea", "Автономна Республіка Крим"
