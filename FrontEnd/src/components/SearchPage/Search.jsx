@@ -21,22 +21,10 @@ export function Search({ isAuthorized }) {
   const searchTerm = searchParams.get('name');
   const servedAddress = process.env.REACT_APP_BASE_API_URL;
   const searchUrl = 'search';
-  const authToken = localStorage.getItem('Token');
-  const headers = authToken
-    ? {
-        withCredentials: true,
-        headers: {
-          Authorization: `Token ${authToken}`,
-        },
-      }
-    : {
-        'Content-Type': 'application/json',
-      };
 
   const fetcher = async (url) => {
-    const data = await axios.get(url, headers);
-    setSearchResults(data.data);
-    return data;
+    const response = await axios.get(url);
+    setSearchResults(response.data);
   };
 
   const { data: companylist, error } = useSWR(
@@ -58,7 +46,7 @@ export function Search({ isAuthorized }) {
     if (searchTerm) {
       setSearchPerformed(true);
     }
-  }, [searchTerm, servedAddress, searchUrl, authToken, companylist]);
+  }, [searchTerm, servedAddress, searchUrl, companylist]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalItems = searchResults.length;

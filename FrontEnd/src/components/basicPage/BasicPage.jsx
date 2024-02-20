@@ -2,6 +2,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+import { SWRConfig } from 'swr';
 import 'react-toastify/dist/ReactToastify.css';
 
 import AuthorizationPage from '../authorization/AuthorizationPage';
@@ -31,7 +32,7 @@ import './customToastStyles.css';
 import Contact from '../Contact/Contact';
 
 function BasicPage() {
-  const auth = useAuth();
+  const { isAuth, user, logout } = useAuth();
 
   return (
     <ConfigProvider
@@ -67,29 +68,41 @@ function BasicPage() {
         },
       }}
     >
-      <Header isAuthorized={auth.isAuth} />
+      <SWRConfig value={{
+        onError: (error) => {
+          console.error(error);
+          if (error.status === 401) {
+            logout();
+          }
+        }
+      }}>
+      <Header isAuthorized={isAuth} />
       <Routes>
-        <Route path="/" element={<MainPage isAuthorized={auth.isAuth} />} />
-        <Route path="/profile/*" element={<ProfilePage />} />
+        <Route path="/" element={<MainPage isAuthorized={isAuth} />} />
+        {isAuth ? (
+          <Route path="/profile/*" element={<ProfilePage />} />
+          ) : (
+          <Route path="/profile/*" element={<Navigate to="/" />} />
+          )}
         <Route
           path="/profile-detail/:id"
-          element={<ProfileDetailPage isAuthorized={auth.isAuth} />}
+          element={<ProfileDetailPage isAuthorized={isAuth} />}
         />
         <Route
           path="/profiles/:filter"
-          element={<ProfileListPage isAuthorized={auth.isAuth} />}
+          element={<ProfileListPage isAuthorized={isAuth} />}
         />
-        {auth.isAuth ? (
+        {isAuth ? (
           <Route path="/login" element={<Navigate to="/profile/user-info" />} />
         ) : (
           <Route path="/login" element={<AuthorizationPage />} />
         )}
-        {!auth.isAuth ? (
+        {!isAuth ? (
           <Route path="/logout" element={<Navigate to="/" />} />
         ) : (
           <Route path="/logout" element={<Logout />} />
           )}
-        {auth.isAuth ? (
+        {isAuth ? (
           <Route
             path="/sign-up"
             element={<Navigate to="/profile/user-info" />}
@@ -130,7 +143,10 @@ function BasicPage() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/search" element={<Search isAuthorized={auth.isAuth} />} />
+        <Route
+          path="/search"
+          element={<Search isAuthorized={isAuth} userData={user} />}
+        />
       </Routes>
       <Footer />
       <ScrollToTopButton />
@@ -140,6 +156,7 @@ function BasicPage() {
         theme="colored"
         icon={false}
       />
+      </SWRConfig>
     </ConfigProvider>
   );
 }

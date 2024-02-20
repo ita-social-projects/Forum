@@ -4,11 +4,11 @@ import ProfileContent from './ProfilePageComponents/ProfileContent';
 import { useState } from 'react';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
 import Loader from '../loader/Loader';
-import { useUser, useProfile } from '../../hooks/';
+import { useAuth, useProfile } from '../../hooks/';
 
 
 const ProfilePage = () => {
-    const { user } = useUser();
+    const { user } = useAuth();
     const { profile } = useProfile();
     const [formName, setFormName] = useState('');
 
