@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge } from 'antd';
@@ -6,12 +7,12 @@ import { PropTypes } from 'prop-types';
 import classNames from 'classnames';
 import useSWRMutation from 'swr/mutation';
 
-import { useUser } from '../../../hooks';
+import { useAuth } from '../../../hooks';
 import DefaultLogo from './DefaultLogo';
 import classes from './TitleInfo.module.css';
 
 function TitleInfo({ isAuthorized, data }) {
-  const { user } = useUser();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
@@ -19,14 +20,12 @@ function TitleInfo({ isAuthorized, data }) {
       id: data.id,
       personId: data.person,
       name: data.name,
-      activities: data.activities && data.activities.length
-        ? data.activities.map((activity) => activity.name).join(', ')
-        : null,
-      region: data.region_display ? data.region_display : '',
-      categories:
-        data.categories
-          ? data.categories
+      activities:
+        data.activities && data.activities.length
+          ? data.activities.map((activity) => activity.name).join(', ')
           : null,
+      region: data.region_display ? data.region_display : '',
+      categories: data.categories ? data.categories : null,
       isSaved: data.is_saved,
       logo: data.logo_image,
     };
@@ -35,26 +34,14 @@ function TitleInfo({ isAuthorized, data }) {
   const ownProfile = user && user.id === profile.personId;
 
   async function sendRequest(url, { arg: data }) {
-    const authToken = localStorage.getItem('Token');
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${authToken}`,
-      },
-      body: JSON.stringify(data),
-    }).then((res) => {
-      if (!res.ok && res.status === 403) {
-        const error = new Error('Own company cannot be added to the saved list.');
-              error.info = res.json();
-              error.status = res.status;
-              throw error;
-      }
-    })
+    return axios.post(url, data)
       .catch(error => {
-        console.error(error);
+        if (error.response && error.response.status === 403) {
+          console.error('Own company cannot be added to the saved list.');
+        }
+        console.error(error.response ? error.response.data : error.message);
       });
-  }
+    }
 
   const { trigger } = useSWRMutation(
     `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
@@ -65,9 +52,10 @@ function TitleInfo({ isAuthorized, data }) {
     try {
       await trigger(
         { company_pk: profile.id },
-        { optimisticData: () => {
+        {
+          optimisticData: () => {
             setIsSaved(!isSaved);
-            }
+          },
         }
       );
     } catch (error) {
@@ -94,8 +82,8 @@ function TitleInfo({ isAuthorized, data }) {
 
   const getStarVisibility = () => {
     if (isAuthorized) {
-        return isSaved ? filledStar : outlinedStar;
-      }
+      return isSaved ? filledStar : outlinedStar;
+    }
   };
 
   const CategoryBadges = ({ categories }) => {
@@ -126,21 +114,28 @@ function TitleInfo({ isAuthorized, data }) {
         {!profile.logo ? (
           <DefaultLogo />
         ) : (
-          <img className={classes['logo']}
+          <img
+            className={classes['logo']}
             src={profile.logo}
             alt="Company logo"
           />
         )}
       </div>
       <div className={classes['title-block__about']}>
-        <div className={classes['title-block__activity']}>{profile.activities}</div>
+        <div className={classes['title-block__activity']}>
+          {profile.activities}
+        </div>
         <div className={classes['title-block__company']}>
-          <div className={classes['title-block__company_name']}>{profile.name}</div>
+          <div className={classes['title-block__company_name']}>
+            {profile.name}
+          </div>
           <div className={classes['title-block__company_category']}>
             <CategoryBadges categories={profile.categories} />
           </div>
         </div>
-        <div className={classes['title-block__company_region']}>{profile.region}</div>
+        <div className={classes['title-block__company_region']}>
+          {profile.region}
+        </div>
       </div>
       {isAuthorized ? (
         <>
@@ -148,9 +143,15 @@ function TitleInfo({ isAuthorized, data }) {
             <button
               onClick={handleClick}
               type="button"
-              className={classNames(classes['title-block__button'], {[classes['added_to_saved__button']]: isSaved})}
+              className={classNames(classes['title-block__button'], {
+                [classes['added_to_saved__button']]: isSaved,
+              })}
             >
-              <span className={classNames(classes['title-block__button--text'], {[classes['added_to_saved__button--text']]: isSaved})}>
+              <span
+                className={classNames(classes['title-block__button--text'], {
+                  [classes['added_to_saved__button--text']]: isSaved,
+                })}
+              >
                 {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
               </span>
               {getStarVisibility()}
@@ -162,7 +163,9 @@ function TitleInfo({ isAuthorized, data }) {
               className={`${classes['title-block__button']} ${classes['title-block__link']}`}
               onClick={navigateToEditProfile}
             >
-              <span className={`${classes['title-block__button--text']}`}>Редагувати профіль</span>
+              <span className={`${classes['title-block__button--text']}`}>
+                Редагувати профіль
+              </span>
             </a>
           )}
         </>

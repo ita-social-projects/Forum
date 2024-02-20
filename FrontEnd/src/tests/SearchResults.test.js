@@ -3,6 +3,19 @@ import { MemoryRouter } from 'react-router-dom';
 
 import SearchResults from '../components/SearchPage/search_field/SearchResults';
 
+const mockedUser = {
+  email: 'test@test.com',
+  id: 1,
+  name: 'Test',
+  profile_id: 1,
+  surname: 'Test'
+};
+jest.mock('../hooks/useAuth', () => ({
+    useAuth: () => {
+      return mockedUser;
+  },
+}));
+
 afterEach(cleanup);
 
 describe('SearchResults component unit tests', () => {
@@ -26,6 +39,7 @@ describe('SearchResults component unit tests', () => {
         service_info: null,
         address: 'Kyiv',
         banner_image: null,
+        is_saved: true,
       },
       {
         id: 2,
@@ -41,6 +55,7 @@ describe('SearchResults component unit tests', () => {
         service_info: null,
         address: 'Dnipro',
         banner_image: null,
+        is_saved: false,
       },
       {
         id: 3,
@@ -99,9 +114,8 @@ describe('SearchResults component unit tests', () => {
       <MemoryRouter>
         <SearchResults
           results={results}
-          searchPerformed={true}
           displayedResults={displayedResults}
-          isAuthorized={{ isAuth: true }}
+          isAuthorized={true}
         />
       </MemoryRouter>
     );

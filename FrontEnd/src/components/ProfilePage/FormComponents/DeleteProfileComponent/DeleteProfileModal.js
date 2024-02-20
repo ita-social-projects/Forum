@@ -3,12 +3,10 @@ import css from './DeleteProfileModal.module.css';
 import { useAuth } from '../../../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useUser } from '../../../../hooks/';
 
 
 const DeleteProfileModal = (props) => {
-    const { user } = useUser();
-    const auth = useAuth();
+    const { auth, user } = useAuth();
     const [typePassword, setTypePassword] = useState('password');
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');

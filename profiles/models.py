@@ -77,8 +77,13 @@ class Profile(models.Model):
         default=None,
         null=True,
     )
-    edrpou = models.IntegerField(
-        unique=True, validators=[validate_edrpou], default=None, null=True
+    edrpou = models.CharField(
+        max_length=8,
+        unique=True,
+        validators=[validate_edrpou],
+        default=None,
+        blank=True,
+        null=True,
     )
     founded = models.SmallIntegerField(
         validators=[validate_foundation_year_range], default=None, null=True

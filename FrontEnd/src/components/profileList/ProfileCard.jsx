@@ -7,15 +7,15 @@ import { PropTypes } from 'prop-types';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { useUser } from '../../hooks';
+import { useAuth } from '../../hooks';
 import css from './ProfileCard.module.css';
+import axios from 'axios';
 
 const { Paragraph } = Typography;
 
-
 export default function ProfileCard({ isAuthorized, data }) {
   const { mutate } = useSWRConfig();
-  const { user } = useUser();
+  const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
     return {
@@ -25,11 +25,8 @@ export default function ProfileCard({ isAuthorized, data }) {
       activities: !data.activities.length
         ? null
         : data.activities.map((activity) => activity.name).join(', '),
-      region: data.region_display
-        ? data.region_display
-        : '',
-      categories:
-        data.categories,
+      region: data.region_display ? data.region_display : '',
+      categories: data.categories,
       isSaved: data.is_saved,
       commonInfo: data.common_info,
       logo: data.logo_image,
@@ -39,15 +36,7 @@ export default function ProfileCard({ isAuthorized, data }) {
   const ownProfile = user && user.id === profile.personId;
 
   async function sendRequest(url, { arg: data }) {
-    const authToken = localStorage.getItem('Token');
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${authToken}`,
-      },
-      body: JSON.stringify(data),
-    }).then();
+    return axios.post(url, data);
   }
 
   const { trigger } = useSWRMutation(
@@ -60,11 +49,14 @@ export default function ProfileCard({ isAuthorized, data }) {
       await trigger(
         { company_pk: profile.id },
         { optimisticData: () => setIsSaved(!isSaved) }
-        );
-        mutate((key) => typeof key === 'string' && key.startsWith('/api/profiles/'), {
+      );
+      mutate(
+        (key) => typeof key === 'string' && key.startsWith('/api/profiles/'),
+        {
           revalidate: true,
-        });
-      } catch (error) {
+        }
+      );
+    } catch (error) {
       console.error(error);
     }
   };
@@ -106,11 +98,17 @@ export default function ProfileCard({ isAuthorized, data }) {
 
   return (
     <div className={css['company-card']}>
-      <Link className={css['company-card__link']} to={`/profile-detail/${profile.id}`}>
+      <Link
+        className={css['company-card__link']}
+        to={`/profile-detail/${profile.id}`}
+      >
         <div className={css['logo-box']}>
           <img
             className={css.logo}
-            src={profile.logo || `${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
+            src={
+              profile.logo ||
+              `${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`
+            }
             alt="Company logo"
           />
         </div>
@@ -122,7 +120,9 @@ export default function ProfileCard({ isAuthorized, data }) {
               </p>
             </div>
             <div className={css['content-header__name']}>{profile.name}</div>
-            <div className={css['content-header__address']}>{profile.region}</div>
+            <div className={css['content-header__address']}>
+              {profile.region}
+            </div>
           </div>
           <div className={css['content__common-info']}>
             <Paragraph ellipsis={{ rows: 3, expandable: false }}>
@@ -134,7 +134,11 @@ export default function ProfileCard({ isAuthorized, data }) {
           </div>
         </div>
       </Link>
-      {isAuthorized && !ownProfile ? (isSaved ? filledStar : outlinedStar) : null}
+      {isAuthorized && !ownProfile
+        ? isSaved
+          ? filledStar
+          : outlinedStar
+        : null}
     </div>
   );
 }

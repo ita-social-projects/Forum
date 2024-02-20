@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { useSWRConfig } from 'swr';
-import useSWRMutation from 'swr/mutation';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
@@ -10,53 +8,45 @@ import link_to_left from './img/link_to_left.svg';
 import link_to_right from './img/link_to_right.svg';
 import styles from './search_page.module.css';
 import PropTypes from 'prop-types';
+import useSWR from 'swr';
 
 const ITEMS_PER_PAGE = 6;
 
-export function Search({ isAuthorized, userData }) {
-  Search.propTypes = {
-    isAuthorized: PropTypes.any.isRequired,
-    userData: PropTypes.any.isRequired,
-  };
-
+export function Search({ isAuthorized }) {
   const [searchResults, setSearchResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  const [error, setError] = useState(null);
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get('name');
   const servedAddress = process.env.REACT_APP_BASE_API_URL;
   const searchUrl = 'search';
-  const { mutate } = useSWRConfig();
 
-  const fetcher = (url) => axios.get(url).then((res) => res.data);
+  const fetcher = async (url) => {
+    const response = await axios.get(url);
+    setSearchResults(response.data);
+  };
 
-  async function getRequest(url) {
-    const data = await fetcher(url);
-    setSearchResults(data);
-    setSearchPerformed(true);
-    setError(null);
-  }
-
-  const { trigger } = useSWRMutation(
+  const { data: companylist, error } = useSWR(
     `${servedAddress}/api/search/?name=${searchTerm}`,
-    getRequest
+    fetcher
   );
 
-  mutate((key) => typeof key === 'string' && key.startsWith('/api/search/'), {
-    revalidate: true,
-  });
+  const changeCompanies = (id, isSaved) => {
+    const newCompanies = [...searchResults];
+    for (let company of newCompanies) {
+      if (company.id == id) {
+        company.is_saved = isSaved;
+      }
+    }
+    setSearchResults(newCompanies);
+  };
 
   useEffect(() => {
     if (searchTerm) {
-      try {
-        trigger();
-      } catch (error) {
-        console.error(error);
-      }
+      setSearchPerformed(true);
     }
-  }, [searchTerm, servedAddress, searchUrl]);
+  }, [searchTerm, servedAddress, searchUrl, companylist]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalItems = searchResults.length;
@@ -77,14 +67,15 @@ export function Search({ isAuthorized, userData }) {
         <img className={styles['frame-img-right']} src={frame42} alt="frame" />
         <div className={styles['new-companies-search_count']}>
           {searchResults && (
-            <div><h3 className={styles['search_results_text']}>
-              РЕЗУЛЬТАТІВ ЗА ПОШУКОМ{' '}
-              <span className={styles['search_field_entered_value']}>
-                {searchTerm}
-              </span>{' '}
-              : {searchResults.length > 0 ? searchResults.length : 0}
-            </h3>
-            <br/>
+            <div>
+              <h3 className={styles['search_results_text']}>
+                РЕЗУЛЬТАТІВ ЗА ПОШУКОМ
+                <span className={styles['search_field_entered_value']}>
+                  {` ${searchTerm} `}
+                </span>
+                : {searchResults.length > 0 ? searchResults.length : 0}
+              </h3>
+              <br />
             </div>
           )}
           <br />
@@ -97,21 +88,21 @@ export function Search({ isAuthorized, userData }) {
                 searchPerformed={searchPerformed}
                 displayedResults={displayedResults}
                 isAuthorized={isAuthorized}
-                userData={userData}
+                changeCompanies={changeCompanies}
               />
               <br />
             </>
-          ) : ( <div>
-          <br />
-            <p className={styles['search_result_error']}>
-              Пошук не дав результатів: компанії з іменем{' '}
-              <span className={styles['.search_result_error']}>
-                {searchTerm}
-              </span>{' '}
-              не було виявлено на даний момент
-            </p>
-             <br />
-          </div>
+          ) : (
+            <div>
+              <br />
+              <p className={styles['search_result_error']}>
+                Пошук не дав результатів: компанії з іменем
+                <span className={styles['.search_result_error']}>
+                  {` ${searchTerm} `}
+                </span>
+                не було виявлено на даний момент
+              </p>
+            </div>
           )}
         </div>
         <div className={styles['new-companies-result_pages']}>
@@ -172,3 +163,11 @@ export function Search({ isAuthorized, userData }) {
 }
 
 export default Search;
+
+Search.propTypes = {
+  isAuthorized: PropTypes.bool,
+};
+
+Search.propTypes = {
+  isAuthorized: PropTypes.bool,
+};

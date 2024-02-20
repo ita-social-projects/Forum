@@ -182,8 +182,8 @@ class TestCompanyOrder(APITestCase):
             [
                 self.company_odesa.id,
                 self.company_kirovohrad.id,
-                self.company_dnipro.id,
                 self.company_kyiv.id,
+                self.company_dnipro.id,
                 self.company_kharkiv.id,
                 self.company_chernigiv.id,
             ],
