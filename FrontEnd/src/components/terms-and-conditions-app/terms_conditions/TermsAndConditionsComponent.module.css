@@ -4,6 +4,7 @@
     width: 100%;
     max-height: auto;
     background-color: var(--light-text-color);
+    color: var(--main-text-color);
     scroll-behavior: smooth;
 
 }

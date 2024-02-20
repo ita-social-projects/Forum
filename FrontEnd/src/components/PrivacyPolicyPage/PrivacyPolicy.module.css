@@ -5,6 +5,7 @@
     max-height: auto;
     background-color: var(--light-text-color);
     scroll-behavior: smooth;
+    color: var(--main-text-color);
 
 }
   

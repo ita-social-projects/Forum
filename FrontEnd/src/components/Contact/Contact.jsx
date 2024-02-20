@@ -2,7 +2,6 @@ import styles from './Contact.module.css';
 import contactText from './text';
 import Text from './text';
 import { v4 as uuidv4 } from 'uuid';
-import reactLogo from './img/dots.png';
 import { useEffect } from 'react';
 
 const Contact = () => {
@@ -18,7 +17,9 @@ const Contact = () => {
                 <a className={styles['link_text']} href="/cookies-policy/">Cookie Policy</a>
                 <a className={styles['link_text__active']} href="/Contact/">Contact</a>
             </div>
-            <img className={styles['contact__img1']} src={reactLogo} alt="Image dots" />
+            <img className={styles['contact__img1']}
+                src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots.png`}
+                alt="dots.png" />
         </div>
         <div className={styles['contact__text_container']}>
         <h2 className={styles['contact__title']}>{contactText.title} </h2>
