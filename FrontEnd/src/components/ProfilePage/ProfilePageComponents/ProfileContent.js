@@ -219,7 +219,7 @@ ProfileContent.propTypes = {
     profile: PropTypes.shape({
         name: PropTypes.string.isRequired,
         official_name: PropTypes.string,
-        edrpou: PropTypes.number,
+        edrpou: PropTypes.string,
         region: PropTypes.string,
         common_info: PropTypes.string,
         phone: PropTypes.string,

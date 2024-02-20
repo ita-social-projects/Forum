@@ -4,15 +4,15 @@ import { useEffect } from 'react';
 import { useAuth } from '../../../../hooks';
 
 function Logout() {
-  const auth = useAuth();
+  const { isAuth, logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     const performLogout = async () => {
-      if (auth.isAuth) {
+      if (isAuth) {
         try {
           await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`);
-          await auth.logout();
+          await logout();
         } catch (error) {
           console.error('Error during logout', error);
         }
@@ -21,7 +21,7 @@ function Logout() {
     };
 
     performLogout();
-  }, [auth, navigate]);
+  }, [isAuth, navigate]);
 }
 
 export default Logout;
