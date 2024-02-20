@@ -12,12 +12,12 @@ import { useAuth } from '../../hooks';
 
 function AdminPage() {
     const auth = useAuth();
-    const renderMenu = auth.isSuper ? (
+    const renderMenu = auth.isStaff ? (
         <>
             <Menu />
         </>
     ) : null;
-    const authRoutes = auth.isSuper ? (
+    const authRoutes = auth.isStaff? (
         <>
             <Route path="/" element={<MainPage />} />
             <Route path="/users" element={<UserTable />} />
@@ -31,7 +31,7 @@ function AdminPage() {
 
     return (
         <div className={css['admin_block']}>
-            < Header className={css['header_content']}  disabled={!auth.isSuper} />
+            < Header className={css['header_content']}  disabled={!auth.isStaff} />
             {/* {auth.isSuper && <Header />} */}
             <div className={css['content']}>
                 {renderMenu}

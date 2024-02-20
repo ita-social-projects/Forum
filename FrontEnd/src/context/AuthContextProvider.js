@@ -6,6 +6,7 @@ import { AuthContext } from '../context';
 
 export function AuthProvider ({ children }) {
   const [isAuth, setIsAuth] = useState(!!JSON.parse(localStorage.getItem('isAuth')));
+  const [isStaff, setIsStaff] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
@@ -31,13 +32,28 @@ export function AuthProvider ({ children }) {
   )
 );
 
-  const login = (authToken) => {
-    localStorage.setItem('Token', authToken);
-    setAuthToken(authToken);
-    localStorage.setItem('isAuth', true);
-    axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
-    setIsAuth(true);
-  };
+const login = async (authToken) => {
+  localStorage.setItem('Token', authToken);
+  setAuthToken(authToken);
+  localStorage.setItem('isAuth', true);
+  axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
+  setIsAuth(true);
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
+      { headers: { Authorization: `Token ${authToken}` } }
+    );
+    const responseId = await axios.get(
+      `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${response.data.id}`,
+      { headers: { Authorization: `Token ${authToken}` } }
+    );
+    if (responseId.data.is_staff ) {
+      setIsStaff(true);
+    }
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+  }
+};
 
   const logout = () => {
     localStorage.removeItem('Token');
@@ -86,7 +102,7 @@ export function AuthProvider ({ children }) {
     });
   });
 
-  const value = { login, logout, isAuth, authToken, isLoading, user, error, mutate };
+  const value = { login, logout, isAuth, authToken, isLoading, user, error, isStaff, mutate };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
