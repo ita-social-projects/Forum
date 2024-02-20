@@ -1,12 +1,13 @@
-import css from './FormComponents.module.css';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from  '../../../context/DirtyFormContext';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
-import { useUser, useProfile } from '../../../hooks/';
+import { useAuth, useProfile } from '../../../hooks/';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
+import css from './FormComponents.module.css';
 
 const LABELS = {
     'product_info': 'Товари',
@@ -16,7 +17,7 @@ const LABELS = {
 const TEXT_AREA_MAX_LENGTH = 1000;
 
 const ProductServiceInfo = (props) => {
-    const { user } = useUser();
+    const { user } = useAuth();
     const { profile: mainProfile, mutate: profileMutate } = useProfile();
     const [profile, setProfile] = useState(props.profile);
     const { setFormIsDirty } = useContext(DirtyFormContext);
@@ -46,30 +47,22 @@ const ProductServiceInfo = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const token = localStorage.getItem('Token');
         try {
-            const response = await fetch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Authorization': `Token ${token}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    product_info: profile.product_info,
-                    service_info: profile.service_info,
-                }),
-            });
-
-            if (response.status === 200) {
-                const updatedProfileData = await response.json();
-                profileMutate(updatedProfileData);
-                setFormIsDirty(false);
-                toast.success('Зміни успішно збережено');
-            } else {
-                console.error('Помилка');
+            const response = await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
+                product_info: profile.product_info,
+                service_info: profile.service_info,
+                }
+            );
+            const updatedProfileData = response.data;
+            profileMutate(updatedProfileData);
+            setFormIsDirty(false);
+            toast.success('Зміни успішно збережено');
             }
-        } catch (error) {
-            console.error('Помилка:', error);
+        catch (error) {
+            console.error('Помилка:', error.response ? error.response.data : error.message);
+            if (!error.response || error.response.status !== 401) {
+                toast.error('Не вдалося зберегти зміни, сталася помилка');
+            }
         }
     };
 

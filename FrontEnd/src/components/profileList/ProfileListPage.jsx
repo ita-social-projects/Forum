@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 import { Radio } from 'antd';
 import useSWR from 'swr';
@@ -41,17 +42,8 @@ export default function ProfileListPage({ isAuthorized }) {
   }&page=${currentPage}`;
 
   async function fetcher(url) {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    if (isAuthorized) {
-      const authToken = localStorage.getItem('Token');
-      headers.Authorization = `Token ${authToken}`;
-    }
-    return fetch(url, {
-      method: 'GET',
-      headers: headers,
-    }).then((res) => res.json());
+    return axios.get(url)
+    .then(res => res.data);
   }
 
   const {
@@ -69,7 +61,7 @@ export default function ProfileListPage({ isAuthorized }) {
 
   return (
     <div className={css.page}>
-      {error ? (
+      {error && error.status !==401 ? (
         <ErrorPage404 />
       ) : (
         <div className={css['page-content']}>

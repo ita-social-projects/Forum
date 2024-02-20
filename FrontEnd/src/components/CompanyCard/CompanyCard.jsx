@@ -3,7 +3,7 @@ import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import styles from './CompanyCard.module.css';
-import { useUser } from '../../hooks';
+import { useAuth } from '../../hooks';
 import PropTypes from 'prop-types';
 import { Tooltip, Badge } from 'antd';
 import axios from 'axios';
@@ -17,18 +17,7 @@ export default function CompanyCard({
   const lengthOfCategoryActivityArray = 3;
   const { mutate } = useSWRConfig();
 
-  const { user } = useUser();
-  const authToken = localStorage.getItem('Token');
-  const headers = authToken
-    ? {
-        withCredentials: true,
-        headers: {
-          Authorization: `Token ${authToken}`,
-        },
-      }
-    : {
-        'Content-Type': 'application/json',
-      };
+  const { user } = useAuth();
 
   const ownProfile = user && user.id === profile.person;
   const activitiesString =
@@ -43,7 +32,7 @@ export default function CompanyCard({
       .join(' ');
 
   async function sendRequest(url, { arg: data }) {
-    return axios.post(url, data, headers);
+    return axios.post(url, data);
   }
 
   const { trigger } = useSWRMutation(
@@ -119,9 +108,9 @@ export default function CompanyCard({
     <div className={styles['company-card']}>
       <div className={styles['company-card__block']}>
         <div className={styles['company-card__image-frame']}>
-          {profile.banner ? (
+          {profile.banner_image ? (
             <img
-              src={profile.banner}
+              src={profile.banner_image}
               alt="Company Banner"
               className={styles['company-card__image']}
             />
@@ -185,9 +174,9 @@ export default function CompanyCard({
       </div>
       <div className={styles['company-card__logo']}>
         <div className={styles['company-card__logo-ellipse']}>
-          {profile.logo ? (
+          {profile.logo_image ? (
             <img
-              src={profile.logo}
+              src={profile.logo_image}
               alt="Logo"
               className={styles['company-card__logo-image']}
             />

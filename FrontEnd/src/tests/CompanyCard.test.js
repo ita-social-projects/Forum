@@ -3,6 +3,19 @@ import { MemoryRouter } from 'react-router-dom';
 
 import CompanyCard from '../components/CompanyCard/CompanyCard';
 
+const mockedUser = {
+  email: 'test@test.com',
+  id: 1,
+  name: 'Test',
+  profile_id: 1,
+  surname: 'Test'
+};
+jest.mock('../hooks/useAuth', () => ({
+    useAuth: () => {
+      return mockedUser;
+  },
+}));
+
 afterEach(cleanup);
 
 const company_liked = {

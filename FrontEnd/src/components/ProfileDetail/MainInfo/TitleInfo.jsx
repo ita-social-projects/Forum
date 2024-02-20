@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge } from 'antd';
@@ -6,12 +7,12 @@ import { PropTypes } from 'prop-types';
 import classNames from 'classnames';
 import useSWRMutation from 'swr/mutation';
 
-import { useUser } from '../../../hooks';
+import { useAuth } from '../../../hooks';
 import DefaultLogo from './DefaultLogo';
 import classes from './TitleInfo.module.css';
 
 function TitleInfo({ isAuthorized, data }) {
-  const { user } = useUser();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
@@ -33,29 +34,14 @@ function TitleInfo({ isAuthorized, data }) {
   const ownProfile = user && user.id === profile.personId;
 
   async function sendRequest(url, { arg: data }) {
-    const authToken = localStorage.getItem('Token');
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${authToken}`,
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        if (!res.ok && res.status === 403) {
-          const error = new Error(
-            'Own company cannot be added to the saved list.'
-          );
-          error.info = res.json();
-          error.status = res.status;
-          throw error;
+    return axios.post(url, data)
+      .catch(error => {
+        if (error.response && error.response.status === 403) {
+          console.error('Own company cannot be added to the saved list.');
         }
-      })
-      .catch((error) => {
-        console.error(error);
+        console.error(error.response ? error.response.data : error.message);
       });
-  }
+    }
 
   const { trigger } = useSWRMutation(
     `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,

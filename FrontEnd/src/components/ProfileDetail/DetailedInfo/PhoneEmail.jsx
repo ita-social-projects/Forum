@@ -1,44 +1,27 @@
+import axios from 'axios';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { useUser } from '../../../hooks';
+import { useAuth } from '../../../hooks';
 import { PropTypes } from 'prop-types';
 import classes from './PhoneEmail.module.css';
 
 function PhoneEmail ({ profileId, personId }) {
     const [isContactsShown, setContactsShown] = useState(false);
-    const authToken = localStorage.getItem('Token');
-    const { user } = useUser();
+    const { user } = useAuth();
 
     const { data: profileData } = useSWR(
       `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,
-      (url) =>
-        fetch(url, {
-          method: 'GET'
+      (url) => axios.get(url)
+        .then(res => res.data)
+        .catch((error) => {
+          console.error('Cannot get profile contact data', error);
         })
-          .then((res) => {
-            if (!res.ok) {
-              const error = new Error('Cannot get profile contact data');
-              error.info = res.json();
-              error.status = res.status;
-              throw error;
-            }
-            return res.json();
-          })
-          .catch((error) => {
-              console.error(error);
-          })
     );
 
     const urlViewed = `${process.env.REACT_APP_BASE_API_URL}/api/company-view/${profileId}/`;
 
     async function addToViewed(url) {
-        return fetch(url, {
-          method: 'POST',
-          headers: {
-            Authorization: authToken ? `Token ${authToken}` : '',
-            'Content-Type': 'application/json',
-          },
-        }).then();
+        return axios.post(url);
     }
 
     const handleContactsClick = async () => {
