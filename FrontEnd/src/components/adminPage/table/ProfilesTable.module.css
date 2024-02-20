@@ -1,19 +1,11 @@
 .table-profiles{
-    width: 50%;
+    width: 100%;
 }
 
 .table-section {
-    margin-bottom: 162px;
     margin-top: 20px;
-    width:70%;
-    overflow: auto;
-}
-
-.table {
-    border-collapse: collapse;
-    width: 100%;
-    table-layout: fixed;
-    text-align: center; 
+    width:100%;
+    
 }
 
 .table-header {
@@ -53,5 +45,5 @@
 .table-element td {
     vertical-align: middle;
     display: table-cell;
-    text-align: center; /* Вирівнюємо текст по центру в колонках */
+    text-align: center;
 }

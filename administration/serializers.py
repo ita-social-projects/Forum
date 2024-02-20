@@ -1,18 +1,16 @@
 from rest_framework import serializers
-from djoser.serializers import UserSerializer
-
 from authentication.models import CustomUser
 from profiles.models import Profile
 
 
 class AdminUserListSerializer(serializers.ModelSerializer):
-    class Meta(UserSerializer.Meta):
+    class Meta:
         model = CustomUser
         fields = ("id", "email", "name", "surname",)
 
 
 class AdminUserDetailSerializer(serializers.ModelSerializer):
-    class Meta(UserSerializer.Meta):
+    class Meta:
         model = CustomUser
         fields = (
             "name",
@@ -22,6 +20,7 @@ class AdminUserDetailSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_superuser",
         )
+
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)

@@ -25,8 +25,8 @@ function PaginationButtons({ currentPage, totalPages, onPageChange, pageSize, on
                 <button className={css['pagination-button']} onClick={goToPreviousPage}>&#60;</button>
                 <label className={css['pagination-counter']}>{currentPage}/{totalPages}</label>
                 <button className={css['pagination-button']} onClick={goToNextPage}>&#62;</button>
-                <select value={pageSize} onChange={handlePageSizeChange}>
-                    <option value={3}>3</option>
+                <select className={css['pagination-select']} value={pageSize} onChange={handlePageSizeChange}>
+                    <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={20}>20</option>
                 </select>

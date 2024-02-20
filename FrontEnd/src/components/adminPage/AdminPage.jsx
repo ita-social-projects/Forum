@@ -30,12 +30,12 @@ function AdminPage() {
     );
 
     return (
-        <div>
-            <Header disabled={!auth.isSuper} />
+        <div className={css['admin_block']}>
+            < Header className={css['header_content']}  disabled={!auth.isSuper} />
             {/* {auth.isSuper && <Header />} */}
             <div className={css['content']}>
                 {renderMenu}
-                <Routes >
+                <Routes className={css['content-block']}>
                     {authRoutes}
                 </Routes>
             </div>

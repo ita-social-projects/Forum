@@ -1,17 +1,9 @@
 .table-section {
-    margin-bottom: 162px;
     margin-top: 20px;
     min-width: 1050px;
     width: 100%;
     overflow: auto;
 
-}
-
-.table {
-    border-collapse: collapse;
-    width: 100%;
-    table-layout: fixed;
-    text-align: center; 
 }
 
 .table-header {
