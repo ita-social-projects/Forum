@@ -33,7 +33,7 @@ class ProfileFactory(factory.django.DjangoModelFactory):
 
     person = factory.SubFactory("authentication.factories.UserFactory")
     name = "Test Comp name"
-    region = factory.fuzzy.FuzzyChoice(Region, getter=lambda r: r[0])
+    region = factory.fuzzy.FuzzyChoice(Region.choices, getter=lambda r: r[0])
     common_info = "test common info"
     phone = "380112909099"
     edrpou = factory.Sequence(lambda n: str(10000000 + n))

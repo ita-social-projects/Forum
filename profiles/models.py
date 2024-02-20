@@ -16,10 +16,7 @@ from validation.validate_phone_number import (
 
 
 class Region(models.TextChoices):
-    EMPTY_VALUE = (
-        "",
-        "",
-    )
+    EMPTY_VALUE = "", ""
     KYIV = "Kyiv", "Київ"
     VINNYTSIA_REGION = "Vinnytsia region", "Вінницька область"
     VOLYN_REGION = "Volyn region", "Волинська область"
@@ -28,10 +25,7 @@ class Region(models.TextChoices):
     ZHYTOMYR_REGION = "Zhytomyr region", "Житомирська область"
     ZAKARPATTIA_REGION = "Zakarpattia region", "Закарпатська область"
     ZAPORIZHZHIA_REGION = "Zaporizhzhia region", "Запорізька область"
-    IVANOFRANKIVSK_REGION = (
-        "IvanoFrankivsk region",
-        "Івано-Франківська область",
-    )
+    IVANOFRANKIVSK_REGION = "IvanoFrankivsk region", "Івано-Франківська область"
     KYIV_REGION = "Kyiv region", "Київська область"
     KIROVOHRAD_REGION = "Kirovohrad region", "Кіровоградська область"
     CRIMEA = "Crimea", "Автономна Республіка Крим"
