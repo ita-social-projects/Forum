@@ -1,4 +1,4 @@
-import { Link } from react-router-dom;
+import { Link } from 'react-router-dom';
 import css from './Profile.module.css';
 import avatar_image from './Avatar.png';
 

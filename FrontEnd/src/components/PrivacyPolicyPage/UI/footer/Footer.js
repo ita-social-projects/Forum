@@ -1,4 +1,4 @@
-import { Link } from react-router-dom;
+import { Link } from 'react-router-dom';
 import css from './Footer.module.css';
 import logo from './logo.svg';
 
