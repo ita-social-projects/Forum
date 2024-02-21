@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import axios from 'axios';
 import { AuthContext } from '../context';
+import PropTypes from 'prop-types';
 
 export function AuthProvider ({ children }) {
   const [isAuth, setIsAuth] = useState(!!JSON.parse(localStorage.getItem('isAuth')));
@@ -32,6 +33,10 @@ export function AuthProvider ({ children }) {
   )
 );
 
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired
+};
+
   const login = async (authToken) => {
     try {
       localStorage.setItem('Token', authToken);
@@ -42,18 +47,20 @@ export function AuthProvider ({ children }) {
       const userDataResponse = await axios.get(
         `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`
       );
-      const userStaffDataResponse = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userDataResponse.data.id}`
-      );
-      if (userStaffDataResponse.data.is_staff) {
-        setIsStaff(true);
-      }
+      if (userDataResponse.data) {
+        const userStaffDataResponse = await axios.get(
+          `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userDataResponse.data.id}`
+        );
+        if (userStaffDataResponse.data.is_staff) {
+          setIsStaff(true);
+        }
+      } else { console.error('Error fetching user data'); }
     } catch (error) {
       console.error('Error fetching user details:', error);
     }
   };
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('Token');
     localStorage.removeItem('isAuth');
     setAuthToken('');
@@ -61,7 +68,7 @@ export function AuthProvider ({ children }) {
     setIsAuth(false);
     setUser(null);
     navigate('/', { replace: true });
-  };
+  }, [navigate]);
 
   useEffect(() => {
     axios.interceptors.response.use(
@@ -81,7 +88,7 @@ export function AuthProvider ({ children }) {
     }
 
     setLoading(false);
-  }, []);
+  }, [authToken, logout]);
 
   useEffect(() => {
     if (data) {

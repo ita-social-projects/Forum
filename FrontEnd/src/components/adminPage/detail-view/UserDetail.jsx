@@ -28,7 +28,7 @@ function UserDetail() {
         };
         fetchData();
 
-    }, [userId]);
+    }, [userId, url]);
 
     const handleSaveChanges = async () => {
         try {
