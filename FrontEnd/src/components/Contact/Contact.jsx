@@ -4,6 +4,7 @@ import Text from './text';
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ContentRenderer from '../CookiesPolicyPage/RenderingTextContainer.jsx';
 
 const Contact = () => {
     useEffect(() => {
@@ -24,23 +25,9 @@ const Contact = () => {
         </div>
         <div className={styles['contact__text_container']}>
         <h2 className={styles['contact__title']}>{contactText.title} </h2>
-        {Text.content.map((item) => {
-            if (item.type === 'paragraph') {
-            return <p className={styles['text_content']} key={item.id || uuidv4()}>{item.text}</p>;
-            } else if (item.type === 'heading') {
-            const HeadingTag =`h${item.level}`;
-            return <HeadingTag className={styles['text_content__heading']} key={item.id || uuidv4()}>{item.text}</HeadingTag>;
-            }else if (item.type === 'paragraph__margin_bottom') {
-            return <p  className={styles['text_content__margin_bottom']} key={item.id || uuidv4()}>{item.text}</p>;
-            } else if (item.type === 'list-item') {
-            return (
-                <ul key={item.id || uuidv4()} className={styles['custom-list']}>
-                <li className={styles['custom-list__item']}>{item.text}</li>
-                </ul>
-            );
-            }
-            return null;
-        })}
+        {Text.content.map((item) => (
+          <ContentRenderer key={item.id || uuidv4()} item={item} styles={styles} />
+        ))}
         </div>
     </div>
   );
