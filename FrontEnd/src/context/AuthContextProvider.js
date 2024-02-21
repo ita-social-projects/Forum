@@ -60,12 +60,6 @@ export function AuthProvider ({ children }) {
       }
     );
 
-    if (authToken) {
-      login(authToken);
-    } else {
-      logout();
-    }
-
     setLoading(false);
   }, []);
 
