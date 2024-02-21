@@ -123,7 +123,7 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
                 </label>
                 <div className={styles['reset-password-form__label--password']}>
                   <label className={styles['reset-password-form__label--text']}>
-                    Повторіть пароль
+                    Повторіть новий пароль
                   </label>
                 </div>
               </div>

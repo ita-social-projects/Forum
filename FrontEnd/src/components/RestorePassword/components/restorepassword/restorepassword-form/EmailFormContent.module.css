@@ -45,16 +45,6 @@
     text-align: left;
 }
 
-.send-email-form__label--required {
-    color: var(--dust-red-5, #ff4d4f);
-    text-align: right;
-    font-family: SimSong;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22.001px;
-}
-
 .send-email-form__label--text {
     display: flex;
     flex-direction: column;

@@ -62,9 +62,6 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
         <div className={styles['send-email-form__row']}>
           <div className={styles['send-email-form__column']}>
             <div className={styles['send-email-form__label']}>
-              <label className={styles['send-email-form__label--required']}>
-                *
-              </label>
               <label className={styles['send-email-form__label--text']}>
                 Електронна пошта
               </label>
