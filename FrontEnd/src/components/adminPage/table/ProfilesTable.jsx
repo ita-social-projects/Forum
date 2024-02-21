@@ -19,7 +19,6 @@ function ProfilesTable() {
         let path = `../../customadmin/profile/${id}`;
         navigate(path);
     };
-    const token = localStorage.getItem('Token');
     const [pageSize, setPageSize] = useState(10);
     const handlePageSizeChange = (size) => {
         setPageSize(size);
@@ -31,12 +30,8 @@ function ProfilesTable() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/?page=${currentPage}&page_size=${pageSize}`,
-                    {
-                        headers: {
-                            'Authorization': `Token ${token}`
-                        }
-                    });
+                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/?page=${currentPage}&page_size=${pageSize}`
+                );
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -50,7 +45,7 @@ function ProfilesTable() {
         };
 
         fetchData();
-    }, [currentPage, pageSize, token]);
+    }, [currentPage, pageSize]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -65,7 +60,7 @@ function ProfilesTable() {
     }
 
     return (
-        <div  className={css['table-profiles']}>
+        <div className={css['table-profiles']}>
             <PaginationButtons totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange}
                 pageSize={pageSize} onPageSizeChange={handlePageSizeChange}
             />

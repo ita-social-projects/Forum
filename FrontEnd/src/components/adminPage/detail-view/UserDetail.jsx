@@ -8,7 +8,6 @@ function UserDetail() {
     const [error, setError] = useState(null);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-    const token = localStorage.getItem('Token');
     const userId = usePathUserId();
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`;
@@ -16,14 +15,7 @@ function UserDetail() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    url,
-                    {
-                        headers: {
-                            'Authorization': `Token ${token}`
-                        }
-                    }
-                );
+                const response = await axios.get(url);
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -36,7 +28,7 @@ function UserDetail() {
         };
         fetchData();
 
-    }, [userId, token]);
+    }, [userId]);
 
     const handleSaveChanges = async () => {
         try {
@@ -50,13 +42,6 @@ function UserDetail() {
                     is_staff: users.is_staff,
                     is_superuser: users.is_superuser
                 },
-                {
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-
             );
             if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -77,14 +62,7 @@ function UserDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await axios.delete(
-                url,
-                {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                }
-            );
+            const response = await axios.delete(url);
             if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -130,7 +108,7 @@ function UserDetail() {
                         type="checkbox"
                         checked={users.is_active}
                         onChange={(e) => setUsers({ ...users, is_active: e.target.checked })}
-                        className={css['form-input']}
+                        className={css['form-input_checkbox']}
                     />
                 </div>
                 <button className={css['save-button']} onClick={handleSaveChanges}>Зберегти зміни</button>

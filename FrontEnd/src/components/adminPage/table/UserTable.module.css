@@ -43,5 +43,5 @@
 .table-element td {
     vertical-align: middle;
     display: table-cell;
-    text-align: center; /* Вирівнюємо текст по центру в колонках */
+    text-align: center; 
 }

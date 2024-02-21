@@ -32,28 +32,26 @@ export function AuthProvider ({ children }) {
   )
 );
 
-const login = async (authToken) => {
-  localStorage.setItem('Token', authToken);
-  setAuthToken(authToken);
-  localStorage.setItem('isAuth', true);
-  axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
-  setIsAuth(true);
-  try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
-      { headers: { Authorization: `Token ${authToken}` } }
-    );
-    const responseId = await axios.get(
-      `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${response.data.id}`,
-      { headers: { Authorization: `Token ${authToken}` } }
-    );
-    if (responseId.data.is_staff ) {
-      setIsStaff(true);
+  const login = async (authToken) => {
+    try {
+      localStorage.setItem('Token', authToken);
+      setAuthToken(authToken);
+      localStorage.setItem('isAuth', true);
+      axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
+      setIsAuth(true);
+      const userDataResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`
+      );
+      const userStaffDataResponse = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userDataResponse.data.id}`
+      );
+      if (userStaffDataResponse.data.is_staff) {
+        setIsStaff(true);
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error);
     }
-  } catch (error) {
-    console.error('Error fetching user details:', error);
-  }
-};
+  };
 
   const logout = () => {
     localStorage.removeItem('Token');

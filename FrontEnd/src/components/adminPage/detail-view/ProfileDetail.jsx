@@ -9,7 +9,6 @@ function ProfileDetail() {
     const [error, setError] = useState(null);
     const [profile, setProfile] = useState([]);
     const [loading, setLoading] = useState(true);
-    const token = localStorage.getItem('Token');
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const profileId = usePathCompanyId();
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`;
@@ -27,14 +26,8 @@ function ProfileDetail() {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                   url,
-                    {
-                        headers: {
-                            'Authorization': `Token ${token}`
-                        }
-                    });
-                if (response.status !==200) {
+                const response = await axios.get(url);
+                if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 setProfile(response.data);
@@ -46,7 +39,7 @@ function ProfileDetail() {
         };
         fetchData();
 
-    }, [url, profileId, token ]);
+    }, [url, profileId]);
 
     const handleSaveChanges = async () => {
         try {
@@ -55,12 +48,6 @@ function ProfileDetail() {
                 {
                     name: profile.name,
                     is_deleted: profile.is_deleted,
-                },
-                {
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                        'Content-Type': 'application/json'
-                    }
                 }
             );
             if (response.status !== 200) {
@@ -82,14 +69,7 @@ function ProfileDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await axios.delete(
-                url,
-                {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                }
-            );
+            const response = await axios.delete(url);
             if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
