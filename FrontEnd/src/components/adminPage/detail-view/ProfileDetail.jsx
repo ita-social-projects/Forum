@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import DeleteModal from './DeleteModal';
 import css from './ProfileDetail.module.css';
 import axios from 'axios';
@@ -12,6 +13,7 @@ function ProfileDetail() {
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const profileId = usePathCompanyId();
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`;
+    const navigate = useNavigate();
     const companyInfo = [
         { label: 'Ім\'я', key: 'name' },
         { label: 'person_position', key: 'person_position' },
@@ -69,10 +71,9 @@ function ProfileDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await axios.delete(url);
-            if (response.status !== 200) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
+            await axios.delete(url);
+            setProfile([]);
+            navigate('/customadmin/profiles');
         } catch (error) {
             console.error('Failed to delete profile:', error);
         }

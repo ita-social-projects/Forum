@@ -10,6 +10,7 @@ class AdminUserListSerializer(serializers.ModelSerializer):
 
 
 class AdminUserDetailSerializer(serializers.ModelSerializer):
+    company_name = serializers.SerializerMethodField()
     class Meta:
         model = CustomUser
         fields = (
@@ -19,7 +20,10 @@ class AdminUserDetailSerializer(serializers.ModelSerializer):
             "is_active",
             "is_staff",
             "is_superuser",
+            "company_name",
         )
+    def get_company_name(self, obj):
+        return obj.profile.name if hasattr(obj, 'profile') else None    
 
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):

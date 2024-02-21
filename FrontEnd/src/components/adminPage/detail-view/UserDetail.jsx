@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import css from './UserDetail.module.css';
 import DeleteModal from './DeleteModal';
 import axios from 'axios';
@@ -11,6 +12,7 @@ function UserDetail() {
     const userId = usePathUserId();
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`;
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,10 +64,9 @@ function UserDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await axios.delete(url);
-            if (response.status !== 200) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
+            await axios.delete(url);
+            setUsers([]);
+            navigate('/customadmin/users');
         } catch (error) {
             console.error('Failed to delete user:', error);
         }
@@ -87,6 +88,7 @@ function UserDetail() {
                     <li>Активний користувач: {users.is_active ? 'Так' : 'Ні'}</li>
                     <li>Персонал: {users.is_staff ? 'Так' : 'Ні'}</li>
                     <li>Суперкористувач: {users.is_superuser ? 'Так' : 'Ні'}</li>
+                    <li>Компанія: {users.company_name ? 'Так' : 'Ні'}</li>
                 </ul>
                 <div className={css['form-section']}>
                     <label className={css['form-info__text']}>Прізвище</label>
