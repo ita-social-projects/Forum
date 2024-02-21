@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate, Link  } from 'react-router-dom';
 import axios from 'axios';
 import validator from 'validator';
 import EyeVisible from './EyeVisible';
@@ -150,20 +150,20 @@ const LoginContent = (props) => {
                     {errors.unspecifiedError && errors.unspecifiedError.message}
               </span>
             </div>
-            <a href="/reset-password" className={classes['forget-password']}>Забули пароль?</a>
+            <Link to="/reset-password" className={classes['forget-password']}>Забули пароль?</Link>
           </div>
 
         </div>
         <div className={classes['login-footer']}>
           <div className={classes['login-footer-buttons']}>
-          <a href="/">
+            <Link to="/">
               <button
                 type="button"
                 className={classes['login-footer-buttons__main']}
               >
                 Головна
               </button>
-            </a>
+            </Link>
             <button
               disabled={!isValid}
               type="submit"

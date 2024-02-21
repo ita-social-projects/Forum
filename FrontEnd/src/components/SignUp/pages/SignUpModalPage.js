@@ -15,9 +15,9 @@ export function SignUpModalPage() {
                   Будь ласка перейдіть за посиланням з листа для підтвердження вказаної електронної адреси. <br />
                   На цьому реєстрацію завершено. <br />
                   <div className={styles['resend-line']}>
-                    <a href="/sign-up/resend-activation" className={styles['resend-line__link']}>
+                    <Link to="/sign-up/resend-activation" className={styles['resend-line__link']}>
                       Не отримали лист?
-                    </a>
+                    </Link>
                   </div>
                 </p>
             </div>

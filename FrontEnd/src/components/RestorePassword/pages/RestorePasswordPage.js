@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './RestorePasswordPage.module.css';
 import DotDecorComponent from '../UI/dotDecor/DotDecor';
 import { RestorePasswordFormComponent } from '../components/restorepassword/RestorePasswordForm';
@@ -13,9 +14,9 @@ export function RestorePasswordPage() {
             <div className={styles['sign-in-line__text']}>
               Вже були на нашому сайті?
             </div>
-            <a href="/login" className={styles['sign-in-line__link']}>
+            <Link to="/login" className={styles['sign-in-line__link']}>
               Увійти
-            </a>
+            </Link>
           </div>
         </div>
         <DotDecorComponent position={'down-left'} />
