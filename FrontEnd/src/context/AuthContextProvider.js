@@ -1,13 +1,11 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import axios from 'axios';
 import { AuthContext } from '../context';
-import PropTypes from 'prop-types';
 
 export function AuthProvider ({ children }) {
   const [isAuth, setIsAuth] = useState(!!JSON.parse(localStorage.getItem('isAuth')));
-  const [isStaff, setIsStaff] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
@@ -33,34 +31,15 @@ export function AuthProvider ({ children }) {
   )
 );
 
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired
-};
-
-  const login = async (authToken) => {
-    try {
-      localStorage.setItem('Token', authToken);
-      setAuthToken(authToken);
-      localStorage.setItem('isAuth', true);
-      axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
-      setIsAuth(true);
-      const userDataResponse = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`
-      );
-      if (userDataResponse.data) {
-        const userStaffDataResponse = await axios.get(
-          `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userDataResponse.data.id}`
-        );
-        if (userStaffDataResponse.data.is_staff) {
-          setIsStaff(true);
-        }
-      } else { console.error('Error fetching user data'); }
-    } catch (error) {
-      console.error('Error fetching user details:', error);
-    }
+  const login = (authToken) => {
+    localStorage.setItem('Token', authToken);
+    setAuthToken(authToken);
+    localStorage.setItem('isAuth', true);
+    axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
+    setIsAuth(true);
   };
 
-  const logout = useCallback(() => {
+  const logout = () => {
     localStorage.removeItem('Token');
     localStorage.removeItem('isAuth');
     setAuthToken('');
@@ -68,7 +47,7 @@ AuthProvider.propTypes = {
     setIsAuth(false);
     setUser(null);
     navigate('/', { replace: true });
-  }, [navigate]);
+  };
 
   useEffect(() => {
     axios.interceptors.response.use(
@@ -81,14 +60,8 @@ AuthProvider.propTypes = {
       }
     );
 
-    if (authToken) {
-      login(authToken);
-    } else {
-      logout();
-    }
-
     setLoading(false);
-  }, [authToken, logout]);
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -107,7 +80,7 @@ AuthProvider.propTypes = {
     });
   });
 
-  const value = { login, logout, isAuth, authToken, isLoading, user, error, isStaff, mutate };
+  const value = { login, logout, isAuth, authToken, isLoading, user, error, mutate };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
