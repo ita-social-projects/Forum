@@ -18,6 +18,8 @@ from administration.serializers import (
 from administration.pagination import ListPagination
 from authentication.models import CustomUser
 from profiles.models import Profile
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class IsStafUser(BasePermission):
@@ -42,6 +44,15 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
     serializer_class = AdminUserDetailSerializer
     queryset = CustomUser.objects.all()
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if Profile.objects.filter(person_id=instance.id).exists():
+            return Response(
+                {"error": "Cannot delete user with associated profiles."}, status=status.HTTP_400_BAD_REQUEST
+                )
+        else:
+            return super().destroy(request, *args, **kwargs)
 
 
 class ProfilesListView(ListCreateAPIView):
