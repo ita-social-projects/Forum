@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import css from './ShortFooter.module.css';
 
 const LINKS = [
@@ -34,7 +35,7 @@ function ShortFooter() {
                     <div className={css['footer-info__text']}>Copyright 2022 Company name.</div>
                     <div className={css['footer-links']}>
                         {LINKS.map( (element) => (
-                            <a className={css['footer-link__text']} key={element.id} href={element.link}>{element.title}</a>
+                            <Link className={css['footer-link__text']} key={element.id} to={element.link}>{element.title}</Link>
                         ))}
                     </div>
                 </div>
