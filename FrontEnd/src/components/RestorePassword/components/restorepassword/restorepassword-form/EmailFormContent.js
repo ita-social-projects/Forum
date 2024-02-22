@@ -13,7 +13,7 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
 
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
-    email: 'Email не відповідає вимогам',
+    email: 'Формат електронної адреси некоректний',
   };
 
   const {
@@ -46,7 +46,7 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
         navigate('/reset-password/modal');
       })
       .catch(() => {
-        toast.error('Формат електронної пошти некоректний.');
+        toast.error('Зазначена електронна адреса не зареєстрована.');
       });
   };
 
@@ -62,9 +62,6 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
         <div className={styles['send-email-form__row']}>
           <div className={styles['send-email-form__column']}>
             <div className={styles['send-email-form__label']}>
-              <label className={styles['send-email-form__label--required']}>
-                *
-              </label>
               <label className={styles['send-email-form__label--text']}>
                 Електронна пошта
               </label>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import PhoneEmail from './PhoneEmail';
 import classes from './DataContacts.module.css';
@@ -62,9 +63,9 @@ function DataContacts ({ data }) {
                   {value.map((contact, index) => {
                     if (contact.url) {
                       return (
-                        <a key={index} href={contact.url}>
+                        <Link key={index} to={contact.url}>
                           {contact.svgPath}
-                        </a>
+                        </Link>
                       );
                     }
                   return null;

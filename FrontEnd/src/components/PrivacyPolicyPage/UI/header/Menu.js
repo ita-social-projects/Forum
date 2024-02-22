@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import css from './Menu.module.css';
 
 const MENU = [
@@ -28,9 +29,9 @@ function Menu() {
         <div className={css['header-menu-section']}>
             {MENU.map((element) => (
                 <div key={element.id} className={css['header-menu-element']}>
-                    <a className={css['header-menu-element__text']} key={element.id} href={element.link}>
+                    <Link className={css['header-menu-element__text']} key={element.id} to={element.link}>
                         {element.title}
-                    </a>
+                    </Link>
                 </div>
             ))}
         </div>
