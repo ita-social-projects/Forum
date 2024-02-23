@@ -32,7 +32,6 @@ function AdminPage() {
     return (
         <div className={css['admin_block']}>
             < Header className={css['header_content']}  disabled={!auth} />
-            {/* {auth.isSuper && <Header />} */}
             <div className={css['content']}>
                 {renderMenu}
                 <Routes className={css['content-block']}>
