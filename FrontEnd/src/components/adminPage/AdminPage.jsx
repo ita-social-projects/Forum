@@ -12,18 +12,14 @@ import { useAuth } from '../../hooks';
 
 function AdminPage() {
     const auth = useAuth();
-    const renderMenu = auth ? (
-        <>
-            <Menu />
-        </>
-    ) : null;
-    const authRoutes = auth ? (
+    const renderMenu = auth.isAuth ? (<Menu />) : null;
+    const authRoutes = auth.isAuth ? (
         <>
             <Route path="/" element={<MainPage />} />
             <Route path="/users" element={<UserTable />} />
             <Route path="/users/:id" element={<UserDetail />} />
             <Route path="/profiles" element={<ProfilesTable />} />
-            <Route path="/profile/:id" element={<ProfileDetail/>} />
+            <Route path="/profile/:id" element={<ProfileDetail />} />
         </>
     ) : (
         <Route path="/login" />
@@ -31,7 +27,7 @@ function AdminPage() {
 
     return (
         <div className={css['admin_block']}>
-            < Header className={css['header_content']}  disabled={!auth} />
+            < Header className={css['header_content']} disabled={!auth.isAuth} />
             <div className={css['content']}>
                 {renderMenu}
                 <Routes className={css['content-block']}>

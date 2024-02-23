@@ -6,7 +6,7 @@ function Header () {
         <header>
             <div className={css['header-content']}>
                 <Link className={css['header-logo__text']} to="/customadmin/">admin panel</Link>
-                <Link className={css['header-view__button']} to="/">Переглянути сайт</Link>
+                <Link className={css['header-view__button']} to="/"  target="_blank">Переглянути сайт</Link>
             </div>
             <div className={css['header-divider']}></div>
         </header>
