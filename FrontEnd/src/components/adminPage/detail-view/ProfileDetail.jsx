@@ -12,6 +12,7 @@ function ProfileDetail() {
     const [loading, setLoading] = useState(true);
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const profileId = usePathCompanyId();
+    const token = localStorage.getItem('Token');
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`;
     const navigate = useNavigate();
     const companyInfo = [
@@ -28,10 +29,13 @@ function ProfileDetail() {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get(url);
-                if (response.status !== 200) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                const response = await axios.get(
+                    url,
+                     {
+                         headers: {
+                             'Authorization': `Token ${token}`
+                         }
+                     });
                 setProfile(response.data);
                 setLoading(false);
             } catch (error) {
@@ -50,6 +54,12 @@ function ProfileDetail() {
                 {
                     name: profile.name,
                     is_deleted: profile.is_deleted,
+                },
+                {
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                        'Content-Type': 'application/json'
+                    }
                 }
             );
             if (response.status !== 200) {
@@ -71,7 +81,17 @@ function ProfileDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            await axios.delete(url);
+            const response = await axios.delete(
+                url,
+                {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                }
+            );
+            if (response.status !== 204) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
             setProfile([]);
             navigate('/customadmin/profiles');
         } catch (error) {
