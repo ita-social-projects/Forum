@@ -90,7 +90,6 @@ function UserDetail() {
                     <li>Email: {users.email}</li>
                     <li>Активний користувач: {users.is_active ? 'Так' : 'Ні'}</li>
                     <li>Персонал: {users.is_staff ? 'Так' : 'Ні'}</li>
-                    <li>Суперкористувач: {users.is_superuser ? 'Так' : 'Ні'}</li>
                     <li>Компанія: {users.company_name ? 'Так' : 'Ні'}</li>
                 </ul>
                 <div className={css['form-section']}>

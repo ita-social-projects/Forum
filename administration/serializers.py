@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from authentication.models import CustomUser
 from profiles.models import Profile
+from django.contrib.auth import get_user_model
+from djoser.serializers import UserSerializer
+
 
 
 class AdminUserListSerializer(serializers.ModelSerializer):
@@ -81,3 +84,16 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
             "banner_image",
             "is_deleted",
         )
+
+User = get_user_model()
+
+class AdminUserStatusSerializer(UserSerializer):
+    class Meta(UserSerializer):
+        model = User
+        fields = ("is_staff",)
+    def to_representation(self, instance):
+        user = self.context['request'].user
+        if instance == user:
+            return super().to_representation(instance)
+        else:
+            raise serializers.ValidationError("You do not have permission to view this user's status.")    

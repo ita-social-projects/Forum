@@ -3,13 +3,10 @@ import axios from 'axios';
 const checkIfStaff = async () => {
     try {
         const userDataResponse = await axios.get(
-            `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
+            `${process.env.REACT_APP_BASE_API_URL}/api/admin/status/`,
         );
         if (userDataResponse.data) {
-            const userStaffDataResponse = await axios.get(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userDataResponse.data.id}`,
-            );
-            return userStaffDataResponse.data.is_staff || false;
+            return userDataResponse.data.is_staff || false;
         } else {
             return false;
         }
