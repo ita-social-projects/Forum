@@ -15,7 +15,6 @@ function ProfilesTable() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
-    const token = localStorage.getItem('Token');
     const routeChange = (id) => {
         let path = `../../customadmin/profile/${id}`;
         navigate(path);
@@ -32,11 +31,7 @@ function ProfilesTable() {
             try {
                 const response = await axios.get(
                     `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/?page=${currentPage}&page_size=${pageSize}`,
-                    {
-                        headers: {
-                            'Authorization': `Token ${token}`
-                        }
-                    });
+                );
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -50,7 +45,7 @@ function ProfilesTable() {
         };
 
         fetchData();
-    }, [currentPage, pageSize, token]);
+    }, [currentPage, pageSize]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);

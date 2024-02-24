@@ -11,21 +11,13 @@ function UserDetail() {
     const [loading, setLoading] = useState(true);
     const userId = usePathUserId();
     const [updateSuccess, setUpdateSuccess] = useState(false);
-    const token = localStorage.getItem('Token');
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`;
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    url,
-                    {
-                        headers: {
-                            'Authorization': `Token ${token}`
-                        }
-                    }
-                );
+                const response = await axios.get(url,);
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -38,7 +30,7 @@ function UserDetail() {
         };
         fetchData();
 
-    }, [userId, url, token]);
+    }, [userId, url]);
 
     const handleSaveChanges = async () => {
         try {
@@ -52,12 +44,6 @@ function UserDetail() {
                     is_staff: users.is_staff,
                     is_superuser: users.is_superuser
                 },
-                {
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
             );
             if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -78,14 +64,7 @@ function UserDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await axios.delete(
-                url,
-                {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                }
-            );
+            const response = await axios.delete(url,);
             if (response.status !== 204) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

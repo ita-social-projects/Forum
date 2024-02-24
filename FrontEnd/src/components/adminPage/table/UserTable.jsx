@@ -12,7 +12,6 @@ function UserTable() {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const token = localStorage.getItem('Token');
     const navigate = useNavigate();
 
     const routeChange = (id) => {
@@ -30,11 +29,7 @@ function UserTable() {
             try {
                 const response = await axios.get(
                     `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`,
-                    {
-                        headers: {
-                            'Authorization': `Token ${token}`
-                        }
-                    });
+                    );
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -48,7 +43,7 @@ function UserTable() {
         };
 
         fetchData();
-    }, [currentPage, pageSize , token]);
+    }, [currentPage, pageSize]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
