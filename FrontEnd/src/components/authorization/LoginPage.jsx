@@ -6,6 +6,7 @@ import validator from 'validator';
 import EyeVisible from './EyeVisible';
 import EyeInvisible from './EyeInvisible';
 import classes from './LoginPage.module.css';
+import checkIfStaff from '../adminPage/checkIfStaff';
 import { useAuth } from '../../hooks/';
 
 
@@ -69,7 +70,12 @@ const LoginContent = (props) => {
       });
       const authToken = response.data.auth_token;
       auth.login(authToken);
-      navigate('/profile/user-info');
+      const isStaf = await checkIfStaff();
+      if (isStaf) {
+        navigate('/customadmin');
+      } else {
+        navigate('/profile/user-info');
+      }
     }
     catch (error) {
       console.error('ERROR', error);

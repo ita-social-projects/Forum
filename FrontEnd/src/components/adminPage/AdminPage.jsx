@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react';
 import './AdminGlobal.css';
 import Header from './header/Header';
 import Menu from './menu/Menu';
@@ -9,11 +10,27 @@ import css from './AdminPage.module.css';
 import { Routes, Route } from 'react-router-dom';
 import MainPage from './mainPage/MainPage';
 import { useAuth } from '../../hooks';
+import checkIfStaff from './checkIfStaff';
 
 function AdminPage() {
     const auth = useAuth();
-    const renderMenu = auth.isAuth ? (<Menu />) : null;
-    const authRoutes = auth.isAuth ? (
+    const [isStaff, setIsStaff] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const staffStatus = await checkIfStaff();
+                setIsStaff(staffStatus);
+            } catch (error) {
+                console.error('Error checking staff status:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const renderMenu = auth.isAuth && isStaff ? (<Menu />) : null;
+    const authRoutes = auth.isAuth && isStaff ? (
         <>
             <Route path="/" element={<MainPage />} />
             <Route path="/users" element={<UserTable />} />
@@ -27,7 +44,7 @@ function AdminPage() {
 
     return (
         <div className={css['admin_block']}>
-            < Header className={css['header_content']} disabled={!auth.isAuth} />
+            < Header className={css['header_content']} disabled={!auth.isAuth && isStaff} />
             <div className={css['content']}>
                 {renderMenu}
                 <Routes className={css['content-block']}>
