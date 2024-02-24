@@ -45,7 +45,7 @@ function ProfileDetail() {
         };
         fetchData();
 
-    }, [url, profileId]);
+    }, [url, profileId, token]);
 
     const handleSaveChanges = async () => {
         try {

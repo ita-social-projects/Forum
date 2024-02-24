@@ -173,7 +173,9 @@ const LoginContent = (props) => {
             <button
               disabled={!isValid}
               type="submit"
-              className={isValid ? classes['login-footer-buttons__signin'] : classes['login-footer-buttons__signin__disabled']}
+              className={
+                isValid ? classes['login-footer-buttons__signin'] : classes['login-footer-buttons__signin__disabled']
+              }
             >
               Увійти
             </button>

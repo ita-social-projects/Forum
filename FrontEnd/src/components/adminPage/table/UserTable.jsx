@@ -48,7 +48,7 @@ function UserTable() {
         };
 
         fetchData();
-    }, [currentPage, pageSize]);
+    }, [currentPage, pageSize , token]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
