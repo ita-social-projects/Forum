@@ -1,11 +1,11 @@
-.table-profiles{
-    width: 100%;
+.table-profiles {
+    width: var(--table-size__admin-panel);
 }
 
 .table-section {
     margin-top: 20px;
-    width:100%;
-    
+    padding: 10px;
+    width: var(--table-size__admin-panel);
 }
 
 .table-header {
@@ -15,8 +15,9 @@
     backdrop-filter: blur(4px);
 }
 
-.table-header__text, .table-element__text {
-    padding: 20px 15px;
+.table-header__text,
+.table-element__text {
+    padding: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

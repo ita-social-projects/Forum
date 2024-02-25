@@ -1,5 +1,6 @@
 .buttons-section {
     display: flex;
+    padding: 10px;
 }
 
 .buttons-section-content {
