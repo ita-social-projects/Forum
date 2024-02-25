@@ -118,8 +118,18 @@ function UserDetail() {
                 <button className={css['save-button']} onClick={handleSaveChanges}>Зберегти зміни</button>
             </div>
             <div className={css['delete-section']}>
-                <div className={css['form-info__text']}>Видалити акаунт</div>
-                <button className={css['button__delete']} onClick={() => setDeleteModalActive(true)}>Видалити</button>
+                <div className={css['form-info__text']}>
+                    {users.company_name ? 'Заборона на видалення, користувач має профіль' : 'Видалити акаунт'}
+                </div>
+                {!users.company_name && (
+                    <button
+                        className={css['button__delete']}
+                        onClick={() => setDeleteModalActive(true)}
+                        disabled={users.company_name}
+                    >
+                        Видалити
+                    </button>
+                )}
             </div>
         </div>
     );

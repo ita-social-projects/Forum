@@ -5,9 +5,10 @@
 }
 
 .user-details-section {
-   padding-top: 10px;
+   margin-left: 10px;
    display: flex;
    flex-direction: column;
+   padding: 10px;
    gap: 20px;
 
 }
