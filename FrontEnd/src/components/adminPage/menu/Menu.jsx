@@ -2,6 +2,7 @@ import css from './Menu.module.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
+import axios from 'axios';
 
 
 const MENU = [
@@ -21,6 +22,9 @@ function Menu() {
     const auth = useAuth();
     const navigate = useNavigate();
     const handleLogout = async () => {
+        if (auth.isAuth) {
+            await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`);
+        }
         auth.logout();
         navigate('/');
     };
