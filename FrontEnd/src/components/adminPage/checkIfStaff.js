@@ -5,11 +5,7 @@ const checkIfStaff = async () => {
         const userDataResponse = await axios.get(
             `${process.env.REACT_APP_BASE_API_URL}/api/admin/status/`,
         );
-        if (userDataResponse.data) {
-            return userDataResponse.data.is_staff || false;
-        } else {
-            return false;
-        }
+        return userDataResponse.data ? userDataResponse.data.is_staff || false : false;
     } catch (error) {
         return false;
     }

@@ -11,10 +11,13 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './mainPage/MainPage';
 import { useAuth } from '../../hooks';
 import checkIfStaff from './checkIfStaff';
+import axios from 'axios';
 
 function AdminPage() {
     const auth = useAuth();
     const [isStaff, setIsStaff] = useState(false);
+    const authToken = localStorage.getItem('Token');
+    axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
 
     useEffect(() => {
         const fetchData = async () => {
