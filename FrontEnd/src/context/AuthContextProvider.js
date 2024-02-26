@@ -64,14 +64,6 @@ export function AuthProvider ({ children }) {
   }, []);
 
   useEffect(() => {
-    if (authToken) {
-      axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
-    } else {
-      delete axios.defaults.headers.common['Authorization'];
-    }
-  }, [authToken]);
-
-  useEffect(() => {
     if (data) {
         setUser(data);
     }
