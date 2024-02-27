@@ -5,11 +5,15 @@ from django.contrib.auth import get_user_model
 from djoser.serializers import UserSerializer
 
 
-
 class AdminUserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ("id", "email", "name", "surname",)
+        fields = (
+            "id",
+            "email",
+            "name",
+            "surname",
+        )
 
 
 class AdminUserDetailSerializer(serializers.ModelSerializer):
@@ -28,7 +32,7 @@ class AdminUserDetailSerializer(serializers.ModelSerializer):
         )
 
     def get_company_name(self, obj):
-        return obj.profile.person_id if hasattr(obj, 'profile') else None
+        return obj.profile.person_id if hasattr(obj, "profile") else None
 
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):
@@ -85,15 +89,20 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
             "is_deleted",
         )
 
+
 User = get_user_model()
+
 
 class AdminUserStatusSerializer(UserSerializer):
     class Meta(UserSerializer):
         model = User
         fields = ("is_staff",)
+
     def to_representation(self, instance):
-        user = self.context['request'].user
+        user = self.context["request"].user
         if instance == user:
             return super().to_representation(instance)
         else:
-            raise serializers.ValidationError("You do not have permission to view this user's status.")    
+            raise serializers.ValidationError(
+                "You do not have permission to view this user's status."
+            )

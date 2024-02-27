@@ -30,13 +30,14 @@ class IsStafUser(BasePermission):
     """
 
     def has_permission(self, request, view):
-       return request.user.is_staff
+        return request.user.is_staff
 
 
 class UsersListView(ListAPIView):
     """
     List of users.
     """
+
     permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
@@ -47,6 +48,7 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update or delete a user.
     """
+
     permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
     serializer_class = AdminUserDetailSerializer
     queryset = CustomUser.objects.all()
@@ -55,7 +57,8 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         if Profile.objects.filter(person_id=instance.id).exists():
             return Response(
-                {"error": "Cannot delete user with associated profiles."}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "Cannot delete user with associated profiles."},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         else:
             return super().destroy(request, *args, **kwargs)
@@ -65,6 +68,7 @@ class ProfilesListView(ListCreateAPIView):
     """
     List of profiles.
     """
+
     permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
     pagination_class = ListPagination
     serializer_class = AdminCompanyListSerializer
@@ -75,6 +79,7 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update or delete a Profiles.
     """
+
     permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
     serializer_class = AdminCompanyDetailSerializer
     queryset = Profile.objects.all()
@@ -84,6 +89,7 @@ class UserStatus(RetrieveAPIView):
     """
     User status.
     """
+
     permission_classes = [IsAuthenticated]
     serializer_class = AdminUserStatusSerializer
 
