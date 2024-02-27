@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import './AdminGlobal.css';
 import Header from './header/Header';
 import Menu from './menu/Menu';
@@ -11,19 +11,22 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './mainPage/MainPage';
 import { useAuth } from '../../hooks';
 import checkIfStaff from './checkIfStaff';
-import axios from 'axios';
+import Loader from '../loader/Loader';
 
 function AdminPage() {
-    const auth = useAuth();
+    const { isAuth, isLoading } = useAuth();
     const [isStaff, setIsStaff] = useState(false);
-    const authToken = localStorage.getItem('Token');
-    axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const staffStatus = await checkIfStaff();
-                setIsStaff(staffStatus);
+
+                if (isAuth) {
+                    const staffStatus = await checkIfStaff();
+                    setIsStaff(staffStatus);
+                } else {
+                    setIsStaff(false);
+                }
             } catch (error) {
                 console.error('Error checking staff status:', error);
             }
@@ -32,8 +35,9 @@ function AdminPage() {
         fetchData();
     }, []);
 
-    const renderMenu = auth.isAuth && isStaff ? (<Menu />) : null;
-    const authRoutes = auth.isAuth && isStaff ? (
+
+    const renderMenu = isAuth && isStaff ? (<Menu />) : null;
+    const authRoutes = isAuth && isStaff ? (
         <>
             <Route path="/" element={<MainPage />} />
             <Route path="/users" element={<UserTable />} />
@@ -42,18 +46,20 @@ function AdminPage() {
             <Route path="/profile/:id" element={<ProfileDetail />} />
         </>
     ) : (
-        <Route path="/login" />
+        <Route path="/" />
     );
 
     return (
         <div className={css['admin_block']}>
-            < Header className={css['header_content']} disabled={!auth.isAuth && isStaff} />
-            <div className={css['content']}>
-                {renderMenu}
-                <Routes className={css['content-block']}>
-                    {authRoutes}
-                </Routes>
-            </div>
+            < Header className={css['header_content']} disabled={!isAuth && isStaff} />
+            {isLoading ? <Loader /> :
+                <div className={css['content']}>
+                    {renderMenu}
+                    <Routes className={css['content-block']}>
+                        {authRoutes}
+                    </Routes>
+                </div>
+            }
         </div>
     );
 }

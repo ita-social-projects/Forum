@@ -17,7 +17,7 @@ function UserDetail() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(url,);
+                const response = await axios.get(url);
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -64,7 +64,7 @@ function UserDetail() {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await axios.delete(url,);
+            const response = await axios.delete(url);
             if (response.status !== 204) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

@@ -28,7 +28,7 @@ function UserTable() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`,
+                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`
                     );
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
