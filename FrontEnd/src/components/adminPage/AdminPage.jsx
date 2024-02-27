@@ -20,7 +20,6 @@ function AdminPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-
                 if (isAuth) {
                     const staffStatus = await checkIfStaff();
                     setIsStaff(staffStatus);
@@ -35,9 +34,8 @@ function AdminPage() {
         fetchData();
     }, []);
 
-
-    const renderMenu = isAuth && isStaff ? (<Menu />) : null;
-    const authRoutes = isAuth && isStaff ? (
+    const renderMenu = isStaff ? <Menu /> : null;
+    const authRoutes = isStaff ? (
         <>
             <Route path="/" element={<MainPage />} />
             <Route path="/users" element={<UserTable />} />
@@ -51,7 +49,7 @@ function AdminPage() {
 
     return (
         <div className={css['admin_block']}>
-            < Header className={css['header_content']} disabled={!isAuth && isStaff} />
+            <Header className={css['header_content']} isAuthorized={isStaff} />
             {isLoading ? <Loader /> :
                 <div className={css['content']}>
                     {renderMenu}
