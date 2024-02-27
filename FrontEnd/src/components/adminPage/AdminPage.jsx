@@ -44,12 +44,12 @@ function AdminPage() {
             <Route path="/profile/:id" element={<ProfileDetail />} />
         </>
     ) : (
-        <Route path="/" />
+        <Route path="/customadmin/"  />
     );
 
     return (
         <div className={css['admin_block']}>
-            <Header className={css['header_content']} isAuthorized={isStaff} />
+            <Header className={css['header_content']} />
             {isLoading ? <Loader /> :
                 <div className={css['content']}>
                     {renderMenu}
