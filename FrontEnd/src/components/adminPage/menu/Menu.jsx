@@ -21,9 +21,11 @@ function Menu() {
     const auth = useAuth();
     const handleLogout = async () => {
         if (auth.isAuth) {
-            await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`);
+            axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`)
+                .then(() => {
+                    auth.logout();
+                });
         }
-        auth.logout();
     };
 
     return (
