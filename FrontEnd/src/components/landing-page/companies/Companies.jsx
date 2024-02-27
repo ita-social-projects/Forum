@@ -9,20 +9,9 @@ const MainCompanies = ({ isAuthorized }) => {
   const baseUrl = process.env.REACT_APP_BASE_API_URL;
   const [searchResults, setSearchResults] = useState([]);
   const [newMembers, setNewMembers] = useState(true);
-  const authToken = localStorage.getItem('Token');
-  const headers = authToken
-    ? {
-        withCredentials: true,
-        headers: {
-          Authorization: `Token ${authToken}`,
-        },
-      }
-    : {
-        'Content-Type': 'application/json',
-      };
 
   const fetcher = async (url) => {
-    const data = await axios.get(url, headers);
+    const data = await axios.get(url);
     setSearchResults(data.data.results);
     return data.data.results;
   };
@@ -46,7 +35,7 @@ const MainCompanies = ({ isAuthorized }) => {
     if (newMembers) {
       setNewMembers(false);
     }
-  }, [newMembers, authToken, companylist, searchResults]);
+  }, [newMembers, companylist, searchResults]);
   const companyDataList = searchResults;
 
   return (

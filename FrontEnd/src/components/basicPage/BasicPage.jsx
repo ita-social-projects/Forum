@@ -10,6 +10,7 @@ import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent'
 import Footer from '../HeaderFooter/footer/Footer';
 import Header from '../HeaderFooter/header/Header';
 import Logout from '../HeaderFooter/header/navbar/Logout';
+import Loader from '../loader/Loader';
 import MainPage from '../landing-page/MainPage';
 import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
 import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
@@ -31,7 +32,7 @@ import { Search } from '../SearchPage/Search';
 import './customToastStyles.css';
 
 function BasicPage() {
-  const { isAuth, user, logout } = useAuth();
+  const { isAuth, user, logout, isLoading } = useAuth();
 
   return (
     <ConfigProvider
@@ -76,7 +77,8 @@ function BasicPage() {
         }
       }}>
       <Header isAuthorized={isAuth} />
-      <Routes>
+      {isLoading ? <Loader /> :
+      (<Routes>
         <Route path="/" element={<MainPage isAuthorized={isAuth} />} />
         {isAuth ? (
           <Route path="/profile/*" element={<ProfilePage />} />
@@ -145,7 +147,7 @@ function BasicPage() {
           path="/search"
           element={<Search isAuthorized={isAuth} userData={user} />}
         />
-      </Routes>
+      </Routes>)}
       <Footer />
       <ScrollToTopButton />
       <ToastContainer
