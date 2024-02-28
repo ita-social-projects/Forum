@@ -3,7 +3,7 @@ import TermsAndConditionsText from './text';
 import Text from './text';
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import LinkContainer from '../../CookiesPolicyPage/LinkContainer.jsx';
 import ContentRenderer from '../../CookiesPolicyPage/RenderingTextContainer.jsx';
 
 const TermsAndConditions = () => {
@@ -13,16 +13,11 @@ const TermsAndConditions = () => {
   return (
     <div className={styles['TermsAndConditions']}>
         <div className={styles['TermsAndConditions__link_container']}>
-            <div className={styles['link']}>
-                <Link className={styles['link_text']} to="/privacy-policy/">Privacy Policy<br /></Link>
-                <Link className={styles['link_text__active']} to="/terms-and-conditions/">Terms & Conditions<br /></Link>
-                <Link className={styles['link_text']} to="/cookies-policy/">Cookie Policy</Link>
-                <Link className={styles['link_text']} to="/contact/">Contact</Link>
-            </div>
-            <img className={styles['TermsAndConditions__img1']}
+          <LinkContainer /> {}
+          <img className={styles['TermsAndConditions__img1']}
                 src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots.png`}
                 alt="dots.png" />
-            <img className={styles['TermsAndConditions__img2']}
+          <img className={styles['TermsAndConditions__img2']}
                 src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots.png`}
                 alt="dots.png" />
         </div>

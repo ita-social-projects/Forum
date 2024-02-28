@@ -3,7 +3,7 @@ import CookiesPolicyText from './text.js';
 import Text from './text.js';
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import LinkContainer from './LinkContainer.jsx';
 import ContentRenderer from './RenderingTextContainer.jsx';
 
 const CookiesPolicy = () => {
@@ -14,12 +14,7 @@ const CookiesPolicy = () => {
   return (
     <div className={styles['cookies_policy']}>
       <div className={styles['cookies_policy__link_container']}>
-        <div className={styles['link']}>
-          <Link className={styles['link_text']} to="/privacy-policy/">Privacy Policy<br /></Link>
-          <Link className={styles['link_text']} to="/terms-and-conditions/">Terms & Conditions<br /></Link>
-          <Link className={styles['link_text__active']} to="/cookies-policy/">Cookie Policy</Link>
-          <Link className={styles['link_text']} to="/contact/">Contact</Link>
-        </div>
+        <LinkContainer /> {}
         <img className={styles['cookies_policy__img1']}
           src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots.png`}
           alt="dots.png" />
