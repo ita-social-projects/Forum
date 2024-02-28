@@ -2,6 +2,8 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
 )
 from rest_framework.parsers import MultiPartParser, FormParser
+# from drf_spectacular.utils import extend_schema_view, inline_serializer
+# from rest_framework import serializers
 
 from profiles.permissions import UserIsProfileOwnerOrReadOnly
 from profiles.models import Profile
