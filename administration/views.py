@@ -24,7 +24,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-class IsStafUser(BasePermission):
+class IsStaffUser(BasePermission):
     """
     Custom is staff permission.
     """
@@ -38,7 +38,7 @@ class UsersListView(ListAPIView):
     List of users.
     """
 
-    permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsStaffUser, IsAdminUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
     queryset = CustomUser.objects.all().order_by("id")
@@ -49,7 +49,7 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     Retrieve, update or delete a user.
     """
 
-    permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsStaffUser, IsAdminUser]
     serializer_class = AdminUserDetailSerializer
     queryset = CustomUser.objects.all()
 
@@ -69,7 +69,7 @@ class ProfilesListView(ListCreateAPIView):
     List of profiles.
     """
 
-    permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsStaffUser, IsAdminUser]
     pagination_class = ListPagination
     serializer_class = AdminCompanyListSerializer
     queryset = Profile.objects.all().order_by("id")
@@ -80,7 +80,7 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     Retrieve, update or delete a Profiles.
     """
 
-    permission_classes = [IsAuthenticated, IsStafUser, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsStaffUser, IsAdminUser]
     serializer_class = AdminCompanyDetailSerializer
     queryset = Profile.objects.all()
 
