@@ -55,7 +55,8 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         if Profile.objects.filter(person_id=instance.id).exists():
             raise PermissionDenied(
-                "Cannot delete user with associated profiles.")
+                "Cannot delete user with associated profiles."
+            )
         else:
             return super().destroy(request, *args, **kwargs)
 
