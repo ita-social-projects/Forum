@@ -21,6 +21,7 @@ from authentication.models import CustomUser
 from profiles.models import Profile
 from rest_framework.exceptions import PermissionDenied
 
+
 class IsStaffUser(BasePermission):
     """
     Custom is staff permission.
@@ -53,7 +54,8 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if Profile.objects.filter(person_id=instance.id).exists():
-            raise PermissionDenied("Cannot delete user with associated profiles.")
+            raise PermissionDenied(
+                "Cannot delete user with associated profiles.")
         else:
             return super().destroy(request, *args, **kwargs)
 
