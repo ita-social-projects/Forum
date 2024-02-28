@@ -60,12 +60,6 @@ export function AuthProvider ({ children }) {
       }
     );
 
-    if (authToken) {
-      login(authToken);
-    } else {
-      logout();
-    }
-
     setLoading(false);
   }, []);
 
@@ -76,7 +70,16 @@ export function AuthProvider ({ children }) {
     if (error) {
         setUser(null);
     }
+    setLoading(false);
   }, [data, error]);
+
+  useEffect(() => {
+    if (authToken) {
+      axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  }, []);
 
   useEffect(() => {
     window.addEventListener('storage', (e) => {

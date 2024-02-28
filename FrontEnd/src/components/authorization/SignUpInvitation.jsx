@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom';
 import classes from './SignUpInvitation.module.css';
 
 const SignUpInvitation = () => {
     return (
         <div className={classes['signup-invitation']}>
             <p>Вперше на нашому сайті?</p>
-            <a href="/sign-up">Зареєструйтесь</a>
+            <Link to="/sign-up">Зареєструйтесь</Link>
         </div>
     );
 };
