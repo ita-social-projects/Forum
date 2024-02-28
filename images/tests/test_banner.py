@@ -112,7 +112,7 @@ class TestBannerChange(APITestCase):
         self.assertEqual(
             {
                 "banner_image": [
-                    "Image size exceeds the maximum allowed (50MB)."
+                    "Image size exceeds the maximum allowed (5MB)."
                 ]
             },
             response.json(),

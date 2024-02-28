@@ -107,6 +107,6 @@ class TestLogoChange(APITestCase):
         )
         self.assertEqual(400, response.status_code)
         self.assertEqual(
-            {"logo_image": ["Image size exceeds the maximum allowed (10MB)."]},
+            {"logo_image": ["Image size exceeds the maximum allowed (1MB)."]},
             response.json(),
         )
