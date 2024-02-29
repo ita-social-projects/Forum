@@ -16,6 +16,7 @@ from rest_framework.permissions import (
 )
 from rest_framework.response import Response
 from rest_framework import filters
+from utils.completeness_counter import completeness_count
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -188,19 +189,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         instance.save()
 
     def perform_update(self, serializer):
-        instance = serializer.save()
-        instance.completeness = 0
-        if instance.banner_image:
-            instance.completeness += 100
-        if instance.logo_image:
-            instance.completeness += 1
-        if instance.region:
-            instance.completeness += 1
-        if Activity.objects.all().filter(profile=instance.id):
-            instance.completeness += 1
-        if Category.objects.all().filter(profile=instance.id):
-            instance.completeness += 1
-        instance.save()
+        completeness_count(serializer)
 
 
 class ProfileViewCreate(CreateAPIView):

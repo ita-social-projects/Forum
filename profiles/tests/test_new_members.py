@@ -46,7 +46,7 @@ class TestCompletenessUpdate(APITestCase):
 
     def test_completeness_after_update_activity(self):
         self.client.force_authenticate(self.kryvyi_rig_user)
-        self.client.patch(
+        response = self.client.patch(
             path=f"/api/profiles/{self.company_kryvyi_rig.id}",
             data={"activities": [self.sale_activity.id]},
         )
@@ -106,40 +106,47 @@ class TestCompanyOrder(APITestCase):
         self.kirovohrad_user = UserFactory()
         self.mykolaiv_user = UserFactory()
         self.odesa_user = UserFactory()
-
-        self.cheese_category = CategoryFactory(name="cheese")
-        self.sale_activity = ActivityFactory(name="sale")
+        self.synelnicovo_user = UserFactory()
 
         self.company_kyiv = ProfileCompanyFactory(
-            name="Kyivbud",
+            name="Kyiv",
             person=self.kyiv_user,
-            created_at="2023-12-01",
             completeness=2,
         )
+        self.company_kyiv.created_at = "2023-12-01"
+        self.company_kyiv.save()
+
         self.company_dnipro = ProfileStartupFactory(
-            name="Dniprotrans",
+            name="Dnipro",
             person=self.dnipro_user,
-            created_at="2023-12-02",
             completeness=2,
         )
+        self.company_dnipro.created_at = "2023-12-02"
+        self.company_dnipro.save()
+
         self.company_kharkiv = ProfileStartupFactory(
-            name="Kharkivmarket",
+            name="Kharkiv",
             person=self.kharkiv_user,
-            created_at="2023-12-03",
             completeness=1,
         )
+        self.company_kharkiv.created_at = "2023-12-03"
+        self.company_kharkiv.save()
+
         self.company_chernigiv = ProfileStartupFactory(
-            name="Chernigivtravel",
+            name="Chernigiv",
             person=self.chernigiv_user,
-            created_at="2023-12-04",
             completeness=1,
         )
+        self.company_chernigiv.created_at = "2023-12-04"
+        self.company_chernigiv.save()
+
         self.company_kirovohrad = ProfileCompanyFactory(
-            name="Kirovohraduniversity",
+            name="Kirovohrad",
             person=self.kirovohrad_user,
-            created_at="2023-12-05",
             completeness=3,
         )
+        self.company_kirovohrad.created_at = "2023-12-05"
+        self.company_kirovohrad.save()
 
     def tearDown(self) -> None:
         self.right_image.close()
@@ -148,46 +155,45 @@ class TestCompanyOrder(APITestCase):
         response = self.client.get(
             path="/api/profiles/?new_members=-completeness,-created_at"
         )
-        self.assertEqual(200, response.status_code)
-        ids_from_response = [prof["id"] for prof in response.data["results"]]
+        names_from_response = [
+            prof["name"] for prof in response.data["results"]
+        ]
         self.assertEqual(
-            [
-                self.company_kirovohrad.id,
-                self.company_kyiv.id,
-                self.company_dnipro.id,
-                self.company_kharkiv.id,
-                self.company_chernigiv.id,
-            ],
-            ids_from_response,
+            ["Kirovohrad", "Dnipro", "Kyiv", "Chernigiv", "Kharkiv"],
+            names_from_response,
         )
+        self.assertEqual(200, response.status_code)
         self.assertEqual(5, response.data["total_items"])
         self.assertEqual(1, response.data["current"])
         self.assertEqual(1, response.data["total_pages"])
         self.assertEqual(None, response.data["next"])
 
     def test_get_enough_companies(self):
-        self.company_odesa = ProfileStartupFactory(
-            name="Odesaairlines",
-            person=self.odesa_user,
-            created_at="2023-12-07",
+        self.company_synelnicovo = ProfileStartupFactory(
+            name="Synelnicovo",
+            person=self.synelnicovo_user,
             completeness=5,
         )
+        self.company_synelnicovo.created_at = "2023-12-07"
+        self.company_synelnicovo.save()
         response = self.client.get(
             path="/api/profiles/?new_members=-completeness,-created_at"
         )
         self.assertEqual(200, response.status_code)
-        ids_from_response = [prof["id"] for prof in response.data["results"]]
+        names_from_response = [
+            prof["name"] for prof in response.data["results"]
+        ]
 
         self.assertEqual(
             [
-                self.company_odesa.id,
-                self.company_kirovohrad.id,
-                self.company_dnipro.id,
-                self.company_kyiv.id,
-                self.company_kharkiv.id,
-                self.company_chernigiv.id,
+                "Synelnicovo",
+                "Kirovohrad",
+                "Dnipro",
+                "Kyiv",
+                "Chernigiv",
+                "Kharkiv",
             ],
-            ids_from_response,
+            names_from_response,
         )
         self.assertEqual(6, response.data["total_items"])
         self.assertEqual(1, response.data["current"])
@@ -196,34 +202,32 @@ class TestCompanyOrder(APITestCase):
 
     def test_get_more_companies(self):
         self.company_mykolaiv = ProfileStartupFactory(
-            name="Mykolaivsale",
+            name="Mykolaiv",
             person=self.mykolaiv_user,
-            created_at="2023-12-06",
             completeness=3,
         )
+        self.company_mykolaiv.created_at = "2023-12-06"
+        self.company_mykolaiv.save()
+
         self.company_odesa = ProfileStartupFactory(
-            name="Odesaairlines",
+            name="Odesa",
             person=self.odesa_user,
-            created_at="2023-12-07",
             completeness=5,
         )
+        self.company_odesa.created_at = "2023-12-07"
+        self.company_odesa.save()
 
         response = self.client.get(
             path="/api/profiles/?new_members=-completeness,-created_at"
         )
-        self.assertEqual(200, response.status_code)
-        ids_from_response = [prof["id"] for prof in response.data["results"]]
+        names_from_response = [
+            prof["name"] for prof in response.data["results"]
+        ]
         self.assertEqual(
-            [
-                self.company_odesa.id,
-                self.company_mykolaiv.id,
-                self.company_kirovohrad.id,
-                self.company_dnipro.id,
-                self.company_kyiv.id,
-                self.company_chernigiv.id,
-            ],
-            ids_from_response,
+            ["Odesa", "Mykolaiv", "Kirovohrad", "Dnipro", "Kyiv", "Chernigiv"],
+            names_from_response,
         )
+        self.assertEqual(200, response.status_code)
         self.assertEqual(7, response.data["total_items"])
         self.assertEqual(1, response.data["current"])
         self.assertEqual(2, response.data["total_pages"])
