@@ -5,7 +5,6 @@ Image.MAX_IMAGE_PIXELS = None
 
 MAX_ALLOWED_BANNER_IMAGE_SIZE = 5 * 1024 * 1024
 MAX_ALLOWED_LOGO_IMAGE_SIZE = 1 * 1024 * 1024
-# ToDo: discuss problem with MB-sized pictures with mentors, experts and BAs
 
 
 def validate_image_format(image: Image):

@@ -9,6 +9,7 @@ from profiles.factories import (
 )
 
 from utils.dump_response import dump  # noqa
+from profiles.models import Profile
 
 
 class TestBannerChange(APITestCase):
@@ -100,6 +101,8 @@ class TestBannerChange(APITestCase):
             path=f"/api/banner/{self.company_dnipro.id}/",
             data={"banner_image": self.right_image},
         )
+        comp = Profile.objects.filter(name="Dnipro").first()
+        self.assertEqual(comp.completeness, 101)
         self.assertEqual(200, response.status_code)
 
     def test_put_banner_authorized_owner_wrong_image(self):
