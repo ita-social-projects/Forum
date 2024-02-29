@@ -1,5 +1,6 @@
 from profiles.models import Profile, Activity, Category
 
+
 def completeness_count(serializer):
     instance = serializer.save()
     instance.completeness = 0
