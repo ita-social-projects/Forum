@@ -118,7 +118,7 @@ DataContacts.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.number.isRequired,
     person: PropTypes.number,
-    edrpou: PropTypes.number,
+    edrpou: PropTypes.string,
     founded: PropTypes.number,
     address: PropTypes.string,
   }),
