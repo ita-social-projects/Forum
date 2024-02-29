@@ -50,7 +50,6 @@ class TestCompletenessUpdate(APITestCase):
             path=f"/api/profiles/{self.company_kryvyi_rig.id}",
             data={"activities": [self.sale_activity.id]},
         )
-        # print(response, '***********')
         comp = Profile.objects.filter(name="Kryvyi_rig_art").first()
         self.assertEqual(comp.completeness, 2)
 
@@ -159,16 +158,6 @@ class TestCompanyOrder(APITestCase):
         names_from_response = [
             prof["name"] for prof in response.data["results"]
         ]
-        comp = Profile.objects.filter(name="Kharkiv").first()
-        comp1 = Profile.objects.filter(name="Chernigiv").first()
-        print(
-            comp.name,
-            comp.created_at,
-            comp.completeness,
-            comp1.name,
-            comp1.created_at,
-            comp1.completeness,
-        )
         self.assertEqual(
             ["Kirovohrad", "Dnipro", "Kyiv", "Chernigiv", "Kharkiv"],
             names_from_response,
