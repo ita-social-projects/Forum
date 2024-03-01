@@ -7,6 +7,7 @@ from profiles.factories import (
     ProfileStartupFactory,
     ProfileCompanyFactory,
 )
+from profiles.models import Profile
 
 from utils.dump_response import dump  # noqa
 
@@ -97,6 +98,8 @@ class TestLogoChange(APITestCase):
             path=f"/api/logo/{self.company_dnipro.id}/",
             data={"logo_image": self.right_image},
         )
+        comp = Profile.objects.filter(name="Dnipro").first()
+        self.assertEqual(comp.completeness, 2)
         self.assertEqual(200, response.status_code)
 
     def test_put_logo_authorized_owner_wrong_image(self):
@@ -107,6 +110,6 @@ class TestLogoChange(APITestCase):
         )
         self.assertEqual(400, response.status_code)
         self.assertEqual(
-            {"logo_image": ["Image size exceeds the maximum allowed (10MB)."]},
+            {"logo_image": ["Image size exceeds the maximum allowed (1MB)."]},
             response.json(),
         )

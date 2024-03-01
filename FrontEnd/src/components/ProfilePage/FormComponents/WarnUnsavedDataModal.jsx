@@ -14,7 +14,7 @@ const WarnUnsavedDataModal = ({ onCancel, onConfirm }) => {
             </div>
             <div className={classes['modal-content']}>
                 <p className={classes['modal-content--text']}>
-                    Ввдені дані не є збережені. При переході на іншу сторінку вони будуть втрачені. Перейти на іншу сторінку?
+                    Введені дані не є збережені. При переході на іншу сторінку вони будуть втрачені. Перейти на іншу сторінку?
                 </p>
             </div>
             <div className={classes['modal-footer']}>
