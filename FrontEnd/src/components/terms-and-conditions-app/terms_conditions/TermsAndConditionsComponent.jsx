@@ -1,38 +1,32 @@
-import './Text.css';
-import './TermsAndConditionsComponent.css';
-import { useEffect } from 'react';
-import { termsConditions } from './Text';
+import React, { useEffect } from 'react';
+import styles from './TermsAndConditionsComponent.module.css';
+import TermsAndConditionsText from './text';
+import TEXT_CONTENT from './text';
+import LinkContainer from '../../CookiesPolicyPage/LinkContainer.jsx';
+import renderContent from '../../CookiesPolicyPage/RenderContent.jsx';
 
-export function TermsAndConditions() {
+const TermsAndConditions = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="block-terms_and_conditions block-size">
-      <div className="root-container">
-        <div className="divider" />
-        <div className="terms-conditions-main">
-          <div className="title-container">
-            <h2 className="title-terms_and_conditions">Terms & Conditions</h2>
-            <p className="description">{termsConditions.intro}</p>
-          </div>
-        </div>
+    <div className={styles['TermsAndConditions']}>
+      <div className={styles['TermsAndConditions__link_container']}>
+        <LinkContainer />
+        <img className={styles['TermsAndConditions__img1']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots.png`}
+          alt="dots.png" />
+        <img className={styles['TermsAndConditions__img2']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots.png`}
+          alt="dots.png" />
       </div>
-      <div className="terms-conditions-text">
-        <ul>
-          <p>Updated: {termsConditions.info.updated}</p>
-          <p>{termsConditions.info.intro}</p>
-          {termsConditions.sections.map((section, index) => (
-            <li key={index}>
-              <h3>{section.title}</h3>
-              <p>{section.content}</p>
-            </li>
-          ))}
-        </ul>
+      <div className={styles['TermsAndConditions__text_container']}>
+        <h2 className={styles['TermsAndConditions__title']}>{TermsAndConditionsText.title} </h2>
+        {renderContent(TEXT_CONTENT)}
       </div>
     </div>
   );
-}
+};
 
 export default TermsAndConditions;

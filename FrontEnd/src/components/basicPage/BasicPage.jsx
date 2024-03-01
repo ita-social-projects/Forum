@@ -12,7 +12,7 @@ import Header from '../HeaderFooter/header/Header';
 import Logout from '../HeaderFooter/header/navbar/Logout';
 import Loader from '../loader/Loader';
 import MainPage from '../landing-page/MainPage';
-import PrivacyPolicy from '../PrivacyPolicyPage/privacy/PrivacyPolicyComponent';
+import PrivacyPolicy from '../PrivacyPolicyPage/PrivacyPolicyPage';
 import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../profileList/ProfileListPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
@@ -30,6 +30,7 @@ import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/Ter
 import { useAuth } from '../../hooks';
 import { Search } from '../SearchPage/Search';
 import './customToastStyles.css';
+import Contact from '../Contact/Contact';
 
 function BasicPage() {
   const { isAuth, user, logout, isLoading } = useAuth();
@@ -143,6 +144,7 @@ function BasicPage() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
           path="/search"
           element={<Search isAuthorized={isAuth} userData={user} />}
