@@ -2,22 +2,47 @@ import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
 const RenderingTextContainer = ({ item, styles }) => {
-  if (item.type === 'paragraph') {
-    return <p className={styles['text_content']} key={item.id || uuidv4()}>{item.text}</p>;
-  } else if (item.type === 'heading') {
+  const renderParagraph = () => (
+    <p className={styles['text_content']} key={item.id || uuidv4()}>{item.text}</p>
+  );
+
+  const renderHeading = () => {
     const HeadingTag = `h${item.level}`;
     return <HeadingTag className={styles['text_content__heading']} key={item.id || uuidv4()}>{item.text}</HeadingTag>;
-  } else if (item.type === 'paragraph__margin_bottom') {
-    return <p className={styles['text_content__margin_bottom']} key={item.id || uuidv4()}>{item.text}</p>;
-  } else if (item.type === 'list-item') {
-    return (
-      <ul key={item.id || uuidv4()} className={styles['custom-list']}>
-        <li className={styles['custom-list__item']}>{item.text}</li>
-      </ul>
-    );
+  };
+
+  const renderParagraphMarginBottom = () => (
+    <p className={styles['text_content__margin_bottom']} key={item.id || uuidv4()}>{item.text}</p>
+  );
+
+  const renderListItem = () => (
+    <ul key={item.id || uuidv4()} className={styles['custom-list']}>
+      <li className={styles['custom-list__item']}>{item.text}</li>
+    </ul>
+  );
+
+  let element = null;
+
+  switch (item.type) {
+    case 'paragraph':
+      element = renderParagraph();
+      break;
+    case 'heading':
+      element = renderHeading();
+      break;
+    case 'paragraph__margin_bottom':
+      element = renderParagraphMarginBottom();
+      break;
+    case 'list-item':
+      element = renderListItem();
+      break;
+    default:
+      break;
   }
-  return null;
+
+  return element;
 };
+
 RenderingTextContainer.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
