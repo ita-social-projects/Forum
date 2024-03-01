@@ -6,7 +6,6 @@
     background-color: var(--light-text-color);
     scroll-behavior: smooth;
     color: var(--main-text-color);
-
 }
   
 .cookies_policy__title{
@@ -17,14 +16,12 @@
     letter-spacing: 0em;
     text-align: left;
     margin-bottom: 12px;
-    
 }
 
 .cookies_policy__link_container {
     margin-right: 100px;
     max-width: 234px;
     max-height: 1400px;
-
 }
 
 .link {
@@ -43,6 +40,7 @@
     text-transform: uppercase;
     margin-bottom: 24px;
 }
+
 .link_text__active{
     width: 234px;
     color: var(--main-header-color);
@@ -89,9 +87,9 @@
     font-weight: 400;
     line-height: 22px;
 }
+
 .text_content__heading{
     margin-top: 24px;
-
 }
 
 .custom-list {
