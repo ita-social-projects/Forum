@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from './PrivacyPolicy.module.css';
 import privacyPolicyText from './text';
-import Text from './text';
+import TEXT_CONTENT from './text';
 import LinkContainer from '../CookiesPolicyPage/LinkContainer.jsx';
 import renderContent from '../CookiesPolicyPage/RenderContent.jsx';
 
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
       </div>
       <div className={styles['privacy_policy__text_container']}>
         <h2 className={styles['privacy_policy__title']}>{privacyPolicyText.title} </h2>
-        {renderContent(Text)}
+        {renderContent(TEXT_CONTENT)}
       </div>
     </div>
   );

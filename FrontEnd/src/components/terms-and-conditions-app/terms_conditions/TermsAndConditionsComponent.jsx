@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from './TermsAndConditionsComponent.module.css';
 import TermsAndConditionsText from './text';
-import Text from './text';
+import TEXT_CONTENT from './text';
 import LinkContainer from '../../CookiesPolicyPage/LinkContainer.jsx';
 import renderContent from '../../CookiesPolicyPage/RenderContent.jsx';
 
@@ -23,7 +23,7 @@ const TermsAndConditions = () => {
       </div>
       <div className={styles['TermsAndConditions__text_container']}>
         <h2 className={styles['TermsAndConditions__title']}>{TermsAndConditionsText.title} </h2>
-        {renderContent(Text)}
+        {renderContent(TEXT_CONTENT)}
       </div>
     </div>
   );

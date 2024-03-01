@@ -3,7 +3,7 @@ import renderContent from '../CookiesPolicyPage/RenderContent.jsx';
 import LinkContainer from '../CookiesPolicyPage/LinkContainer.jsx';
 import styles from './Contact.module.css';
 import contactText from './text';
-import Text from './text';
+import TEXT_CONTENT from './text';
 
 const Contact = () => {
   useEffect(() => {
@@ -20,7 +20,7 @@ const Contact = () => {
       </div>
       <div className={styles['contact__text_container']}>
         <h2 className={styles['contact__title']}>{contactText.title}</h2>
-        {renderContent(Text)}
+        {renderContent(TEXT_CONTENT)}
       </div>
     </div>
   );
