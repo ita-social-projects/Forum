@@ -7,7 +7,6 @@ from djoser.serializers import (
     UserSerializer,
 )
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 
 from profiles.models import Profile
 from validation.validate_password import (
@@ -31,12 +30,6 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
     company = CustomProfileSerializer(write_only=True)
     email = serializers.EmailField(
         write_only=True,
-        validators=[
-            UniqueValidator(
-                queryset=User.objects.all(),
-                message="Email is already registered",
-            )
-        ],
     )
     password = serializers.CharField(
         style={"input_type": "password"}, write_only=True
@@ -50,10 +43,15 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
         custom_errors = defaultdict(list)
         self.fields.pop("re_password", None)
         re_password = value.pop("re_password")
+        email = value.get("email").lower()
         password = value.get("password")
         company_data = value.get("company")
         is_registered = company_data.get("is_registered")
         is_startup = company_data.get("is_startup")
+        if User.objects.filter(email=email).exists():
+            custom_errors["email"].append("Email is already registered")
+        else:
+            value["email"] = email
         if not is_registered and not is_startup:
             custom_errors["comp_status"].append(
                 "Please choose who you represent."
