@@ -124,7 +124,9 @@ class ProfileList(ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.request.query_params.get("userid")
-        queryset = Profile.objects.filter(is_deleted=False, person__is_active=True).order_by("id")
+        queryset = Profile.objects.filter(
+            is_deleted=False, person__is_active=True
+        ).order_by("id")
         if user_id:
             try:
                 return queryset.filter(person_id=user_id)
