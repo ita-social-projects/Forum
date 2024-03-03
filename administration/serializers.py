@@ -31,8 +31,8 @@ class AdminUserDetailSerializer(serializers.ModelSerializer):
             "company_name",
         )
 
-    def get_company_name(self, obj):
-        return obj.profile.person_id if hasattr(obj, "profile") else None
+    def get_company_name(self, obj) -> bool:
+        return True if hasattr(obj, "profile") else False
 
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):
@@ -97,12 +97,3 @@ class AdminUserStatusSerializer(UserSerializer):
     class Meta(UserSerializer):
         model = User
         fields = ("is_staff",)
-
-    def to_representation(self, instance):
-        user = self.context["request"].user
-        if instance == user:
-            return super().to_representation(instance)
-        else:
-            raise serializers.ValidationError(
-                "You do not have permission to view this user's status."
-            )
