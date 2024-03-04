@@ -182,11 +182,7 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Forum Project",
     "DESCRIPTION": "Forum Project",
     "VERSION": "1.0.0",
-    "COMPONENT_SPLIT_REQUEST": True,
     "SERVE_INCLUDE_SCHEMA": False,
-    # 'SWAGGER_UI_SETTINGS': {
-    #         'url': os.path.join(BASE_DIR, "schema.yml"),
-    #     },
 }
 
 TOKEN_EXPIRATION_TIME = timedelta(days=14)
