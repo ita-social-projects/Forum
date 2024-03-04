@@ -50,7 +50,7 @@ function UserDetail() {
             }
             setUpdateSuccess(true);
         } catch (error) {
-            console.error('Failed to update user:', error);
+            setError(error.message);
         }
     };
 
@@ -71,7 +71,7 @@ function UserDetail() {
             setUsers([]);
             navigate('/customadmin/users');
         } catch (error) {
-            console.error('Failed to delete user:', error);
+            setError(error.message);
         }
     };
 
@@ -83,6 +83,7 @@ function UserDetail() {
                 onDelete={handleDeleteUser}
             />
             <div className={css['user-details-section']}>
+                {error && <p>Виникла помилка!</p>}
                 {updateSuccess && <p>Користувач успішно оновлений!</p>}
                 <ul className={css['form-info__user_text']}>
                     <li>Ім&apos;я: {users.name}</li>

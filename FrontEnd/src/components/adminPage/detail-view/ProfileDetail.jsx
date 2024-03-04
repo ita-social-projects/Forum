@@ -4,7 +4,6 @@ import DeleteModal from './DeleteModal';
 import css from './ProfileDetail.module.css';
 import axios from 'axios';
 
-
 function ProfileDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
     const [error, setError] = useState(null);
@@ -54,7 +53,7 @@ function ProfileDetail() {
             }
             setUpdateSuccess(true);
         } catch (error) {
-            console.error('Failed to update profile:', error);
+            setError(error.message);
         }
     };
 
@@ -75,7 +74,7 @@ function ProfileDetail() {
             setProfile([]);
             navigate('/customadmin/profiles');
         } catch (error) {
-            console.error('Failed to delete profile:', error);
+            setError(error.message);
         }
     };
 
@@ -87,6 +86,7 @@ function ProfileDetail() {
                 onDelete={handleDeleteUser}
             />
             <div className={css['profile-details-section']}>
+                {error && <p>Виникла помилка!</p>}
                 {updateSuccess && <p>Профіль успішно оновлений!</p>}
                 <ul className={css['profile-details-section_info']}>
                     {companyInfo.map((info, index) => (
