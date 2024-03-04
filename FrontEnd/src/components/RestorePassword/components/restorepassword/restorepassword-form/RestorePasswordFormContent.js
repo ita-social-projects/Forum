@@ -26,7 +26,7 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
     password: 'Пароль не відповідає вимогам',
-    confirmPassword: 'Паролі не збігаються',
+    confirmPassword: 'Паролі не співпадають',
   };
 
   const {
