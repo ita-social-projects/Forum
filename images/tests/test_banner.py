@@ -97,11 +97,14 @@ class TestBannerChange(APITestCase):
 
     def test_put_banner_authorized_owner_right_image(self):
         self.client.force_authenticate(self.user)
+        comp1 = Profile.objects.filter(name="Dnipro").first()
+        print(comp1.completeness, '@@@@@@@@@@@@@@@@@@@@')
         response = self.client.put(
             path=f"/api/banner/{self.company_dnipro.id}/",
             data={"banner_image": self.right_image},
         )
         comp = Profile.objects.filter(name="Dnipro").first()
+        print(comp.completeness, '****************')
         self.assertEqual(comp.completeness, 101)
         self.assertEqual(200, response.status_code)
 
