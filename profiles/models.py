@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxLengthValidator
 
 from authentication.models import CustomUser
+from .managers import ProfileManager
 from validation.validate_edrpou import validate_edrpou
 from validation.validate_foundation_year import validate_foundation_year_range
 from validation.validate_image import (
@@ -49,13 +50,13 @@ class Region(models.TextChoices):
     CHERNIHIV_REGION = "Chernihiv region", "Чернігівська область"
 
 
-class ProfileManager(models.Manager):
-    def get_queryset(self):
-        return (
-            super()
-            .get_queryset()
-            .filter(is_deleted=False, person__is_active=True)
-        )
+# class ProfileManager(models.Manager):
+#     def get_queryset(self):
+#         return (
+#             super()
+#             .get_queryset()
+#             .filter(is_deleted=False, person__is_active=True)
+#         )
 
 
 class Profile(models.Model):
@@ -124,8 +125,7 @@ class Profile(models.Model):
     updated_at = models.DateField(auto_now=True)
     completeness = models.SmallIntegerField(default=0)
 
-    objects = models.Manager()
-    active_profiles = ProfileManager()
+    objects = ProfileManager.as_manager()
 
 
 class Activity(models.Model):
