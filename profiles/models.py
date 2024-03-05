@@ -48,9 +48,15 @@ class Region(models.TextChoices):
     CHERNIVTSI_REGION = "Chernivtsi region", "Чернівецька область"
     CHERNIHIV_REGION = "Chernihiv region", "Чернігівська область"
 
+
 class ProfileManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_deleted=False, person__is_active=True)
+        return (
+            super()
+            .get_queryset()
+            .filter(is_deleted=False, person__is_active=True)
+        )
+
 
 class Profile(models.Model):
     id = models.AutoField(primary_key=True)
