@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
   const [isAuth, setIsAuth] = useState(!!JSON.parse(localStorage.getItem('isAuth')));
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const [isStaff, setIsStaff] = useState(!!JSON.parse(localStorage.getItem('isStaff')));
+  const [isStaff, setIsStaff] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
   const navigate = useNavigate();
   const { data, error, mutate } = useSWR(
@@ -38,7 +38,8 @@ export function AuthProvider({ children }) {
     setAuthToken(authToken);
     localStorage.setItem('isAuth', true);
     axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
-    setIsStaff(checkIfStaff);
+    const getIsStaff = checkIfStaff();
+    setIsStaff(getIsStaff);
     setIsAuth(true);
   };
 

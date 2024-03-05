@@ -70,8 +70,8 @@ const LoginContent = (props) => {
       });
       const authToken = response.data.auth_token;
       auth.login(authToken);
-      const isStaf = await checkIfStaff();
-      if (isStaf) {
+      const isStaff = await checkIfStaff();
+      if (isStaff) {
         navigate('/customadmin');
       } else {
         navigate('/profile/user-info');
