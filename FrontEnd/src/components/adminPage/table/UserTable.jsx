@@ -1,53 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import css from './UserTable.module.css';
 import { useNavigate } from 'react-router-dom';
 import PaginationButtons from './PaginationButtons';
 import axios from 'axios';
+import useSWR from 'swr';
 
-const COLUMN_NAMES = ['ID', 'ФІО', 'Пошта',];
+const COLUMN_NAMES = ['ID', 'ФІО', 'Пошта'];
 
 function UserTable() {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
-
     const routeChange = (id) => {
         let path = `../../customadmin/users/${id}`;
         navigate(path);
     };
+    const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const handlePageSizeChange = (size) => {
         setPageSize(size);
         setCurrentPage(1);
     };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`
-                    );
-                if (response.status !== 200) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                setUsers(response.data.results);
-                setTotalPages(response.data.total_pages);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [currentPage, pageSize]);
-
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
+
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`;
+
+    async function fetcher(url) {
+        const response = await axios.get(url);
+        return response.data;
+    }
+
+    const { data, error, isValidating: loading } = useSWR(url, fetcher);
 
     if (loading) {
         return <p>Loading...</p>;
@@ -56,17 +39,24 @@ function UserTable() {
     if (error) {
         return <p>Error: {error}</p>;
     }
+    const users = data.results;
 
     return (
         <div>
-            <PaginationButtons totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange}
-                pageSize={pageSize} onPageSizeChange={handlePageSizeChange}
+            <PaginationButtons
+                totalPages={data ? data.total_pages : 1}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+                pageSize={pageSize}
+                onPageSizeChange={handlePageSizeChange}
             />
             <table className={css['table-section']}>
                 <thead>
                     <tr className={css['table-header']}>
                         {COLUMN_NAMES.map((column) => (
-                            <th key={column} className={css['table-header__text']}>{column}</th>
+                            <th key={column} className={css['table-header__text']}>
+                                {column}
+                            </th>
                         ))}
                     </tr>
                 </thead>
@@ -74,7 +64,9 @@ function UserTable() {
                     {users.map((user) => (
                         <tr key={user.id} className={css['table-element']} onClick={() => routeChange(user.id)}>
                             <td className={css['table-element__text']}>{user.id}</td>
-                            <td className={css['table-element__text']}>{user.surname} {user.name}</td>
+                            <td className={css['table-element__text']}>
+                                {user.surname} {user.name}
+                            </td>
                             <td className={css['table-element__text']}>{user.email}</td>
                         </tr>
                     ))}
