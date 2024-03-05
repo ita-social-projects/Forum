@@ -13,7 +13,7 @@ class BannerRetrieveUpdate(RetrieveUpdateAPIView):
     permission_classes = (UserIsProfileOwnerOrReadOnly,)
     serializer_class = BannerSerializer
     parser_classes = (MultiPartParser, FormParser)
-    queryset = Profile.objects.filter(is_deleted=False, person__is_active=True)
+    queryset = Profile.active_profiles
 
     def perform_update(self, serializer):
         completeness_count(serializer)
@@ -23,7 +23,7 @@ class LogoRetrieveUpdate(RetrieveUpdateAPIView):
     permission_classes = (UserIsProfileOwnerOrReadOnly,)
     serializer_class = LogoSerializer
     parser_classes = (MultiPartParser, FormParser)
-    queryset = Profile.objects.filter(is_deleted=False, person__is_active=True)
+    queryset = Profile.active_profiles
 
     def perform_update(self, serializer):
         completeness_count(serializer)

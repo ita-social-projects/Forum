@@ -8,7 +8,7 @@ from search.filters import CompanyFilter
 
 
 class SearchCompanyView(ListAPIView):
-    queryset = Profile.objects.filter(is_deleted=False, person__is_active=True)
+    queryset = Profile.active_profiles
     serializer_class = CompanySerializers
     filter_backends = [
         django_filters.rest_framework.DjangoFilterBackend,
