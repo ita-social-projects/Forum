@@ -179,7 +179,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Forum Project",
-    "DESCRIPTION": "Your project description",
+    "DESCRIPTION": "Forum Project",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }

@@ -46,7 +46,7 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
         navigate('/reset-password/modal');
       })
       .catch(() => {
-        toast.error('Зазначена електронна адреса не зареєстрована.');
+        toast.error('Зазначена електронна адреса не зареєстрована');
       });
   };
 

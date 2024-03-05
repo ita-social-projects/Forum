@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Forum Project
   version: 1.0.0
-  description: Your project description
+  description: Forum Project
 paths:
   /api/activities/:
     get:
@@ -28,13 +28,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Activity'
+              $ref: '#/components/schemas/ActivityRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Activity'
+              $ref: '#/components/schemas/ActivityRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Activity'
+              $ref: '#/components/schemas/ActivityRequest'
         required: true
       security:
       - tokenAuth: []
@@ -81,13 +81,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Activity'
+              $ref: '#/components/schemas/ActivityRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Activity'
+              $ref: '#/components/schemas/ActivityRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Activity'
+              $ref: '#/components/schemas/ActivityRequest'
         required: true
       security:
       - tokenAuth: []
@@ -113,13 +113,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedActivity'
+              $ref: '#/components/schemas/PatchedActivityRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedActivity'
+              $ref: '#/components/schemas/PatchedActivityRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedActivity'
+              $ref: '#/components/schemas/PatchedActivityRequest'
       security:
       - tokenAuth: []
       responses:
@@ -155,13 +155,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TokenCreate'
+              $ref: '#/components/schemas/TokenCreateRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TokenCreate'
+              $ref: '#/components/schemas/TokenCreateRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TokenCreate'
+              $ref: '#/components/schemas/TokenCreateRequest'
       security:
       - tokenAuth: []
       - {}
@@ -207,13 +207,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegistration'
+              $ref: '#/components/schemas/UserRegistrationRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserRegistration'
+              $ref: '#/components/schemas/UserRegistrationRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserRegistration'
+              $ref: '#/components/schemas/UserRegistrationRequest'
         required: true
       security:
       - tokenAuth: []
@@ -261,13 +261,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
         required: true
       security:
       - tokenAuth: []
@@ -293,13 +293,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
       security:
       - tokenAuth: []
       responses:
@@ -334,13 +334,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Activation'
+              $ref: '#/components/schemas/ActivationRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Activation'
+              $ref: '#/components/schemas/ActivationRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Activation'
+              $ref: '#/components/schemas/ActivationRequest'
         required: true
       security:
       - tokenAuth: []
@@ -374,13 +374,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
         required: true
       security:
       - tokenAuth: []
@@ -399,13 +399,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
       security:
       - tokenAuth: []
       responses:
@@ -433,13 +433,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
         required: true
       security:
       - tokenAuth: []
@@ -460,13 +460,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
         required: true
       security:
       - tokenAuth: []
@@ -487,13 +487,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsernameResetConfirm'
+              $ref: '#/components/schemas/UsernameResetConfirmRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UsernameResetConfirm'
+              $ref: '#/components/schemas/UsernameResetConfirmRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UsernameResetConfirm'
+              $ref: '#/components/schemas/UsernameResetConfirmRequest'
         required: true
       security:
       - tokenAuth: []
@@ -514,13 +514,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
         required: true
       security:
       - tokenAuth: []
@@ -541,13 +541,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PasswordResetConfirmRetype'
+              $ref: '#/components/schemas/PasswordResetConfirmRetypeRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PasswordResetConfirmRetype'
+              $ref: '#/components/schemas/PasswordResetConfirmRetypeRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PasswordResetConfirmRetype'
+              $ref: '#/components/schemas/PasswordResetConfirmRetypeRequest'
         required: true
       security:
       - tokenAuth: []
@@ -568,13 +568,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SetUsername'
+              $ref: '#/components/schemas/SetUsernameRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SetUsername'
+              $ref: '#/components/schemas/SetUsernameRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SetUsername'
+              $ref: '#/components/schemas/SetUsernameRequest'
         required: true
       security:
       - tokenAuth: []
@@ -594,13 +594,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SetPassword'
+              $ref: '#/components/schemas/SetPasswordRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SetPassword'
+              $ref: '#/components/schemas/SetPasswordRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SetPassword'
+              $ref: '#/components/schemas/SetPasswordRequest'
         required: true
       security:
       - tokenAuth: []
@@ -640,13 +640,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AdminCompanyList'
+              $ref: '#/components/schemas/AdminCompanyListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/AdminCompanyList'
+              $ref: '#/components/schemas/AdminCompanyListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/AdminCompanyList'
+              $ref: '#/components/schemas/AdminCompanyListRequest'
       security:
       - tokenAuth: []
       responses:
@@ -692,13 +692,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AdminCompanyDetail'
+              $ref: '#/components/schemas/AdminCompanyDetailRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/AdminCompanyDetail'
+              $ref: '#/components/schemas/AdminCompanyDetailRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/AdminCompanyDetail'
+              $ref: '#/components/schemas/AdminCompanyDetailRequest'
       security:
       - tokenAuth: []
       responses:
@@ -723,13 +723,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedAdminCompanyDetail'
+              $ref: '#/components/schemas/PatchedAdminCompanyDetailRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedAdminCompanyDetail'
+              $ref: '#/components/schemas/PatchedAdminCompanyDetailRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedAdminCompanyDetail'
+              $ref: '#/components/schemas/PatchedAdminCompanyDetailRequest'
       security:
       - tokenAuth: []
       responses:
@@ -815,13 +815,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AdminUser'
+              $ref: '#/components/schemas/AdminUserRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/AdminUser'
+              $ref: '#/components/schemas/AdminUserRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/AdminUser'
+              $ref: '#/components/schemas/AdminUserRequest'
         required: true
       security:
       - tokenAuth: []
@@ -848,13 +848,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedAdminUser'
+              $ref: '#/components/schemas/PatchedAdminUserRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedAdminUser'
+              $ref: '#/components/schemas/PatchedAdminUserRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedAdminUser'
+              $ref: '#/components/schemas/PatchedAdminUserRequest'
       security:
       - tokenAuth: []
       responses:
@@ -891,13 +891,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TokenCreate'
+              $ref: '#/components/schemas/TokenCreateRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TokenCreate'
+              $ref: '#/components/schemas/TokenCreateRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TokenCreate'
+              $ref: '#/components/schemas/TokenCreateRequest'
       security:
       - tokenAuth: []
       - {}
@@ -943,13 +943,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegistration'
+              $ref: '#/components/schemas/UserRegistrationRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserRegistration'
+              $ref: '#/components/schemas/UserRegistrationRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserRegistration'
+              $ref: '#/components/schemas/UserRegistrationRequest'
         required: true
       security:
       - tokenAuth: []
@@ -997,13 +997,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1029,13 +1029,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
       security:
       - tokenAuth: []
       responses:
@@ -1070,13 +1070,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Activation'
+              $ref: '#/components/schemas/ActivationRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Activation'
+              $ref: '#/components/schemas/ActivationRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Activation'
+              $ref: '#/components/schemas/ActivationRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1110,13 +1110,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserList'
+              $ref: '#/components/schemas/UserListRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1135,13 +1135,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUserList'
+              $ref: '#/components/schemas/PatchedUserListRequest'
       security:
       - tokenAuth: []
       responses:
@@ -1169,13 +1169,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1196,13 +1196,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1223,13 +1223,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsernameResetConfirm'
+              $ref: '#/components/schemas/UsernameResetConfirmRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UsernameResetConfirm'
+              $ref: '#/components/schemas/UsernameResetConfirmRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UsernameResetConfirm'
+              $ref: '#/components/schemas/UsernameResetConfirmRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1250,13 +1250,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SendEmailReset'
+              $ref: '#/components/schemas/SendEmailResetRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1277,13 +1277,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PasswordResetConfirmRetype'
+              $ref: '#/components/schemas/PasswordResetConfirmRetypeRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PasswordResetConfirmRetype'
+              $ref: '#/components/schemas/PasswordResetConfirmRetypeRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PasswordResetConfirmRetype'
+              $ref: '#/components/schemas/PasswordResetConfirmRetypeRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1304,13 +1304,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SetUsername'
+              $ref: '#/components/schemas/SetUsernameRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SetUsername'
+              $ref: '#/components/schemas/SetUsernameRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SetUsername'
+              $ref: '#/components/schemas/SetUsernameRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1330,13 +1330,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SetPassword'
+              $ref: '#/components/schemas/SetPasswordRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SetPassword'
+              $ref: '#/components/schemas/SetPasswordRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SetPassword'
+              $ref: '#/components/schemas/SetPasswordRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1346,6 +1346,83 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SetPassword'
+          description: ''
+  /api/banner/{id}/:
+    get:
+      operationId: api_banner_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Banner'
+          description: ''
+    put:
+      operationId: api_banner_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BannerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BannerRequest'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Banner'
+          description: ''
+    patch:
+      operationId: api_banner_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBannerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBannerRequest'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Banner'
           description: ''
   /api/categories/:
     get:
@@ -1371,13 +1448,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CategoryRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CategoryRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CategoryRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1424,13 +1501,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CategoryRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CategoryRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CategoryRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1456,13 +1533,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedCategory'
+              $ref: '#/components/schemas/PatchedCategoryRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedCategory'
+              $ref: '#/components/schemas/PatchedCategoryRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedCategory'
+              $ref: '#/components/schemas/PatchedCategoryRequest'
       security:
       - tokenAuth: []
       responses:
@@ -1488,6 +1565,103 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/company-view/{profile_id}/:
+    post:
+      operationId: api_company_view_create
+      parameters:
+      - in: path
+        name: profile_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViewedCompany'
+          description: ''
+  /api/logo/{id}/:
+    get:
+      operationId: api_logo_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logo'
+          description: ''
+    put:
+      operationId: api_logo_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LogoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LogoRequest'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logo'
+          description: ''
+    patch:
+      operationId: api_logo_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLogoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLogoRequest'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logo'
+          description: ''
   /api/profiles/:
     get:
       operationId: api_profiles_list
@@ -1512,6 +1686,32 @@ paths:
         name: is_startup
         schema:
           type: boolean
+      - in: query
+        name: new_members
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - --completeness
+            - --created_at
+            - -completeness
+            - -created_at
+        description: |-
+          Ordering
+
+          * `-completeness` - -completeness
+          * `--completeness` - -completeness (descending)
+          * `-created_at` - -created at
+          * `--created_at` - -created at (descending)
+        explode: false
+        style: form
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       - name: page
         required: false
         in: query
@@ -1548,13 +1748,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProfileCreate'
+              $ref: '#/components/schemas/ProfileCreateRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ProfileCreate'
+              $ref: '#/components/schemas/ProfileCreateRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ProfileCreate'
+              $ref: '#/components/schemas/ProfileCreateRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1677,13 +1877,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SavedCompany'
+              $ref: '#/components/schemas/SavedCompanyRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SavedCompany'
+              $ref: '#/components/schemas/SavedCompanyRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SavedCompany'
+              $ref: '#/components/schemas/SavedCompanyRequest'
         required: true
       security:
       - tokenAuth: []
@@ -1743,58 +1943,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/CompanySerializers'
           description: ''
-  /api/viewed-list/:
-    get:
-      operationId: api_viewed_list_list
-      parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: page_size
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      tags:
-      - api
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedViewedCompanyList'
-          description: ''
-    post:
-      operationId: api_viewed_list_create
-      tags:
-      - api
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ViewedCompany'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ViewedCompany'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ViewedCompany'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ViewedCompany'
-          description: ''
 components:
   schemas:
     Activation:
@@ -1804,6 +1952,18 @@ components:
           type: string
         token:
           type: string
+      required:
+      - token
+      - uid
+    ActivationRequest:
+      type: object
+      properties:
+        uid:
+          type: string
+          minLength: 1
+        token:
+          type: string
+          minLength: 1
       required:
       - token
       - uid
@@ -1819,13 +1979,22 @@ components:
       required:
       - id
       - name
+    ActivityRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 50
+      required:
+      - name
     AdminCompanyDetail:
       type: object
       properties:
         name:
           type: string
           nullable: true
-          maxLength: 50
+          maxLength: 100
         is_registered:
           type: boolean
           nullable: true
@@ -1848,30 +2017,25 @@ components:
           readOnly: true
         person_position:
           type: string
-          nullable: true
           maxLength: 50
         official_name:
           type: string
           nullable: true
           maxLength: 255
         region:
-          nullable: true
           oneOf:
           - $ref: '#/components/schemas/RegionEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          - $ref: '#/components/schemas/BlankEnum'
         common_info:
           type: string
-          nullable: true
-          maxLength: 255
+          maxLength: 2000
         phone:
           type: string
-          nullable: true
           maxLength: 12
         edrpou:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: string
           nullable: true
+          maxLength: 8
         founded:
           type: integer
           maximum: 32767
@@ -1879,16 +2043,12 @@ components:
           nullable: true
         service_info:
           type: string
-          nullable: true
         product_info:
           type: string
-          nullable: true
         address:
           type: string
-          nullable: true
         startup_idea:
           type: string
-          nullable: true
         banner_image:
           type: string
           format: uri
@@ -1899,13 +2059,67 @@ components:
       - activities
       - categories
       - person
+    AdminCompanyDetailRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 100
+        is_registered:
+          type: boolean
+          nullable: true
+        is_startup:
+          type: boolean
+          nullable: true
+        person_position:
+          type: string
+          maxLength: 50
+        official_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        region:
+          oneOf:
+          - $ref: '#/components/schemas/RegionEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        common_info:
+          type: string
+          maxLength: 2000
+        phone:
+          type: string
+          maxLength: 12
+        edrpou:
+          type: string
+          nullable: true
+          maxLength: 8
+        founded:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+          nullable: true
+        service_info:
+          type: string
+        product_info:
+          type: string
+        address:
+          type: string
+        startup_idea:
+          type: string
+        banner_image:
+          type: string
+          format: binary
+          nullable: true
+        is_deleted:
+          type: boolean
     AdminCompanyList:
       type: object
       properties:
         name:
           type: string
           nullable: true
-          maxLength: 50
+          maxLength: 100
         is_registered:
           type: boolean
           nullable: true
@@ -1918,7 +2132,6 @@ components:
           readOnly: true
         person_position:
           type: string
-          nullable: true
           maxLength: 50
         official_name:
           type: string
@@ -1926,20 +2139,49 @@ components:
           maxLength: 255
         phone:
           type: string
-          nullable: true
           maxLength: 12
         edrpou:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        address:
           type: string
           nullable: true
+          maxLength: 8
+        address:
+          type: string
         is_deleted:
           type: boolean
       required:
       - person
+    AdminCompanyListRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 100
+        is_registered:
+          type: boolean
+          nullable: true
+        is_startup:
+          type: boolean
+          nullable: true
+        person_position:
+          type: string
+          maxLength: 50
+        official_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        phone:
+          type: string
+          maxLength: 12
+        edrpou:
+          type: string
+          nullable: true
+          maxLength: 8
+        address:
+          type: string
+        is_deleted:
+          type: boolean
     AdminUser:
       type: object
       properties:
@@ -1969,6 +2211,41 @@ components:
       - name
       - phone_number
       - surname
+    AdminUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 50
+        surname:
+          type: string
+          minLength: 1
+          maxLength: 50
+        is_active:
+          type: boolean
+        is_staff:
+          type: boolean
+      required:
+      - name
+      - surname
+    Banner:
+      type: object
+      properties:
+        banner_image:
+          type: string
+          format: uri
+          nullable: true
+    BannerRequest:
+      type: object
+      properties:
+        banner_image:
+          type: string
+          format: binary
+          nullable: true
+    BlankEnum:
+      enum:
+      - ''
     Category:
       type: object
       properties:
@@ -1981,6 +2258,15 @@ components:
       required:
       - id
       - name
+    CategoryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 50
+      required:
+      - name
     CompanySerializers:
       type: object
       properties:
@@ -1990,42 +2276,54 @@ components:
         name:
           type: string
           nullable: true
-          maxLength: 50
+          maxLength: 100
         categories:
           type: array
           items:
             $ref: '#/components/schemas/Category'
           readOnly: true
+        activities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Activity'
+          readOnly: true
         region:
-          nullable: true
           oneOf:
           - $ref: '#/components/schemas/RegionEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          - $ref: '#/components/schemas/BlankEnum'
         founded:
           type: integer
           maximum: 32767
           minimum: -32768
           nullable: true
-        service_info:
-          type: string
-          nullable: true
         address:
           type: string
-          nullable: true
         banner_image:
           type: string
           format: uri
           nullable: true
+        logo_image:
+          type: string
+          format: uri
+          nullable: true
+        person:
+          type: integer
+        is_saved:
+          type: string
+          readOnly: true
       required:
+      - activities
       - categories
       - id
+      - is_saved
+      - person
     CustomProfile:
       type: object
       properties:
         name:
           type: string
           nullable: true
-          maxLength: 50
+          maxLength: 100
         is_registered:
           type: boolean
         is_startup:
@@ -2033,9 +2331,35 @@ components:
       required:
       - is_registered
       - is_startup
-    NullEnum:
-      enum:
-      - null
+    CustomProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 100
+        is_registered:
+          type: boolean
+        is_startup:
+          type: boolean
+      required:
+      - is_registered
+      - is_startup
+    Logo:
+      type: object
+      properties:
+        logo_image:
+          type: string
+          format: uri
+          nullable: true
+    LogoRequest:
+      type: object
+      properties:
+        logo_image:
+          type: string
+          format: binary
+          nullable: true
     PaginatedAdminCompanyListList:
       type: object
       properties:
@@ -2096,26 +2420,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProfileList'
-    PaginatedViewedCompanyList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ViewedCompany'
     PasswordResetConfirmRetype:
       type: object
       properties:
@@ -2132,68 +2436,68 @@ components:
       - re_new_password
       - token
       - uid
-    PatchedActivity:
+    PasswordResetConfirmRetypeRequest:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
+        uid:
+          type: string
+          minLength: 1
+        token:
+          type: string
+          minLength: 1
+        new_password:
+          type: string
+          minLength: 1
+        re_new_password:
+          type: string
+          minLength: 1
+      required:
+      - new_password
+      - re_new_password
+      - token
+      - uid
+    PatchedActivityRequest:
+      type: object
+      properties:
         name:
           type: string
+          minLength: 1
           maxLength: 50
-    PatchedAdminCompanyDetail:
+    PatchedAdminCompanyDetailRequest:
       type: object
       properties:
         name:
           type: string
           nullable: true
-          maxLength: 50
+          minLength: 1
+          maxLength: 100
         is_registered:
           type: boolean
           nullable: true
         is_startup:
           type: boolean
           nullable: true
-        categories:
-          type: array
-          items:
-            type: string
-          readOnly: true
-        activities:
-          type: array
-          items:
-            type: string
-          readOnly: true
-        person:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
         person_position:
           type: string
-          nullable: true
           maxLength: 50
         official_name:
           type: string
           nullable: true
           maxLength: 255
         region:
-          nullable: true
           oneOf:
           - $ref: '#/components/schemas/RegionEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          - $ref: '#/components/schemas/BlankEnum'
         common_info:
           type: string
-          nullable: true
-          maxLength: 255
+          maxLength: 2000
         phone:
           type: string
-          nullable: true
           maxLength: 12
         edrpou:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: string
           nullable: true
+          maxLength: 8
         founded:
           type: integer
           maximum: 32767
@@ -2201,69 +2505,64 @@ components:
           nullable: true
         service_info:
           type: string
-          nullable: true
         product_info:
           type: string
-          nullable: true
         address:
           type: string
-          nullable: true
         startup_idea:
           type: string
-          nullable: true
         banner_image:
           type: string
-          format: uri
+          format: binary
           nullable: true
         is_deleted:
           type: boolean
-    PatchedAdminUser:
+    PatchedAdminUserRequest:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         name:
           type: string
+          minLength: 1
           maxLength: 50
         surname:
           type: string
+          minLength: 1
           maxLength: 50
-        email:
-          type: string
-          format: email
-          readOnly: true
-        phone_number:
-          type: string
-          readOnly: true
         is_active:
           type: boolean
         is_staff:
           type: boolean
-    PatchedCategory:
+    PatchedBannerRequest:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
+        banner_image:
+          type: string
+          format: binary
+          nullable: true
+    PatchedCategoryRequest:
+      type: object
+      properties:
         name:
           type: string
+          minLength: 1
           maxLength: 50
-    PatchedUserList:
+    PatchedLogoRequest:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        email:
+        logo_image:
           type: string
-          format: email
-          readOnly: true
+          format: binary
+          nullable: true
+    PatchedUserListRequest:
+      type: object
+      properties:
         name:
           type: string
+          minLength: 1
           maxLength: 50
         surname:
           type: string
+          minLength: 1
           maxLength: 50
     ProfileCreate:
       type: object
@@ -2274,7 +2573,7 @@ components:
         name:
           type: string
           nullable: true
-          maxLength: 50
+          maxLength: 100
         is_registered:
           type: boolean
           nullable: true
@@ -2283,30 +2582,25 @@ components:
           nullable: true
         person_position:
           type: string
-          nullable: true
           maxLength: 50
         official_name:
           type: string
           nullable: true
           maxLength: 255
         region:
-          nullable: true
           oneOf:
           - $ref: '#/components/schemas/RegionEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          - $ref: '#/components/schemas/BlankEnum'
         common_info:
           type: string
-          nullable: true
-          maxLength: 255
+          maxLength: 2000
         phone:
           type: string
-          nullable: true
           maxLength: 12
         edrpou:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: string
           nullable: true
+          maxLength: 8
         founded:
           type: integer
           maximum: 32767
@@ -2314,22 +2608,34 @@ components:
           nullable: true
         service_info:
           type: string
-          nullable: true
         product_info:
           type: string
-          nullable: true
         address:
           type: string
-          nullable: true
         startup_idea:
           type: string
-          nullable: true
         banner_image:
+          type: string
+          format: uri
+          nullable: true
+        logo_image:
           type: string
           format: uri
           nullable: true
         is_deleted:
           type: boolean
+        created_at:
+          type: string
+          format: date
+          readOnly: true
+        updated_at:
+          type: string
+          format: date
+          readOnly: true
+        completeness:
+          type: integer
+          maximum: 32767
+          minimum: -32768
         person:
           type: integer
         categories:
@@ -2343,7 +2649,85 @@ components:
       required:
       - activities
       - categories
+      - created_at
       - id
+      - person
+      - updated_at
+    ProfileCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 100
+        is_registered:
+          type: boolean
+          nullable: true
+        is_startup:
+          type: boolean
+          nullable: true
+        person_position:
+          type: string
+          maxLength: 50
+        official_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        region:
+          oneOf:
+          - $ref: '#/components/schemas/RegionEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        common_info:
+          type: string
+          maxLength: 2000
+        phone:
+          type: string
+          maxLength: 12
+        edrpou:
+          type: string
+          nullable: true
+          maxLength: 8
+        founded:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+          nullable: true
+        service_info:
+          type: string
+        product_info:
+          type: string
+        address:
+          type: string
+        startup_idea:
+          type: string
+        banner_image:
+          type: string
+          format: binary
+          nullable: true
+        logo_image:
+          type: string
+          format: binary
+          nullable: true
+        is_deleted:
+          type: boolean
+        completeness:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+        person:
+          type: integer
+        categories:
+          type: array
+          items:
+            type: integer
+        activities:
+          type: array
+          items:
+            type: integer
+      required:
+      - activities
+      - categories
       - person
     ProfileList:
       type: object
@@ -2354,7 +2738,7 @@ components:
         name:
           type: string
           nullable: true
-          maxLength: 50
+          maxLength: 100
         person:
           type: integer
         is_registered:
@@ -2368,19 +2752,21 @@ components:
           nullable: true
           maxLength: 255
         region:
-          nullable: true
           oneOf:
           - $ref: '#/components/schemas/RegionEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          - $ref: '#/components/schemas/BlankEnum'
         region_display:
           type: string
           readOnly: true
         common_info:
           type: string
-          nullable: true
-          maxLength: 255
+          maxLength: 2000
         address:
           type: string
+        founded:
+          type: integer
+          maximum: 32767
+          minimum: -32768
           nullable: true
         categories:
           type: array
@@ -2393,6 +2779,10 @@ components:
             $ref: '#/components/schemas/Activity'
           readOnly: true
         banner_image:
+          type: string
+          format: uri
+          nullable: true
+        logo_image:
           type: string
           format: uri
           nullable: true
@@ -2436,34 +2826,21 @@ components:
       - Chernivtsi region
       - Chernihiv region
       type: string
-      description: |-
-        * `Kyiv` - Київ
-        * `Vinnytsia region` - Вінницька область
-        * `Volyn region` - Волинська область
-        * `Dnipro region` - Дніпропетровська область
-        * `Donetsk region` - Донецька область
-        * `Zhytomyr region` - Житомирська область
-        * `Zakarpattia region` - Закарпатська область
-        * `Zaporizhzhia region` - Запорізька область
-        * `IvanoFrankivsk region` - Івано-Франківська область
-        * `Kyiv region` - Київська область
-        * `Kirovohrad region` - Кіровоградська область
-        * `Crimea` - Автономна Республіка Крим
-        * `Luhansk region` - Луганська область
-        * `Lviv region` - Львівська область
-        * `Mykolaiv region` - Миколаївська область
-        * `Odesa region` - Одеська область
-        * `Poltava region` - Полтавська область
-        * `Rivne region` - Рівненська область
-        * `Sevastopol` - Севастополь
-        * `Sumy region` - Сумська область
-        * `Ternopil region` - Тернопільська область
-        * `Kharkiv region` - Харківська область
-        * `Kherson region` - Херсонська область
-        * `Khmelnytskyi region` - Хмельницька область
-        * `Cherkasy region` - Черкаська область
-        * `Chernivtsi region` - Чернівецька область
-        * `Chernihiv region` - Чернігівська область
+      description: "* `` - \n* `Kyiv` - Київ\n* `Vinnytsia region` - Вінницька область\n\
+        * `Volyn region` - Волинська область\n* `Dnipro region` - Дніпропетровська\
+        \ область\n* `Donetsk region` - Донецька область\n* `Zhytomyr region` - Житомирська\
+        \ область\n* `Zakarpattia region` - Закарпатська область\n* `Zaporizhzhia\
+        \ region` - Запорізька область\n* `IvanoFrankivsk region` - Івано-Франківська\
+        \ область\n* `Kyiv region` - Київська область\n* `Kirovohrad region` - Кіровоградська\
+        \ область\n* `Crimea` - Автономна Республіка Крим\n* `Luhansk region` - Луганська\
+        \ область\n* `Lviv region` - Львівська область\n* `Mykolaiv region` - Миколаївська\
+        \ область\n* `Odesa region` - Одеська область\n* `Poltava region` - Полтавська\
+        \ область\n* `Rivne region` - Рівненська область\n* `Sevastopol` - Севастополь\n\
+        * `Sumy region` - Сумська область\n* `Ternopil region` - Тернопільська область\n\
+        * `Kharkiv region` - Харківська область\n* `Kherson region` - Херсонська область\n\
+        * `Khmelnytskyi region` - Хмельницька область\n* `Cherkasy region` - Черкаська\
+        \ область\n* `Chernivtsi region` - Чернівецька область\n* `Chernihiv region`\
+        \ - Чернігівська область"
     SavedCompany:
       type: object
       properties:
@@ -2483,12 +2860,31 @@ components:
       - company
       - id
       - user
+    SavedCompanyRequest:
+      type: object
+      properties:
+        user:
+          type: integer
+        company:
+          type: integer
+      required:
+      - company
+      - user
     SendEmailReset:
       type: object
       properties:
         email:
           type: string
           format: email
+      required:
+      - email
+    SendEmailResetRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
       required:
       - email
     SetPassword:
@@ -2498,6 +2894,18 @@ components:
           type: string
         current_password:
           type: string
+      required:
+      - current_password
+      - new_password
+    SetPasswordRequest:
+      type: object
+      properties:
+        new_password:
+          type: string
+          minLength: 1
+        current_password:
+          type: string
+          minLength: 1
       required:
       - current_password
       - new_password
@@ -2514,6 +2922,21 @@ components:
       required:
       - current_password
       - new_email
+    SetUsernameRequest:
+      type: object
+      properties:
+        current_password:
+          type: string
+          minLength: 1
+        new_email:
+          type: string
+          format: email
+          minLength: 1
+          title: Email
+          maxLength: 50
+      required:
+      - current_password
+      - new_email
     TokenCreate:
       type: object
       properties:
@@ -2521,6 +2944,15 @@ components:
           type: string
         email:
           type: string
+    TokenCreateRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 1
     User:
       type: object
       properties:
@@ -2554,33 +2986,71 @@ components:
         surname:
           type: string
           maxLength: 50
+        profile_id:
+          type: integer
+          readOnly: true
       required:
       - email
       - id
+      - name
+      - profile_id
+      - surname
+    UserListRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 50
+        surname:
+          type: string
+          minLength: 1
+          maxLength: 50
+      required:
       - name
       - surname
     UserRegistration:
       type: object
       properties:
-        email:
-          type: string
-          format: email
-          writeOnly: true
-        password:
-          type: string
-          writeOnly: true
         name:
           type: string
           maxLength: 50
         surname:
           type: string
           maxLength: 50
+        re_password:
+          type: string
+      required:
+      - name
+      - re_password
+      - surname
+    UserRegistrationRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          writeOnly: true
+          minLength: 1
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+          maxLength: 50
+        surname:
+          type: string
+          minLength: 1
+          maxLength: 50
         company:
           allOf:
-          - $ref: '#/components/schemas/CustomProfile'
+          - $ref: '#/components/schemas/CustomProfileRequest'
           writeOnly: true
         re_password:
           type: string
+          minLength: 1
       required:
       - company
       - email
@@ -2588,12 +3058,43 @@ components:
       - password
       - re_password
       - surname
+    UserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 50
+        name:
+          type: string
+          minLength: 1
+          maxLength: 50
+        surname:
+          type: string
+          minLength: 1
+          maxLength: 50
+      required:
+      - email
+      - name
+      - surname
     UsernameResetConfirm:
       type: object
       properties:
         new_email:
           type: string
           format: email
+          title: Email
+          maxLength: 50
+      required:
+      - new_email
+    UsernameResetConfirmRequest:
+      type: object
+      properties:
+        new_email:
+          type: string
+          format: email
+          minLength: 1
           title: Email
           maxLength: 50
       required:
@@ -2606,17 +3107,28 @@ components:
           readOnly: true
         user:
           type: integer
+          readOnly: true
+          nullable: true
         company:
           type: integer
+          readOnly: true
         date:
           type: string
           format: date-time
           readOnly: true
+        user_profile_name:
+          type: string
+          readOnly: true
+        company_name:
+          type: string
+          readOnly: true
       required:
       - company
+      - company_name
       - date
       - id
       - user
+      - user_profile_name
   securitySchemes:
     tokenAuth:
       type: apiKey
