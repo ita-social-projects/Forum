@@ -1,13 +1,14 @@
 from collections import defaultdict
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model
 from django.core.exceptions import ValidationError
+from djoser.conf import settings
 from djoser.serializers import (
     UserCreatePasswordRetypeSerializer,
     UserSerializer,
+    TokenCreateSerializer,
 )
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 
 from profiles.models import Profile
 from validation.validate_password import (
@@ -31,12 +32,6 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
     company = CustomProfileSerializer(write_only=True)
     email = serializers.EmailField(
         write_only=True,
-        validators=[
-            UniqueValidator(
-                queryset=User.objects.all(),
-                message="Email is already registered",
-            )
-        ],
     )
     password = serializers.CharField(
         style={"input_type": "password"}, write_only=True
@@ -50,10 +45,15 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
         custom_errors = defaultdict(list)
         self.fields.pop("re_password", None)
         re_password = value.pop("re_password")
+        email = value.get("email").lower()
         password = value.get("password")
         company_data = value.get("company")
         is_registered = company_data.get("is_registered")
         is_startup = company_data.get("is_startup")
+        if User.objects.filter(email=email).exists():
+            custom_errors["email"].append("Email is already registered")
+        else:
+            value["email"] = email
         if not is_registered and not is_startup:
             custom_errors["comp_status"].append(
                 "Please choose who you represent."
@@ -89,3 +89,22 @@ class UserListSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
         model = User
         fields = ("id", "email", "name", "surname", "profile_id")
+
+
+class CustomTokenCreateSerializer(TokenCreateSerializer):
+    def validate(self, attrs):
+        password = attrs.get("password")
+        params = {
+            settings.LOGIN_FIELD: attrs.get(settings.LOGIN_FIELD).lower()
+        }
+
+        self.user = authenticate(
+            request=self.context.get("request"), **params, password=password
+        )
+        if not self.user:
+            self.user = User.objects.filter(**params).first()
+            if self.user and not self.user.check_password(password):
+                self.fail("invalid_credentials")
+        if self.user and self.user.is_active:
+            return attrs
+        self.fail("invalid_credentials")
