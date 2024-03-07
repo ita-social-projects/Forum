@@ -6,9 +6,8 @@ import validator from 'validator';
 import EyeVisible from './EyeVisible';
 import EyeInvisible from './EyeInvisible';
 import classes from './LoginPage.module.css';
-import checkIfStaff from '../adminPage/checkIfStaff';
 import { useAuth } from '../../hooks/';
-
+import checkIfStaff from '../adminPage/checkIfStaff';
 
 const LoginContent = (props) => {
   const auth = useAuth();

@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import DeleteModal from './DeleteModal';
 import css from './ProfileDetail.module.css';
 import axios from 'axios';
+import useSWR from 'swr';
 
 function ProfileDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
     const [error, setError] = useState(null);
     const [profile, setProfile] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const profileId = usePathCompanyId();
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`;
@@ -23,21 +23,17 @@ function ProfileDetail() {
         { label: 'address', key: 'address' },
     ];
 
-    useEffect(() => {
-
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(url);
-                setProfile(response.data);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
-        fetchData();
-
-    }, [url, profileId]);
+    const fetcher = url => axios.get(url).then(res => res.data);
+    const { data, error: fetchError, isValidating: loading } = useSWR(url, fetcher);
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+    if (fetchError) {
+        return <p>Error:  {fetchError.message}</p>;
+    }
+    if (data && !Object.keys(profile).length) {
+        setProfile(data);
+    }
 
     const handleSaveChanges = async () => {
         try {

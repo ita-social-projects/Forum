@@ -9,9 +9,9 @@ export function AuthProvider({ children }) {
   const [isAuth, setIsAuth] = useState(!!JSON.parse(localStorage.getItem('isAuth')));
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const [isStaff, setIsStaff] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
   const navigate = useNavigate();
+  const [isStaff, setIsStaff] = useState(false);
   const { data, error, mutate } = useSWR(
     authToken
       ? [`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, authToken]
@@ -38,8 +38,6 @@ export function AuthProvider({ children }) {
     setAuthToken(authToken);
     localStorage.setItem('isAuth', true);
     axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
-    const getIsStaff = checkIfStaff();
-    setIsStaff(getIsStaff);
     setIsAuth(true);
   };
 
@@ -93,7 +91,17 @@ export function AuthProvider({ children }) {
     });
   });
 
-  const value = { login, logout, isAuth, authToken, isStaff, isLoading, user, error, mutate };
+  useEffect(() => {
+    const checkStaff = async () => {
+      const staffStatus = await checkIfStaff();
+      setIsStaff(staffStatus);
+    };
+    if (isAuth) {
+      checkStaff();
+    }
+  });
+
+  const value = { login, logout, isAuth, authToken, isLoading, isStaff, user, error, mutate };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
