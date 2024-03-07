@@ -4,12 +4,8 @@ import PropTypes from 'prop-types';
 function DeleteModal({ active, setActive, onDelete }) {
 
     const onDeleteClick = async () => {
-        try {
-            await onDelete();
-            setActive(false);
-        } catch (error) {
-            console.error('Failed to delete:', error);
-        }
+        await onDelete();
+        setActive(false);
     };
 
     return !active ? null : (

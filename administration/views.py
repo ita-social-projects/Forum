@@ -53,7 +53,7 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if not Profile.objects.filter(person_id=instance.id).exists():
-            return self.perform_destroy(instance)
+            return super().destroy(request, *args, **kwargs)
         else:
             return self.http_method_not_allowed(request, *args, **kwargs)
 
