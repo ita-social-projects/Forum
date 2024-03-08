@@ -9,14 +9,22 @@ from djoser.serializers import (
     TokenCreateSerializer,
 )
 from rest_framework import serializers
+from ratelimit.decorators import RateLimitDecorator
+from ratelimit.exception import RateLimitException
+from collections import OrderedDict
+
 
 from profiles.models import Profile
 from validation.validate_password import (
     validate_password_long,
     validate_password_include_symbols,
 )
+from forum.settings import ATTEMPTS_FOR_LOGIN, DELAY_FOR_LOGIN
 
 User = get_user_model()
+
+# CALLS = ATTEMPTS_FOR_LOGIN
+# DELAY = DELAY_FOR_LOGIN
 
 
 class CustomProfileSerializer(serializers.ModelSerializer):
@@ -93,18 +101,15 @@ class UserListSerializer(UserSerializer):
 
 class CustomTokenCreateSerializer(TokenCreateSerializer):
     def validate(self, attrs):
-        password = attrs.get("password")
-        params = {
-            settings.LOGIN_FIELD: attrs.get(settings.LOGIN_FIELD).lower()
-        }
+        try:
+            return self.validate_for_rate(attrs)
+        except RateLimitException:
+            self.fail("inactive_account")
 
-        self.user = authenticate(
-            request=self.context.get("request"), **params, password=password
+    @RateLimitDecorator(calls=ATTEMPTS_FOR_LOGIN, period=DELAY_FOR_LOGIN)
+    def validate_for_rate(self, attrs):
+        email = attrs.get(settings.LOGIN_FIELD).lower()
+        new_attr = OrderedDict(
+            [("password", attrs.get("password")), ("email", email)]
         )
-        if not self.user:
-            self.user = User.objects.filter(**params).first()
-            if self.user and not self.user.check_password(password):
-                self.fail("invalid_credentials")
-        if self.user and self.user.is_active:
-            return attrs
-        self.fail("invalid_credentials")
+        return super().validate(new_attr)
