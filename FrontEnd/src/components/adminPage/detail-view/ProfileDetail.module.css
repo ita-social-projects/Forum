@@ -13,6 +13,18 @@
 
 }
 
+.log-section {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 30px;
+    overflow-y: auto;
+ }
+    
+ .log {
+    margin-bottom: 10px;
+ }
+
 .profile-details-section_info {
     font-family: var(--font__admin-panel);    
     font-size: 16px;

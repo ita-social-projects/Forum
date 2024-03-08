@@ -29,16 +29,7 @@ function UserTable() {
         const response = await axios.get(url);
         return response.data;
     }
-
     const { data, error, isValidating: loading } = useSWR(url, fetcher);
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
     const users = data.results;
 
     return (
@@ -50,6 +41,10 @@ function UserTable() {
                 pageSize={pageSize}
                 onPageSizeChange={handlePageSizeChange}
             />
+            <ul className={css['log-section']}>
+                {loading && <li className={css['log']} >Завантаження ...</li>}
+                {error && <li className={css['log']}>Виникла помилка: {error}</li>}
+            </ul>
             <table className={css['table-section']}>
                 <thead>
                     <tr className={css['table-header']}>

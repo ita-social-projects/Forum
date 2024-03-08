@@ -45,3 +45,15 @@
     display: table-cell;
     text-align: center; 
 }
+
+.log-section {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 20px;
+    overflow-y: auto;
+ }
+    
+ .log {
+    margin-bottom: 10px;
+ }

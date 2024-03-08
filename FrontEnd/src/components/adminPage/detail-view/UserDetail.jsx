@@ -7,7 +7,6 @@ import useSWR from 'swr';
 
 function UserDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
-    const [error, setError] = useState(null);
     const [user, setUser] = useState([]);
     const userId = usePathUserId();
     const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -15,56 +14,37 @@ function UserDetail() {
     const navigate = useNavigate();
 
     const fetcher = url => axios.get(url).then(res => res.data);
-    const { data, error: fetchError, isValidating: loading } = useSWR(url, fetcher);
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-    if (fetchError) {
-        return <p>Error:  {fetchError.message}</p>;
-    }
+    const { data, error, isValidating: loading } = useSWR(url, fetcher);
     if (data && !Object.keys(user).length) {
         setUser(data);
     }
 
     const handleSaveChanges = async () => {
-        try {
-            const response = await axios.put(
-                url,
-                {
-                    name: user.name,
-                    surname: user.surname,
-                    email: user.email,
-                    is_active: user.is_active,
-                    is_staff: user.is_staff,
-                    is_superuser: user.is_superuser
-                },
-            );
-            if (response.status !== 200) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            setUpdateSuccess(true);
-        } catch (error) {
-            setError(error.message);
+        const response = await axios.put(
+            url,
+            {
+                name: user.name,
+                surname: user.surname,
+                email: user.email,
+                is_active: user.is_active,
+                is_staff: user.is_staff,
+                is_superuser: user.is_superuser
+            },
+        );
+        if (response.status !== 200) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        setUpdateSuccess(true);
+        setTimeout(() => setUpdateSuccess(false), 3000);
     };
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
 
     const handleDeleteUser = async () => {
-        try {
-            const response = await axios.delete(url);
-            if (response.status !== 204) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            setUser([]);
-            navigate('/customadmin/users');
-        } catch (error) {
-            setError(error.message);
+        const response = await axios.delete(url);
+        if (response.status !== 204) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        setUser([]);
+        navigate('/customadmin/users');
     };
 
     return (
@@ -75,8 +55,11 @@ function UserDetail() {
                 onDelete={handleDeleteUser}
             />
             <div className={css['user-details-section']}>
-                {error && <p>Виникла помилка!</p>}
-                {updateSuccess && <p>Користувач успішно оновлений!</p>}
+                <ul className={css['log-section']}>
+                    {loading && <li className={css['log']} >Завантаження ...</li>}
+                    {error && <li className={css['log']}>Виникла помилка: {error}</li>}
+                    {updateSuccess && <li className={css['log']}>Користувач успішно оновлений!</li>}
+                </ul>
                 <ul className={css['form-info__user_text']}>
                     <li>Ім&apos;я: {user.name}</li>
                     <li>Прізвище: {user.surname}</li>

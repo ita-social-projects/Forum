@@ -7,7 +7,6 @@ import useSWR from 'swr';
 
 function ProfileDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
-    const [error, setError] = useState(null);
     const [profile, setProfile] = useState([]);
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const profileId = usePathCompanyId();
@@ -24,52 +23,34 @@ function ProfileDetail() {
     ];
 
     const fetcher = url => axios.get(url).then(res => res.data);
-    const { data, error: fetchError, isValidating: loading } = useSWR(url, fetcher);
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-    if (fetchError) {
-        return <p>Error:  {fetchError.message}</p>;
-    }
+    const { data, error, isValidating: loading } = useSWR(url, fetcher);
+
     if (data && !Object.keys(profile).length) {
         setProfile(data);
     }
 
     const handleSaveChanges = async () => {
-        try {
-            const response = await axios.put(
-                url,
-                {
-                    name: profile.name,
-                    is_deleted: profile.is_deleted,
-                },
-            );
-            if (response.status !== 200) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            setUpdateSuccess(true);
-        } catch (error) {
-            setError(error.message);
+        const response = await axios.put(
+            url,
+            {
+                name: profile.name,
+                is_deleted: profile.is_deleted,
+            },
+        );
+        if (response.status !== 200) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        setUpdateSuccess(true);
+        setTimeout(() => setUpdateSuccess(false), 3000);
     };
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
 
     const handleDeleteUser = async () => {
-        try {
-            const response = await axios.delete(url);
-            if (response.status !== 204) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            setProfile([]);
-            navigate('/customadmin/profiles');
-        } catch (error) {
-            setError(error.message);
+        const response = await axios.delete(url);
+        if (response.status !== 204) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        setProfile([]);
+        navigate('/customadmin/profiles');
     };
 
     return (
@@ -80,8 +61,11 @@ function ProfileDetail() {
                 onDelete={handleDeleteUser}
             />
             <div className={css['profile-details-section']}>
-                {error && <p>Виникла помилка!</p>}
-                {updateSuccess && <p>Профіль успішно оновлений!</p>}
+                <ul className={css['log-section']}>
+                    {loading && <li className={css['log']} >Завантаження ...</li>}
+                    {error && <li className={css['log']}>Виникла помилка: {error}</li>}
+                    {updateSuccess && <li className={css['log']}>Профіль успішно оновлений!</li>}
+                </ul>
                 <ul className={css['profile-details-section_info']}>
                     {companyInfo.map((info, index) => (
                         <li key={index}>

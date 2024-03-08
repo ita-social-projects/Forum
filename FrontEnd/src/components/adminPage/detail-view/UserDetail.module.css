@@ -10,7 +10,18 @@
    flex-direction: column;
    padding: 10px;
    gap: 20px;
-
+}
+   
+.log-section {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   height: 30px;
+   overflow-y: auto;
+}
+   
+.log {
+   margin-bottom: 10px;
 }
 
 .data-section {
