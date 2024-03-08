@@ -78,7 +78,6 @@ class TestCompletenessUpdate(APITestCase):
             data={"categories": [self.cheese_category.id]},
         )
         comp = Profile.objects.filter(name="Kryvyi_rig_art").first()
-        print(comp.completeness, '****')
         self.assertEqual(comp.completeness, 2)
 
     def test_completeness_after_update_banner_and_region(self):
