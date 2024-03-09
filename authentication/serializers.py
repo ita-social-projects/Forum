@@ -103,7 +103,10 @@ class CustomTokenCreateSerializer(TokenCreateSerializer):
         except RateLimitException:
             self.fail("inactive_account")
 
-    @RateLimitDecorator(calls=custom_settings.ATTEMPTS_FOR_LOGIN, period=custom_settings.DELAY_FOR_LOGIN)
+    @RateLimitDecorator(
+        calls=custom_settings.ATTEMPTS_FOR_LOGIN,
+        period=custom_settings.DELAY_FOR_LOGIN,
+    )
     def validate_for_rate(self, attrs):
         email = attrs.get(settings.LOGIN_FIELD).lower()
         new_attr = OrderedDict(
