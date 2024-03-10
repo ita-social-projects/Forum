@@ -6,7 +6,7 @@ import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
-import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../../constants/constants';
+import { EMAIL_PATTERN, PASSWORD_PATTERN, NAME_SURNAME_PATTERN, COMPANY_NAME_PATTERN } from '../../../../../constants/constants';
 const RulesModal = React.lazy(() => import('./RulesModal'));
 
 export function SignUpFormContentComponent(props) {
@@ -142,6 +142,9 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Назва компанії"
                 {...register('companyName', {
                   required: errorMessageTemplates.required,
+                  pattern: {
+                    value: COMPANY_NAME_PATTERN,
+                },
                 })}
               />
             </div>
@@ -243,6 +246,9 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Прізвище"
                 {...register('surname', {
                   required: errorMessageTemplates.required,
+                  pattern: {
+                    value: NAME_SURNAME_PATTERN,
+                },
                 })}
               />
             </div>
@@ -264,6 +270,9 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Ім‘я"
                 {...register('name', {
                   required: errorMessageTemplates.required,
+                  pattern: {
+                    value: NAME_SURNAME_PATTERN,
+                },
                 })}
               />
             </div>
