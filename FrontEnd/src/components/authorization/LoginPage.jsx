@@ -69,7 +69,7 @@ const LoginContent = (props) => {
       });
       const authToken = response.data.auth_token;
       auth.login(authToken);
-      navigate('/profile/user-info');
+      navigate('/profile/general-info');
     }
     catch (error) {
       console.error('ERROR', error);

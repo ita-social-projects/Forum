@@ -80,13 +80,29 @@
   font-style: normal;
   font-weight: 400;
   line-height: 22.001px;
+  position: relative;
+  top: 10%; /* Змініть значення top за потребою */
 }
-
+.signup-form__label--required_special{
+  color: var(--dust-red-5, #ff4d4f);
+  text-align: right;
+  font-family: SimSong;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22.001px;
+  position: relative;
+  bottom: 10%; /* Змініть значення top за потребою */
+}
 .signup-form__label--text {
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex: 1 0 0;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  color:var(--main-text-color);
 }
 
 .signup-form__field {

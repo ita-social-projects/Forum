@@ -153,7 +153,7 @@ export function SignUpFormContentComponent(props) {
         <div className={styles['signup-form__row']}>
           <div className={styles['signup-form__column']}>
             <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
+              <label className={styles['signup-form__label--required_special']}>
                 *
               </label>
               <div className={styles['signup-form__label--password']}>
@@ -189,7 +189,7 @@ export function SignUpFormContentComponent(props) {
           </div>
           <div className={styles['signup-form__column']}>
             <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
+              <label className={styles['signup-form__label--required_special']}>
                 *
               </label>
               <div className={styles['signup-form__label--password']}>
