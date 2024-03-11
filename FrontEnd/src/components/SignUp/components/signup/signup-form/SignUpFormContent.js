@@ -6,7 +6,13 @@ import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
-import { EMAIL_PATTERN, PASSWORD_PATTERN, NAME_SURNAME_PATTERN, COMPANY_NAME_PATTERN } from '../../../../../constants/constants';
+import {
+  EMAIL_PATTERN,
+  PASSWORD_PATTERN,
+  NAME_SURNAME_PATTERN,
+  COMPANY_NAME_PATTERN
+} from '../../../../../constants/constants';
+
 const RulesModal = React.lazy(() => import('./RulesModal'));
 
 export function SignUpFormContentComponent(props) {
