@@ -16,4 +16,6 @@ gunicorn==21.2.0
 toml==0.10.2
 black==23.9.1
 drf-spectacular==0.26.5
+ratelimit==2.2.1
+
 

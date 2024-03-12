@@ -28,6 +28,7 @@ class TestBannerChange(APITestCase):
             person=self.user,
             name="Dnipro",
             banner_image=f"banners/{self.right_image.name}",
+            region="Dnipro",
         )
 
         self.company_kyiv = ProfileCompanyFactory(name="Kyivbud")

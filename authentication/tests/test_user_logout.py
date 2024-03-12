@@ -3,6 +3,7 @@ from rest_framework.test import APITestCase
 
 from authentication.factories import UserFactory
 from utils.dump_response import dump  # noqa
+from time import sleep
 
 
 class UserLogoutAPITests(APITestCase):
@@ -28,6 +29,7 @@ class UserLogoutAPITests(APITestCase):
 
     def test_logout_not_logged_in(self):
         response = self.client.post(path="/api/auth/token/logout/")
+        sleep(6)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(
             {"detail": "Authentication credentials were not provided."},

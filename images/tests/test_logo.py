@@ -29,6 +29,7 @@ class TestLogoChange(APITestCase):
             person=self.user,
             name="Dnipro",
             logo_image=f"logos/{self.right_image.name}",
+            region="Dnipro",
         )
 
         self.company_kyiv = ProfileCompanyFactory(name="Kyivbud")
