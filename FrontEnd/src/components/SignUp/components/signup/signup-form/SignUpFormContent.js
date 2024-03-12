@@ -111,6 +111,32 @@ export function SignUpFormContentComponent(props) {
                 *
               </label>
               <label className={styles['signup-form__label--text']}>
+                Назва компанії
+              </label>
+            </div>
+            <div className={styles['signup-form__field']}>
+              <input
+                className={styles['signup-form__input']}
+                type="text"
+                placeholder="Назва компанії"
+                {...register('companyName', {
+                  required: errorMessageTemplates.required,
+                  pattern: {
+                    value: COMPANY_NAME_PATTERN,
+                  },
+                })}
+              />
+            </div>
+            <div className={styles['signup-form__error']}>
+              {errors.companyName && errors.companyName.message}
+            </div>
+          </div>
+          <div className={styles['signup-form__column']}>
+            <div className={styles['signup-form__label']}>
+              <label className={styles['signup-form__label--required']}>
+                *
+              </label>
+              <label className={styles['signup-form__label--text']}>
                 Електронна пошта
               </label>
             </div>
@@ -130,32 +156,6 @@ export function SignUpFormContentComponent(props) {
             </div>
             <div className={styles['signup-form__error']}>
               {errors.email && errors.email.message}
-            </div>
-          </div>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
-                *
-              </label>
-              <label className={styles['signup-form__label--text']}>
-                Назва компанії
-              </label>
-            </div>
-            <div className={styles['signup-form__field']}>
-              <input
-                className={styles['signup-form__input']}
-                type="text"
-                placeholder="Назва компанії"
-                {...register('companyName', {
-                  required: errorMessageTemplates.required,
-                  pattern: {
-                    value: COMPANY_NAME_PATTERN,
-                },
-                })}
-              />
-            </div>
-            <div className={styles['signup-form__error']}>
-              {errors.companyName && errors.companyName.message}
             </div>
           </div>
         </div>

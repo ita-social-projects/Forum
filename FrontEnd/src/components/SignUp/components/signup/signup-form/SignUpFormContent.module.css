@@ -81,7 +81,7 @@
   font-weight: 400;
   line-height: 22.001px;
   position: relative;
-  top: 10%; /* Змініть значення top за потребою */
+  top: 10%;
 }
 .signup-form__label--required_special{
   color: var(--dust-red-5, #ff4d4f);
@@ -92,7 +92,7 @@
   font-weight: 400;
   line-height: 22.001px;
   position: relative;
-  bottom: 10%; /* Змініть значення top за потребою */
+  bottom: 10%;
 }
 .signup-form__label--text {
   display: flex;
