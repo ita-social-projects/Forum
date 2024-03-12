@@ -2,8 +2,8 @@ from collections import defaultdict
 
 from django.contrib.auth import authenticate, get_user_model
 from django.core.exceptions import ValidationError
-from django.conf import settings as custom_settings
-from djoser.conf import settings
+from django.conf import settings as django_settings
+from djoser.conf import settings as djoser_settings
 from djoser.serializers import (
     UserCreatePasswordRetypeSerializer,
     UserSerializer,
@@ -12,7 +12,6 @@ from djoser.serializers import (
 from rest_framework import serializers
 from ratelimit.decorators import RateLimitDecorator
 from ratelimit.exception import RateLimitException
-from collections import OrderedDict
 
 
 from profiles.models import Profile
@@ -104,12 +103,12 @@ class CustomTokenCreateSerializer(TokenCreateSerializer):
             self.fail("inactive_account")
 
     @RateLimitDecorator(
-        calls=custom_settings.ATTEMPTS_FOR_LOGIN,
-        period=custom_settings.DELAY_FOR_LOGIN,
+        calls=django_settings.ATTEMPTS_FOR_LOGIN,
+        period=django_settings.DELAY_FOR_LOGIN,
     )
     def validate_for_rate(self, attrs):
-        email = attrs.get(settings.LOGIN_FIELD).lower()
-        new_attr = OrderedDict(
+        email = attrs.get(djoser_settings.LOGIN_FIELD).lower()
+        new_attr = dict(
             [("password", attrs.get("password")), ("email", email)]
         )
         return super().validate(new_attr)
