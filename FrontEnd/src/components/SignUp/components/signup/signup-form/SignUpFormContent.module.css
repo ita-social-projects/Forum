@@ -115,8 +115,7 @@
 
 .signup-form__field__password {
   display: flex;
-  height: 22px;
-  padding: 5px 12px;
+  padding-right: 10px;
   align-items: center;
   gap: 4px;
   align-self: stretch;
@@ -127,6 +126,8 @@
 
 .signup-form__input__password {
   font-family: Roboto, sans-serif;
+  height: 22px;
+  padding: 5px 12px;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -139,6 +140,7 @@
 }
 
 .signup-form__input__password:focus {
+  border: 1px solid var(--main-header-color);
   outline: none;
 } 
 
@@ -163,8 +165,9 @@
 }
 
 .signup-form__input:focus {
+  border: 1px solid var(--main-header-color);
   outline: none;
-}
+} 
 
 .signup-form__error {
   display: flex;
