@@ -21,29 +21,15 @@ export function AuthProvider({ children }) {
           Authorization: `Token ${authToken}`,
         },
       })
-        .then(async res => {
-          res.data;
-          await staff();
-          return res.data;
-        })
+        .then(async res => res.data)
         .catch((error) => {
           if (error.response && error.response.status === 401) {
             logout();
           }
           console.error('An error occurred while fetching the data.', error);
         }),
-        { revalidateOnFocus: true }
+    { revalidateOnFocus: true }
   );
-
-  const staff = async () => {
-    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/status/`;
-    const userDataResponse = await axios.get(url);
-    if (userDataResponse.data.is_staff === true) {
-      setIsStaff(true);
-    } else {
-      setIsStaff(false);
-    }
-  };
 
   const login = (authToken) => {
     localStorage.setItem('Token', authToken);
@@ -81,6 +67,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (data) {
       setUser(data);
+      setIsStaff(data.is_staff);
     }
     if (error) {
       setUser(null);
@@ -91,7 +78,6 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (authToken) {
       axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
-      staff();
     } else {
       delete axios.defaults.headers.common['Authorization'];
     }
@@ -104,12 +90,6 @@ export function AuthProvider({ children }) {
       }
     });
   });
-
-  // useEffect(() => {
-  //   if (data && !error) {
-  //     staff();
-  //   }
-  // }, [data, error]);
 
   const value = { login, logout, isAuth, authToken, isLoading, isStaff, user, error, mutate };
 
