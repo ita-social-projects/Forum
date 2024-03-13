@@ -30,7 +30,8 @@ function UserTable() {
         return response.data;
     }
     const { data, error, isValidating: loading } = useSWR(url, fetcher);
-    const users = data.results;
+
+    const users = data ? data.results : [];
 
     return (
         <div>

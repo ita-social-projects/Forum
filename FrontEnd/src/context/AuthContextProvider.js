@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import axios from 'axios';
 import { AuthContext } from '../context';
-import checkIfStaff from '../components/adminPage/checkIfStaff';
 
 export function AuthProvider({ children }) {
   const [isAuth, setIsAuth] = useState(!!JSON.parse(localStorage.getItem('isAuth')));
@@ -22,16 +21,29 @@ export function AuthProvider({ children }) {
           Authorization: `Token ${authToken}`,
         },
       })
-        .then(res => res.data)
+        .then(async res => {
+          res.data;
+          await staff();
+          return res.data;
+        })
         .catch((error) => {
           if (error.response && error.response.status === 401) {
             logout();
           }
           console.error('An error occurred while fetching the data.', error);
-        },
-          { revalidateOnFocus: false }
-        )
+        }),
+        { revalidateOnFocus: true }
   );
+
+  const staff = async () => {
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/status/`;
+    const userDataResponse = await axios.get(url);
+    if (userDataResponse.data.is_staff === true) {
+      setIsStaff(true);
+    } else {
+      setIsStaff(false);
+    }
+  };
 
   const login = (authToken) => {
     localStorage.setItem('Token', authToken);
@@ -47,6 +59,7 @@ export function AuthProvider({ children }) {
     setAuthToken('');
     delete axios.defaults.headers.common['Authorization'];
     setIsAuth(false);
+    setIsStaff(false);
     setUser(null);
     navigate('/', { replace: true });
   };
@@ -78,6 +91,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (authToken) {
       axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
+      staff();
     } else {
       delete axios.defaults.headers.common['Authorization'];
     }
@@ -91,15 +105,11 @@ export function AuthProvider({ children }) {
     });
   });
 
-  useEffect(() => {
-    const checkStaff = async () => {
-      const staffStatus = await checkIfStaff();
-      setIsStaff(staffStatus);
-    };
-    if (isAuth) {
-      checkStaff();
-    }
-  });
+  // useEffect(() => {
+  //   if (data && !error) {
+  //     staff();
+  //   }
+  // }, [data, error]);
 
   const value = { login, logout, isAuth, authToken, isLoading, isStaff, user, error, mutate };
 

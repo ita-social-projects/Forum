@@ -77,7 +77,7 @@ function ProfileDetail() {
                 <div className={css['form-section']}>
                     <label className={css['form-info__text']}>Назва компанії</label>
                     <input
-                        value={profile.name}
+                        value={profile.name || ''}
                         onChange={(e) => setProfile({ ...profile, name: e.target.value })}
                         type="text"
                         className={css['form-input']}
@@ -85,7 +85,7 @@ function ProfileDetail() {
                     <label className={css['form-info__text_checkbox']}>Видалений</label>
                     <input
                         type="checkbox"
-                        checked={profile.is_deleted}
+                        checked={profile.is_deleted || false}
                         onChange={(e) => setProfile({ ...profile, is_deleted: e.target.checked })}
                         className={css['form-input_checkbox']}
                     />

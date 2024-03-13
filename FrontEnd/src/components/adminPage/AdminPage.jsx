@@ -12,7 +12,7 @@ import { useAuth } from '../../hooks';
 import Loader from '../loader/Loader';
 
 function AdminPage() {
-    const { isLoading,  isAuth, isStaff } = useAuth();
+    const { isLoading,  isAuth, isStaff} = useAuth();
     const renderMenu =  isStaff && isAuth ? <Menu /> : null;
     const authRoutes =  isStaff && isAuth ? (
         <>

@@ -71,14 +71,14 @@ function UserDetail() {
                 <div className={css['form-section']}>
                     <label className={css['form-info__text']}>Прізвище</label>
                     <input
-                        value={user.surname}
+                        value={user.surname || ''}
                         onChange={(e) => setUser({ ...user, surname: e.target.value })}
                         type="text"
                         className={css['form-input']}
                     />
                     <label className={css['form-info__text']}>Ім&apos;я</label>
                     <input
-                        value={user.name}
+                        value={user.name || ''}
                         onChange={(e) => setUser({ ...user, name: e.target.value })}
                         type="text"
                         className={css['form-input']}
@@ -86,7 +86,7 @@ function UserDetail() {
                     <label className={css['form-info__text']}>Активний користувач</label>
                     <input
                         type="checkbox"
-                        checked={user.is_active}
+                        checked={user.is_active || false}
                         onChange={(e) => setUser({ ...user, is_active: e.target.checked })}
                         className={css['form-input_checkbox']}
                     />

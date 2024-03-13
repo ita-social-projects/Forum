@@ -10,7 +10,7 @@ import { useAuth } from '../../hooks/';
 import checkIfStaff from '../adminPage/checkIfStaff';
 
 const LoginContent = (props) => {
-  const auth = useAuth();
+  const {login} = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -68,7 +68,7 @@ const LoginContent = (props) => {
         password: value.password,
       });
       const authToken = response.data.auth_token;
-      auth.login(authToken);
+      login(authToken);
       const isStaff = await checkIfStaff();
       if (isStaff) {
         navigate('/customadmin');

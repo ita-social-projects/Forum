@@ -32,7 +32,8 @@ function ProfilesTable() {
         return response.data;
     }
     const { data, error, isValidating: loading } = useSWR(url, fetcher);
-    const profiles = data.results;
+
+    const profiles = data ? data.results : [];
 
     return (
         <div className={css['table-profiles']}>
