@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
+from time import sleep
 
 from authentication.factories import UserFactory
 from utils.dump_response import dump  # noqa
@@ -13,7 +14,7 @@ class UserLoginAPITests(APITestCase):
     def test_login_successful(self):
         self.user.set_password("Test1234")
         self.user.save()
-
+        sleep(6)
         response = self.client.post(
             path="/api/auth/token/login/",
             data={
@@ -66,3 +67,75 @@ class UserLoginAPITests(APITestCase):
             },
             response.json(),
         )
+
+    def test_login_after_allowed_number_attempts(self):
+        self.user.set_password("Test1234")
+        self.user.save()
+
+        self.client.post(
+            path="/api/auth/token/login/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+            },
+        )
+        self.client.post(
+            path="/api/auth/token/login/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+            },
+        )
+
+        response = self.client.post(
+            path="/api/auth/token/login/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+            },
+        )
+        sleep(6)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            {"non_field_errors": ["User account is disabled."]},
+            response.json(),
+        )
+
+    def test_login_after_allowed_delay_time(self):
+        self.user.set_password("Test1234")
+        self.user.save()
+
+        self.client.post(
+            path="/api/auth/token/login/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+            },
+        )
+
+        self.client.post(
+            path="/api/auth/token/login/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+            },
+        )
+        self.client.post(
+            path="/api/auth/token/login/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+            },
+        )
+        sleep(6)
+        response = self.client.post(
+            path="/api/auth/token/login/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual({"auth_token": AnyStr()}, response.json())
+        self.assertContains(response, "auth_token")

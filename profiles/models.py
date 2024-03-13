@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxLengthValidator
 
 from authentication.models import CustomUser
+from .managers import ProfileManager
 from validation.validate_edrpou import validate_edrpou
 from validation.validate_foundation_year import validate_foundation_year_range
 from validation.validate_image import (
@@ -114,6 +115,8 @@ class Profile(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     completeness = models.SmallIntegerField(default=0)
+
+    objects = ProfileManager.as_manager()
 
 
 class Activity(models.Model):

@@ -124,7 +124,7 @@ class ProfileList(ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.request.query_params.get("userid")
-        queryset = Profile.objects.filter(is_deleted=False).order_by("id")
+        queryset = Profile.objects.active_only().order_by("id")
         if user_id:
             try:
                 return queryset.filter(person_id=user_id)
@@ -148,7 +148,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         If user is authenticated, he can get sensitive data via query param 'with_contacts'.
     """
 
-    queryset = Profile.objects.filter(is_deleted=False)
+    queryset = Profile.objects.active_only()
     permission_classes = [UserIsProfileOwnerOrReadOnly]
 
     def get_serializer_context(self):
