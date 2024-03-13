@@ -68,6 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "ratelimitbackend.middleware.RateLimitMiddleware",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -228,3 +229,8 @@ if running_tests():
     # For tests execution, the fastest password hasher is used
     # (may increase execution speed ×10 and more)
     PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
+    DELAY_FOR_LOGIN = 5
+    ATTEMPTS_FOR_LOGIN = 2
+else:
+    DELAY_FOR_LOGIN = 600  # delay time for login in seconds
+    ATTEMPTS_FOR_LOGIN = 10  # attempts for login during delay for login

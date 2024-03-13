@@ -30,6 +30,7 @@ class TestCompletenessUpdate(APITestCase):
         self.company_kryvyi_rig = ProfileCompanyFactory(
             name="Kryvyi_rig_art",
             person=self.kryvyi_rig_user,
+            region="Kryvyi Rig",
         )
 
     def tearDown(self) -> None:
