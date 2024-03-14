@@ -11,7 +11,7 @@ function ProfileDetail() {
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const profileId = usePathCompanyId();
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`;
-    const navigate = useNavigate();
+    const navigateToProfiles = useNavigate();
     const companyInfo = [
         { label: 'Ім\'я', key: 'name' },
         { label: 'person_position', key: 'person_position' },
@@ -50,7 +50,7 @@ function ProfileDetail() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         setProfile({});
-        navigate('/customadmin/profiles');
+        navigateToProfiles('/customadmin/profiles');
     };
 
     return (

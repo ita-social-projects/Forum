@@ -11,7 +11,7 @@ function UserDetail() {
     const userId = usePathUserId();
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`;
-    const navigate = useNavigate();
+    const navigateToUsers = useNavigate();
 
     const fetcher = url => axios.get(url).then(res => res.data);
     const { data, error, isValidating: loading } = useSWR(url, fetcher);
@@ -44,7 +44,7 @@ function UserDetail() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         setUser({});
-        navigate('/customadmin/users');
+        navigateToUsers('/customadmin/users');
     };
 
     return (
