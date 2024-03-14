@@ -33,7 +33,6 @@
   display: flex;
   gap: 4px;
   align-self: stretch;
-
   color: var(--main-black-90, #292e32);
   font-feature-settings: "calt" off;
 
@@ -80,6 +79,19 @@
   font-style: normal;
   font-weight: 400;
   line-height: 22.001px;
+  position: relative;
+  top: 10%;
+}
+.signup-form__label--required_special{
+  color: var(--dust-red-5, #ff4d4f);
+  text-align: right;
+  font-family: SimSong;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22.001px;
+  position: relative;
+  bottom: 10%;
 }
 
 .signup-form__label--text {
@@ -87,6 +99,10 @@
   flex-direction: column;
   justify-content: center;
   flex: 1 0 0;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  color:var(--main-text-color);
 }
 
 .signup-form__field {
@@ -99,8 +115,7 @@
 
 .signup-form__field__password {
   display: flex;
-  height: 22px;
-  padding: 5px 12px;
+  padding-right: 10px;
   align-items: center;
   gap: 4px;
   align-self: stretch;
@@ -111,6 +126,8 @@
 
 .signup-form__input__password {
   font-family: Roboto, sans-serif;
+  height: 22px;
+  padding: 5px 12px;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -122,9 +139,13 @@
   border: none;
 }
 
+.signup-form__field__password:focus-within {
+  border: 1px solid var(--main-header-color);
+}
+
 .signup-form__input__password:focus {
   outline: none;
-} 
+}
 
 .signup-form__input {
   display: flex;
@@ -147,8 +168,9 @@
 }
 
 .signup-form__input:focus {
+  border: 1px solid var(--main-header-color);
   outline: none;
-}
+} 
 
 .signup-form__error {
   display: flex;

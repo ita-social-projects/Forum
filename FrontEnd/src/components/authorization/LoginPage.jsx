@@ -73,7 +73,7 @@ const LoginContent = (props) => {
       if (isStaff) {
         navigate('/customadmin');
       } else {
-        navigate('/profile/user-info');
+        navigate('/profile/general-info');
       }
     }
     catch (error) {
