@@ -70,6 +70,7 @@ class UserLogoutAPITests(APITestCase):
                 "name": "Test",
                 "surname": "Test",
                 "profile_id": AnyInt(),
+                "is_staff": False,
             },
             response.json(),
         )

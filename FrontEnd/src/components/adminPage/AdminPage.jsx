@@ -12,9 +12,9 @@ import { useAuth } from '../../hooks';
 import Loader from '../loader/Loader';
 
 function AdminPage() {
-    const { isLoading,  isAuth, isStaff} = useAuth();
-    const renderMenu =  isStaff && isAuth ? <Menu /> : null;
-    const authRoutes =  isStaff && isAuth ? (
+    const { isLoading, isAuth, isStaff } = useAuth();
+    const renderMenu = isStaff && isAuth ? <Menu /> : null;
+    const authRoutes = isStaff && isAuth ? (
         <>
             <Route path="/" element={<MainPage />} />
             <Route path="/users" element={<UserTable />} />
@@ -23,7 +23,7 @@ function AdminPage() {
             <Route path="/profile/:id" element={<ProfileDetail />} />
         </>
     ) : (
-        <Route path="/customadmin/"  />
+        <Route path="/customadmin/" />
     );
 
     return (

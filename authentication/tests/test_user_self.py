@@ -30,6 +30,7 @@ class UserSelfAPITests(APITestCase):
                 "name": "Test",
                 "surname": "Test",
                 "profile_id": AnyInt(),
+                "is_staff": False,
             },
             response.json(),
         )
@@ -52,6 +53,7 @@ class UserSelfAPITests(APITestCase):
                 "name": "Ivan",
                 "surname": "Ivanenko",
                 "profile_id": AnyInt(),
+                "is_staff": False,
             },
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -62,6 +64,7 @@ class UserSelfAPITests(APITestCase):
                 "name": "Ivan",
                 "surname": "Ivanenko",
                 "profile_id": AnyInt(),
+                "is_staff": False,
             },
             response.json(),
         )
@@ -82,6 +85,7 @@ class UserSelfAPITests(APITestCase):
                 "name": "Test",
                 "surname": "Petrenko",
                 "profile_id": AnyInt(),
+                "is_staff": False,
             },
             response.json(),
         )

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function checkIfStaff() {
-    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/status/`;
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`;
     const userDataResponse = await axios.get(url);
     if (userDataResponse.data.is_staff === true ) {
         return true;

@@ -10,7 +10,7 @@ import { useAuth } from '../../hooks/';
 import checkIfStaff from '../adminPage/checkIfStaff';
 
 const LoginContent = (props) => {
-  const {login} = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
