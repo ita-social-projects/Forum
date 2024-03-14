@@ -139,10 +139,13 @@
   border: none;
 }
 
-.signup-form__input__password:focus {
+.signup-form__field__password:focus-within {
   border: 1px solid var(--main-header-color);
+}
+
+.signup-form__input__password:focus {
   outline: none;
-} 
+}
 
 .signup-form__input {
   display: flex;
