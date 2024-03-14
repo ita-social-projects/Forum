@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import PaginationButtons from './PaginationButtons';
 import axios from 'axios';
 import useSWR from 'swr';
+import { DEFAULT_PAGE_SIZE } from '../AdminConstants';
 
 const COLUMN_NAMES = [
     'ID', 'Person', 'Position', 'Company', 'Region', 'Phone', 'EDRPOU', 'Adress', 'IsDeleted', 'IsApproved'
@@ -16,7 +17,7 @@ function ProfilesTable() {
         navigate(path);
     };
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
     const handlePageSizeChange = (size) => {
         setPageSize(size);
         setCurrentPage(1);

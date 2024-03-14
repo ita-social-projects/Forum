@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import css from './PaginationButtons.module.css';
+import { PAGE_SIZES_SELECTOR } from '../AdminConstants';
 
 function PaginationButtons({ currentPage, totalPages, onPageChange, pageSize, onPageSizeChange }) {
     const goToPreviousPage = () => {
@@ -26,9 +27,9 @@ function PaginationButtons({ currentPage, totalPages, onPageChange, pageSize, on
                 <label className={css['pagination-counter']}>{currentPage}/{totalPages}</label>
                 <button className={css['pagination-button']} onClick={goToNextPage}>&#62;</button>
                 <select className={css['pagination-select']} value={pageSize} onChange={handlePageSizeChange}>
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
+                    {PAGE_SIZES_SELECTOR.map((size) => (
+                        <option key={size} value={size}>{size}</option>
+                    ))}
                 </select>
             </div>
         </div>
