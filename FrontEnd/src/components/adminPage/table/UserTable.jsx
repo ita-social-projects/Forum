@@ -10,7 +10,7 @@ const COLUMN_NAMES = ['ID', 'ФІО', 'Пошта'];
 function UserTable() {
     const navigate = useNavigate();
     const routeChange = (id) => {
-        let path = `../../customadmin/users/${id}`;
+        const path = `../../customadmin/users/${id}`;
         navigate(path);
     };
     const [currentPage, setCurrentPage] = useState(1);

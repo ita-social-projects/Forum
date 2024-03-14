@@ -7,7 +7,7 @@ import useSWR from 'swr';
 
 function ProfileDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
-    const [profile, setProfile] = useState([]);
+    const [profile, setProfile] = useState({});
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const profileId = usePathCompanyId();
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/${profileId}/`;
@@ -49,7 +49,7 @@ function ProfileDetail() {
         if (response.status !== 204) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        setProfile([]);
+        setProfile({});
         navigate('/customadmin/profiles');
     };
 

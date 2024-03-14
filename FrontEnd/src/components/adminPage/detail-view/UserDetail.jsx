@@ -7,7 +7,7 @@ import useSWR from 'swr';
 
 function UserDetail() {
     const [deleteModalActive, setDeleteModalActive] = useState(false);
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState({});
     const userId = usePathUserId();
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${userId}/`;
@@ -43,7 +43,7 @@ function UserDetail() {
         if (response.status !== 204) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        setUser([]);
+        setUser({});
         navigate('/customadmin/users');
     };
 
@@ -61,9 +61,9 @@ function UserDetail() {
                     {updateSuccess && <li className={css['log']}>Користувач успішно оновлений!</li>}
                 </ul>
                 <ul className={css['form-info__user_text']}>
-                    <li>Ім&apos;я: {user.name}</li>
-                    <li>Прізвище: {user.surname}</li>
-                    <li>Email: {user.email}</li>
+                    <li>Ім&apos;я: {user.name || ''}</li>
+                    <li>Прізвище: {user.surname || ''}</li>
+                    <li>Email: {user.email || ''}</li>
                     <li>Активний користувач: {user.is_active ? 'Так' : 'Ні'}</li>
                     <li>Персонал: {user.is_staff ? 'Так' : 'Ні'}</li>
                     <li>Компанія: {user.company_name ? 'Так' : 'Ні'}</li>

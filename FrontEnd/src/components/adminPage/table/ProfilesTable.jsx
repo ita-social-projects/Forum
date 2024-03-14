@@ -12,7 +12,7 @@ const COLUMN_NAMES = [
 function ProfilesTable() {
     const navigate = useNavigate();
     const routeChange = (id) => {
-        let path = `../../customadmin/profile/${id}`;
+        const path = `../../customadmin/profile/${id}`;
         navigate(path);
     };
     const [currentPage, setCurrentPage] = useState(1);
