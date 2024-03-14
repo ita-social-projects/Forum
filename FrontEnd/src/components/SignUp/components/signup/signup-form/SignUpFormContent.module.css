@@ -33,7 +33,6 @@
   display: flex;
   gap: 4px;
   align-self: stretch;
-
   color: var(--main-black-90, #292e32);
   font-feature-settings: "calt" off;
 
@@ -94,6 +93,7 @@
   position: relative;
   bottom: 10%;
 }
+
 .signup-form__label--text {
   display: flex;
   flex-direction: column;
