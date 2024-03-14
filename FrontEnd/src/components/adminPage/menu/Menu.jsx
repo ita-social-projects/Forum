@@ -18,12 +18,12 @@ const MENU = [
 ];
 
 function Menu() {
-    const auth = useAuth();
+    const { isAuth, logout } = useAuth();
     const handleLogout = async () => {
-        if (auth.isAuth) {
+        if (isAuth) {
             axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`)
                 .then(() => {
-                    auth.logout();
+                    logout();
                 });
         }
     };
