@@ -6,7 +6,13 @@ import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
-import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../../constants/constants';
+import {
+  EMAIL_PATTERN,
+  PASSWORD_PATTERN,
+  NAME_SURNAME_PATTERN,
+  COMPANY_NAME_PATTERN
+} from '../../../../../constants/constants';
+
 const RulesModal = React.lazy(() => import('./RulesModal'));
 
 export function SignUpFormContentComponent(props) {
@@ -105,6 +111,32 @@ export function SignUpFormContentComponent(props) {
                 *
               </label>
               <label className={styles['signup-form__label--text']}>
+                Назва компанії
+              </label>
+            </div>
+            <div className={styles['signup-form__field']}>
+              <input
+                className={styles['signup-form__input']}
+                type="text"
+                placeholder="Назва компанії"
+                {...register('companyName', {
+                  required: errorMessageTemplates.required,
+                  pattern: {
+                    value: COMPANY_NAME_PATTERN,
+                  },
+                })}
+              />
+            </div>
+            <div className={styles['signup-form__error']}>
+              {errors.companyName && errors.companyName.message}
+            </div>
+          </div>
+          <div className={styles['signup-form__column']}>
+            <div className={styles['signup-form__label']}>
+              <label className={styles['signup-form__label--required']}>
+                *
+              </label>
+              <label className={styles['signup-form__label--text']}>
                 Електронна пошта
               </label>
             </div>
@@ -126,40 +158,17 @@ export function SignUpFormContentComponent(props) {
               {errors.email && errors.email.message}
             </div>
           </div>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
-                *
-              </label>
-              <label className={styles['signup-form__label--text']}>
-                Назва компанії
-              </label>
-            </div>
-            <div className={styles['signup-form__field']}>
-              <input
-                className={styles['signup-form__input']}
-                type="text"
-                placeholder="Назва компанії"
-                {...register('companyName', {
-                  required: errorMessageTemplates.required,
-                })}
-              />
-            </div>
-            <div className={styles['signup-form__error']}>
-              {errors.companyName && errors.companyName.message}
-            </div>
-          </div>
         </div>
         <div className={styles['signup-form__row']}>
           <div className={styles['signup-form__column']}>
             <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
+              <label className={styles['signup-form__label--required_special']}>
                 *
               </label>
               <div className={styles['signup-form__label--password']}>
                 <label>Пароль</label>
                 <label className={styles['signup-form__label--hint']}>
-                  (Повинен містити A-Z, a-z, 0-9)
+                  (Повинен містити від 8 до 50 символів, A-Z, a-z, 0-9)
                 </label>
               </div>
             </div>
@@ -189,7 +198,7 @@ export function SignUpFormContentComponent(props) {
           </div>
           <div className={styles['signup-form__column']}>
             <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
+              <label className={styles['signup-form__label--required_special']}>
                 *
               </label>
               <div className={styles['signup-form__label--password']}>
@@ -197,7 +206,7 @@ export function SignUpFormContentComponent(props) {
                   Повторіть пароль
                 </label>
                 <label className={styles['signup-form__label--hint']}>
-                  (Повинен містити A-Z, a-z, 0-9)
+                  (Повинен містити від 8 до 50 символів, A-Z, a-z, 0-9)
                 </label>
               </div>
             </div>
@@ -243,6 +252,9 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Прізвище"
                 {...register('surname', {
                   required: errorMessageTemplates.required,
+                  pattern: {
+                    value: NAME_SURNAME_PATTERN,
+                },
                 })}
               />
             </div>
@@ -264,6 +276,9 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Ім‘я"
                 {...register('name', {
                   required: errorMessageTemplates.required,
+                  pattern: {
+                    value: NAME_SURNAME_PATTERN,
+                },
                 })}
               />
             </div>
