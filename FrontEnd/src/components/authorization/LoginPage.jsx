@@ -19,14 +19,9 @@ const LoginContent = (props) => {
     setShowPassword(!showPassword);
   };
 
-  // function RateLimitStopwatch() {
   const { minutes, isRunning, start, reset } = useStopwatch({
     autoStart: false,
   });
-  // return minutes, isRunning, start, pause
-  // }
-
-  // const { minutes, isRunning, start, pause } = RateLimitStopwatch()
 
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
@@ -83,7 +78,7 @@ const LoginContent = (props) => {
     clearErrors('rateError');
   }, [getValues('email'), getValues('password'), clearErrors]);
 
-  const disabled = !isValid || (isRunning && minutes < 2);
+  const disabled = !isValid || (isRunning && minutes < 10);
 
   const onSubmit = async (value) => {
     try {
