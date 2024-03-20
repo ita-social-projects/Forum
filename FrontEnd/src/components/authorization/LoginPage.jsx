@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import { useNavigate, Link  } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { useStopwatch } from 'react-timer-hook';
+
 import validator from 'validator';
 import EyeVisible from './EyeVisible';
 import EyeInvisible from './EyeInvisible';
@@ -18,10 +20,15 @@ const LoginContent = (props) => {
     setShowPassword(!showPassword);
   };
 
+  const { minutes, isRunning, start, reset } = useStopwatch({
+    autoStart: false,
+  });
+
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
     email: 'Формат електронної пошти некоректний',
     unspecifiedError: 'Електронна пошта чи пароль вказані некоректно',
+    rateError: 'Небезпечні дії на сторінці. Сторінка заблокована на 10 хвилин',
   };
 
   const {
@@ -32,7 +39,7 @@ const LoginContent = (props) => {
     clearErrors,
     formState: { errors, isValid },
   } = useForm({
-    mode: 'all'
+    mode: 'all',
   });
 
   const { setErrorMessage } = props;
@@ -44,7 +51,9 @@ const LoginContent = (props) => {
       if (errors.email.message === errors.password.message) {
         errorMessage = errors.email.message;
       } else {
-        errorMessage = `${errors.email?.message || ''}\n${errors.password?.message || ''}`;
+        errorMessage = `${errors.email?.message || ''}\n${
+          errors.password?.message || ''
+        }`;
       }
     } else if (errors.email?.message) {
       errorMessage = errors.email.message;
@@ -52,21 +61,35 @@ const LoginContent = (props) => {
       errorMessage = errors.password.message;
     } else if (errors.unspecifiedError?.message) {
       errorMessage = errors.unspecifiedError.message;
+    } else if (errors.rateError?.message) {
+      errorMessage = errors.rateError.message;
     }
 
     setErrorMessage(errorMessage);
-  }, [errors.email?.message, errors.password?.message, errors.unspecifiedError?.message, setErrorMessage]);
+  }, [
+    errors.email?.message,
+    errors.password?.message,
+    errors.unspecifiedError?.message,
+    errors.rateError?.message,
+    setErrorMessage,
+  ]);
 
   useEffect(() => {
     clearErrors('unspecifiedError');
+    clearErrors('rateError');
   }, [getValues('email'), getValues('password'), clearErrors]);
+
+  const disabled = !isValid || (isRunning && minutes < 10);
 
   const onSubmit = async (value) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/login/`, {
-        email: value.email,
-        password: value.password,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_API_URL}/api/auth/token/login/`,
+        {
+          email: value.email,
+          password: value.password,
+        }
+      );
       const authToken = response.data.auth_token;
       login(authToken);
       const isStaff = await checkIfStaff();
@@ -79,12 +102,24 @@ const LoginContent = (props) => {
     catch (error) {
       console.error('ERROR', error);
       if (error.response.status === 400) {
-      setError('unspecifiedError', {
-        type: 'manual',
-        message: errorMessageTemplates.unspecifiedError
-      });
-    }}
+        const resp = error.response.data.non_field_errors[0];
+        if (resp == 'Unable to log in with provided credentials.') {
+          setError('unspecifiedError', {
+            type: 'manual',
+            message: errorMessageTemplates.unspecifiedError,
+          });
+        } else if (resp == 'User account is disabled.') {
+          isRunning ? reset() : start();
+          setError('rateError', {
+            type: 'manual',
+            message: errorMessageTemplates.rateError,
+          });
+        }
+      }
+    }
   };
+
+  useEffect(() => {}, [disabled]);
 
   return (
     <div className={classes['login-basic']}>
@@ -113,14 +148,15 @@ const LoginContent = (props) => {
                   placeholder="Електронна пошта"
                   {...register('email', {
                     required: errorMessageTemplates.required,
-                    validate: (value) => validator.isEmail(value) || errorMessageTemplates.email,
+                    validate: (value) =>
+                      validator.isEmail(value) || errorMessageTemplates.email,
                   })}
                 />
               </div>
               <span className={classes['error-message']}>
                 {errors.email && errors.email.message}
                 {errors.required && errors.required.message}
-                </span>
+              </span>
             </div>
             <div className={classes['login-content__item']}>
               <label
@@ -144,20 +180,24 @@ const LoginContent = (props) => {
                       required: errorMessageTemplates.required,
                     })}
                   />
-                  <span className={classes['password-visibility']} onClick={togglePassword}>
+                  <span
+                    className={classes['password-visibility']}
+                    onClick={togglePassword}
+                  >
                     {!showPassword ? <EyeInvisible /> : <EyeVisible />}
                   </span>
                 </div>
               </div>
               <span className={classes['error-message']}>
-                    {errors.password && errors.password.message}
-                    {errors.required && errors.required.message}
-                    {errors.unspecifiedError && errors.unspecifiedError.message}
+                {errors.password && errors.password.message}
+                {errors.required && errors.required.message}
+                {errors.unspecifiedError && errors.unspecifiedError.message}
               </span>
             </div>
-            <Link to="/reset-password" className={classes['forget-password']}>Забули пароль?</Link>
+            <Link to="/reset-password" className={classes['forget-password']}>
+              Забули пароль?
+            </Link>
           </div>
-
         </div>
         <div className={classes['login-footer']}>
           <div className={classes['login-footer-buttons']}>
@@ -170,10 +210,12 @@ const LoginContent = (props) => {
               </button>
             </Link>
             <button
-              disabled={!isValid}
+              disabled={disabled}
               type="submit"
               className={
-                isValid ? classes['login-footer-buttons__signin'] : classes['login-footer-buttons__signin__disabled']
+                disabled
+                  ? classes['login-footer-buttons__signin__disabled']
+                  : classes['login-footer-buttons__signin']
               }
             >
               Увійти
