@@ -143,15 +143,15 @@ export default function CompanyCard({
             </div>
           </div>
           <Tooltip
-            title={profile.region}
+            title={profile.region_display}
             placement="bottom"
             pointAtCenter={true}
           >
             <div className={styles['company-card__region-text']}>
               {profile.region
-                ? profile.region.length < lengthOfRegion
-                  ? `${profile.region}`
-                  : `${profile.region.substring(0, 35)}...`
+                ? profile.region_display.length < lengthOfRegion
+                  ? `${profile.region_display}`
+                  : `${profile.region_display.substring(0, 35)}...`
                 : ''}
             </div>
           </Tooltip>

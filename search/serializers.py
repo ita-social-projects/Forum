@@ -8,6 +8,7 @@ class CompanySerializers(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
     activities = ActivitySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
+    region_display = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -17,6 +18,7 @@ class CompanySerializers(serializers.ModelSerializer):
             "categories",
             "activities",
             "region",
+            "region_display",
             "founded",
             "address",
             "banner_image",
@@ -30,3 +32,6 @@ class CompanySerializers(serializers.ModelSerializer):
         if user.is_authenticated:
             return obj.pk in self.context["saved_companies_pk"]
         return False
+
+    def get_region_display(self, obj):
+        return obj.get_region_display()
