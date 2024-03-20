@@ -8,11 +8,11 @@ const mockedUser = {
   id: 1,
   name: 'Test',
   profile_id: 1,
-  surname: 'Test'
+  surname: 'Test',
 };
 jest.mock('../hooks/useAuth', () => ({
-    useAuth: () => {
-      return mockedUser;
+  useAuth: () => {
+    return mockedUser;
   },
 }));
 
@@ -22,6 +22,7 @@ const company_liked = {
   id: 1,
   name: 'Testname',
   region: 'Testregion',
+  region_display: 'Testregion',
   founded: 2006,
   service_info: 'Testinfo',
   address: 'Testadress',
@@ -49,6 +50,7 @@ const company_unliked = {
   id: 1,
   name: 'Testname_unlike',
   region: 'Testregion_unlike',
+  region_display: 'Testregion_unlike',
   founded: 2006,
   service_info: 'Testinfo_unlike',
   address: 'Testadress_unlike',
