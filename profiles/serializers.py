@@ -1,4 +1,3 @@
-from django.contrib.auth.models import AnonymousUser
 from rest_framework import serializers
 from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
 
