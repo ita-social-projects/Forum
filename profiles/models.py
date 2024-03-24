@@ -91,7 +91,14 @@ class Profile(models.Model):
         blank=True,
         null=True,
     )
-    ipn = models.CharField(max_length=10, unique=True, validators=[validate_ipn], default=None, blank=True, null=True)
+    ipn = models.CharField(
+        max_length=10,
+        unique=True,
+        validators=[validate_ipn],
+        default=None,
+        blank=True,
+        null=True,
+    )
     founded = models.SmallIntegerField(
         validators=[validate_foundation_year_range], default=None, null=True
     )

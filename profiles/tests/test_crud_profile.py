@@ -549,7 +549,14 @@ class TestProfileDetailAPIView(APITestCase):
             data={"is_fop": True},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual(response.json(), {"is_fop": ["For the EDRPOU field filled out, FOP must be set to False"]})
+        self.assertEqual(
+            response.json(),
+            {
+                "is_fop": [
+                    "For the EDRPOU field filled out, FOP must be set to False"
+                ]
+            },
+        )
 
     def test_partial_update_profile_ipn(self):
         self.client.force_authenticate(self.user)
@@ -561,7 +568,14 @@ class TestProfileDetailAPIView(APITestCase):
             data={"edrpou": "", "ipn": "1234567891"},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual(response.json(), {"is_fop": ["For the IPN field filled out, FOP must be set to True"]})
+        self.assertEqual(
+            response.json(),
+            {
+                "is_fop": [
+                    "For the IPN field filled out, FOP must be set to True"
+                ]
+            },
+        )
 
     def test_partial_update_profile_is_fop_with_ipn(self):
         self.client.force_authenticate(self.user)
