@@ -39,12 +39,6 @@ class TestProfileDetailAPIView(APITestCase):
             edrpou="99999999",
         )
 
-        # self.user_fop = UserFactory(email="test2@test.com")
-        # self.profile_fop = ProfileStartupFactory.create(
-        #     person=self.user_fop,
-        #     edrpou=None,
-        # )
-
     def tearDown(self) -> None:
         self.right_image.close()
         self.wrong_image.close()
