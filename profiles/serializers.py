@@ -222,6 +222,16 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("person",)
 
+    def validate(self, data):
+        edrpou = data.get("edrpou", self.instance.edrpou)
+        ipn = data.get("ipn", self.instance.ipn)
+        is_fop = data.get("is_fop", self.instance.is_fop)
+        if ipn and not is_fop:
+            raise serializers.ValidationError({"is_fop": "For the IPN field filled out, FOP must be set to True"})
+        if edrpou and is_fop:
+            raise serializers.ValidationError({"is_fop": "For the EDRPOU field filled out, FOP must be set to False"})
+        return data
+
 
 class ProfileDeleteSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)
