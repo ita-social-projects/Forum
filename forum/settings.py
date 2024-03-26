@@ -217,20 +217,5 @@ DJOSER = {
     },
 }
 
-
-def running_tests():
-    import sys
-
-    """ Check if tests are executed """
-    return sys.argv[1:2] == ["test"]
-
-
-if running_tests():
-    # For tests execution, the fastest password hasher is used
-    # (may increase execution speed ×10 and more)
-    PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
-    DELAY_FOR_LOGIN = 5
-    ATTEMPTS_FOR_LOGIN = 2
-else:
-    DELAY_FOR_LOGIN = 600  # delay time for login in seconds
-    ATTEMPTS_FOR_LOGIN = 10  # attempts for login during delay for login
+DELAY_FOR_LOGIN = 600  # delay time for login in seconds
+ATTEMPTS_FOR_LOGIN = 10  # attempts for login during delay for login
