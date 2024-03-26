@@ -1,4 +1,3 @@
-from django.contrib.auth.models import AnonymousUser
 from rest_framework import serializers
 from .models import Profile, Activity, Category, SavedCompany, ViewedCompany
 
@@ -74,12 +73,14 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "region_display",
             "common_info",
             "edrpou",
+            "ipn",
             "founded",
             "address",
             "startup_idea",
             "name",
             "is_registered",
             "is_startup",
+            "is_fop",
             "categories",
             "activities",
             "service_info",
@@ -95,12 +96,14 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "region_display",
             "common_info",
             "edrpou",
+            "ipn",
             "founded",
             "address",
             "startup_idea",
             "name",
             "is_registered",
             "is_startup",
+            "is_fop",
             "categories",
             "activities",
             "service_info",
@@ -132,6 +135,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "name",
             "is_registered",
             "is_startup",
+            "is_fop",
             "categories",
             "activities",
             "person",
@@ -143,6 +147,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "common_info",
             "phone",
             "edrpou",
+            "ipn",
             "founded",
             "service_info",
             "product_info",
@@ -157,6 +162,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "name",
             "is_registered",
             "is_startup",
+            "is_fop",
             "categories",
             "activities",
             "person",
@@ -168,6 +174,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "common_info",
             "phone",
             "edrpou",
+            "ipn",
             "founded",
             "service_info",
             "product_info",
@@ -192,6 +199,7 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             "name",
             "is_registered",
             "is_startup",
+            "is_fop",
             "categories",
             "activities",
             "person",
@@ -202,6 +210,7 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             "common_info",
             "phone",
             "edrpou",
+            "ipn",
             "founded",
             "service_info",
             "product_info",
@@ -212,6 +221,24 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             "is_deleted",
         )
         read_only_fields = ("person",)
+
+    def validate(self, data):
+        edrpou = data.get("edrpou", self.instance.edrpou)
+        ipn = data.get("ipn", self.instance.ipn)
+        is_fop = data.get("is_fop", self.instance.is_fop)
+        if ipn and not is_fop:
+            raise serializers.ValidationError(
+                {
+                    "is_fop": "For the IPN field filled out, FOP must be set to True"
+                }
+            )
+        if edrpou and is_fop:
+            raise serializers.ValidationError(
+                {
+                    "is_fop": "For the EDRPOU field filled out, FOP must be set to False"
+                }
+            )
+        return data
 
 
 class ProfileDeleteSerializer(serializers.Serializer):
