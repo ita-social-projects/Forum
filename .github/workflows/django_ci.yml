@@ -55,4 +55,4 @@ jobs:
       - name: Run migrations
         run: python manage.py migrate
       - name: Run Tests
-        run: python manage.py test
+        run: python manage.py test --settings=forum.test_setting
