@@ -282,6 +282,28 @@ const GeneralInfo = (props) => {
         });
     };
 
+    const errorMessages = {
+        'profile with this edrpou already exists.': 'Компанія з таким ЄДРПОУ вже існує',
+        'profile with this ipn already exists.': 'Фізична особа-підприємець з таким ІПН вже існує',
+        'For the IPN field filled out, FOP must be set to True': 'Поле ІПН може бути заповнене лише при зазначеному полі ФОП',
+        'For the EDRPOU field filled out, FOP must be set to False': 'Поле ЄДРПОУ може бути заповнене, якщо поле ФОП не зазначене'
+    };
+
+    function handleError(error) {
+        if (error.response && error.response.status === 400) {
+            const errorData = error.response.data;
+            Object.keys(errorData).forEach(key => {
+                const message = errorData[key][0];
+                if (errorMessages[message]) {
+                    toast.error(errorMessages[message]);
+                }
+            });
+        } else if (!error.response || error.response.status !== 401) {
+            toast.error('Не вдалося зберегти зміни, сталася помилка');
+        }
+        console.error('Помилка:', error.response ? error.response.data : error.message);
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkRequiredFields()) {
@@ -307,19 +329,7 @@ const GeneralInfo = (props) => {
                 await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
 
             } catch (error) {
-                if (error.response && error.response.status === 400) {
-                    const errorData = error.response.data;
-                    if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
-                        toast.error('Компанія з таким ЄДРПОУ вже існує');
-                    }
-                    if (errorData.ipn && errorData.ipn[0] === 'profile with this ipn already exists.') {
-                        toast.error('Фізична особа-підприємець з таким ІПН вже існує');
-                    }
-                console.error('Помилка:', error.response ? error.response.data : error.message);
-                if (!error.response || error.response.status !== 401) {
-                    toast.error('Не вдалося зберегти зміни, сталася помилка');
-                }
-            }
+                handleError(error);
         }
     }
 };
