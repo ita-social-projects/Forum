@@ -223,9 +223,12 @@ $ docker stop $(docker ps -q)
 ### How to run tests
 - User, run test:
 ```shell
-$ python manage.py test
+$ python manage.py test --settings=forum.test_settings
 ```
-
+- Running tests from Docker container:
+```
+$ docker compose -f docker-compose.dev.yml exec api-dev python manage.py test --settings=forum.test_settings
+```
 ### How to Checkstyle
 
 ---

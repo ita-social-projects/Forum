@@ -4,6 +4,7 @@ from django.core.validators import MaxLengthValidator
 from authentication.models import CustomUser
 from .managers import ProfileManager
 from validation.validate_edrpou import validate_edrpou
+from validation.validate_ipn import validate_ipn
 from validation.validate_foundation_year import validate_foundation_year_range
 from validation.validate_image import (
     validate_image_size,
@@ -56,6 +57,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=100, default=None, null=True)
     is_registered = models.BooleanField(default=None, null=True)
     is_startup = models.BooleanField(default=None, null=True)
+    is_fop = models.BooleanField(default=False)
 
     categories = models.ManyToManyField("Category")
     activities = models.ManyToManyField("Activity")
@@ -85,6 +87,14 @@ class Profile(models.Model):
         max_length=8,
         unique=True,
         validators=[validate_edrpou],
+        default=None,
+        blank=True,
+        null=True,
+    )
+    ipn = models.CharField(
+        max_length=10,
+        unique=True,
+        validators=[validate_ipn],
         default=None,
         blank=True,
         null=True,

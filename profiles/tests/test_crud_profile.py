@@ -533,6 +533,57 @@ class TestProfileDetailAPIView(APITestCase):
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
+    def test_partial_update_profile_is_fop_with_edrpou(self):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"is_fop": True},
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            response.json(),
+            {
+                "is_fop": [
+                    "For the EDRPOU field filled out, FOP must be set to False"
+                ]
+            },
+        )
+
+    def test_partial_update_profile_ipn(self):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"edrpou": "", "ipn": "1234567891"},
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            response.json(),
+            {
+                "is_fop": [
+                    "For the IPN field filled out, FOP must be set to True"
+                ]
+            },
+        )
+
+    def test_partial_update_profile_is_fop_with_ipn(self):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"edrpou": "", "is_fop": True, "ipn": "1234567891"},
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual("1234567891", response.data.get("ipn"))
+        self.assertTrue(response.data.get("is_fop"))
+
     def test_partial_update_profile_category(self):
         category = CategoryFactory()
         self.client.force_authenticate(self.user)
