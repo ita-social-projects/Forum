@@ -3,7 +3,7 @@
   font-weight: 400;
   font-style: normal;
   src: local('Inter Regular'), local('Inter-Regular'),
-       url('/public/fonts/Inter-Regular.ttf') format('truetype');
+    url('/public/fonts/Inter-Regular.ttf') format('truetype');
 }
 
 * {
@@ -34,7 +34,7 @@
   /* button color*/
   --main-button-color: #1F9A7C;
   --light-button-color: #FFFFFF;
-  
+
   scroll-behavior: smooth;
   font-family: "Inter", sans-serif;
 }
@@ -42,4 +42,3 @@
 a {
   text-decoration: none;
 }
-

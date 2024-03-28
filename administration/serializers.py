@@ -1,55 +1,53 @@
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from djoser.serializers import UserSerializer
-
 from authentication.models import CustomUser
 from profiles.models import Profile
+from django.contrib.auth import get_user_model
+from djoser.serializers import UserSerializer
 
 
-User = get_user_model()
-
-
-class AdminUserSerializer(UserSerializer):
-    phone_number = serializers.SerializerMethodField()
-
-    def get_phone_number(self, user):
-        try:
-            return user.profile.phone_number
-        except ObjectDoesNotExist:
-            return None
-
-    class Meta(UserSerializer.Meta):
-        model = User
+class AdminUserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
         fields = (
             "id",
+            "email",
+            "name",
+            "surname",
+        )
+
+
+class AdminUserDetailSerializer(serializers.ModelSerializer):
+    company_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CustomUser
+        fields = (
             "name",
             "surname",
             "email",
-            "phone_number",
             "is_active",
             "is_staff",
+            "is_superuser",
+            "company_name",
         )
-        read_only_fields = ("phone_number", "email")
 
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ("email", "name", "surname")
+    def get_company_name(self, obj) -> bool:
+        return True if hasattr(obj, "profile") else False
 
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):
-    person = UserSerializer(read_only=True)
+    person = AdminUserDetailSerializer(read_only=True)
 
     class Meta:
         model = Profile
         fields = (
+            "id",
             "name",
             "is_registered",
             "is_startup",
             "person",
             "person_position",
+            "region",
             "official_name",
             "phone",
             "edrpou",
@@ -59,7 +57,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
 
 
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
-    person = UserSerializer(read_only=True)
+    person = AdminUserDetailSerializer(read_only=True)
     categories = serializers.SlugRelatedField(
         many=True, slug_field="name", read_only=True
     )

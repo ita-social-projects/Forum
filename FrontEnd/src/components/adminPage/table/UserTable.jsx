@@ -1,87 +1,75 @@
-import css from './Table.module.css';
-import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import css from './UserTable.module.css';
+import { useNavigate } from 'react-router-dom';
 import PaginationButtons from './PaginationButtons';
+import axios from 'axios';
+import useSWR from 'swr';
+import { DEFAULT_PAGE_SIZE } from '../сonstants';
 
-const COLUMN_NAMES = ['ID', 'ФІО', 'Пошта', 'Телефон'];
-
-const USERS = [
-    {
-        id: 1,
-        name: 'Lebron',
-        surname: 'James',
-        person_email: 'user123123@user.com',
-        phone_number: '+380997777778'
-    },
-    {
-        id: 1,
-        name: 'Lebron',
-        surname: 'James',
-        person_email: 'user123123@user.com',
-        phone_number: '+380997777778'
-    },
-    {
-        id: 2222,
-        name: 'Lebron',
-        surname: 'James',
-        person_email: 'user123123@user.com',
-        phone_number: '+380997777778'
-    },
-    {
-        id: 1,
-        name: 'Lebron',
-        surname: 'James',
-        person_email: 'user123123@user.com',
-        phone_number: '-'
-    },
-    {
-        id: 1,
-        name: 'Lebron',
-        surname: 'James',
-        person_email: 'user123123@user.com',
-        phone_number: '+380997777778'
-    },
-    {
-        id: 1,
-        name: 'Lebron',
-        surname: 'James',
-        person_email: 'user123123@user.com',
-        phone_number: '+380997777778'
-    },
-
-];
+const COLUMN_NAMES = ['ID', 'ФІО', 'Пошта'];
 
 function UserTable() {
-
-    let navigate = useNavigate();
-    const routeChange = (id) =>{
-        let path = `/admin/users/${id}`;
+    const navigate = useNavigate();
+    const routeChange = (id) => {
+        const path = `../../customadmin/users/${id}`;
         navigate(path);
     };
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
+    const handlePageSizeChange = (size) => {
+        setPageSize(size);
+        setCurrentPage(1);
+    };
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`;
+
+    async function fetcher(url) {
+        const response = await axios.get(url);
+        return response.data;
+    }
+    const { data, error, isValidating: loading } = useSWR(url, fetcher);
+
+    const users = data ? data.results : [];
 
     return (
         <div>
-            <PaginationButtons></PaginationButtons>
-            <table  className={css['table-section']}>
-            <thead>
-                <tr className={css['table-header']}>
-                    {COLUMN_NAMES.map((column) =>(
-                        <th key={column} className={css['table-header__text']}>{column}</th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                {USERS.map((user) =>(
-                    <tr key={user.id} className={css['table-element']} onClick={() => routeChange(user.id)}>
-                        <td className={css['table-element__text']}>{user.id}</td>
-                        <td className={css['table-element__text']}>{user.surname} {user.name}</td>
-                        <td className={css['table-element__text']}>{user.person_email}</td>
-                        <td className={css['table-element__text']}>{user.phone_number}</td>
+            <PaginationButtons
+                totalPages={data ? data.total_pages : 1}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+                pageSize={pageSize}
+                onPageSizeChange={handlePageSizeChange}
+            />
+            <ul className={css['log-section']}>
+                {loading && <li className={css['log']} >Завантаження ...</li>}
+                {error && <li className={css['log']}>Виникла помилка: {error}</li>}
+            </ul>
+            <table className={css['table-section']}>
+                <thead>
+                    <tr className={css['table-header']}>
+                        {COLUMN_NAMES.map((column) => (
+                            <th key={column} className={css['table-header__text']}>
+                                {column}
+                            </th>
+                        ))}
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {users.map((user) => (
+                        <tr key={user.id} className={css['table-element']} onClick={() => routeChange(user.id)}>
+                            <td className={css['table-element__text']}>{user.id}</td>
+                            <td className={css['table-element__text']}>
+                                {user.surname} {user.name}
+                            </td>
+                            <td className={css['table-element__text']}>{user.email}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
-
     );
 }
 

@@ -9,9 +9,10 @@ import EyeVisible from './EyeVisible';
 import EyeInvisible from './EyeInvisible';
 import classes from './LoginPage.module.css';
 import { useAuth } from '../../hooks/';
+import checkIfStaff from '../adminPage/checkIfStaff';
 
 const LoginContent = (props) => {
-  const auth = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -90,9 +91,15 @@ const LoginContent = (props) => {
         }
       );
       const authToken = response.data.auth_token;
-      auth.login(authToken);
-      navigate('/profile/general-info');
-    } catch (error) {
+      login(authToken);
+      const isStaff = await checkIfStaff();
+      if (isStaff) {
+        navigate('/customadmin');
+      } else {
+        navigate('/profile/general-info');
+      }
+    }
+    catch (error) {
       console.error('ERROR', error);
       if (error.response.status === 400) {
         const resp = error.response.data.non_field_errors[0];

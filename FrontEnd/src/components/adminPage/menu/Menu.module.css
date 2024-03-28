@@ -1,7 +1,7 @@
 .menu-section {
     display: flex;
-    width: 120px;
-    padding: 30px 60px 40px 104px;
+    width: var(--menu-size__admin-panel);
+    padding: 20px;
     flex-direction: column;
     align-items: flex-start;
     gap: 23px;
@@ -10,34 +10,30 @@
 .menu-section-element {
     color: var(--main-grey-100, #000);
     font-feature-settings: 'calt' off;
-
-    /* Text/14-Semi bold */
     text-decoration: none;
-    font-family: Inter;
+    font-family: var(--font__admin-panel);
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
-    line-height: 22px; /* 157.143% */
+    line-height: 22px;
     letter-spacing: -0.14px;
 }
 
 .menu-section-divider {
     height: 1px;
     align-self: stretch;
-    width: 150px;
+    width:  var(--menu-size__admin-panel);
     background: var(--main-black-20, #E2E5EB);
 }
 
 .menu-section-logout {
     color: var(--system-red-100, #F15831);
     font-feature-settings: 'calt' off;
-
-    /* Text/14-Regular */
     text-decoration: none;
-    font-family: Inter;
+    font-family: var(--font__admin-panel);
     font-size: 20px;
     font-style: normal;
-    font-weight: 400;
-    line-height: 22px; /* 157.143% */
+    font-weight: 600;
+    line-height: 22px;
     letter-spacing: -0.14px;
 }

@@ -1,4 +1,6 @@
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import (
+    BasePermission,
+)
 from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
@@ -6,13 +8,23 @@ from rest_framework.generics import (
 )
 
 from administration.serializers import (
-    AdminUserSerializer,
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
+    AdminUserListSerializer,
+    AdminUserDetailSerializer,
 )
 from administration.pagination import ListPagination
 from authentication.models import CustomUser
 from profiles.models import Profile
+
+
+class IsStaffUser(BasePermission):
+    """
+    Custom is staff permission.
+    """
+
+    def has_permission(self, request, view):
+        return request.user.is_staff
 
 
 class UsersListView(ListAPIView):
@@ -20,10 +32,10 @@ class UsersListView(ListAPIView):
     List of users.
     """
 
-    queryset = CustomUser.objects.filter(is_superuser=False).order_by("id")
-    serializer_class = AdminUserSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsStaffUser]
     pagination_class = ListPagination
+    serializer_class = AdminUserListSerializer
+    queryset = CustomUser.objects.all().order_by("id")
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
@@ -31,19 +43,34 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     Retrieve, update or delete a user.
     """
 
-    queryset = CustomUser.objects.filter(is_superuser=False).order_by("id")
-    permission_classes = [IsAuthenticated, IsAdminUser]
-    serializer_class = AdminUserSerializer
+    permission_classes = [IsStaffUser]
+    serializer_class = AdminUserDetailSerializer
+    queryset = CustomUser.objects.all()
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if not Profile.objects.filter(person_id=instance.id).exists():
+            return super().destroy(request, *args, **kwargs)
+        else:
+            return self.http_method_not_allowed(request, *args, **kwargs)
 
 
-class AdminProfileList(ListCreateAPIView):
-    permission_classes = (IsAuthenticated, IsAdminUser)
+class ProfilesListView(ListCreateAPIView):
+    """
+    List of profiles.
+    """
+
+    permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminCompanyListSerializer
-    queryset = Profile.objects.filter(is_deleted=False)
+    queryset = Profile.objects.all().order_by("id")
 
 
-class AdminProfileDetail(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated, IsAdminUser)
+class ProfileDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update or delete a Profiles.
+    """
+
+    permission_classes = [IsStaffUser]
     serializer_class = AdminCompanyDetailSerializer
-    queryset = Profile.objects.filter(is_deleted=False)
+    queryset = Profile.objects.all()

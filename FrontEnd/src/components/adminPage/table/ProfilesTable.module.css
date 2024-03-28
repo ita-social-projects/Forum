@@ -1,26 +1,23 @@
-.table-section {
-    margin-bottom: 162px;
-    margin-top: 20px;
-    min-width: 1050px;
-    width: 100%;
-    overflow: auto;
+.table-profiles {
+    width: var(--table-size__admin-panel);
 }
 
-.table {
-    border-collapse: collapse;
-    width: 100%;
-    table-layout: fixed;
-    text-align: center; /* Вирівнюємо текст по центру в таблиці */
+.table-section {
+    margin-top: 20px;
+    padding: 10px;
+    width: var(--table-size__admin-panel);
 }
 
 .table-header {
     text-align: left;
     background: rgb(214, 243, 234);
+    font-family: var(--font__admin-panel);
     backdrop-filter: blur(4px);
 }
 
-.table-header__text, .table-element__text {
-    padding: 20px 15px;
+.table-header__text,
+.table-element__text {
+    padding: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -31,6 +28,7 @@
 .table-element {
     transition: transform 0.2s ease;
     display: table-row;
+    font-family: var(--font__admin-panel);
 }
 
 .table-element:hover {
@@ -48,5 +46,17 @@
 .table-element td {
     vertical-align: middle;
     display: table-cell;
-    text-align: center; /* Вирівнюємо текст по центру в колонках */
+    text-align: center;
 }
+
+.log-section {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 20px;
+    overflow-y: auto;
+ }
+    
+ .log {
+    margin-bottom: 10px;
+ }
