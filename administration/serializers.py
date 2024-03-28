@@ -88,12 +88,3 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
             "banner_image",
             "is_deleted",
         )
-
-
-User = get_user_model()
-
-
-class AdminUserStatusSerializer(UserSerializer):
-    class Meta(UserSerializer):
-        model = User
-        fields = ("is_staff",)

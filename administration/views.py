@@ -1,12 +1,10 @@
 from rest_framework.permissions import (
-    IsAuthenticated,
     BasePermission,
 )
 from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
-    RetrieveAPIView,
 )
 
 from administration.serializers import (
@@ -14,7 +12,6 @@ from administration.serializers import (
     AdminCompanyDetailSerializer,
     AdminUserListSerializer,
     AdminUserDetailSerializer,
-    AdminUserStatusSerializer,
 )
 from administration.pagination import ListPagination
 from authentication.models import CustomUser
@@ -77,15 +74,3 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsStaffUser]
     serializer_class = AdminCompanyDetailSerializer
     queryset = Profile.objects.all()
-
-
-class UserStatus(RetrieveAPIView):
-    """
-    User status.
-    """
-
-    permission_classes = [IsAuthenticated]
-    serializer_class = AdminUserStatusSerializer
-
-    def get_object(self):
-        return self.request.user
