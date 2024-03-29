@@ -69,7 +69,6 @@ function BasicPage() {
           Select: {
             colorPrimary: '#1f9a7c',
             borderRadiusSM: '2px',
-            fontSize: 10,
             optionPadding: '5px 12px',
             optionFontSize: 14,
             optionLineHeight: '22px',
