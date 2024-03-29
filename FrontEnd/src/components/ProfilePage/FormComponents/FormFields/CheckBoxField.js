@@ -1,4 +1,5 @@
 import { PropTypes } from 'prop-types';
+import { Checkbox } from 'antd';
 import css from './CheckBoxField.module.css';
 
 const CheckBoxField = (props) => {
@@ -14,11 +15,8 @@ const CheckBoxField = (props) => {
         <div className={css['representative__checkboxes']}>
             <div className={css['representative__checkboxes--company-type']}>
                 <label className={css['form-control']}>
-                    <input
-                        className={css['checkbox__input']}
+                    <Checkbox
                         name={props.nameRegister}
-                        type="checkbox"
-                        value={props.nameRegister}
                         onChange={props.updateHandler}
                         checked={props.valueRegister}
                     />
@@ -27,11 +25,8 @@ const CheckBoxField = (props) => {
             </div>
             <div className={css['representative__checkboxes--company-type']}>
                 <label className={css['form-control']}>
-                    <input
-                        className={css['checkbox__input']}
+                    <Checkbox
                         name={props.nameStartup}
-                        type="checkbox"
-                        value={props.nameStartup}
                         onChange={props.updateHandler}
                         checked={props.valueStartup}
                     />
