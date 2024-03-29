@@ -66,6 +66,22 @@ function BasicPage() {
             colorPrimary: '#1F9A7C',
             colorPrimaryHover: '#0b6c61',
           },
+          Select: {
+            colorPrimary: '#1f9a7c',
+            borderRadiusSM: '2px',
+            fontSize: 10,
+            optionPadding: '5px 12px',
+            optionFontSize: 14,
+            optionLineHeight: '22px',
+            optionSelectedBg: '#EFFFF6',
+            optionSelectedColor: '#25292C',
+            multipleItemBorderColor: '#D9D9D9',
+            multipleItemBg: '#F8F8F8',
+          },
+          Checkbox: {
+            colorPrimary: '#1f9a7c',
+            colorPrimaryHover: '#1f9a7c',
+          }
         },
       }}
     >
