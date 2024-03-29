@@ -133,9 +133,9 @@ const GeneralInfo = (props) => {
     };
 
     const onUpdateOneSelectField = e => {
-        const selectedRegion = fetchedRegions.find((el) => el.value === e.target.value);
+        const selectedRegion = fetchedRegions.find((el) => el.value === e);
         setProfile((prevState) => {
-            return { ...prevState, [e.target.name]: selectedRegion.key };
+            return { ...prevState, region: selectedRegion ? selectedRegion.key : '' };
         });
     };
 
@@ -154,6 +154,7 @@ const GeneralInfo = (props) => {
     };
 
     const onChangeCheckbox = (e) => {
+        console.log('EVENT', e);
       const isAnyChecked =
         (profile.is_registered && e.target.name === 'is_startup') ||
         (profile.is_startup && e.target.name === 'is_registered') ||
@@ -175,32 +176,30 @@ const GeneralInfo = (props) => {
             });
     };
 
-    const onUpdateSelectField = e => {
-        const selectName = e.target.name;
-
-        if (selectName === 'activities') {
-            let selectedActivities = [];
-            for (let activity of e.target.value) {
-                let item = fetchedActivities.find((el) => el.name === activity);
-                if (item) {
-                    selectedActivities.push({ id: item.id, name: activity });
-                }
+    const onUpdateActivities = e => {
+        let selectedActivities = [];
+        for (let activity of e) {
+            let item = fetchedActivities.find((el) => el.name === activity);
+            if (item) {
+                selectedActivities.push({ id: item.id, name: activity });
             }
-            setProfile((prevState) => {
-                return { ...prevState, [selectName]: selectedActivities };
-            });
-        } else {
-            let selectedCategories = [];
-            for (let category of e.target.value) {
-                let item = fetchedCategories.find((el) => el.name === category);
-                if (item) {
-                    selectedCategories.push({ id: item.id, name: category });
-                }
-            }
-            setProfile((prevState) => {
-                return { ...prevState, [selectName]: selectedCategories };
-            });
         }
+        setProfile((prevState) => {
+            return { ...prevState, ['activities']: selectedActivities };
+        });
+    };
+
+    const onUpdateCategories = e => {
+        let selectedCategories = [];
+        for (let category of e) {
+            let item = fetchedCategories.find((el) => el.name === category);
+            if (item) {
+                selectedCategories.push({ id: item.id, name: category });
+            }
+        }
+        setProfile((prevState) => {
+            return { ...prevState, ['categories']: selectedCategories };
+        });
     };
 
     const uploadImage = async (url, imageKey, image) => {
@@ -361,7 +360,7 @@ const GeneralInfo = (props) => {
                                     name="activities"
                                     options={fetchedActivities}
                                     label={LABELS.activities}
-                                    updateHandler={onUpdateSelectField}
+                                    updateHandler={onUpdateActivities}
                                     requredField={true}
                                     value={profile.activities.map(obj => obj.name) ?? ''}
                                     defaultValue="Оберіть"
@@ -380,7 +379,7 @@ const GeneralInfo = (props) => {
                                     name="categories"
                                     options={fetchedCategories}
                                     label={LABELS.categories}
-                                    updateHandler={onUpdateSelectField}
+                                    updateHandler={onUpdateCategories}
                                     requredField={true}
                                     value={profile.categories.map(obj => obj.name) ?? ''}
                                     defaultValue="Оберіть"
