@@ -14,7 +14,9 @@ class ProfileFilter(FilterSet):
     def is_saved_filter(self, queryset, name, value):
         if value:
             if self.request.user.is_authenticated:
-                queryset = queryset.filter(saved_list__user=self.request.user).order_by("-saved_list__added_at")
+                queryset = queryset.filter(
+                    saved_list__user=self.request.user
+                ).order_by("-saved_list__added_at")
             else:
                 queryset = queryset.none()
         return queryset
