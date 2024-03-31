@@ -10,7 +10,6 @@ from profiles.factories import (
     ActivityFactory,
     RegionFactory,
 )
-from profiles.models import Region
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
 
@@ -39,9 +38,6 @@ class TestProfileDetailAPIView(APITestCase):
             phone="380100102034",
             edrpou="99999999",
         )
-        # self.dnipro_region = RegionFactory(name_eng="Dnipro", name_ukr="Дніпро")
-        # self.kyiv_region = RegionFactory(name_eng="Kyiv", name_ukr="Київ")
-
 
     def tearDown(self) -> None:
         self.right_image.close()
@@ -632,7 +628,6 @@ class TestProfileDetailAPIView(APITestCase):
         self.client.force_authenticate(self.user)
 
         response = self.client.put(
-
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),

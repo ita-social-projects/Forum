@@ -21,8 +21,8 @@ afterEach(cleanup);
 const company_liked = {
   id: 1,
   name: 'Testname',
-  region: 'Testregion',
-  region_display: 'Testregion',
+  regions: [{ id: 1, name_eng: 'Testregion', name_ukr: 'Тестовий регіон' }],
+  regions_ukr_display: 'Тестовий регіон',
   founded: 2006,
   service_info: 'Testinfo',
   address: 'Testadress',
@@ -49,8 +49,14 @@ const company_liked = {
 const company_unliked = {
   id: 1,
   name: 'Testname_unlike',
-  region: 'Testregion_unlike',
-  region_display: 'Testregion_unlike',
+  regions: [
+    {
+      id: 2,
+      name_eng: 'Testregion_unlike',
+      name_ukr: 'Тестовий регіон анлайк',
+    },
+  ],
+  regions_ukr_display: 'Тестовий регіон анлайк',
   founded: 2006,
   service_info: 'Testinfo_unlike',
   address: 'Testadress_unlike',
@@ -81,7 +87,7 @@ describe('CompanyCard component unit tests', () => {
         <CompanyCard profile={company_liked} isAuthorized={true} />
       </MemoryRouter>
     );
-    const divElement = screen.getByText(/Testregion/i, { exact: false });
+    const divElement = screen.getByText(/Тестовий регіон/i, { exact: false });
     expect(divElement).toBeInTheDocument();
   });
 

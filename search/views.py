@@ -15,7 +15,6 @@ class SearchCompanyView(ListAPIView):
         filters.OrderingFilter,
     ]
     filterset_class = CompanyFilter
-    # ordering_fields = ["name", "region"]
     ordering_fields = ["name"]
 
     def get_serializer_context(self):

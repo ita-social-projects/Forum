@@ -16,9 +16,15 @@ class TestCompanyFilter(APITestCase):
     def setUp(self) -> None:
         self.user = UserFactory()
         self.kyiv_region = RegionFactory(name_eng="Kyiv", name_ukr="Київ")
-        self.dnipro_region = RegionFactory(name_eng="Dnipro", name_ukr="Дніпро")
-        self.kharkiv_region = RegionFactory(name_eng="Kharkiv", name_ukr="Харків")
-        self.chernihiv_region = RegionFactory(name_eng="Chernihiv", name_ukr="Чернігів")
+        self.dnipro_region = RegionFactory(
+            name_eng="Dnipro", name_ukr="Дніпро"
+        )
+        self.kharkiv_region = RegionFactory(
+            name_eng="Kharkiv", name_ukr="Харків"
+        )
+        self.chernihiv_region = RegionFactory(
+            name_eng="Chernihiv", name_ukr="Чернігів"
+        )
         self.company_kiev = ProfileCompanyFactory(
             name="Kyivbud", regions=[self.kyiv_region]
         )
@@ -37,29 +43,245 @@ class TestCompanyFilter(APITestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.data))
 
-    # def test_get_profile_filtered_by_region_unauthorized(self):
-    #     response = self.client.get(path="/api/search/?region=Dnipro")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(1, len(response.data))
-    #     self.assertEqual(
-    #         [
-    #             {
-    #                 "id": self.company_dnipro.id,
-    #                 "name": "Dniprotrans",
-    #                 "categories": [],
-    #                 "activities": [],
-    #                 "region": "Dnipro region",
-    #                 "region_display": "Дніпропетровська область",
-    #                 "founded": 2022,
-    #                 "address": "Test Country, Test City, St. Test, 1",
-    #                 "banner_image": None,
-    #                 "logo_image": None,
-    #                 "person": self.company_dnipro.person_id,
-    #                 "is_saved": False,
-    #             }
-    #         ],
-    #         response.json(),
-    #     )
+    def test_get_profile_filtered_by_region_eng_unauthorized(self):
+        response = self.client.get(path="/api/search/?regions_eng=Dnipro")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_dnipro.id,
+                    "name": "Dniprotrans",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.dnipro_region.id,
+                            "name_eng": "Dnipro",
+                            "name_ukr": "Дніпро",
+                        }
+                    ],
+                    "regions_ukr_display": "Дніпро",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_dnipro.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
+
+    def test_get_profile_filtered_by_region_eng_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?regions_eng=Dnipro")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_dnipro.id,
+                    "name": "Dniprotrans",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.dnipro_region.id,
+                            "name_eng": "Dnipro",
+                            "name_ukr": "Дніпро",
+                        }
+                    ],
+                    "regions_ukr_display": "Дніпро",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_dnipro.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
+
+    def test_get_profile_filtered_by_region_ukr_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?regions_ukr=Дніпро")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_dnipro.id,
+                    "name": "Dniprotrans",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.dnipro_region.id,
+                            "name_eng": "Dnipro",
+                            "name_ukr": "Дніпро",
+                        }
+                    ],
+                    "regions_ukr_display": "Дніпро",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_dnipro.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
+
+    def test_get_profile_filtered_by_region_ukr_unauthorized(self):
+        response = self.client.get(path="/api/search/?regions_ukr=Дніпро")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_dnipro.id,
+                    "name": "Dniprotrans",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.dnipro_region.id,
+                            "name_eng": "Dnipro",
+                            "name_ukr": "Дніпро",
+                        }
+                    ],
+                    "regions_ukr_display": "Дніпро",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_dnipro.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
+
+    def test_get_profile_filtered_by_region_ukr_partial_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?regions_ukr=Дніп")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_dnipro.id,
+                    "name": "Dniprotrans",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.dnipro_region.id,
+                            "name_eng": "Dnipro",
+                            "name_ukr": "Дніпро",
+                        }
+                    ],
+                    "regions_ukr_display": "Дніпро",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_dnipro.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
+
+    def test_get_profile_filtered_by_region_ukr_partial_unauthorized(self):
+        response = self.client.get(path="/api/search/?regions_ukr=Дніпро")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_dnipro.id,
+                    "name": "Dniprotrans",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.dnipro_region.id,
+                            "name_eng": "Dnipro",
+                            "name_ukr": "Дніпро",
+                        }
+                    ],
+                    "regions_ukr_display": "Дніпро",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_dnipro.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
+
+    def test_get_profile_filtered_by_region_ukr_lower_case_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?regions_ukr=дніпро")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_dnipro.id,
+                    "name": "Dniprotrans",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.dnipro_region.id,
+                            "name_eng": "Dnipro",
+                            "name_ukr": "Дніпро",
+                        }
+                    ],
+                    "regions_ukr_display": "Дніпро",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_dnipro.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
+
+    def test_get_profile_filtered_by_region_ukr_not_exist_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?regions_ukr=УУ")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
+
+    def test_get_profile_filtered_by_region_eng_not_exist_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?regions_eng=WWWW")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
+
+    def test_get_profile_filtered_by_region_ukr_not_exist_unauthorized(self):
+        response = self.client.get(path="/api/search/?regions_ukr=УУ")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
+
+    def test_get_profile_filtered_by_region_eng_not_exist_unauthorized(self):
+        response = self.client.get(path="/api/search/?regions_eng=WWWW")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
 
     def test_get_profile_filtered_by_name_authorized(self):
         self.client.force_authenticate(self.user)
@@ -73,8 +295,14 @@ class TestCompanyFilter(APITestCase):
                     "name": "Kyivbud",
                     "categories": [],
                     "activities": [],
-                    "regions": [{"id": self.kyiv_region.id, "name_eng": "Kyiv", "name_ukr": "Київ"}],
-                    'regions_ukr_display': 'Київ',
+                    "regions": [
+                        {
+                            "id": self.kyiv_region.id,
+                            "name_eng": "Kyiv",
+                            "name_ukr": "Київ",
+                        }
+                    ],
+                    "regions_ukr_display": "Київ",
                     "founded": 2022,
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
@@ -85,12 +313,6 @@ class TestCompanyFilter(APITestCase):
             ],
             response.json(),
         )
-
-    # def test_get_profile_filtered_by_region_authorized(self):
-    #     self.client.force_authenticate(self.user)
-    #     response = self.client.get(path="/api/search/?region=Dnipro")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(1, len(response.data))
 
     def test_get_profiles_without_filter_unauthorized(self):
         response = self.client.get(path="/api/search/")
@@ -116,120 +338,140 @@ class TestCompanyFilter(APITestCase):
         self.assertEqual(0, len(response.data))
         self.assertEqual([], response.json())
 
-    # def test_get_profile_filtered_by_name_and_region_unauthorized(self):
-    #     response = self.client.get(
-    #         path="/api/search/?name=Kyivbud&region=Kyiv"
-    #     )
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(1, len(response.data))
-    #     self.assertEqual(
-    #         [
-    #             {
-    #                 "id": self.company_kiev.id,
-    #                 "name": "Kyivbud",
-    #                 "categories": [],
-    #                 "activities": [],
-    #                 "region": "Kyiv",
-    #                 "region_display": "Київ",
-    #                 "founded": 2022,
-    #                 "address": "Test Country, Test City, St. Test, 1",
-    #                 "banner_image": None,
-    #                 "logo_image": None,
-    #                 "person": self.company_kiev.person_id,
-    #                 "is_saved": False,
-    #             }
-    #         ],
-    #         response.json(),
-    #     )
+    def test_get_profile_filtered_by_name_and_region_eng_unauthorized(self):
+        response = self.client.get(
+            path="/api/search/?name=Kyivbud&regions_eng=Kyiv"
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_kiev.id,
+                    "name": "Kyivbud",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.kyiv_region.id,
+                            "name_eng": "Kyiv",
+                            "name_ukr": "Київ",
+                        }
+                    ],
+                    "regions_ukr_display": "Київ",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_kiev.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
 
-    # def test_get_profile_filtered_by_name_and_region_authorized(self):
-    #     self.client.force_authenticate(self.user)
-    #     response = self.client.get(
-    #         path="/api/search/?name=Kyivbud&region=Kyiv"
-    #     )
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(1, len(response.data))
-    #     self.assertEqual(
-    #         [
-    #             {
-    #                 "id": self.company_kiev.id,
-    #                 "name": "Kyivbud",
-    #                 "categories": [],
-    #                 "activities": [],
-    #                 "region": "Kyiv",
-    #                 "region_display": "Київ",
-    #                 "founded": 2022,
-    #                 "address": "Test Country, Test City, St. Test, 1",
-    #                 "banner_image": None,
-    #                 "logo_image": None,
-    #                 "person": self.company_kiev.person_id,
-    #                 "is_saved": False,
-    #             }
-    #         ],
-    #         response.json(),
-    #     )
+    def test_get_profile_filtered_by_name_and_region_eng_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/api/search/?name=Kyivbud&region=Kyiv"
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_kiev.id,
+                    "name": "Kyivbud",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.kyiv_region.id,
+                            "name_eng": "Kyiv",
+                            "name_ukr": "Київ",
+                        }
+                    ],
+                    "regions_ukr_display": "Київ",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_kiev.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
 
-    # def test_get_profile_filtered_by_wrong_name_and_region_authorized(self):
-    #     self.client.force_authenticate(self.user)
-    #     response = self.client.get(path="/api/search/?name=Pizza&region=Kyiv")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(0, len(response.data))
-    #     self.assertEqual([], response.json())
+    def test_get_profile_filtered_by_wrong_name_and_region_ukr_authorized(
+        self,
+    ):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/api/search/?name=Pizza&regions_ukr=Київ"
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
 
-    # def test_get_profile_filtered_by_wrong_name_and_region_unauthorized(self):
-    #     response = self.client.get(path="/api/search/?name=Pizza&region=Kyiv")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(0, len(response.data))
-    #     self.assertEqual([], response.json())
-    #
-    # def test_get_profile_filtered_by_name_and_wrong_region_authorized(self):
-    #     self.client.force_authenticate(self.user)
-    #     response = self.client.get(
-    #         path="/api/search/?name=Kyivbud&region=Ghernigiv"
-    #     )
-    #     self.assertEqual(status.HTTP_200_OK, response.status_code)
-    #     self.assertEqual(0, len(response.data))
-    #     self.assertEqual([], response.json())
+    def test_get_profile_filtered_by_wrong_name_and_region_ukr_unauthorized(
+        self,
+    ):
+        response = self.client.get(path="/api/search/?name=Pizza&region=Київ")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
 
-    # def test_get_profile_filtered_by_name_and_wrong_region_unauthorized(self):
-    #     response = self.client.get(
-    #         path="/api/search/?name=Kyivbud&region=Ghernigiv"
-    #     )
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(0, len(response.data))
-    #     self.assertEqual([], response.json())
+    def test_get_profile_filtered_by_name_and_wrong_region_eng_authorized(
+        self,
+    ):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/api/search/?name=Kyivbud&regions_eng=Ghernigiv"
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
 
-    # def test_get_profile_filtered_by_wrong_name_and_wrong_region_authorized(
-    #     self,
-    # ):
-    #     self.client.force_authenticate(self.user)
-    #     response = self.client.get(
-    #         path="/api/search/?name=Pizza&region=Ghernigiv"
-    #     )
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(0, len(response.data))
-    #     self.assertEqual([], response.json())
+    def test_get_profile_filtered_by_name_and_wrong_region_unauthorized(self):
+        response = self.client.get(
+            path="/api/search/?name=Kyivbud&regions_eng=Ghernigiv"
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
 
-    # def test_get_profile_filtered_by_wrong_name_and_wrong_region_unauthorized(
-    #     self,
-    # ):
-    #     response = self.client.get(
-    #         path="/api/search/?name=Pizza&region=Ghernigiv"
-    #     )
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(0, len(response.data))
-    #     self.assertEqual([], response.json())
+    def test_get_profile_filtered_by_wrong_name_and_wrong_region_authorized(
+        self,
+    ):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/api/search/?name=Pizza&regions_eng=London"
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
 
-    # def test_get_profile_filtered_by_region_partially_authorized(self):
-    #     self.client.force_authenticate(self.user)
-    #     response = self.client.get(path="/api/search/?region=Dnip")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(1, len(response.data))
-    #
-    # def test_get_profile_filtered_by_region_partially_unauthorized(self):
-    #     response = self.client.get(path="/api/search/?region=Dnip")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(1, len(response.data))
+    def test_get_profile_filtered_by_wrong_name_and_wrong_region_unauthorized(
+        self,
+    ):
+        response = self.client.get(
+            path="/api/search/?name=Pizza&regions_ukr=Лондон"
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
+
+    def test_get_profile_filtered_by_region_eng_partially_authorized(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/search/?regions_eng=Dnip")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+
+    def test_get_profile_filtered_by_region_eng_partially_unauthorized(self):
+        response = self.client.get(path="/api/search/?regions_eng=Dnip")
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
 
     def test_get_profile_filtered_by_name_partially_authorized(self):
         self.client.force_authenticate(self.user)
@@ -243,8 +485,14 @@ class TestCompanyFilter(APITestCase):
                     "name": "Kyivbud",
                     "categories": [],
                     "activities": [],
-                    "regions": [{"id": self.kyiv_region.id, "name_eng": "Kyiv", "name_ukr": "Київ"}],
-                    'regions_ukr_display': 'Київ',
+                    "regions": [
+                        {
+                            "id": self.kyiv_region.id,
+                            "name_eng": "Kyiv",
+                            "name_ukr": "Київ",
+                        }
+                    ],
+                    "regions_ukr_display": "Київ",
                     "founded": 2022,
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
@@ -267,8 +515,14 @@ class TestCompanyFilter(APITestCase):
                     "name": "Kyivbud",
                     "categories": [],
                     "activities": [],
-                    "regions": [{"id": self.kyiv_region.id, "name_eng": "Kyiv", "name_ukr": "Київ"}],
-                    'regions_ukr_display': 'Київ',
+                    "regions": [
+                        {
+                            "id": self.kyiv_region.id,
+                            "name_eng": "Kyiv",
+                            "name_ukr": "Київ",
+                        }
+                    ],
+                    "regions_ukr_display": "Київ",
                     "founded": 2022,
                     "address": "Test Country, Test City, St. Test, 1",
                     "banner_image": None,
@@ -280,41 +534,51 @@ class TestCompanyFilter(APITestCase):
             response.json(),
         )
 
-    # def test_get_profile_filtered_by_name_and_region_partialyy_authorized(
-    #     self,
-    # ):
-    #     self.client.force_authenticate(self.user)
-    #     response = self.client.get(path="/api/search/?name=Kyiv&region=Ky")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(1, len(response.data))
-    #     self.assertEqual(
-    #         [
-    #             {
-    #                 "id": self.company_kiev.id,
-    #                 "name": "Kyivbud",
-    #                 "categories": [],
-    #                 "activities": [],
-    #                 "region": "Kyiv",
-    #                 "region_display": "Київ",
-    #                 "founded": 2022,
-    #                 "address": "Test Country, Test City, St. Test, 1",
-    #                 "banner_image": None,
-    #                 "logo_image": None,
-    #                 "person": self.company_kiev.person_id,
-    #                 "is_saved": False,
-    #             }
-    #         ],
-    #         response.json(),
-    #     )
+    def test_get_profile_filtered_by_name_and_region_eng_partialyy_authorized(
+        self,
+    ):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/api/search/?name=Kyiv&regions_eng=Ky"
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.data))
+        self.assertEqual(
+            [
+                {
+                    "id": self.company_kiev.id,
+                    "name": "Kyivbud",
+                    "categories": [],
+                    "activities": [],
+                    "regions": [
+                        {
+                            "id": self.kyiv_region.id,
+                            "name_eng": "Kyiv",
+                            "name_ukr": "Київ",
+                        }
+                    ],
+                    "regions_ukr_display": "Київ",
+                    "founded": 2022,
+                    "address": "Test Country, Test City, St. Test, 1",
+                    "banner_image": None,
+                    "logo_image": None,
+                    "person": self.company_kiev.person_id,
+                    "is_saved": False,
+                }
+            ],
+            response.json(),
+        )
 
-    # def test_get_profile_filtered_by_wrong_name_and_wrong_region_partially_authorized(
-    #     self,
-    # ):
-    #     self.client.force_authenticate(self.user)
-    #     response = self.client.get(path="/api/search/?name=Kyivf&region=Kyif")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(0, len(response.data))
-    #     self.assertEqual([], response.json())
+    def test_get_profile_filtered_by_wrong_name_and_wrong_region_partially_authorized(
+        self,
+    ):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/api/search/?name=Kyivf&regions_eng=Kyif"
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.data))
+        self.assertEqual([], response.json())
 
     def test_get_profile_ordered_by_name_asc_unauthorized(
         self,
@@ -325,8 +589,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Charkivmarket",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.kharkiv_region.id, "name_eng": "Kharkiv", "name_ukr": "Харків"}],
-                'regions_ukr_display': 'Харків',
+                "regions": [
+                    {
+                        "id": self.kharkiv_region.id,
+                        "name_eng": "Kharkiv",
+                        "name_ukr": "Харків",
+                    }
+                ],
+                "regions_ukr_display": "Харків",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -339,8 +609,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Chernigivtravel",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.chernihiv_region.id, "name_eng": "Chernihiv", "name_ukr": "Чернігів"}],
-                'regions_ukr_display': 'Чернігів',
+                "regions": [
+                    {
+                        "id": self.chernihiv_region.id,
+                        "name_eng": "Chernihiv",
+                        "name_ukr": "Чернігів",
+                    }
+                ],
+                "regions_ukr_display": "Чернігів",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -353,8 +629,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Dniprotrans",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.dnipro_region.id, "name_eng": "Dnipro", "name_ukr": "Дніпро"}],
-                'regions_ukr_display': 'Дніпро',
+                "regions": [
+                    {
+                        "id": self.dnipro_region.id,
+                        "name_eng": "Dnipro",
+                        "name_ukr": "Дніпро",
+                    }
+                ],
+                "regions_ukr_display": "Дніпро",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -367,8 +649,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Kyivbud",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.kyiv_region.id, "name_eng": "Kyiv", "name_ukr": "Київ"}],
-                'regions_ukr_display': 'Київ',
+                "regions": [
+                    {
+                        "id": self.kyiv_region.id,
+                        "name_eng": "Kyiv",
+                        "name_ukr": "Київ",
+                    }
+                ],
+                "regions_ukr_display": "Київ",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -393,8 +681,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Charkivmarket",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.kharkiv_region.id, "name_eng": "Kharkiv", "name_ukr": "Харків"}],
-                'regions_ukr_display': 'Харків',
+                "regions": [
+                    {
+                        "id": self.kharkiv_region.id,
+                        "name_eng": "Kharkiv",
+                        "name_ukr": "Харків",
+                    }
+                ],
+                "regions_ukr_display": "Харків",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -407,8 +701,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Chernigivtravel",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.chernihiv_region.id, "name_eng": "Chernihiv", "name_ukr": "Чернігів"}],
-                'regions_ukr_display': 'Чернігів',
+                "regions": [
+                    {
+                        "id": self.chernihiv_region.id,
+                        "name_eng": "Chernihiv",
+                        "name_ukr": "Чернігів",
+                    }
+                ],
+                "regions_ukr_display": "Чернігів",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -421,8 +721,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Dniprotrans",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.dnipro_region.id, "name_eng": "Dnipro", "name_ukr": "Дніпро"}],
-                'regions_ukr_display': 'Дніпро',
+                "regions": [
+                    {
+                        "id": self.dnipro_region.id,
+                        "name_eng": "Dnipro",
+                        "name_ukr": "Дніпро",
+                    }
+                ],
+                "regions_ukr_display": "Дніпро",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -435,8 +741,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Kyivbud",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.kyiv_region.id, "name_eng": "Kyiv", "name_ukr": "Київ"}],
-                'regions_ukr_display': 'Київ',
+                "regions": [
+                    {
+                        "id": self.kyiv_region.id,
+                        "name_eng": "Kyiv",
+                        "name_ukr": "Київ",
+                    }
+                ],
+                "regions_ukr_display": "Київ",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -460,8 +772,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Kyivbud",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.kyiv_region.id, "name_eng": "Kyiv", "name_ukr": "Київ"}],
-                'regions_ukr_display': 'Київ',
+                "regions": [
+                    {
+                        "id": self.kyiv_region.id,
+                        "name_eng": "Kyiv",
+                        "name_ukr": "Київ",
+                    }
+                ],
+                "regions_ukr_display": "Київ",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -474,8 +792,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Dniprotrans",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.dnipro_region.id, "name_eng": "Dnipro", "name_ukr": "Дніпро"}],
-                'regions_ukr_display': 'Дніпро',
+                "regions": [
+                    {
+                        "id": self.dnipro_region.id,
+                        "name_eng": "Dnipro",
+                        "name_ukr": "Дніпро",
+                    }
+                ],
+                "regions_ukr_display": "Дніпро",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -488,8 +812,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Chernigivtravel",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.chernihiv_region.id, "name_eng": "Chernihiv", "name_ukr": "Чернігів"}],
-                'regions_ukr_display': 'Чернігів',
+                "regions": [
+                    {
+                        "id": self.chernihiv_region.id,
+                        "name_eng": "Chernihiv",
+                        "name_ukr": "Чернігів",
+                    }
+                ],
+                "regions_ukr_display": "Чернігів",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -502,8 +832,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Charkivmarket",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.kharkiv_region.id, "name_eng": "Kharkiv", "name_ukr": "Харків"}],
-                'regions_ukr_display': 'Харків',
+                "regions": [
+                    {
+                        "id": self.kharkiv_region.id,
+                        "name_eng": "Kharkiv",
+                        "name_ukr": "Харків",
+                    }
+                ],
+                "regions_ukr_display": "Харків",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -528,8 +864,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Kyivbud",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.kyiv_region.id, "name_eng": "Kyiv", "name_ukr": "Київ"}],
-                'regions_ukr_display': 'Київ',
+                "regions": [
+                    {
+                        "id": self.kyiv_region.id,
+                        "name_eng": "Kyiv",
+                        "name_ukr": "Київ",
+                    }
+                ],
+                "regions_ukr_display": "Київ",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -542,8 +884,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Dniprotrans",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.dnipro_region.id, "name_eng": "Dnipro", "name_ukr": "Дніпро"}],
-                'regions_ukr_display': 'Дніпро',
+                "regions": [
+                    {
+                        "id": self.dnipro_region.id,
+                        "name_eng": "Dnipro",
+                        "name_ukr": "Дніпро",
+                    }
+                ],
+                "regions_ukr_display": "Дніпро",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -556,8 +904,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Chernigivtravel",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.chernihiv_region.id, "name_eng": "Chernihiv", "name_ukr": "Чернігів"}],
-                'regions_ukr_display': 'Чернігів',
+                "regions": [
+                    {
+                        "id": self.chernihiv_region.id,
+                        "name_eng": "Chernihiv",
+                        "name_ukr": "Чернігів",
+                    }
+                ],
+                "regions_ukr_display": "Чернігів",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -570,8 +924,14 @@ class TestCompanyFilter(APITestCase):
                 "name": "Charkivmarket",
                 "categories": [],
                 "activities": [],
-                "regions": [{"id": self.kharkiv_region.id, "name_eng": "Kharkiv", "name_ukr": "Харків"}],
-                'regions_ukr_display': 'Харків',
+                "regions": [
+                    {
+                        "id": self.kharkiv_region.id,
+                        "name_eng": "Kharkiv",
+                        "name_ukr": "Харків",
+                    }
+                ],
+                "regions_ukr_display": "Харків",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
                 "banner_image": None,
@@ -585,273 +945,3 @@ class TestCompanyFilter(APITestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(4, len(response.data))
         self.assertEqual(ordered_response_data, response.json())
-
-    # def test_get_profile_ordered_by_region_asc_unauthorized(
-    #     self,
-    # ):
-    #     ordered_response_data = [
-    #         {
-    #             "id": self.company_chernigiv.id,
-    #             "name": "Chernigivtravel",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Chernihiv region",
-    #             "region_display": "Чернігівська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_chernigiv.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_dnipro.id,
-    #             "name": "Dniprotrans",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Dnipro region",
-    #             "region_display": "Дніпропетровська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_dnipro.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_charkiv.id,
-    #             "name": "Charkivmarket",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Kharkiv region",
-    #             "region_display": "Харківська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_charkiv.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_kiev.id,
-    #             "name": "Kyivbud",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Kyiv",
-    #             "region_display": "Київ",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_kiev.person_id,
-    #             "is_saved": False,
-    #         },
-    #     ]
-    #
-    #     response = self.client.get(path="/api/search/?ordering=region")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(4, len(response.data))
-    #     self.assertEqual(ordered_response_data, response.json())
-
-    # def test_get_profile_ordered_by_region_asc_authorized(
-    #     self,
-    # ):
-    #     self.client.force_authenticate(self.user)
-    #     ordered_response_data = [
-    #         {
-    #             "id": self.company_chernigiv.id,
-    #             "name": "Chernigivtravel",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Chernihiv region",
-    #             "region_display": "Чернігівська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_chernigiv.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_dnipro.id,
-    #             "name": "Dniprotrans",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Dnipro region",
-    #             "region_display": "Дніпропетровська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_dnipro.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_charkiv.id,
-    #             "name": "Charkivmarket",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Kharkiv region",
-    #             "region_display": "Харківська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_charkiv.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_kiev.id,
-    #             "name": "Kyivbud",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Kyiv",
-    #             "region_display": "Київ",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_kiev.person_id,
-    #             "is_saved": False,
-    #         },
-    #     ]
-    #
-    #     response = self.client.get(path="/api/search/?ordering=region")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(4, len(response.data))
-    #     self.assertEqual(ordered_response_data, response.json())
-
-    # def test_get_profile_ordered_by_region_dsc_unauthorized(
-    #     self,
-    # ):
-    #     ordered_response_data = [
-    #         {
-    #             "id": self.company_kiev.id,
-    #             "name": "Kyivbud",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Kyiv",
-    #             "region_display": "Київ",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_kiev.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_charkiv.id,
-    #             "name": "Charkivmarket",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Kharkiv region",
-    #             "region_display": "Харківська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_charkiv.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_dnipro.id,
-    #             "name": "Dniprotrans",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Dnipro region",
-    #             "region_display": "Дніпропетровська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_dnipro.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_chernigiv.id,
-    #             "name": "Chernigivtravel",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Chernihiv region",
-    #             "region_display": "Чернігівська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_chernigiv.person_id,
-    #             "is_saved": False,
-    #         },
-    #     ]
-    #
-    #     response = self.client.get(path="/api/search/?ordering=-region")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(4, len(response.data))
-    #     self.assertEqual(ordered_response_data, response.json())
-
-    # def test_get_profile_ordered_by_region_dsc_authorized(
-    #     self,
-    # ):
-    #     self.client.force_authenticate(self.user)
-    #     ordered_response_data = [
-    #         {
-    #             "id": self.company_kiev.id,
-    #             "name": "Kyivbud",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Kyiv",
-    #             "region_display": "Київ",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_kiev.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_charkiv.id,
-    #             "name": "Charkivmarket",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Kharkiv region",
-    #             "region_display": "Харківська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_charkiv.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_dnipro.id,
-    #             "name": "Dniprotrans",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Dnipro region",
-    #             "region_display": "Дніпропетровська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_dnipro.person_id,
-    #             "is_saved": False,
-    #         },
-    #         {
-    #             "id": self.company_chernigiv.id,
-    #             "name": "Chernigivtravel",
-    #             "categories": [],
-    #             "activities": [],
-    #             "region": "Chernihiv region",
-    #             "region_display": "Чернігівська область",
-    #             "founded": 2022,
-    #             "address": "Test Country, Test City, St. Test, 1",
-    #             "banner_image": None,
-    #             "logo_image": None,
-    #             "person": self.company_chernigiv.person_id,
-    #             "is_saved": False,
-    #         },
-    #     ]
-    #
-    #     response = self.client.get(path="/api/search/?ordering=-region")
-    #     self.assertEqual(200, response.status_code)
-    #     self.assertEqual(4, len(response.data))
-    #     self.assertEqual(ordered_response_data, response.json())

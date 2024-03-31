@@ -1,7 +1,11 @@
 from rest_framework import serializers
 
 from profiles.models import Profile, Category, SavedCompany
-from profiles.serializers import CategorySerializer, ActivitySerializer, RegionSerializer
+from profiles.serializers import (
+    CategorySerializer,
+    ActivitySerializer,
+    RegionSerializer,
+)
 
 
 class CompanySerializers(serializers.ModelSerializer):
@@ -10,7 +14,6 @@ class CompanySerializers(serializers.ModelSerializer):
     is_saved = serializers.SerializerMethodField()
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
-
 
     class Meta:
         model = Profile

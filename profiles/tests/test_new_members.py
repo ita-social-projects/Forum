@@ -27,7 +27,9 @@ class TestCompletenessUpdate(APITestCase):
 
         self.cheese_category = CategoryFactory(name="cheese")
         self.sale_activity = ActivityFactory(name="sale")
-        self.dnipro_region = RegionFactory(name_eng="Dnipro", name_ukr="Дніпро")
+        self.dnipro_region = RegionFactory(
+            name_eng="Dnipro", name_ukr="Дніпро"
+        )
         self.kyiv_region = RegionFactory(name_eng="Kyiv", name_ukr="Київ")
 
         self.company_kryvyi_rig = ProfileCompanyFactory(

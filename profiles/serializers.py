@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from .models import Profile, Activity, Category, SavedCompany, ViewedCompany, Region
+from .models import (
+    Profile,
+    Activity,
+    Category,
+    SavedCompany,
+    ViewedCompany,
+    Region,
+)
 
 
 class ActivitySerializer(serializers.ModelSerializer):

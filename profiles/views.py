@@ -247,4 +247,3 @@ class RegionDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = RegionSerializer
     permission_classes = (IsAdminUser,)
     queryset = Region.objects.all()
-
