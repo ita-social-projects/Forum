@@ -37,6 +37,15 @@ ALLOWED_HOSTS = [
     config("ALLOWED_ENV_HOST"),
 ]
 
+if DEBUG:
+    import socket
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + [
+        "127.0.0.1",
+        "10.0.2.2",
+    ]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,6 +59,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "django_filters",
     "djoser",
+    "debug_toolbar",
     "authentication",
     "profiles",
     "administration",
@@ -60,6 +70,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -69,6 +80,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # "ratelimitbackend.middleware.RateLimitMiddleware",
 ]
+
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_ALL_ORIGINS = False
