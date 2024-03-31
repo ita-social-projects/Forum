@@ -154,7 +154,7 @@ class TestCompanyOrder(APITestCase):
 
     def test_get_less_companies(self):
         response = self.client.get(
-            path="/api/profiles/?new_members=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at"
         )
         names_from_response = [
             prof["name"] for prof in response.data["results"]
@@ -178,7 +178,7 @@ class TestCompanyOrder(APITestCase):
         self.company_synelnicovo.created_at = "2023-12-07"
         self.company_synelnicovo.save()
         response = self.client.get(
-            path="/api/profiles/?new_members=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at"
         )
         self.assertEqual(200, response.status_code)
         names_from_response = [
@@ -219,7 +219,7 @@ class TestCompanyOrder(APITestCase):
         self.company_odesa.save()
 
         response = self.client.get(
-            path="/api/profiles/?new_members=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at"
         )
         names_from_response = [
             prof["name"] for prof in response.data["results"]
@@ -233,6 +233,6 @@ class TestCompanyOrder(APITestCase):
         self.assertEqual(1, response.data["current"])
         self.assertEqual(2, response.data["total_pages"])
         self.assertEqual(
-            "http://testserver/api/profiles/?new_members=-completeness%2C-created_at&page=2",
+            "http://testserver/api/profiles/?ordering=-completeness%2C-created_at&page=2",
             response.data["next"],
         )
