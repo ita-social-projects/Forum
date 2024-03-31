@@ -1,4 +1,4 @@
-from profiles.models import Profile, Activity, Category
+from profiles.models import Profile, Activity, Category, Region
 
 
 def completeness_count(serializer):
@@ -8,7 +8,7 @@ def completeness_count(serializer):
         instance.completeness += 100
     if instance.logo_image:
         instance.completeness += 1
-    if instance.region:
+    if Region.objects.all().filter(profile=instance.id):
         instance.completeness += 1
     if Activity.objects.all().filter(profile=instance.id):
         instance.completeness += 1

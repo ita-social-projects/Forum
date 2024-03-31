@@ -1,14 +1,16 @@
 from rest_framework import serializers
 
 from profiles.models import Profile, Category, SavedCompany
-from profiles.serializers import CategorySerializer, ActivitySerializer
+from profiles.serializers import CategorySerializer, ActivitySerializer, RegionSerializer
 
 
 class CompanySerializers(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
     activities = ActivitySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
-    region_display = serializers.SerializerMethodField()
+    regions = RegionSerializer(many=True, read_only=True)
+    regions_ukr_display = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Profile
@@ -17,8 +19,8 @@ class CompanySerializers(serializers.ModelSerializer):
             "name",
             "categories",
             "activities",
-            "region",
-            "region_display",
+            "regions",
+            "regions_ukr_display",
             "founded",
             "address",
             "banner_image",
@@ -33,5 +35,10 @@ class CompanySerializers(serializers.ModelSerializer):
             return obj.pk in self.context["saved_companies_pk"]
         return False
 
-    def get_region_display(self, obj):
-        return obj.get_region_display()
+    def get_regions_ukr_display(self, obj):
+        if not obj.regions:
+            return ""
+        regions_ukr_names = []
+        for region in obj.regions.all():
+            regions_ukr_names.append(region.name_ukr)
+        return ", ".join(regions_ukr_names)
