@@ -44,7 +44,7 @@ class Profile(models.Model):
         max_length=255, unique=True, null=True, blank=True, default=None
     )
 
-    regions = models.ManyToManyField("Region")
+    regions = models.ManyToManyField("Region", blank=True)
     common_info = models.TextField(
         validators=[MaxLengthValidator(2000)], blank=True, default=""
     )
