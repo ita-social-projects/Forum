@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG")
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -36,15 +36,6 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     config("ALLOWED_ENV_HOST"),
 ]
-
-if DEBUG:
-    import socket
-
-    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + [
-        "127.0.0.1",
-        "10.0.2.2",
-    ]
 
 # Application definition
 
@@ -230,3 +221,12 @@ DJOSER = {
 
 DELAY_FOR_LOGIN = 600  # delay time for login in seconds
 ATTEMPTS_FOR_LOGIN = 10  # attempts for login during delay for login
+
+
+def show_toolbar(request):
+    return DEBUG
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+}
