@@ -88,3 +88,48 @@
   fields:
     name_eng: Chernihiv region
     name_ukr: Чернігівська область
+- model: profiles.region
+  pk: 19
+  fields:
+    name_eng: Vinnytsia region
+    name_ukr: Вінницька область
+- model: profiles.region
+  pk: 20
+  fields:
+    name_eng: Volyn region
+    name_ukr: Волинська область
+- model: profiles.region
+  pk: 21
+  fields:
+    name_eng: Dnipro region
+    name_ukr: Дніпропетровська область
+- model: profiles.region
+  pk: 22
+  fields:
+    name_eng: Donetsk region
+    name_ukr: Донецька область
+- model: profiles.region
+  pk: 23
+  fields:
+    name_eng: Zhytomyr region
+    name_ukr: Житомирська область
+- model: profiles.region
+  pk: 24
+  fields:
+    name_eng: Zakarpattia region
+    name_ukr: Закарпатська область
+- model: profiles.region
+  pk: 25
+  fields:
+    name_eng: Zaporizhzhia region
+    name_ukr: Запорізька область
+- model: profiles.region
+  pk: 26
+  fields:
+    name_eng: IvanoFrankivsk region
+    name_ukr: Івано-Франківська область
+- model: profiles.region
+  pk: 27
+  fields:
+    name_eng: Kyiv
+    name_ukr: Київ
