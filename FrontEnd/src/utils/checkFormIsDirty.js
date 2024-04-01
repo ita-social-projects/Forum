@@ -16,8 +16,6 @@ const compareArrays = (array1, array2) => {
     );
   };
 
-// TODO: remove logic for 'edrpou' field check when it  will be replaced with char field on server side
-
 const checkFormIsDirty = (fields, userData, profileData) => {
     return Object.keys(fields).some(key => {
       const { defaultValue, type, context } = fields[key];
@@ -26,7 +24,7 @@ const checkFormIsDirty = (fields, userData, profileData) => {
       if (type === 'array') {
         return !compareArrays(defaultValue, currentValue);
       }
-      if (['edrpou', 'founded'].includes(key)) {
+      if (['edrpou', 'ipn', 'founded'].includes(key)) {
         if (((defaultValue && currentValue !== null) && (defaultValue.toString() !== currentValue.toString())) ||
         (defaultValue === null && currentValue !== null)) {
           return true;
