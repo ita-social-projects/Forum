@@ -285,8 +285,8 @@ const GeneralInfo = (props) => {
     const errorMessages = {
         'profile with this edrpou already exists.': 'Компанія з таким ЄДРПОУ вже існує',
         'profile with this ipn already exists.': 'Фізична особа-підприємець з таким ІПН вже існує',
-        'For the IPN field filled out, FOP must be set to True': 'Поле ІПН може бути заповнене лише при зазначеному полі ФОП',
-        'For the EDRPOU field filled out, FOP must be set to False': 'Поле ЄДРПОУ може бути заповнене, якщо поле ФОП не зазначене'
+        'For the IPN field filled out, FOP must be set to True': 'Поле ІПН заповнюється лише для ФОП',
+        'For the EDRPOU field filled out, FOP must be set to False': 'Поле ЄРДПОУ не заповнюється для ФОП'
     };
 
     function handleError(error) {
