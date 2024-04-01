@@ -1,13 +1,20 @@
 .fields {
     display: flex;
-    flex-direction: column;   
-    gap: 0px;    
+    flex-direction: column;
+    gap: 0px;
 }
 
 .fields-groups {
     display: flex;
     align-items: flex-start;
     gap: 16px;
+}
+
+.fop-field {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding-top: 8px;
 }
 
 .form__container {
