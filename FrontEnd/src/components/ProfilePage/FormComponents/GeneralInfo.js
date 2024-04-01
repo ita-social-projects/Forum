@@ -163,7 +163,6 @@ const GeneralInfo = (props) => {
     };
 
     const onChangeCheckbox = (e) => {
-        console.log('EVENT', e);
       const isAnyChecked =
         (profile.is_registered && e.target.name === 'is_startup') ||
         (profile.is_startup && e.target.name === 'is_registered') ||
