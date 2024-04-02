@@ -25,7 +25,7 @@ export default function ProfileCard({ isAuthorized, data }) {
       activities: !data.activities.length
         ? null
         : data.activities.map((activity) => activity.name).join(', '),
-      region: data.region_display ? data.region_display : '',
+      region: data.regions_ukr_display ? data.regions_ukr_display : '',
       categories: data.categories,
       isSaved: data.is_saved,
       commonInfo: data.common_info,

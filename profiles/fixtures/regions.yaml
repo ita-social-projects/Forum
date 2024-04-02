@@ -1,0 +1,135 @@
+- model: profiles.region
+  pk: 1
+  fields:
+    name_eng: Kyiv region
+    name_ukr: Київська область
+- model: profiles.region
+  pk: 2
+  fields:
+    name_eng: Kirovohrad region
+    name_ukr: Кіровоградська область
+- model: profiles.region
+  pk: 3
+  fields:
+    name_eng: Crimea
+    name_ukr: Автономна Республіка Крим
+- model: profiles.region
+  pk: 4
+  fields:
+    name_eng: Luhansk region
+    name_ukr: Луганська область
+- model: profiles.region
+  pk: 5
+  fields:
+    name_eng: Lviv region
+    name_ukr: Львівська область
+- model: profiles.region
+  pk: 6
+  fields:
+    name_eng: Mykolaiv region
+    name_ukr: Миколаївська область
+- model: profiles.region
+  pk: 7
+  fields:
+    name_eng: Odesa region
+    name_ukr: Одеська область
+- model: profiles.region
+  pk: 8
+  fields:
+    name_eng: Poltava region
+    name_ukr: Полтавська область
+- model: profiles.region
+  pk: 9
+  fields:
+    name_eng: Rivne region
+    name_ukr: Рівненська область
+- model: profiles.region
+  pk: 10
+  fields:
+    name_eng: Sevastopol
+    name_ukr: Севастополь
+- model: profiles.region
+  pk: 11
+  fields:
+    name_eng: Sumy region
+    name_ukr: Сумська область
+- model: profiles.region
+  pk: 12
+  fields:
+    name_eng: Ternopil region
+    name_ukr: Тернопільська область
+- model: profiles.region
+  pk: 13
+  fields:
+    name_eng: Kharkiv region
+    name_ukr: Харківська область
+- model: profiles.region
+  pk: 14
+  fields:
+    name_eng: Kherson region
+    name_ukr: Херсонська область
+- model: profiles.region
+  pk: 15
+  fields:
+    name_eng: Khmelnytskyi region
+    name_ukr: Хмельницька область
+- model: profiles.region
+  pk: 16
+  fields:
+    name_eng: Cherkasy region
+    name_ukr: Черкаська область
+- model: profiles.region
+  pk: 17
+  fields:
+    name_eng: Chernivtsi region
+    name_ukr: Чернівецька область
+- model: profiles.region
+  pk: 18
+  fields:
+    name_eng: Chernihiv region
+    name_ukr: Чернігівська область
+- model: profiles.region
+  pk: 19
+  fields:
+    name_eng: Vinnytsia region
+    name_ukr: Вінницька область
+- model: profiles.region
+  pk: 20
+  fields:
+    name_eng: Volyn region
+    name_ukr: Волинська область
+- model: profiles.region
+  pk: 21
+  fields:
+    name_eng: Dnipro region
+    name_ukr: Дніпропетровська область
+- model: profiles.region
+  pk: 22
+  fields:
+    name_eng: Donetsk region
+    name_ukr: Донецька область
+- model: profiles.region
+  pk: 23
+  fields:
+    name_eng: Zhytomyr region
+    name_ukr: Житомирська область
+- model: profiles.region
+  pk: 24
+  fields:
+    name_eng: Zakarpattia region
+    name_ukr: Закарпатська область
+- model: profiles.region
+  pk: 25
+  fields:
+    name_eng: Zaporizhzhia region
+    name_ukr: Запорізька область
+- model: profiles.region
+  pk: 26
+  fields:
+    name_eng: IvanoFrankivsk region
+    name_ukr: Івано-Франківська область
+- model: profiles.region
+  pk: 27
+  fields:
+    name_eng: Kyiv
+    name_ukr: Київ
