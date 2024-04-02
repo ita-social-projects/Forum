@@ -5,9 +5,10 @@ from .views import (
     ProfileDetail,
     CategoryList,
     ActivityList,
-    RegionListView,
+    RegionList,
     CategoryDetail,
     ActivityDetail,
+    RegionDetail,
     ProfileViewCreate,
 )
 
@@ -32,9 +33,10 @@ urlpatterns = [
         ProfileViewCreate.as_view(),
         name="company_details_request",
     ),
-    path("regions/", RegionListView.as_view(), name="region-list"),
+    path("regions/", RegionList.as_view(), name="region-list"),
     path("categories/", CategoryList.as_view(), name="category_list"),
     path("activities/", ActivityList.as_view(), name="activity_list"),
     path("categories/<pk>/", CategoryDetail.as_view(), name="category-detail"),
     path("activities/<pk>/", ActivityDetail.as_view(), name="activity-detail"),
+    path("regions/<pk>/", RegionDetail.as_view(), name="region-detail"),
 ]

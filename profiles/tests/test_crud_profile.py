@@ -8,8 +8,8 @@ from profiles.factories import (
     ProfileStartupFactory,
     CategoryFactory,
     ActivityFactory,
+    RegionFactory,
 )
-from profiles.models import Region
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
 
@@ -67,9 +67,9 @@ class TestProfileDetailAPIView(APITestCase):
             response.data.get("official_name"),
             msg="Official names do not match.",
         )
-        self.assertEqual(
-            self.profile.region,
-            response.data.get("region"),
+
+        self.assertFalse(
+            response.data.get("regions"),
             msg="Regions do not match.",
         )
         self.assertEqual(
@@ -158,9 +158,8 @@ class TestProfileDetailAPIView(APITestCase):
             response.data.get("official_name"),
             msg="Official names do not match.",
         )
-        self.assertEqual(
-            profile2.region,
-            response.data.get("region"),
+        self.assertFalse(
+            response.data.get("regions"),
             msg="Regions do not match.",
         )
         self.assertEqual(
@@ -256,8 +255,8 @@ class TestProfileDetailAPIView(APITestCase):
             msg="Official names do not match.",
         )
         self.assertEqual(
-            self.profile.region,
-            response.data.get("region"),
+            list(self.profile.regions.all()),
+            response.data.get("regions"),
             msg="Regions do not match.",
         )
         self.assertEqual(
@@ -610,21 +609,36 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual([activity.id], response.data.get("activities"))
 
+    def test_partial_update_profile_region(self):
+        region = RegionFactory()
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"regions": [region.id]},
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertEqual([region.id], response.data.get("regions"))
+
     # # PUT requests section
     def test_full_update_profile_authorized_with_partial_data(self):
+        region = RegionFactory()
         self.client.force_authenticate(self.user)
 
         response = self.client.put(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
-            data={"region": Region.DNIPRO_REGION, "phone": "380100109934"},
+            data={"regions": [region.id], "phone": "380100109934"},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_full_update_profile_authorized_with_full_data(self):
         category = CategoryFactory()
         activity = ActivityFactory()
+        region = RegionFactory()
         self.client.force_authenticate(self.user)
 
         response = self.client.put(
@@ -633,7 +647,7 @@ class TestProfileDetailAPIView(APITestCase):
             ),
             data={
                 "official_name": "Official name from test case",
-                "region": Region.KYIV,
+                "regions": [region.id],
                 "common_info": "Common info from test case",
                 "phone": "123456789012",
                 "edrpou": "12345678",
@@ -659,6 +673,7 @@ class TestProfileDetailAPIView(APITestCase):
     def test_full_update_profile_unauthorized(self):
         category = CategoryFactory()
         activity = ActivityFactory()
+        region = RegionFactory()
 
         response = self.client.put(
             path="/api/profiles/{profile_id}".format(
@@ -667,7 +682,7 @@ class TestProfileDetailAPIView(APITestCase):
             data={
                 "person": self.user.id,
                 "official_name": "Official name from test case",
-                "region": Region.KYIV,
+                "regions": [region.id],
                 "common_info": "Common info from test case",
                 "phone": "123456789012",
                 "edrpou": "12345678",
@@ -689,6 +704,7 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_full_update_profile_not_exist(self):
+        region = RegionFactory()
         self.client.force_authenticate(self.user)
 
         response = self.client.put(
@@ -696,7 +712,7 @@ class TestProfileDetailAPIView(APITestCase):
             data={
                 "person": self.user.id,
                 "official_name": "Official name from test case",
-                "region": Region.KYIV,
+                "regions": [region.id],
                 "common_info": "Common info from test case",
                 "phone": "123456789012",
                 "edrpou": "12345678",
@@ -725,7 +741,7 @@ class TestProfileDetailAPIView(APITestCase):
             data={
                 "person": self.user.id,
                 "official_name": "Official name from test case",
-                "region": Region.KYIV,
+                "regions": ["1"],
                 "common_info": "Common info from test case",
                 "phone": "123456789012",
                 "edrpou": "12345678",
@@ -756,7 +772,7 @@ class TestProfileDetailAPIView(APITestCase):
             data={
                 "person": self.user.id,
                 "official_name": "Official name from test case",
-                "region": Region.KYIV,
+                "regions": [1],
                 "common_info": "Common info from test case",
                 "phone": "123456789012",
                 "edrpou": "12345678",
@@ -782,10 +798,12 @@ class TestProfileDetailAPIView(APITestCase):
         user2 = UserFactory()
         category = CategoryFactory()
         activity = ActivityFactory()
+        region = RegionFactory()
         new_profile_data = {
             "person": user2.id,
             "categories": [category.id],
             "activities": [activity.id],
+            "regions": [region.id],
         }
         self.client.force_authenticate(user2)
 
@@ -818,15 +836,21 @@ class TestProfileDetailAPIView(APITestCase):
             response.data.get("activities"),
             msg="Activities do not match.",
         )
+        self.assertEqual(
+            new_profile_data.get("regions"),
+            response.data.get("regions"),
+            msg="Regions do not match.",
+        )
 
     def test_create_profile_authorized_full_data(self):
         user2 = UserFactory()
         category = CategoryFactory()
         activity = ActivityFactory()
+        region = RegionFactory()
         new_profile_data = {
             "person": user2.id,
             "official_name": "Official name from test case",
-            "region": Region.KYIV,
+            "regions": [region.id],
             "common_info": "Common info from test case",
             "phone": "123456789012",
             "edrpou": "12345678",
@@ -867,8 +891,8 @@ class TestProfileDetailAPIView(APITestCase):
             msg="Official names do not match.",
         )
         self.assertEqual(
-            new_profile_data.get("region"),
-            response.data.get("region"),
+            new_profile_data.get("regions"),
+            response.data.get("regions"),
             msg="Regions do not match.",
         )
         self.assertEqual(
