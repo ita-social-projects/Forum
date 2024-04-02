@@ -27,10 +27,9 @@ export default function MultipleSelectChip(props) {
             paddingRight: '0px',
             borderRadius: '2px',
           }}
-          defaultValue={props.defaultValue}
           onChange={props.updateHandler}
           options={props.options.map(option => ({
-            value: option.name,
+            value: option.name ?? option.name_ukr,
           }))}
         />
       </Space>

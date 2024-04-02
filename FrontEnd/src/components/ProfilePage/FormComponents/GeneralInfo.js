@@ -14,7 +14,6 @@ import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
-import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
 
@@ -23,7 +22,7 @@ const LABELS = {
     'is_fop': 'ФОП',
     'official_name': 'Юридична назва компанії',
     'identifier': 'ЄДРПОУ / ІПН',
-    'region': 'Регіон(и)',
+    'regions': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
     'banner_image': 'Зображення для банера',
@@ -78,7 +77,7 @@ const GeneralInfo = (props) => {
         'official_name': {defaultValue: mainProfile?.official_name ?? null},
         'edrpou': {defaultValue: mainProfile?.edrpou ?? ''},
         'ipn': {defaultValue: mainProfile?.ipn ?? ''},
-        'region': {defaultValue: mainProfile?.region ?? null},
+        'regions': {defaultValue: mainProfile?.regions ?? [], type: 'array'},
         'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
         'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
         'banner_image': {defaultValue: mainProfile?.banner_image ?? null},
@@ -133,10 +132,16 @@ const GeneralInfo = (props) => {
         });
     };
 
-    const onUpdateOneSelectField = e => {
-        const selectedRegion = fetchedRegions.find((el) => el.value === e);
+    const onUpdateRegions = e => {
+        let selectedRegions = [];
+        for (let region of e) {
+            let item = fetchedRegions.find((el) => el.name_ukr === region);
+            if (item) {
+                selectedRegions.push({id: item.id, name_eng: item.name_eng, name_ukr: region});
+            }
+        }
         setProfile((prevState) => {
-            return { ...prevState, region: selectedRegion ? selectedRegion.key : '' };
+            return { ...prevState, ['regions']: selectedRegions };
         });
     };
 
@@ -312,7 +317,7 @@ const GeneralInfo = (props) => {
                     official_name: profile.official_name,
                     edrpou: profile.edrpou,
                     ipn: profile.ipn,
-                    region: profile.region,
+                    regions: profile.regions.map(obj => obj.id),
                     common_info: profile.common_info,
                     is_startup: profile.is_startup,
                     is_registered: profile.is_registered,
@@ -380,14 +385,13 @@ const GeneralInfo = (props) => {
                                 ?
                                 <Loader />
                                 :
-                                <OneSelectChip
-                                    name="region"
+                                <MultipleSelectChip
+                                    name="regions"
                                     options={fetchedRegions}
-                                    label={LABELS.region}
-                                    updateHandler={onUpdateOneSelectField}
+                                    label={LABELS.regions}
+                                    updateHandler={onUpdateRegions}
                                     requredField={false}
-                                    defaultValue="Оберіть"
-                                    value={fetchedRegions.find((el) => el.key === profile.region)?.value ?? ''}
+                                    value={profile.regions.map(obj => obj.name_ukr) ?? ''}
                                 />
                             }
                         </div>
@@ -403,7 +407,6 @@ const GeneralInfo = (props) => {
                                     updateHandler={onUpdateActivities}
                                     requredField={true}
                                     value={profile.activities.map(obj => obj.name) ?? ''}
-                                    defaultValue="Оберіть"
                                     error={formStateErr['activities']['error']
                                         ?
                                         formStateErr['activities']['message']
@@ -422,7 +425,6 @@ const GeneralInfo = (props) => {
                                     updateHandler={onUpdateCategories}
                                     requredField={true}
                                     value={profile.categories.map(obj => obj.name) ?? ''}
-                                    defaultValue="Оберіть"
                                     error={formStateErr['categories']['error']
                                         ?
                                         formStateErr['categories']['message']
