@@ -1,4 +1,5 @@
 import { Select, Space } from 'antd';
+import { PropTypes } from 'prop-types';
 import css from './MultipleSelectChip.module.css';
 
 
@@ -41,3 +42,13 @@ export default function MultipleSelectChip(props) {
     </div>
   );
 }
+
+MultipleSelectChip.propTypes = {
+    requredField: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.array,
+    options: PropTypes.array,
+    updateHandler: PropTypes.func.isRequired,
+    error:PropTypes.string,
+};
