@@ -349,10 +349,13 @@ const GeneralInfo = (props) => {
                             />
                             <div className={css['fop-field']}>
                                 <CheckBoxField
-                                    fop_field={true}
-                                    name="is_fop"
-                                    value={profile.is_fop}
-                                    updateHandler={onChangeCheckboxFop}
+                                    fopProps={{
+                                        fop_field: true,
+                                        name: 'is_fop',
+                                        value: profile.is_fop,
+                                        updateHandler: onChangeCheckboxFop,
+                                    }}
+
                                 />
                             </div>
                         </div>
@@ -459,14 +462,16 @@ const GeneralInfo = (props) => {
                             maxLength={TEXT_AREA_MAX_LENGTH}
                         />
                         <CheckBoxField
-                            name="companyType"
-                            nameRegister="is_registered"
-                            valueRegister={profile.is_registered}
-                            nameStartup="is_startup"
-                            valueStartup={profile.is_startup}
-                            updateHandler={onChangeCheckbox}
-                            error={companyTypeError}
-                            requredField={true}
+                            companyProps={{
+                                name: 'companyType',
+                                nameRegister: 'is_registered',
+                                valueRegister: profile.is_registered,
+                                nameStartup: 'is_startup',
+                                valueStartup: profile.is_startup,
+                                updateHandler: onChangeCheckbox,
+                                error: companyTypeError,
+                                requredField: true,
+                            }}
                         />
                     </div>
                 </form>
