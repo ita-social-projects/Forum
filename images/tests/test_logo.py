@@ -29,7 +29,7 @@ class TestLogoChange(APITestCase):
             person=self.user,
             name="Dnipro",
             logo_image=f"logos/{self.right_image.name}",
-            region="Dnipro",
+            # region="Dnipro",
         )
 
         self.company_kyiv = ProfileCompanyFactory(name="Kyivbud")
@@ -100,7 +100,7 @@ class TestLogoChange(APITestCase):
             data={"logo_image": self.right_image},
         )
         comp = Profile.objects.filter(name="Dnipro").first()
-        self.assertEqual(comp.completeness, 2)
+        self.assertEqual(comp.completeness, 1)
         self.assertEqual(200, response.status_code)
 
     def test_put_logo_authorized_owner_wrong_image(self):

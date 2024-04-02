@@ -7,6 +7,7 @@ from profiles.factories import (
     ProfileCompanyFactory,
     ActivityFactory,
     CategoryFactory,
+    RegionFactory,
 )
 from profiles.models import Profile
 
@@ -26,11 +27,15 @@ class TestCompletenessUpdate(APITestCase):
 
         self.cheese_category = CategoryFactory(name="cheese")
         self.sale_activity = ActivityFactory(name="sale")
+        self.dnipro_region = RegionFactory(
+            name_eng="Dnipro", name_ukr="Дніпро"
+        )
+        self.kyiv_region = RegionFactory(name_eng="Kyiv", name_ukr="Київ")
 
         self.company_kryvyi_rig = ProfileCompanyFactory(
             name="Kryvyi_rig_art",
             person=self.kryvyi_rig_user,
-            region="Kryvyi Rig",
+            regions=[self.dnipro_region],
         )
 
     def tearDown(self) -> None:
@@ -40,7 +45,7 @@ class TestCompletenessUpdate(APITestCase):
         self.client.force_authenticate(self.kryvyi_rig_user)
         self.client.patch(
             path=f"/api/profiles/{self.company_kryvyi_rig.id}",
-            data={"region": "Kyiv"},
+            data={"regions": [self.kyiv_region.id]},
         )
         comp = Profile.objects.filter(name="Kryvyi_rig_art").first()
         self.assertEqual(comp.completeness, 1)

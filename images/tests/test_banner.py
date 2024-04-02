@@ -28,7 +28,7 @@ class TestBannerChange(APITestCase):
             person=self.user,
             name="Dnipro",
             banner_image=f"banners/{self.right_image.name}",
-            region="Dnipro",
+            # region="Dnipro",
         )
 
         self.company_kyiv = ProfileCompanyFactory(name="Kyivbud")
@@ -103,8 +103,7 @@ class TestBannerChange(APITestCase):
             data={"banner_image": self.right_image},
         )
         comp = Profile.objects.filter(name="Dnipro").first()
-        # add 3 parameter to assertEqual. We'll see it if test will fail in future
-        self.assertEqual(comp.completeness, 101, f"{comp.region}")
+        self.assertEqual(comp.completeness, 100)
         self.assertEqual(200, response.status_code)
 
     def test_put_banner_authorized_owner_wrong_image(self):

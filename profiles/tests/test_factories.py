@@ -9,6 +9,7 @@ from profiles.factories import (
     SavedCompanyFactory,
     SavedStartupFactory,
     ViewedCompanyFactory,
+    RegionFactory,
 )
 from utils.dump_response import dump  # noqa
 
@@ -17,13 +18,13 @@ class TestFactories(TestCase):
     def test_profile_factory(self):
         activity = ActivityFactory()
         category = CategoryFactory()
+        region = RegionFactory()
         profile = ProfileFactory(
-            activities=(activity,), categories=(category,)
+            activities=(activity,), categories=(category,), regions=(region,)
         )
         self.assertIsNotNone(profile.id)
         self.assertIsNotNone(profile.person)
         self.assertIsNotNone(profile.name)
-        self.assertIsNotNone(profile.region)
         self.assertIsNotNone(profile.common_info)
         self.assertIsNotNone(profile.phone)
         self.assertIsNotNone(profile.edrpou)
@@ -34,6 +35,7 @@ class TestFactories(TestCase):
         self.assertIsNotNone(profile.person_position)
         self.assertEqual(1, profile.categories.all().count())
         self.assertEqual(1, profile.activities.all().count())
+        self.assertEqual(1, profile.regions.all().count())
         self.assertFalse(profile.is_deleted)
 
     def test_profile_startup_factory(self):
@@ -56,6 +58,11 @@ class TestFactories(TestCase):
     def test_activity_factory(self):
         activity = ActivityFactory()
         self.assertIsNotNone(activity.name)
+
+    def test_region_factory(self):
+        region = RegionFactory()
+        self.assertIsNotNone(region.name_eng)
+        self.assertIsNotNone(region.name_ukr)
 
     def test_saved_company_factory(self):
         saved_company = SavedCompanyFactory()

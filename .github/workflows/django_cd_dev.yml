@@ -40,6 +40,8 @@ jobs:
         run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py loaddata activities
       - name: Docker compose LOADDATA categories
         run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py loaddata categories
+      - name: Docker compose LOADDATA regions
+        run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py loaddata regions
       - name: Docker compose COLLECTSTATIC
         run: docker compose -f docker-compose.dev.yml exec ${{ vars.API_DEV }} python manage.py collectstatic --no-input
       - name: nginx
