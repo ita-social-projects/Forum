@@ -2,7 +2,6 @@
   width: var(--main-block-size);
   min-height: 1106px;
   display: flex;
-  /* padding: 80px 104px; */
   flex-direction: column;
   align-items: center;
   gap: 24px;
@@ -38,18 +37,15 @@
   gap: 36px;
 }
 
-@media (min-width: 460px) {
-  .row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 40px;
-    row-gap: 18px;
-  }
-
-  .col-md-4 {
-    flex-basis: calc(33, 3% - 80px);
-    /* 3 companies per row */
-    margin: 10px;
-    /* spacess beetwen ecompanies */
-  }
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 40px;
+  row-gap: 18px;
 }
+
+.col-md-4 {
+  flex-basis: calc(33, 3% - 80px);
+  margin: 10px;
+}
+
