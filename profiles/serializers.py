@@ -64,9 +64,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
     def get_regions_ukr_display(self, obj):
         if not obj.regions:
             return ""
-        regions_ukr_names = []
-        for region in obj.regions.all():
-            regions_ukr_names.append(region.name_ukr)
+        regions_ukr_names = [region.name_ukr for region in obj.regions.all()]
         return ", ".join(regions_ukr_names)
 
 
@@ -82,6 +80,8 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     is_saved = serializers.SerializerMethodField()
     banner_image = serializers.ImageField(required=False)
     regions = RegionSerializer(many=True, read_only=True)
+    regions_ukr_display = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Profile
@@ -89,6 +89,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "id",
             "official_name",
             "regions",
+            "regions_ukr_display",
             "common_info",
             "edrpou",
             "ipn",
@@ -111,6 +112,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "id",
             "official_name",
             "regions",
+            "regions_ukr_display",
             "common_info",
             "edrpou",
             "ipn",
@@ -134,6 +136,12 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
         if user.is_authenticated:
             return obj.pk in self.context["saved_companies_pk"]
         return False
+
+    def get_regions_ukr_display(self, obj):
+        if not obj.regions:
+            return ""
+        regions_ukr_names = [region.name_ukr for region in obj.regions.all()]
+        return ", ".join(regions_ukr_names)
 
 
 class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
