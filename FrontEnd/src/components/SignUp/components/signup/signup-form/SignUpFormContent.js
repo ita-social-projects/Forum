@@ -280,7 +280,7 @@ export function SignUpFormContentComponent(props) {
               <label className={styles['signup-form__label--text']}>Ім‘я</label>
             </div>
             <div className={styles['signup-form__field']}>
-            <Tooltip title="Прізвище повинне містити від 2 до 50 символів"
+            <Tooltip title="Ім‘я повинне містити від 2 до 50 символів"
                 pointAtCenter={true}>
               <input
                 className={styles['signup-form__input']}
