@@ -82,7 +82,6 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
 
-
     class Meta:
         model = Profile
         fields = (
