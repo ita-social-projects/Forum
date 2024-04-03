@@ -4,7 +4,7 @@
   right: 20px;
   width: 40px;
   height: 40px;
-  background-color: #007bff;
+  background-color: var(--main-button-color);
   color: white;
   border: none;
   border-radius: 50%;
@@ -22,5 +22,5 @@
 }
 
 .scroll-to-top-button:hover {
-  background-color: #0056b3;
+  background-color: var(--main-button-color);
 }

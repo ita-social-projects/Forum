@@ -68,11 +68,6 @@
     letter-spacing: -0.14px;
 }
 
-.checkbox__input {
-    justify-content: flex-start;
-    accent-color: #1F9A7C;
-}
-
 .error-message {
     display: flex;
     padding: 1px 0px;
