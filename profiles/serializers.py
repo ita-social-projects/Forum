@@ -7,6 +7,7 @@ from .models import (
     ViewedCompany,
     Region,
 )
+from utils.regions_ukr_names import get_regions_ukr_names_as_string
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -62,10 +63,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
         return False
 
     def get_regions_ukr_display(self, obj):
-        if not obj.regions:
-            return ""
-        regions_ukr_names = [region.name_ukr for region in obj.regions.all()]
-        return ", ".join(regions_ukr_names)
+        return get_regions_ukr_names_as_string(obj)
 
 
 class ProfileCreateSerializer(serializers.ModelSerializer):
@@ -137,10 +135,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
         return False
 
     def get_regions_ukr_display(self, obj):
-        if not obj.regions:
-            return ""
-        regions_ukr_names = [region.name_ukr for region in obj.regions.all()]
-        return ", ".join(regions_ukr_names)
+        return get_regions_ukr_names_as_string(obj)
 
 
 class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
@@ -148,6 +143,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
     email = serializers.ReadOnlyField(source="person.email")
     regions = RegionSerializer(many=True, read_only=True)
+    regions_ukr_display = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -164,6 +160,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "person_position",
             "official_name",
             "regions",
+            "regions_ukr_display",
             "common_info",
             "phone",
             "edrpou",
@@ -190,6 +187,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "person_position",
             "official_name",
             "regions",
+            "regions_ukr_display",
             "common_info",
             "phone",
             "edrpou",
@@ -203,6 +201,9 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "logo_image",
             "is_deleted",
         )
+
+    def get_regions_ukr_display(self, obj):
+        return get_regions_ukr_names_as_string(obj)
 
 
 class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
