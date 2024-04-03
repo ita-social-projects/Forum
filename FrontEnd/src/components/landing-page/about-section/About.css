@@ -4,7 +4,7 @@
     align-items: flex-start;
 }
 .about-us-section-content {
-    width: 1512px;
+    width: var(--main-block-size);
     height: 366px;
 }
 .about-us-section-content__field {
@@ -18,7 +18,7 @@
     position: absolute;
 }
 .about-us-rectangle {
-    width: 1512px;
+    width:  var(--main-block-size);
     height: 366px;
     flex-shrink: 0;
     background: #0B6C61;
