@@ -56,14 +56,15 @@
 .formControlFocused {
     border: 1px solid #1f9a7c;
     background: #fff;
-  }
+}
 
-.choose__placeholder {
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-    letter-spacing: -0.01em;
-    text-align: left;
-    color: #00000040;
+.select-container {
+    width: 257px;
+    border-radius: 2px;
+    border: 1px solid #D9D9D9;
+    background: #FFF;
+}
+
+.select-container:focus-within {
+    border: 1px solid var(--main-button-color);
 }

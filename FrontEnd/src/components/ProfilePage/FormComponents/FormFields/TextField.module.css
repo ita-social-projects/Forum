@@ -60,7 +60,7 @@
     background: var(--main-white, #FFF);
     width: 530px;
     height: 98px;
-    border: 1px solid #DEE1E8;
+    border: none;
 }
 
 .fields__field--textarea::placeholder {
@@ -79,7 +79,7 @@
     border: 1px solid #1f9a7c;
     background: #fff;
     outline: none;
-  }
+}
 
 .error-message {
     display: flex;
@@ -98,7 +98,7 @@
 
 .count__symbols {
     display: flex;
-    justify-content: flex-end;   
+    justify-content: flex-end;
     height: 22px;
     top: 5px;
     font-family: "Inter", sans-serif;

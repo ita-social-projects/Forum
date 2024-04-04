@@ -12,6 +12,9 @@
 }
 
 :root {
+
+  --main-block-size: 1512px;
+
   /* background color*/
   --main-header-color: #1F9A7C;
   --main-footer-background: #3C4044;

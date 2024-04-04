@@ -10,6 +10,15 @@ from .models import (
 )
 
 
+class RegionFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Region
+        django_get_or_create = ("name_eng", "name_ukr")
+
+    name_eng = factory.Sequence(lambda n: f"test region {n}")
+    name_ukr = factory.Sequence(lambda n: f"тестовий регіон {n}")
+
+
 class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Category
@@ -33,7 +42,6 @@ class ProfileFactory(factory.django.DjangoModelFactory):
 
     person = factory.SubFactory("authentication.factories.UserFactory")
     name = "Test Comp name"
-    region = factory.fuzzy.FuzzyChoice(Region.choices, getter=lambda r: r[0])
     common_info = "test common info"
     phone = "380112909099"
     edrpou = factory.Sequence(lambda n: str(10000000 + n))
@@ -57,6 +65,14 @@ class ProfileFactory(factory.django.DjangoModelFactory):
         if extracted:
             for category in extracted:
                 self.categories.add(category)
+
+    @factory.post_generation
+    def regions(self, create, extracted):
+        if not create:
+            return
+        if extracted:
+            for region in extracted:
+                self.regions.add(region)
 
 
 class ProfileStartupFactory(ProfileFactory):

@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
+  cursor: pointer;
   border-radius: 100px;
   border: 1px solid var(--main-black-20, #E2E5EB);
   background: var(--conditional-pop-over, #FFF)

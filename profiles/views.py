@@ -223,9 +223,10 @@ class ActivityList(ListCreateAPIView):
     queryset = Activity.objects.all()
 
 
-class RegionListView(ListAPIView):
+class RegionList(ListCreateAPIView):
     serializer_class = RegionSerializer
-    queryset = Region.choices
+    permission_classes = (RequestIsReadOnly | IsAdminUser,)
+    queryset = Region.objects.all()
 
 
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
@@ -238,3 +239,9 @@ class ActivityDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = ActivitySerializer
     permission_classes = (IsAdminUser,)
     queryset = Activity.objects.all()
+
+
+class RegionDetail(RetrieveUpdateDestroyAPIView):
+    serializer_class = RegionSerializer
+    permission_classes = (IsAdminUser,)
+    queryset = Region.objects.all()

@@ -14,15 +14,15 @@ import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
-import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
 
 const LABELS = {
     'name': 'Назва компанії',
+    'is_fop': 'ФОП',
     'official_name': 'Юридична назва компанії',
-    'edrpou': 'ЄДРПОУ / ІПН',
-    'region': 'Регіон(и)',
+    'identifier': 'ЄДРПОУ / ІПН',
+    'regions': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
     'banner_image': 'Зображення для банера',
@@ -62,7 +62,7 @@ const GeneralInfo = (props) => {
     const [logoImage, setLogoImage] = useState(props.profile.logo_image);
     const [bannerImageError, setBannerImageError] = useState(null);
     const [logoImageError, setLogoImageError] = useState(null);
-    const [edrpouError, setEdrpouError] = useState(null);
+    const [identifierError, setIdentifierError] = useState(null);
     const [companyTypeError, setCompanyTypeError] = useState(null);
 
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
@@ -71,13 +71,13 @@ const GeneralInfo = (props) => {
 
     const { setFormIsDirty } = useContext(DirtyFormContext);
 
-    // TODO: update default values as new fields added
-
     const fields = {
         'name': {defaultValue: mainProfile?.name},
+        'is_fop': {defaultValue: mainProfile?.is_fop},
         'official_name': {defaultValue: mainProfile?.official_name ?? null},
-        'edrpou': {defaultValue: mainProfile?.edrpou ?? null},
-        'region': {defaultValue: mainProfile?.region ?? null},
+        'edrpou': {defaultValue: mainProfile?.edrpou ?? ''},
+        'ipn': {defaultValue: mainProfile?.ipn ?? ''},
+        'regions': {defaultValue: mainProfile?.regions ?? [], type: 'array'},
         'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
         'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
         'banner_image': {defaultValue: mainProfile?.banner_image ?? null},
@@ -132,23 +132,37 @@ const GeneralInfo = (props) => {
         });
     };
 
-    const onUpdateOneSelectField = e => {
-        const selectedRegion = fetchedRegions.find((el) => el.value === e.target.value);
+    const onUpdateRegions = e => {
+        let selectedRegions = [];
+        for (let region of e) {
+            let item = fetchedRegions.find((el) => el.name_ukr === region);
+            if (item) {
+                selectedRegions.push({id: item.id, name_eng: item.name_eng, name_ukr: region});
+            }
+        }
         setProfile((prevState) => {
-            return { ...prevState, [e.target.name]: selectedRegion.key };
+            return { ...prevState, ['regions']: selectedRegions };
         });
     };
 
-    const onUpdateEdrpouField = e => {
-        if (e.target.value && e.target.value.length !== 8) {
-            setEdrpouError('ЄДРПОУ має містити 8 символів');
+    const onUpdateIdentifierField = (e) => {
+        if (profile.is_fop) {
+            if (e.target.value && e.target.value.length !== 10) {
+                setIdentifierError('ІПН має містити 10 символів');
+            } else {
+                setIdentifierError(null);
+            }
             setProfile((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
+                return { ...prevState, ipn: e.target.value, edrpou: null };
             });
         } else {
-            setEdrpouError(null);
+            if (e.target.value && e.target.value.length !== 8) {
+                setIdentifierError('ЄДРПОУ має містити 8 символів');
+            } else {
+                setIdentifierError(null);
+            }
             setProfile((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
+                return { ...prevState, edrpou: e.target.value, ipn: null };
             });
         }
     };
@@ -168,6 +182,12 @@ const GeneralInfo = (props) => {
       });
     };
 
+    const onChangeCheckboxFop = (e) => {
+        setProfile((prevState) => {
+          return { ...prevState, [e.target.name]: e.target.checked };
+        });
+      };
+
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
             setProfile((prevState) => {
@@ -175,32 +195,30 @@ const GeneralInfo = (props) => {
             });
     };
 
-    const onUpdateSelectField = e => {
-        const selectName = e.target.name;
-
-        if (selectName === 'activities') {
-            let selectedActivities = [];
-            for (let activity of e.target.value) {
-                let item = fetchedActivities.find((el) => el.name === activity);
-                if (item) {
-                    selectedActivities.push({ id: item.id, name: activity });
-                }
+    const onUpdateActivities = e => {
+        let selectedActivities = [];
+        for (let activity of e) {
+            let item = fetchedActivities.find((el) => el.name === activity);
+            if (item) {
+                selectedActivities.push({ id: item.id, name: activity });
             }
-            setProfile((prevState) => {
-                return { ...prevState, [selectName]: selectedActivities };
-            });
-        } else {
-            let selectedCategories = [];
-            for (let category of e.target.value) {
-                let item = fetchedCategories.find((el) => el.name === category);
-                if (item) {
-                    selectedCategories.push({ id: item.id, name: category });
-                }
-            }
-            setProfile((prevState) => {
-                return { ...prevState, [selectName]: selectedCategories };
-            });
         }
+        setProfile((prevState) => {
+            return { ...prevState, ['activities']: selectedActivities };
+        });
+    };
+
+    const onUpdateCategories = e => {
+        let selectedCategories = [];
+        for (let category of e) {
+            let item = fetchedCategories.find((el) => el.name === category);
+            if (item) {
+                selectedCategories.push({ id: item.id, name: category });
+            }
+        }
+        setProfile((prevState) => {
+            return { ...prevState, ['categories']: selectedCategories };
+        });
     };
 
     const uploadImage = async (url, imageKey, image) => {
@@ -267,15 +285,39 @@ const GeneralInfo = (props) => {
         });
     };
 
+    const errorMessages = {
+        'profile with this edrpou already exists.': 'Компанія з таким ЄДРПОУ вже існує',
+        'profile with this ipn already exists.': 'Фізична особа-підприємець з таким ІПН вже існує',
+        'For the IPN field filled out, FOP must be set to True': 'Поле ІПН заповнюється лише для ФОП',
+        'For the EDRPOU field filled out, FOP must be set to False': 'Поле ЄРДПОУ не заповнюється для ФОП'
+    };
+
+    function handleError(error) {
+        if (error.response && error.response.status === 400) {
+            const errorData = error.response.data;
+            Object.keys(errorData).forEach(key => {
+                const message = errorData[key][0];
+                if (errorMessages[message]) {
+                    toast.error(errorMessages[message]);
+                }
+            });
+        } else if (!error.response || error.response.status !== 401) {
+            toast.error('Не вдалося зберегти зміни, сталася помилка');
+        }
+        console.error('Помилка:', error.response ? error.response.data : error.message);
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkRequiredFields()) {
             try {
                 const response = await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
                     name: profile.name,
+                    is_fop: profile.is_fop,
                     official_name: profile.official_name,
                     edrpou: profile.edrpou,
-                    region: profile.region,
+                    ipn: profile.ipn,
+                    regions: profile.regions.map(obj => obj.id),
                     common_info: profile.common_info,
                     is_startup: profile.is_startup,
                     is_registered: profile.is_registered,
@@ -290,16 +332,7 @@ const GeneralInfo = (props) => {
                 await uploadImage(`${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`, 'logo_image', logoImage);
 
             } catch (error) {
-                if (error.response && error.response.status === 400) {
-                    const errorData = error.response.data;
-                    if (errorData.edrpou && errorData.edrpou[0] === 'profile with this edrpou already exists.') {
-                        toast.error('Компанія з таким ЄДРПОУ вже існує');
-                }
-                console.error('Помилка:', error.response ? error.response.data : error.message);
-                if (!error.response || error.response.status !== 401) {
-                    toast.error('Не вдалося зберегти зміни, сталася помилка');
-                }
-            }
+                handleError(error);
         }
     }
 };
@@ -319,6 +352,17 @@ const GeneralInfo = (props) => {
                                 requredField={true}
                                 value={profile.name}
                             />
+                            <div className={css['fop-field']}>
+                                <CheckBoxField
+                                    fopProps={{
+                                        fop_field: true,
+                                        name: 'is_fop',
+                                        value: profile.is_fop,
+                                        updateHandler: onChangeCheckboxFop,
+                                    }}
+
+                                />
+                            </div>
                         </div>
                         <FullField
                             name="official_name"
@@ -330,25 +374,24 @@ const GeneralInfo = (props) => {
                         <div className={css['fields-groups']}>
                             <HalfFormField
                                 inputType="text"
-                                name="edrpou"
-                                label={LABELS.edrpou}
-                                updateHandler={onUpdateEdrpouField}
+                                name="identifier"
+                                label={LABELS.identifier}
+                                updateHandler={onUpdateIdentifierField}
                                 requredField={false}
-                                value={profile.edrpou ?? ''}
-                                error={edrpouError}
+                                value={(profile.edrpou || profile.ipn) ?? ''}
+                                error={identifierError}
                             />
                             {isRegionLoading
                                 ?
                                 <Loader />
                                 :
-                                <OneSelectChip
-                                    name="region"
+                                <MultipleSelectChip
+                                    name="regions"
                                     options={fetchedRegions}
-                                    label={LABELS.region}
-                                    updateHandler={onUpdateOneSelectField}
+                                    label={LABELS.regions}
+                                    updateHandler={onUpdateRegions}
                                     requredField={false}
-                                    defaultValue="Оберіть"
-                                    value={fetchedRegions.find((el) => el.key === profile.region)?.value ?? ''}
+                                    value={profile.regions.map(obj => obj.name_ukr) ?? ''}
                                 />
                             }
                         </div>
@@ -361,10 +404,9 @@ const GeneralInfo = (props) => {
                                     name="activities"
                                     options={fetchedActivities}
                                     label={LABELS.activities}
-                                    updateHandler={onUpdateSelectField}
+                                    updateHandler={onUpdateActivities}
                                     requredField={true}
                                     value={profile.activities.map(obj => obj.name) ?? ''}
-                                    defaultValue="Оберіть"
                                     error={formStateErr['activities']['error']
                                         ?
                                         formStateErr['activities']['message']
@@ -380,10 +422,9 @@ const GeneralInfo = (props) => {
                                     name="categories"
                                     options={fetchedCategories}
                                     label={LABELS.categories}
-                                    updateHandler={onUpdateSelectField}
+                                    updateHandler={onUpdateCategories}
                                     requredField={true}
                                     value={profile.categories.map(obj => obj.name) ?? ''}
-                                    defaultValue="Оберіть"
                                     error={formStateErr['categories']['error']
                                         ?
                                         formStateErr['categories']['message']
@@ -423,14 +464,16 @@ const GeneralInfo = (props) => {
                             maxLength={TEXT_AREA_MAX_LENGTH}
                         />
                         <CheckBoxField
-                            name="companyType"
-                            nameRegister="is_registered"
-                            valueRegister={profile.is_registered}
-                            nameStartup="is_startup"
-                            valueStartup={profile.is_startup}
-                            updateHandler={onChangeCheckbox}
-                            error={companyTypeError}
-                            requredField={true}
+                            companyProps={{
+                                name: 'companyType',
+                                nameRegister: 'is_registered',
+                                valueRegister: profile.is_registered,
+                                nameStartup: 'is_startup',
+                                valueStartup: profile.is_startup,
+                                updateHandler: onChangeCheckbox,
+                                error: companyTypeError,
+                                requredField: true,
+                            }}
                         />
                     </div>
                 </form>
@@ -445,6 +488,8 @@ GeneralInfo.propTypes = {
     profile: PropTypes.shape({
         name: PropTypes.string.isRequired,
         official_name: PropTypes.string,
+        is_fop: PropTypes.bool,
+        ipn: PropTypes.string,
         edrpou: PropTypes.string,
         region: PropTypes.string,
         common_info: PropTypes.string,
