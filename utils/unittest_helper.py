@@ -1,3 +1,11 @@
+import pytz
+from django.utils.datetime_safe import datetime
+
+
+def utc_datetime(*args):
+    return datetime(*args, tzinfo=pytz.timezone("UTC"))
+
+
 class AnyStr:
     """Placeholder to put in unittests in case we expect some string
     (let's say, an date string) which is hard to determine and we don't
