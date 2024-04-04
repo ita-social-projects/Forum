@@ -10,47 +10,200 @@ from profiles.factories import (
 )
 
 from profiles.factories import SavedCompanyFactory, SavedStartupFactory
+from utils.unittest_helper import utc_datetime
 from utils.dump_response import dump  # noqa
 
 
 class TestProfileOrdering(APITestCase):
     def setUp(self) -> None:
         self.user = UserFactory()
-        self.company_retail = ProfileCompanyFactory(name="Retail company")
-        self.company_winery = ProfileCompanyFactory(name="Winery")
-        self.company_delivery = ProfileCompanyFactory(name="Delivery company")
-        self.startup_catering = ProfileStartupFactory(name="Catering service")
-        self.startup_brewery = ProfileStartupFactory(name="Brewery")
-        self.startup_bakery = ProfileStartupFactory(name="Bakery")
 
-        self.saved_company_first = SavedCompanyFactory(user=self.user, company=self.company_delivery, added_at=(timezone.now() - timedelta(days=1)))
-        self.saved_company_second = SavedCompanyFactory(user=self.user, company=self.company_winery, added_at=timezone.now())
+        self.company_retail = ProfileCompanyFactory(
+            name="Retail company", completeness=105
+        )
+        self.company_retail.created_at = utc_datetime(2023, 12, 7)
+        self.company_retail.save()
 
-        self.saved_startup_first = SavedStartupFactory(user=self.user, company=self.startup_bakery, added_at=(timezone.now() - timedelta(days=1)))
-        self.saved_startup_second = SavedStartupFactory(user=self.user, company=self.startup_catering, added_at=timezone.now())
+        self.company_winery = ProfileCompanyFactory(
+            name="Winery", completeness=1
+        )
+        self.company_winery.created_at = utc_datetime(2023, 12, 5)
+        self.company_winery.save()
 
-    def test_get_list_of_companies_alphabetical_order(self):
-        response = self.client.get(path="/api/profiles/?is_registered=True&ordering=name&page=1&page_size=12")
-        companies_names = [company["name"] for company in response.data["results"]]
+        self.company_delivery = ProfileCompanyFactory(
+            name="Delivery company", completeness=2
+        )
+        self.company_delivery.created_at = utc_datetime(2024, 1, 15)
+        self.company_delivery.save()
+
+        self.startup_catering = ProfileStartupFactory(
+            name="Catering service", completeness=5
+        )
+        self.startup_catering.created_at = utc_datetime(2023, 11, 15)
+        self.startup_catering.save()
+
+        self.startup_brewery = ProfileStartupFactory(
+            name="Brewery", completeness=110
+        )
+        self.startup_brewery.created_at = utc_datetime(2023, 11, 1)
+        self.startup_brewery.save()
+
+        self.startup_bakery = ProfileStartupFactory(
+            name="Bakery", completeness=1
+        )
+        self.startup_bakery.created_at = utc_datetime(2023, 12, 31)
+        self.startup_bakery.save()
+
+        self.saved_company_first = SavedCompanyFactory(
+            user=self.user,
+            company=self.company_delivery,
+            added_at=(timezone.now() - timedelta(days=3)),
+        )
+        self.saved_company_second = SavedCompanyFactory(
+            user=self.user,
+            company=self.company_winery,
+            added_at=(timezone.now() - timedelta(days=2)),
+        )
+
+        self.saved_startup_third = SavedStartupFactory(
+            user=self.user,
+            company=self.startup_bakery,
+            added_at=(timezone.now() - timedelta(days=1)),
+        )
+        self.saved_startup_fourth = SavedStartupFactory(
+            user=self.user,
+            company=self.startup_catering,
+            added_at=timezone.now(),
+        )
+
+    def test_get_list_of_profiles_alphabetical_order_asc(self):
+        response = self.client.get(
+            path="/api/profiles/?ordering=name&page=1&page_size=12"
+        )
+        profiles = [profile["name"] for profile in response.data["results"]]
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(["Delivery company", "Retail company", "Winery"], companies_names)
+        self.assertEqual(
+            [
+                "Bakery",
+                "Brewery",
+                "Catering service",
+                "Delivery company",
+                "Retail company",
+                "Winery",
+            ],
+            profiles,
+        )
 
-    def test_get_list_of_startups_alphabetical_order(self):
-        response = self.client.get(path="/api/profiles/?is_startup=True&ordering=name&page=1&page_size=12")
-        startups_names = [company["name"] for company in response.data["results"]]
+    def test_get_list_of_profiles_alphabetical_order_desc(self):
+        response = self.client.get(
+            path="/api/profiles/?ordering=-name&page=1&page_size=12"
+        )
+        profiles = [profile["name"] for profile in response.data["results"]]
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(["Bakery", "Brewery", "Catering service"], startups_names)
+        self.assertEqual(
+            [
+                "Winery",
+                "Retail company",
+                "Delivery company",
+                "Catering service",
+                "Brewery",
+                "Bakery",
+            ],
+            profiles,
+        )
 
-    def test_get_list_of_saved_companies_desc_added_at_order(self):
+    def test_get_list_of_profiles_created_at_order_asc(self):
+        response = self.client.get(
+            path="/api/profiles/?ordering=created_at&page=1&page_size=12"
+        )
+        profiles = [profile["name"] for profile in response.data["results"]]
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(
+            [
+                "Brewery",
+                "Catering service",
+                "Winery",
+                "Retail company",
+                "Bakery",
+                "Delivery company",
+            ],
+            profiles,
+        )
+
+    def test_get_list_of_profiles_created_at_order_desc(self):
+        response = self.client.get(
+            path="/api/profiles/?ordering=-created_at&page=1&page_size=12"
+        )
+        profiles = [profile["name"] for profile in response.data["results"]]
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(
+            [
+                "Delivery company",
+                "Bakery",
+                "Retail company",
+                "Winery",
+                "Catering service",
+                "Brewery",
+            ],
+            profiles,
+        )
+
+    def test_get_list_of_profiles_completeness_order_asc(self):
+        response = self.client.get(
+            path="/api/profiles/?ordering=completeness&page=1&page_size=12"
+        )
+        profiles = [profile["name"] for profile in response.data["results"]]
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(
+            [
+                "Winery",
+                "Bakery",
+                "Delivery company",
+                "Catering service",
+                "Retail company",
+                "Brewery",
+            ],
+            profiles,
+        )
+
+    def test_get_list_of_profiles_completeness_order_desc(self):
+        response = self.client.get(
+            path="/api/profiles/?ordering=-completeness&page=1&page_size=12"
+        )
+        profiles = [profile["name"] for profile in response.data["results"]]
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(
+            [
+                "Brewery",
+                "Retail company",
+                "Catering service",
+                "Delivery company",
+                "Winery",
+                "Bakery",
+            ],
+            profiles,
+        )
+
+    def test_get_list_of_saved_profiles_added_at_order_asc_auth(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path="/api/profiles/?is_registered=True&is_saved=True&ordering=-saved_at&page=1&page_size=12")
-        saved_companies_names = [company["name"] for company in response.data["results"]]
+        response = self.client.get(
+            path="/api/profiles/?is_saved=True&ordering=saved_at&page=1&page_size=12"
+        )
+        profiles = [profile["name"] for profile in response.data["results"]]
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(["Winery", "Delivery company"], saved_companies_names)
+        self.assertEqual(
+            ["Delivery company", "Winery", "Bakery", "Catering service"],
+            profiles,
+        )
 
-    def test_get_list_of_saved_startups_desc_added_at_order(self):
+    def test_get_list_of_saved_profiles_added_at_order_desc_auth(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path="/api/profiles/?is_startup=True&is_saved=True&ordering=-saved_at&page=1&page_size=12")
-        saved_startups_names = [company["name"] for company in response.data["results"]]
+        response = self.client.get(
+            path="/api/profiles/?is_saved=True&ordering=-saved_at&page=1&page_size=12"
+        )
+        profiles = [profile["name"] for profile in response.data["results"]]
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(["Catering service", "Bakery"], saved_startups_names)
+        self.assertEqual(
+            ["Catering service", "Bakery", "Winery", "Delivery company"],
+            profiles,
+        )
