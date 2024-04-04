@@ -6,6 +6,7 @@ from profiles.serializers import (
     ActivitySerializer,
     RegionSerializer,
 )
+from utils.regions_ukr_names import get_regions_ukr_names_as_string
 
 
 class CompanySerializers(serializers.ModelSerializer):
@@ -39,9 +40,4 @@ class CompanySerializers(serializers.ModelSerializer):
         return False
 
     def get_regions_ukr_display(self, obj):
-        if not obj.regions:
-            return ""
-        regions_ukr_names = []
-        for region in obj.regions.all():
-            regions_ukr_names.append(region.name_ukr)
-        return ", ".join(regions_ukr_names)
+        return get_regions_ukr_names_as_string(obj)

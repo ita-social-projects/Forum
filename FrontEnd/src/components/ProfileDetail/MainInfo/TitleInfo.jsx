@@ -24,7 +24,7 @@ function TitleInfo({ isAuthorized, data }) {
         data.activities && data.activities.length
           ? data.activities.map((activity) => activity.name).join(', ')
           : null,
-      region: data.region_display ? data.region_display : '',
+      regions: data.regions_ukr_display ? data.regions_ukr_display : '',
       categories: data.categories ? data.categories : null,
       isSaved: data.is_saved,
       logo: data.logo_image,
@@ -34,14 +34,13 @@ function TitleInfo({ isAuthorized, data }) {
   const ownProfile = user && user.id === profile.personId;
 
   async function sendRequest(url, { arg: data }) {
-    return axios.post(url, data)
-      .catch(error => {
-        if (error.response && error.response.status === 403) {
-          console.error('Own company cannot be added to the saved list.');
-        }
-        console.error(error.response ? error.response.data : error.message);
-      });
-    }
+    return axios.post(url, data).catch((error) => {
+      if (error.response && error.response.status === 403) {
+        console.error('Own company cannot be added to the saved list.');
+      }
+      console.error(error.response ? error.response.data : error.message);
+    });
+  }
 
   const { trigger } = useSWRMutation(
     `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
@@ -134,7 +133,7 @@ function TitleInfo({ isAuthorized, data }) {
           </div>
         </div>
         <div className={classes['title-block__company_region']}>
-          {profile.region}
+          {profile.regions}
         </div>
       </div>
       {isAuthorized ? (
