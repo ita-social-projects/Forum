@@ -1,8 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Badge, Typography } from 'antd';
-import { StarOutlined, StarFilled } from '@ant-design/icons';
+import { Typography } from 'antd';
 import { PropTypes } from 'prop-types';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
@@ -10,6 +9,8 @@ import useSWRMutation from 'swr/mutation';
 import { useAuth } from '../../hooks';
 import css from './ProfileCard.module.css';
 import axios from 'axios';
+import CategoryBadges from '../MiniComponents/CategoryBadges';
+import StarForLike from '../MiniComponents/StarForLike';
 
 const { Paragraph } = Typography;
 
@@ -61,41 +62,6 @@ export default function ProfileCard({ isAuthorized, data }) {
     }
   };
 
-  const filledStar = (
-    <StarFilled
-      style={{ color: '#FFD800', fontSize: '24px' }}
-      onClick={handleClick}
-    />
-  );
-  const outlinedStar = (
-    <StarOutlined
-      style={{ color: '#FFD800', fontSize: '24px' }}
-      onClick={handleClick}
-    />
-  );
-
-  const CategoryBadges = ({ categories }) => {
-    return (
-      <>
-        {categories
-          ? categories.map((category) => (
-              <Badge
-                key={category.id}
-                size="medium"
-                count={category.name.toUpperCase()}
-                style={{
-                  backgroundColor: '#1F9A7C',
-                  fontWeight: 600,
-                  fontFamily: 'Inter',
-                  fontSize: 10,
-                }}
-              />
-            ))
-          : ''}
-      </>
-    );
-  };
-
   return (
     <div className={css['company-card']}>
       <Link
@@ -134,11 +100,12 @@ export default function ProfileCard({ isAuthorized, data }) {
           </div>
         </div>
       </Link>
-      {isAuthorized && !ownProfile
-        ? isSaved
-          ? filledStar
-          : outlinedStar
-        : null}
+      <StarForLike
+        isSaved={isSaved}
+        isAuthorized={isAuthorized}
+        ownProfile={ownProfile}
+        handleClick={handleClick}
+      ></StarForLike>
     </div>
   );
 }

@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Badge } from 'antd';
-import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
 import classNames from 'classnames';
 import useSWRMutation from 'swr/mutation';
@@ -10,6 +8,8 @@ import useSWRMutation from 'swr/mutation';
 import { useAuth } from '../../../hooks';
 import DefaultLogo from './DefaultLogo';
 import classes from './TitleInfo.module.css';
+import CategoryBadges from '../../MiniComponents/CategoryBadges';
+import StarForLike from '../../MiniComponents/StarForLike';
 
 function TitleInfo({ isAuthorized, data }) {
   const { user } = useAuth();
@@ -66,47 +66,6 @@ function TitleInfo({ isAuthorized, data }) {
     navigate('/profile/user-info');
   };
 
-  const filledStar = (
-    <StarFilled
-      style={{ color: '#FFD800', fontSize: '24px' }}
-      onClick={handleClick}
-    />
-  );
-  const outlinedStar = (
-    <StarOutlined
-      style={{ color: '#FFD800', fontSize: '24px' }}
-      onClick={handleClick}
-    />
-  );
-
-  const getStarVisibility = () => {
-    if (isAuthorized) {
-      return isSaved ? filledStar : outlinedStar;
-    }
-  };
-
-  const CategoryBadges = ({ categories }) => {
-    return (
-      <>
-        {categories
-          ? categories.map((category) => (
-              <Badge
-                key={category.id}
-                size="medium"
-                count={category.name.toUpperCase()}
-                style={{
-                  backgroundColor: '#1F9A7C',
-                  fontWeight: 600,
-                  fontFamily: 'Inter',
-                  fontSize: 10,
-                }}
-              />
-            ))
-          : ''}
-      </>
-    );
-  };
-
   return (
     <div className={classes['title-block']}>
       <div className={classes['title-block__logo']}>
@@ -153,7 +112,11 @@ function TitleInfo({ isAuthorized, data }) {
               >
                 {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
               </span>
-              {getStarVisibility()}
+              <StarForLike
+                isSaved={isSaved}
+                isAuthorized={isAuthorized}
+                ownProfile={ownProfile}
+              ></StarForLike>
             </button>
           )}
           {ownProfile && (

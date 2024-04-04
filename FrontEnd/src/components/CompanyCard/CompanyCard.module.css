@@ -180,8 +180,3 @@
 .company-card__buttons:hover {
   cursor: pointer;
 }
-
-.star {
-  color: #ffd800;
-  font-size: 24px;
-}
