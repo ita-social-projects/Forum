@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
-import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import styles from './CompanyCard.module.css';
 import { useAuth } from '../../hooks';
 import PropTypes from 'prop-types';
-import { Tooltip, Badge } from 'antd';
+import { Tooltip } from 'antd';
+import CategoryBadges from '../MiniComponents/CategoryBadges';
+import StarForLike from '../MiniComponents/StarForLike';
+
 import axios from 'axios';
 
 export default function CompanyCard({
@@ -55,53 +57,6 @@ export default function CompanyCard({
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const filledStar = (
-    <StarFilled
-      className={styles['star']}
-      onClick={handleClick}
-      data-testid="star"
-    />
-  );
-  const outlinedStar = (
-    <StarOutlined
-      className={styles['star']}
-      onClick={handleClick}
-      data-testid="emptystar"
-    />
-  );
-  const getStar = () => {
-    return isAuthorized && !ownProfile
-      ? profile.is_saved
-        ? filledStar
-        : outlinedStar
-      : null;
-  };
-
-  const CategoryBadges = ({ categories }) => {
-    const style = {
-      backgroundColor: '#1F9A7C',
-      fontWeight: 600,
-      fontFamily: 'Inter',
-      fontSize: 10,
-      margin: 5,
-    };
-    return (
-      <div>
-        {categories
-          ? categories.map((category) => (
-              <Badge
-                title=""
-                key={category.id}
-                size="medium"
-                count={category.name.toUpperCase()}
-                style={style}
-              />
-            ))
-          : null}
-      </div>
-    );
   };
 
   return (
@@ -168,7 +123,12 @@ export default function CompanyCard({
                 <CategoryBadges categories={profile.categories.slice(0, 3)} />
               </div>
             </Tooltip>
-            {getStar()}
+            <StarForLike
+              isSaved={profile.is_saved}
+              isAuthorized={isAuthorized}
+              ownProfile={ownProfile}
+              handleClick={handleClick}
+            ></StarForLike>
           </div>
         </div>
       </div>
