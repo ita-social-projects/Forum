@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import './global.css';
+// import './global.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AdminPage from './components/adminPage/AdminPage';
 import BasicPage from './components/basicPage/BasicPage';

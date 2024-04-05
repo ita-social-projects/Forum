@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './indexAuthPage.css';
+// import './indexAuthPage.css';
 import App from './App';
-import './index.css';
+// import './index.css';
+import './global.css';
 import reportWebVitals from './reportWebVitals';
-import './indexHeaderFooterSignUp.css';
+// import './indexHeaderFooterSignUp.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
