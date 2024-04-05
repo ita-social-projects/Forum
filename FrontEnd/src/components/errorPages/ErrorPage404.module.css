@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   gap: 80px;
-  font-family: Inter;
+  font-family: var(--font-main);
   color: var(--primary-green-20, #effff6);
   font-feature-settings: "calt" off;
   font-style: normal;
@@ -56,5 +56,5 @@
 }
 
 .button-text {
-  font-family: Inter;
+  font-family: var(--font-main);
 }

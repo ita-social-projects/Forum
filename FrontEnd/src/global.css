@@ -40,13 +40,13 @@
   --light-button-color: #FFFFFF;
 
   scroll-behavior: smooth;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 
-  --font-main: "Inter", sans-serif;
+  --font-main: 'Inter', sans-serif;
 
   --toastify-color-error: var(--Dust-Red-1, #FFF1F0);
   --toastify-color-success: #F1FFF7;
-  --toastify-font-family: var(--font-main);
+  --toastify-font-family:"Inter", sans-serif;
   --toastify-toast-width: 395px;
   --toastify-toast-min-height: 22px;
   --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));

@@ -11,7 +11,7 @@ body {
 /* :root {
   --toastify-color-error: var(--Dust-Red-1, #FFF1F0);
   --toastify-color-success: #F1FFF7;
-  --toastify-font-family: Inter;
+  --toastify-font-family: var(--font-main);
   --toastify-toast-width: 395px;
   --toastify-toast-min-height: 22px;
   --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));

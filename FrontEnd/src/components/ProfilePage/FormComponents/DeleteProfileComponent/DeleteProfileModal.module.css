@@ -1,7 +1,7 @@
 .delete__description {
     text-align: left;
     color: #292E32;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -30,7 +30,7 @@
     background: white;
     border: 1px solid #A3AAB0; 
     cursor: pointer;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -49,7 +49,7 @@
     background: #F15831;
     border: 1px solid #F15831;
     color: white;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -68,7 +68,7 @@
     background: white;
     border: 1px solid #F15831;
     color: #F15831;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -86,7 +86,7 @@
     box-shadow: 0px -1px 0px 0px #F0F0F0 inset;
     color: var(--character-title-85, rgba(0, 0, 0, 0.85));
     font-feature-settings: 'calt' off;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -103,7 +103,7 @@
     padding-bottom: 8px;
     align-items: center;
     gap: 4px;   
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;

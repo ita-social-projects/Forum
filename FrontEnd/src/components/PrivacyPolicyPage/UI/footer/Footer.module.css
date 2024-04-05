@@ -43,7 +43,7 @@ footer {
     color: #FFF;
     font-feature-settings: 'calt' off;
 
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -64,7 +64,7 @@ footer {
 
     text-decoration: none;
 
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

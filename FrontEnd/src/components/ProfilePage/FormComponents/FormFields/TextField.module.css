@@ -13,7 +13,7 @@
 }
 
 .fields__label--required {
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -27,7 +27,7 @@
     color: var(--main-black-90, #292E32);
     font-feature-settings: 'calt' off;
     font-style: normal;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -65,7 +65,7 @@
 
 .fields__field--textarea::placeholder {
     font-style: normal;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -101,7 +101,7 @@
     justify-content: flex-end;
     height: 22px;
     top: 5px;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;

@@ -37,7 +37,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Regular */
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -55,7 +55,7 @@
 
   /* Text/Body/14-Regular */
   text-align: left;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -99,7 +99,7 @@
   flex-direction: column;
   justify-content: center;
   flex: 1 0 0;
-  font-family: Inter;
+  font-family: var(--font-main);
   font-size: 14px;
   font-weight: 400;
   color:var(--main-text-color);
@@ -220,7 +220,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Regular */
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -231,7 +231,7 @@
 .rules__line--link {
   color: #00a3cf;
   font-feature-settings: "calt" off;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -263,7 +263,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Semi bold */
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -310,7 +310,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Regular */
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

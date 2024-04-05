@@ -42,7 +42,7 @@
    color: var(--main-black-90, #292E32);
    font-feature-settings: 'calt' off;
 
-   font-family: Inter;
+   font-family: var(--font-main);
    font-size: 17px;
    font-style: normal;
    font-weight: 400;

@@ -69,7 +69,7 @@
   color: var(--main-grey-20, #767f86);
   font-feature-settings: "calt" off;
 
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -84,7 +84,7 @@
   align-self: stretch;
   color: var(--main-grey-90, #25292c);
 
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -99,7 +99,7 @@
   color: var(--main-grey-80, #292e32);
   font-feature-settings: "calt" off;
 
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -111,7 +111,7 @@
   color: var(--main-grey-90, #25292c);
   font-feature-settings: "calt" off;
 
-  font-family: Inter;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
