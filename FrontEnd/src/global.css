@@ -12,7 +12,8 @@
 }
 
 :root {
-
+  display: flex;
+  
   --main-block-size: 1512px;
 
   /* background color*/
@@ -40,6 +41,8 @@
 
   scroll-behavior: smooth;
   font-family: "Inter", sans-serif;
+
+  --font-main: "Inter", sans-serif;
 }
 
 a {

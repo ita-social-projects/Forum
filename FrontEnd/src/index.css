@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
 }
@@ -16,4 +16,4 @@ body {
   --toastify-toast-min-height: 22px;
   --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));
   --toastify-text-color-error: var(--character-title-85, rgba(0, 0, 0, 0.85));
-}
+} */
