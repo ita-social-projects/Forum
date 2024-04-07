@@ -1,19 +1,18 @@
-/* * {
+* {
   margin: 0;
   padding: 0;
 }
 
-body {
-  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-} */
+h1 {
+  display: none;
+}
 
-/* :root {
-  --toastify-color-error: var(--Dust-Red-1, #FFF1F0);
-  --toastify-color-success: #F1FFF7;
-  --toastify-font-family: var(--font-main);
-  --toastify-toast-width: 395px;
-  --toastify-toast-min-height: 22px;
-  --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));
-  --toastify-text-color-error: var(--character-title-85, rgba(0, 0, 0, 0.85));
-} */
+a {
+  text-decoration: none;
+}
+
+:root {
+  display: flex;
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+}

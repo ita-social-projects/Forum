@@ -22,15 +22,7 @@
     url('/public/fonts/Geologica-VariableFont.ttf') format('truetype');
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 :root {
-  display: flex;
-  scroll-behavior: smooth;
-  font-family: 'Inter', sans-serif;
 
   --main-block-size: 1512px;
 
@@ -65,13 +57,9 @@
 
   --toastify-color-error: var(--Dust-Red-1, #FFF1F0);
   --toastify-color-success: #F1FFF7;
-  --toastify-font-family: "Inter", sans-serif;
+  --toastify-font-family: var(--font-main);
   --toastify-toast-width: 395px;
   --toastify-toast-min-height: 22px;
   --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));
   --toastify-text-color-error: var(--character-title-85, rgba(0, 0, 0, 0.85));
-}
-
-a {
-  text-decoration: none;
 }

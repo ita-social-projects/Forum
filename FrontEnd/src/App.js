@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-// import './global.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AdminPage from './components/adminPage/AdminPage';
 import BasicPage from './components/basicPage/BasicPage';
@@ -29,6 +28,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Крафтовий майданчик для обміну інформацією втілюй свої ідеї в життя</h1>
       <RouterProvider router={router} />
     </div>
   );
