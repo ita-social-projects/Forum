@@ -24,7 +24,7 @@ const checkFormIsDirty = (fields, userData, profileData) => {
       if (type === 'array') {
         return !compareArrays(defaultValue, currentValue);
       }
-      if (['edrpou', 'ipn', 'founded'].includes(key)) {
+      if (key === 'founded') {
         if (((defaultValue && currentValue !== null) && (defaultValue.toString() !== currentValue.toString())) ||
         (defaultValue === null && currentValue !== null)) {
           return true;
