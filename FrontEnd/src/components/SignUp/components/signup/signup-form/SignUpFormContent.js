@@ -84,8 +84,6 @@ export function SignUpFormContentComponent(props) {
     setIsValid(formIsValid);
   }, [isValid, setIsValid, isChecked.fop, isChecked.yurosoba]);
 
-
-
   const onSubmit = () => {
 
     const dataToSend = {
@@ -101,8 +99,6 @@ export function SignUpFormContentComponent(props) {
         is_fop: isChecked.fop,
       },
     };
-
-    console.log('DATA', dataToSend);
 
     axios({
       method: 'post',
