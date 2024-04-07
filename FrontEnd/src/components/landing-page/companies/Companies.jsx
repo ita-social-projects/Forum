@@ -17,7 +17,7 @@ const MainCompanies = ({ isAuthorized }) => {
   };
 
   const { data: companylist } = useSWR(
-    `${baseUrl}/api/profiles/?new_members=-completeness,-created_at`,
+    `${baseUrl}/api/profiles/?ordering=-completeness,-created_at`,
     fetcher
   );
 

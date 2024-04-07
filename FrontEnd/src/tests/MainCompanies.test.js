@@ -100,7 +100,7 @@ describe('MainCompanies component unit tests', () => {
         </MemoryRouter>
       );
       expect(axios.get).toHaveBeenCalledWith(
-        'http://localhost:8000/api/profiles/?new_members=-completeness,-created_at'
+        'http://localhost:8000/api/profiles/?ordering=-completeness,-created_at'
       );
       const divElement = screen.getByText(/Нові учасники/i, { exact: false });
       const onenameElement = screen.getByText(/saleonline/i, {
