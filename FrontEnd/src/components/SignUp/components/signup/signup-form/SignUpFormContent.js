@@ -58,9 +58,32 @@ export function SignUpFormContentComponent(props) {
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const [isChecked, setIsChecked] = useState({
+    startup: false,
+    company: false,
+  });
+
+  const onChangeCheckbox = (event) => {
+    if (event.target.name === 'fop') {
+      setIsChecked({
+        fop: true,
+        yurosoba: false,
+      });
+    } else if (event.target.name === 'yurosoba') {
+      setIsChecked({
+        fop: false,
+        yurosoba: true,
+      });
+    }
+  };
+
   useEffect(() => {
-    setIsValid(isValid);
-  }, [isValid, setIsValid]);
+    const fopOrYurOsosba = isChecked.fop || isChecked.yurosoba;
+    const formIsValid = fopOrYurOsosba && isValid;
+    setIsValid(formIsValid);
+  }, [isValid, setIsValid, isChecked.fop, isChecked.yurosoba]);
+
 
 
   const onSubmit = () => {
@@ -75,8 +98,12 @@ export function SignUpFormContentComponent(props) {
         name: getValues('companyName'),
         is_registered: (getValues('representative').indexOf('company') > -1),
         is_startup: (getValues('representative').indexOf('startup') > -1),
+        is_fop: isChecked.fop,
       },
     };
+
+    console.log('DATA', dataToSend);
+
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
@@ -339,6 +366,55 @@ export function SignUpFormContentComponent(props) {
             </div>
             <div className={styles['signup-form__error']}>
               {errors.representative && errors.representative.message}
+            </div>
+          </div>
+          <div className={styles['representative']}>
+            <div className={styles['representative__title']}>
+              <label className={styles['signup-form__label--required']}>
+                *
+              </label>
+              <label>Який суб&apos;єкт господарювання ви представляєте?</label>
+            </div>
+            <div className={styles['representative__container']}>
+              <div className={styles['representative__content']}>
+                <div className={styles['representative__column']}>
+                  <div className={styles['representative__option']}>
+                    <div
+                      className={styles['representative__checkbox-container']}
+                    >
+                      <input
+                        type="checkbox"
+                        name="yurosoba"
+                        onChange={onChangeCheckbox}
+                        checked={isChecked.yurosoba}
+                      />
+                    </div>
+                    <label className={styles['representative__label']}>
+                      Юридична особа
+                    </label>
+                  </div>
+                </div>
+                <div className={styles['representative__column']}>
+                  <div className={styles['representative__option']}>
+                    <div
+                      className={styles['representative__checkbox-container']}
+                    >
+                      <input
+                        type="checkbox"
+                        name="fop"
+                        onChange={onChangeCheckbox}
+                        checked={isChecked.fop}
+                      />
+                    </div>
+                    <label className={styles['representative__label']}>
+                      ФОП
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles['signup-form__error']}>
+              {errors.businessEntity && errors.businessEntity.message}
             </div>
           </div>
           <div className={styles['signup-form__checkboxes-container--rules']}>
