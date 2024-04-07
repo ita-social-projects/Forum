@@ -79,7 +79,7 @@
 }
 
 .login-content__email input {
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-messages);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -132,7 +132,7 @@
 }
 
 .login-content__password input {
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-messages);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -251,7 +251,7 @@
   flex: 1 0 0;
   color: #f34444;
   font-feature-settings: "calt" off;
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-error);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -265,7 +265,7 @@
   content: "*";
   color: #ff4d4f;
   text-align: right;
-  font-family: SimSong;
+  font-family: var(--font-error);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

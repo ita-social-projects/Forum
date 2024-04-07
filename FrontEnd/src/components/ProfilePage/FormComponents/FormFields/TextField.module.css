@@ -89,7 +89,7 @@
     align-self: stretch;
     flex: 1 0 0;
     color: var(--red-red-100, #F34444);
-    font-family: Roboto;
+    font-family: var(--font-error);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

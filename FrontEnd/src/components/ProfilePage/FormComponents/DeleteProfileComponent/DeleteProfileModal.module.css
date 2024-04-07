@@ -6,7 +6,7 @@
     font-weight: 400;
     line-height: 20px;
     letter-spacing: -0.01em;
-    margin: 24px 24px 8px 24px;    
+    margin: 24px 24px 8px 24px;
 }
 
 .buttons__section {
@@ -28,7 +28,7 @@
     gap: 10px;
     border-radius: 4px;
     background: white;
-    border: 1px solid #A3AAB0; 
+    border: 1px solid #A3AAB0;
     cursor: pointer;
     font-family: var(--font-main);
     font-size: 16px;
@@ -55,7 +55,7 @@
     line-height: 20px;
     letter-spacing: -0.01em;
     text-align: center;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 .button__delete__disabled {
@@ -73,7 +73,7 @@
     font-weight: 600;
     line-height: 20px;
     letter-spacing: -0.01em;
-    text-align: center; 
+    text-align: center;
 }
 
 .delete-header {
@@ -102,7 +102,7 @@
     display: flex;
     padding-bottom: 8px;
     align-items: center;
-    gap: 4px;   
+    gap: 4px;
     font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
@@ -138,12 +138,12 @@
     border: 1px solid #1f9a7c;
     background: #fff;
     outline: none;
-  }
+}
 
 .password__eye {
-    width:23px; 
-    padding: 5px 3px 2px 3px; 
-    cursor: pointer;  
+    width: 23px;
+    padding: 5px 3px 2px 3px;
+    cursor: pointer;
 }
 
 .delete__cancelButton {
@@ -158,7 +158,7 @@
     align-self: stretch;
     flex: 1 0 0;
     color: var(--red-red-100, #F34444);
-    font-family: Roboto;
+    font-family: var(--font-error);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

@@ -24,7 +24,7 @@ footer {
     color: #FFF;
     font-feature-settings: 'calt' off;
 
-    font-family: Geologica;
+    font-family: var(--font-logo);
     font-size: 32px;
     font-style: normal;
     font-weight: 500;
