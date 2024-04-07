@@ -19,9 +19,9 @@ import Loader from '../../loader/Loader';
 
 const LABELS = {
     'name': 'Назва компанії',
-    'is_fop': 'ФОП',
     'official_name': 'Юридична назва компанії',
-    'identifier': 'ЄДРПОУ / ІПН',
+    'edrpou': 'ЄДРПОУ',
+    'ipn': 'ІПН',
     'regions': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
@@ -62,7 +62,8 @@ const GeneralInfo = (props) => {
     const [logoImage, setLogoImage] = useState(props.profile.logo_image);
     const [bannerImageError, setBannerImageError] = useState(null);
     const [logoImageError, setLogoImageError] = useState(null);
-    const [identifierError, setIdentifierError] = useState(null);
+    const [edrpouFieldError, setEdrpouFieldError] = useState(null);
+    const [ipnFieldError, setIpnFieldError] = useState(null);
     const [companyTypeError, setCompanyTypeError] = useState(null);
 
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
@@ -73,10 +74,9 @@ const GeneralInfo = (props) => {
 
     const fields = {
         'name': {defaultValue: mainProfile?.name},
-        'is_fop': {defaultValue: mainProfile?.is_fop},
         'official_name': {defaultValue: mainProfile?.official_name ?? null},
-        'edrpou': {defaultValue: mainProfile?.edrpou ?? ''},
-        'ipn': {defaultValue: mainProfile?.ipn ?? ''},
+        'edrpou': {defaultValue: mainProfile?.edrpou ?? null},
+        'ipn': {defaultValue: mainProfile?.ipn ?? null},
         'regions': {defaultValue: mainProfile?.regions ?? [], type: 'array'},
         'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
         'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
@@ -145,26 +145,26 @@ const GeneralInfo = (props) => {
         });
     };
 
-    const onUpdateIdentifierField = (e) => {
-        if (profile.is_fop) {
-            if (e.target.value && e.target.value.length !== 10) {
-                setIdentifierError('ІПН має містити 10 символів');
-            } else {
-                setIdentifierError(null);
-            }
-            setProfile((prevState) => {
-                return { ...prevState, ipn: e.target.value, edrpou: null };
-            });
+    const onUpdateIpnField = (e) => {
+        if (e.target.value && e.target.value.length !== 10) {
+            setIpnFieldError('ІПН має містити 10 символів');
         } else {
-            if (e.target.value && e.target.value.length !== 8) {
-                setIdentifierError('ЄДРПОУ має містити 8 символів');
-            } else {
-                setIdentifierError(null);
-            }
-            setProfile((prevState) => {
-                return { ...prevState, edrpou: e.target.value, ipn: null };
-            });
+            setIpnFieldError(null);
         }
+        setProfile((prevState) => {
+            return { ...prevState, ipn: e.target.value};
+        });
+    };
+
+    const onUpdateEdrpouField = (e) => {
+        if (e.target.value && e.target.value.length !== 8) {
+            setEdrpouFieldError('ЄДРПОУ має містити 8 символів');
+        } else {
+            setEdrpouFieldError(null);
+        }
+        setProfile((prevState) => {
+            return { ...prevState, edrpou: e.target.value, ipn: null };
+        });
     };
 
     const onChangeCheckbox = (e) => {
@@ -181,12 +181,6 @@ const GeneralInfo = (props) => {
         return { ...prevState, [e.target.name]: e.target.checked };
       });
     };
-
-    const onChangeCheckboxFop = (e) => {
-        setProfile((prevState) => {
-          return { ...prevState, [e.target.name]: e.target.checked };
-        });
-      };
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
@@ -288,8 +282,6 @@ const GeneralInfo = (props) => {
     const errorMessages = {
         'profile with this edrpou already exists.': 'Компанія з таким ЄДРПОУ вже існує',
         'profile with this ipn already exists.': 'Фізична особа-підприємець з таким ІПН вже існує',
-        'For the IPN field filled out, FOP must be set to True': 'Поле ІПН заповнюється лише для ФОП',
-        'For the EDRPOU field filled out, FOP must be set to False': 'Поле ЄРДПОУ не заповнюється для ФОП'
     };
 
     function handleError(error) {
@@ -313,7 +305,6 @@ const GeneralInfo = (props) => {
             try {
                 const response = await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
                     name: profile.name,
-                    is_fop: profile.is_fop,
                     official_name: profile.official_name,
                     edrpou: profile.edrpou,
                     ipn: profile.ipn,
@@ -352,17 +343,6 @@ const GeneralInfo = (props) => {
                                 requredField={true}
                                 value={profile.name}
                             />
-                            <div className={css['fop-field']}>
-                                <CheckBoxField
-                                    fopProps={{
-                                        fop_field: true,
-                                        name: 'is_fop',
-                                        value: profile.is_fop,
-                                        updateHandler: onChangeCheckboxFop,
-                                    }}
-
-                                />
-                            </div>
                         </div>
                         <FullField
                             name="official_name"
@@ -372,15 +352,27 @@ const GeneralInfo = (props) => {
                             value={profile.official_name ?? ''}
                         />
                         <div className={css['fields-groups']}>
-                            <HalfFormField
-                                inputType="text"
-                                name="identifier"
-                                label={LABELS.identifier}
-                                updateHandler={onUpdateIdentifierField}
-                                requredField={false}
-                                value={(profile.edrpou || profile.ipn) ?? ''}
-                                error={identifierError}
-                            />
+                            {mainProfile?.is_fop ?
+                                <HalfFormField
+                                    inputType="text"
+                                    name="ipn"
+                                    label={LABELS.ipn}
+                                    updateHandler={onUpdateIpnField}
+                                    requredField={false}
+                                    value={profile.ipn ?? ''}
+                                    error={ipnFieldError}
+                                />
+                                :
+                                <HalfFormField
+                                    inputType="text"
+                                    name="edrpou"
+                                    label={LABELS.edrpou}
+                                    updateHandler={onUpdateEdrpouField}
+                                    requredField={false}
+                                    value={profile.edrpou ?? ''}
+                                    error={edrpouFieldError}
+                                />
+                            }
                             {isRegionLoading
                                 ?
                                 <Loader />
@@ -464,16 +456,14 @@ const GeneralInfo = (props) => {
                             maxLength={TEXT_AREA_MAX_LENGTH}
                         />
                         <CheckBoxField
-                            companyProps={{
-                                name: 'companyType',
-                                nameRegister: 'is_registered',
-                                valueRegister: profile.is_registered,
-                                nameStartup: 'is_startup',
-                                valueStartup: profile.is_startup,
-                                updateHandler: onChangeCheckbox,
-                                error: companyTypeError,
-                                requredField: true,
-                            }}
+                            name ="companyType"
+                            nameRegister="is_registered'"
+                            valueRegister={profile.is_registered}
+                            nameStartup="is_startup"
+                            valueStartup={profile.is_startup}
+                            updateHandler={onChangeCheckbox}
+                            error={companyTypeError}
+                            requredField={true}
                         />
                     </div>
                 </form>
