@@ -15,7 +15,6 @@ from rest_framework.permissions import (
     IsAdminUser,
 )
 from rest_framework.response import Response
-from rest_framework import filters
 from utils.completeness_counter import completeness_count
 
 from forum.pagination import ForumPagination
@@ -101,7 +100,6 @@ class ProfileList(ListCreateAPIView):
     pagination_class = ForumPagination
     filter_backends = [
         django_filters.rest_framework.DjangoFilterBackend,
-        filters.OrderingFilter,
     ]
     filterset_class = ProfileFilter
 

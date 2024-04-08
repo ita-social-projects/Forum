@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Badge } from 'antd';
-import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { PropTypes } from 'prop-types';
 import classNames from 'classnames';
 import useSWRMutation from 'swr/mutation';
@@ -10,6 +8,8 @@ import useSWRMutation from 'swr/mutation';
 import { useAuth } from '../../../hooks';
 import DefaultLogo from './DefaultLogo';
 import classes from './TitleInfo.module.css';
+import CategoryBadges from '../../MiniComponents/CategoryBadges';
+import StarForLike from '../../MiniComponents/StarForLike';
 
 function TitleInfo({ isAuthorized, data }) {
   const { user } = useAuth();
@@ -24,7 +24,7 @@ function TitleInfo({ isAuthorized, data }) {
         data.activities && data.activities.length
           ? data.activities.map((activity) => activity.name).join(', ')
           : null,
-      region: data.region_display ? data.region_display : '',
+      regions: data.regions_ukr_display ? data.regions_ukr_display : '',
       categories: data.categories ? data.categories : null,
       isSaved: data.is_saved,
       logo: data.logo_image,
@@ -34,14 +34,13 @@ function TitleInfo({ isAuthorized, data }) {
   const ownProfile = user && user.id === profile.personId;
 
   async function sendRequest(url, { arg: data }) {
-    return axios.post(url, data)
-      .catch(error => {
-        if (error.response && error.response.status === 403) {
-          console.error('Own company cannot be added to the saved list.');
-        }
-        console.error(error.response ? error.response.data : error.message);
-      });
-    }
+    return axios.post(url, data).catch((error) => {
+      if (error.response && error.response.status === 403) {
+        console.error('Own company cannot be added to the saved list.');
+      }
+      console.error(error.response ? error.response.data : error.message);
+    });
+  }
 
   const { trigger } = useSWRMutation(
     `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
@@ -65,47 +64,6 @@ function TitleInfo({ isAuthorized, data }) {
 
   const navigateToEditProfile = () => {
     navigate('/profile/user-info');
-  };
-
-  const filledStar = (
-    <StarFilled
-      style={{ color: '#FFD800', fontSize: '24px' }}
-      onClick={handleClick}
-    />
-  );
-  const outlinedStar = (
-    <StarOutlined
-      style={{ color: '#FFD800', fontSize: '24px' }}
-      onClick={handleClick}
-    />
-  );
-
-  const getStarVisibility = () => {
-    if (isAuthorized) {
-      return isSaved ? filledStar : outlinedStar;
-    }
-  };
-
-  const CategoryBadges = ({ categories }) => {
-    return (
-      <>
-        {categories
-          ? categories.map((category) => (
-              <Badge
-                key={category.id}
-                size="medium"
-                count={category.name.toUpperCase()}
-                style={{
-                  backgroundColor: '#1F9A7C',
-                  fontWeight: 600,
-                  fontFamily: 'Inter',
-                  fontSize: 10,
-                }}
-              />
-            ))
-          : ''}
-      </>
-    );
   };
 
   return (
@@ -134,7 +92,7 @@ function TitleInfo({ isAuthorized, data }) {
           </div>
         </div>
         <div className={classes['title-block__company_region']}>
-          {profile.region}
+          {profile.regions}
         </div>
       </div>
       {isAuthorized ? (
@@ -154,7 +112,11 @@ function TitleInfo({ isAuthorized, data }) {
               >
                 {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
               </span>
-              {getStarVisibility()}
+              <StarForLike
+                isSaved={isSaved}
+                isAuthorized={isAuthorized}
+                ownProfile={ownProfile}
+              ></StarForLike>
             </button>
           )}
           {ownProfile && (

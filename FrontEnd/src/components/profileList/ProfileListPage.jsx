@@ -33,13 +33,13 @@ export default function ProfileListPage({ isAuthorized }) {
     setCurrentPage(1);
   }, [filter]);
 
-  const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&page=${currentPage}`;
+  const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&ordering=name&page=${currentPage}`;
 
   const urlForSaved = `${
     process.env.REACT_APP_BASE_API_URL
   }/api/profiles/?${profileFilter}${
     filterSaved ? '&is_saved=True' : ''
-  }&page=${currentPage}`;
+  }&ordering=-saved_at&page=${currentPage}`;
 
   async function fetcher(url) {
     return axios.get(url)

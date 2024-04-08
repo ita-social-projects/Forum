@@ -17,7 +17,7 @@ const MainCompanies = ({ isAuthorized }) => {
   };
 
   const { data: companylist } = useSWR(
-    `${baseUrl}/api/profiles/?new_members=-completeness,-created_at`,
+    `${baseUrl}/api/profiles/?ordering=-completeness,-created_at`,
     fetcher
   );
 
@@ -40,10 +40,10 @@ const MainCompanies = ({ isAuthorized }) => {
 
   return (
     <div className={styles['new-companies-main']}>
-      <div className={styles['new-companies']}>
-        <div className={styles['new-companies-main__header']}>
+      <div className={styles['new-companies-main__header']}>
+        <h2 className={styles['new-companies-main__title']}>
           Нові учасники
-        </div>
+        </h2>
       </div>
       <div className={styles['new-companies-block']}>
         <div className={styles['row']}>

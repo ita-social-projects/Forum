@@ -28,7 +28,7 @@ export function Search({ isAuthorized }) {
   };
 
   const { data: companylist, error } = useSWR(
-    `${servedAddress}/api/search/?name=${searchTerm}`,
+    `${servedAddress}/api/search/?name=${searchTerm}&ordering=name`,
     fetcher
   );
 

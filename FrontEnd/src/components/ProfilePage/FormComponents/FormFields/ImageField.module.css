@@ -1,7 +1,7 @@
 .fields__column {
     display: flex;
     width: 530px;
-    padding-bottom: 5px;
+    padding-top: 10px;
     flex-direction: column;
     align-items: flex-start;
 }

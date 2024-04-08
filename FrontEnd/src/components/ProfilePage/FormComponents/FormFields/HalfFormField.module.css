@@ -54,12 +54,12 @@
 .fields__field--input {
     display: flex;
     height: 22px;
-    padding: 5px 12px;
+    padding: 4px 12px;
     align-items: center;
     gap: 4px;
     flex: 1 0 0;
     border-radius: 2px;
-    border: 1px solid var(--neutral-5, #D9D9D9);
+    border: none;
     background: var(--main-white, #FFF);
 }
 

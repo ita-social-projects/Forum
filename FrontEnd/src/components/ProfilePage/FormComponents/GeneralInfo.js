@@ -14,7 +14,6 @@ import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
-import OneSelectChip from './FormFields/OneSelectChip';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
 
@@ -23,7 +22,7 @@ const LABELS = {
     'is_fop': 'ФОП',
     'official_name': 'Юридична назва компанії',
     'identifier': 'ЄДРПОУ / ІПН',
-    'region': 'Регіон(и)',
+    'regions': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
     'banner_image': 'Зображення для банера',
@@ -78,7 +77,7 @@ const GeneralInfo = (props) => {
         'official_name': {defaultValue: mainProfile?.official_name ?? null},
         'edrpou': {defaultValue: mainProfile?.edrpou ?? ''},
         'ipn': {defaultValue: mainProfile?.ipn ?? ''},
-        'region': {defaultValue: mainProfile?.region ?? null},
+        'regions': {defaultValue: mainProfile?.regions ?? [], type: 'array'},
         'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
         'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
         'banner_image': {defaultValue: mainProfile?.banner_image ?? null},
@@ -133,10 +132,16 @@ const GeneralInfo = (props) => {
         });
     };
 
-    const onUpdateOneSelectField = e => {
-        const selectedRegion = fetchedRegions.find((el) => el.value === e.target.value);
+    const onUpdateRegions = e => {
+        let selectedRegions = [];
+        for (let region of e) {
+            let item = fetchedRegions.find((el) => el.name_ukr === region);
+            if (item) {
+                selectedRegions.push({id: item.id, name_eng: item.name_eng, name_ukr: region});
+            }
+        }
         setProfile((prevState) => {
-            return { ...prevState, [e.target.name]: selectedRegion.key };
+            return { ...prevState, ['regions']: selectedRegions };
         });
     };
 
@@ -190,32 +195,30 @@ const GeneralInfo = (props) => {
             });
     };
 
-    const onUpdateSelectField = e => {
-        const selectName = e.target.name;
-
-        if (selectName === 'activities') {
-            let selectedActivities = [];
-            for (let activity of e.target.value) {
-                let item = fetchedActivities.find((el) => el.name === activity);
-                if (item) {
-                    selectedActivities.push({ id: item.id, name: activity });
-                }
+    const onUpdateActivities = e => {
+        let selectedActivities = [];
+        for (let activity of e) {
+            let item = fetchedActivities.find((el) => el.name === activity);
+            if (item) {
+                selectedActivities.push({ id: item.id, name: activity });
             }
-            setProfile((prevState) => {
-                return { ...prevState, [selectName]: selectedActivities };
-            });
-        } else {
-            let selectedCategories = [];
-            for (let category of e.target.value) {
-                let item = fetchedCategories.find((el) => el.name === category);
-                if (item) {
-                    selectedCategories.push({ id: item.id, name: category });
-                }
-            }
-            setProfile((prevState) => {
-                return { ...prevState, [selectName]: selectedCategories };
-            });
         }
+        setProfile((prevState) => {
+            return { ...prevState, ['activities']: selectedActivities };
+        });
+    };
+
+    const onUpdateCategories = e => {
+        let selectedCategories = [];
+        for (let category of e) {
+            let item = fetchedCategories.find((el) => el.name === category);
+            if (item) {
+                selectedCategories.push({ id: item.id, name: category });
+            }
+        }
+        setProfile((prevState) => {
+            return { ...prevState, ['categories']: selectedCategories };
+        });
     };
 
     const uploadImage = async (url, imageKey, image) => {
@@ -314,7 +317,7 @@ const GeneralInfo = (props) => {
                     official_name: profile.official_name,
                     edrpou: profile.edrpou,
                     ipn: profile.ipn,
-                    region: profile.region,
+                    regions: profile.regions.map(obj => obj.id),
                     common_info: profile.common_info,
                     is_startup: profile.is_startup,
                     is_registered: profile.is_registered,
@@ -351,10 +354,13 @@ const GeneralInfo = (props) => {
                             />
                             <div className={css['fop-field']}>
                                 <CheckBoxField
-                                    fop_field={true}
-                                    name="is_fop"
-                                    value={profile.is_fop}
-                                    updateHandler={onChangeCheckboxFop}
+                                    fopProps={{
+                                        fop_field: true,
+                                        name: 'is_fop',
+                                        value: profile.is_fop,
+                                        updateHandler: onChangeCheckboxFop,
+                                    }}
+
                                 />
                             </div>
                         </div>
@@ -379,14 +385,13 @@ const GeneralInfo = (props) => {
                                 ?
                                 <Loader />
                                 :
-                                <OneSelectChip
-                                    name="region"
+                                <MultipleSelectChip
+                                    name="regions"
                                     options={fetchedRegions}
-                                    label={LABELS.region}
-                                    updateHandler={onUpdateOneSelectField}
+                                    label={LABELS.regions}
+                                    updateHandler={onUpdateRegions}
                                     requredField={false}
-                                    defaultValue="Оберіть"
-                                    value={fetchedRegions.find((el) => el.key === profile.region)?.value ?? ''}
+                                    value={profile.regions.map(obj => obj.name_ukr) ?? ''}
                                 />
                             }
                         </div>
@@ -399,10 +404,9 @@ const GeneralInfo = (props) => {
                                     name="activities"
                                     options={fetchedActivities}
                                     label={LABELS.activities}
-                                    updateHandler={onUpdateSelectField}
+                                    updateHandler={onUpdateActivities}
                                     requredField={true}
                                     value={profile.activities.map(obj => obj.name) ?? ''}
-                                    defaultValue="Оберіть"
                                     error={formStateErr['activities']['error']
                                         ?
                                         formStateErr['activities']['message']
@@ -418,10 +422,9 @@ const GeneralInfo = (props) => {
                                     name="categories"
                                     options={fetchedCategories}
                                     label={LABELS.categories}
-                                    updateHandler={onUpdateSelectField}
+                                    updateHandler={onUpdateCategories}
                                     requredField={true}
                                     value={profile.categories.map(obj => obj.name) ?? ''}
-                                    defaultValue="Оберіть"
                                     error={formStateErr['categories']['error']
                                         ?
                                         formStateErr['categories']['message']
@@ -461,14 +464,16 @@ const GeneralInfo = (props) => {
                             maxLength={TEXT_AREA_MAX_LENGTH}
                         />
                         <CheckBoxField
-                            name="companyType"
-                            nameRegister="is_registered"
-                            valueRegister={profile.is_registered}
-                            nameStartup="is_startup"
-                            valueStartup={profile.is_startup}
-                            updateHandler={onChangeCheckbox}
-                            error={companyTypeError}
-                            requredField={true}
+                            companyProps={{
+                                name: 'companyType',
+                                nameRegister: 'is_registered',
+                                valueRegister: profile.is_registered,
+                                nameStartup: 'is_startup',
+                                valueStartup: profile.is_startup,
+                                updateHandler: onChangeCheckbox,
+                                error: companyTypeError,
+                                requredField: true,
+                            }}
                         />
                     </div>
                 </form>

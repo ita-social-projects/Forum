@@ -11,6 +11,7 @@ from profiles.factories import (
 )
 from profiles.models import Profile
 
+from utils.unittest_helper import utc_datetime
 from utils.dump_response import dump  # noqa
 
 
@@ -119,7 +120,7 @@ class TestCompanyOrder(APITestCase):
             person=self.kyiv_user,
             completeness=2,
         )
-        self.company_kyiv.created_at = "2023-12-01"
+        self.company_kyiv.created_at = utc_datetime(2023, 12, 1)
         self.company_kyiv.save()
 
         self.company_dnipro = ProfileStartupFactory(
@@ -127,7 +128,7 @@ class TestCompanyOrder(APITestCase):
             person=self.dnipro_user,
             completeness=2,
         )
-        self.company_dnipro.created_at = "2023-12-02"
+        self.company_dnipro.created_at = utc_datetime(2023, 12, 2)
         self.company_dnipro.save()
 
         self.company_kharkiv = ProfileStartupFactory(
@@ -135,7 +136,7 @@ class TestCompanyOrder(APITestCase):
             person=self.kharkiv_user,
             completeness=1,
         )
-        self.company_kharkiv.created_at = "2023-12-03"
+        self.company_kharkiv.created_at = utc_datetime(2023, 12, 3)
         self.company_kharkiv.save()
 
         self.company_chernigiv = ProfileStartupFactory(
@@ -143,7 +144,7 @@ class TestCompanyOrder(APITestCase):
             person=self.chernigiv_user,
             completeness=1,
         )
-        self.company_chernigiv.created_at = "2023-12-04"
+        self.company_chernigiv.created_at = utc_datetime(2023, 12, 4)
         self.company_chernigiv.save()
 
         self.company_kirovohrad = ProfileCompanyFactory(
@@ -151,7 +152,7 @@ class TestCompanyOrder(APITestCase):
             person=self.kirovohrad_user,
             completeness=3,
         )
-        self.company_kirovohrad.created_at = "2023-12-05"
+        self.company_kirovohrad.created_at = utc_datetime(2023, 12, 5)
         self.company_kirovohrad.save()
 
     def tearDown(self) -> None:
@@ -159,7 +160,7 @@ class TestCompanyOrder(APITestCase):
 
     def test_get_less_companies(self):
         response = self.client.get(
-            path="/api/profiles/?new_members=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at"
         )
         names_from_response = [
             prof["name"] for prof in response.data["results"]
@@ -180,10 +181,10 @@ class TestCompanyOrder(APITestCase):
             person=self.synelnicovo_user,
             completeness=5,
         )
-        self.company_synelnicovo.created_at = "2023-12-07"
+        self.company_synelnicovo.created_at = utc_datetime(2023, 12, 7)
         self.company_synelnicovo.save()
         response = self.client.get(
-            path="/api/profiles/?new_members=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at"
         )
         self.assertEqual(200, response.status_code)
         names_from_response = [
@@ -212,7 +213,7 @@ class TestCompanyOrder(APITestCase):
             person=self.mykolaiv_user,
             completeness=3,
         )
-        self.company_mykolaiv.created_at = "2023-12-06"
+        self.company_mykolaiv.created_at = utc_datetime(2023, 12, 6)
         self.company_mykolaiv.save()
 
         self.company_odesa = ProfileStartupFactory(
@@ -220,11 +221,11 @@ class TestCompanyOrder(APITestCase):
             person=self.odesa_user,
             completeness=5,
         )
-        self.company_odesa.created_at = "2023-12-07"
+        self.company_odesa.created_at = utc_datetime(2023, 12, 7)
         self.company_odesa.save()
 
         response = self.client.get(
-            path="/api/profiles/?new_members=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at"
         )
         names_from_response = [
             prof["name"] for prof in response.data["results"]
@@ -238,6 +239,6 @@ class TestCompanyOrder(APITestCase):
         self.assertEqual(1, response.data["current"])
         self.assertEqual(2, response.data["total_pages"])
         self.assertEqual(
-            "http://testserver/api/profiles/?new_members=-completeness%2C-created_at&page=2",
+            "http://testserver/api/profiles/?ordering=-completeness%2C-created_at&page=2",
             response.data["next"],
         )
