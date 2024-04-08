@@ -5,7 +5,6 @@ import axios from 'axios';
 import { Tooltip } from 'antd';
 import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
-import { validateCompanyName, validateName, validateSurname } from './FieldValidation';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
 import {
@@ -117,7 +116,10 @@ export function SignUpFormContentComponent(props) {
               </label>
             </div>
             <div className={styles['signup-form__field']}>
-              <Tooltip title={validateCompanyName(getValues('companyName'))}
+              <Tooltip
+                title={!COMPANY_NAME_PATTERN.test(getValues('companyName')) &&
+                'Назва повинна містити від 2 до 100 символів'}
+                trigger="focus"
                 pointAtCenter={true}>
                 <input
                   className={styles['signup-form__input']}
@@ -254,7 +256,9 @@ export function SignUpFormContentComponent(props) {
               </label>
             </div>
             <div className={styles['signup-form__field']}>
-            <Tooltip title={validateSurname(getValues('surname'))}
+            <Tooltip title={!NAME_SURNAME_PATTERN.test(getValues('surname')) &&
+                'Прізвище повинне містити від 2 до 50 символів'}
+                trigger="focus"
                 pointAtCenter={true}>
               <input
                 className={styles['signup-form__input']}
@@ -281,7 +285,9 @@ export function SignUpFormContentComponent(props) {
               <label className={styles['signup-form__label--text']}>Ім‘я</label>
             </div>
             <div className={styles['signup-form__field']}>
-            <Tooltip title={validateName(getValues('name'))}
+            <Tooltip title={!NAME_SURNAME_PATTERN.test(getValues('name')) &&
+                'Ім‘я повинне містити від 2 до 50 символів'}
+                trigger="focus"
                 pointAtCenter={true}>
               <input
                 className={styles['signup-form__input']}
