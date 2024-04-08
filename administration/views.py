@@ -45,7 +45,7 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
 
     permission_classes = [IsStaffUser]
     serializer_class = AdminUserDetailSerializer
-    queryset = CustomUser.objects.all()
+    queryset = CustomUser.objects.all().select_related("profile")
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -63,7 +63,12 @@ class ProfilesListView(ListCreateAPIView):
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminCompanyListSerializer
-    queryset = Profile.objects.all().order_by("id")
+    queryset = (
+        Profile.objects.all()
+        .select_related("person")
+        .prefetch_related("regions", "categories", "activities")
+        .order_by("id")
+    )
 
 
 class ProfileDetailView(RetrieveUpdateDestroyAPIView):
@@ -73,4 +78,8 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
 
     permission_classes = [IsStaffUser]
     serializer_class = AdminCompanyDetailSerializer
-    queryset = Profile.objects.all()
+    queryset = (
+        Profile.objects.all()
+        .select_related("person")
+        .prefetch_related("regions", "categories", "activities")
+    )
