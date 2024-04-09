@@ -1,12 +1,9 @@
-from rest_framework import status
 from rest_framework.test import APITestCase
 
 from authentication.factories import UserFactory
 from profiles.factories import (
     ProfileStartupFactory,
     ProfileCompanyFactory,
-    ActivityFactory,
-    RegionFactory,
 )
 
 from utils.dump_response import dump  # noqa
