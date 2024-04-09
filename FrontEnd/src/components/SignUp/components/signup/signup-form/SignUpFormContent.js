@@ -2,6 +2,7 @@ import React, { useEffect, useState ,  Suspense} from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Tooltip } from 'antd';
 import EyeInvisible from '../../../../authorization/EyeInvisible';
 import EyeVisible from '../../../../authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
@@ -115,17 +116,23 @@ export function SignUpFormContentComponent(props) {
               </label>
             </div>
             <div className={styles['signup-form__field']}>
-              <input
-                className={styles['signup-form__input']}
-                type="text"
-                placeholder="Назва компанії"
-                {...register('companyName', {
-                  required: errorMessageTemplates.required,
-                  pattern: {
-                    value: COMPANY_NAME_PATTERN,
-                  },
-                })}
-              />
+              <Tooltip
+                title={!COMPANY_NAME_PATTERN.test(getValues('companyName')) &&
+                'Назва повинна містити від 2 до 100 символів'}
+                trigger="focus"
+                pointAtCenter={true}>
+                <input
+                  className={styles['signup-form__input']}
+                  type="text"
+                  placeholder="Назва компанії"
+                  {...register('companyName', {
+                    required: errorMessageTemplates.required,
+                    pattern: {
+                      value: COMPANY_NAME_PATTERN,
+                    },
+                  })}
+                />
+              </Tooltip>
             </div>
             <div className={styles['signup-form__error']}>
               {errors.companyName && errors.companyName.message}
@@ -141,6 +148,8 @@ export function SignUpFormContentComponent(props) {
               </label>
             </div>
             <div className={styles['signup-form__field']}>
+            <Tooltip title="Приклад електронної пошти logginname@example.com"
+                pointAtCenter={true}>
               <input
                 className={styles['signup-form__input']}
                 placeholder="Електронна пошта"
@@ -153,6 +162,7 @@ export function SignUpFormContentComponent(props) {
                   },
                 })}
               />
+            </Tooltip>
             </div>
             <div className={styles['signup-form__error']}>
               {errors.email && errors.email.message}
@@ -246,6 +256,10 @@ export function SignUpFormContentComponent(props) {
               </label>
             </div>
             <div className={styles['signup-form__field']}>
+            <Tooltip title={!NAME_SURNAME_PATTERN.test(getValues('surname')) &&
+                'Прізвище повинне містити від 2 до 50 символів'}
+                trigger="focus"
+                pointAtCenter={true}>
               <input
                 className={styles['signup-form__input']}
                 type="text"
@@ -257,6 +271,7 @@ export function SignUpFormContentComponent(props) {
                 },
                 })}
               />
+            </Tooltip>
             </div>
             <div className={styles['signup-form__error']}>
               {errors.surname && errors.surname.message}
@@ -270,6 +285,10 @@ export function SignUpFormContentComponent(props) {
               <label className={styles['signup-form__label--text']}>Ім‘я</label>
             </div>
             <div className={styles['signup-form__field']}>
+            <Tooltip title={!NAME_SURNAME_PATTERN.test(getValues('name')) &&
+                'Ім‘я повинне містити від 2 до 50 символів'}
+                trigger="focus"
+                pointAtCenter={true}>
               <input
                 className={styles['signup-form__input']}
                 type="text"
@@ -281,6 +300,7 @@ export function SignUpFormContentComponent(props) {
                 },
                 })}
               />
+            </Tooltip>
             </div>
             <div className={styles['signup-form__error']}>
               {errors.name && errors.name.message}
