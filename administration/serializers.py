@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from authentication.models import CustomUser
 from profiles.models import Profile
-from django.contrib.auth import get_user_model
-from djoser.serializers import UserSerializer
 
 
 class AdminUserListSerializer(serializers.ModelSerializer):
@@ -47,7 +45,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "is_startup",
             "person",
             "person_position",
-            "region",
+            "regions",
             "official_name",
             "phone",
             "edrpou",
@@ -76,7 +74,7 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
             "person",
             "person_position",
             "official_name",
-            "region",
+            "regions",
             "common_info",
             "phone",
             "edrpou",
