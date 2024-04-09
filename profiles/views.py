@@ -7,7 +7,6 @@ from rest_framework.generics import (
     ListCreateAPIView,
     DestroyAPIView,
     RetrieveUpdateDestroyAPIView,
-    ListAPIView,
 )
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
@@ -122,7 +121,11 @@ class ProfileList(ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.request.query_params.get("userid")
-        queryset = Profile.objects.active_only().order_by("id")
+        queryset = (
+            Profile.objects.active_only()
+            .prefetch_related("regions", "categories", "activities")
+            .order_by("id")
+        )
         if user_id:
             try:
                 return queryset.filter(person_id=user_id)
@@ -146,7 +149,11 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         If user is authenticated, he can get sensitive data via query param 'with_contacts'.
     """
 
-    queryset = Profile.objects.active_only()
+    queryset = (
+        Profile.objects.active_only()
+        .select_related("person")
+        .prefetch_related("regions", "categories", "activities")
+    )
     permission_classes = [UserIsProfileOwnerOrReadOnly]
 
     def get_serializer_context(self):
@@ -164,7 +171,11 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         get_contacts = self.request.query_params.get("with_contacts")
 
         profile_pk = self.kwargs.get("pk")
-        profile_instance = Profile.objects.filter(id=profile_pk).first()
+        profile_instance = (
+            Profile.objects.select_related("person")
+            .filter(id=profile_pk)
+            .first()
+        )
         user_pk = self.request.user.id
 
         if self.request.method == "GET":
@@ -203,7 +214,7 @@ class ProfileViewCreate(CreateAPIView):
     @cached_property
     def _profile(self):
         return get_object_or_404(
-            Profile.objects.filter(is_deleted=False),
+            Profile.objects.active_only(),
             pk=self.kwargs["profile_id"],
         )
 
