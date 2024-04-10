@@ -57,10 +57,10 @@ function PhoneEmail ({ profileId, personId }) {
                 {isContactsShown || (user && user.id === personId) ? (
                   <div className={classes['data-block__field--contacts']}>
                     <p className={classes['contact-container']}>
-                      <div>{profileData.phone}</div><div onClick={() => copyContent('phone')}>{ isPhoneCopied  ? <CheckOutlined style={{color: '#46a310'}}/> : <CopyOutlined style={{cursor: 'pointer'}}/>}</div>
+                      <span>{profileData.phone}</span><span onClick={() => copyContent('phone')}>{ isPhoneCopied  ? <CheckOutlined style={{color: '#46a310'}}/> : <CopyOutlined style={{cursor: 'pointer'}}/>}</span>
                     </p>
                     <p className={classes['contact-container']}>
-                      <div>{profileData.email}</div> <div onClick={() => copyContent('email')}>{ isEmailCopied  ? <CheckOutlined style={{color: '#46a310'}}/> : <CopyOutlined style={{cursor: 'pointer'}}/> }</div>
+                      <span>{profileData.email}</span> <span onClick={() => copyContent('email')}>{ isEmailCopied  ? <CheckOutlined style={{color: '#46a310'}}/> : <CopyOutlined style={{cursor: 'pointer'}}/> }</span>
                     </p>
                   </div>
                   ) : (
