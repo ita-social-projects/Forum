@@ -4,10 +4,24 @@ import useSWR from 'swr';
 import { useAuth } from '../../../hooks';
 import { PropTypes } from 'prop-types';
 import classes from './PhoneEmail.module.css';
+import { CheckOutlined, CopyOutlined} from '@ant-design/icons';
 
 function PhoneEmail ({ profileId, personId }) {
     const [isContactsShown, setContactsShown] = useState(false);
+    const [isPhoneCopied, setIsPhoneCopied] = useState(false);
+    const [isEmailCopied, setIsEmailCopied] = useState(false);
     const { user } = useAuth();
+
+    const copyContent = key => {
+      navigator.clipboard.writeText(profileData[key]);
+      if(key === 'phone'){
+        setIsPhoneCopied(true);
+        setTimeout(() => setIsPhoneCopied(false), 4000);
+      } else {
+        setIsEmailCopied(true);
+        setTimeout(() => setIsEmailCopied(false), 4000);
+      }
+    };
 
     const { data: profileData } = useSWR(
       `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,
@@ -42,8 +56,12 @@ function PhoneEmail ({ profileId, personId }) {
                 <p className={classes['data-block__field--title']}>Контакти</p>
                 {isContactsShown || (user && user.id === personId) ? (
                   <div className={classes['data-block__field--contacts']}>
-                    <p>{profileData.phone}</p>
-                    <p>{profileData.email}</p>
+                    <p className={classes['contact-container']}>
+                      <div>{profileData.phone}</div><div onClick={() => copyContent('phone')}>{ isPhoneCopied  ? <CheckOutlined style={{color: '#46a310'}}/> : <CopyOutlined style={{cursor: 'pointer'}}/>}</div>
+                    </p>
+                    <p className={classes['contact-container']}>
+                      <div>{profileData.email}</div> <div onClick={() => copyContent('email')}>{ isEmailCopied  ? <CheckOutlined style={{color: '#46a310'}}/> : <CopyOutlined style={{cursor: 'pointer'}}/> }</div>
+                    </p>
                   </div>
                   ) : (
                   <button type="button" onClick={handleContactsClick} className={classes['data-block__field--show--contacts']}>
