@@ -403,7 +403,7 @@ export function SignUpFormContentComponent(props) {
                       />
                     </div>
                     <label className={styles['representative__label']}>
-                      ФОП
+                      Фізична особа-підприємець
                     </label>
                   </div>
                 </div>
