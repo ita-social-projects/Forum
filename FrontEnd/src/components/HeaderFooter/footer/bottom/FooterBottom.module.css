@@ -12,7 +12,7 @@
     color: var(--wf-base-white, #FFF);
     font-feature-settings: 'calt' off;
 
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

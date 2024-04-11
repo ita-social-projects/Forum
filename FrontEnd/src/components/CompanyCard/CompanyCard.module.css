@@ -72,7 +72,7 @@
 .company-card__category-text {
   color: var(--companies-card-lover-text);
   text-align: center;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
@@ -84,7 +84,7 @@
   width: 328px;
   height: 48px;
   color: var(--text-color);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -107,7 +107,7 @@
   height: 20px;
   color: var(--companies-card-address);
   font-feature-settings: 'calt' off;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -132,7 +132,7 @@
   color: var(--main_light-color);
   text-align: center;
   font-feature-settings: 'calt' off;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 10px;
   font-style: normal;
   font-weight: 600;

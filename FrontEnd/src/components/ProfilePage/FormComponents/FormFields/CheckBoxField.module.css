@@ -15,7 +15,7 @@
 .representative__label--required {
     color: var(--dust-red-5, #FF4D4F);
     text-align: right;
-    font-family: SimSong;
+    font-family: var(--font-messages);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -23,7 +23,7 @@
 }
 
 .representative__label--text {
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
@@ -60,7 +60,7 @@
     color: var(--main-black-90, #292E32);
     font-feature-settings: 'calt' off;
     text-align: start;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -76,7 +76,7 @@
     align-self: stretch;
     flex: 1 0 0;
     color: var(--red-red-100, #F34444);
-    font-family: Roboto;
+    font-family: var(--font-error);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

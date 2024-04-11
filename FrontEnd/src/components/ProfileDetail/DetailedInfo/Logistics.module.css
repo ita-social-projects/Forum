@@ -33,7 +33,7 @@
 .logistics__title--text {
     width: 742px;
     color: var(--main-grey-90, #25292C);
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -55,7 +55,7 @@
     width: 776px;
     color: var(--main-grey-90, #25292C);
     font-feature-settings: 'calt' off;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

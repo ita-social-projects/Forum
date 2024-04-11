@@ -35,7 +35,7 @@
 .title-block__activity {
   color: var(--main-grey-90, #25292c);
   font-feature-settings: 'calt' off;
-  font-family: Inter;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -56,7 +56,7 @@
   min-width: fit-content;
   gap: 4px;
   color: var(--main-grey-90, #25292c);
-  font-family: Inter;
+  font-family: var(--font-main);
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -74,7 +74,7 @@
 .title-block__company_region {
   color: var(--main-black-90, #292e32);
   font-feature-settings: 'calt' off;
-  font-family: Inter;
+  font-family: var(--font-main);
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -108,7 +108,7 @@
   color: var(--primary-green-80, #1f9a7c);
   text-align: center;
   font-feature-settings: 'calt' off;
-  font-family: Inter;
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;

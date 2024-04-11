@@ -24,7 +24,7 @@
 
 .infolink {
     color: #4F585F;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -34,7 +34,7 @@
 }
 
 .infolink__active {
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-weight: 600;
     color: #000000;
     text-decoration: none;
@@ -43,7 +43,7 @@
 .infolink__disabled {
     color: var(--main-grey-50, #8D959C);
     font-feature-settings: 'calt' off;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

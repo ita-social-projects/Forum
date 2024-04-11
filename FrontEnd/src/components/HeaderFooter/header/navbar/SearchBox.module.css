@@ -56,7 +56,7 @@
 .header-search-form__input::placeholder {
   color: rgba(0, 0, 0, 0.25);
   font-feature-settings: 'calt' off;
-  font-family: Inter;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

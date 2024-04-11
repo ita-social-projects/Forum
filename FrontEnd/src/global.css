@@ -6,9 +6,20 @@
     url('/public/fonts/Inter-Regular.ttf') format('truetype');
 }
 
-* {
-  margin: 0;
-  padding: 0;
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'),
+    url('/public/fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Geologica';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Geologica-VariableFont'), local('Geologica-VariableFont'),
+    url('/public/fonts/Geologica-VariableFont.ttf') format('truetype');
 }
 
 :root {
@@ -38,10 +49,17 @@
   --main-button-color: #1F9A7C;
   --light-button-color: #FFFFFF;
 
-  scroll-behavior: smooth;
-  font-family: "Inter", sans-serif;
-}
+  /* fonts */
+  --font-main: 'Inter', sans-serif;
+  --font-messages: 'Roboto', sans-serif;
+  --font-error: 'Roboto', sans-serif;
+  --font-logo: 'Geologica', sans-serif;
 
-a {
-  text-decoration: none;
+  --toastify-color-error: var(--Dust-Red-1, #FFF1F0);
+  --toastify-color-success: #F1FFF7;
+  --toastify-font-family: var(--font-main);
+  --toastify-toast-width: 395px;
+  --toastify-toast-min-height: 22px;
+  --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  --toastify-text-color-error: var(--character-title-85, rgba(0, 0, 0, 0.85));
 }

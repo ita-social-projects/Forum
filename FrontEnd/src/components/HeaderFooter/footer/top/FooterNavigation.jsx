@@ -77,12 +77,12 @@ function FooterNavigation() {
       </div>
       <div className={css['navigation-content-section']}>
         {CONTACTS.map((element, index) => (
-          <label
+          <p
             key={index}
             className={css['navigation-content-section-service__text']}
           >
             {element}
-          </label>
+          </p>
         ))}
       </div>
     </div>
