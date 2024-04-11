@@ -52,4 +52,11 @@ networks:
 
 volumes:
   static:
+    external:
+      name: forum_static
+#    external: true
+
   media:
+    external:
+      name: forum_media
+#    external: true
