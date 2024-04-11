@@ -16,12 +16,13 @@ import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
+import validateEdrpouKey from '../../../utils/validateEdrpouKey';
 
 const LABELS = {
     'name': 'Назва компанії',
     'official_name': 'Юридична назва компанії',
     'edrpou': 'ЄДРПОУ',
-    'ipn': 'ІПН',
+    'ipn': 'РНОКПП',
     'regions': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
@@ -116,7 +117,7 @@ const GeneralInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
-        if (profile.edrpou && !EDRPOU_PATTERN.test(profile.edrpou)) {
+        if (profile.edrpou && (!EDRPOU_PATTERN.test(profile.edrpou) || !validateEdrpouKey(profile.edrpou))){
             isValid = false;
         }
         if (profile.ipn && !IPN_PATTRN.test(profile.ipn)) {
@@ -153,7 +154,7 @@ const GeneralInfo = (props) => {
     const onUpdateIpnField = (e) => {
       const ipnValue = e.target.value;
       if (ipnValue && !IPN_PATTRN.test(ipnValue)) {
-        setIpnFieldError('ІПН має містити 10 цифр');
+        setIpnFieldError('РНОКПП має містити 10 цифр');
       } else {
         setIpnFieldError(null);
       }
@@ -166,6 +167,8 @@ const GeneralInfo = (props) => {
       const edrpouValue = e.target.value;
       if (edrpouValue && !EDRPOU_PATTERN.test(edrpouValue)) {
         setEdrpouFieldError('ЄДРПОУ має містити 8 цифр');
+      } else if (edrpouValue && !validateEdrpouKey(edrpouValue)) {
+        setEdrpouFieldError('Помилковий код ЄДРПОУ');
       } else {
         setEdrpouFieldError(null);
       }
@@ -288,7 +291,7 @@ const GeneralInfo = (props) => {
 
     const errorMessages = {
         'profile with this edrpou already exists.': 'Компанія з таким ЄДРПОУ вже існує',
-        'profile with this ipn already exists.': 'Фізична особа-підприємець з таким ІПН вже існує',
+        'profile with this ipn already exists.': 'Фізична особа-підприємець з таким РНОКПП вже існує',
     };
 
     function handleError(error) {
