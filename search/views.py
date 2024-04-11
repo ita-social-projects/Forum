@@ -3,12 +3,14 @@ import django_filters
 from rest_framework import filters
 
 from profiles.models import Profile, SavedCompany
-from .serializers import CompanySerializers
+from .serializers import CompanySerializers, CompanyAdvancedSerializers
 from search.filters import CompanyFilter
 
 
 class SearchCompanyView(ListAPIView):
-    queryset = Profile.objects.active_only()
+    queryset = Profile.objects.active_only().prefetch_related(
+        "regions", "categories", "activities"
+    )
     serializer_class = CompanySerializers
     filter_backends = [
         django_filters.rest_framework.DjangoFilterBackend,
@@ -27,3 +29,23 @@ class SearchCompanyView(ListAPIView):
             )
             context.update({"saved_companies_pk": saved_companies_pk})
         return context
+
+
+class AdvancedSearchView(ListAPIView):
+    queryset = Profile.objects.active_only().prefetch_related(
+        "regions", "categories", "activities"
+    )
+    serializer_class = CompanyAdvancedSerializers
+    filter_backends = [
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    search_fields = [
+        "name",
+        "official_name",
+        "common_info",
+        "service_info",
+        "product_info",
+    ]
+    ordering_fields = ["name"]
+    ordering = ["name"]
