@@ -176,7 +176,6 @@
 
 .signup-form__error {
   display: flex;
-  padding: 1px 0px;
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;

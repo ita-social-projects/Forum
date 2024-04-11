@@ -35,7 +35,9 @@ export function SignUpFormContentComponent(props) {
     handleSubmit,
     watch,
     getValues,
+    setValue,
     setError,
+    clearErrors,
     formState: { errors, isValid },
   } = useForm({
     mode: 'all',
@@ -60,30 +62,23 @@ export function SignUpFormContentComponent(props) {
     setShowPassword(!showPassword);
   };
 
-  const [isChecked, setIsChecked] = useState({
-    startup: false,
-    company: false,
-  });
-
   const onChangeCheckbox = (event) => {
-    if (event.target.name === 'fop') {
-      setIsChecked({
-        fop: true,
-        yurosoba: false,
-      });
-    } else if (event.target.name === 'yurosoba') {
-      setIsChecked({
-        fop: false,
-        yurosoba: true,
-      });
+    const { name } = event.target;
+    if (name === 'yurosoba') {
+      setValue('fop', false);
+    } else if (name === 'fop') {
+      setValue('yurosoba', false);
+    }
+    if (!getValues('yurosoba') && !getValues('fop')) {
+      setError('businessEntity', { type: 'manual', message: errorMessageTemplates.required });
+    } else {
+      clearErrors('businessEntity');
     }
   };
 
   useEffect(() => {
-    const fopOrYurOsosba = isChecked.fop || isChecked.yurosoba;
-    const formIsValid = fopOrYurOsosba && isValid;
-    setIsValid(formIsValid);
-  }, [isValid, setIsValid, isChecked.fop, isChecked.yurosoba]);
+    setIsValid(isValid);
+  }, [isValid, setIsValid]);
 
   const onSubmit = () => {
 
@@ -97,7 +92,7 @@ export function SignUpFormContentComponent(props) {
         name: getValues('companyName'),
         is_registered: (getValues('representative').indexOf('company') > -1),
         is_startup: (getValues('representative').indexOf('startup') > -1),
-        is_fop: isChecked.fop,
+        is_fop: (getValues('fop').indexOf('fop') > -1),
       },
     };
 
@@ -401,8 +396,10 @@ export function SignUpFormContentComponent(props) {
                       <input
                         type="checkbox"
                         name="yurosoba"
-                        onChange={onChangeCheckbox}
-                        checked={isChecked.yurosoba}
+                        value={'yurosoba'}
+                        {...register('yurosoba', {
+                          onChange: onChangeCheckbox
+                        })}
                       />
                     </div>
                     <label className={styles['representative__label']}>
@@ -418,8 +415,10 @@ export function SignUpFormContentComponent(props) {
                       <input
                         type="checkbox"
                         name="fop"
-                        onChange={onChangeCheckbox}
-                        checked={isChecked.fop}
+                        value={'fop'}
+                        {...register('fop', {
+                          onChange: onChangeCheckbox
+                        })}
                       />
                     </div>
                     <label className={styles['representative__label']}>
