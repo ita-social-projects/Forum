@@ -50,6 +50,8 @@ const ERRORS = {
 const TEXT_AREA_MAX_LENGTH = 2000;
 const BANNER_IMAGE_SIZE = 5 * 1024 * 1024;
 const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
+const IPN_PATTRN = /^\d{10}$/;
+const EDRPOU_PATTERN = /^\d{8}$/;
 
 const fetcher = (...args) => axios.get(...args).then(res => res.data);
 
@@ -114,7 +116,10 @@ const GeneralInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
-        if (profile.edrpou && profile.edrpou.toString().length !== 8) {
+        if (profile.edrpou && !EDRPOU_PATTERN.test(profile.edrpou)) {
+            isValid = false;
+        }
+        if (profile.ipn && !IPN_PATTRN.test(profile.ipn)) {
             isValid = false;
         }
         if (!profile.is_registered && !profile.is_startup) {
@@ -146,25 +151,27 @@ const GeneralInfo = (props) => {
     };
 
     const onUpdateIpnField = (e) => {
-        if (e.target.value && e.target.value.length !== 10) {
-            setIpnFieldError('ІПН має містити 10 символів');
-        } else {
-            setIpnFieldError(null);
-        }
-        setProfile((prevState) => {
-            return { ...prevState, ipn: e.target.value};
-        });
+      const ipnValue = e.target.value;
+      if (ipnValue && !IPN_PATTRN.test(ipnValue)) {
+        setIpnFieldError('ІПН має містити 10 цифр');
+      } else {
+        setIpnFieldError(null);
+      }
+      setProfile((prevState) => {
+        return { ...prevState, ipn: ipnValue };
+      });
     };
 
     const onUpdateEdrpouField = (e) => {
-        if (e.target.value && e.target.value.length !== 8) {
-            setEdrpouFieldError('ЄДРПОУ має містити 8 символів');
-        } else {
-            setEdrpouFieldError(null);
-        }
-        setProfile((prevState) => {
-            return { ...prevState, edrpou: e.target.value, ipn: null };
-        });
+      const edrpouValue = e.target.value;
+      if (edrpouValue && !EDRPOU_PATTERN.test(edrpouValue)) {
+        setEdrpouFieldError('ЄДРПОУ має містити 8 цифр');
+      } else {
+        setEdrpouFieldError(null);
+      }
+      setProfile((prevState) => {
+        return { ...prevState, edrpou: edrpouValue };
+      });
     };
 
     const onChangeCheckbox = (e) => {
@@ -361,6 +368,7 @@ const GeneralInfo = (props) => {
                                     requredField={false}
                                     value={profile.ipn ?? ''}
                                     error={ipnFieldError}
+                                    maxLength={10}
                                 />
                                 :
                                 <HalfFormField
@@ -371,6 +379,7 @@ const GeneralInfo = (props) => {
                                     requredField={false}
                                     value={profile.edrpou ?? ''}
                                     error={edrpouFieldError}
+                                    maxLength={8}
                                 />
                             }
                             {isRegionLoading
@@ -457,7 +466,7 @@ const GeneralInfo = (props) => {
                         />
                         <CheckBoxField
                             name ="companyType"
-                            nameRegister="is_registered'"
+                            nameRegister="is_registered"
                             valueRegister={profile.is_registered}
                             nameStartup="is_startup"
                             valueStartup={profile.is_startup}
@@ -487,6 +496,8 @@ GeneralInfo.propTypes = {
         is_startup: PropTypes.bool,
         categories: PropTypes.array,
         activities: PropTypes.array,
+        banner_image: PropTypes.string,
+        logo_image: PropTypes.string,
     }).isRequired,
     currentFormNameHandler: PropTypes.func,
     curForm: PropTypes.string,
