@@ -23,7 +23,7 @@ const LABELS = {
     'name': 'Назва компанії',
     'official_name': 'Юридична назва компанії',
     'edrpou': 'ЄДРПОУ',
-    'ipn': 'РНОКПП',
+    'rnokpp': 'РНОКПП',
     'regions': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
@@ -52,7 +52,7 @@ const ERRORS = {
 const TEXT_AREA_MAX_LENGTH = 2000;
 const BANNER_IMAGE_SIZE = 5 * 1024 * 1024;
 const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
-const IPN_PATTRN = /^\d{10}$/;
+const RNOKPP_PATTRN = /^\d{10}$/;
 const EDRPOU_PATTERN = /^\d{8}$/;
 
 const fetcher = (...args) => axios.get(...args).then(res => res.data);
@@ -121,7 +121,7 @@ const GeneralInfo = (props) => {
         if (profile.edrpou && (!EDRPOU_PATTERN.test(profile.edrpou) || !validateEdrpouKey(profile.edrpou))){
             isValid = false;
         }
-        if (profile.ipn && (!IPN_PATTRN.test(profile.ipn) || !validateRnokppKey(profile.ipn))) {
+        if (profile.ipn && (!RNOKPP_PATTRN.test(profile.ipn) || !validateRnokppKey(profile.ipn))) {
             isValid = false;
         }
         if (!profile.is_registered && !profile.is_startup) {
@@ -152,17 +152,17 @@ const GeneralInfo = (props) => {
         });
     };
 
-    const onUpdateIpnField = (e) => {
-      const ipnValue = e.target.value;
-      if (ipnValue && !IPN_PATTRN.test(ipnValue)) {
+    const onUpdateRnokppField = (e) => {
+      const rnokppValue = e.target.value;
+      if (rnokppValue && !RNOKPP_PATTRN.test(rnokppValue)) {
         setRnokppFieldError('РНОКПП має містити 10 цифр');
-      } else if (ipnValue && !validateRnokppKey(ipnValue)) {
+      } else if (rnokppValue && !validateRnokppKey(rnokppValue)) {
         setRnokppFieldError('Помилковий РНОКПП');
       } else {
         setRnokppFieldError(null);
       }
       setProfile((prevState) => {
-        return { ...prevState, ipn: ipnValue };
+        return { ...prevState, ipn: rnokppValue };
       });
     };
 
@@ -368,9 +368,9 @@ const GeneralInfo = (props) => {
                             {mainProfile?.is_fop ?
                                 <HalfFormField
                                     inputType="text"
-                                    name="ipn"
-                                    label={LABELS.ipn}
-                                    updateHandler={onUpdateIpnField}
+                                    name="rnokpp"
+                                    label={LABELS.rnokpp}
+                                    updateHandler={onUpdateRnokppField}
                                     requredField={false}
                                     value={profile.ipn ?? ''}
                                     error={rnokppFieldError}
