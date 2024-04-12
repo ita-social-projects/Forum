@@ -20,7 +20,7 @@ const SERVICES_LINKS = [
     },
     {
         title: 'Інші послуги',
-        link: '#'
+        link: '/profiles/otherServices'
     }
 ];
 
