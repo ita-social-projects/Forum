@@ -17,6 +17,7 @@ import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
 import validateEdrpouKey from '../../../utils/validateEdrpouKey';
+import validateRnokppKey from '../../../utils/validateRnokppKey';
 
 const LABELS = {
     'name': 'Назва компанії',
@@ -66,7 +67,7 @@ const GeneralInfo = (props) => {
     const [bannerImageError, setBannerImageError] = useState(null);
     const [logoImageError, setLogoImageError] = useState(null);
     const [edrpouFieldError, setEdrpouFieldError] = useState(null);
-    const [ipnFieldError, setIpnFieldError] = useState(null);
+    const [rnokppFieldError, setRnokppFieldError] = useState(null);
     const [companyTypeError, setCompanyTypeError] = useState(null);
 
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
@@ -120,7 +121,7 @@ const GeneralInfo = (props) => {
         if (profile.edrpou && (!EDRPOU_PATTERN.test(profile.edrpou) || !validateEdrpouKey(profile.edrpou))){
             isValid = false;
         }
-        if (profile.ipn && !IPN_PATTRN.test(profile.ipn)) {
+        if (profile.ipn && (!IPN_PATTRN.test(profile.ipn) || !validateRnokppKey(profile.ipn))) {
             isValid = false;
         }
         if (!profile.is_registered && !profile.is_startup) {
@@ -154,9 +155,11 @@ const GeneralInfo = (props) => {
     const onUpdateIpnField = (e) => {
       const ipnValue = e.target.value;
       if (ipnValue && !IPN_PATTRN.test(ipnValue)) {
-        setIpnFieldError('РНОКПП має містити 10 цифр');
+        setRnokppFieldError('РНОКПП має містити 10 цифр');
+      } else if (ipnValue && !validateRnokppKey(ipnValue)) {
+        setRnokppFieldError('Помилковий РНОКПП');
       } else {
-        setIpnFieldError(null);
+        setRnokppFieldError(null);
       }
       setProfile((prevState) => {
         return { ...prevState, ipn: ipnValue };
@@ -370,7 +373,7 @@ const GeneralInfo = (props) => {
                                     updateHandler={onUpdateIpnField}
                                     requredField={false}
                                     value={profile.ipn ?? ''}
-                                    error={ipnFieldError}
+                                    error={rnokppFieldError}
                                     maxLength={10}
                                 />
                                 :
