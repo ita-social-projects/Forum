@@ -4,79 +4,112 @@ import useSWR from 'swr';
 import { useAuth } from '../../../hooks';
 import { PropTypes } from 'prop-types';
 import classes from './PhoneEmail.module.css';
-import { CheckOutlined, CopyOutlined} from '@ant-design/icons';
+import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
+import { toast, Bounce } from 'react-toastify';
 
-function PhoneEmail ({ profileId, personId }) {
-    const [isContactsShown, setContactsShown] = useState(false);
-    const [isPhoneCopied, setIsPhoneCopied] = useState(false);
-    const [isEmailCopied, setIsEmailCopied] = useState(false);
-    const { user } = useAuth();
+function PhoneEmail({ profileId, personId }) {
+  const [isContactsShown, setContactsShown] = useState(false);
+  const [isPhoneCopied, setIsPhoneCopied] = useState(false);
+  const [isEmailCopied, setIsEmailCopied] = useState(false);
+  const { user } = useAuth();
 
-    const copyContent = key => {
+  const copyContent = (key) => {
+    try {
       navigator.clipboard.writeText(profileData[key]);
-      if(key === 'phone'){
+      if (key === 'phone') {
         setIsPhoneCopied(true);
         setTimeout(() => setIsPhoneCopied(false), 4000);
       } else {
         setIsEmailCopied(true);
         setTimeout(() => setIsEmailCopied(false), 4000);
       }
-    };
+    } catch (error) {
+      toast.error('Інформацію не скопійовано, спробуйте ще раз.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
+    }
+  };
 
-    const { data: profileData } = useSWR(
-      `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,
-      (url) => axios.get(url)
-        .then(res => res.data)
+  const { data: profileData } = useSWR(
+    `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,
+    (url) =>
+      axios
+        .get(url)
+        .then((res) => res.data)
         .catch((error) => {
           console.error('Cannot get profile contact data', error);
         })
-    );
+  );
 
-    const urlViewed = `${process.env.REACT_APP_BASE_API_URL}/api/company-view/${profileId}/`;
+  const urlViewed = `${process.env.REACT_APP_BASE_API_URL}/api/company-view/${profileId}/`;
 
-    async function addToViewed(url) {
-        return axios.post(url);
+  async function addToViewed(url) {
+    return axios.post(url);
+  }
+
+  const handleContactsClick = async () => {
+    setContactsShown(true);
+    try {
+      await addToViewed(urlViewed);
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    const handleContactsClick = async () => {
-        setContactsShown(true);
-        try {
-            await addToViewed(
-                urlViewed
-            );
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    return (
-      <>
-        {profileData && (profileData.phone || profileData.email) ? (
-              <div className={classes['data-block__field']}>
-                <p className={classes['data-block__field--title']}>Контакти</p>
-                {isContactsShown || (user && user.id === personId) ? (
-                  <div className={classes['data-block__field--contacts']}>
-                    <p className={classes['contact-container']}>
-                      <span>{profileData.phone}</span><span onClick={() => copyContent('phone')}>{ isPhoneCopied  ? <CheckOutlined style={{color: '#46a310'}}/> : <CopyOutlined style={{cursor: 'pointer'}}/>}</span>
-                    </p>
-                    <p className={classes['contact-container']}>
-                      <span>{profileData.email}</span> <span onClick={() => copyContent('email')}>{ isEmailCopied  ? <CheckOutlined style={{color: '#46a310'}}/> : <CopyOutlined style={{cursor: 'pointer'}}/> }</span>
-                    </p>
-                  </div>
+  return (
+    <>
+      {profileData && (profileData.phone || profileData.email) ? (
+        <div className={classes['data-block__field']}>
+          <p className={classes['data-block__field--title']}>Контакти</p>
+          {isContactsShown || (user && user.id === personId) ? (
+            <div className={classes['data-block__field--contacts']}>
+              <p className={classes['contact-container']}>
+                <span>{profileData.phone}</span>
+                <span onClick={() => copyContent('phone')}>
+                  {isPhoneCopied ? (
+                    <CheckOutlined style={{ color: '#46a310' }} />
                   ) : (
-                  <button type="button" onClick={handleContactsClick} className={classes['data-block__field--show--contacts']}>
-                    Показати контакти
-                  </button>
-                )}
-              </div>
-        ) : null}
-      </>
-    );
+                    <CopyOutlined style={{ cursor: 'pointer' }} />
+                  )}
+                </span>
+              </p>
+              <p className={classes['contact-container']}>
+                <span>{profileData.email}</span>{' '}
+                <span onClick={() => copyContent('email')}>
+                  {isEmailCopied ? (
+                    <CheckOutlined style={{ color: '#46a310' }} />
+                  ) : (
+                    <CopyOutlined style={{ cursor: 'pointer' }} />
+                  )}
+                </span>
+              </p>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handleContactsClick}
+              className={classes['data-block__field--show--contacts']}
+            >
+              Показати контакти
+            </button>
+          )}
+        </div>
+      ) : null}
+    </>
+  );
 }
 
 export default PhoneEmail;
 
 PhoneEmail.propTypes = {
-    profileId: PropTypes.number.isRequired,
-    personId: PropTypes.number,
-  };
+  profileId: PropTypes.number.isRequired,
+  personId: PropTypes.number,
+};
