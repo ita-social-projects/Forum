@@ -38,9 +38,9 @@ const UserInfo = (props) => {
     // TODO: update default values as new fields added
 
     const fields = {
-        'surname': {defaultValue: user?.surname, context: 'user'},
-        'name': {defaultValue: user?.name, context: 'user'},
-        'person_position': {defaultValue: profile?.person_position},
+        'surname': {defaultValue: user?.surname ?? '', context: 'user'},
+        'name': {defaultValue: user?.name ?? '', context: 'user'},
+        'person_position': {defaultValue: profile?.person_position ?? null},
     };
 
     useEffect(() => {

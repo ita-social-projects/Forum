@@ -76,17 +76,17 @@ const GeneralInfo = (props) => {
 
     const fields = {
         'name': {defaultValue: mainProfile?.name},
-        'official_name': {defaultValue: mainProfile?.official_name},
-        'edrpou': {defaultValue: mainProfile?.edrpou},
-        'ipn': {defaultValue: mainProfile?.ipn },
-        'regions': {defaultValue: mainProfile?.regions, type: 'array'},
-        'categories': {defaultValue: mainProfile?.categories, type: 'array'},
-        'activities': {defaultValue: mainProfile?.activities, type: 'array'},
-        'banner_image': {defaultValue: mainProfile?.banner_image},
-        'logo_image': {defaultValue: mainProfile?.logo_image},
-        'common_info': {defaultValue: mainProfile?.common_info},
-        'is_registered': {defaultValue: mainProfile?.is_registered},
-        'is_startup': {defaultValue: mainProfile?.is_startup},
+        'official_name': {defaultValue: mainProfile?.official_name ?? null},
+        'edrpou': {defaultValue: mainProfile?.edrpou ?? null},
+        'ipn': {defaultValue: mainProfile?.ipn ?? null},
+        'regions': {defaultValue: mainProfile?.regions ?? [], type: 'array'},
+        'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
+        'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
+        'banner_image': {defaultValue: mainProfile?.banner_image ?? null},
+        'logo_image': {defaultValue: mainProfile?.logo_image ?? null},
+        'common_info': {defaultValue: mainProfile?.common_info ?? null},
+        'is_registered': {defaultValue: mainProfile?.is_registered ?? null},
+        'is_startup': {defaultValue: mainProfile?.is_startup ?? null},
     };
 
     useEffect(() => {
