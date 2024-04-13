@@ -25,8 +25,7 @@ const checkFormIsDirty = (fields, userData, profileData) => {
         return !compareArrays(defaultValue, currentValue);
       }
       if (key === 'founded') {
-        if (((defaultValue && currentValue !== null) && (defaultValue.toString() !== currentValue.toString())) ||
-        (defaultValue === null && currentValue !== null)) {
+        if (((defaultValue === null && currentValue !== '')) || (defaultValue.toString() !== currentValue.toString())) {
           return true;
         }
         return false;
