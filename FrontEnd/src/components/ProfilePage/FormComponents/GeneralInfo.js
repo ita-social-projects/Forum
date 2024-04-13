@@ -16,8 +16,8 @@ import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
-import validateEdrpouKey from '../../../utils/validateEdrpouKey';
-import validateRnokppKey from '../../../utils/validateRnokppKey';
+import validateEdrpou from '../../../utils/validateEdrpou';
+import validateRnokpp from '../../../utils/validateRnokpp';
 
 const LABELS = {
     'name': 'Назва компанії',
@@ -52,8 +52,6 @@ const ERRORS = {
 const TEXT_AREA_MAX_LENGTH = 2000;
 const BANNER_IMAGE_SIZE = 5 * 1024 * 1024;
 const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
-const RNOKPP_PATTRN = /^\d{10}$/;
-const EDRPOU_PATTERN = /^\d{8}$/;
 
 const fetcher = (...args) => axios.get(...args).then(res => res.data);
 
@@ -78,17 +76,17 @@ const GeneralInfo = (props) => {
 
     const fields = {
         'name': {defaultValue: mainProfile?.name},
-        'official_name': {defaultValue: mainProfile?.official_name ?? null},
-        'edrpou': {defaultValue: mainProfile?.edrpou ?? null},
-        'ipn': {defaultValue: mainProfile?.ipn ?? null},
-        'regions': {defaultValue: mainProfile?.regions ?? [], type: 'array'},
-        'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
-        'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
-        'banner_image': {defaultValue: mainProfile?.banner_image ?? null},
-        'logo_image': {defaultValue: mainProfile?.logo_image ?? null},
-        'common_info': {defaultValue: mainProfile?.common_info ?? null},
-        'is_registered': {defaultValue: mainProfile?.is_registered ?? ''},
-        'is_startup': {defaultValue: mainProfile?.is_startup ?? ''},
+        'official_name': {defaultValue: mainProfile?.official_name},
+        'edrpou': {defaultValue: mainProfile?.edrpou},
+        'ipn': {defaultValue: mainProfile?.ipn },
+        'regions': {defaultValue: mainProfile?.regions, type: 'array'},
+        'categories': {defaultValue: mainProfile?.categories, type: 'array'},
+        'activities': {defaultValue: mainProfile?.activities, type: 'array'},
+        'banner_image': {defaultValue: mainProfile?.banner_image},
+        'logo_image': {defaultValue: mainProfile?.logo_image},
+        'common_info': {defaultValue: mainProfile?.common_info},
+        'is_registered': {defaultValue: mainProfile?.is_registered},
+        'is_startup': {defaultValue: mainProfile?.is_startup},
     };
 
     useEffect(() => {
@@ -118,11 +116,19 @@ const GeneralInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
-        if (profile.edrpou && (!EDRPOU_PATTERN.test(profile.edrpou) || !validateEdrpouKey(profile.edrpou))){
-            isValid = false;
+        if (profile.edrpou) {
+            try {
+                validateEdrpou(profile.edrpou);
+            } catch (error) {
+                isValid = false;
+            }
         }
-        if (profile.ipn && (!RNOKPP_PATTRN.test(profile.ipn) || !validateRnokppKey(profile.ipn))) {
-            isValid = false;
+        if (profile.ipn) {
+            try {
+                validateRnokpp(profile.ipn);
+            } catch (error) {
+                isValid = false;
+            }
         }
         if (!profile.is_registered && !profile.is_startup) {
             isValid = false;
@@ -152,31 +158,26 @@ const GeneralInfo = (props) => {
         });
     };
 
-    const onUpdateRnokppField = (e) => {
-      const rnokppValue = e.target.value;
-      if (rnokppValue && !RNOKPP_PATTRN.test(rnokppValue)) {
-        setRnokppFieldError('РНОКПП має містити 10 цифр');
-      } else if (rnokppValue && !validateRnokppKey(rnokppValue)) {
-        setRnokppFieldError('Помилковий РНОКПП');
-      } else {
-        setRnokppFieldError(null);
+    const onUpdateIdentifierField = (e) => {
+      const identifierValue = e.target.value;
+      const identifierName = e.target.name;
+      setEdrpouFieldError(null);
+      setRnokppFieldError(null);
+      if (identifierValue && identifierName === 'edrpou') {
+        try {
+          validateEdrpou(identifierValue);
+        } catch (error) {
+          setEdrpouFieldError(error.message);
+        }
+      } else if (identifierValue && identifierName === 'ipn') {
+        try {
+          validateRnokpp(identifierValue);
+        } catch (error) {
+          setRnokppFieldError(error.message);
+        }
       }
       setProfile((prevState) => {
-        return { ...prevState, ipn: rnokppValue };
-      });
-    };
-
-    const onUpdateEdrpouField = (e) => {
-      const edrpouValue = e.target.value;
-      if (edrpouValue && !EDRPOU_PATTERN.test(edrpouValue)) {
-        setEdrpouFieldError('ЄДРПОУ має містити 8 цифр');
-      } else if (edrpouValue && !validateEdrpouKey(edrpouValue)) {
-        setEdrpouFieldError('Помилковий код ЄДРПОУ');
-      } else {
-        setEdrpouFieldError(null);
-      }
-      setProfile((prevState) => {
-        return { ...prevState, edrpou: edrpouValue };
+        return { ...prevState, [identifierName]: identifierValue };
       });
     };
 
@@ -368,9 +369,9 @@ const GeneralInfo = (props) => {
                             {mainProfile?.is_fop ?
                                 <HalfFormField
                                     inputType="text"
-                                    name="rnokpp"
+                                    name="ipn"
                                     label={LABELS.rnokpp}
-                                    updateHandler={onUpdateRnokppField}
+                                    updateHandler={onUpdateIdentifierField}
                                     requredField={false}
                                     value={profile.ipn ?? ''}
                                     error={rnokppFieldError}
@@ -381,7 +382,7 @@ const GeneralInfo = (props) => {
                                     inputType="text"
                                     name="edrpou"
                                     label={LABELS.edrpou}
-                                    updateHandler={onUpdateEdrpouField}
+                                    updateHandler={onUpdateIdentifierField}
                                     requredField={false}
                                     value={profile.edrpou ?? ''}
                                     error={edrpouFieldError}
