@@ -24,7 +24,7 @@ const StartupInfo = (props) => {
     // TODO: update default values as new fields added
 
     const fields = {
-        'startup_idea': {defaultValue: mainProfile?.startup_idea ?? null},
+        'startup_idea': {defaultValue: mainProfile?.startup_idea},
     };
 
     useEffect(() => {
