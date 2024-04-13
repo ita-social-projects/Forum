@@ -23,7 +23,7 @@ const AdditionalInfo = (props) => {
     // TODO: update default values as new fields added
 
     const fields = {
-        'founded': {defaultValue: mainProfile?.founded ?? null},
+        'founded': {defaultValue: mainProfile?.founded},
     };
 
     useEffect(() => {
