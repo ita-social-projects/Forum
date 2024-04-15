@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PropTypes } from 'prop-types';
 import EyeInvisible from '../../../authorization/EyeInvisible';
 import EyeVisible from '../../../authorization/EyeVisible';
 import css from './PasswordField.module.css';
@@ -49,6 +50,16 @@ const PasswordField = (props) => {
             }
         </div>
     );
+};
+
+PasswordField.propTypes = {
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    updateHandler: PropTypes.func.isRequired,
+    value: PropTypes.string,
+    inputId: PropTypes.string,
+    requredField: PropTypes.bool,
+    error: PropTypes.string
 };
 
 export default PasswordField;
