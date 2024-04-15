@@ -201,7 +201,7 @@ const ProfileContent = (props) => {
                         <Route
                             path="/change-password"
                             element={<ChangePassword
-                                profile={props.user}
+                                user={props.user}
                                 currentFormNameHandler={props.currentFormNameHandler}
                                 curForm={FORM_NAMES[7]} />} />
                     </Routes>
