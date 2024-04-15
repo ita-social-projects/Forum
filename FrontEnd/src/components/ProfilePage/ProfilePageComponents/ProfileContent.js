@@ -13,6 +13,7 @@ import UserInfo from '../FormComponents/UserInfo';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import MyModal from '../UI/MyModal/MyModal';
 import WarnUnsavedDataModal from '../FormComponents/WarnUnsavedDataModal';
+import ChangePassword from '../FormComponents/ChangePassword';
 import css from './ProfileContent.module.css';
 
 
@@ -53,7 +54,8 @@ const FORM_NAMES = [
     'ProductServiceInfo',
     'AdditionalInfo',
     'StartupInfo',
-    'Delete'
+    'Delete',
+    'ChangePassword'
 ];
 
 const ProfileContent = (props) => {
@@ -144,6 +146,11 @@ const ProfileContent = (props) => {
                 })}
                     <div className={css['divider']}></div>
                     <Link
+                        to="/profile/change-password"
+                        className={`${css['infolink']}`}>
+                        Змінити пароль
+                    </Link>
+                    <Link
                         to="/profile/delete"
                         className={`${css['infolink']} ${css['delete']}`}>
                         Видалити профіль
@@ -191,6 +198,12 @@ const ProfileContent = (props) => {
                                 profile={props.profile}
                                 currentFormNameHandler={props.currentFormNameHandler}
                                 curForm={FORM_NAMES[5]} />} />
+                        <Route
+                            path="/change-password"
+                            element={<ChangePassword
+                                profile={props.user}
+                                currentFormNameHandler={props.currentFormNameHandler}
+                                curForm={FORM_NAMES[7]} />} />
                     </Routes>
                 </DirtyFormContext.Provider>
             </div>
