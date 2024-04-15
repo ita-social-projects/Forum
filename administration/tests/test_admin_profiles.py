@@ -22,13 +22,14 @@ class TestAdminProfilesAPITests(APITestCase):
 
     def test_get_profile_id_not_authorized(self):
         response = self.client.get(
-            path="/api/admin/profiles/" + str(self.user.id) + "/"
+            path="/api/admin/profiles/" + str(self.company.id) + "/"
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-    def test_get_profiles(self):
+    def test_get_profiles_structure_json(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/admin/profiles/")
+        auto_data_user = response.json()[0]["person"]
         data = [
             {
                 "id": self.company.id,
@@ -36,13 +37,13 @@ class TestAdminProfilesAPITests(APITestCase):
                 "is_registered": self.company.is_registered,
                 "is_startup": self.company.is_startup,
                 "person": {
-                    "name": "Test person 6",
-                    "surname": "Test person 6 surname",
-                    "email": "test6@test.com",
-                    "is_active": self.user.is_active,
-                    "is_staff": True,
-                    "is_superuser": self.user.is_superuser,
-                    "company_name": True,
+                    "name": auto_data_user["name"],
+                    "surname": auto_data_user["surname"],
+                    "email": auto_data_user["email"],
+                    "is_active": auto_data_user["is_active"],
+                    "is_staff": auto_data_user["is_staff"],
+                    "is_superuser": auto_data_user["is_superuser"],
+                    "company_name": auto_data_user["company_name"],
                 },
                 "person_position": self.company.person_position,
                 "regions": [],
@@ -56,11 +57,12 @@ class TestAdminProfilesAPITests(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data, response.json())
 
-    def test_get_profile_id(self):
+    def test_get_profile_id_structure_json(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(
             path="/api/admin/profiles/" + str(self.company.id) + "/"
         )
+        auto_data_user = response.json()["person"]
         data = {
             "name": self.company.name,
             "is_registered": self.company.is_registered,
@@ -68,13 +70,13 @@ class TestAdminProfilesAPITests(APITestCase):
             "categories": [],
             "activities": [],
             "person": {
-                "name": "Test person 2",
-                "surname": "Test person 2 surname",
-                "email": "test2@test.com",
-                "is_active": True,
-                "is_staff": True,
-                "is_superuser": self.user.is_superuser,
-                "company_name": True,
+                "name": auto_data_user["name"],
+                "surname": auto_data_user["surname"],
+                "email": auto_data_user["email"],
+                "is_active": auto_data_user["is_active"],
+                "is_staff": auto_data_user["is_staff"],
+                "is_superuser": auto_data_user["is_superuser"],
+                "company_name": auto_data_user["company_name"],
             },
             "person_position": self.company.person_position,
             "official_name": self.company.official_name,

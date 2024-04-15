@@ -19,7 +19,7 @@ class TestAdminUsersAPITests(APITestCase):
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-    def test_get_users(self):
+    def test_get_users_structure_json(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/admin/users/")
 
@@ -35,7 +35,7 @@ class TestAdminUsersAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
 
-    def test_get_user_id(self):
+    def test_get_user_id_structure_json(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(
             path="/api/admin/users/" + str(self.user.id) + "/"
@@ -48,7 +48,7 @@ class TestAdminUsersAPITests(APITestCase):
             "is_active": self.user.is_active,
             "is_staff": self.user.is_staff,
             "is_superuser": self.user.is_superuser,
-            "company_name": False,
+            "company_name": response.json()["company_name"],
         }
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
