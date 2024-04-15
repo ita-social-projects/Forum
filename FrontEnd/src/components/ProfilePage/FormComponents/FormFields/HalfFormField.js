@@ -37,7 +37,7 @@ const HalfFormField = (props) => {
 export default HalfFormField;
 
 HalfFormField.propTypes = {
-    requredField: PropTypes.bool.isRequired,
+    requredField: PropTypes.bool,
     inputType: PropTypes.string,
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

@@ -362,7 +362,6 @@ const GeneralInfo = (props) => {
                             name="official_name"
                             label={LABELS.official_name}
                             updateHandler={onUpdateField}
-                            requredField={false}
                             value={profile.official_name ?? ''}
                         />
                         <div className={css['fields-groups']}>
@@ -372,7 +371,6 @@ const GeneralInfo = (props) => {
                                     name="ipn"
                                     label={LABELS.rnokpp}
                                     updateHandler={onUpdateIdentifierField}
-                                    requredField={false}
                                     value={profile.ipn ?? ''}
                                     error={rnokppFieldError}
                                     maxLength={10}
@@ -383,7 +381,6 @@ const GeneralInfo = (props) => {
                                     name="edrpou"
                                     label={LABELS.edrpou}
                                     updateHandler={onUpdateIdentifierField}
-                                    requredField={false}
                                     value={profile.edrpou ?? ''}
                                     error={edrpouFieldError}
                                     maxLength={8}
@@ -398,7 +395,6 @@ const GeneralInfo = (props) => {
                                     options={fetchedRegions}
                                     label={LABELS.regions}
                                     updateHandler={onUpdateRegions}
-                                    requredField={false}
                                     value={profile.regions.map(obj => obj.name_ukr) ?? ''}
                                 />
                             }
@@ -447,7 +443,6 @@ const GeneralInfo = (props) => {
                             name="banner_image"
                             label={LABELS.banner_image}
                             updateHandler={onUpdateImageField}
-                            requredField={false}
                             value={profile.banner_image ?? ''}
                             error={bannerImageError}
                             onDeleteImage={deleteImageHandler}
@@ -458,7 +453,6 @@ const GeneralInfo = (props) => {
                             name="logo_image"
                             label={LABELS.logo_image}
                             updateHandler={onUpdateImageField}
-                            requredField={false}
                             value={profile.logo_image ?? ''}
                             error={logoImageError}
                             onDeleteImage={deleteImageHandler}
@@ -467,7 +461,6 @@ const GeneralInfo = (props) => {
                             name="common_info"
                             label={LABELS.common_info}
                             updateHandler={onUpdateTextAreaField}
-                            requredField={false}
                             value={profile.common_info ?? ''}
                             maxLength={TEXT_AREA_MAX_LENGTH}
                         />
