@@ -35,14 +35,11 @@
   align-self: stretch;
   color: var(--main-black-90, #292e32);
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Regular */
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  /* 142.857% */
   letter-spacing: -0.14px;
   text-align: left;
 }
@@ -53,8 +50,6 @@
   flex-direction: column;
   color: var(--main-black-90, #292e32);
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Regular */
   text-align: left;
   font-family: Inter, sans-serif;
   font-size: 14px;
@@ -160,8 +155,6 @@
   border: 1px solid var(--neutral-5, #d9d9d9);
   background: var(--main-white, #fff);
   color: var(--character-title-85, rgba(0, 0, 0, 0.85));
-
-  /* Body/regular */
   font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -180,8 +173,6 @@
   gap: 10px;
   align-self: stretch;
   color: var(--red-red-100, #f34444);
-
-  /* Body/regular */
   font-family: Roboto, sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -218,14 +209,11 @@
 .rules__line--text {
   color: var(--main-black-90, #292e32);
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Regular */
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  /* 142.857% */
   letter-spacing: -0.14px;
 }
 
@@ -262,14 +250,11 @@
   gap: 4px;
   color: var(--main-black-90, #292e32);
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Semi bold */
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: 20px;
-  /* 142.857% */
   letter-spacing: -0.14px;
 }
 
@@ -310,14 +295,11 @@
 .representative__label {
   color: var(--main-black-90, #292e32);
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Regular */
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  /* 142.857% */
   letter-spacing: -0.14px;
   text-align: left;
 }
