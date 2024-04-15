@@ -52,4 +52,8 @@ networks:
 
 volumes:
   static:
+    external:
+      name: forum_static
   media:
+    external:
+      name: forum_media
