@@ -5,7 +5,7 @@ import { useAuth } from '../../../hooks';
 import { PropTypes } from 'prop-types';
 import classes from './PhoneEmail.module.css';
 import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
-import { toast, Bounce } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function PhoneEmail({ profileId, personId }) {
   const [isContactsShown, setContactsShown] = useState(false);
@@ -24,17 +24,7 @@ function PhoneEmail({ profileId, personId }) {
         setTimeout(() => setIsEmailCopied(false), 4000);
       }
     } catch (error) {
-      toast.error('Інформацію не скопійовано, спробуйте ще раз.', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
+      toast.error('Інформацію не скопійовано, спробуйте ще раз.');
     }
   };
 
