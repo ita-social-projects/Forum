@@ -14,7 +14,7 @@ const PasswordField = (props) => {
     return (
         <div className={css['password-field__item']}>
             <div className={css['password-field__label-wrapper']}>
-                {props.requredField &&
+                {props.requiredField &&
                 <span>
                     *
                 </span>}
@@ -58,7 +58,7 @@ PasswordField.propTypes = {
     updateHandler: PropTypes.func.isRequired,
     value: PropTypes.string,
     inputId: PropTypes.string,
-    requredField: PropTypes.bool,
+    requiredField: PropTypes.bool,
     error: PropTypes.string
 };
 
