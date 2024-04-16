@@ -63,14 +63,14 @@ export default function ChangePassword(props) {
                         label="Поточний пароль"
                         updateHandler={handleInputChange}
                         value={formData.currentPassword}
-                        requredField={true}
+                        requiredField={true}
                     />
                     <PasswordField
                         name="newPassword"
                         label="Новий пароль"
                         updateHandler={handleInputChange}
                         value={formData.newPassword}
-                        requredField={true}
+                        requiredField={true}
                         error={invalidPasswordError}
                     />
                     <PasswordField
@@ -78,7 +78,7 @@ export default function ChangePassword(props) {
                         label="Повторіть новий пароль"
                         updateHandler={handleInputChange}
                         value={formData.reNewPassword}
-                        requredField={true}
+                        requiredField={true}
                         error={passwordsDontMatchError}
                     />
                 </form>

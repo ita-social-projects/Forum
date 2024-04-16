@@ -33,7 +33,7 @@ const PasswordField = (props) => {
                         value={props.value}
                         onChange={props.updateHandler}
                         placeholder={props.label}
-                        required={props.requredField}
+                        required={props.requiredField}
                     />
                 </div>
                 <span
@@ -43,7 +43,7 @@ const PasswordField = (props) => {
                     {!showPassword ? <EyeInvisible /> : <EyeVisible />}
                 </span>
             </div>
-            {(props.requredField || props.error) &&
+            {(props.requiredField || props.error) &&
                 <div className={css['error-message']}>
                     {props.error}
                 </div>
