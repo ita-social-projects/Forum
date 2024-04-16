@@ -1,7 +1,7 @@
 .read-more-symbol {
     color: var(--primary-green-80, #1F9A7C);
     font-feature-settings: 'calt' off;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -13,7 +13,7 @@
 .read-more {
     color: var(--main-grey-90, #25292C);
     font-feature-settings: 'calt' off;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

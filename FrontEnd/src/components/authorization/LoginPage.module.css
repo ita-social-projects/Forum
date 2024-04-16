@@ -21,7 +21,7 @@
 
 .login-header p {
   color: #000000;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -63,7 +63,7 @@
   flex: 1 0 0;
   color: #292e32;
   font-feature-settings: "calt" off;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -79,7 +79,7 @@
 }
 
 .login-content__email input {
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-messages);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -98,7 +98,7 @@
 .login-content__password input::placeholder {
   color: #adb3b9;
   font-feature-settings: "calt" off;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -132,7 +132,7 @@
 }
 
 .login-content__password input {
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-messages);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -202,7 +202,7 @@
   color: var(--primary-green-80, #1f9a7c);
   text-align: center;
   font-feature-settings: "calt" off;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -227,7 +227,7 @@
   color: #fff;
   text-align: center;
   font-feature-settings: "calt" off;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -251,7 +251,7 @@
   flex: 1 0 0;
   color: #f34444;
   font-feature-settings: "calt" off;
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-error);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -265,7 +265,7 @@
   content: "*";
   color: #ff4d4f;
   text-align: right;
-  font-family: SimSong;
+  font-family: var(--font-error);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -277,7 +277,7 @@
   text-decoration: none;
   color: var(--accent-accelerate-1500, #00A3CF);
   font-feature-settings: 'calt' off;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

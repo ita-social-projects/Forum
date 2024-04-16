@@ -8,7 +8,7 @@
     width: 130px;
     color: var(--main-black-90, #292E32);
     font-feature-settings: 'calt' off;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -39,7 +39,7 @@
     align-items: flex-start;
     color: var(--main-black-90, #292E32);
     font-feature-settings: 'calt' off;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
@@ -52,10 +52,17 @@
     color: var(--primary-green-80, #1F9A7C);
     text-align: center;
     font-feature-settings: 'calt' off;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: 20px;
     letter-spacing: -0.16px;
+}
+
+.contact-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 100%;
 }

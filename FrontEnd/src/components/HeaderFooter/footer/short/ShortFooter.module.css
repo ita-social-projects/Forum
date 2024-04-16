@@ -24,7 +24,7 @@
     color: #FFF;
     font-feature-settings: 'calt' off;
 
-    font-family: Geologica;
+    font-family: var(--font-logo);
     font-size: 32px;
     font-style: normal;
     font-weight: 500;
@@ -43,7 +43,7 @@
     color: #FFF;
     font-feature-settings: 'calt' off;
 
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -64,7 +64,7 @@
 
     text-decoration: none;
 
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

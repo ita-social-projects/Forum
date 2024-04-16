@@ -10,7 +10,7 @@
 }
   
 .TermsAndConditions__title{
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 32px;
     font-weight: 700;
     line-height: 38px;
@@ -28,7 +28,7 @@
 .link {
     display: flex;
     flex-direction: column;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 20px;
     font-weight: 700;
     line-height: 24px;
@@ -74,7 +74,7 @@
 }
 
 .text_content {
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -82,7 +82,7 @@
 
 .text_content__margin_bottom{
     margin-bottom: 24px;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -98,7 +98,7 @@
 }
 
 .custom-list__item{
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;

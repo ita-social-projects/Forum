@@ -100,7 +100,7 @@
 .main-banner-group__banner-text {
     width: 584px;
     color: #000;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-main);
     font-size: 40px;
     font-style: normal;
     font-weight: 700;
@@ -132,7 +132,7 @@
     color: #FFF;
     text-align: center;
     font-feature-settings: 'calt' off;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -159,7 +159,7 @@
     color: #1F9A7C;
     text-align: center;
     font-feature-settings: 'calt' off;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -260,7 +260,7 @@
 .main-banner-group__banner-item-text {
     color: #292E32;
     font-feature-settings: 'calt' off;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-main);
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
@@ -270,7 +270,7 @@
 .main-banner-group__banner-item-counter {
     color: #BE4F28;
     font-feature-settings: 'calt' off;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-main);
     font-size: 10px;
     font-style: normal;
     font-weight: 400;

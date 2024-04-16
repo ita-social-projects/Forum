@@ -5,7 +5,7 @@
 }
 
 .privacy-text {
-    font-family: Inter, sans-serif;
+    font-family: var(--font-main);
     font-size: 18px;
     line-height: 1.42857; /* 20px divided by 14px */
     letter-spacing: -0.14px;

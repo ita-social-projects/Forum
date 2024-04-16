@@ -26,7 +26,8 @@ export default function ProfileListPage({ isAuthorized }) {
       producers: 'activities__name=Виробник',
       importers: 'activities__name=Імпортер',
       retailers: 'activities__name=Роздрібна мережа',
-      horeca: 'activities__name=HORECA'
+      horeca: 'activities__name=HORECA',
+      otherServices: 'activities__name=Інші послуги'
     };
     setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);

@@ -6,7 +6,7 @@
 }
 
 .main-page__button {
-  font-family: 'Inter', sans-serif;
+  font-family:  var(--font-main);
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
@@ -17,7 +17,7 @@
 }
 
 .current-page__button {
-  font-family: 'Inter', sans-serif;
+  font-family:  var(--font-main);
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
@@ -40,7 +40,7 @@
   color: var(--primary-green-80, #1f9a7c);
   text-align: center;
   font-feature-settings: 'calt' off;
-  font-family: 'Inter', sans-serif;
+  font-family:  var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;

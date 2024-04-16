@@ -11,7 +11,7 @@
     width: 776px;
     color: var(--main-grey-40, #A3AAB0);
     font-feature-settings: 'calt' off;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

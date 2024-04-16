@@ -98,7 +98,7 @@
     background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
         linear-gradient(0deg, #F15831, #F15831);
     border: 1px solid #F15831;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -124,7 +124,7 @@
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
-    font-family: Inter;
+    font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
     font-weight: 600;

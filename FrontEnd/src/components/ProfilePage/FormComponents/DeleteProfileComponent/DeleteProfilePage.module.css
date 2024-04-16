@@ -10,7 +10,7 @@
     background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
         linear-gradient(0deg, #F15831, #F15831);
     border: 1px solid #F15831;
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -20,7 +20,7 @@
 }
 
 .text__for__delete {
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;

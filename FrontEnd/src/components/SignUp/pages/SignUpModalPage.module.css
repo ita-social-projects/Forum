@@ -33,7 +33,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/16-Semi bold */
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -64,7 +64,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/14-Regular */
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -96,7 +96,7 @@
   font-feature-settings: "calt" off;
 
   /* Text/Body/16-Semi bold */
-  font-family: Inter, sans-serif;
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
