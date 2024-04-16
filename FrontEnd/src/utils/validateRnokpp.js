@@ -8,10 +8,10 @@ function validateRnokpp(rnokpp) {
     */
     if (RNOKPP_PATTRN.test(rnokpp)) {
         const valueForValidation = Array.from(rnokpp).map(Number);
-        const weightCoeffBase = [-1, 5, 7, 9, 4, 6, 10, 5, 7]; // Weight coefficients for corresponding RNOKPP digits.
+        const weightCoefficients = [-1, 5, 7, 9, 4, 6, 10, 5, 7]; // Weight coefficients for corresponding RNOKPP digits.
         let sum = 0;
         for (let i = 0; i < 9; i++) {
-            sum += weightCoeffBase[i] * valueForValidation[i];
+            sum += weightCoefficients[i] * valueForValidation[i];
         }
         // Calculate checksum key.
         const key = (sum % 11) % 10;

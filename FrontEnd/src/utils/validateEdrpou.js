@@ -12,14 +12,14 @@ function validateEdrpou(edrpou) {
     }
     if (EDRPOU_PATTERN.test(edrpou)) {
         // Determine weight coefficients for calculating the checksum key, based on the value of the EDRPOU.
-        const weightCoeffBase = (parseInt(edrpou, 10) > 30000000 && parseInt(edrpou, 10) < 60000000)
+        const weightCoefficients = (parseInt(edrpou, 10) > 30000000 && parseInt(edrpou, 10) < 60000000)
                             ? [7, 1, 2, 3, 4, 5, 6] // weight coefficients for codes between 30000000 and 60000000.
                             : [1, 2, 3, 4, 5, 6, 7]; // weight coefficients for other values of codes.
         // Calculate checksum key.
-        let key = calculateKey(weightCoeffBase);
+        let key = calculateKey(weightCoefficients);
         // Recalculate with adjusted weights if initial key greater than 10.
         if (key > 10) {
-            key = calculateKey(weightCoeffBase, 2);
+            key = calculateKey(weightCoefficients, 2);
         }
         // Validate the EDRPOU by comparing the calculated key with its last digit.
         if (key < 10 && key === parseInt(edrpou[7], 10)) {
