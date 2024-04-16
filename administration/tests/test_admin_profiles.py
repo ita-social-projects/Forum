@@ -9,6 +9,27 @@ from administration.factories import (
 from utils.dump_response import dump  # noqa
 
 
+class TestAdminProfilesAPITestsNotStaff(APITestCase):
+    def setUp(self):
+        self.user = AdminUserFactory(
+            is_staff=False,
+            is_active=True,
+        )
+        self.company = AdminProfileFactory()
+
+    def test_get_profiles_not_staff(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/admin/profiles/")
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+    def test_get_profile_id_not_staff(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path=f"/api/admin/profiles/{self.company.id}/"
+        )
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+
 class TestAdminProfilesAPITests(APITestCase):
     def setUp(self):
         self.user = AdminUserFactory()
@@ -22,7 +43,7 @@ class TestAdminProfilesAPITests(APITestCase):
 
     def test_get_profile_id_not_authorized(self):
         response = self.client.get(
-            path="/api/admin/profiles/" + str(self.company.id) + "/"
+            path=f"/api/admin/profiles/{self.company.id}/"
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
@@ -57,10 +78,10 @@ class TestAdminProfilesAPITests(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data, response.json())
 
-    def test_get_profile_id_structure_json(self):
+    def test_get_profile_id_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(
-            path="/api/admin/profiles/" + str(self.company.id) + "/"
+            path=f"/api/admin/profiles/{self.company.id}/"
         )
         auto_data_user = response.json()["person"]
         data = {
@@ -93,3 +114,34 @@ class TestAdminProfilesAPITests(APITestCase):
             "is_deleted": self.company.is_deleted,
         }
         self.assertEqual(data, response.json())
+
+
+class TestDeleteProfile(APITestCase):
+    def setUp(self):
+        self.company = AdminProfileFactory()
+        self.user = AdminUserFactory()
+
+    def test_delete_Profile(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.delete(
+            path=f"/api/admin/profiles/{self.company.id}/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_profile_not_authorized(self):
+        response = self.client.delete(
+            path=f"/api/admin/profiles/{self.company.id}/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class TestPutProfile(APITestCase):
+    def setUp(self):
+        self.company = AdminProfileFactory()
+        self.user = AdminUserFactory()
+
+
+class TestPatchProfile(APITestCase):
+    def setUp(self):
+        self.company = AdminProfileFactory()
+        self.user = AdminUserFactory()

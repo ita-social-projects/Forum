@@ -21,8 +21,8 @@ class AdminProfileFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Profile
 
-    person = factory.SubFactory("administration.factories.AdminUserFactory")
-    name = factory.Sequence(lambda n: f"Test person {n + 1}")
+    person = factory.SubFactory(AdminUserFactory)
+    name = "Test person "
     common_info = "test common info"
     phone = "380112909099"
     edrpou = factory.Sequence(lambda n: str(10000000 + n))
