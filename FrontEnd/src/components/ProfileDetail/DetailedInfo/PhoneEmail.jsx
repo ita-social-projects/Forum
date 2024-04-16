@@ -28,6 +28,14 @@ function PhoneEmail({ profileId, personId }) {
     }
   };
 
+  const renderIcons = (state) => {
+    return state ? (
+      <CheckOutlined style={{ color: '#46a310' }} />
+    ) : (
+      <CopyOutlined style={{ cursor: 'pointer' }} />
+    );
+  };
+
   const { data: profileData } = useSWR(
     `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,
     (url) =>
@@ -65,11 +73,7 @@ function PhoneEmail({ profileId, personId }) {
                 <span>{profileData.phone}</span>
                {
                 profileData.phone ? <span onClick={() => copyContent('phone')}>
-                  {isPhoneCopied ? (
-                    <CheckOutlined style={{ color: '#46a310' }} />
-                  ) : (
-                    <CopyOutlined style={{ cursor: 'pointer' }} />
-                  )}
+                  {renderIcons(isPhoneCopied)}
                 </span>
                 : null
                }
@@ -78,11 +82,7 @@ function PhoneEmail({ profileId, personId }) {
                 <span>{profileData.email}</span>
                {
                 profileData.email ? <span onClick={() => copyContent('email')}>
-                  {isEmailCopied ? (
-                    <CheckOutlined style={{ color: '#46a310' }} />
-                  ) : (
-                    <CopyOutlined style={{ cursor: 'pointer' }} />
-                  )}
+                  {renderIcons(isEmailCopied)}
                 </span>
                 : null
                }
