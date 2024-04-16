@@ -26,10 +26,11 @@ User = get_user_model()
 class CustomProfileSerializer(serializers.ModelSerializer):
     is_registered = serializers.BooleanField()
     is_startup = serializers.BooleanField()
+    is_fop = serializers.BooleanField()
 
     class Meta:
         model = Profile
-        fields = ("name", "is_registered", "is_startup")
+        fields = ("name", "is_registered", "is_startup", "is_fop")
 
 
 class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):

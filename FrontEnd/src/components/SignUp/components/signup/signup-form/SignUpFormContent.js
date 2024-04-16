@@ -35,7 +35,9 @@ export function SignUpFormContentComponent(props) {
     handleSubmit,
     watch,
     getValues,
+    setValue,
     setError,
+    clearErrors,
     formState: { errors, isValid },
   } = useForm({
     mode: 'all',
@@ -59,10 +61,24 @@ export function SignUpFormContentComponent(props) {
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const onChangeCheckbox = (event) => {
+    const { name } = event.target;
+    if (name === 'yurosoba') {
+      setValue('fop', false);
+    } else if (name === 'fop') {
+      setValue('yurosoba', false);
+    }
+    if (!getValues('yurosoba') && !getValues('fop')) {
+      setError('businessEntity', { type: 'manual', message: errorMessageTemplates.required });
+    } else {
+      clearErrors('businessEntity');
+    }
+  };
+
   useEffect(() => {
     setIsValid(isValid);
   }, [isValid, setIsValid]);
-
 
   const onSubmit = () => {
 
@@ -76,8 +92,10 @@ export function SignUpFormContentComponent(props) {
         name: getValues('companyName'),
         is_registered: (getValues('representative').indexOf('company') > -1),
         is_startup: (getValues('representative').indexOf('startup') > -1),
+        is_fop: (getValues('fop').indexOf('fop') > -1),
       },
     };
+
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
@@ -359,6 +377,59 @@ export function SignUpFormContentComponent(props) {
             </div>
             <div className={styles['signup-form__error']}>
               {errors.representative && errors.representative.message}
+            </div>
+          </div>
+          <div className={styles['representative']}>
+            <div className={styles['representative__title']}>
+              <label className={styles['signup-form__label--required']}>
+                *
+              </label>
+              <label>Який суб&apos;єкт господарювання ви представляєте?</label>
+            </div>
+            <div className={styles['representative__container']}>
+              <div className={styles['representative__content']}>
+                <div className={styles['representative__column']}>
+                  <div className={styles['representative__option']}>
+                    <div
+                      className={styles['representative__checkbox-container']}
+                    >
+                      <input
+                        type="checkbox"
+                        name="yurosoba"
+                        value={'yurosoba'}
+                        {...register('yurosoba', {
+                          onChange: onChangeCheckbox
+                        })}
+                      />
+                    </div>
+                    <label className={styles['representative__label']}>
+                      Юридична особа
+                    </label>
+                  </div>
+                </div>
+                <div className={styles['representative__column']}>
+                  <div className={styles['representative__option']}>
+                    <div
+                      className={styles['representative__checkbox-container']}
+                    >
+                      <input
+                        type="checkbox"
+                        name="fop"
+                        value={'fop'}
+                        {...register('fop', {
+                          onChange: onChangeCheckbox
+                        })}
+                      />
+                    </div>
+                    <label className={styles['representative__label']}>
+                      Фізична особа-підприємець
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles['signup-form__error']}>
+              {errors.businessEntity && errors.businessEntity.message}
             </div>
           </div>
           <div className={styles['signup-form__checkboxes-container--rules']}>

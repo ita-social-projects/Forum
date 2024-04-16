@@ -16,12 +16,14 @@ import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
+import validateEdrpou from '../../../utils/validateEdrpou';
+import validateRnokpp from '../../../utils/validateRnokpp';
 
 const LABELS = {
     'name': 'Назва компанії',
-    'is_fop': 'ФОП',
     'official_name': 'Юридична назва компанії',
-    'identifier': 'ЄДРПОУ / ІПН',
+    'edrpou': 'ЄДРПОУ',
+    'rnokpp': 'РНОКПП',
     'regions': 'Регіон(и)',
     'categories': 'Категорія(ї)',
     'activities': 'Вид(и) діяльності',
@@ -62,7 +64,8 @@ const GeneralInfo = (props) => {
     const [logoImage, setLogoImage] = useState(props.profile.logo_image);
     const [bannerImageError, setBannerImageError] = useState(null);
     const [logoImageError, setLogoImageError] = useState(null);
-    const [identifierError, setIdentifierError] = useState(null);
+    const [edrpouFieldError, setEdrpouFieldError] = useState(null);
+    const [rnokppFieldError, setRnokppFieldError] = useState(null);
     const [companyTypeError, setCompanyTypeError] = useState(null);
 
     const { data: fetchedRegions, isLoading: isRegionLoading } = useSWR(`${process.env.REACT_APP_BASE_API_URL}/api/regions/`, fetcher);
@@ -73,18 +76,17 @@ const GeneralInfo = (props) => {
 
     const fields = {
         'name': {defaultValue: mainProfile?.name},
-        'is_fop': {defaultValue: mainProfile?.is_fop},
         'official_name': {defaultValue: mainProfile?.official_name ?? null},
-        'edrpou': {defaultValue: mainProfile?.edrpou ?? ''},
-        'ipn': {defaultValue: mainProfile?.ipn ?? ''},
+        'edrpou': {defaultValue: mainProfile?.edrpou ?? null},
+        'ipn': {defaultValue: mainProfile?.ipn ?? null},
         'regions': {defaultValue: mainProfile?.regions ?? [], type: 'array'},
         'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
         'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
         'banner_image': {defaultValue: mainProfile?.banner_image ?? null},
         'logo_image': {defaultValue: mainProfile?.logo_image ?? null},
         'common_info': {defaultValue: mainProfile?.common_info ?? null},
-        'is_registered': {defaultValue: mainProfile?.is_registered ?? ''},
-        'is_startup': {defaultValue: mainProfile?.is_startup ?? ''},
+        'is_registered': {defaultValue: mainProfile?.is_registered ?? null},
+        'is_startup': {defaultValue: mainProfile?.is_startup ?? null},
     };
 
     useEffect(() => {
@@ -114,8 +116,19 @@ const GeneralInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
-        if (profile.edrpou && profile.edrpou.toString().length !== 8) {
-            isValid = false;
+        if (profile.edrpou) {
+            try {
+                validateEdrpou(profile.edrpou);
+            } catch (error) {
+                isValid = false;
+            }
+        }
+        if (profile.ipn) {
+            try {
+                validateRnokpp(profile.ipn);
+            } catch (error) {
+                isValid = false;
+            }
         }
         if (!profile.is_registered && !profile.is_startup) {
             isValid = false;
@@ -146,25 +159,26 @@ const GeneralInfo = (props) => {
     };
 
     const onUpdateIdentifierField = (e) => {
-        if (profile.is_fop) {
-            if (e.target.value && e.target.value.length !== 10) {
-                setIdentifierError('ІПН має містити 10 символів');
-            } else {
-                setIdentifierError(null);
-            }
-            setProfile((prevState) => {
-                return { ...prevState, ipn: e.target.value, edrpou: null };
-            });
-        } else {
-            if (e.target.value && e.target.value.length !== 8) {
-                setIdentifierError('ЄДРПОУ має містити 8 символів');
-            } else {
-                setIdentifierError(null);
-            }
-            setProfile((prevState) => {
-                return { ...prevState, edrpou: e.target.value, ipn: null };
-            });
+      const identifierValue = e.target.value;
+      const identifierName = e.target.name;
+      setEdrpouFieldError(null);
+      setRnokppFieldError(null);
+      if (identifierValue && identifierName === 'edrpou') {
+        try {
+          validateEdrpou(identifierValue);
+        } catch (error) {
+          setEdrpouFieldError(error.message);
         }
+      } else if (identifierValue && identifierName === 'ipn') {
+        try {
+          validateRnokpp(identifierValue);
+        } catch (error) {
+          setRnokppFieldError(error.message);
+        }
+      }
+      setProfile((prevState) => {
+        return { ...prevState, [identifierName]: identifierValue };
+      });
     };
 
     const onChangeCheckbox = (e) => {
@@ -181,12 +195,6 @@ const GeneralInfo = (props) => {
         return { ...prevState, [e.target.name]: e.target.checked };
       });
     };
-
-    const onChangeCheckboxFop = (e) => {
-        setProfile((prevState) => {
-          return { ...prevState, [e.target.name]: e.target.checked };
-        });
-      };
 
     const onUpdateTextAreaField = e => {
         if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
@@ -287,9 +295,7 @@ const GeneralInfo = (props) => {
 
     const errorMessages = {
         'profile with this edrpou already exists.': 'Компанія з таким ЄДРПОУ вже існує',
-        'profile with this ipn already exists.': 'Фізична особа-підприємець з таким ІПН вже існує',
-        'For the IPN field filled out, FOP must be set to True': 'Поле ІПН заповнюється лише для ФОП',
-        'For the EDRPOU field filled out, FOP must be set to False': 'Поле ЄРДПОУ не заповнюється для ФОП'
+        'profile with this ipn already exists.': 'Фізична особа-підприємець з таким РНОКПП вже існує',
     };
 
     function handleError(error) {
@@ -313,7 +319,6 @@ const GeneralInfo = (props) => {
             try {
                 const response = await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
                     name: profile.name,
-                    is_fop: profile.is_fop,
                     official_name: profile.official_name,
                     edrpou: profile.edrpou,
                     ipn: profile.ipn,
@@ -352,35 +357,35 @@ const GeneralInfo = (props) => {
                                 requredField={true}
                                 value={profile.name}
                             />
-                            <div className={css['fop-field']}>
-                                <CheckBoxField
-                                    fopProps={{
-                                        fop_field: true,
-                                        name: 'is_fop',
-                                        value: profile.is_fop,
-                                        updateHandler: onChangeCheckboxFop,
-                                    }}
-
-                                />
-                            </div>
                         </div>
                         <FullField
                             name="official_name"
                             label={LABELS.official_name}
                             updateHandler={onUpdateField}
-                            requredField={false}
                             value={profile.official_name ?? ''}
                         />
                         <div className={css['fields-groups']}>
-                            <HalfFormField
-                                inputType="text"
-                                name="identifier"
-                                label={LABELS.identifier}
-                                updateHandler={onUpdateIdentifierField}
-                                requredField={false}
-                                value={(profile.edrpou || profile.ipn) ?? ''}
-                                error={identifierError}
-                            />
+                            {mainProfile?.is_fop ?
+                                <HalfFormField
+                                    inputType="text"
+                                    name="ipn"
+                                    label={LABELS.rnokpp}
+                                    updateHandler={onUpdateIdentifierField}
+                                    value={profile.ipn ?? ''}
+                                    error={rnokppFieldError}
+                                    maxLength={10}
+                                />
+                                :
+                                <HalfFormField
+                                    inputType="text"
+                                    name="edrpou"
+                                    label={LABELS.edrpou}
+                                    updateHandler={onUpdateIdentifierField}
+                                    value={profile.edrpou ?? ''}
+                                    error={edrpouFieldError}
+                                    maxLength={8}
+                                />
+                            }
                             {isRegionLoading
                                 ?
                                 <Loader />
@@ -390,7 +395,6 @@ const GeneralInfo = (props) => {
                                     options={fetchedRegions}
                                     label={LABELS.regions}
                                     updateHandler={onUpdateRegions}
-                                    requredField={false}
                                     value={profile.regions.map(obj => obj.name_ukr) ?? ''}
                                 />
                             }
@@ -439,7 +443,6 @@ const GeneralInfo = (props) => {
                             name="banner_image"
                             label={LABELS.banner_image}
                             updateHandler={onUpdateImageField}
-                            requredField={false}
                             value={profile.banner_image ?? ''}
                             error={bannerImageError}
                             onDeleteImage={deleteImageHandler}
@@ -450,7 +453,6 @@ const GeneralInfo = (props) => {
                             name="logo_image"
                             label={LABELS.logo_image}
                             updateHandler={onUpdateImageField}
-                            requredField={false}
                             value={profile.logo_image ?? ''}
                             error={logoImageError}
                             onDeleteImage={deleteImageHandler}
@@ -459,21 +461,18 @@ const GeneralInfo = (props) => {
                             name="common_info"
                             label={LABELS.common_info}
                             updateHandler={onUpdateTextAreaField}
-                            requredField={false}
                             value={profile.common_info ?? ''}
                             maxLength={TEXT_AREA_MAX_LENGTH}
                         />
                         <CheckBoxField
-                            companyProps={{
-                                name: 'companyType',
-                                nameRegister: 'is_registered',
-                                valueRegister: profile.is_registered,
-                                nameStartup: 'is_startup',
-                                valueStartup: profile.is_startup,
-                                updateHandler: onChangeCheckbox,
-                                error: companyTypeError,
-                                requredField: true,
-                            }}
+                            name ="companyType"
+                            nameRegister="is_registered"
+                            valueRegister={profile.is_registered}
+                            nameStartup="is_startup"
+                            valueStartup={profile.is_startup}
+                            updateHandler={onChangeCheckbox}
+                            error={companyTypeError}
+                            requredField={true}
                         />
                     </div>
                 </form>
@@ -497,6 +496,8 @@ GeneralInfo.propTypes = {
         is_startup: PropTypes.bool,
         categories: PropTypes.array,
         activities: PropTypes.array,
+        banner_image: PropTypes.string,
+        logo_image: PropTypes.string,
     }).isRequired,
     currentFormNameHandler: PropTypes.func,
     curForm: PropTypes.string,
