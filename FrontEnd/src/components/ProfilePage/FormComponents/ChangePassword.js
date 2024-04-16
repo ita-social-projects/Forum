@@ -15,10 +15,11 @@ export default function ChangePassword(props) {
     const [passwordsDontMatchError, setPasswordsDontMatchError] = useState(null);
     const [invalidPasswordError, setInvalidPasswordError] = useState(null);
     const { setFormIsDirty } = useContext(DirtyFormContext);
+    const { currentFormNameHandler, curForm } = props;
 
     useEffect(() => {
-        props.currentFormNameHandler(props.curForm);
-    }, [props]);
+      currentFormNameHandler(curForm);
+    }, [currentFormNameHandler, curForm]);
 
     useEffect(() => {
         setFormIsDirty(Object.keys(formData).some((field) => formData[field] !== ''));

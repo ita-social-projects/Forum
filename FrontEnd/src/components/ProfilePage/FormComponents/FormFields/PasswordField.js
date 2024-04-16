@@ -37,6 +37,7 @@ const PasswordField = (props) => {
                     />
                 </div>
                 <span
+                    aria-label="Toggle password visibility"
                     className={css['password-visibility']}
                     onClick={togglePassword}
                 >
