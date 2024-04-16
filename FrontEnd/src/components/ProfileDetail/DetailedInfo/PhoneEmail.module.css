@@ -59,3 +59,10 @@
     line-height: 20px;
     letter-spacing: -0.16px;
 }
+
+.contact-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 100%;
+}
