@@ -140,7 +140,7 @@ class TestPutProfile(APITestCase):
         self.profile = AdminProfileFactory()
         self.user = AdminUserFactory()
 
-    def test_Put_Profile(self):
+    def test_put_profile(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "Test string",
@@ -164,7 +164,7 @@ class TestPutProfile(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_Put_Reverese_Bool_Profile(self):
+    def test_put_reverese_bool_profile(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "Test string",
@@ -188,7 +188,7 @@ class TestPutProfile(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_Put_Profile_Not_authorized(self):
+    def test_put_profile_not_authorized(self):
         data = {"name": "Test string", "is_deleted": True}
         response = self.client.put(
             path=f"/api/admin/profiles/{self.profile.id}/",
@@ -196,7 +196,7 @@ class TestPutProfile(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_Put_Profile_Not_exist(self):
+    def test_put_profile_not_exist(self):
         self.client.force_authenticate(self.user)
         data = {"name": "Test string", "is_deleted": True}
         response = self.client.put(
@@ -211,7 +211,7 @@ class TestPatchProfile(APITestCase):
         self.profile = AdminProfileFactory()
         self.user = AdminUserFactory()
 
-    def test_Patch_Profile(self):
+    def test_patch_profile(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "Test string",
@@ -235,7 +235,7 @@ class TestPatchProfile(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_Patch_Reverese_Bool_Profile(self):
+    def test_patch_reverese_bool_profile(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "Test string",
@@ -259,7 +259,7 @@ class TestPatchProfile(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_Patch_Profile_Not_authorized(self):
+    def test_patch_profile_not_authorized(self):
         data = {"name": "Test string", "is_deleted": True}
         response = self.client.patch(
             path=f"/api/admin/profiles/{self.profile.id}/",
@@ -267,7 +267,7 @@ class TestPatchProfile(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_Patch_Profile_Not_exist(self):
+    def test_patch_profile_not_exist(self):
         self.client.force_authenticate(self.user)
         data = {"name": "Test string", "is_deleted": True}
         response = self.client.patch(
@@ -308,7 +308,7 @@ class TestPostProfile(APITestCase):
             status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code
         )
 
-    def test_create_profile_Not_authorized_full_data(self):
+    def test_create_profile_not_authorized_full_data(self):
         user2 = AdminUserFactory()
         new_profile_data = {
             "person": user2.id,

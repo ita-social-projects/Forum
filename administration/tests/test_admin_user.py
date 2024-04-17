@@ -35,7 +35,7 @@ class TestAdminUsersAPITests(APITestCase):
         response = self.client.get(path=f"/api/admin/users/{self.user.id}/")
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-    def test_get_users_authenticated_structure_json(self):
+    def test_get_users_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/admin/users/")
         data = [
@@ -50,7 +50,7 @@ class TestAdminUsersAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
 
-    def test_get_user_id_authenticated_structure_json(self):
+    def test_get_user_id_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path=f"/api/admin/users/{self.user.id}/")
 
@@ -100,7 +100,7 @@ class TestPutUser(APITestCase):
     def setUp(self):
         self.user = AdminUserFactory()
 
-    def test_Put_User(self):
+    def test_put_user(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "string",
@@ -116,7 +116,7 @@ class TestPutUser(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_Put_Reverese_Bool_User(self):
+    def test_put_reverese_bool_user(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "string",
@@ -132,7 +132,7 @@ class TestPutUser(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_Put_User_Not_authorized(self):
+    def test_put_user_not_authorized(self):
         data = {"name": "Test string"}
         response = self.client.put(
             path=f"/api/admin/users/{self.user.id}/",
@@ -140,7 +140,7 @@ class TestPutUser(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_Put_User_Not_exist(self):
+    def test_put_user_not_exist(self):
         data = {"name": "Test string"}
         self.client.force_authenticate(self.user)
         response = self.client.put(
@@ -154,7 +154,7 @@ class TestPatchUser(APITestCase):
     def setUp(self):
         self.user = AdminUserFactory()
 
-    def test_Patch_User(self):
+    def test_patch_user(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "string",
@@ -170,7 +170,7 @@ class TestPatchUser(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_Patch_Reverese_Bool_User(self):
+    def test_patch_reverese_bool_user(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "string",
@@ -186,7 +186,7 @@ class TestPatchUser(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_Patch_User_Not_authorized(self):
+    def test_patch_user_not_authorized(self):
         data = {"name": "Test string"}
         response = self.client.patch(
             path=f"/api/admin/users/{self.user.id}/",
@@ -194,7 +194,7 @@ class TestPatchUser(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_Patch_User_Not_exist(self):
+    def test_patch_user_not_exist(self):
         data = {"name": "Test string"}
         self.client.force_authenticate(self.user)
         response = self.client.patch(
@@ -226,7 +226,7 @@ class TestPostUser(APITestCase):
             status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code
         )
 
-    def test_create_user_Not_authorized_full_data(self):
+    def test_create_user_not_authorized_full_data(self):
         new_user_data = {
             "name": "string",
             "surname": "string",
