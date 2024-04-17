@@ -72,7 +72,7 @@ class TestDeleteUser(APITestCase):
     def test_delete_user_with_company(self):
         self.user = AdminUserFactory()
         self.client.force_authenticate(self.user)
-        self.company = AdminProfileFactory(person_id=self.user.id)
+        self.profile = AdminProfileFactory(person_id=self.user.id)
         response = self.client.delete(path=f"/api/admin/users/{self.user.id}/")
         self.assertEqual(
             response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED
@@ -86,7 +86,7 @@ class TestDeleteUser(APITestCase):
 
     def test_delete_user_with_company_not_authorized(self):
         self.user = AdminUserFactory()
-        self.company = AdminProfileFactory(person_id=self.user.id)
+        self.profile = AdminProfileFactory(person_id=self.user.id)
         response = self.client.delete(path=f"/api/admin/users/{self.user.id}/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -98,11 +98,50 @@ class TestDeleteUser(APITestCase):
 
 class TestPutUser(APITestCase):
     def setUp(self):
-        self.company = AdminProfileFactory()
+        self.profile = AdminProfileFactory()
         self.user = AdminUserFactory()
 
 
 class TestPatchUser(APITestCase):
     def setUp(self):
-        self.company = AdminProfileFactory()
         self.user = AdminUserFactory()
+
+    def test_update_User(self):
+        self.client.force_authenticate(self.user)
+        data = {
+            "name": "string",
+            "surname": "string",
+            "email": "user@example.com",
+            "is_active": True,
+            "is_staff": True,
+            "is_superuser": True,
+        }
+        response = self.client.patch(
+            path=f"/api/admin/users/{self.user.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_Reverese_Bool_User(self):
+        self.client.force_authenticate(self.user)
+        data = {
+            "name": "string",
+            "surname": "string",
+            "email": "user@example.com",
+            "is_active": False,
+            "is_staff": False,
+            "is_superuser": False,
+        }
+        response = self.client.patch(
+            path=f"/api/admin/users/{self.user.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_User_Not_authorized(self):
+        data = {"name": "Test string"}
+        response = self.client.patch(
+            path=f"/api/admin/users/{self.user.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
