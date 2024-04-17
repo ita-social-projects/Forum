@@ -52,10 +52,10 @@ class TestAdminProfilesAPITests(APITestCase):
         response = self.client.get(path="/api/admin/profiles/")
         data = [
             {
-                "id": self.profile.id,
-                "name": self.profile.name,
-                "is_registered": self.profile.is_registered,
-                "is_startup": self.profile.is_startup,
+                "id": 4,
+                "name": "Test person",
+                "is_registered": True,
+                "is_startup": True,
                 "person": {
                     "name": "Test person 7",
                     "surname": "Test person 7 surname",
@@ -65,13 +65,13 @@ class TestAdminProfilesAPITests(APITestCase):
                     "is_superuser": False,
                     "company_name": True,
                 },
-                "person_position": self.profile.person_position,
+                "person_position": "Test person position",
                 "regions": [],
-                "official_name": self.profile.official_name,
+                "official_name": "Test official name",
                 "phone": "380112909099",
-                "edrpou": self.profile.edrpou,
+                "edrpou": "10000003",
                 "address": "Test Country, Test City, St. Test, 1",
-                "is_deleted": self.profile.is_deleted,
+                "is_deleted": False,
             }
         ]
         self.assertEqual(status.HTTP_200_OK, response.status_code)
@@ -83,9 +83,9 @@ class TestAdminProfilesAPITests(APITestCase):
             path=f"/api/admin/profiles/{self.profile.id}/"
         )
         data = {
-            "name": self.profile.name,
-            "is_registered": self.profile.is_registered,
-            "is_startup": self.profile.is_startup,
+            "name": "Test person",
+            "is_registered": True,
+            "is_startup": True,
             "categories": [],
             "activities": [],
             "person": {
@@ -97,18 +97,18 @@ class TestAdminProfilesAPITests(APITestCase):
                 "is_superuser": False,
                 "company_name": True,
             },
-            "person_position": "Test",
-            "official_name": self.profile.official_name,
+            "person_position": "Test person position",
+            "official_name": "Test official name",
             "regions": [],
             "common_info": "test common info",
             "phone": "380112909099",
-            "edrpou": self.profile.edrpou,
+            "edrpou": "10000000",
             "founded": 2022,
             "service_info": "test service info",
             "product_info": "test product info",
             "address": "Test Country, Test City, St. Test, 1",
-            "startup_idea": self.profile.startup_idea,
-            "banner_image": self.profile.banner_image,
+            "startup_idea": "Test startup idea",
+            "banner_image": "http://testserver/media/Test_banner_image",
             "is_deleted": False,
         }
         self.assertEqual(data, response.json())
