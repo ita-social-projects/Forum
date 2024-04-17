@@ -10,7 +10,7 @@ class UserRegistrationAPITests(APITestCase):
     def setUp(self):
         self.user = UserFactory(email="test@test.com")
 
-    def test_register_user_successful(self):
+    def test_register_user_yurosoba_successful(self):
         response = self.client.post(
             path="/api/auth/users/",
             data={
@@ -23,6 +23,37 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": True,
                     "is_startup": False,
+                    "is_fop": False,
+                },
+            },
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(
+            {
+                "name": "Jane",
+                "surname": "Smith",
+            },
+            response.json(),
+        )
+        self.assertEqual(Profile.objects.get().person.email, "jane@test.com")
+        self.assertEqual(Profile.objects.get().name, "My Company")
+
+    def test_register_user_fop_successful(self):
+        response = self.client.post(
+            path="/api/auth/users/",
+            data={
+                "email": "jane@test.com",
+                "password": "Test1234",
+                "re_password": "Test1234",
+                "name": "Jane",
+                "surname": "Smith",
+                "company": {
+                    "name": "My Company",
+                    "is_registered": True,
+                    "is_startup": False,
+                    "is_fop": True,
                 },
             },
             format="json",
@@ -52,6 +83,7 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": True,
                     "is_startup": False,
+                    "is_fop": False,
                 },
             },
             format="json",
@@ -75,6 +107,7 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "Test Company",
                     "is_registered": True,
                     "is_startup": False,
+                    "is_fop": False,
                 },
             },
             format="json",
@@ -98,6 +131,7 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": True,
                     "is_startup": False,
+                    "is_fop": False,
                 },
             },
             format="json",
@@ -127,6 +161,7 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": False,
                     "is_startup": False,
+                    "is_fop": False,
                 },
             },
             format="json",
@@ -150,6 +185,7 @@ class UserRegistrationAPITests(APITestCase):
                     "name": "My Company",
                     "is_registered": True,
                     "is_startup": True,
+                    "is_fop": False,
                 },
             },
             format="json",

@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import css from './HalfFormField.module.css';
 
 const HalfFormField = (props) => {
@@ -21,6 +22,7 @@ const HalfFormField = (props) => {
                     onChange={props.updateHandler}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}
+                    maxLength={props.maxLength}
                 />
             </div>
             {(props.requredField || props.error) &&
@@ -33,3 +35,18 @@ const HalfFormField = (props) => {
 };
 
 export default HalfFormField;
+
+HalfFormField.propTypes = {
+    requredField: PropTypes.bool,
+    inputType: PropTypes.string,
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+      ]).isRequired,
+    fieldPlaceholder: PropTypes.string,
+    maxLength: PropTypes.number,
+    updateHandler: PropTypes.func,
+    error:PropTypes.string,
+  };

@@ -10,7 +10,7 @@ function DataContacts ({ data }) {
 
     const companyData = {
         'ЄДРПОУ': data.edrpou,
-        'ІПН': data.ipn,
+        'РНОКПП': data.ipn,
         'Рік заснування': data.founded,
         'Розмір компанії': '',
         'Аудит': ''
@@ -38,7 +38,7 @@ function DataContacts ({ data }) {
     const hasSocialLinks = companyContacts['Соціальні мережі'].filter(socialLink => socialLink.url !== '').length > 0;
 
     const renderedDataSections = Object.entries(companyData).map(([key, value]) => {
-        const className = key === ('ЄДРПОУ' || 'ІПН') ? `${classes['data-block__field']} ${classes['edrpou']}` : classes['data-block__field'];
+        const className = key === ('ЄДРПОУ' || 'РНОКПП') ? `${classes['data-block__field']} ${classes['edrpou']}` : classes['data-block__field'];
         if (value) {
           return (
             <div key={key} className={className}>

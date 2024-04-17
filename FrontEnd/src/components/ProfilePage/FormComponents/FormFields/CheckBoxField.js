@@ -2,24 +2,13 @@ import { PropTypes } from 'prop-types';
 import { Checkbox } from 'antd';
 import css from './CheckBoxField.module.css';
 
-const CheckBoxField = ({fopProps, companyProps}) => {
-    return (fopProps && fopProps.fop_field ? (
-        <div className={`${css['representative__checkboxes']} ${css['fop-field']}`}>
-            <Checkbox
-                name={fopProps.name}
-                onChange={fopProps.updateHandler}
-                checked={fopProps.value}
-            />
-            <label className={css['form-control']}>
-                ФОП
-            </label>
-        </div>
-        ) : (
+const CheckBoxField = (props) => {
+    return (
         <div className={css['representative']}>
             <div className={css['representative__label']}>
-                {companyProps.requredField && <label className={css['representative__label--required']}>*</label>}
+                {props.requredField && <label className={css['representative__label--required']}>*</label>}
                 <label
-                    className={`${css['representative__label--text']} ${!companyProps.requredField && css['fields__field--notrequired']}`}
+                    className={`${css['representative__label--text']} ${!props.requredField && css['fields__field--notrequired']}`}
                 >
                     Кого ви представляєте?
                 </label>
@@ -28,9 +17,9 @@ const CheckBoxField = ({fopProps, companyProps}) => {
                 <div className={css['representative__checkboxes--company-type']}>
                     <label className={css['form-control']}>
                         <Checkbox
-                            name={companyProps.nameRegister}
-                            onChange={companyProps.updateHandler}
-                            checked={companyProps.valueRegister}
+                            name={props.nameRegister}
+                            onChange={props.updateHandler}
+                            checked={props.valueRegister}
                         />
                         Зареєстрована компанія
                     </label>
@@ -38,40 +27,31 @@ const CheckBoxField = ({fopProps, companyProps}) => {
                 <div className={css['representative__checkboxes--company-type']}>
                     <label className={css['form-control']}>
                         <Checkbox
-                            name={companyProps.nameStartup}
-                            onChange={companyProps.updateHandler}
-                            checked={companyProps.valueStartup}
+                            name={props.nameStartup}
+                            onChange={props.updateHandler}
+                            checked={props.valueStartup}
                         />
                         Стартап проект, який шукає інвестиції
                     </label>
                 </div>
             </div>
-            {(companyProps.requredField || companyProps.error) &&
+            {(props.requredField || props.error) &&
                 <span className={css['error-message']}>
-                    {companyProps.error}
+                    {props.error}
                 </span>
                 }
         </div>
-        )
     );
 };
 
 export default CheckBoxField;
 
 CheckBoxField.propTypes = {
-    fopProps: PropTypes.shape({
-        fop_field:PropTypes.bool.isRequired,
-        name: PropTypes.string.isRequired,
-        value: PropTypes.bool.isRequired,
-        updateHandler: PropTypes.func.isRequired,
-    }),
-    companyProps: PropTypes.shape({
-        requredField: PropTypes.bool.isRequired,
-        nameRegister: PropTypes.string.isRequired,
-        valueRegister: PropTypes.bool.isRequired,
-        nameStartup: PropTypes.string.isRequired,
-        valueStartup: PropTypes.bool.isRequired,
-        updateHandler: PropTypes.func.isRequired,
-        error:PropTypes.string,
-    })
+    requredField: PropTypes.bool.isRequired,
+    nameRegister: PropTypes.string.isRequired,
+    valueRegister: PropTypes.bool.isRequired,
+    nameStartup: PropTypes.string.isRequired,
+    valueStartup: PropTypes.bool.isRequired,
+    updateHandler: PropTypes.func.isRequired,
+    error:PropTypes.string,
   };
