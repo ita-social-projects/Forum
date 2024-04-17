@@ -98,15 +98,63 @@ class TestDeleteUser(APITestCase):
 
 class TestPutUser(APITestCase):
     def setUp(self):
-        self.profile = AdminProfileFactory()
         self.user = AdminUserFactory()
+
+    def test_Put_User(self):
+        self.client.force_authenticate(self.user)
+        data = {
+            "name": "string",
+            "surname": "string",
+            "email": "user@example.com",
+            "is_active": True,
+            "is_staff": True,
+            "is_superuser": True,
+        }
+        response = self.client.put(
+            path=f"/api/admin/users/{self.user.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_Put_Reverese_Bool_User(self):
+        self.client.force_authenticate(self.user)
+        data = {
+            "name": "string",
+            "surname": "string",
+            "email": "user@example.com",
+            "is_active": False,
+            "is_staff": False,
+            "is_superuser": False,
+        }
+        response = self.client.put(
+            path=f"/api/admin/users/{self.user.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_Put_User_Not_authorized(self):
+        data = {"name": "Test string"}
+        response = self.client.put(
+            path=f"/api/admin/users/{self.user.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_Put_User_Not_exist(self):
+        data = {"name": "Test string"}
+        self.client.force_authenticate(self.user)
+        response = self.client.put(
+            path=f"/api/admin/users/0/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
 class TestPatchUser(APITestCase):
     def setUp(self):
         self.user = AdminUserFactory()
 
-    def test_update_User(self):
+    def test_Patch_User(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "string",
@@ -122,7 +170,7 @@ class TestPatchUser(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_update_Reverese_Bool_User(self):
+    def test_Patch_Reverese_Bool_User(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "string",
@@ -138,10 +186,56 @@ class TestPatchUser(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_update_User_Not_authorized(self):
+    def test_Patch_User_Not_authorized(self):
         data = {"name": "Test string"}
         response = self.client.patch(
             path=f"/api/admin/users/{self.user.id}/",
             data=data,
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_Patch_User_Not_exist(self):
+        data = {"name": "Test string"}
+        self.client.force_authenticate(self.user)
+        response = self.client.patch(
+            path=f"/api/admin/users/0/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class TestPostUser(APITestCase):
+    def setUp(self):
+        self.user = AdminUserFactory()
+
+    def test_create_user_authorized_full_data(self):
+        new_user_data = {
+            "name": "string",
+            "surname": "string",
+            "email": "user@example.com",
+            "is_active": False,
+            "is_staff": False,
+            "is_superuser": False,
+        }
+
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            path=f"/api/admin/users/", data=new_user_data
+        )
+        self.assertEqual(
+            status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code
+        )
+
+    def test_create_user_Not_authorized_full_data(self):
+        new_user_data = {
+            "name": "string",
+            "surname": "string",
+            "email": "user@example.com",
+            "is_active": False,
+            "is_staff": False,
+            "is_superuser": False,
+        }
+        response = self.client.post(
+            path=f"/api/admin/users/", data=new_user_data
+        )
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)

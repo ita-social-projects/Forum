@@ -140,13 +140,78 @@ class TestPutProfile(APITestCase):
         self.profile = AdminProfileFactory()
         self.user = AdminUserFactory()
 
+    def test_Put_Profile(self):
+        self.client.force_authenticate(self.user)
+        data = {
+            "name": "Test string",
+            "is_registered": True,
+            "is_startup": True,
+            "person_position": "Test string",
+            "official_name": "Test string",
+            "common_info": "Test string",
+            "phone": 123456789012,
+            "edrpou": 12345678,
+            "founded": 2024,
+            "service_info": "Test string",
+            "product_info": "Test string",
+            "address": "Test string",
+            "startup_idea": "Test string",
+            "is_deleted": True,
+        }
+        response = self.client.put(
+            path=f"/api/admin/profiles/{self.profile.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_Put_Reverese_Bool_Profile(self):
+        self.client.force_authenticate(self.user)
+        data = {
+            "name": "Test string",
+            "is_registered": False,
+            "is_startup": False,
+            "person_position": "Test string",
+            "official_name": "Test string",
+            "common_info": "Test string",
+            "phone": 123456789012,
+            "edrpou": 12345678,
+            "founded": 2024,
+            "service_info": "Test string",
+            "product_info": "Test string",
+            "address": "Test string",
+            "startup_idea": "Test string",
+            "is_deleted": False,
+        }
+        response = self.client.put(
+            path=f"/api/admin/profiles/{self.profile.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_Put_Profile_Not_authorized(self):
+        data = {"name": "Test string", "is_deleted": True}
+        response = self.client.put(
+            path=f"/api/admin/profiles/{self.profile.id}/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_Put_Profile_Not_exist(self):
+        self.client.force_authenticate(self.user)
+        data = {"name": "Test string", "is_deleted": True}
+        response = self.client.put(
+            path=f"/api/admin/profiles/0/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 
 class TestPatchProfile(APITestCase):
     def setUp(self):
         self.profile = AdminProfileFactory()
         self.user = AdminUserFactory()
 
-    def test_update_Profile(self):
+    def test_Patch_Profile(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "Test string",
@@ -170,7 +235,7 @@ class TestPatchProfile(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_update_Reverese_Bool_Profile(self):
+    def test_Patch_Reverese_Bool_Profile(self):
         self.client.force_authenticate(self.user)
         data = {
             "name": "Test string",
@@ -194,10 +259,74 @@ class TestPatchProfile(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_update_Profile_Not_authorized(self):
+    def test_Patch_Profile_Not_authorized(self):
         data = {"name": "Test string", "is_deleted": True}
         response = self.client.patch(
             path=f"/api/admin/profiles/{self.profile.id}/",
             data=data,
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_Patch_Profile_Not_exist(self):
+        self.client.force_authenticate(self.user)
+        data = {"name": "Test string", "is_deleted": True}
+        response = self.client.patch(
+            path=f"/api/admin/profiles/0/",
+            data=data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class TestPostProfile(APITestCase):
+    def setUp(self):
+        self.user = AdminUserFactory()
+
+    def test_create_profile_authorized_full_data(self):
+        user2 = AdminUserFactory()
+        new_profile_data = {
+            "person": user2.id,
+            "official_name": "Official name from test case",
+            "common_info": "Common info from test case",
+            "phone": "123456789012",
+            "edrpou": "12345678",
+            "founded": 2005,
+            "service_info": "Service info from test case",
+            "product_info": "Product info from test case",
+            "address": "Kyiv",
+            "person_position": "director",
+            "startup_idea": "StartUp idea from test case",
+            "is_startup": True,
+            "is_registered": False,
+            "name": "Comp name from test case",
+        }
+
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            path=f"/api/admin/profiles/", data=new_profile_data
+        )
+        self.assertEqual(
+            status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code
+        )
+
+    def test_create_profile_Not_authorized_full_data(self):
+        user2 = AdminUserFactory()
+        new_profile_data = {
+            "person": user2.id,
+            "official_name": "Official name from test case",
+            "common_info": "Common info from test case",
+            "phone": "123456789012",
+            "edrpou": "12345678",
+            "founded": 2005,
+            "service_info": "Service info from test case",
+            "product_info": "Product info from test case",
+            "address": "Kyiv",
+            "person_position": "director",
+            "startup_idea": "StartUp idea from test case",
+            "is_startup": True,
+            "is_registered": False,
+            "name": "Comp name from test case",
+        }
+        response = self.client.post(
+            path=f"/api/admin/profiles/", data=new_profile_data
+        )
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
