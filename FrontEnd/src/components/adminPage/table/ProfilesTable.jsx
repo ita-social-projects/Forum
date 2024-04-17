@@ -64,7 +64,13 @@ function ProfilesTable() {
                             </td>
                             <td className={css['table-element__text']}>{profile.person_position} </td>
                             <td className={css['table-element__text']}>{profile.official_name} </td>
-                            <td className={css['table-element__text']}>{profile.regions} </td>
+                            <td className={css['table-element__text']}>
+                                <ul>
+                                    {profile.regions.map(region => (
+                                        <li key={region.id}>{region.name_ukr}</li>
+                                    ))}
+                                </ul>
+                            </td>
                             <td className={css['table-element__text']}>{profile.phone} </td>
                             <td className={css['table-element__text']}>{profile.edrpou} </td>
                             <td className={css['table-element__text']}>{profile.address} </td>
