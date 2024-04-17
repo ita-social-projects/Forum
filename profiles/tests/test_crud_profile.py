@@ -558,7 +558,7 @@ class TestProfileDetailAPIView(APITestCase):
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
-            data={"edrpou": "", "rnokpp": "1234567891"},
+            data={"edrpou": "", "rnokpp": "1111111118"},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(
@@ -570,18 +570,96 @@ class TestProfileDetailAPIView(APITestCase):
             },
         )
 
-    def test_partial_update_profile_is_fop_with_rnokpp(self):
+    def test_partial_update_profile_is_fop_with_valid_rnokpp(self):
         self.client.force_authenticate(self.user)
 
         response = self.client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
-            data={"edrpou": "", "is_fop": True, "rnokpp": "1234567891"},
+            data={"edrpou": "", "is_fop": True, "rnokpp": "1234567899"},
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual("1234567891", response.data.get("rnokpp"))
+        self.assertEqual("1234567899", response.data.get("rnokpp"))
         self.assertTrue(response.data.get("is_fop"))
+
+    def test_partial_update_profile_is_fop_with_incorrect_length_rnokpp(self):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"edrpou": "", "is_fop": True, "rnokpp": "12345678"},
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            response.json(),
+            {"rnokpp": ["RNOKPP must be exactly 10 digits long."]},
+        )
+
+    def test_partial_update_profile_is_fop_with_incorrect_checksum_rnokpp(
+        self,
+    ):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"edrpou": "", "is_fop": True, "rnokpp": "1234567889"},
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            response.json(),
+            {"rnokpp": ["RNOKPP is not correct, checksum key is not valid."]},
+        )
+
+    def test_partial_update_profile_yurosoba_with_valid_edrpou(self):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"edrpou": "00112236"},
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual("00112236", response.data.get("edrpou"))
+
+    def test_partial_update_profile_yurosoba_with_incorrect_length_edrpou(
+        self,
+    ):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"edrpou": "123456"},
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            response.json(),
+            {"edrpou": ["EDRPOU must be exactly 8 digits long."]},
+        )
+
+    def test_partial_update_profile_yurosoba_with_incorrect_checksum_edrpou(
+        self,
+    ):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"edrpou": "12345677"},
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            response.json(),
+            {"edrpou": ["EDRPOU is not correct, checksum key is not valid."]},
+        )
 
     def test_partial_update_profile_category(self):
         category = CategoryFactory()
