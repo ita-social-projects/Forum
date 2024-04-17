@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 max_length=10,
                 null=True,
                 unique=True,
-                validators=[validation.validate_rnokpp],
+                validators=[validation.validate_rnokpp.validate_rnokpp],
             ),
         ),
         migrations.AddField(
