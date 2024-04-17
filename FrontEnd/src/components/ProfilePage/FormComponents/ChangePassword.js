@@ -42,16 +42,20 @@ export default function ChangePassword(props) {
 
     const handleInputChange = (e) => {
         e.preventDefault();
-        const updatedFormData = { ...formData, [e.target.name]: e.target.value };
-        setFormData(updatedFormData);
-        (updatedFormData.newPassword !== '' &&
-        !PASSWORD_PATTERN.test(updatedFormData.newPassword)) ?
-            setInvalidPasswordError('Пароль не відповідає вимогам') :
-            setInvalidPasswordError(null);
-        (updatedFormData.reNewPassword !== '' &&
-        updatedFormData.newPassword !== updatedFormData.reNewPassword) ?
-            setPasswordsDontMatchError('Паролі не співпадають') :
-            setPasswordsDontMatchError(null);
+        const { name, value } = e.target;
+        const newFormData = { ...formData, [name]: value };
+
+        const newInvalidPasswordError = newFormData.newPassword !== '' && !PASSWORD_PATTERN.test(newFormData.newPassword)
+            ? 'Пароль не відповідає вимогам'
+            : null;
+
+        const newPasswordsDontMatchError = newFormData.reNewPassword !== '' && newFormData.newPassword !== newFormData.reNewPassword
+            ? 'Паролі не співпадають'
+            : null;
+
+        setFormData(newFormData);
+        setInvalidPasswordError(newInvalidPasswordError);
+        setPasswordsDontMatchError(newPasswordsDontMatchError);
     };
 
     return (
