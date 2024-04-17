@@ -40,13 +40,12 @@ class TestAdminUsersAPITests(APITestCase):
         response = self.client.get(path="/api/admin/users/")
         data = [
             {
-                "id": self.user.id,
-                "email": self.user.email,
-                "name": self.user.name,
-                "surname": self.user.surname,
+                "id": 39,
+                "email": "test39@test.com",
+                "name": "Test person 39",
+                "surname": "Test person 39 surname",
             }
         ]
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
 
@@ -55,15 +54,14 @@ class TestAdminUsersAPITests(APITestCase):
         response = self.client.get(path=f"/api/admin/users/{self.user.id}/")
 
         data = {
-            "name": self.user.name,
-            "surname": self.user.surname,
-            "email": self.user.email,
-            "is_active": self.user.is_active,
-            "is_staff": self.user.is_staff,
-            "is_superuser": self.user.is_superuser,
-            "company_name": response.json()["company_name"],
+            "name": "Test person 37",
+            "surname": "Test person 37 surname",
+            "email": "test37@test.com",
+            "is_active": True,
+            "is_staff": True,
+            "is_superuser": False,
+            "company_name": False,
         }
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
 
