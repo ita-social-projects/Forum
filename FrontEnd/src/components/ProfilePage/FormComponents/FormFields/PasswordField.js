@@ -44,7 +44,7 @@ const PasswordField = (props) => {
                     {!showPassword ? <EyeInvisible /> : <EyeVisible />}
                 </span>
             </div>
-            {(props.requiredField || props.error) &&
+            {(props.requiredField && props.error) &&
                 <div className={css['error-message']}>
                     {props.error}
                 </div>
