@@ -16,7 +16,7 @@ function ProfileDetail() {
         { label: 'Ім\'я', key: 'name' },
         { label: 'person_position', key: 'person_position' },
         { label: 'official_name', key: 'official_name' },
-        { label: 'region', key: 'region' },
+        { label: 'regions ID', key: 'regions' },
         { label: 'phone', key: 'phone' },
         { label: 'edrpou', key: 'edrpou' },
         { label: 'address', key: 'address' },

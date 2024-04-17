@@ -33,7 +33,7 @@ class TestAdminProfilesAPITestsNotStaff(APITestCase):
 class TestAdminProfilesAPITests(APITestCase):
     def setUp(self):
         self.user = AdminUserFactory()
-        self.profile = AdminProfileFactory()
+        self.profile = AdminProfileFactory(person_id=self.user.id)
 
     def test_get_profiles_not_authorized(self):
         response = self.client.get(
@@ -50,7 +50,6 @@ class TestAdminProfilesAPITests(APITestCase):
     def test_get_profiles_structure_json(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/admin/profiles/")
-        auto_data_user = response.json()[0]["person"]
         data = [
             {
                 "id": self.profile.id,
@@ -58,20 +57,20 @@ class TestAdminProfilesAPITests(APITestCase):
                 "is_registered": self.profile.is_registered,
                 "is_startup": self.profile.is_startup,
                 "person": {
-                    "name": auto_data_user["name"],
-                    "surname": auto_data_user["surname"],
-                    "email": auto_data_user["email"],
-                    "is_active": auto_data_user["is_active"],
-                    "is_staff": auto_data_user["is_staff"],
-                    "is_superuser": auto_data_user["is_superuser"],
-                    "company_name": auto_data_user["company_name"],
+                    "name": "Test person 7",
+                    "surname": "Test person 7 surname",
+                    "email": "test7@test.com",
+                    "is_active": True,
+                    "is_staff": True,
+                    "is_superuser": False,
+                    "company_name": True,
                 },
                 "person_position": self.profile.person_position,
                 "regions": [],
                 "official_name": self.profile.official_name,
-                "phone": self.profile.phone,
+                "phone": "380112909099",
                 "edrpou": self.profile.edrpou,
-                "address": self.profile.address,
+                "address": "Test Country, Test City, St. Test, 1",
                 "is_deleted": self.profile.is_deleted,
             }
         ]
@@ -83,7 +82,6 @@ class TestAdminProfilesAPITests(APITestCase):
         response = self.client.get(
             path=f"/api/admin/profiles/{self.profile.id}/"
         )
-        auto_data_user = response.json()["person"]
         data = {
             "name": self.profile.name,
             "is_registered": self.profile.is_registered,
@@ -91,27 +89,27 @@ class TestAdminProfilesAPITests(APITestCase):
             "categories": [],
             "activities": [],
             "person": {
-                "name": auto_data_user["name"],
-                "surname": auto_data_user["surname"],
-                "email": auto_data_user["email"],
-                "is_active": auto_data_user["is_active"],
-                "is_staff": auto_data_user["is_staff"],
-                "is_superuser": auto_data_user["is_superuser"],
-                "company_name": auto_data_user["company_name"],
+                "name": "Test person 1",
+                "surname": "Test person 1 surname",
+                "email": "test1@test.com",
+                "is_active": True,
+                "is_staff": True,
+                "is_superuser": False,
+                "company_name": True,
             },
-            "person_position": self.profile.person_position,
+            "person_position": "Test",
             "official_name": self.profile.official_name,
             "regions": [],
-            "common_info": self.profile.common_info,
-            "phone": self.profile.phone,
+            "common_info": "test common info",
+            "phone": "380112909099",
             "edrpou": self.profile.edrpou,
-            "founded": self.profile.founded,
-            "service_info": self.profile.service_info,
-            "product_info": self.profile.product_info,
-            "address": self.profile.address,
+            "founded": 2022,
+            "service_info": "test service info",
+            "product_info": "test product info",
+            "address": "Test Country, Test City, St. Test, 1",
             "startup_idea": self.profile.startup_idea,
             "banner_image": self.profile.banner_image,
-            "is_deleted": self.profile.is_deleted,
+            "is_deleted": False,
         }
         self.assertEqual(data, response.json())
 

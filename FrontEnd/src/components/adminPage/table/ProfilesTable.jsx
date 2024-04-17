@@ -7,7 +7,7 @@ import useSWR from 'swr';
 import { DEFAULT_PAGE_SIZE } from '../constants';
 
 const COLUMN_NAMES = [
-    'ID', 'Person', 'Position', 'Company', 'Region', 'Phone', 'EDRPOU', 'Adress', 'IsDeleted', 'IsApproved'
+    'ID', 'Person', 'Position', 'Company', 'Region ID', 'Phone', 'EDRPOU', 'Adress', 'IsDeleted', 'IsApproved'
 ];
 
 function ProfilesTable() {
@@ -64,7 +64,7 @@ function ProfilesTable() {
                             </td>
                             <td className={css['table-element__text']}>{profile.person_position} </td>
                             <td className={css['table-element__text']}>{profile.official_name} </td>
-                            <td className={css['table-element__text']}>{profile.region} </td>
+                            <td className={css['table-element__text']}>{profile.regions} </td>
                             <td className={css['table-element__text']}>{profile.phone} </td>
                             <td className={css['table-element__text']}>{profile.edrpou} </td>
                             <td className={css['table-element__text']}>{profile.address} </td>
