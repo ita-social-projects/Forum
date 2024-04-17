@@ -551,36 +551,36 @@ class TestProfileDetailAPIView(APITestCase):
             },
         )
 
-    def test_partial_update_profile_ipn(self):
+    def test_partial_update_profile_rnokpp(self):
         self.client.force_authenticate(self.user)
 
         response = self.client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
-            data={"edrpou": "", "ipn": "1234567891"},
+            data={"edrpou": "", "rnokpp": "1234567891"},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(
             response.json(),
             {
                 "is_fop": [
-                    "For the IPN field filled out, FOP must be set to True"
+                    "For the RNOKPP field filled out, FOP must be set to True"
                 ]
             },
         )
 
-    def test_partial_update_profile_is_fop_with_ipn(self):
+    def test_partial_update_profile_is_fop_with_rnokpp(self):
         self.client.force_authenticate(self.user)
 
         response = self.client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
-            data={"edrpou": "", "is_fop": True, "ipn": "1234567891"},
+            data={"edrpou": "", "is_fop": True, "rnokpp": "1234567891"},
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual("1234567891", response.data.get("ipn"))
+        self.assertEqual("1234567891", response.data.get("rnokpp"))
         self.assertTrue(response.data.get("is_fop"))
 
     def test_partial_update_profile_category(self):
