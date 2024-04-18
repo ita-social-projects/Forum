@@ -89,7 +89,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "regions_ukr_display",
             "common_info",
             "edrpou",
-            "ipn",
+            "rnokpp",
             "founded",
             "address",
             "startup_idea",
@@ -112,7 +112,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "regions_ukr_display",
             "common_info",
             "edrpou",
-            "ipn",
+            "rnokpp",
             "founded",
             "address",
             "startup_idea",
@@ -164,7 +164,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "common_info",
             "phone",
             "edrpou",
-            "ipn",
+            "rnokpp",
             "founded",
             "service_info",
             "product_info",
@@ -191,7 +191,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "common_info",
             "phone",
             "edrpou",
-            "ipn",
+            "rnokpp",
             "founded",
             "service_info",
             "product_info",
@@ -227,7 +227,7 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             "common_info",
             "phone",
             "edrpou",
-            "ipn",
+            "rnokpp",
             "founded",
             "service_info",
             "product_info",
@@ -241,12 +241,12 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         edrpou = data.get("edrpou", self.instance.edrpou)
-        ipn = data.get("ipn", self.instance.ipn)
+        rnokpp = data.get("rnokpp", self.instance.rnokpp)
         is_fop = data.get("is_fop", self.instance.is_fop)
-        if ipn and not is_fop:
+        if rnokpp and not is_fop:
             raise serializers.ValidationError(
                 {
-                    "is_fop": "For the IPN field filled out, FOP must be set to True"
+                    "is_fop": "For the RNOKPP field filled out, FOP must be set to True"
                 }
             )
         if edrpou and is_fop:
