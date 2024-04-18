@@ -58,7 +58,6 @@ export default function ChangePassword(props) {
                         inputId="currentPassword"
                         name="currentPassword"
                         label="Поточний пароль"
-                        requiredField={true}
                         register={register}
                         error={errors}
                         showError={false}
@@ -68,7 +67,6 @@ export default function ChangePassword(props) {
                         inputId="newPassword"
                         name="newPassword"
                         label="Новий пароль"
-                        requiredField={true}
                         error={errors}
                         register={register}
                         showError={true}
@@ -78,7 +76,6 @@ export default function ChangePassword(props) {
                         inputId="reNewPassword"
                         name="reNewPassword"
                         label="Повторіть новий пароль"
-                        requiredField={true}
                         error={errors}
                         register={register}
                         showError={true}
