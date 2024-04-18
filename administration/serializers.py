@@ -1,6 +1,18 @@
 from rest_framework import serializers
 from authentication.models import CustomUser
-from profiles.models import Profile
+from profiles.models import (
+    Profile,
+    Region,
+)
+
+
+class AdminRegionSerialaizer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = (
+            "id",
+            "name_ukr",
+        )
 
 
 class AdminUserListSerializer(serializers.ModelSerializer):
@@ -35,6 +47,7 @@ class AdminUserDetailSerializer(serializers.ModelSerializer):
 
 class AdminCompanyListSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)
+    regions = AdminRegionSerialaizer(many=True, read_only=True)
 
     class Meta:
         model = Profile
@@ -62,6 +75,7 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
     activities = serializers.SlugRelatedField(
         many=True, slug_field="name", read_only=True
     )
+    regions = AdminRegionSerialaizer(many=True, read_only=True)
 
     class Meta:
         model = Profile
