@@ -2,7 +2,6 @@ from django.core.exceptions import ValidationError
 
 
 def validate_edrpou(edrpou: str):
-    # Validate if EDRPOU exactly 8 digits long
     if len(edrpou) != 8 or not edrpou.isdecimal():
         raise ValidationError("EDRPOU must be exactly 8 digits long.")
     value_for_validation = [int(i) for i in edrpou]

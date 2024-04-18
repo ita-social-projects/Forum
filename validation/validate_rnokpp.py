@@ -2,7 +2,6 @@ from django.core.exceptions import ValidationError
 
 
 def validate_rnokpp(rnokpp: str):
-    # Validate if RNOKPP exactly 10 digits long
     if len(rnokpp) != 10 or not rnokpp.isdecimal():
         raise ValidationError("RNOKPP must be exactly 10 digits long.")
     value_for_validation = [int(i) for i in rnokpp]
