@@ -6,12 +6,20 @@ import css from './PasswordField.module.css';
 import { PASSWORD_PATTERN } from '../../../../constants/constants';
 
 const PasswordField = (props) => {
+
+    const errorMessages = {
+        invalidPassword: 'Пароль не відповідає вимогам',
+        passwordsDontMatch: 'Паролі не співпадають'
+    };
+
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePassword = () => {
         setShowPassword(!showPassword);
     };
+
     const { register, name, error, showError, watch } = props;
+
     return (
         <div className={css['password-field__item']}>
             <div className={css['password-field__label-wrapper']}>
@@ -33,13 +41,13 @@ const PasswordField = (props) => {
                             {
                                 pattern: {
                                     value: PASSWORD_PATTERN,
-                                    message: 'Пароль не відповідає вимогам'
+                                    message: errorMessages.invalidPassword
                                 },
                                 validate: name === 'reNewPassword' ?
                                     (value) => {
                                         return value === watch('newPassword') ||
                                             value === '' ||
-                                            'Паролі не співпадають';
+                                            errorMessages.passwordsDontMatch;
                                     } :
                                     null
                             })}
