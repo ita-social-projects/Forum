@@ -17,8 +17,8 @@ export default function ChangePassword(props) {
         register,
         handleSubmit,
         getValues,
-        setValue,
         watch,
+        reset,
         formState: { errors, isDirty },
       } = useForm({
         mode: 'all',
@@ -46,9 +46,7 @@ export default function ChangePassword(props) {
         })
             .then(() => toast.success('Пароль успішно змінено'))
             .catch(() => toast.error('Виникла помилка. Можливо, вказано невірний поточний пароль'));
-            setValue('currentPassword', '');
-            setValue('newPassword', '');
-            setValue('reNewPassword', '');
+            reset();
     };
 
     return (
