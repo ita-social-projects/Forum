@@ -1,29 +1,18 @@
 from rest_framework import serializers
 from authentication.models import CustomUser
-from profiles.models import (
-    Profile,
-    Region,
-)
+from profiles.models import Profile
 
 
-class AdminRegionSerialaizer(serializers.ModelSerializer):
-    class Meta:
-        model = Region
-        fields = (
-            "id",
-            "name_ukr",
-        )
+class AdminRegionSerialaizer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name_ukr = serializers.CharField(read_only=True)
 
 
-class AdminUserListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = (
-            "id",
-            "email",
-            "name",
-            "surname",
-        )
+class AdminUserListSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    email = serializers.CharField(read_only=True)
+    name = serializers.CharField(read_only=True)
+    surname = serializers.CharField(read_only=True)
 
 
 class AdminUserDetailSerializer(serializers.ModelSerializer):
@@ -45,26 +34,19 @@ class AdminUserDetailSerializer(serializers.ModelSerializer):
         return True if hasattr(obj, "profile") else False
 
 
-class AdminCompanyListSerializer(serializers.ModelSerializer):
+class AdminCompanyListSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(read_only=True)
+    is_registered = serializers.BooleanField(read_only=True)
+    is_startup = serializers.BooleanField(read_only=True)
     person = AdminUserDetailSerializer(read_only=True)
+    person_position = serializers.CharField(read_only=True)
     regions = AdminRegionSerialaizer(many=True, read_only=True)
-
-    class Meta:
-        model = Profile
-        fields = (
-            "id",
-            "name",
-            "is_registered",
-            "is_startup",
-            "person",
-            "person_position",
-            "regions",
-            "official_name",
-            "phone",
-            "edrpou",
-            "address",
-            "is_deleted",
-        )
+    official_name = serializers.CharField(read_only=True)
+    phone = serializers.CharField(read_only=True)
+    edrpou = serializers.CharField(read_only=True)
+    address = serializers.CharField(read_only=True)
+    is_deleted = serializers.BooleanField(read_only=True)
 
 
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
