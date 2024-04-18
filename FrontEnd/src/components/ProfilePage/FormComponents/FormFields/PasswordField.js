@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import EyeInvisible from '../../../authorization/EyeInvisible';
 import EyeVisible from '../../../authorization/EyeVisible';
 import css from './PasswordField.module.css';
+import { PASSWORD_PATTERN } from '../../../../constants/constants';
 
 const PasswordField = (props) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -10,14 +11,13 @@ const PasswordField = (props) => {
     const togglePassword = () => {
         setShowPassword(!showPassword);
     };
-
+    const { register, name, error, showError, watch } = props;
     return (
         <div className={css['password-field__item']}>
             <div className={css['password-field__label-wrapper']}>
-                {props.requiredField &&
                 <span>
                     *
-                </span>}
+                </span>
                 <label
                     htmlFor={props.inputId}
                 >
@@ -27,13 +27,22 @@ const PasswordField = (props) => {
             <div className={css['password-field__password']}>
                 <div className={css['password-field__password__wrapper']}>
                     <input
-                        id={props.inputId}
-                        name={props.name}
                         type={showPassword ? 'text' : 'password'}
-                        value={props.value}
-                        onChange={props.updateHandler}
                         placeholder={props.label}
-                        required={props.requiredField}
+                        {...register(name,
+                            {
+                                pattern: {
+                                    value: PASSWORD_PATTERN,
+                                    message: 'Пароль не відповідає вимогам'
+                                },
+                                validate: name === 'reNewPassword' ?
+                                    (value) => {
+                                        return value === watch('newPassword') ||
+                                            value === '' ||
+                                            'Паролі не співпадають';
+                                    } :
+                                    null
+                            })}
                     />
                 </div>
                 <span
@@ -44,10 +53,12 @@ const PasswordField = (props) => {
                     {!showPassword ? <EyeInvisible /> : <EyeVisible />}
                 </span>
             </div>
-            {(props.requiredField && props.error) &&
+            {(error[name] && showError) ?
                 <div className={css['error-message']}>
-                    {props.error}
+                    {error[name].message}
                 </div>
+                :
+                null
             }
         </div>
     );
@@ -56,11 +67,11 @@ const PasswordField = (props) => {
 PasswordField.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    updateHandler: PropTypes.func.isRequired,
-    value: PropTypes.string,
-    inputId: PropTypes.string,
-    requiredField: PropTypes.bool,
-    error: PropTypes.string
+    register: PropTypes.func.isRequired,
+    watch: PropTypes.func.isRequired,
+    inputId: PropTypes.string.isRequired,
+    showError: PropTypes.bool.isRequired,
+    error: PropTypes.object
 };
 
 export default PasswordField;

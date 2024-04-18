@@ -1,90 +1,90 @@
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
 import { toast } from 'react-toastify';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useContext } from 'react';
+import { useForm } from 'react-hook-form';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import PasswordField from './FormFields/PasswordField';
 import Loader from '../../loader/Loader';
 import css from './ChangePassword.module.css';
-import { PASSWORD_PATTERN } from '../../../constants/constants';
 
 
 export default function ChangePassword(props) {
-    const [formData, setFormData] = useState({ currentPassword: '', newPassword: '', reNewPassword: '' });
-    const [passwordsDontMatchError, setPasswordsDontMatchError] = useState(null);
-    const [invalidPasswordError, setInvalidPasswordError] = useState(null);
     const { setFormIsDirty } = useContext(DirtyFormContext);
     const { currentFormNameHandler, curForm } = props;
+    const {
+        register,
+        handleSubmit,
+        getValues,
+        setValue,
+        watch,
+        formState: { errors, isDirty },
+      } = useForm({
+        mode: 'all',
+        defaultValues: {
+            currentPassword: '',
+            newPassword: '',
+            reNewPassword: ''
+        }
+      });
 
     useEffect(() => {
       currentFormNameHandler(curForm);
     }, [currentFormNameHandler, curForm]);
 
     useEffect(() => {
-        setFormIsDirty(Object.keys(formData).some((field) => formData[field] !== ''));
-    }, [formData]
+        setFormIsDirty(isDirty);
+    }, [isDirty, setFormIsDirty]
     );
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!invalidPasswordError && !passwordsDontMatchError) {
-            axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/set_password/`, {
-                current_password: formData.currentPassword,
-                new_password: formData.newPassword,
-                re_new_password: formData.reNewPassword
-            })
-                .then(() => toast.success('Пароль успішно змінено'))
-                .catch(() => toast.error('Виникла помилка. Можливо, вказано невірний поточний пароль'));
-            setFormData({ currentPassword: '', newPassword: '', reNewPassword: '' });
-        }
-    };
-
-    const handleInputChange = (e) => {
-        e.preventDefault();
-        const { name, value } = e.target;
-        const newFormData = { ...formData, [name]: value };
-
-        const newInvalidPasswordError = newFormData.newPassword !== '' && !PASSWORD_PATTERN.test(newFormData.newPassword)
-            ? 'Пароль не відповідає вимогам'
-            : null;
-
-        const newPasswordsDontMatchError = newFormData.reNewPassword !== '' && newFormData.newPassword !== newFormData.reNewPassword
-            ? 'Паролі не співпадають'
-            : null;
-
-        setFormData(newFormData);
-        setInvalidPasswordError(newInvalidPasswordError);
-        setPasswordsDontMatchError(newPasswordsDontMatchError);
+    const handleFormSubmit = () => {
+        axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/set_password/`, {
+            current_password: getValues('currentPassword'),
+            new_password: getValues('newPassword'),
+            re_new_password: getValues('reNewPassword')
+        })
+            .then(() => toast.success('Пароль успішно змінено'))
+            .catch(() => toast.error('Виникла помилка. Можливо, вказано невірний поточний пароль'));
+            setValue('currentPassword', '');
+            setValue('newPassword', '');
+            setValue('reNewPassword', '');
     };
 
     return (
         <div className={css['form__container']}>
             {props.user
                 ?
-                <form id="ChangePassword" onSubmit={handleSubmit}>
+                <form id="ChangePassword" onSubmit={handleSubmit(handleFormSubmit)}>
                     <PasswordField
+                        inputId="currentPassword"
                         name="currentPassword"
                         label="Поточний пароль"
-                        updateHandler={handleInputChange}
-                        value={formData.currentPassword}
                         requiredField={true}
+                        register={register}
+                        error={errors}
+                        showError={false}
+                        watch={watch}
                     />
                     <PasswordField
+                        inputId="newPassword"
                         name="newPassword"
                         label="Новий пароль"
-                        updateHandler={handleInputChange}
-                        value={formData.newPassword}
                         requiredField={true}
-                        error={invalidPasswordError}
+                        error={errors}
+                        register={register}
+                        showError={true}
+                        watch={watch}
                     />
                     <PasswordField
+                        inputId="reNewPassword"
                         name="reNewPassword"
                         label="Повторіть новий пароль"
-                        updateHandler={handleInputChange}
-                        value={formData.reNewPassword}
                         requiredField={true}
-                        error={passwordsDontMatchError}
+                        error={errors}
+                        register={register}
+                        showError={true}
+                        watch={watch}
                     />
                 </form>
                 : <Loader />
