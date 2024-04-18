@@ -18,7 +18,15 @@ const PasswordField = (props) => {
         setShowPassword(!showPassword);
     };
 
-    const { register, name, error, showError, watch } = props;
+    const {
+        register,
+        name,
+        error,
+        showError,
+        watch,
+        label,
+        inputId
+    } = props;
 
     return (
         <div className={css['password-field__item']}>
@@ -27,16 +35,16 @@ const PasswordField = (props) => {
                     *
                 </span>
                 <label
-                    htmlFor={props.inputId}
+                    htmlFor={inputId}
                 >
-                    {props.label}
+                    {label}
                 </label>
             </div>
             <div className={css['password-field__password']}>
                 <div className={css['password-field__password__wrapper']}>
                     <input
                         type={showPassword ? 'text' : 'password'}
-                        placeholder={props.label}
+                        placeholder={label}
                         {...register(name,
                             {
                                 pattern: {
