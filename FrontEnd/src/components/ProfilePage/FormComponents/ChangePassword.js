@@ -62,6 +62,13 @@ export default function ChangePassword(props) {
                         error={errors}
                         showError={false}
                         watch={watch}
+                        checkValid={false}
+                        checkMatch={
+                            {
+                                isCheck: false,
+                                checkWith: null
+                            }
+                        }
                     />
                     <PasswordField
                         inputId="newPassword"
@@ -71,6 +78,13 @@ export default function ChangePassword(props) {
                         register={register}
                         showError={true}
                         watch={watch}
+                        checkValid={true}
+                        checkMatch={
+                            {
+                                isCheck: false,
+                                checkWith: null
+                            }
+                        }
                     />
                     <PasswordField
                         inputId="reNewPassword"
@@ -80,6 +94,13 @@ export default function ChangePassword(props) {
                         register={register}
                         showError={true}
                         watch={watch}
+                        checkValid={false}
+                        checkMatch={
+                            {
+                                isCheck: true,
+                                checkWith: 'newPassword'
+                            }
+                        }
                     />
                 </form>
                 : <Loader />

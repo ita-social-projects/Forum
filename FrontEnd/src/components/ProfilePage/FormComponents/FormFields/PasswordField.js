@@ -25,7 +25,9 @@ const PasswordField = (props) => {
         showError,
         watch,
         label,
-        inputId
+        inputId,
+        checkValid,
+        checkMatch
     } = props;
 
     return (
@@ -43,17 +45,18 @@ const PasswordField = (props) => {
             <div className={css['password-field__password']}>
                 <div className={css['password-field__password__wrapper']}>
                     <input
+                        id={inputId}
                         type={showPassword ? 'text' : 'password'}
                         placeholder={label}
                         {...register(name,
                             {
-                                pattern: {
+                                pattern: checkValid && {
                                     value: PASSWORD_PATTERN,
                                     message: errorMessages.invalidPassword
                                 },
-                                validate: name === 'reNewPassword' ?
+                                validate: checkMatch.isCheck ?
                                     (value) => {
-                                        return value === watch('newPassword') ||
+                                        return value === watch(checkMatch.checkWith) ||
                                             value === '' ||
                                             errorMessages.passwordsDontMatch;
                                     } :
@@ -87,7 +90,12 @@ PasswordField.propTypes = {
     watch: PropTypes.func.isRequired,
     inputId: PropTypes.string.isRequired,
     showError: PropTypes.bool.isRequired,
-    error: PropTypes.object
+    error: PropTypes.object,
+    checkValid: PropTypes.bool.isRequired,
+    checkMatch: PropTypes.shape({
+        isCheck: PropTypes.bool.isRequired,
+        checkWith: PropTypes.string
+    })
 };
 
 export default PasswordField;
