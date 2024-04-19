@@ -218,7 +218,7 @@ DJOSER = {
     },
     "EMAIL": {
         "activation": "authentication.email.CustomActivationEmail",
-        "password_reset": "authentication.email.CustomPasswordResetEmail"
+        "password_reset": "authentication.email.CustomPasswordResetEmail",
     },
 }
 
