@@ -217,9 +217,9 @@ DJOSER = {
         "token_create": "authentication.serializers.CustomTokenCreateSerializer",
     },
     "EMAIL": {
-        "activation": "authentication.email.CustomActivationEmail" ,
+        "activation": "authentication.email.CustomActivationEmail",
         "password_reset": "authentication.email.CustomPasswordResetEmail"
-    }
+    },
 }
 
 DELAY_FOR_LOGIN = 600  # delay time for login in seconds
