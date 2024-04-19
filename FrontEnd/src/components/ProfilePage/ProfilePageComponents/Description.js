@@ -9,6 +9,7 @@ const DESCRIPTIONS = {
     'AdditionalInfo': 'Інформація про компанію',
     'StartupInfo': 'Інформація про стартап',
     'Delete': 'Видалення профілю',
+    'ChangePassword': 'Зміна паролю користувача'
 };
 
 const Description = (props) => {
