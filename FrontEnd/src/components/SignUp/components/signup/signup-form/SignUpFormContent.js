@@ -25,9 +25,13 @@ export function SignUpFormContentComponent(props) {
 
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
-    email: 'Email не відповідає вимогам',
+    requiredRepresentative: 'Будь ласка, оберіть кого ви представляєте',
+    email: 'Електронна пошта не відповідає вимогам',
     password: 'Пароль не відповідає вимогам',
     confirmPassword: 'Паролі не збігаються',
+    minNameSurnameLength: 'Введіть як мінімум 2 символи',
+    maxNameSurnameLength: 'Введіть не більше 50 символів',
+    notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
   };
 
   const {
@@ -70,10 +74,22 @@ export function SignUpFormContentComponent(props) {
       setValue('yurosoba', false);
     }
     if (!getValues('yurosoba') && !getValues('fop')) {
-      setError('businessEntity', { type: 'manual', message: errorMessageTemplates.required });
+      setError('businessEntity', { type: 'manual', message: errorMessageTemplates.requiredRepresentative });
     } else {
       clearErrors('businessEntity');
     }
+  };
+
+  const validateNameSurname = (value) => {
+    const pattern = /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/;
+    if (!pattern.test(value)) {
+      return errorMessageTemplates.notAllowedSymbols;
+    } else if (value.length < 2) {
+      return errorMessageTemplates.minNameSurnameLength;
+    } else if (value.length > 50) {
+      return errorMessageTemplates.maxNameSurnameLength;
+    }
+    return true;
   };
 
   useEffect(() => {
@@ -284,10 +300,9 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Прізвище"
                 {...register('surname', {
                   required: errorMessageTemplates.required,
-                  pattern: {
-                    value: NAME_SURNAME_PATTERN,
+                  validate: validateNameSurname,
                 },
-                })}
+                )}
               />
             </Tooltip>
             </div>
@@ -313,10 +328,9 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Ім‘я"
                 {...register('name', {
                   required: errorMessageTemplates.required,
-                  pattern: {
-                    value: NAME_SURNAME_PATTERN,
+                  validate: validateNameSurname,
                 },
-                })}
+                )}
               />
             </Tooltip>
             </div>
@@ -345,7 +359,7 @@ export function SignUpFormContentComponent(props) {
                         name="company"
                         value={'company'}
                         {...register('representative', {
-                          required: errorMessageTemplates.required
+                          required: errorMessageTemplates.requiredRepresentative
                         })}
                       />
                     </div>
@@ -364,7 +378,7 @@ export function SignUpFormContentComponent(props) {
                         name="startup"
                         value={'startup'}
                         {...register('representative', {
-                          required: errorMessageTemplates.required
+                          required: errorMessageTemplates.requiredRepresentative
                         })}
                       />
                     </div>
@@ -379,7 +393,7 @@ export function SignUpFormContentComponent(props) {
               {errors.representative && errors.representative.message}
             </div>
           </div>
-          <div className={styles['representative']}>
+          <div className={`${styles.representative} ${styles.business_entity}`}>
             <div className={styles['representative__title']}>
               <label className={styles['signup-form__label--required']}>
                 *
