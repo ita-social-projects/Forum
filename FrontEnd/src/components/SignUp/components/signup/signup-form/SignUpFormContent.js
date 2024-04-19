@@ -393,7 +393,7 @@ export function SignUpFormContentComponent(props) {
               {errors.representative && errors.representative.message}
             </div>
           </div>
-          <div className={`${styles.representative} ${styles.business_entity}`}>
+          <div className={styles['representative']}>
             <div className={styles['representative__title']}>
               <label className={styles['signup-form__label--required']}>
                 *
