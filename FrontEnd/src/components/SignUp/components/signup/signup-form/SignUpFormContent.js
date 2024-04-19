@@ -63,12 +63,10 @@ export function SignUpFormContentComponent(props) {
   };
 
   const onChangeCheckbox = (event) => {
-    const { name } = event.target;
-    if (name === 'yurosoba') {
-      setValue('fop', false);
-    } else if (name === 'fop') {
-      setValue('yurosoba', false);
-    }
+    const { name, checked } = event.target;
+    setValue(name, checked);
+    const otherOption = name === 'yurosoba' ? 'fop' : 'yurosoba';
+    setValue(otherOption, false);
     if (!getValues('yurosoba') && !getValues('fop')) {
       setError('businessEntity', { type: 'manual', message: errorMessageTemplates.required });
     } else {
@@ -92,7 +90,7 @@ export function SignUpFormContentComponent(props) {
         name: getValues('companyName'),
         is_registered: (getValues('representative').indexOf('company') > -1),
         is_startup: (getValues('representative').indexOf('startup') > -1),
-        is_fop: (getValues('fop').indexOf('fop') > -1),
+        is_fop: (getValues('fop')),
       },
     };
 
