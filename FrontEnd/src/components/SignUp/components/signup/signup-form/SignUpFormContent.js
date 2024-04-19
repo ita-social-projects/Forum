@@ -393,8 +393,6 @@ export function SignUpFormContentComponent(props) {
                     >
                       <input
                         type="checkbox"
-                        name="yurosoba"
-                        value={'yurosoba'}
                         {...register('yurosoba', {
                           onChange: onChangeCheckbox
                         })}
@@ -412,8 +410,6 @@ export function SignUpFormContentComponent(props) {
                     >
                       <input
                         type="checkbox"
-                        name="fop"
-                        value={'fop'}
                         {...register('fop', {
                           onChange: onChangeCheckbox
                         })}
