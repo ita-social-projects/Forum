@@ -35,8 +35,6 @@ const UserInfo = (props) => {
     const [formStateErr, setFormStateErr] = useState(ERRORS);
     const { setFormIsDirty } = useContext(DirtyFormContext);
 
-    // TODO: update default values as new fields added
-
     const fields = {
         'surname': {defaultValue: user?.surname ?? '', context: 'user'},
         'name': {defaultValue: user?.name ?? '', context: 'user'},
@@ -70,24 +68,54 @@ const UserInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
+        if (user.name.length < 2 || user.surname.length < 2) {
+            isValid = false;
+        }
+        if (profile.person_position !== 0 && profile.person_position < 2) {
+            isValid = false;
+        }
         return isValid;
     };
 
+    const errorMessageTemplates = {
+        fieldLength: 'Введіть від 2 до 50 символів',
+        notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
+      };
+
     const onUpdateField = e => {
-        if (e.target.name === 'person_position') {
-            setUpdateProfile((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
-            });
+        const patterns = {
+            'person_position': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ' -]*$/,
+            'name': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/,
+            'surname': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/
+        };
+        const { value: fieldValue, name: fieldName } = e.target;
+        const isValidLength = fieldValue.length >= 2 || (fieldName === 'person_position' && fieldValue.length === 0);
+        const isValidPattern = patterns[fieldName].test(fieldValue);
+        let errorMessage = '';
+
+        if (fieldValue && !isValidPattern) {
+            errorMessage = errorMessageTemplates.notAllowedSymbols;
+        } else if (!isValidLength) {
+            errorMessage = errorMessageTemplates.fieldLength;
+        }
+
+        setFormStateErr(prevState => ({
+            ...prevState,
+            [fieldName]: { 'error': !isValidLength || !isValidPattern, 'message': errorMessage }
+        }));
+
+        if (fieldName === 'person_position') {
+            setUpdateProfile(prevState => ({ ...prevState, [fieldName]: fieldValue }));
         } else {
-            setUpdateUser((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
-            });
+            setUpdateUser(prevState => ({ ...prevState, [fieldName]: fieldValue }));
         }
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (checkRequiredFields()) {
+        if (!checkRequiredFields()) {
+            toast.error('Зміни не можуть бути збережені, перевірте правильність заповнення полів');
+        } else {
             axios.all([
                 axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
                     surname: updateUser.surname,
@@ -127,6 +155,7 @@ const UserInfo = (props) => {
                                 error={formStateErr['surname']['error'] ? formStateErr['surname']['message'] : null}
                                 requredField={true}
                                 value={updateUser.surname}
+                                maxLength={50}
                             />
                             <HalfFormField
                                 inputType="text"
@@ -136,6 +165,7 @@ const UserInfo = (props) => {
                                 error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
                                 requredField={true}
                                 value={updateUser.name}
+                                maxLength={50}
                             />
                         </div>
                         <div className={css['fields-groups']}>
@@ -144,6 +174,7 @@ const UserInfo = (props) => {
                                 name="person_position"
                                 label={LABELS.person_position}
                                 updateHandler={onUpdateField}
+                                error={formStateErr['person_position']?.['error'] ? formStateErr['person_position']['message'] : null}
                                 requredField={false}
                                 value={updateProfile.person_position ?? ''}
                             />
