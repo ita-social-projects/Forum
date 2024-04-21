@@ -44,7 +44,7 @@ export default function MultipleSelectChip(props) {
 }
 
 MultipleSelectChip.propTypes = {
-    requredField: PropTypes.bool.isRequired,
+    requredField: PropTypes.bool,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.array,
