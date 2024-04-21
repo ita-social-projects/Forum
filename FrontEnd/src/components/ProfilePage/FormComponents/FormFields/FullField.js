@@ -21,6 +21,7 @@ const FullField = (props) => {
                     onChange={props.updateHandler}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}
+                    maxLength={props.maxLength}
                 />
             </div>
             {(props.requredField || props.error)  &&
