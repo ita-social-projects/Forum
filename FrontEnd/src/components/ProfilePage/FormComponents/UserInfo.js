@@ -68,10 +68,11 @@ const UserInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
+
         if (user.name.length < 2 || user.surname.length < 2) {
             isValid = false;
         }
-        if (profile.person_position !== 0 && profile.person_position < 2) {
+        if (profile.person_position.length !== 0 && profile.person_position.length < 2) {
             isValid = false;
         }
         return isValid;
