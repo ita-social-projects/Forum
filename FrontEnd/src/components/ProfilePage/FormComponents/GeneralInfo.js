@@ -116,6 +116,12 @@ const GeneralInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
+        if (profile.official_name.length !== 0 && profile.official_name.length < 2) {
+            isValid = false;
+        }
+        if (profile.name.length < 2) {
+            isValid = false;
+        }
         if (profile.edrpou) {
             try {
                 validateEdrpou(profile.edrpou);
@@ -140,8 +146,17 @@ const GeneralInfo = (props) => {
     };
 
     const onUpdateField = e => {
+        const fieldValue = e.target.value;
+        const fieldName = e.target.name;
+        setFormStateErr({ ...formStateErr, [fieldName]: {'error': false, 'message': ''}});
+        if (fieldName === 'name' && fieldValue.length < 2) {
+            setFormStateErr({ ...formStateErr, [fieldName]: {'error': true, 'message': 'Введіть від 2 до 100 символів'}});
+        }
+        if (fieldName === 'official_name' && fieldValue.length !== 0 && fieldValue.length < 2) {
+            setFormStateErr({ ...formStateErr, [fieldName]: {'error': true, 'message': 'Введіть від 2 до 200 символів'}});
+        }
         setProfile((prevState) => {
-            return { ...prevState, [e.target.name]: e.target.value };
+            return { ...prevState, [fieldName]: fieldValue };
         });
     };
 
@@ -315,7 +330,9 @@ const GeneralInfo = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (checkRequiredFields()) {
+        if (!checkRequiredFields()) {
+            toast.error('Зміни не можуть бути збережені, перевірте правильність заповнення полів');
+        } else {
             try {
                 const response = await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
                     name: profile.name,
@@ -353,9 +370,10 @@ const GeneralInfo = (props) => {
                                 name="name"
                                 label={LABELS.name}
                                 updateHandler={onUpdateField}
-                                error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
+                                error={formStateErr['name']?.['error'] ? formStateErr['name']['message'] : null}
                                 requredField={true}
                                 value={profile.name}
+                                maxLength={100}
                             />
                         </div>
                         <FullField
@@ -363,6 +381,8 @@ const GeneralInfo = (props) => {
                             label={LABELS.official_name}
                             updateHandler={onUpdateField}
                             value={profile.official_name ?? ''}
+                            error={formStateErr['official_name']?.['error'] ? formStateErr['official_name']['message'] : null}
+                            maxLength={200}
                         />
                         <div className={css['fields-groups']}>
                             {mainProfile?.is_fop ?
