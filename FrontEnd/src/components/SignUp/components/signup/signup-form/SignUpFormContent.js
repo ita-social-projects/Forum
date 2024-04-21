@@ -1,6 +1,7 @@
 import React, { useEffect, useState ,  Suspense} from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Tooltip } from 'antd';
 import EyeInvisible from '../../../../authorization/EyeInvisible';
@@ -29,8 +30,7 @@ export function SignUpFormContentComponent(props) {
     email: 'Електронна пошта не відповідає вимогам',
     password: 'Пароль не відповідає вимогам',
     confirmPassword: 'Паролі не збігаються',
-    minNameSurnameLength: 'Введіть як мінімум 2 символи',
-    maxNameSurnameLength: 'Введіть не більше 50 символів',
+    minFieldLength: 'Введіть як мінімум 2 символи',
     notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
   };
 
@@ -83,9 +83,7 @@ export function SignUpFormContentComponent(props) {
     if (!pattern.test(value)) {
       return errorMessageTemplates.notAllowedSymbols;
     } else if (value.length < 2) {
-      return errorMessageTemplates.minNameSurnameLength;
-    } else if (value.length > 50) {
-      return errorMessageTemplates.maxNameSurnameLength;
+      return errorMessageTemplates.minFieldLength;
     }
     return true;
   };
@@ -125,6 +123,9 @@ export function SignUpFormContentComponent(props) {
             message: 'Вже зареєстрована пошта',
           });
         }
+        if (error.response && error.response.status === 400) {
+          toast.error('Не вдалося зареєструвати користувача, сталася помилка');
+        }
       });
   };
 
@@ -162,7 +163,9 @@ export function SignUpFormContentComponent(props) {
                     pattern: {
                       value: COMPANY_NAME_PATTERN,
                     },
+                    minLength: {value: 2, message: errorMessageTemplates.minFieldLength}
                   })}
+                  maxLength={100}
                 />
               </Tooltip>
             </div>
@@ -226,6 +229,7 @@ export function SignUpFormContentComponent(props) {
                     message: errorMessageTemplates.password,
                   },
                 })}
+                maxLength={50}
               />
               <span
                 className={styles['password-visibility']}
@@ -264,6 +268,7 @@ export function SignUpFormContentComponent(props) {
                       ? errorMessageTemplates.confirmPassword
                       : null,
                 })}
+                maxLength={50}
               />
               <span
                 className={styles['password-visibility']}
@@ -301,6 +306,7 @@ export function SignUpFormContentComponent(props) {
                   validate: validateNameSurname,
                 },
                 )}
+                maxLength={50}
               />
             </Tooltip>
             </div>
@@ -329,6 +335,7 @@ export function SignUpFormContentComponent(props) {
                   validate: validateNameSurname,
                 },
                 )}
+                maxLength={50}
               />
             </Tooltip>
             </div>
