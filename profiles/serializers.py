@@ -293,19 +293,9 @@ class ProfileDeleteSerializer(serializers.Serializer):
         return data
 
 
-class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
-    email = serializers.ReadOnlyField(source="person.email")
-
-    class Meta:
-        model = Profile
-        fields = (
-            "phone",
-            "email",
-        )
-        read_only_fields = (
-            "phone",
-            "email",
-        )
+class ProfileSensitiveDataROSerializer(serializers.Serializer):
+    email = serializers.CharField(source="person.email", read_only=True)
+    phone = serializers.CharField(read_only=True)
 
 
 class SavedCompanySerializer(serializers.ModelSerializer):
@@ -336,7 +326,7 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
     def get_user_profile_name(self, obj) -> str:
         if obj.user:
             return obj.user_profile_name
-        return
+        return None
 
     def get_company_name(self, obj) -> str:
         return obj.company_name
