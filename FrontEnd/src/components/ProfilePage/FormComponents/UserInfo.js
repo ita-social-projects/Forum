@@ -1,13 +1,16 @@
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import { useState, useEffect } from 'react';
-import { useContext } from 'react';
-import { DirtyFormContext } from  '../../../context/DirtyFormContext';
-import { useAuth, useProfile } from '../../../hooks/';
+import {toast} from 'react-toastify';
+import {useState, useEffect} from 'react';
+import {useContext} from 'react';
+import {DirtyFormContext} from '../../../context/DirtyFormContext';
+import {useAuth, useProfile} from '../../../hooks/';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
 import css from './FormComponents.module.css';
+import {Tooltip} from 'antd';
+
+const N = 10;
 
 const LABELS = {
     'surname': 'Прізвище',
@@ -28,12 +31,12 @@ const ERRORS = {
 };
 
 const UserInfo = (props) => {
-    const { user, mutate: userMutate } = useAuth();
-    const { profile, mutate: profileMutate } = useProfile();
+    const {user, mutate: userMutate} = useAuth();
+    const {profile, mutate: profileMutate} = useProfile();
     const [updateUser, setUpdateUser] = useState(props.user);
     const [updateProfile, setUpdateProfile] = useState(props.profile);
     const [formStateErr, setFormStateErr] = useState(ERRORS);
-    const { setFormIsDirty } = useContext(DirtyFormContext);
+    const {setFormIsDirty} = useContext(DirtyFormContext);
 
     // TODO: update default values as new fields added
 
@@ -46,7 +49,7 @@ const UserInfo = (props) => {
     useEffect(() => {
         const isDirty = checkFormIsDirty(fields, updateUser, updateProfile);
         setFormIsDirty(isDirty);
-      }, [user, profile, updateUser, updateProfile]);
+    }, [user, profile, updateUser, updateProfile]);
 
     useEffect(() => {
         props.currentFormNameHandler(props.curForm);
@@ -69,18 +72,18 @@ const UserInfo = (props) => {
                 };
             }
         }
-        setFormStateErr({ ...formStateErr, ...newFormState });
+        setFormStateErr({...formStateErr, ...newFormState});
         return isValid;
     };
 
     const onUpdateField = e => {
         if (e.target.name === 'person_position') {
             setUpdateProfile((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
+                return {...prevState, [e.target.name]: e.target.value};
             });
         } else {
             setUpdateUser((prevState) => {
-                return { ...prevState, [e.target.name]: e.target.value };
+                return {...prevState, [e.target.name]: e.target.value};
             });
         }
     };
@@ -92,23 +95,23 @@ const UserInfo = (props) => {
                 axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, {
                     surname: updateUser.surname,
                     name: updateUser.name
-                    }),
+                }),
                 axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
-                person_position: updateProfile.person_position ,
+                    person_position: updateProfile.person_position,
                 })
             ])
-            .then(axios.spread((updatedUserData , updatedProfileData ) => {
-                userMutate(updatedUserData .data);
-                profileMutate(updatedProfileData .data);
-                setFormIsDirty(false);
-                toast.success('Зміни успішно збережено');
-            }))
-            .catch((error) => {
-                console.error('Помилка:', error.response ? error.response.data : error.message);
-                if (!error.response || error.response.status !== 401) {
-                    toast.error('Не вдалося зберегти зміни, сталася помилка');
-                }
-            });
+                .then(axios.spread((updatedUserData, updatedProfileData) => {
+                    userMutate(updatedUserData.data);
+                    profileMutate(updatedProfileData.data);
+                    setFormIsDirty(false);
+                    toast.success('Зміни успішно збережено');
+                }))
+                .catch((error) => {
+                    console.error('Помилка:', error.response ? error.response.data : error.message);
+                    if (!error.response || error.response.status !== 401) {
+                        toast.error('Не вдалося зберегти зміни, сталася помилка');
+                    }
+                });
         }
     };
 
@@ -147,17 +150,24 @@ const UserInfo = (props) => {
                                 requredField={false}
                                 value={updateProfile.person_position ?? ''}
                             />
-                            <HalfFormField
-                                inputType="text"
-                                name="email"
-                                label={LABELS.email}
-                                requredField={true}
-                                value={updateUser.email}
-                            />
+                            <Tooltip title={updateUser.email} placement="bottom"
+                                     visible={updateUser.email.length > N}>
+                                <HalfFormField
+                                    inputType="text"
+                                    name="email"
+                                    label={LABELS.email}
+                                    requiredField={true}
+                                    value={
+                                        updateUser.email.length > N
+                                            ? `${updateUser.email.slice(0, N)}...`
+                                            : updateUser.email
+                                    }
+                                />
+                            </Tooltip>
                         </div>
                     </div>
                 </form>
-                : <Loader />
+                : <Loader/>
             }
         </div>
     );

@@ -8,6 +8,7 @@ import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import {Tooltip} from 'antd';
 
+const N = 10;
 function PhoneEmail({ profileId, personId }) {
   const [isContactsShown, setContactsShown] = useState(false);
   const [isPhoneCopied, setIsPhoneCopied] = useState(false);
@@ -80,9 +81,9 @@ function PhoneEmail({ profileId, personId }) {
                }
               </p>
               <p className={classes['contact-container']}>
-               {profileData.email.length > 10 ? (
+               {profileData.email.length > N ? (
                   <Tooltip title={profileData.email} placement="bottom">
-                    <span>{`${profileData.email.slice(0, 10)}...`}</span>
+                    <span>{`${profileData.email.slice(0, N)}...`}</span>
                   </Tooltip>
                 ) : (
                   <span>{profileData.email}</span>
