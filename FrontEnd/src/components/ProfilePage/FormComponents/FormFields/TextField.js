@@ -1,6 +1,13 @@
 import css from './TextField.module.css';
 
 const TextField = (props) => {
+
+    const onKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+        }
+    };
+
     return (
         <div className={css['fields__column']}>
             <div className={css['fields__label']}>
@@ -18,6 +25,7 @@ const TextField = (props) => {
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
                     onChange={props.updateHandler}
+                    onKeyDown={onKeyDown}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}
                 ></textarea>

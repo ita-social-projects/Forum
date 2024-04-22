@@ -18,6 +18,12 @@ const PasswordField = (props) => {
         setShowPassword(!showPassword);
     };
 
+    const onKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+        }
+    };
+
     const {
         register,
         name,
@@ -45,6 +51,7 @@ const PasswordField = (props) => {
             <div className={css['password-field__password']}>
                 <div className={css['password-field__password__wrapper']}>
                     <input
+                        onKeyDown={onKeyDown}
                         id={inputId}
                         type={showPassword ? 'text' : 'password'}
                         placeholder={label}

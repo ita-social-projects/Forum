@@ -3,6 +3,13 @@ import { Checkbox } from 'antd';
 import css from './CheckBoxField.module.css';
 
 const CheckBoxField = (props) => {
+
+    const onKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+        }
+    };
+
     return (
         <div className={css['representative']}>
             <div className={css['representative__label']}>
@@ -19,6 +26,7 @@ const CheckBoxField = (props) => {
                         <Checkbox
                             name={props.nameRegister}
                             onChange={props.updateHandler}
+                            onKeyDown={onKeyDown}
                             checked={props.valueRegister}
                         />
                         Зареєстрована компанія
@@ -29,6 +37,7 @@ const CheckBoxField = (props) => {
                         <Checkbox
                             name={props.nameStartup}
                             onChange={props.updateHandler}
+                            onKeyDown={onKeyDown}
                             checked={props.valueStartup}
                         />
                         Стартап проект, який шукає інвестиції

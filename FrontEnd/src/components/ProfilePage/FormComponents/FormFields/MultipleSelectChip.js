@@ -4,6 +4,12 @@ import css from './MultipleSelectChip.module.css';
 
 
 export default function MultipleSelectChip(props) {
+
+  const onKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+    }
+};
   return (
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>
@@ -29,6 +35,7 @@ export default function MultipleSelectChip(props) {
             borderRadius: '2px',
           }}
           onChange={props.updateHandler}
+          onKeyDown={onKeyDown}
           options={props.options.map(option => ({
             value: option.name ?? option.name_ukr,
           }))}
