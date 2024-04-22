@@ -10,7 +10,7 @@ function DataContacts ({ data }) {
 
     const companyData = {
         'ЄДРПОУ': data.edrpou,
-        'РНОКПП': data.ipn,
+        'РНОКПП': data.rnokpp,
         'Рік заснування': data.founded,
         'Розмір компанії': '',
         'Аудит': ''

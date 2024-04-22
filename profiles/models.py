@@ -4,7 +4,7 @@ from django.core.validators import MaxLengthValidator
 from authentication.models import CustomUser
 from .managers import ProfileManager
 from validation.validate_edrpou import validate_edrpou
-from validation.validate_ipn import validate_ipn
+from validation.validate_rnokpp import validate_rnokpp
 from validation.validate_foundation_year import validate_foundation_year_range
 from validation.validate_image import (
     validate_image_size,
@@ -62,16 +62,18 @@ class Profile(models.Model):
         blank=True,
         null=True,
     )
-    ipn = models.CharField(
+    rnokpp = models.CharField(
         max_length=10,
         unique=True,
-        validators=[validate_ipn],
+        validators=[validate_rnokpp],
         default=None,
         blank=True,
         null=True,
     )
     founded = models.SmallIntegerField(
-        validators=[validate_foundation_year_range], default=None, null=True
+        validators=[validate_foundation_year_range],
+        default=None,
+        null=True,
     )
     service_info = models.TextField(blank=True, default="")
     product_info = models.TextField(blank=True, default="")

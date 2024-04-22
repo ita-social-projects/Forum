@@ -78,7 +78,7 @@ const GeneralInfo = (props) => {
         'name': {defaultValue: mainProfile?.name},
         'official_name': {defaultValue: mainProfile?.official_name ?? null},
         'edrpou': {defaultValue: mainProfile?.edrpou ?? null},
-        'ipn': {defaultValue: mainProfile?.ipn ?? null},
+        'rnokpp': {defaultValue: mainProfile?.rnokpp ?? null},
         'regions': {defaultValue: mainProfile?.regions ?? [], type: 'array'},
         'categories': {defaultValue: mainProfile?.categories ?? [], type: 'array'},
         'activities': {defaultValue: mainProfile?.activities ?? [], type: 'array'},
@@ -123,9 +123,9 @@ const GeneralInfo = (props) => {
                 isValid = false;
             }
         }
-        if (profile.ipn) {
+        if (profile.rnokpp) {
             try {
-                validateRnokpp(profile.ipn);
+                validateRnokpp(profile.rnokpp);
             } catch (error) {
                 isValid = false;
             }
@@ -169,7 +169,7 @@ const GeneralInfo = (props) => {
         } catch (error) {
           setEdrpouFieldError(error.message);
         }
-      } else if (identifierValue && identifierName === 'ipn') {
+      } else if (identifierValue && identifierName === 'rnokpp') {
         try {
           validateRnokpp(identifierValue);
         } catch (error) {
@@ -295,7 +295,7 @@ const GeneralInfo = (props) => {
 
     const errorMessages = {
         'profile with this edrpou already exists.': 'Компанія з таким ЄДРПОУ вже існує',
-        'profile with this ipn already exists.': 'Фізична особа-підприємець з таким РНОКПП вже існує',
+        'profile with this rnokpp already exists.': 'Фізична особа-підприємець з таким РНОКПП вже існує',
     };
 
     function handleError(error) {
@@ -321,7 +321,7 @@ const GeneralInfo = (props) => {
                     name: profile.name,
                     official_name: profile.official_name,
                     edrpou: profile.edrpou,
-                    ipn: profile.ipn,
+                    rnokpp: profile.rnokpp,
                     regions: profile.regions.map(obj => obj.id),
                     common_info: profile.common_info,
                     is_startup: profile.is_startup,
@@ -368,10 +368,10 @@ const GeneralInfo = (props) => {
                             {mainProfile?.is_fop ?
                                 <HalfFormField
                                     inputType="text"
-                                    name="ipn"
+                                    name="rnokpp"
                                     label={LABELS.rnokpp}
                                     updateHandler={onUpdateIdentifierField}
-                                    value={profile.ipn ?? ''}
+                                    value={profile.rnokpp ?? ''}
                                     error={rnokppFieldError}
                                     maxLength={10}
                                 />
@@ -488,7 +488,7 @@ GeneralInfo.propTypes = {
         name: PropTypes.string.isRequired,
         official_name: PropTypes.string,
         is_fop: PropTypes.bool,
-        ipn: PropTypes.string,
+        rnokpp: PropTypes.string,
         edrpou: PropTypes.string,
         region: PropTypes.string,
         common_info: PropTypes.string,

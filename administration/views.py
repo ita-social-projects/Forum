@@ -55,7 +55,7 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
             return self.http_method_not_allowed(request, *args, **kwargs)
 
 
-class ProfilesListView(ListCreateAPIView):
+class ProfilesListView(ListAPIView):
     """
     List of profiles.
     """

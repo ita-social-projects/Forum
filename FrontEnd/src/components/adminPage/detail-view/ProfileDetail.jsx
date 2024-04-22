@@ -16,7 +16,7 @@ function ProfileDetail() {
         { label: 'Ім\'я', key: 'name' },
         { label: 'person_position', key: 'person_position' },
         { label: 'official_name', key: 'official_name' },
-        { label: 'region', key: 'region' },
+        { label: 'region', key: 'regions' },
         { label: 'phone', key: 'phone' },
         { label: 'edrpou', key: 'edrpou' },
         { label: 'address', key: 'address' },
@@ -69,7 +69,13 @@ function ProfileDetail() {
                 <ul className={css['profile-details-section_info']}>
                     {companyInfo.map((info, index) => (
                         <li key={index}>
-                            {info.label}: {profile[info.key]}
+                            {info.label}: {
+                                Array.isArray(profile[info.key]) ?
+                                    profile[info.key].map(region => (
+                                        <p key={region.id}> {region.name_ukr} </p>
+                                    )) :
+                                    profile[info.key]
+                            }
                         </li>
                     ))}
                     <li>Видалений: {profile.is_deleted ? 'Так' : 'Ні'}</li>
