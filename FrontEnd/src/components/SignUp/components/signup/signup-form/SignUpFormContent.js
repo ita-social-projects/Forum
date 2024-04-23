@@ -30,7 +30,8 @@ export function SignUpFormContentComponent(props) {
     email: 'Електронна пошта не відповідає вимогам',
     password: 'Пароль не відповідає вимогам',
     confirmPassword: 'Паролі не збігаються',
-    minFieldLength: 'Введіть як мінімум 2 символи',
+    nameSurnameFieldLength: 'Введіть від 2 до 50 символів',
+    companyFieldLength: 'Введіть від 2 до 100 символів',
     notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
   };
 
@@ -83,7 +84,7 @@ export function SignUpFormContentComponent(props) {
     if (!pattern.test(value)) {
       return errorMessageTemplates.notAllowedSymbols;
     } else if (value.length < 2) {
-      return errorMessageTemplates.minFieldLength;
+      return errorMessageTemplates.nameSurnameFieldLength;
     }
     return true;
   };
@@ -163,7 +164,7 @@ export function SignUpFormContentComponent(props) {
                     pattern: {
                       value: COMPANY_NAME_PATTERN,
                     },
-                    minLength: {value: 2, message: errorMessageTemplates.minFieldLength}
+                    minLength: {value: 2, message: errorMessageTemplates.companyFieldLength}
                   })}
                   maxLength={100}
                 />
