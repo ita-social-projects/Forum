@@ -50,6 +50,33 @@ const UserInfo = (props) => {
         props.currentFormNameHandler(props.curForm);
     }, []);
 
+    const errorMessageTemplates = {
+        fieldLength: 'Введіть від 2 до 50 символів',
+        notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
+      };
+
+    const validateFields = (fieldName, fieldValue) => {
+        const patterns = {
+            'person_position': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ' -]*$/,
+            'name': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/,
+            'surname': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/
+        };
+        const isValidLength = fieldValue.length >= 2 || (fieldName === 'person_position' && fieldValue.length === 0);
+        const isValidPattern = patterns[fieldName].test(fieldValue);
+        let errorMessage = '';
+
+        if (fieldValue && !isValidPattern) {
+            errorMessage = errorMessageTemplates.notAllowedSymbols;
+        } else if (!isValidLength) {
+            errorMessage = errorMessageTemplates.fieldLength;
+        }
+
+        setFormStateErr(prevState => ({
+            ...prevState,
+            [fieldName]: { 'error': !isValidLength || !isValidPattern, 'message': errorMessage }
+        }));
+    };
+
     const checkRequiredFields = () => {
         let isValid = true;
         const newFormState = {};
@@ -69,42 +96,18 @@ const UserInfo = (props) => {
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
 
-        if (user.name.length < 2 || user.surname.length < 2) {
+        if (updateUser.name.length < 2 || updateUser.surname.length < 2) {
             isValid = false;
         }
-        if (profile.person_position.length !== 0 && profile.person_position.length < 2) {
+        if (updateProfile.person_position.length !== 0 && updateProfile.person_position.length < 2) {
             isValid = false;
         }
         return isValid;
     };
 
-    const errorMessageTemplates = {
-        fieldLength: 'Введіть від 2 до 50 символів',
-        notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
-      };
-
     const onUpdateField = e => {
-        const patterns = {
-            'person_position': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ' -]*$/,
-            'name': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/,
-            'surname': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/
-        };
         const { value: fieldValue, name: fieldName } = e.target;
-        const isValidLength = fieldValue.length >= 2 || (fieldName === 'person_position' && fieldValue.length === 0);
-        const isValidPattern = patterns[fieldName].test(fieldValue);
-        let errorMessage = '';
-
-        if (fieldValue && !isValidPattern) {
-            errorMessage = errorMessageTemplates.notAllowedSymbols;
-        } else if (!isValidLength) {
-            errorMessage = errorMessageTemplates.fieldLength;
-        }
-
-        setFormStateErr(prevState => ({
-            ...prevState,
-            [fieldName]: { 'error': !isValidLength || !isValidPattern, 'message': errorMessage }
-        }));
-
+        validateFields(fieldName, fieldValue);
         if (fieldName === 'person_position') {
             setUpdateProfile(prevState => ({ ...prevState, [fieldName]: fieldValue }));
         } else {
