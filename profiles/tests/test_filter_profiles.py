@@ -269,7 +269,8 @@ class TestProfileFilterActivityType(APITestCase):
             size=self.horecas_number, activities=(self.horeca_activity,)
         )
         self.other_services = ProfileStartupFactory.create_batch(
-            size=self.other_services_number, activities=(self.other_services_activity,)
+            size=self.other_services_number,
+            activities=(self.other_services_activity,),
         )
 
     def test_get_profiles_any_user_filter_producer_count(self):
@@ -399,7 +400,7 @@ class TestProfileFilterActivityType(APITestCase):
                 ]
             )
         )
-    
+
     def test_get_profiles_any_user_filter_other_services_count(self):
         response = self.client.get(
             path="/api/profiles/?activities__name={activity}&page=1&page_size={page_size}".format(
@@ -407,7 +408,9 @@ class TestProfileFilterActivityType(APITestCase):
             )
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(self.other_services_number, response.data["total_items"])
+        self.assertEqual(
+            self.other_services_number, response.data["total_items"]
+        )
 
     def test_get_profiles_any_user_filter_other_services_content(self):
         response = self.client.get(
@@ -418,7 +421,9 @@ class TestProfileFilterActivityType(APITestCase):
         other_services_from_db = Profile.objects.filter(
             activities=self.other_services_activity, is_deleted=False
         ).order_by("id")
-        self.assertEqual(other_services_from_db.count(), self.other_services_number)
+        self.assertEqual(
+            other_services_from_db.count(), self.other_services_number
+        )
         self.assertTrue(
             all(
                 [
