@@ -5,7 +5,7 @@ import css from './CheckBoxField.module.css';
 const CheckBoxField = (props) => {
 
     const onKeyDown = (event) => {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
           event.preventDefault();
         }
     };

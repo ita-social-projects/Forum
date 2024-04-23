@@ -3,7 +3,7 @@ import css from './TextField.module.css';
 const TextField = (props) => {
 
     const onKeyDown = (event) => {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
           event.preventDefault();
         }
     };

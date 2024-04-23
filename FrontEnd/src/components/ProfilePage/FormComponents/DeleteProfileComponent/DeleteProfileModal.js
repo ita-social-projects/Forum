@@ -13,6 +13,12 @@ const DeleteProfileModal = (props) => {
     const [isCorrectEmail, setIsCorrectEmail] = useState(true);
     const navigate = useNavigate();
 
+    const onKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+        }
+    };
+
     const submitHandler = (event) => {
         event.preventDefault();
         if (user.email === inputEmail) {
@@ -75,6 +81,7 @@ const DeleteProfileModal = (props) => {
                             name="email"
                             placeholder="Електронна пошта"
                             onChange={emailChangeHandler}
+                            onKeyDown={onKeyDown}
                         />
                     </div>
                     {(!isCorrectEmail) &&
@@ -91,6 +98,7 @@ const DeleteProfileModal = (props) => {
                             name="password"
                             placeholder="Пароль"
                             onChange={passwordChangeHandler}
+                            onKeyDown={onKeyDown}
                         />
                         <span onClick={passwordVisisbilityHandler}>
                             <img

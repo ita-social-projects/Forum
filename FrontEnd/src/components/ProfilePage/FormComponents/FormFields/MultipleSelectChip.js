@@ -6,7 +6,7 @@ import css from './MultipleSelectChip.module.css';
 export default function MultipleSelectChip(props) {
 
   const onKeyDown = (event) => {
-    if (event.keyCode === 13) {
+    if (event.key === 'Enter') {
       event.preventDefault();
     }
 };

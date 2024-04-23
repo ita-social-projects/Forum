@@ -8,7 +8,7 @@ const ImageField = (props) => {
     };
 
     const onKeyDown = (event) => {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
           event.preventDefault();
         }
     };

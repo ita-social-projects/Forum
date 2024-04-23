@@ -3,7 +3,7 @@ import css from './FullField.module.css';
 const FullField = (props) => {
 
     const onKeyDown = (event) => {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
           event.preventDefault();
         }
     };
