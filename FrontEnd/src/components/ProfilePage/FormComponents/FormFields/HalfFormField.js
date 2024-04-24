@@ -2,12 +2,12 @@ import {PropTypes} from 'prop-types';
 import css from './HalfFormField.module.css';
 import {Tooltip} from 'antd';
 
-const N = 23;
+const LengthEmail = 32;
 
 const HalfFormField = (props) => {
-    const shouldShowTooltip = props.name === 'email' && props.value.length > N;
+    const shouldShowTooltip = props.name === 'email' && props.value.length > LengthEmail;
 
-    const truncatedEmail = shouldShowTooltip ? `${props.value.slice(0, N)}...` : props.value;
+    const truncatedEmail = shouldShowTooltip ? `${props.value.slice(0, LengthEmail)}...` : props.value;
 
     return (
         <div className={css['fields__column']}>
