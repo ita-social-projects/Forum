@@ -8,9 +8,7 @@ import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
 import css from './FormComponents.module.css';
-import {Tooltip} from 'antd';
 
-const N = 10;
 
 const LABELS = {
     'surname': 'Прізвище',
@@ -150,20 +148,13 @@ const UserInfo = (props) => {
                                 requredField={false}
                                 value={updateProfile.person_position ?? ''}
                             />
-                            <Tooltip title={updateUser.email} placement="bottom"
-                                     visible={updateUser.email.length > N}>
                                 <HalfFormField
-                                    inputType="text"
-                                    name="email"
-                                    label={LABELS.email}
-                                    requiredField={true}
-                                    value={
-                                        updateUser.email.length > N
-                                            ? `${updateUser.email.slice(0, N)}...`
-                                            : updateUser.email
-                                    }
-                                />
-                            </Tooltip>
+                                inputType="text"
+                                name="email"
+                                label={LABELS.email}
+                                requredField={true}
+                                value={updateUser.email}
+                            />
                         </div>
                     </div>
                 </form>

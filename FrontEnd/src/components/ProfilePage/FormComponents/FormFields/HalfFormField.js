@@ -1,7 +1,14 @@
-import { PropTypes } from 'prop-types';
+import {PropTypes} from 'prop-types';
 import css from './HalfFormField.module.css';
+import {Tooltip} from 'antd';
+
+const N = 23;
 
 const HalfFormField = (props) => {
+    const shouldShowTooltip = props.name === 'email' && props.value.length > N;
+
+    const truncatedEmail = shouldShowTooltip ? `${props.value.slice(0, N)}...` : props.value;
+
     return (
         <div className={css['fields__column']}>
             <div className={css['fields__label']}>
@@ -13,17 +20,33 @@ const HalfFormField = (props) => {
                 </label>
             </div>
             <div className={css['fields__field']}>
-                <input
-                    type={props.inputType ? props.inputType : 'text'}
-                    className={`${css['fields__field--input']} ${props.name === 'email' && css['disabled__field']}`}
-                    name={props.name}
-                    value={props.value}
-                    placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
-                    onChange={props.updateHandler}
-                    required={(props.requredField) ? 'required' : ''}
-                    disabled={(props.name === 'email') ? 'disabled' : ''}
-                    maxLength={props.maxLength}
-                />
+                {shouldShowTooltip ? (
+                    <Tooltip title={props.value} placement="bottom">
+                        <input
+                            type={props.inputType || 'text'}
+                            className={`${css['fields__field--input']} ${props.name === 'email' && css['disabled__field']}`}
+                            name={props.name}
+                            value={truncatedEmail}
+                            placeholder={props.fieldPlaceholder || 'Введіть текст'}
+                            onChange={props.updateHandler}
+                            required={props.requredField ? 'required' : ''}
+                            disabled={props.name === 'email' ? 'disabled' : ''}
+                            maxLength={props.maxLength}
+                        />
+                    </Tooltip>
+                ) : (
+                    <input
+                        type={props.inputType || 'text'}
+                        className={`${css['fields__field--input']} ${props.name === 'email' && css['disabled__field']}`}
+                        name={props.name}
+                        value={truncatedEmail}
+                        placeholder={props.fieldPlaceholder || 'Введіть текст'}
+                        onChange={props.updateHandler}
+                        required={props.requredField ? 'required' : ''}
+                        disabled={props.name === 'email' ? 'disabled' : ''}
+                        maxLength={props.maxLength}
+                    />
+                )}
             </div>
             {(props.requredField || props.error) &&
                 <div className={css['error-message']}>
@@ -44,9 +67,9 @@ HalfFormField.propTypes = {
     value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
-      ]).isRequired,
+    ]).isRequired,
     fieldPlaceholder: PropTypes.string,
     maxLength: PropTypes.number,
     updateHandler: PropTypes.func,
-    error:PropTypes.string,
-  };
+    error: PropTypes.string,
+};
