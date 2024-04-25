@@ -11,6 +11,7 @@ function Navbar(props) {
       <div className={css['navbar-logo__text']}>
         <Link to="/">
           <img
+            className={css['main-logo']}
             src={`${process.env.REACT_APP_PUBLIC_URL}/forum-logo.ico`}
             alt="forum-logo"
           ></img>

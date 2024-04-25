@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: space-between;
 }
+.main-logo {
+  width: 48px;
+  height: 48px;
+}
 
 /* .navbar-logo__text {
     color: #292E32;
