@@ -252,10 +252,6 @@
     height: 18px;
     fill: #FFF;
 }
-.winemaking img {
-    width: 15px;
-    height: 18px;
-}
 .main-banner-group__content {
     display: flex;
     flex-direction: column;
@@ -317,10 +313,6 @@
     height: 20px;
     position: relative;
 }
-.cheese img {
-    width: 20px;
-    height: 20px;
-}
 .main-banner-delivery {
     display: inline-flex;
     padding: 6px 16px;
@@ -347,11 +339,4 @@
     height: 20px;
     position: relative;
 }
-.delivery img {
-    width: 20px;
-    height: 20px;
-}
-
-
-
 
