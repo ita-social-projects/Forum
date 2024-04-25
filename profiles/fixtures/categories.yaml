@@ -14,3 +14,35 @@
   pk: 4
   fields:
     name: Пакування з паперу
+- model: profiles.category
+  pk: 5
+  fields:
+    name: Їжа
+- model: profiles.category
+  pk: 6
+  fields:
+    name: Напої
+- model: profiles.category
+  pk: 7
+  fields:
+    name: Пакування
+- model: profiles.category
+  pk: 8
+  fields:
+    name: Перевезення
+- model: profiles.category
+  pk: 9
+  fields:
+    name: Клінінг
+- model: profiles.category
+  pk: 10
+  fields:
+    name: Кейтеринг
+- model: profiles.category
+  pk: 11
+  fields:
+    name: Інші товари
+- model: profiles.category
+  pk: 12
+  fields:
+    name: Інші послуги
