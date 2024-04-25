@@ -119,7 +119,6 @@ export function SignUpFormContentComponent(props) {
       },
     };
 
-    console.log('DATA TO SEND', dataToSend);
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
