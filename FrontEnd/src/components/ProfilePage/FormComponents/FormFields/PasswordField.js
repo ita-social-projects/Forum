@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import EyeInvisible from '../../../authorization/EyeInvisible';
 import EyeVisible from '../../../authorization/EyeVisible';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './PasswordField.module.css';
 import { PASSWORD_PATTERN } from '../../../../constants/constants';
 
@@ -16,12 +17,6 @@ const PasswordField = (props) => {
 
     const togglePassword = () => {
         setShowPassword(!showPassword);
-    };
-
-    const onKeyDown = (event) => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-        }
     };
 
     const {
@@ -51,7 +46,7 @@ const PasswordField = (props) => {
             <div className={css['password-field__password']}>
                 <div className={css['password-field__password__wrapper']}>
                     <input
-                        onKeyDown={onKeyDown}
+                        onKeyDown={preventEnterSubmit}
                         id={inputId}
                         type={showPassword ? 'text' : 'password'}
                         placeholder={label}

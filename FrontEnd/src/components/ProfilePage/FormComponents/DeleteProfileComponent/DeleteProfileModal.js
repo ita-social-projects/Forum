@@ -3,6 +3,7 @@ import css from './DeleteProfileModal.module.css';
 import { useAuth } from '../../../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 
 
 const DeleteProfileModal = (props) => {
@@ -12,12 +13,6 @@ const DeleteProfileModal = (props) => {
     const [inputPassword, setInputPassword] = useState('');
     const [isCorrectEmail, setIsCorrectEmail] = useState(true);
     const navigate = useNavigate();
-
-    const onKeyDown = (event) => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-        }
-    };
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -81,7 +76,7 @@ const DeleteProfileModal = (props) => {
                             name="email"
                             placeholder="Електронна пошта"
                             onChange={emailChangeHandler}
-                            onKeyDown={onKeyDown}
+                            onKeyDown={preventEnterSubmit}
                         />
                     </div>
                     {(!isCorrectEmail) &&
@@ -98,7 +93,7 @@ const DeleteProfileModal = (props) => {
                             name="password"
                             placeholder="Пароль"
                             onChange={passwordChangeHandler}
-                            onKeyDown={onKeyDown}
+                            onKeyDown={preventEnterSubmit}
                         />
                         <span onClick={passwordVisisbilityHandler}>
                             <img

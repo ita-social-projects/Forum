@@ -1,12 +1,7 @@
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './FullField.module.css';
 
 const FullField = (props) => {
-
-    const onKeyDown = (event) => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-        }
-    };
 
     return (
         <div className={css['fields__column']}>
@@ -27,7 +22,7 @@ const FullField = (props) => {
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder: 'Введіть текст'}
                     onChange={props.updateHandler}
                     onBlur={props.onBlur}
-                    onKeyDown={onKeyDown}
+                    onKeyDown={preventEnterSubmit}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}
                     maxLength={props.maxLength}

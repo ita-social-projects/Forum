@@ -1,13 +1,8 @@
 import { PropTypes } from 'prop-types';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './HalfFormField.module.css';
 
 const HalfFormField = (props) => {
-
-    const onKeyDown = (event) => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-        }
-    };
 
     return (
         <div className={css['fields__column']}>
@@ -27,7 +22,7 @@ const HalfFormField = (props) => {
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
                     onBlur={props.onBlur}
-                    onKeyDown={onKeyDown}
+                    onKeyDown={preventEnterSubmit}
                     onChange={props.updateHandler}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}

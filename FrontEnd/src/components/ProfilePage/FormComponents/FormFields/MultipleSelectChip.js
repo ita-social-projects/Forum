@@ -1,15 +1,11 @@
 import { Select, Space } from 'antd';
 import { PropTypes } from 'prop-types';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './MultipleSelectChip.module.css';
 
 
 export default function MultipleSelectChip(props) {
 
-  const onKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-    }
-};
   return (
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>
@@ -35,7 +31,7 @@ export default function MultipleSelectChip(props) {
             borderRadius: '2px',
           }}
           onChange={props.updateHandler}
-          onKeyDown={onKeyDown}
+          onKeyDown={preventEnterSubmit}
           options={props.options.map(option => ({
             value: option.name ?? option.name_ukr,
           }))}
