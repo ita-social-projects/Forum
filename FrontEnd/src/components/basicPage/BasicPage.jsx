@@ -25,7 +25,6 @@ import { RestorePasswordPage } from '../RestorePassword/pages/RestorePasswordPag
 import { RestorePasswordModalPage } from '../RestorePassword/pages/RestorePasswordModalPage';
 import { RestorePasswordSuccessPage } from '../RestorePassword/pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../RestorePassword/pages/RestorePasswordFailedPage';
-import ScrollToTopButton from '../PrivacyPolicyPage/privacy/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
 import { Search } from '../SearchPage/Search';
@@ -168,7 +167,6 @@ function BasicPage() {
         />
       </Routes>)}
       <Footer />
-      <ScrollToTopButton />
       <ToastContainer
         position="top-right"
         autoClose={3000}
