@@ -26,6 +26,7 @@ const FullField = (props) => {
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder: 'Введіть текст'}
                     onChange={props.updateHandler}
+                    onBlur={props.onBlur}
                     onKeyDown={onKeyDown}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}

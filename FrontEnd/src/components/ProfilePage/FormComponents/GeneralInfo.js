@@ -146,17 +146,25 @@ const GeneralInfo = (props) => {
     };
 
     const onUpdateField = e => {
-        const fieldValue = e.target.value;
-        const fieldName = e.target.name;
+        const { value: fieldValue, name: fieldName } = e.target;
+        const symbolCount = (fieldValue.replace(/[\s`]/g,'').trim()).length;
         setFormStateErr({ ...formStateErr, [fieldName]: {'error': false, 'message': ''}});
-        if (fieldName === 'name' && fieldValue.length < 2) {
+        if (fieldName === 'name' && symbolCount < 2) {
             setFormStateErr({ ...formStateErr, [fieldName]: {'error': true, 'message': 'Введіть від 2 до 100 символів'}});
         }
-        if (fieldName === 'official_name' && fieldValue.length !== 0 && fieldValue.length < 2) {
+        if (fieldName === 'official_name' && symbolCount !== 0 && symbolCount < 2) {
             setFormStateErr({ ...formStateErr, [fieldName]: {'error': true, 'message': 'Введіть від 2 до 200 символів'}});
         }
         setProfile((prevState) => {
             return { ...prevState, [fieldName]: fieldValue };
+        });
+    };
+
+    const onBlurHandler = (e) => {
+        const { value: rawFieldValue, name: fieldName } = e.target;
+        const fieldValue = rawFieldValue.replace(/\s{2,}/g,' ').trim();
+        setProfile((prevState) => {
+            return { ...prevState, [fieldName]: fieldValue.trim() };
         });
     };
 
@@ -370,6 +378,7 @@ const GeneralInfo = (props) => {
                                 name="name"
                                 label={LABELS.name}
                                 updateHandler={onUpdateField}
+                                onBlur={onBlurHandler}
                                 error={formStateErr['name']?.['error'] ? formStateErr['name']['message'] : null}
                                 requredField={true}
                                 value={profile.name}
@@ -380,6 +389,7 @@ const GeneralInfo = (props) => {
                             name="official_name"
                             label={LABELS.official_name}
                             updateHandler={onUpdateField}
+                            onBlur={onBlurHandler}
                             value={profile.official_name ?? ''}
                             error={formStateErr['official_name']?.['error'] ? formStateErr['official_name']['message'] : null}
                             maxLength={200}

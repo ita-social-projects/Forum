@@ -56,13 +56,14 @@ const UserInfo = (props) => {
       };
 
     const validateFields = (fieldName, fieldValue) => {
-        const patterns = {
-            'person_position': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ' -]*$/,
-            'name': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/,
-            'surname': /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/
+        const allowedSymbolsPatterns = {
+            'person_position': /^[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ\-'\s]+$/,
+            'name': /^[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ'\s]+$/,
+            'surname': /^[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ'\s]+$/,
         };
-        const isValidLength = fieldValue.length >= 2 || (fieldName === 'person_position' && fieldValue.length === 0);
-        const isValidPattern = patterns[fieldName].test(fieldValue);
+        const letterCount = (fieldValue.match(/[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ]/g) || []).length;
+        const isValidLength = letterCount >= 2 || (fieldName === 'person_position' && letterCount === 0);
+        const isValidPattern = allowedSymbolsPatterns[fieldName].test(fieldValue);
         let errorMessage = '';
 
         if (fieldValue && !isValidPattern) {
@@ -102,12 +103,23 @@ const UserInfo = (props) => {
         if (updateProfile.person_position.length !== 0 && updateProfile.person_position.length < 2) {
             isValid = false;
         }
+
         return isValid;
     };
 
     const onUpdateField = e => {
         const { value: fieldValue, name: fieldName } = e.target;
         validateFields(fieldName, fieldValue);
+        if (fieldName === 'person_position') {
+            setUpdateProfile(prevState => ({ ...prevState, [fieldName]: fieldValue }));
+        } else {
+            setUpdateUser(prevState => ({ ...prevState, [fieldName]: fieldValue }));
+        }
+    };
+
+    const onBlurHandler = (e) => {
+        const { value: rawFieldValue, name: fieldName } = e.target;
+        const fieldValue = rawFieldValue.replace(/\s{2,}/g,' ').trim();
         if (fieldName === 'person_position') {
             setUpdateProfile(prevState => ({ ...prevState, [fieldName]: fieldValue }));
         } else {
@@ -126,7 +138,7 @@ const UserInfo = (props) => {
                     name: updateUser.name
                     }),
                 axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
-                person_position: updateProfile.person_position ,
+                person_position: updateProfile.person_position,
                 })
             ])
             .then(axios.spread((updatedUserData , updatedProfileData ) => {
@@ -156,6 +168,7 @@ const UserInfo = (props) => {
                                 name="surname"
                                 label={LABELS.surname}
                                 updateHandler={onUpdateField}
+                                onBlur={onBlurHandler}
                                 error={formStateErr['surname']['error'] ? formStateErr['surname']['message'] : null}
                                 requredField={true}
                                 value={updateUser.surname}
@@ -166,6 +179,7 @@ const UserInfo = (props) => {
                                 name="name"
                                 label={LABELS.name}
                                 updateHandler={onUpdateField}
+                                onBlur={onBlurHandler}
                                 error={formStateErr['name']['error'] ? formStateErr['name']['message'] : null}
                                 requredField={true}
                                 value={updateUser.name}
@@ -178,6 +192,7 @@ const UserInfo = (props) => {
                                 name="person_position"
                                 label={LABELS.person_position}
                                 updateHandler={onUpdateField}
+                                onBlur={onBlurHandler}
                                 error={formStateErr['person_position']?.['error'] ? formStateErr['person_position']['message'] : null}
                                 requredField={false}
                                 value={updateProfile.person_position ?? ''}

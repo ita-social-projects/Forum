@@ -26,6 +26,7 @@ const HalfFormField = (props) => {
                     name={props.name}
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
+                    onBlur={props.onBlur}
                     onKeyDown={onKeyDown}
                     onChange={props.updateHandler}
                     required={(props.requredField) ? 'required' : ''}

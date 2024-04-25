@@ -80,14 +80,24 @@ export function SignUpFormContentComponent(props) {
   };
 
   const validateNameSurname = (value) => {
-    const pattern = /^[a-zA-Zа-щюяА-ЩЮЯїЇіІєЄґҐ']+$/;
-    if (!pattern.test(value)) {
+    const allowedSymbolsPattern = /^[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ'\s]+$/;
+    const letterCount = (value.match(/[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ]/g) || []).length;
+    if (!allowedSymbolsPattern.test(value)) {
       return errorMessageTemplates.notAllowedSymbols;
-    } else if (value.length < 2) {
+    }
+    if (letterCount < 2) {
       return errorMessageTemplates.nameSurnameFieldLength;
     }
     return true;
   };
+
+  const onBlurHandler = (fieldName) => {
+    let fieldValue = getValues(fieldName);
+    if (fieldValue) {
+      fieldValue = fieldValue.replace(/\s{2,}/g,' ').trim();
+      setValue(fieldName, fieldValue);
+    }
+};
 
   useEffect(() => {
     setIsValid(isValid);
@@ -109,6 +119,7 @@ export function SignUpFormContentComponent(props) {
       },
     };
 
+    console.log('DATA TO SEND', dataToSend);
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/`,
@@ -167,6 +178,7 @@ export function SignUpFormContentComponent(props) {
                     minLength: {value: 2, message: errorMessageTemplates.companyFieldLength}
                   })}
                   maxLength={100}
+                  onBlur={() => onBlurHandler('companyName')}
                 />
               </Tooltip>
             </div>
@@ -308,6 +320,7 @@ export function SignUpFormContentComponent(props) {
                 },
                 )}
                 maxLength={50}
+                onBlur={() => onBlurHandler('surname')}
               />
             </Tooltip>
             </div>
@@ -337,6 +350,7 @@ export function SignUpFormContentComponent(props) {
                 },
                 )}
                 maxLength={50}
+                onBlur={() => onBlurHandler('name')}
               />
             </Tooltip>
             </div>
