@@ -5,13 +5,14 @@
 {% endblock subject %}
 
 {% block html_body %}
+<style> p {color: black} </style>
 <img src="{{protocol}}://178.212.110.52/craftMerge-logo.png" alt="Forum project logo" />
-<p style="color:black;">Доброго дня, {{user.surname}} {{user.name}}</p>
-<p style="color:black;">Ви надіслали запит на створення облікового запису на сайті CraftMerge.
+<p>Доброго дня, {{user.surname}} {{user.name}}</p>
+<p>Ви надіслали запит на створення облікового запису на сайті CraftMerge.
     Щоб завершити процес активації, будь ласка, підтвердить свою адресу електронної пошти за наступним посиланням:</p>
 <a href="{{ protocol }}://{{ domain }}/{{ url|safe }}">{{ protocol }}://{{ domain }}/{{ url|safe }}</a>
-<p style="color:black;">Якщо ви не реєструвались на нашому сайті або отримали цей лист помилково, ігноруйте його.</p>
-<p style="color:black;">Дякуємо за використання нашого сайту!</p>
-<p style="color:black;">З повагою,<br/>
+<p>Якщо ви не реєструвались на нашому сайті або отримали цей лист помилково, ігноруйте його.</p>
+<p>Дякуємо за використання нашого сайту!</p>
+<p>З повагою,<br/>
     Команда CraftMerge</p>
 {% endblock html_body %}
