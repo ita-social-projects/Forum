@@ -50,7 +50,10 @@ const MainBanner = (props) => {
             <div className="main-banner-group__frame">
               <div className="main-banner-wine__winemaking">
                 <div className="winemaking">
-                    <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/winemaking.svg`} alt=""/>
+                    <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/winemaking.svg`}
+                         alt=""
+                         width="16"
+                         height="18"/>
                 </div>
               </div>
               <div className="main-banner-group__content">
@@ -67,14 +70,20 @@ const MainBanner = (props) => {
           </div>
           <div className="main-banner-cheese__cheese">
               <div className="cheese">
-                <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cheese.svg`} alt=""/>
+                <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cheese.svg`}
+                     alt=""
+                     width="20"
+                     height="20"/>
               </div>
           </div>
           <div className="main-banner-delivery">
             <div className="main-banner-group__frame">
               <div className="main-banner-delivery__delivery">
                 <div className="delivery">
-                  <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/delivery.svg`} alt=""/>
+                  <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/delivery.svg`}
+                       alt=""
+                       width="20"
+                       height="20"/>
                 </div>
               </div>
               <div className="main-banner-group__content">
