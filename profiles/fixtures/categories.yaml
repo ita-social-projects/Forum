@@ -1,32 +1,32 @@
 - model: profiles.category
   pk: 1
   fields:
-    name: Напої
+    name: Їжа
 - model: profiles.category
   pk: 2
   fields:
-    name: Пакування
+    name: Напої
 - model: profiles.category
   pk: 3
   fields:
-    name: Перевезення
+    name: Пакування
 - model: profiles.category
   pk: 4
   fields:
-    name: Клінінг
+    name: Перевезення
 - model: profiles.category
   pk: 5
   fields:
-    name: Кейтеринг
+    name: Клінінг
 - model: profiles.category
   pk: 6
   fields:
-    name: Інші товари
+    name: Кейтеринг
 - model: profiles.category
   pk: 7
   fields:
-    name: Інші послуги
+    name: Інші товари
 - model: profiles.category
   pk: 8
   fields:
-    name: Їжа
+    name: Інші послуги
