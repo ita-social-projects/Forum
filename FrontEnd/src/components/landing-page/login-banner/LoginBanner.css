@@ -39,14 +39,12 @@
 }
 
 .login-banner-group__image {
-    width: 1800px;
-    height: 1249px;
+    width: 960px;
+    height: 210px;
     flex-shrink: 0;
     border-radius: 8px;
     background: lightgray 50% / cover no-repeat;
-    top: -716px;
     position: relative;
-    right: 400px;
 }
 
 .login-banner-group__content__login-rectangle {
