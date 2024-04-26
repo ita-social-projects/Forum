@@ -39,7 +39,7 @@ const SERVICES_LINKS = [
   },
   {
     title: 'Інші послуги',
-    link: '#',
+    link: '/profiles/other-services',
   },
 ];
 const CONTACTS = [
