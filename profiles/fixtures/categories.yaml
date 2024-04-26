@@ -26,3 +26,7 @@
   pk: 7
   fields:
     name: Інші послуги
+- model: profiles.category
+  pk: 8
+  fields:
+    name: Їжа
