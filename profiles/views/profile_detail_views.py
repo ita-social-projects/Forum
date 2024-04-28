@@ -4,13 +4,12 @@ from rest_framework.generics import (
 from utils.completeness_counter import completeness_count
 from ..models import SavedCompany, Profile
 from ..permissions import UserIsProfileOwnerOrReadOnly
-from ..serializers.serializers import ProfileDetailSerializer
-
 from ..serializers.profile_detail_serializers import (
     ProfileOwnerDetailViewSerializer,
     ProfileSensitiveDataROSerializer,
     ProfileDeleteSerializer,
     ProfileOwnerDetailEditSerializer,
+    ProfileDetailSerializer,
 )
 
 
