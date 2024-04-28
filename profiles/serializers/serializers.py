@@ -3,7 +3,6 @@ from ..models import (
     Profile,
     Activity,
     Category,
-    SavedCompany,
     ViewedCompany,
     Region,
 )
@@ -117,12 +116,6 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
 
     def get_regions_ukr_display(self, obj) -> str:
         return get_regions_ukr_names_as_string(obj)
-
-
-class SavedCompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SavedCompany
-        fields = ("id", "user", "company", "added_at")
 
 
 class ViewedCompanySerializer(serializers.ModelSerializer):

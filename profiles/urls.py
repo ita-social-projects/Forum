@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import SavedCompaniesCreate, SavedCompaniesDestroy
-from .views import (
-    ProfileList,
-    ProfileDetail,
+from .views.saved_companys_views import (
+    SavedCompaniesCreate,
+    SavedCompaniesDestroy,
+)
+from .views.views import (
     CategoryList,
     ActivityList,
     RegionList,
@@ -11,6 +12,9 @@ from .views import (
     RegionDetail,
     ProfileViewCreate,
 )
+
+from .views.profile_list_views import ProfileList
+from .views.profile_detail_views import ProfileDetail
 
 
 app_name = "profiles"
