@@ -1,12 +1,9 @@
 from rest_framework import serializers
 
 from profiles.models import Profile, Category, SavedCompany
-from profiles.serializers.serializers import (
-    ActivitySerializer,
-    RegionSerializer,
-)
-
+from profiles.serializers.activity_serializers import ActivitySerializer
 from profiles.serializers.category_serializer import CategorySerializer
+from profiles.serializers.region_serializers import RegionSerializer
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
 
 

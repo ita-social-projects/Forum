@@ -1,12 +1,8 @@
 from rest_framework import serializers
-from .serializers import (
-    ActivitySerializer,
-    CategorySerializer,
-    RegionSerializer,
-)
-from ..models import (
-    Profile,
-)
+from .activity_serializers import ActivitySerializer
+from .category_serializer import CategorySerializer
+from .region_serializers import RegionSerializer
+from ..models import Profile
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
 
 

@@ -3,16 +3,15 @@ from .views.saved_companys_views import (
     SavedCompaniesCreate,
     SavedCompaniesDestroy,
 )
-from .views.views import (
+from .views.activity_views import (
     ActivityList,
-    RegionList,
     ActivityDetail,
-    RegionDetail,
 )
 from .views.viewed_company_views import ProfileViewCreate
 from .views.profile_list_views import ProfileList
 from .views.profile_detail_views import ProfileDetail
 from .views.category_views import CategoryList, CategoryDetail
+from .views.regions_views import RegionList, RegionDetail
 
 
 app_name = "profiles"

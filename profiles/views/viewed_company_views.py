@@ -7,7 +7,7 @@ from ..permissions import (
     IsOwner,
     RequestIsCreate,
 )
-from ..serializers.viewed_company_serializer import ViewedCompanySerializer
+from ..serializers.viewed_company_serializers import ViewedCompanySerializer
 
 
 class ProfileViewCreate(CreateAPIView):

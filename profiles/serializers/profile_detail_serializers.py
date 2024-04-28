@@ -1,9 +1,7 @@
 from rest_framework import serializers
-from .serializers import (
-    ActivitySerializer,
-    CategorySerializer,
-    RegionSerializer,
-)
+from .activity_serializers import ActivitySerializer
+from .region_serializers import RegionSerializer
+from .category_serializer import CategorySerializer
 from ..models import (
     Profile,
 )

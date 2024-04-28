@@ -1,21 +1,5 @@
 from rest_framework import serializers
-from ..models import (
-    Activity,
-    Category,
-    Region,
-)
-
-
-class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Activity
-        fields = "__all__"
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = "__all__"
+from ..models import Region
 
 
 class RegionSerializer(serializers.Serializer):

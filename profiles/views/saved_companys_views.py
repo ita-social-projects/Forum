@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from forum.pagination import ForumPagination
 from ..models import SavedCompany
 from ..permissions import IsOwnCompany
-from ..serializers.saved_companys_serializer import SavedCompanySerializer
+from ..serializers.saved_companys_serializers import SavedCompanySerializer
 
 
 class SavedCompaniesCreate(CreateAPIView):
