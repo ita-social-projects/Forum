@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from profiles.models import Profile, Category, SavedCompany
-from profiles.serializers import (
+from profiles.serializers.serializers import (
     CategorySerializer,
     ActivitySerializer,
     RegionSerializer,

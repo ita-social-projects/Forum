@@ -25,19 +25,23 @@ from .permissions import (
     RequestIsReadOnly,
     RequestIsCreate,
 )
-from .serializers import (
+from .serializers.serializers import (
     SavedCompanySerializer,
     ViewedCompanySerializer,
-    ProfileListSerializer,
-    ProfileSensitiveDataROSerializer,
     ProfileDetailSerializer,
-    ProfileOwnerDetailViewSerializer,
-    ProfileOwnerDetailEditSerializer,
-    ProfileDeleteSerializer,
     CategorySerializer,
     ActivitySerializer,
     RegionSerializer,
+)
+from .serializers.profile_list_serializers import (
+    ProfileListSerializer,
     ProfileCreateSerializer,
+)
+from .serializers.profile_detail_serializers import (
+    ProfileOwnerDetailViewSerializer,
+    ProfileSensitiveDataROSerializer,
+    ProfileDeleteSerializer,
+    ProfileOwnerDetailEditSerializer,
 )
 from .filters import ProfileFilter
 
