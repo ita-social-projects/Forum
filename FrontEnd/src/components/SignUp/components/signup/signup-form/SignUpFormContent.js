@@ -93,7 +93,7 @@ export function SignUpFormContentComponent(props) {
 
   const onBlurHandler = (fieldName) => {
     let fieldValue = getValues(fieldName);
-    if (fieldValue) {
+    if (fieldValue !== undefined && fieldValue !== null) {
       fieldValue = fieldValue.replace(/\s{2,}/g,' ').trim();
       setValue(fieldName, fieldValue);
     }
