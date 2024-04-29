@@ -64,12 +64,13 @@ const UserInfo = (props) => {
         const letterCount = (fieldValue.match(/[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ]/g) || []).length;
         const isValidLength = letterCount >= 2 || (fieldName === 'person_position' && letterCount === 0);
         const isValidPattern = allowedSymbolsPatterns[fieldName].test(fieldValue);
-        let errorMessage = '';
+        let errorMessage = [];
 
         if (fieldValue && !isValidPattern) {
-            errorMessage = errorMessageTemplates.notAllowedSymbols;
-        } else if (!isValidLength) {
-            errorMessage = errorMessageTemplates.fieldLength;
+            errorMessage.push(errorMessageTemplates.notAllowedSymbols);
+        }
+        if (!isValidLength) {
+            errorMessage.push(errorMessageTemplates.fieldLength);
         }
 
         setFormStateErr(prevState => ({
@@ -77,6 +78,8 @@ const UserInfo = (props) => {
             [fieldName]: { 'error': !isValidLength || !isValidPattern, 'message': errorMessage }
         }));
     };
+
+   const errorsInNameSurname = formStateErr['name']['message'].length > 1 || formStateErr['surname']['message'].length > 1;
 
     const checkRequiredFields = () => {
         let isValid = true;
@@ -161,7 +164,7 @@ const UserInfo = (props) => {
             {(updateUser && user && profile && updateProfile)
                 ?
                 <form id="UserInfo" onSubmit={handleSubmit} autoComplete="off" noValidate>
-                    <div className={css['fields']}>
+                    <div className={`${css['fields']} ${errorsInNameSurname ? css['user_form_fields'] : ''}`}>
                         <div className={css['fields-groups']}>
                             <HalfFormField
                                 inputType="text"

@@ -83,9 +83,9 @@
 
 .error-message {
     display: flex;
+    flex-direction: column;
     padding: 1px 0px;
     align-items: flex-start;
-    gap: 10px;
     align-self: stretch;
     flex: 1 0 0;
     color: var(--red-red-100, #F34444);

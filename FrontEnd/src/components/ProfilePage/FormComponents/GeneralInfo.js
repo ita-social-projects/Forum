@@ -147,7 +147,7 @@ const GeneralInfo = (props) => {
 
     const onUpdateField = e => {
         const { value: fieldValue, name: fieldName } = e.target;
-        const symbolCount = (fieldValue.replace(/[\s`]/g,'').trim()).length;
+        const symbolCount = (fieldValue.replace(/[\s]/g,'')).length;
         setFormStateErr({ ...formStateErr, [fieldName]: {'error': false, 'message': ''}});
         if (fieldName === 'name' && symbolCount < 2) {
             setFormStateErr({ ...formStateErr, [fieldName]: {'error': true, 'message': 'Введіть від 2 до 100 символів'}});
@@ -164,7 +164,7 @@ const GeneralInfo = (props) => {
         const { value: rawFieldValue, name: fieldName } = e.target;
         const fieldValue = rawFieldValue.replace(/\s{2,}/g,' ').trim();
         setProfile((prevState) => {
-            return { ...prevState, [fieldName]: fieldValue.trim() };
+            return { ...prevState, [fieldName]: fieldValue };
         });
     };
 

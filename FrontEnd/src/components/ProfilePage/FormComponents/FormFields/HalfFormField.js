@@ -29,11 +29,17 @@ const HalfFormField = (props) => {
                     maxLength={props.maxLength}
                 />
             </div>
-            {(props.requredField || props.error) &&
+            {(props.requiredField || props.error) && (
                 <div className={css['error-message']}>
-                    {props.error}
+                    {Array.isArray(props.error) ? (
+                        props.error.map((error, index) =>
+                            <span key={index}>{error}</span>
+                        )
+                    ) : (
+                        <span>{props.error}</span>
+                    )}
                 </div>
-            }
+            )}
         </div>
     );
 };
@@ -52,5 +58,8 @@ HalfFormField.propTypes = {
     fieldPlaceholder: PropTypes.string,
     maxLength: PropTypes.number,
     updateHandler: PropTypes.func,
-    error:PropTypes.string,
+    error:PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
   };
