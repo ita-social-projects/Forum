@@ -1,10 +1,13 @@
 import classNames from 'classnames';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './ImageField.module.css';
 
 const ImageField = (props) => {
+
     const backgroundImage = {
         background: `url(${props.value}) lightgray 50% / cover no-repeat`,
     };
+
     return (
         <div className={classNames(css['fields__column'], {[css['fields__column--logo']] : props.name === 'logo_image'})}>
             <div className={css['fields__label']}>
@@ -14,7 +17,7 @@ const ImageField = (props) => {
                     {props.label}
                 </label>
                 {props.name === 'banner_image' && props.value &&
-                    (<button className={css['upload-file__delete--wrapper']} onClick={() => (props.onDeleteImage(props.name))}>
+                    (<button className={css['upload-file__delete--wrapper']} onKeyDown={preventEnterSubmit} onClick={() => (props.onDeleteImage(props.name))}>
                         <img className={css['upload-file__delete--trashBin']} src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`} alt="Delete icon" />
                         <span className={css['upload-file__delete--text']}>видалити зображення</span>
                     </button>)}
@@ -27,6 +30,7 @@ const ImageField = (props) => {
                     className={css['upload-file__input']}
                     name={props.name}
                     onChange={props.updateHandler}
+                    onKeyDown={preventEnterSubmit}
                     required={(props.requredField) ? 'required' : ''}
                 />
                 {!props.value &&
@@ -53,7 +57,7 @@ const ImageField = (props) => {
                 {props.name === 'logo_image' && props.value && (
                     <div className={css['upload-file__wrapper--logo']}>
                         <div className={css['upload-file__logo']} style={backgroundImage}/>
-                        <button className={css['upload-file__delete--wrapper']} onClick={() => (props.onDeleteImage(props.name))}>
+                        <button className={css['upload-file__delete--wrapper']} onKeyDown={preventEnterSubmit} onClick={() => (props.onDeleteImage(props.name))}>
                             <img className={css['upload-file__delete--trashBin']} src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`} alt="Delete icon" />
                             <span className={css['upload-file__delete--text']}>видалити логотип</span>
                         </button>
