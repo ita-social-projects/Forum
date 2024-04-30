@@ -53,7 +53,13 @@ const HalfFormField = (props) => {
             </div>
             {(props.requredField || props.error) &&
                 <div className={css['error-message']}>
-                    {props.error}
+                    {Array.isArray(props.error) ? (
+                        props.error.map((error, index) =>
+                            <span key={index}>{error}</span>
+                        )
+                    ) : (
+                        <span>{props.error}</span>
+                    )}
                 </div>
             }
         </div>
