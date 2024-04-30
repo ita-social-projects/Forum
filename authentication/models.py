@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.utils.timezone import now
 from django.db import models
 
 
@@ -21,7 +22,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=50, unique=True)
+    email = models.EmailField(unique=True)
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     is_active = models.BooleanField(default=False)
@@ -39,3 +40,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    def delete(self):
+        self.is_active = False
+        self.email = f'is_deleted_{now()}_{self.email}'
+        self.save()
