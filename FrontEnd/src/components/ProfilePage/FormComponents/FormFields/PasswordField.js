@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import EyeInvisible from '../../../authorization/EyeInvisible';
 import EyeVisible from '../../../authorization/EyeVisible';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './PasswordField.module.css';
 import { PASSWORD_PATTERN } from '../../../../constants/constants';
 
@@ -9,7 +10,8 @@ const PasswordField = (props) => {
 
     const errorMessages = {
         invalidPassword: 'Пароль не відповідає вимогам',
-        passwordsDontMatch: 'Паролі не співпадають'
+        passwordsDontMatch: 'Паролі не співпадають',
+        requiredField: 'Обов’язкове поле'
     };
 
     const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +24,6 @@ const PasswordField = (props) => {
         register,
         name,
         error,
-        showError,
         watch,
         label,
         inputId,
@@ -33,10 +34,7 @@ const PasswordField = (props) => {
     return (
         <div className={css['password-field__item']}>
             <div className={css['password-field__label-wrapper']}>
-                <span>
-                    *
-                </span>
-                <label
+                <label className={error[name] ? css['error-dot'] : ''}
                     htmlFor={inputId}
                 >
                     {label}
@@ -45,12 +43,14 @@ const PasswordField = (props) => {
             <div className={css['password-field__password']}>
                 <div className={css['password-field__password__wrapper']}>
                     <input
+                        onKeyDown={preventEnterSubmit}
                         id={inputId}
                         type={showPassword ? 'text' : 'password'}
                         placeholder={label}
                         required
                         {...register(name,
                             {
+                                required: errorMessages.requiredField,
                                 pattern: checkValid && {
                                     value: PASSWORD_PATTERN,
                                     message: errorMessages.invalidPassword
@@ -73,7 +73,7 @@ const PasswordField = (props) => {
                     {!showPassword ? <EyeInvisible /> : <EyeVisible />}
                 </span>
             </div>
-            {(error[name] && showError) ?
+            {(error[name]) ?
                 <div className={css['error-message']}>
                     {error[name].message}
                 </div>
@@ -90,7 +90,6 @@ PasswordField.propTypes = {
     register: PropTypes.func.isRequired,
     watch: PropTypes.func.isRequired,
     inputId: PropTypes.string.isRequired,
-    showError: PropTypes.bool.isRequired,
     error: PropTypes.object,
     checkValid: PropTypes.bool.isRequired,
     checkMatch: PropTypes.shape({

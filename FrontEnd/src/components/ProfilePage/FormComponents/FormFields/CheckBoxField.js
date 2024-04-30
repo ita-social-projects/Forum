@@ -1,8 +1,10 @@
 import { PropTypes } from 'prop-types';
 import { Checkbox } from 'antd';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './CheckBoxField.module.css';
 
 const CheckBoxField = (props) => {
+
     return (
         <div className={css['representative']}>
             <div className={css['representative__label']}>
@@ -19,6 +21,7 @@ const CheckBoxField = (props) => {
                         <Checkbox
                             name={props.nameRegister}
                             onChange={props.updateHandler}
+                            onKeyDown={preventEnterSubmit}
                             checked={props.valueRegister}
                         />
                         Зареєстрована компанія
@@ -29,6 +32,7 @@ const CheckBoxField = (props) => {
                         <Checkbox
                             name={props.nameStartup}
                             onChange={props.updateHandler}
+                            onKeyDown={preventEnterSubmit}
                             checked={props.valueStartup}
                         />
                         Стартап проект, який шукає інвестиції

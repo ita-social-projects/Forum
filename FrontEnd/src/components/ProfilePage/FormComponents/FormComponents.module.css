@@ -4,6 +4,10 @@
     gap: 0px;
 }
 
+.user_form_fields {
+    gap: 14px
+}
+
 .fields-groups {
     display: flex;
     align-items: flex-start;

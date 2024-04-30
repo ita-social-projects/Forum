@@ -1,6 +1,8 @@
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './TextField.module.css';
 
 const TextField = (props) => {
+
     return (
         <div className={css['fields__column']}>
             <div className={css['fields__label']}>
@@ -18,6 +20,7 @@ const TextField = (props) => {
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
                     onChange={props.updateHandler}
+                    onKeyDown={preventEnterSubmit}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}
                 ></textarea>

@@ -6,9 +6,10 @@ import { PropTypes } from 'prop-types';
 import classes from './PhoneEmail.module.css';
 import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
-import {Tooltip} from 'antd';
+import { Tooltip } from 'antd';
 
-const LengthEmail = 23;
+const LENGTH_EMAIL = 23;
+
 function PhoneEmail({ profileId, personId }) {
   const [isContactsShown, setContactsShown] = useState(false);
   const [isPhoneCopied, setIsPhoneCopied] = useState(false);
@@ -81,9 +82,9 @@ function PhoneEmail({ profileId, personId }) {
                }
               </p>
               <p className={classes['contact-container']}>
-               {profileData.email.length > LengthEmail ? (
+               {profileData.email.length > LENGTH_EMAIL ? (
                   <Tooltip title={profileData.email} placement="bottom">
-                    <span>{`${profileData.email.slice(0, LengthEmail)}...`}</span>
+                    <span>{`${profileData.email.slice(0, LENGTH_EMAIL)}...`}</span>
                   </Tooltip>
                 ) : (
                   <span>{profileData.email}</span>
