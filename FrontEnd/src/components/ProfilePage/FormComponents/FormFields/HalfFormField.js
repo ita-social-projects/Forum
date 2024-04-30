@@ -1,4 +1,5 @@
 import { PropTypes } from 'prop-types';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './HalfFormField.module.css';
 import { Tooltip } from 'antd';
 
@@ -21,13 +22,15 @@ const HalfFormField = (props) => {
             </div>
             <div className={css['fields__field']}>
                 {shouldShowTooltip ? (
-                    <Tooltip title={props.value} placement="bottom">
+                    <Tooltip title={shouldShowTooltip ? props.value : ''} placement="bottom">
                         <input
                             type={props.inputType || 'text'}
                             className={`${css['fields__field--input']} ${props.name === 'email' && css['disabled__field']}`}
                             name={props.name}
                             value={truncatedEmail}
                             placeholder={props.fieldPlaceholder || 'Введіть текст'}
+                            onBlur={props.onBlur}
+                            onKeyDown={preventEnterSubmit}
                             onChange={props.updateHandler}
                             required={props.requredField ? 'required' : ''}
                             disabled={props.name === 'email' ? 'disabled' : ''}
@@ -67,9 +70,12 @@ HalfFormField.propTypes = {
     value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
-    ]).isRequired,
+      ]).isRequired,
     fieldPlaceholder: PropTypes.string,
     maxLength: PropTypes.number,
     updateHandler: PropTypes.func,
-    error: PropTypes.string,
-};
+    error:PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
+  };
