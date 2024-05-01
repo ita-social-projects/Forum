@@ -3,7 +3,7 @@ import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './HalfFormField.module.css';
 import { Tooltip } from 'antd';
 
-const LENGTH_EMAIL = 29;
+const LENGTH_EMAIL = 34;
 
 const HalfFormField = (props) => {
     const shouldShowTooltip = props.name === 'email' && props.value.length > LENGTH_EMAIL;

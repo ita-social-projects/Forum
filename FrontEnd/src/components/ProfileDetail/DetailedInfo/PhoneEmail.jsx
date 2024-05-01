@@ -8,7 +8,7 @@ import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import { Tooltip } from 'antd';
 
-const LENGTH_EMAIL = 23;
+const LENGTH_EMAIL = 26;
 
 function PhoneEmail({ profileId, personId }) {
   const [isContactsShown, setContactsShown] = useState(false);
