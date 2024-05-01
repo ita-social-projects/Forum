@@ -1,5 +1,6 @@
 import os
 
+from unittest import mock
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -400,15 +401,41 @@ class TestProfileDetailAPIView(APITestCase):
         response = self.client.get(path="/api/profiles/")
         self.assertEqual(0, response.data["total_items"])
         self.profile.refresh_from_db()
+        self.user.refresh_from_db()
         self.assertTrue(self.profile.is_deleted)
         self.assertFalse(self.user.is_active)
-        self.assertIn("is_deleted", self.user.email)
 
         # try access deleted profile
         response = self.client.get(
             "/api/profiles/{profile_id}".format(profile_id=self.profile.id)
         )
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
+
+
+    def test_delete_profile_authorized_with_correct_password_check_user_email(self):
+        self.user.set_password("Test1234")
+        self.client.force_authenticate(self.user)
+
+        with mock.patch("profiles.views.now") as mock_now:
+            mock_now.return_value.strftime.return_value = "20240430120000"
+
+            # del profile
+            response = self.client.delete(
+                path="/api/profiles/{profile_id}".format(
+                    profile_id=self.profile.id
+                ),
+                data={"password": "Test1234"},
+            )
+
+        self.assertEqual(204, response.status_code)
+
+        # check the user email after deletion
+        expected_email = f"is_deleted_20240430120000_test1@test.com"
+        self.user.refresh_from_db()
+        self.assertIn("20240430120000", self.user.email)
+        self.assertIn("is_deleted", self.user.email)
+        self.assertEqual(expected_email, self.user.email)
+
 
     def test_delete_profile_authorized_with_wrong_password(self):
         self.user.set_password("Test1234")
