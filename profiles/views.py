@@ -202,7 +202,9 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
             instance.is_deleted = True
             instance.save()
             user.is_active = False
-            user.email = f"is_deleted_{now().strftime('%Y%m%d%H%M%S')}_{user.email}"
+            user.email = (
+                f"is_deleted_{now().strftime('%Y%m%d%H%M%S')}_{user.email}"
+            )
             user.save()
             djoser_utils.logout_user(self.request)
 

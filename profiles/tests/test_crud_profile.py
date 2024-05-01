@@ -411,8 +411,9 @@ class TestProfileDetailAPIView(APITestCase):
         )
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
-
-    def test_delete_profile_authorized_with_correct_password_check_user_email(self):
+    def test_delete_profile_authorized_with_correct_password_check_user_email(
+        self,
+    ):
         self.user.set_password("Test1234")
         self.client.force_authenticate(self.user)
 
@@ -435,7 +436,6 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertIn("20240430120000", self.user.email)
         self.assertIn("is_deleted", self.user.email)
         self.assertEqual(expected_email, self.user.email)
-
 
     def test_delete_profile_authorized_with_wrong_password(self):
         self.user.set_password("Test1234")
