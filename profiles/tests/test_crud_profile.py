@@ -401,6 +401,8 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(0, response.data["total_items"])
         self.profile.refresh_from_db()
         self.assertTrue(self.profile.is_deleted)
+        self.assertFalse(self.user.is_active)
+        self.assertIn("is_deleted", self.user.email)
 
         # try access deleted profile
         response = self.client.get(
