@@ -40,8 +40,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
-    def delete(self):
-        self.is_active = False
-        self.email = f'is_deleted_{now()}_{self.email}'
-        self.save()
