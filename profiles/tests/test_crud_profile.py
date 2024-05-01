@@ -430,7 +430,7 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(204, response.status_code)
 
         # check the user email after deletion
-        expected_email = f"is_deleted_20240430120000_test1@test.com"
+        expected_email = "is_deleted_20240430120000_test1@test.com"
         self.user.refresh_from_db()
         self.assertIn("20240430120000", self.user.email)
         self.assertIn("is_deleted", self.user.email)
