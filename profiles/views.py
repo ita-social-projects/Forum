@@ -1,6 +1,9 @@
-import django_filters
+from django.db import transaction
 from django.utils.functional import cached_property
+from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
+import django_filters
+from djoser import utils as djoser_utils
 from rest_framework import status
 from rest_framework.generics import (
     CreateAPIView,
@@ -194,8 +197,14 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
     def perform_destroy(self, instance):
         serializer = self.get_serializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
-        instance.is_deleted = True
-        instance.save()
+        user = self.request.user
+        with transaction.atomic():
+            instance.is_deleted = True
+            instance.save()
+            user.is_active = False
+            user.email = f"is_deleted_{now()}_{user.email}"
+            user.save()
+            djoser_utils.logout_user(self.request)
 
     def perform_update(self, serializer):
         completeness_count(serializer)
