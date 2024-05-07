@@ -50,7 +50,7 @@ function TitleInfo({ isAuthorized, data }) {
   const handleClick = async () => {
     try {
       await trigger(
-        { company_pk: profile.id },
+        { company: profile.id },
         {
           optimisticData: () => {
             setIsSaved(!isSaved);

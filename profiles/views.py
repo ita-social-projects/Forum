@@ -1,6 +1,6 @@
 import django_filters
 from django.utils.functional import cached_property
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework import status
 from rest_framework.generics import (
     CreateAPIView,
@@ -52,41 +52,14 @@ class SavedCompaniesCreate(CreateAPIView):
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
 
-    def post(self, request):
-        user = request.user
-        pk = request.data.get("company_pk")
-
-        # Check if the company is already in the user's saved list
-        if SavedCompany.objects.filter(user=user, company_id=pk).exists():
-            saved_company_destroyer = SavedCompaniesDestroy()
-            return saved_company_destroyer.destroy(request, pk)
-
-        serializer = SavedCompanySerializer(
-            data={"company": pk, "user": user.id}
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"Company added": serializer.data})
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
 class SavedCompaniesDestroy(DestroyAPIView):
     """
     Remove the company from the saved list.
     """
-
+    queryset = SavedCompany.objects.all()
     permission_classes = [IsAuthenticated]
-
-    def destroy(self, request, pk):
-        user = request.user
-        saved_company = get_object_or_404(
-            SavedCompany, company_id=pk, user=user
-        )
-        saved_company.delete()
-        return Response(
-            f"Company {pk} deleted", status=status.HTTP_204_NO_CONTENT
-        )
-
 
 class ProfileList(ListCreateAPIView):
     """

@@ -29,7 +29,7 @@ class IsOwner(BasePermission):
 class IsOwnCompany(BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        pk = request.data.get("company_pk")
+        pk = request.data.get("company")
         try:
             profile = Profile.objects.get(id=pk)
         except ObjectDoesNotExist:

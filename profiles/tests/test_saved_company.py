@@ -15,10 +15,10 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(
+                "company": "{profile_id}".format(
                     profile_id=self.profile.id
                 ),
-            },
+            }, format="json"
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
@@ -27,12 +27,10 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=self.profile.id)
-            },
+                "company": "{profile_id}".format(profile_id=self.profile.id)
+            }, format="json"
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        company_added_info = response.data["Company added"]
-        self.assertEqual(company_added_info["company"], self.profile.id)
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
     def test_add_own_company_to_saved_authenticated(self):
         own_profile = ProfileCompanyFactory(person_id=self.user.id)
@@ -40,8 +38,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=own_profile.id),
-            },
+                "company": "{profile_id}".format(profile_id=own_profile.id),
+            }, format="json"
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
@@ -51,8 +49,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": 0,
-            },
+                "company": 0,
+            }, format="json"
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
@@ -61,10 +59,10 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path="/api/saved-list/{profile_pk}/".format(
-                profile_pk=saved_company.company.id
+            path="/api/saved-list/del/{profile_pk}/".format(
+                profile_pk=saved_company.id
             ),
-            data={},
+            data={}, format="json"
         )
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
 
@@ -72,25 +70,3 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(0, response.data["total_items"])
 
-    def test_add_company_to_saved_twice_authenticated(self):
-        self.client.force_authenticate(self.user)
-
-        self.client.post(
-            path="/api/saved-list/",
-            data={
-                "company_pk": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
-            },
-        )
-        self.client.post(
-            path="/api/saved-list/",
-            data={
-                "company_pk": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
-            },
-        )
-        response = self.client.get(path="/api/profiles/?is_saved=True")
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(0, response.data["total_items"])
