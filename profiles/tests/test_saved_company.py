@@ -64,7 +64,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path="/api/saved-list/{profile_pk}/".format(
+            path="/api/saved-list/del/{profile_pk}/".format(
                 profile_pk=saved_company.id
             ),
             data={},
