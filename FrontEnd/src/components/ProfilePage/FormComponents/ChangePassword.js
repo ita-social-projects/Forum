@@ -92,10 +92,6 @@ export default function ChangePassword(props) {
                         label="Повторіть новий пароль"
                         error={errors}
                         register={register}
-<<<<<<< HEAD
-                        showError={true}
-=======
->>>>>>> ac5ea621aa794a14997aac3ce734764d3e48eea6
                         watch={watch}
                         checkValid={false}
                         checkMatch={

@@ -1,33 +1,6 @@
 {% load i18n %}
 
 {% block subject %}
-<<<<<<< HEAD
-{% blocktrans %}Account activation on {{ site_name }}{% endblocktrans %}
-{% endblock subject %}
-
-{% block text_body %}
-{% blocktrans %}You're receiving this email because you need to finish activation process on {{ site_name }}.{% endblocktrans %}
-
-{% trans "Please go to the following page to activate account:" %}
-{{ protocol }}://{{ domain }}/{{ url|safe }}
-
-{% trans "Thanks for using our site!" %}
-
-{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
-{% endblock text_body %}
-
-{% block html_body %}
-<img src="{{protocol}}://178.212.110.52/forum-logo.ico" alt="Forum project logo" />
-<p>{% blocktrans %}You're receiving this email because you need to finish activation process on {{ site_name }}.{% endblocktrans %}</p>
-
-<p>{% trans "Please go to the following page to activate account:" %}</p>
-<p><a href="{{ protocol }}://{{ domain }}/{{ url|safe }}">{{ protocol }}://{{ domain }}/{{ url|safe }}</a></p>
-
-<p>{% trans "Thanks for using our site!" %}</p>
-
-<p>{% blocktrans %}The {{ site_name }} team{% endblocktrans %}</p>
-
-=======
 {% blocktrans %}Активація облікового запису CraftMerge{% endblocktrans %}
 {% endblock subject %}
 
@@ -42,5 +15,4 @@
 <p>Дякуємо за використання нашого сайту!</p>
 <p>З повагою,<br/>
     Команда CraftMerge</p>
->>>>>>> ac5ea621aa794a14997aac3ce734764d3e48eea6
 {% endblock html_body %}
