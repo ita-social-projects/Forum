@@ -54,12 +54,15 @@ class SavedCompaniesCreate(CreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
+
+
 class SavedCompaniesDestroy(DestroyAPIView):
     """
     Remove the company from the saved list.
     """
     queryset = SavedCompany.objects.all()
     permission_classes = [IsAuthenticated]
+
 
 class ProfileList(ListCreateAPIView):
     """

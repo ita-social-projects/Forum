@@ -16,9 +16,9 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={
                 "company": "{profile_id}".format(
-                    profile_id=self.profile.id
-                ),
-            }, format="json"
+                    profile_id=self.profile.id),
+            },
+            format="json",
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
@@ -27,8 +27,11 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company": "{profile_id}".format(profile_id=self.profile.id)
-            }, format="json"
+                "company": "{profile_id}".format(
+                    profile_id=self.profile.id
+                )
+            },
+            format="json",
         )
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
@@ -39,7 +42,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={
                 "company": "{profile_id}".format(profile_id=own_profile.id),
-            }, format="json"
+            },
+            format="json",
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
@@ -50,7 +54,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             path="/api/saved-list/",
             data={
                 "company": 0,
-            }, format="json"
+            },
+            format="json",
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
@@ -59,14 +64,14 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path="/api/saved-list/del/{profile_pk}/".format(
+            path="/api/saved-list/{profile_pk}/".format(
                 profile_pk=saved_company.id
             ),
-            data={}, format="json"
+            data={},
+            format="json",
         )
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
 
         # check that deleted
         response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(0, response.data["total_items"])
-

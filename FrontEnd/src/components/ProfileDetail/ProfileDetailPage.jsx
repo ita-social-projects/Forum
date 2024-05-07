@@ -28,7 +28,7 @@ function ProfileDetailPage({ isAuthorized }) {
     isLoading,
   } = useSWR(urlProfile, fetcher);
 
-  const notRequiredData = ['address', 'banner_image', 'logo_image', 'common_info', 'edrpou', 'ipn', 'founded', 'official_name', 'product_info', 'service_info', 'startup_idea', 'logistics', 'cooperation'];
+  const notRequiredData = ['address', 'banner_image', 'logo_image', 'common_info', 'edrpou', 'rnokpp', 'founded', 'official_name', 'product_info', 'service_info', 'startup_idea', 'logistics', 'cooperation'];
   const containsNotRequiredData = fetchedProfile ? Object.keys(fetchedProfile).some(key => notRequiredData.includes(key) && fetchedProfile[key] !== '' && fetchedProfile[key] !== null) : false;
 
   return (error && error.status !== 401) ? (
