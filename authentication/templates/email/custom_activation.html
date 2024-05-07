@@ -1,6 +1,7 @@
 {% load i18n %}
 
 {% block subject %}
+<<<<<<< HEAD
 {% blocktrans %}Account activation on {{ site_name }}{% endblocktrans %}
 {% endblock subject %}
 
@@ -26,4 +27,20 @@
 
 <p>{% blocktrans %}The {{ site_name }} team{% endblocktrans %}</p>
 
+=======
+{% blocktrans %}Активація облікового запису CraftMerge{% endblocktrans %}
+{% endblock subject %}
+
+{% block html_body %}
+<style> p {color: black} </style>
+<img src="{{protocol}}://178.212.110.52/craftMerge-logo.png" alt="Forum project logo" />
+<p>Доброго дня, {{user.surname}} {{user.name}}</p>
+<p>Ви надіслали запит на створення облікового запису на сайті CraftMerge.
+    Щоб завершити процес активації, будь ласка, підтвердить свою адресу електронної пошти за наступним посиланням:</p>
+<a href="{{ protocol }}://{{ domain }}/{{ url|safe }}">{{ protocol }}://{{ domain }}/{{ url|safe }}</a>
+<p>Якщо ви не реєструвались на нашому сайті або отримали цей лист помилково, ігноруйте його.</p>
+<p>Дякуємо за використання нашого сайту!</p>
+<p>З повагою,<br/>
+    Команда CraftMerge</p>
+>>>>>>> ac5ea621aa794a14997aac3ce734764d3e48eea6
 {% endblock html_body %}

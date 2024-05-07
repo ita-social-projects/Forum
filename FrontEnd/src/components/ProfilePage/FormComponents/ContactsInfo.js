@@ -73,7 +73,9 @@ const ContactsInfo = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (validateForm()) {
+        if (!validateForm()) {
+            toast.error('Зміни не можуть бути збережені, перевірте правильність заповнення полів');
+        } else {
             try {
                 const response = await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
                     phone: profile.phone,

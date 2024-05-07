@@ -1,9 +1,11 @@
 import { Select, Space } from 'antd';
 import { PropTypes } from 'prop-types';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './MultipleSelectChip.module.css';
 
 
 export default function MultipleSelectChip(props) {
+
   return (
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>
@@ -29,6 +31,7 @@ export default function MultipleSelectChip(props) {
             borderRadius: '2px',
           }}
           onChange={props.updateHandler}
+          onKeyDown={preventEnterSubmit}
           options={props.options.map(option => ({
             value: option.name ?? option.name_ukr,
           }))}
@@ -44,7 +47,7 @@ export default function MultipleSelectChip(props) {
 }
 
 MultipleSelectChip.propTypes = {
-    requredField: PropTypes.bool.isRequired,
+    requredField: PropTypes.bool,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.array,

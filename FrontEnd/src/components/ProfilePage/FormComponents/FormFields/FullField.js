@@ -1,6 +1,8 @@
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './FullField.module.css';
 
 const FullField = (props) => {
+
     return (
         <div className={css['fields__column']}>
             <div className={css['fields__label']}>
@@ -19,8 +21,11 @@ const FullField = (props) => {
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder: 'Введіть текст'}
                     onChange={props.updateHandler}
+                    onBlur={props.onBlur}
+                    onKeyDown={preventEnterSubmit}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}
+                    maxLength={props.maxLength}
                 />
             </div>
             {(props.requredField || props.error)  &&

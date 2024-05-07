@@ -1,6 +1,7 @@
 import React, { useEffect, useState ,  Suspense} from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Tooltip } from 'antd';
 import EyeInvisible from '../../../../authorization/EyeInvisible';
@@ -25,9 +26,13 @@ export function SignUpFormContentComponent(props) {
 
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
-    email: 'Email не відповідає вимогам',
+    requiredRepresentative: 'Будь ласка, оберіть кого ви представляєте',
+    email: 'Електронна пошта не відповідає вимогам',
     password: 'Пароль не відповідає вимогам',
     confirmPassword: 'Паролі не збігаються',
+    nameSurnameFieldLength: 'Введіть від 2 до 50 символів',
+    companyFieldLength: 'Введіть від 2 до 100 символів',
+    notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
   };
 
   const {
@@ -68,11 +73,31 @@ export function SignUpFormContentComponent(props) {
     const otherOption = name === 'yurosoba' ? 'fop' : 'yurosoba';
     setValue(otherOption, false);
     if (!getValues('yurosoba') && !getValues('fop')) {
-      setError('businessEntity', { type: 'manual', message: errorMessageTemplates.required });
+      setError('businessEntity', { type: 'manual', message: errorMessageTemplates.requiredRepresentative });
     } else {
       clearErrors('businessEntity');
     }
   };
+
+  const validateNameSurname = (value) => {
+    const allowedSymbolsPattern = /^[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ'\s]+$/;
+    const letterCount = (value.match(/[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ]/g) || []).length;
+    if (!allowedSymbolsPattern.test(value)) {
+      return errorMessageTemplates.notAllowedSymbols;
+    }
+    if (letterCount < 2) {
+      return errorMessageTemplates.nameSurnameFieldLength;
+    }
+    return true;
+  };
+
+  const onBlurHandler = (fieldName) => {
+    let fieldValue = getValues(fieldName);
+    if (fieldValue !== undefined && fieldValue !== null) {
+      fieldValue = fieldValue.replace(/\s{2,}/g,' ').trim();
+      setValue(fieldName, fieldValue);
+    }
+};
 
   useEffect(() => {
     setIsValid(isValid);
@@ -108,6 +133,9 @@ export function SignUpFormContentComponent(props) {
             type: 'manual',
             message: 'Вже зареєстрована пошта',
           });
+        }
+        if (error.response && error.response.status === 400) {
+          toast.error('Не вдалося зареєструвати користувача, сталася помилка');
         }
       });
   };
@@ -146,7 +174,10 @@ export function SignUpFormContentComponent(props) {
                     pattern: {
                       value: COMPANY_NAME_PATTERN,
                     },
+                    minLength: {value: 2, message: errorMessageTemplates.companyFieldLength}
                   })}
+                  maxLength={100}
+                  onBlur={() => onBlurHandler('companyName')}
                 />
               </Tooltip>
             </div>
@@ -210,6 +241,7 @@ export function SignUpFormContentComponent(props) {
                     message: errorMessageTemplates.password,
                   },
                 })}
+                maxLength={50}
               />
               <span
                 className={styles['password-visibility']}
@@ -248,6 +280,7 @@ export function SignUpFormContentComponent(props) {
                       ? errorMessageTemplates.confirmPassword
                       : null,
                 })}
+                maxLength={50}
               />
               <span
                 className={styles['password-visibility']}
@@ -282,10 +315,11 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Прізвище"
                 {...register('surname', {
                   required: errorMessageTemplates.required,
-                  pattern: {
-                    value: NAME_SURNAME_PATTERN,
+                  validate: validateNameSurname,
                 },
-                })}
+                )}
+                maxLength={50}
+                onBlur={() => onBlurHandler('surname')}
               />
             </Tooltip>
             </div>
@@ -311,10 +345,11 @@ export function SignUpFormContentComponent(props) {
                 placeholder="Ім‘я"
                 {...register('name', {
                   required: errorMessageTemplates.required,
-                  pattern: {
-                    value: NAME_SURNAME_PATTERN,
+                  validate: validateNameSurname,
                 },
-                })}
+                )}
+                maxLength={50}
+                onBlur={() => onBlurHandler('name')}
               />
             </Tooltip>
             </div>
@@ -343,7 +378,7 @@ export function SignUpFormContentComponent(props) {
                         name="company"
                         value={'company'}
                         {...register('representative', {
-                          required: errorMessageTemplates.required
+                          required: errorMessageTemplates.requiredRepresentative
                         })}
                       />
                     </div>
@@ -362,7 +397,7 @@ export function SignUpFormContentComponent(props) {
                         name="startup"
                         value={'startup'}
                         {...register('representative', {
-                          required: errorMessageTemplates.required
+                          required: errorMessageTemplates.requiredRepresentative
                         })}
                       />
                     </div>

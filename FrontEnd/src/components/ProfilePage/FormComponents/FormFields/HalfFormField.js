@@ -1,7 +1,9 @@
 import { PropTypes } from 'prop-types';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './HalfFormField.module.css';
 
 const HalfFormField = (props) => {
+
     return (
         <div className={css['fields__column']}>
             <div className={css['fields__label']}>
@@ -19,17 +21,25 @@ const HalfFormField = (props) => {
                     name={props.name}
                     value={props.value}
                     placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
+                    onBlur={props.onBlur}
+                    onKeyDown={preventEnterSubmit}
                     onChange={props.updateHandler}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}
                     maxLength={props.maxLength}
                 />
             </div>
-            {(props.requredField || props.error) &&
+            {(props.requiredField || props.error) && (
                 <div className={css['error-message']}>
-                    {props.error}
+                    {Array.isArray(props.error) ? (
+                        props.error.map((error, index) =>
+                            <span key={index}>{error}</span>
+                        )
+                    ) : (
+                        <span>{props.error}</span>
+                    )}
                 </div>
-            }
+            )}
         </div>
     );
 };
@@ -48,5 +58,8 @@ HalfFormField.propTypes = {
     fieldPlaceholder: PropTypes.string,
     maxLength: PropTypes.number,
     updateHandler: PropTypes.func,
-    error:PropTypes.string,
+    error:PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
   };

@@ -1,17 +1,16 @@
 import axios from 'axios';
 import css from './DeleteProfileModal.module.css';
 import { useAuth } from '../../../../hooks';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 
 
 const DeleteProfileModal = (props) => {
-    const { auth, user } = useAuth();
+    const { logout, user } = useAuth();
     const [typePassword, setTypePassword] = useState('password');
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');
     const [isCorrectEmail, setIsCorrectEmail] = useState(true);
-    const navigate = useNavigate();
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -20,15 +19,9 @@ const DeleteProfileModal = (props) => {
             axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`, {
                 data: {password: inputPassword}
             })
-                .then(response => {
-                    console.log(response.data);
+                .then(() => {
                     props.onCancel();
-
-                    axios.post(
-                        `${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`
-                    );
-                    auth.logout();
-                    navigate('/');
+                    logout();
                 })
                 .catch(error => {
                     console.error(error);
@@ -75,6 +68,7 @@ const DeleteProfileModal = (props) => {
                             name="email"
                             placeholder="Електронна пошта"
                             onChange={emailChangeHandler}
+                            onKeyDown={preventEnterSubmit}
                         />
                     </div>
                     {(!isCorrectEmail) &&
@@ -91,6 +85,7 @@ const DeleteProfileModal = (props) => {
                             name="password"
                             placeholder="Пароль"
                             onChange={passwordChangeHandler}
+                            onKeyDown={preventEnterSubmit}
                         />
                         <span onClick={passwordVisisbilityHandler}>
                             <img
