@@ -12,7 +12,6 @@ from .views import (
     ProfileViewCreate,
 )
 
-
 app_name = "profiles"
 
 urlpatterns = [
@@ -25,6 +24,7 @@ urlpatterns = [
     ),
     path(
         "saved-list/del/<int:pk>/",
+        SavedCompaniesDestroy.as_view(),
         name="saved_companies_destroy",
     ),
     path(
