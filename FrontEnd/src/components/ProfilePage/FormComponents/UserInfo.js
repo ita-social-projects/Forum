@@ -79,7 +79,7 @@ const UserInfo = (props) => {
         }));
     };
 
-   const errorsInNameSurname = formStateErr['name']['message'].length > 1 || formStateErr['surname']['message'].length > 1;
+   const errorsInNameSurname = formStateErr['name']['message']?.length > 1 || formStateErr['surname']['message']?.length > 1;
 
     const checkRequiredFields = () => {
         let isValid = true;
@@ -100,10 +100,10 @@ const UserInfo = (props) => {
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
 
-        if (updateUser.name.length < 2 || updateUser.surname.length < 2) {
+        if (updateUser.name?.length < 2 || updateUser.surname?.length < 2) {
             isValid = false;
         }
-        if (updateProfile.person_position.length !== 0 && updateProfile.person_position.length < 2) {
+        if (updateProfile.person_position?.length !== 0 && updateProfile.person_position?.length < 2) {
             isValid = false;
         }
 
