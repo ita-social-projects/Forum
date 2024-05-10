@@ -1,8 +1,14 @@
 import { PropTypes } from 'prop-types';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './HalfFormField.module.css';
+import { Tooltip } from 'antd';
+
+const LENGTH_EMAIL = 19;
 
 const HalfFormField = (props) => {
+    const shouldShowTooltip = props.name === 'email' && props.value.length > LENGTH_EMAIL;
+
+    const fieldValue = shouldShowTooltip ? `${props.value.slice(0, LENGTH_EMAIL)}...` : props.value;
 
     return (
         <div className={css['fields__column']}>
@@ -15,21 +21,23 @@ const HalfFormField = (props) => {
                 </label>
             </div>
             <div className={css['fields__field']}>
-                <input
-                    type={props.inputType ? props.inputType : 'text'}
-                    className={`${css['fields__field--input']} ${props.name === 'email' && css['disabled__field']}`}
-                    name={props.name}
-                    value={props.value}
-                    placeholder={props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'}
-                    onBlur={props.onBlur}
-                    onKeyDown={preventEnterSubmit}
-                    onChange={props.updateHandler}
-                    required={(props.requredField) ? 'required' : ''}
-                    disabled={(props.name === 'email') ? 'disabled' : ''}
-                    maxLength={props.maxLength}
-                />
+                    <Tooltip title={shouldShowTooltip ? props.value : ''} placement="bottom">
+                        <input
+                            type={props.inputType || 'text'}
+                            className={`${css['fields__field--input']} ${props.name === 'email' && css['disabled__field']}`}
+                            name={props.name}
+                            value={fieldValue}
+                            placeholder={props.fieldPlaceholder || 'Введіть текст'}
+                            onBlur={props.onBlur}
+                            onKeyDown={preventEnterSubmit}
+                            onChange={props.updateHandler}
+                            required={props.requredField ? 'required' : ''}
+                            disabled={props.name === 'email' ? 'disabled' : ''}
+                            maxLength={props.maxLength}
+                        />
+                    </Tooltip>
             </div>
-            {(props.requiredField || props.error) && (
+            {(props.requredField || props.error) && (
                 <div className={css['error-message']}>
                     {Array.isArray(props.error) ? (
                         props.error.map((error, index) =>
