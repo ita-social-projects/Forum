@@ -257,6 +257,14 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             )
         return data
 
+    # set optional unique fields to None if they are empty
+    def to_internal_value(self, data):
+        fields_to_check = ["official_name", "edrpou", "rnokpp"]
+        for field in fields_to_check:
+            if data.get(field) == "":
+                data[field] = None
+        return super().to_internal_value(data)
+
 
 class ProfileDeleteSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)
