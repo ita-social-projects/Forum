@@ -19,7 +19,7 @@ function DataContacts ({ data }) {
     const companyContacts = {
         'Сайт': '',
         'PhoneEmail': <PhoneEmail profileId={data.id} personId={data.person}/>,
-        'Адрес(и)': data.address,
+        'Поштова адреса': data.address,
         'Соціальні мережі': [
             {
                 name: 'facebook',

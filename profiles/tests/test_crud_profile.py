@@ -1,5 +1,6 @@
 import os
 
+from unittest import mock
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -400,13 +401,41 @@ class TestProfileDetailAPIView(APITestCase):
         response = self.client.get(path="/api/profiles/")
         self.assertEqual(0, response.data["total_items"])
         self.profile.refresh_from_db()
+        self.user.refresh_from_db()
         self.assertTrue(self.profile.is_deleted)
+        self.assertFalse(self.user.is_active)
 
         # try access deleted profile
         response = self.client.get(
             "/api/profiles/{profile_id}".format(profile_id=self.profile.id)
         )
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
+
+    def test_delete_profile_authorized_with_correct_password_check_user_email(
+        self,
+    ):
+        self.user.set_password("Test1234")
+        self.client.force_authenticate(self.user)
+
+        with mock.patch("profiles.views.now") as mock_now:
+            mock_now.return_value.strftime.return_value = "20240430120000"
+
+            # del profile
+            response = self.client.delete(
+                path="/api/profiles/{profile_id}".format(
+                    profile_id=self.profile.id
+                ),
+                data={"password": "Test1234"},
+            )
+
+        self.assertEqual(204, response.status_code)
+
+        # check the user email after deletion
+        expected_email = "is_deleted_20240430120000_test1@test.com"
+        self.user.refresh_from_db()
+        self.assertIn("20240430120000", self.user.email)
+        self.assertIn("is_deleted", self.user.email)
+        self.assertEqual(expected_email, self.user.email)
 
     def test_delete_profile_authorized_with_wrong_password(self):
         self.user.set_password("Test1234")
@@ -532,6 +561,83 @@ class TestProfileDetailAPIView(APITestCase):
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
+    def test_partial_update_profile_official_name_empty_value(self):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"official_name": ""},
+            format="json",
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertIsNone(response.data.get("official_name"))
+
+    def test_partial_update_profile_edrpou_empty_value(self):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"edrpou": ""},
+            format="json",
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertIsNone(response.data.get("edrpou"))
+
+    def test_partial_update_profile_rnokpp_empty_value(self):
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"rnokpp": ""},
+            format="json",
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertIsNone(response.data.get("rnokpp"))
+
+    # updating fields when another instance with empty fields already exists in db
+    def test_partial_update_profile_fields_with_empty_values(
+        self,
+    ):
+        ProfileStartupFactory.create(
+            official_name=None,
+            edrpou=None,
+        )
+        self.client.force_authenticate(self.user)
+
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"official_name": "", "edrpou": ""},
+            format="json",
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+
+        response = self.client.get(path="/api/profiles/")
+        self.assertEqual(2, response.data["total_items"])
+        self.assertTrue(
+            all(
+                [
+                    item.get("official_name") is None
+                    for item in response.data["results"]
+                ]
+            )
+        )
+        self.assertTrue(
+            all(
+                [
+                    item.get("edrpou") is None
+                    for item in response.data["results"]
+                ]
+            )
+        )
+
     def test_partial_update_profile_is_fop_with_edrpou(self):
         self.client.force_authenticate(self.user)
 
@@ -559,6 +665,7 @@ class TestProfileDetailAPIView(APITestCase):
                 profile_id=self.profile.id
             ),
             data={"edrpou": "", "rnokpp": "1111111118"},
+            format="json",
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(
@@ -578,6 +685,7 @@ class TestProfileDetailAPIView(APITestCase):
                 profile_id=self.profile.id
             ),
             data={"edrpou": "", "is_fop": True, "rnokpp": "1234567899"},
+            format="json",
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual("1234567899", response.data.get("rnokpp"))
@@ -591,6 +699,7 @@ class TestProfileDetailAPIView(APITestCase):
                 profile_id=self.profile.id
             ),
             data={"edrpou": "", "is_fop": True, "rnokpp": "12345678"},
+            format="json",
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(
@@ -608,6 +717,7 @@ class TestProfileDetailAPIView(APITestCase):
                 profile_id=self.profile.id
             ),
             data={"edrpou": "", "is_fop": True, "rnokpp": "1234567889"},
+            format="json",
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(

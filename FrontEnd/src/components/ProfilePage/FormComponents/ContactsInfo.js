@@ -12,7 +12,7 @@ import css from './FormComponents.module.css';
 
 const LABELS = {
     'phone': 'Телефон',
-    'address': 'Адрес(и)',
+    'address': 'Поштова адреса',
 };
 
 const ContactsInfo = (props) => {
