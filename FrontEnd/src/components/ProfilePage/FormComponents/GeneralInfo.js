@@ -102,7 +102,7 @@ const GeneralInfo = (props) => {
         let isValid = true;
         const newFormState = {};
         for (const key in profile) {
-            if (key in ERRORS && (!profile[key] || (Array.isArray(profile[key]) && profile[key].length === 0))) {
+            if (key in ERRORS && (!profile[key] || (Array.isArray(profile[key]) && profile[key]?.length === 0))) {
                 isValid = false;
                 newFormState[key] = {
                     'error': true,
@@ -116,10 +116,10 @@ const GeneralInfo = (props) => {
             }
         }
         setFormStateErr({ ...formStateErr, ...newFormState });
-        if (profile.official_name.length !== 0 && profile.official_name.length < 2) {
+        if (profile.official_name?.length !== 0 && profile.official_name?.length < 2) {
             isValid = false;
         }
-        if (profile.name.length < 2) {
+        if (profile.name?.length < 2) {
             isValid = false;
         }
         if (profile.edrpou) {
@@ -147,7 +147,7 @@ const GeneralInfo = (props) => {
 
     const onUpdateField = e => {
         const { value: fieldValue, name: fieldName } = e.target;
-        const symbolCount = (fieldValue.replace(/[\s]/g,'')).length;
+        const symbolCount = (fieldValue.replace(/[\s]/g,''))?.length;
         setFormStateErr({ ...formStateErr, [fieldName]: {'error': false, 'message': ''}});
         if (fieldName === 'name' && symbolCount < 2) {
             setFormStateErr({ ...formStateErr, [fieldName]: {'error': true, 'message': 'Введіть від 2 до 100 символів'}});
@@ -220,7 +220,7 @@ const GeneralInfo = (props) => {
     };
 
     const onUpdateTextAreaField = e => {
-        if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
+        if (e.target.value?.length <= TEXT_AREA_MAX_LENGTH)
             setProfile((prevState) => {
                 return { ...prevState, [e.target.name]: e.target.value };
             });
@@ -491,6 +491,7 @@ const GeneralInfo = (props) => {
                             name="common_info"
                             label={LABELS.common_info}
                             updateHandler={onUpdateTextAreaField}
+                            onBlur={onBlurHandler}
                             value={profile.common_info ?? ''}
                             maxLength={TEXT_AREA_MAX_LENGTH}
                         />

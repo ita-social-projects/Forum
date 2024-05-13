@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './TextField.module.css';
 
@@ -23,6 +24,7 @@ const TextField = (props) => {
                     onKeyDown={preventEnterSubmit}
                     required={(props.requredField) ? 'required' : ''}
                     disabled={(props.name === 'email') ? 'disabled' : ''}
+                    onBlur={props.onBlur}
                 ></textarea>
             </div>
             <div className={css['count__symbols']}>
@@ -38,3 +40,15 @@ const TextField = (props) => {
 };
 
 export default TextField;
+
+TextField.propTypes = {
+    requredField: PropTypes.bool,
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    fieldPlaceholder: PropTypes.string,
+    maxLength: PropTypes.number,
+    updateHandler: PropTypes.func,
+    error: PropTypes.string,
+    onBlur: PropTypes.func,
+  };
