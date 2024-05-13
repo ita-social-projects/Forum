@@ -75,3 +75,33 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         # check that deleted
         response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(0, response.data["total_items"])
+
+    def test_add_company_to_saved_twice_authenticated(self):
+        self.client.force_authenticate(self.user)
+
+        self.client.post(
+            path="/api/saved-list/",
+            data={
+                "company": "{profile_pk}".format(
+                    profile_pk=self.profile.id
+                ),
+            },
+        )
+        existed_company_response = self.client.post(
+            path="/api/saved-list/",
+            data={
+                "company": "{profile_pk}".format(
+                    profile_pk=self.profile.id
+                ),
+            },
+        )
+        response = self.client.get(path="/api/profiles/?is_saved=True")
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(1, response.data["total_items"])
+        self.assertEqual(
+            {
+                "non_field_errors": [
+                    "Company is already in users saved companies list"
+                ]
+            },
+            existed_company_response.json(), )

@@ -289,6 +289,14 @@ class SavedCompanySerializer(serializers.ModelSerializer):
         fields = ("id", "user", "company", "added_at")
         read_only_fields = ["user", ]
 
+    def validate(self, attrs):
+        user = self.context["request"].user
+        company = attrs["company"]
+        company__to_find = SavedCompany.objects.filter(user=user, company=company)
+        if company__to_find:
+            raise serializers.ValidationError("Company is already in users saved companies list")
+        return attrs
+
 
 class ViewedCompanySerializer(serializers.ModelSerializer):
     user_profile_name = serializers.SerializerMethodField()
