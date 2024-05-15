@@ -7,6 +7,7 @@ def validate_password_long(password_value: str):
     if len(password_value) > 100:
         raise ValidationError("The password must not exceed 100 characters.")
 
+
 def validate_password_include_symbols(password_value: str):
     if (
         not any(char.isupper() for char in password_value)
