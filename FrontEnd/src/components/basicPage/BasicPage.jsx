@@ -31,6 +31,7 @@ import { useAuth } from '../../hooks';
 import { Search } from '../SearchPage/Search';
 import './customToastStyles.css';
 import Contact from '../Contact/Contact';
+import ErrorPage404 from '../errorPages/ErrorPage404';
 
 function BasicPage() {
   const { isAuth, user, logout, isLoading } = useAuth();
@@ -166,6 +167,7 @@ function BasicPage() {
           path="/search"
           element={<Search isAuthorized={isAuth} userData={user} />}
         />
+        <Route path="*" element={< ErrorPage404 />} />
       </Routes>)}
       <Footer />
       <ScrollToTopButton />
