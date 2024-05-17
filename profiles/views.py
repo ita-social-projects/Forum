@@ -62,6 +62,7 @@ class SavedCompaniesDestroy(DestroyAPIView):
     """
     Remove the company from the saved list.
     """
+
     queryset = SavedCompany.objects.all()
     permission_classes = [IsAuthenticated]
 

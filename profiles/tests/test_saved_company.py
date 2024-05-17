@@ -15,8 +15,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company": "{profile_id}".format(
-                    profile_id=self.profile.id),
+                "company": "{profile_id}".format(profile_id=self.profile.id),
             },
             format="json",
         )
@@ -27,9 +26,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company": "{profile_id}".format(
-                    profile_id=self.profile.id
-                )
+                "company": "{profile_id}".format(profile_id=self.profile.id)
             },
             format="json",
         )
@@ -82,17 +79,13 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.post(
             path="/api/saved-list/",
             data={
-                "company": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company": "{profile_pk}".format(profile_pk=self.profile.id),
             },
         )
         existed_company_response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company": "{profile_pk}".format(profile_pk=self.profile.id),
             },
         )
         response = self.client.get(path="/api/profiles/?is_saved=True")
@@ -104,4 +97,5 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
                     "Company is already in users saved companies list"
                 ]
             },
-            existed_company_response.json(), )
+            existed_company_response.json(),
+        )
