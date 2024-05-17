@@ -225,7 +225,7 @@ export function SignUpFormContentComponent(props) {
               <div className={styles['signup-form__label--password']}>
                 <label>Пароль</label>
                 <label className={styles['signup-form__label--hint']}>
-                  (Повинен містити від 8 до 50 символів, A-Z, a-z, 0-9)
+                  (Повинен містити від 8 символів, A-Z, a-z, 0-9)
                 </label>
               </div>
             </div>
@@ -264,7 +264,7 @@ export function SignUpFormContentComponent(props) {
                   Повторіть пароль
                 </label>
                 <label className={styles['signup-form__label--hint']}>
-                  (Повинен містити від 8 до 50 символів, A-Z, a-z, 0-9)
+                  (Повинен містити від 8 символів, A-Z, a-z, 0-9)
                 </label>
               </div>
             </div>

@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 def validate_password_long(password_value: str):
     if len(password_value) < 8:
         raise ValidationError("Password must be at least 8 characters long.")
+    if len(password_value) > 128:
+        raise ValidationError("The password must not exceed 128 characters.")
 
 
 def validate_password_include_symbols(password_value: str):
