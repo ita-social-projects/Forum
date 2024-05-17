@@ -294,7 +294,11 @@ class SavedCompanySerializer(serializers.ModelSerializer):
         company = attrs["company"]
         company__to_find = SavedCompany.objects.filter(user=user, company=company)
         if company__to_find:
-            raise serializers.ValidationError("Company is already in users saved companies list")
+            raise serializers.ValidationError({
+                'non_field_errors': [
+                "Company is already in users saved companies list"
+                ]
+            })
         return attrs
 
 
