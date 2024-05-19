@@ -69,7 +69,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path=f"/api/saved-list/del/{saved_company.id}/"
+            path=f"/api/saved-list/del/{saved_company.company.id}/"
             ,
             data={},
             format="json",

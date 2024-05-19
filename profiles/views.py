@@ -65,6 +65,11 @@ class SavedCompaniesDestroy(DestroyAPIView):
     queryset = SavedCompany.objects.all()
     permission_classes = [IsAuthenticated]
 
+    def get_object(self):
+        queryset = self.get_queryset()
+        lookup_kwargs = {'user_id': self.request.user.id, 'company_id': self.kwargs['company_pk']}
+        obj = get_object_or_404(queryset, **lookup_kwargs)
+        return obj
 
 class ProfileList(ListCreateAPIView):
     """

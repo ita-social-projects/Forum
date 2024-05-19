@@ -300,7 +300,8 @@ class SavedCompanySerializer(serializers.ModelSerializer):
                 profile = Profile.objects.get(id=company_pk)
             except Profile.DoesNotExist:
                 raise serializers.ValidationError(
-                    {"non_field_errors": [
+                    {
+                        "non_field_errors": [
                         "Company does not exist"
                     ]
                     }
