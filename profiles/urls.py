@@ -23,7 +23,7 @@ urlpatterns = [
         name="saved_companies_create",
     ),
     path(
-        "saved-list/del/<int:pk>/",
+        "saved-list/<int:company_pk>/",
         SavedCompaniesDestroy.as_view(),
         name="saved_companies_destroy",
     ),
