@@ -56,11 +56,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(
-            {
-                "non_field_errors": [
-                    "Company does not exist"
-                ]
-            },
+            {"non_field_errors": ["Company does not exist"]},
             response.json(),
         )
 
@@ -69,8 +65,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path=f"/api/saved-list/del/{saved_company.company.id}/"
-            ,
+            path=f"/api/saved-list/{saved_company.company.id}/",
             data={},
             format="json",
         )
