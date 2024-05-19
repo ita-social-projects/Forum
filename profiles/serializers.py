@@ -284,20 +284,34 @@ class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
 
 
 class SavedCompanySerializer(serializers.ModelSerializer):
+    company_pk = serializers.IntegerField(write_only=True)
+
     class Meta:
         model = SavedCompany
-        fields = ("id", "user", "company", "added_at")
+        fields = ("id", "user", "company", "company_pk", "added_at")
         read_only_fields = [
             "user",
         ]
 
+    def to_internal_value(self, data):
+        company_pk = data.pop("company_pk", None)
+        if company_pk is not None:
+            try:
+                profile = Profile.objects.get(id=company_pk)
+            except Profile.DoesNotExist:
+                raise serializers.ValidationError(
+                    {"non_field_errors": [
+                        "Company does not exist"
+                    ]
+                    }
+                )
+            data["company"] = profile
+        return data
+
     def validate(self, attrs):
         user = self.context["request"].user
         company = attrs["company"]
-        company__to_find = SavedCompany.objects.filter(
-            user=user, company=company
-        )
-        if company__to_find:
+        if SavedCompany.objects.filter(user=user, company=company).exists():
             raise serializers.ValidationError(
                 {
                     "non_field_errors": [

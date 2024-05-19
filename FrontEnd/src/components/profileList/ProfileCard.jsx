@@ -48,7 +48,7 @@ export default function ProfileCard({ isAuthorized, data }) {
   const handleClick = async () => {
     try {
       await trigger(
-        { company: profile.id },
+        { company_pk: profile.id },
         { optimisticData: () => setIsSaved(!isSaved) }
       );
       mutate(

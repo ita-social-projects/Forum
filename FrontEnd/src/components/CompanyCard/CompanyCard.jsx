@@ -45,7 +45,7 @@ export default function CompanyCard({
   const handleClick = async () => {
     try {
       await trigger(
-        { company: profile.id },
+        { company_pk: profile.id },
         { optimisticData: () => changeCompanies(profile.id, !profile.is_saved) }
       );
       mutate(
