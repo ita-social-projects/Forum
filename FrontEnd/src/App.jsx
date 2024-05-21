@@ -6,7 +6,6 @@ import BasicPage from './components/basicPage/BasicPage';
 import { AuthProvider } from './context';
 
 function App() {
-
   const router = createBrowserRouter([
     {
       path: '/*',
@@ -14,7 +13,7 @@ function App() {
         <AuthProvider>
           <BasicPage />
         </AuthProvider>
-      )
+      ),
     },
     {
       path: '/customadmin/*',
@@ -22,13 +21,15 @@ function App() {
         <AuthProvider>
           <AdminPage />
         </AuthProvider>
-      )
+      ),
     },
   ]);
 
   return (
     <div className="App">
-      <h1>Крафтовий майданчик для обміну інформацією втілюй свої ідеї в життя</h1>
+      <h1>
+        Крафтовий майданчик для обміну інформацією втілюй свої ідеї в життя
+      </h1>
       <RouterProvider router={router} />
     </div>
   );
