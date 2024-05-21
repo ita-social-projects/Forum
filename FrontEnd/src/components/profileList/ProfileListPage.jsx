@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import { Radio } from 'antd';
@@ -12,11 +12,14 @@ import ProfileList from './ProfileList';
 import css from './ProfileListPage.module.css';
 
 export default function ProfileListPage({ isAuthorized }) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { filter } = useParams();
+  const queryParams = new URLSearchParams(location.search);
+  const pageNumber = Number(queryParams.get('page')) || 1;
 
   const [filterSaved, setFilterSaved] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-
+  const [currentPage, setCurrentPage] = useState(pageNumber);
   const [profileFilter, setProfileFilter] = useState('');
 
   useEffect(() => {
@@ -31,8 +34,18 @@ export default function ProfileListPage({ isAuthorized }) {
     };
     setProfileFilter(FILTER_MAP[filter]);
     setFilterSaved(false);
-    setCurrentPage(1);
-  }, [filter]);
+    setCurrentPage(pageNumber);
+  }, [filter, pageNumber]);
+
+  const updateQueryParams = (newPage) => {
+    queryParams.set('page', newPage);
+    navigate(`?${queryParams.toString()}`);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    updateQueryParams(page);
+  };
 
   const urlForAll = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?${profileFilter}&ordering=name&page=${currentPage}`;
 
@@ -87,7 +100,7 @@ export default function ProfileListPage({ isAuthorized }) {
               isAuthorized={isAuthorized}
               isLoading={isLoading}
               data={fetchedProfiles}
-              paginationFunc={setCurrentPage}
+              paginationFunc={handlePageChange}
               current={currentPage}
             />
           )}

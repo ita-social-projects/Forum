@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
 import SearchResults from './search_field/SearchResults';
 import frame42 from './img/frame42.png';
@@ -17,8 +17,10 @@ export function Search({ isAuthorized }) {
   const [searchPerformed, setSearchPerformed] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get('name');
+  const pageNumber = Number(searchParams.get('page')) || 1;
   const servedAddress = process.env.REACT_APP_BASE_API_URL;
   const searchUrl = 'search';
 
@@ -48,7 +50,11 @@ export function Search({ isAuthorized }) {
     }
   }, [searchTerm, servedAddress, searchUrl, companylist]);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    setCurrentPage(pageNumber);
+  }, [pageNumber]);
+
+  const [currentPage, setCurrentPage] = useState(pageNumber);
   const totalItems = searchResults.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
@@ -58,6 +64,8 @@ export function Search({ isAuthorized }) {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+    searchParams.set('page', newPage);
+    navigate(`?${searchParams.toString()}`);
   };
 
   return (
@@ -163,10 +171,6 @@ export function Search({ isAuthorized }) {
 }
 
 export default Search;
-
-Search.propTypes = {
-  isAuthorized: PropTypes.bool,
-};
 
 Search.propTypes = {
   isAuthorized: PropTypes.bool,
