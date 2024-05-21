@@ -15,7 +15,7 @@ const ScrollToTopButton = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
@@ -28,7 +28,10 @@ const ScrollToTopButton = () => {
   }, []);
 
   return (
-    <div className={`scroll-to-top-button ${isVisible ? 'visible' : ''}`} onClick={scrollToTop}>
+    <div
+      className={`scroll-to-top-button ${isVisible ? 'visible' : ''}`}
+      onClick={scrollToTop}
+    >
       &#8679;
     </div>
   );

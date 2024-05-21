@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,  Suspense} from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -12,7 +12,7 @@ import {
   EMAIL_PATTERN,
   PASSWORD_PATTERN,
   NAME_SURNAME_PATTERN,
-  COMPANY_NAME_PATTERN
+  COMPANY_NAME_PATTERN,
 } from '../../../../../constants/constants';
 
 const RulesModal = React.lazy(() => import('./RulesModal'));
@@ -73,7 +73,10 @@ export function SignUpFormContentComponent(props) {
     const otherOption = name === 'yurosoba' ? 'fop' : 'yurosoba';
     setValue(otherOption, false);
     if (!getValues('yurosoba') && !getValues('fop')) {
-      setError('businessEntity', { type: 'manual', message: errorMessageTemplates.requiredRepresentative });
+      setError('businessEntity', {
+        type: 'manual',
+        message: errorMessageTemplates.requiredRepresentative,
+      });
     } else {
       clearErrors('businessEntity');
     }
@@ -81,7 +84,8 @@ export function SignUpFormContentComponent(props) {
 
   const validateNameSurname = (value) => {
     const allowedSymbolsPattern = /^[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ'\s]+$/;
-    const letterCount = (value.match(/[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ]/g) || []).length;
+    const letterCount = (value.match(/[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ]/g) || [])
+      .length;
     if (!allowedSymbolsPattern.test(value)) {
       return errorMessageTemplates.notAllowedSymbols;
     }
@@ -94,17 +98,16 @@ export function SignUpFormContentComponent(props) {
   const onBlurHandler = (fieldName) => {
     let fieldValue = getValues(fieldName);
     if (fieldValue !== undefined && fieldValue !== null) {
-      fieldValue = fieldValue.replace(/\s{2,}/g,' ').trim();
+      fieldValue = fieldValue.replace(/\s{2,}/g, ' ').trim();
       setValue(fieldName, fieldValue);
     }
-};
+  };
 
   useEffect(() => {
     setIsValid(isValid);
   }, [isValid, setIsValid]);
 
   const onSubmit = () => {
-
     const dataToSend = {
       email: getValues('email'),
       password: getValues('password'),
@@ -113,9 +116,9 @@ export function SignUpFormContentComponent(props) {
       surname: getValues('surname'),
       company: {
         name: getValues('companyName'),
-        is_registered: (getValues('representative').indexOf('company') > -1),
-        is_startup: (getValues('representative').indexOf('startup') > -1),
-        is_fop: (getValues('fop')),
+        is_registered: getValues('representative').indexOf('company') > -1,
+        is_startup: getValues('representative').indexOf('startup') > -1,
+        is_fop: getValues('fop'),
       },
     };
 
@@ -161,10 +164,13 @@ export function SignUpFormContentComponent(props) {
             </div>
             <div className={styles['signup-form__field']}>
               <Tooltip
-                title={!COMPANY_NAME_PATTERN.test(getValues('companyName')) &&
-                'Назва повинна містити від 2 до 100 символів'}
+                title={
+                  !COMPANY_NAME_PATTERN.test(getValues('companyName')) &&
+                  'Назва повинна містити від 2 до 100 символів'
+                }
                 trigger="focus"
-                pointAtCenter={true}>
+                pointAtCenter={true}
+              >
                 <input
                   className={styles['signup-form__input']}
                   type="text"
@@ -174,7 +180,10 @@ export function SignUpFormContentComponent(props) {
                     pattern: {
                       value: COMPANY_NAME_PATTERN,
                     },
-                    minLength: {value: 2, message: errorMessageTemplates.companyFieldLength}
+                    minLength: {
+                      value: 2,
+                      message: errorMessageTemplates.companyFieldLength,
+                    },
                   })}
                   maxLength={100}
                   onBlur={() => onBlurHandler('companyName')}
@@ -195,21 +204,23 @@ export function SignUpFormContentComponent(props) {
               </label>
             </div>
             <div className={styles['signup-form__field']}>
-            <Tooltip title="Приклад електронної пошти logginname@example.com"
-                pointAtCenter={true}>
-              <input
-                className={styles['signup-form__input']}
-                placeholder="Електронна пошта"
-                type="email"
-                {...register('email', {
-                  required: errorMessageTemplates.required,
-                  pattern: {
-                    value: EMAIL_PATTERN,
-                    message: errorMessageTemplates.email,
-                  },
-                })}
-              />
-            </Tooltip>
+              <Tooltip
+                title="Приклад електронної пошти logginname@example.com"
+                pointAtCenter={true}
+              >
+                <input
+                  className={styles['signup-form__input']}
+                  placeholder="Електронна пошта"
+                  type="email"
+                  {...register('email', {
+                    required: errorMessageTemplates.required,
+                    pattern: {
+                      value: EMAIL_PATTERN,
+                      message: errorMessageTemplates.email,
+                    },
+                  })}
+                />
+              </Tooltip>
             </div>
             <div className={styles['signup-form__error']}>
               {errors.email && errors.email.message}
@@ -305,23 +316,26 @@ export function SignUpFormContentComponent(props) {
               </label>
             </div>
             <div className={styles['signup-form__field']}>
-            <Tooltip title={!NAME_SURNAME_PATTERN.test(getValues('surname')) &&
-                'Прізвище повинне містити від 2 до 50 символів'}
+              <Tooltip
+                title={
+                  !NAME_SURNAME_PATTERN.test(getValues('surname')) &&
+                  'Прізвище повинне містити від 2 до 50 символів'
+                }
                 trigger="focus"
-                pointAtCenter={true}>
-              <input
-                className={styles['signup-form__input']}
-                type="text"
-                placeholder="Прізвище"
-                {...register('surname', {
-                  required: errorMessageTemplates.required,
-                  validate: validateNameSurname,
-                },
-                )}
-                maxLength={50}
-                onBlur={() => onBlurHandler('surname')}
-              />
-            </Tooltip>
+                pointAtCenter={true}
+              >
+                <input
+                  className={styles['signup-form__input']}
+                  type="text"
+                  placeholder="Прізвище"
+                  {...register('surname', {
+                    required: errorMessageTemplates.required,
+                    validate: validateNameSurname,
+                  })}
+                  maxLength={50}
+                  onBlur={() => onBlurHandler('surname')}
+                />
+              </Tooltip>
             </div>
             <div className={styles['signup-form__error']}>
               {errors.surname && errors.surname.message}
@@ -335,23 +349,26 @@ export function SignUpFormContentComponent(props) {
               <label className={styles['signup-form__label--text']}>Ім‘я</label>
             </div>
             <div className={styles['signup-form__field']}>
-            <Tooltip title={!NAME_SURNAME_PATTERN.test(getValues('name')) &&
-                'Ім‘я повинне містити від 2 до 50 символів'}
+              <Tooltip
+                title={
+                  !NAME_SURNAME_PATTERN.test(getValues('name')) &&
+                  'Ім‘я повинне містити від 2 до 50 символів'
+                }
                 trigger="focus"
-                pointAtCenter={true}>
-              <input
-                className={styles['signup-form__input']}
-                type="text"
-                placeholder="Ім‘я"
-                {...register('name', {
-                  required: errorMessageTemplates.required,
-                  validate: validateNameSurname,
-                },
-                )}
-                maxLength={50}
-                onBlur={() => onBlurHandler('name')}
-              />
-            </Tooltip>
+                pointAtCenter={true}
+              >
+                <input
+                  className={styles['signup-form__input']}
+                  type="text"
+                  placeholder="Ім‘я"
+                  {...register('name', {
+                    required: errorMessageTemplates.required,
+                    validate: validateNameSurname,
+                  })}
+                  maxLength={50}
+                  onBlur={() => onBlurHandler('name')}
+                />
+              </Tooltip>
             </div>
             <div className={styles['signup-form__error']}>
               {errors.name && errors.name.message}
@@ -378,7 +395,8 @@ export function SignUpFormContentComponent(props) {
                         name="company"
                         value={'company'}
                         {...register('representative', {
-                          required: errorMessageTemplates.requiredRepresentative
+                          required:
+                            errorMessageTemplates.requiredRepresentative,
                         })}
                       />
                     </div>
@@ -397,7 +415,8 @@ export function SignUpFormContentComponent(props) {
                         name="startup"
                         value={'startup'}
                         {...register('representative', {
-                          required: errorMessageTemplates.requiredRepresentative
+                          required:
+                            errorMessageTemplates.requiredRepresentative,
                         })}
                       />
                     </div>
@@ -429,7 +448,7 @@ export function SignUpFormContentComponent(props) {
                       <input
                         type="checkbox"
                         {...register('yurosoba', {
-                          onChange: onChangeCheckbox
+                          onChange: onChangeCheckbox,
                         })}
                       />
                     </div>
@@ -446,7 +465,7 @@ export function SignUpFormContentComponent(props) {
                       <input
                         type="checkbox"
                         {...register('fop', {
-                          onChange: onChangeCheckbox
+                          onChange: onChangeCheckbox,
                         })}
                       />
                     </div>
@@ -476,7 +495,10 @@ export function SignUpFormContentComponent(props) {
                 />
                 <label className={styles['rules__line--text']}>
                   Погоджуюсь з{' '}
-                  <a onClick={openModal} className={styles['rules__line--link']}>
+                  <a
+                    onClick={openModal}
+                    className={styles['rules__line--link']}
+                  >
                     правилами використання
                   </a>
                 </label>

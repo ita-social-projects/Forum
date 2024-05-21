@@ -34,7 +34,7 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
     handleSubmit,
     getValues,
     formState: { errors, isValid },
-  } = useForm({mode: 'all'});
+  } = useForm({ mode: 'all' });
 
   useEffect(() => {
     const formIsValid = isValid;
