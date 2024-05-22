@@ -54,26 +54,18 @@ class SavedCompaniesCreate(CreateAPIView):
     serializer_class = SavedCompanySerializer
     pagination_class = ForumPagination
 
-    def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
-
 
 class SavedCompaniesDestroy(DestroyAPIView):
     """
     Remove the company from the saved list.
     """
 
-    queryset = SavedCompany.objects.all()
     permission_classes = [IsAuthenticated]
+    lookup_field = "company_id"
+    lookup_url_kwarg = "company_pk"
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        lookup_kwargs = {
-            "user_id": self.request.user.id,
-            "company_id": self.kwargs["company_pk"],
-        }
-        obj = get_object_or_404(queryset, **lookup_kwargs)
-        return obj
+    def get_queryset(self):
+        return SavedCompany.objects.filter(user_id=self.request.user.id)
 
 
 class ProfileList(ListCreateAPIView):

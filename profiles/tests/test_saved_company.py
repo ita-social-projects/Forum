@@ -56,8 +56,8 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(
-            {"non_field_errors": ["Company does not exist"]},
-            response.json(),
+            {"company_pk": ['Invalid pk "0" - object does not exist.']},
+            response.data,
         )
 
     def test_delete_company_from_saved_authenticated(self):
@@ -65,7 +65,9 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
 
         saved_company = SavedCompanyFactory(user=self.user)
         response = self.client.delete(
-            path=f"/api/saved-list/{saved_company.company.id}/",
+            path="/api/saved-list/{profile_pk}/".format(
+                profile_pk=saved_company.company.id
+            ),
             data={},
             format="json",
         )
@@ -85,21 +87,23 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             },
             format="json",
         )
-        existed_company_response = self.client.post(
+        response = self.client.post(
             path="/api/saved-list/",
             data={
                 "company_pk": self.profile.id,
             },
             format="json",
         )
-        response = self.client.get(path="/api/profiles/?is_saved=True")
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             {
                 "non_field_errors": [
                     "Company is already in users saved companies list"
                 ]
             },
-            existed_company_response.json(),
+            response.data,
         )
+
+        response = self.client.get(path="/api/profiles/?is_saved=True")
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(1, response.data["total_items"])
