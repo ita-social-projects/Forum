@@ -73,7 +73,6 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         )
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
 
-        # check that deleted
         response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(0, response.data["total_items"])
 

@@ -299,11 +299,7 @@ class SavedCompanySerializer(serializers.ModelSerializer):
         company_pk = attrs["company_pk"]
         if not Profile.objects.filter(pk=company_pk).exists():
             raise serializers.ValidationError(
-                {
-                    "company_pk": [
-                        "Company does not exist"
-                    ]
-                }
+                {"company_pk": ["Company does not exist"]}
             )
         if SavedCompany.objects.filter(user=user, company=company_pk).exists():
             raise serializers.ValidationError(
