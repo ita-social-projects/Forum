@@ -15,10 +15,9 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(
-                    profile_id=self.profile.id
-                ),
+                "company_pk": self.profile.id,
             },
+            format="json",
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
@@ -27,12 +26,11 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=self.profile.id)
+                "company_pk": self.profile.id,
             },
+            format="json",
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        company_added_info = response.data["Company added"]
-        self.assertEqual(company_added_info["company"], self.profile.id)
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
     def test_add_own_company_to_saved_authenticated(self):
         own_profile = ProfileCompanyFactory(person_id=self.user.id)
@@ -40,8 +38,9 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_id}".format(profile_id=own_profile.id),
+                "company_pk": own_profile.id,
             },
+            format="json",
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
@@ -53,8 +52,13 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
             data={
                 "company_pk": 0,
             },
+            format="json",
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            {"company_pk": ["Company does not exist"]},
+            response.data,
+        )
 
     def test_delete_company_from_saved_authenticated(self):
         self.client.force_authenticate(self.user)
@@ -65,10 +69,10 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
                 profile_pk=saved_company.company.id
             ),
             data={},
+            format="json",
         )
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
 
-        # check that deleted
         response = self.client.get(path="/api/profiles/?is_saved=True")
         self.assertEqual(0, response.data["total_items"])
 
@@ -78,19 +82,27 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company_pk": self.profile.id,
             },
+            format="json",
         )
-        self.client.post(
+        response = self.client.post(
             path="/api/saved-list/",
             data={
-                "company_pk": "{profile_pk}".format(
-                    profile_pk=self.profile.id
-                ),
+                "company_pk": self.profile.id,
             },
+            format="json",
         )
+        self.assertEqual(
+            {
+                "company_pk": [
+                    "Company is already in users saved companies list"
+                ]
+            },
+            response.data,
+        )
+
         response = self.client.get(path="/api/profiles/?is_saved=True")
+
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual(1, response.data["total_items"])

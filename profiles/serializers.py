@@ -292,9 +292,41 @@ class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
 
 
 class SavedCompanySerializer(serializers.ModelSerializer):
+    company_pk = serializers.IntegerField(write_only=True)
+
     class Meta:
         model = SavedCompany
-        fields = ("id", "user", "company", "added_at")
+        fields = ("id", "user", "company", "company_pk", "added_at")
+        read_only_fields = [
+            "user",
+            "company",
+        ]
+
+    def validate(self, attrs):
+        user = self.context["request"].user
+        company_pk = attrs["company_pk"]
+        if not Profile.objects.filter(pk=company_pk).exists():
+            raise serializers.ValidationError(
+                {"company_pk": ["Company does not exist"]}
+            )
+        if SavedCompany.objects.filter(user=user, company=company_pk).exists():
+            raise serializers.ValidationError(
+                {
+                    "company_pk": [
+                        "Company is already in users saved companies list"
+                    ]
+                }
+            )
+        return attrs
+
+    def create(self, validated_data):
+        company = Profile.objects.get(pk=validated_data.pop("company_pk"))
+        saved_company = SavedCompany.objects.create(
+            user=self.context["request"].user,
+            company=company,
+            **validated_data,
+        )
+        return saved_company
 
 
 class ViewedCompanySerializer(serializers.ModelSerializer):
