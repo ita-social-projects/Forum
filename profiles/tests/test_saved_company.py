@@ -56,7 +56,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(
-            {"company_pk": ['Invalid pk "0" - object does not exist.']},
+            {"company_pk": ["Company does not exist"]},
             response.data,
         )
 
@@ -96,7 +96,7 @@ class SavedCompaniesListCreateDestroyAPITest(APITestCase):
         )
         self.assertEqual(
             {
-                "non_field_errors": [
+                "company_pk": [
                     "Company is already in users saved companies list"
                 ]
             },

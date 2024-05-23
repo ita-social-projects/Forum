@@ -301,14 +301,14 @@ class SavedCompanySerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {
                     "company_pk": [
-                        f'Invalid pk "{company_pk}" - object does not exist.'
+                        "Company does not exist"
                     ]
                 }
             )
         if SavedCompany.objects.filter(user=user, company=company_pk).exists():
             raise serializers.ValidationError(
                 {
-                    "non_field_errors": [
+                    "company_pk": [
                         "Company is already in users saved companies list"
                     ]
                 }
