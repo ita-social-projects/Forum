@@ -4,7 +4,7 @@ RUN mkdir -p /home/forum
 
 RUN addgroup -S forum && adduser -S forum -G forum
 
-ENV HOME=/home/forum
+ENV HOME=/home/forum/backend
 ENV APP_HOME=/home/forum/app
 RUN mkdir $APP_HOME
 
