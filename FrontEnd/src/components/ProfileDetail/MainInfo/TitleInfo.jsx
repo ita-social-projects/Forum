@@ -3,8 +3,6 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import classNames from 'classnames';
-import useSWRMutation from 'swr/mutation';
-
 import { useAuth } from '../../../hooks';
 import DefaultLogo from './DefaultLogo';
 import classes from './TitleInfo.module.css';
@@ -33,30 +31,19 @@ function TitleInfo({ isAuthorized, data }) {
 
   const ownProfile = user && user.id === profile.personId;
 
-  async function sendRequest(url, { arg: data }) {
-    return axios.post(url, data).catch((error) => {
-      if (error.response && error.response.status === 403) {
-        console.error('Own company cannot be added to the saved list.');
-      }
-      console.error(error.response ? error.response.data : error.message);
-    });
-  }
-
-  const { trigger } = useSWRMutation(
-    `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
-    sendRequest
-  );
-
-  const handleClick = async () => {
+  const handleSave = async () => {
+    setIsSaved(true);
     try {
-      await trigger(
-        { company_pk: profile.id },
-        {
-          optimisticData: () => {
-            setIsSaved(!isSaved);
-          },
-        }
-      );
+      await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,{ company_pk: profile.id });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteSaved = async () => {
+    setIsSaved(false);
+    try {
+      await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}`);
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +86,7 @@ function TitleInfo({ isAuthorized, data }) {
         <>
           {!ownProfile && (
             <button
-              onClick={handleClick}
+              onClick={isSaved ? handleDeleteSaved : handleSave}
               type="button"
               className={classNames(classes['title-block__button'], {
                 [classes['added_to_saved__button']]: isSaved,
