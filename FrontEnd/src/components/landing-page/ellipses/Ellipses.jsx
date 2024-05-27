@@ -1,6 +1,5 @@
 import './Ellipses.css';
 
-
 const Ellipses = ({ type, count }) => {
   const ellipseClass = `ellipses-main__${type}`;
 
