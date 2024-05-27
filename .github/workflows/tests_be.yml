@@ -53,7 +53,7 @@ jobs:
           pip install -r ./BackEnd/requirements.txt
       - name: Create Migrations
         run: |
-          python ./BackEnd/manage.py makemigrations
+          python ./app/manage.py makemigrations
           python manage.py migrate
       - name: running tests
         run: python manage.py test --settings=forum.test_setting
