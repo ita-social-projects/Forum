@@ -4,10 +4,20 @@ import css from './ProfileList.module.css';
 
 const PAGE_SIZE = 6;
 
+const getCompanyWord = (number) => {
+  if (number === 1 || (number > 20 && number % 10 === 1)) {
+    return 'компанія';
+  } else if ((number >= 2 && number <= 4) || (number > 20 && number % 10 >= 2 && number % 10 <= 4)) {
+    return 'компанії';
+  } else {
+    return 'компаній';
+  }
+};
+
 const ListHeader = ({ number }) => (
   <div className={css['results-header']}>
     <p className={css['results-header__number']}>{number}</p>
-    <p className={css['results-header__text']}>компаній</p>
+    <p className={css['results-header__text']}>{getCompanyWord(number)}</p>
   </div>
 );
 
