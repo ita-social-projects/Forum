@@ -16,7 +16,7 @@ const getCompanyWord = (number) => {
 
 const ListHeader = ({ number }) => (
   <div className={css['results-header']}>
-    <p className={css['results-header__number']}>{10}</p>
+    <p className={css['results-header__number']}>{number}</p>
     <p className={css['results-header__text']}>{getCompanyWord(number)}</p>
   </div>
 );
