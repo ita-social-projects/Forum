@@ -57,4 +57,6 @@ jobs:
           python manage.py makemigrations
           python manage.py migrate
       - name: running tests
-        run: python manage.py test --settings=forum.test_setting
+        run: |
+          cd BackEnd
+          python manage.py test --settings=forum.test_setting
