@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   api-dev:
-    build: .
+    build: ./BackEnd
     container_name: api-dev
     restart: on-failure
     command: gunicorn --log-level debug forum.wsgi:application --bind 0.0.0.0:8000
