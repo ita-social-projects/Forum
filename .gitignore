@@ -12,6 +12,6 @@ env
 __pycache__/
 /FrontEnd/node_modules
 
-public/*
-!public/media/.gitkeep
-!public/static/.gitkeep
+BackEnd/public/*
+!BackEnd/public/media/.gitkeep
+!BackEnd/public/static/.gitkeep
