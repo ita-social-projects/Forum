@@ -64,7 +64,7 @@ export default function ProfileListPage({ isAuthorized }) {
     data: fetchedProfiles,
     error,
     isLoading,
-  } = useSWR(filterSaved ? urlForSaved : urlForAll, fetcher);
+  } = useSWR(filterSaved && isAuthorized ? urlForSaved : urlForAll, fetcher);
 
   const handleRadioSelect = () => {
     if (!filterSaved) {
