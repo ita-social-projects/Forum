@@ -26,8 +26,8 @@
 
 .data-block__field {
     display: flex;
-    height: 32px;
-    align-items: center;
+    min-height: 32px;
+    align-items: self-start;
     gap: 8px;
 }
 
