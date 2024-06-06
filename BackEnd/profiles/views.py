@@ -17,6 +17,7 @@ from rest_framework.permissions import (
 )
 from rest_framework.response import Response
 from utils.completeness_counter import completeness_count
+from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -55,6 +56,7 @@ class SavedCompaniesCreate(CreateAPIView):
     pagination_class = ForumPagination
 
 
+@extend_schema(responses={204: {}})
 class SavedCompaniesDestroy(DestroyAPIView):
     """
     Remove the company from the saved list.
@@ -120,6 +122,21 @@ class ProfileList(ListCreateAPIView):
         return super().create(request)
 
 
+@extend_schema(
+    responses={
+        200: PolymorphicProxySerializer(
+            component_name="profile_detail",
+            serializers=[
+                ProfileOwnerDetailViewSerializer,
+                ProfileSensitiveDataROSerializer,
+                ProfileDetailSerializer,
+                ProfileOwnerDetailEditSerializer,
+            ],
+            resource_type_field_name=None,
+        ),
+        204: {},
+    }
+)
 class ProfileDetail(RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update or delete a profile instance.
