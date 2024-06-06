@@ -33,13 +33,13 @@ class CompanySerializers(serializers.ModelSerializer):
             "is_saved",
         )
 
-    def get_is_saved(self, obj):
+    def get_is_saved(self, obj) -> bool:
         user = self.context["request"].user
         if user.is_authenticated:
             return obj.pk in self.context["saved_companies_pk"]
         return False
 
-    def get_regions_ukr_display(self, obj):
+    def get_regions_ukr_display(self, obj) -> str:
         return get_regions_ukr_names_as_string(obj)
 
 
@@ -69,5 +69,5 @@ class CompanyAdvancedSerializers(serializers.ModelSerializer):
             "person",
         )
 
-    def get_regions_ukr_display(self, obj):
+    def get_regions_ukr_display(self, obj) -> str:
         return get_regions_ukr_names_as_string(obj)
