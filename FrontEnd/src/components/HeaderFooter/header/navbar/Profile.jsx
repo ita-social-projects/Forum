@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 import { useAuth } from '../../../../hooks';
 
 import DropdownMenu from './DropdownMenu';
@@ -8,10 +8,22 @@ import avatar_image from './Avatar.png';
 
 
 function Profile() {
-  const { user } = useAuth();
+  const { user, isAuth, logout } = useAuth();
   const navigate = useNavigate();
+
   const navigateToProfile = () => {
     navigate(`/profile-detail/${user.profile_id}`);
+  };
+
+  const performLogout = async () => {
+    if (isAuth) {
+      try {
+        await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`);
+        await logout();
+      } catch (error) {
+        console.error('Error during logout', error);
+      }
+    }
   };
 
   return (
@@ -24,7 +36,7 @@ function Profile() {
       />
       <DropdownMenu toggleText="Профіль">
         <Link to="/profile/user-info">Профіль</Link>
-        <Link to="/logout">Вихід</Link>
+        <button onClick={performLogout}>Вихід</button>
       </DropdownMenu>
     </div>
   );
