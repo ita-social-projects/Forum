@@ -25,6 +25,10 @@ const ERRORS = {
     error: false,
     message: '',
   },
+  person_position: {
+    error: false,
+    message: '',
+  },
 };
 
 const UserInfo = (props) => {
@@ -51,11 +55,14 @@ const UserInfo = (props) => {
   }, []);
 
   const errorMessageTemplates = {
+    requiredField: 'Обов’язкове поле',
     fieldLength: 'Введіть від 2 до 50 символів',
     notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
   };
 
   const validateFields = (fieldName, fieldValue) => {
+    let isValid = true;
+    let errorMessage = [];
     const allowedSymbolsPatterns = {
       person_position: /^[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ\-'\s]+$/,
       name: /^[a-zA-Zа-щюяьА-ЩЮЯЬїЇіІєЄґҐ'\s]+$/,
@@ -68,57 +75,51 @@ const UserInfo = (props) => {
       letterCount >= 2 ||
       (fieldName === 'person_position' && letterCount === 0);
     const isValidPattern = allowedSymbolsPatterns[fieldName].test(fieldValue);
-    let errorMessage = [];
+    const isRequiredField =
+      (fieldName === 'name' && letterCount !== 0) ||
+      (fieldName === 'surname' && letterCount !== 0) ||
+      (fieldName === 'person_position');
 
     if (fieldValue && !isValidPattern) {
+      isValid = false;
       errorMessage.push(errorMessageTemplates.notAllowedSymbols);
     }
-    if (!isValidLength) {
+    if (!isRequiredField) {
+      isValid = false;
+      errorMessage.push(errorMessageTemplates.requiredField);
+    } else if (!isValidLength) {
+      isValid = false;
       errorMessage.push(errorMessageTemplates.fieldLength);
     }
 
     setFormStateErr((prevState) => ({
       ...prevState,
       [fieldName]: {
-        error: !isValidLength || !isValidPattern,
+        error: !isValid,
         message: errorMessage,
       },
     }));
+
+    return isValid;
   };
 
   const errorsInNameSurname =
-    formStateErr['name']['message']?.length > 1 ||
-    formStateErr['surname']['message']?.length > 1;
+    formStateErr['name']?.message?.length > 1 ||
+    formStateErr['surname']?.message?.length > 1;
 
-  const checkRequiredFields = () => {
+  const checkFields = () => {
     let isValid = true;
-    const newFormState = {};
-    for (const key in updateUser) {
-      if (!updateUser[key] && key in ERRORS) {
+    const fieldsToValidate = [
+      { name: 'name', value: updateUser['name'] },
+      { name: 'surname', value: updateUser['surname'] },
+      { name: 'person_position', value: updateProfile['person_position'] },
+    ];
+
+    fieldsToValidate.forEach(({ name, value }) => {
+      if (!validateFields(name, value)) {
         isValid = false;
-        newFormState[key] = {
-          error: true,
-          message: 'Обов’язкове поле',
-        };
-      } else {
-        newFormState[key] = {
-          error: false,
-          message: '',
-        };
       }
-    }
-    setFormStateErr({ ...formStateErr, ...newFormState });
-
-    if (updateUser.name?.length < 2 || updateUser.surname?.length < 2) {
-      isValid = false;
-    }
-    if (
-      updateProfile.person_position?.length !== 0 &&
-      updateProfile.person_position?.length < 2
-    ) {
-      isValid = false;
-    }
-
+    });
     return isValid;
   };
 
@@ -150,7 +151,7 @@ const UserInfo = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!checkRequiredFields()) {
+    if (!checkFields()) {
       toast.error(
         'Зміни не можуть бути збережені, перевірте правильність заповнення полів'
       );
@@ -251,6 +252,7 @@ const UserInfo = (props) => {
                 }
                 requredField={false}
                 value={updateProfile.person_position ?? ''}
+                maxLength={50}
               />
               <HalfFormField
                 inputType="text"
