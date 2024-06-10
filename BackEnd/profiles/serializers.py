@@ -56,13 +56,13 @@ class ProfileListSerializer(serializers.ModelSerializer):
             "is_saved",
         )
 
-    def get_is_saved(self, obj):
+    def get_is_saved(self, obj) -> bool:
         user = self.context["request"].user
         if user.is_authenticated:
             return obj.pk in self.context["saved_companies_pk"]
         return False
 
-    def get_regions_ukr_display(self, obj):
+    def get_regions_ukr_display(self, obj) -> str:
         return get_regions_ukr_names_as_string(obj)
 
 
@@ -128,13 +128,13 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "logo_image",
         )
 
-    def get_is_saved(self, obj):
+    def get_is_saved(self, obj) -> bool:
         user = self.context["request"].user
         if user.is_authenticated:
             return obj.pk in self.context["saved_companies_pk"]
         return False
 
-    def get_regions_ukr_display(self, obj):
+    def get_regions_ukr_display(self, obj) -> str:
         return get_regions_ukr_names_as_string(obj)
 
 
@@ -202,7 +202,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "is_deleted",
         )
 
-    def get_regions_ukr_display(self, obj):
+    def get_regions_ukr_display(self, obj) -> str:
         return get_regions_ukr_names_as_string(obj)
 
 
@@ -348,10 +348,10 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
             "company",
         )
 
-    def get_user_profile_name(self, obj):
+    def get_user_profile_name(self, obj) -> str:
         if obj.user:
             return obj.user_profile_name
         return None
 
-    def get_company_name(self, obj):
+    def get_company_name(self, obj) -> str:
         return obj.company_name

@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "search",
     "drf_spectacular",
     "images",
+    "forum.apps.ForumConfig",
 ]
 
 MIDDLEWARE = [
