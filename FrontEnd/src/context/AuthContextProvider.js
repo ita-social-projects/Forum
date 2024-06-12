@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import axios from 'axios';
 import { AuthContext } from '../context';
@@ -9,7 +8,6 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
-  const navigate = useNavigate();
   const [isStaff, setIsStaff] = useState(false);
   const { data, error, mutate } = useSWR(
     authToken
@@ -47,7 +45,6 @@ export function AuthProvider({ children }) {
     setIsAuth(false);
     setIsStaff(false);
     setUser(null);
-    navigate('/', { replace: true });
   };
 
   useEffect(() => {

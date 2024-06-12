@@ -9,7 +9,6 @@ import AuthorizationPage from '../authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../HeaderFooter/footer/Footer';
 import Header from '../HeaderFooter/header/Header';
-import Logout from '../HeaderFooter/header/navbar/Logout';
 import Loader from '../loader/Loader';
 import MainPage from '../landing-page/MainPage';
 import PrivacyPolicy from '../PrivacyPolicyPage/PrivacyPolicyPage';
@@ -117,11 +116,6 @@ function BasicPage() {
         ) : (
           <Route path="/login" element={<AuthorizationPage />} />
         )}
-        {!isAuth ? (
-          <Route path="/logout" element={<Navigate to="/" />} />
-        ) : (
-          <Route path="/logout" element={<Logout />} />
-          )}
         {isAuth ? (
           <Route
             path="/sign-up"
