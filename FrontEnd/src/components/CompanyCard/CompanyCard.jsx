@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useSWRConfig } from 'swr';
-import useSWRMutation from 'swr/mutation';
 import styles from './CompanyCard.module.css';
 import { useAuth } from '../../hooks';
 import PropTypes from 'prop-types';
@@ -17,7 +15,6 @@ export default function CompanyCard({
 }) {
   const lengthOfRegion = 35;
   const lengthOfCategoryActivityArray = 3;
-  const { mutate } = useSWRConfig();
 
   const { user } = useAuth();
 
@@ -33,31 +30,23 @@ export default function CompanyCard({
       .map((activity) => activity.name)
       .join(' ');
 
-  async function sendRequest(url, { arg: data }) {
-    return axios.post(url, data);
-  }
-
-  const { trigger } = useSWRMutation(
-    `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
-    sendRequest
-  );
-
-  const handleClick = async () => {
-    try {
-      await trigger(
-        { company_pk: profile.id },
-        { optimisticData: () => changeCompanies(profile.id, !profile.is_saved) }
-      );
-      mutate(
-        (key) => typeof key === 'string' && key.startsWith('/api/saved-list/'),
-        {
-          revalidate: true,
+      const handleSave = async () => {
+        changeCompanies(profile.id, true);
+        try {
+          await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,{ company_pk: profile.id });
+        } catch (error) {
+          console.error(error);
         }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+      };
+
+      const handleDeleteSaved = async () => {
+        changeCompanies(profile.id, false);
+        try {
+          await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}`);
+        } catch (error) {
+          console.error(error);
+        }
+      };
 
   return (
       <div className={styles['company-card']}>
@@ -148,7 +137,7 @@ export default function CompanyCard({
                 isSaved={profile.is_saved}
                 isAuthorized={isAuthorized}
                 ownProfile={ownProfile}
-                handleClick={handleClick}
+                handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
                   />
             </div>
       </div>

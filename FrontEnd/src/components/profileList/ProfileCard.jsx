@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { Typography } from 'antd';
 import { PropTypes } from 'prop-types';
-import { useSWRConfig } from 'swr';
-import useSWRMutation from 'swr/mutation';
 
 import { useAuth } from '../../hooks';
 import css from './ProfileCard.module.css';
@@ -15,7 +13,6 @@ import StarForLike from '../MiniComponents/StarForLike';
 const { Paragraph } = Typography;
 
 export default function ProfileCard({ isAuthorized, data }) {
-  const { mutate } = useSWRConfig();
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
@@ -36,27 +33,19 @@ export default function ProfileCard({ isAuthorized, data }) {
 
   const ownProfile = user && user.id === profile.personId;
 
-  async function sendRequest(url, { arg: data }) {
-    return axios.post(url, data);
-  }
-
-  const { trigger } = useSWRMutation(
-    `${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,
-    sendRequest
-  );
-
-  const handleClick = async () => {
+  const handleSave = async () => {
+    setIsSaved(true);
     try {
-      await trigger(
-        { company_pk: profile.id },
-        { optimisticData: () => setIsSaved(!isSaved) }
-      );
-      mutate(
-        (key) => typeof key === 'string' && key.startsWith('/api/profiles/'),
-        {
-          revalidate: true,
-        }
-      );
+      await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,{ company_pk: profile.id });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteSaved = async () => {
+    setIsSaved(false);
+    try {
+      await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}`);
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +93,7 @@ export default function ProfileCard({ isAuthorized, data }) {
         isSaved={isSaved}
         isAuthorized={isAuthorized}
         ownProfile={ownProfile}
-        handleClick={handleClick}
+        handleClick={isSaved ? handleDeleteSaved : handleSave}
       ></StarForLike>
     </div>
   );
