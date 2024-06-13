@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 ('product_info', models.TextField(default=None, null=True)),
                 ('address', models.TextField(default=None, null=True)),
                 ('startup_idea', models.TextField(default=None, null=True)),
-                ('banner_image', models.ImageField(null=True, upload_to='', validators=[validation.validate_image.validate_image_format, validation.validate_image.validate_image_size])),
+                ('banner_image', models.ImageField(null=True, upload_to='', validators=[validation.validate_image.validate_image_format, validation.validate_image.validate_banner_size])),
                 ('is_deleted', models.BooleanField(default=False)),
                 ('activities', models.ManyToManyField(to='profiles.activity')),
                 ('categories', models.ManyToManyField(to='profiles.category')),

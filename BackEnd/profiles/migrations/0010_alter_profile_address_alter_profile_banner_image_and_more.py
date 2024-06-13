@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 upload_to="banners",
                 validators=[
                     validation.validate_image.validate_image_format,
-                    validation.validate_image.validate_image_size,
+                    validation.validate_image.validate_banner_size,
                 ],
             ),
         ),
