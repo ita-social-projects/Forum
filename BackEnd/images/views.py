@@ -33,7 +33,6 @@ class ImageCreateAPIView(CreateAPIView):
     ]
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
-    queryset = ProfileImage.objects.filter(is_deleted=False)
 
     def perform_create(self, serializer):
         image = serializer.validated_data.get("image_path")
