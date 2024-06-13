@@ -272,6 +272,8 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             "product_info",
             "address",
             "startup_idea",
+            "banner",
+            "logo",
             "banner_image",
             "banner_approved_image",
             "logo_image",
