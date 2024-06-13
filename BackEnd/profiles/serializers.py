@@ -34,6 +34,12 @@ class ProfileListSerializer(serializers.ModelSerializer):
     is_saved = serializers.SerializerMethodField()
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
+    banner_approved_image = serializers.ImageField(
+        source="banner_approved.image_path", read_only=True, required=False
+    )
+    logo_approved_image = serializers.ImageField(
+        source="logo_approved.image_path", read_only=True, required=False
+    )
 
     class Meta:
         model = Profile
@@ -51,8 +57,8 @@ class ProfileListSerializer(serializers.ModelSerializer):
             "founded",
             "categories",
             "activities",
-            "banner_image",
-            "logo_image",
+            "banner_approved_image",
+            "logo_approved_image",
             "is_saved",
         )
 
@@ -76,9 +82,14 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
-    banner_image = serializers.ImageField(required=False)
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
+    banner_approved_image = serializers.ImageField(
+        source="banner_approved.image_path", required=False
+    )
+    logo_approved_image = serializers.ImageField(
+        source="logo_approved.image_path", required=False
+    )
 
     class Meta:
         model = Profile
@@ -101,8 +112,8 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "activities",
             "service_info",
             "product_info",
-            "banner_image",
-            "logo_image",
+            "banner_approved_image",
+            "logo_approved_image",
             "is_saved",
         )
         read_only_fields = (
@@ -124,8 +135,8 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "activities",
             "service_info",
             "product_info",
-            "banner_image",
-            "logo_image",
+            "banner_approved_image",
+            "logo_approved_image",
         )
 
     def get_is_saved(self, obj) -> bool:
@@ -144,6 +155,18 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField(source="person.email")
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
+    banner_image = serializers.ImageField(
+        source="banner.image_path", required=False
+    )
+    logo_image = serializers.ImageField(
+        source="logo.image_path", required=False
+    )
+    banner_approved_image = serializers.ImageField(
+        source="banner_approved.image_path", required=False
+    )
+    logo_approved_image = serializers.ImageField(
+        source="logo_approved.image_path", required=False
+    )
 
     class Meta:
         model = Profile
@@ -172,6 +195,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "startup_idea",
             "banner_image",
             "logo_image",
+            "banner_approved_image",
+            "logo_approved_image",
             "is_deleted",
         )
         read_only_fields = (
@@ -199,6 +224,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "startup_idea",
             "banner_image",
             "logo_image",
+            "banner_approved_image",
+            "logo_approved_image",
             "is_deleted",
         )
 
@@ -208,6 +235,18 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
 
 class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField(source="person.email")
+    banner_image = serializers.ImageField(
+        source="banner.image_path", required=False
+    )
+    logo_image = serializers.ImageField(
+        source="logo.image_path", required=False
+    )
+    banner_approved_image = serializers.ImageField(
+        source="banner_approved.image_path", required=False
+    )
+    logo_approved_image = serializers.ImageField(
+        source="logo_approved.image_path", required=False
+    )
 
     class Meta:
         model = Profile
@@ -234,7 +273,9 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             "address",
             "startup_idea",
             "banner_image",
+            "banner_approved_image",
             "logo_image",
+            "logo_approved_image",
             "is_deleted",
         )
         read_only_fields = ("person",)
