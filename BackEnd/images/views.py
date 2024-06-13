@@ -10,7 +10,7 @@ from .serializers import ImageSerializer
 
 
 @extend_schema_view(
-    postt=extend_schema(
+    post=extend_schema(
         request={
             "multipart/form-data": {
                 "type": "object",
