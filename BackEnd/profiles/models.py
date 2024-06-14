@@ -12,7 +12,6 @@ from validation.validate_phone_number import (
     validate_phone_number_is_digit,
 )
 
-
 class Region(models.Model):
     id = models.AutoField(primary_key=True)
     name_eng = models.CharField(max_length=150, unique=True)
@@ -87,7 +86,7 @@ class Profile(models.Model):
     logo = models.ForeignKey(
         ProfileImage,
         on_delete=models.CASCADE,
-        related_name="logo_banner",
+        related_name="profile_logo",
         null=True,
         blank=True,
         default=None,
