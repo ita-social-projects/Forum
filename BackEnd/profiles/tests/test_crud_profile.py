@@ -11,27 +11,18 @@ from profiles.factories import (
     ActivityFactory,
     RegionFactory,
 )
+from BackEnd.images.factories import ProfileimageFactory
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
 
 
 class TestProfileDetailAPIView(APITestCase):
     def setUp(self) -> None:
-        self.right_image = open(
-            os.path.join(os.getcwd(), "images", "tests", "img", "img_2mb.png"),
-            "rb",
-        )
-        self.wrong_image = open(
-            os.path.join(os.getcwd(), "images", "tests", "img", "img_7mb.png"),
-            "rb",
-        )
-        self.right_image_logo = open(
-            os.path.join(
-                os.getcwd(), "images", "tests", "img", "img_300kb.png"
-            ),
-            "rb",
-        )
+        self.banner_path = os.path.join(os.getcwd(), "images", "tests", "img", "img_2mb.png")
+        self.logo_path = os.path.join(os.getcwd(), "images", "tests", "img", "img_300kb.png")
 
+        self.banner = ProfileimageFactory(image_path=self.banner_path)
+        self.logo = ProfileimageFactory(image_path=self.logo_path)
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
@@ -39,11 +30,6 @@ class TestProfileDetailAPIView(APITestCase):
             phone="380100102034",
             edrpou="99999999",
         )
-
-    def tearDown(self) -> None:
-        self.right_image.close()
-        self.wrong_image.close()
-        self.right_image_logo.close()
 
     # GET requests section
     def test_get_profile_nonexistent(self):
@@ -124,13 +110,13 @@ class TestProfileDetailAPIView(APITestCase):
             msg="Product info do not match.",
         )
         self.assertEqual(
-            self.profile.banner_image,
-            response.data.get("banner_image"),
+            self.profile.banner,
+            response.data.get("banner"),
             msg="Banner images do not match.",
         )
         self.assertEqual(
-            self.profile.logo_image,
-            response.data.get("logo_image"),
+            self.profile.logo,
+            response.data.get("logo"),
             msg="Logo images do not match.",
         )
         self.assertFalse(
@@ -214,13 +200,13 @@ class TestProfileDetailAPIView(APITestCase):
             msg="Product info do not match.",
         )
         self.assertEqual(
-            self.profile.banner_image,
-            response.data.get("banner_image"),
+            self.profile.banner,
+            response.data.get("banner"),
             msg="Banner images do not match.",
         )
         self.assertEqual(
-            self.profile.logo_image,
-            response.data.get("logo_image"),
+            self.profile.logo,
+            response.data.get("logo"),
             msg="Logo images do not match.",
         )
         self.assertFalse(
@@ -316,13 +302,13 @@ class TestProfileDetailAPIView(APITestCase):
             msg="Product info do not match.",
         )
         self.assertEqual(
-            self.profile.banner_image,
-            response.data.get("banner_image"),
+            self.profile.banner,
+            response.data.get("banner"),
             msg="Banner images do not match.",
         )
         self.assertEqual(
-            self.profile.logo_image,
-            response.data.get("logo_image"),
+            self.profile.logo,
+            response.data.get("logo"),
             msg="Logo images do not match.",
         )
         self.assertEqual(
@@ -503,34 +489,6 @@ class TestProfileDetailAPIView(APITestCase):
             data={"official_name": "Test_company", "founded": 2005},
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
-
-    def test_partial_update_profile_with_wrong_image_banner(self):
-        self.client.force_authenticate(self.user)
-
-        response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(
-                profile_id=self.profile.id
-            ),
-            data={
-                "banner_image": self.wrong_image,
-                "founded": 2005,
-            },
-        )
-        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-
-    def test_partial_update_profile_with_wrong_image_logo(self):
-        self.client.force_authenticate(self.user)
-
-        response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(
-                profile_id=self.profile.id
-            ),
-            data={
-                "logo_image": self.wrong_image,
-                "founded": 2005,
-            },
-        )
-        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_partial_update_profile_unauthorized(self):
         response = self.client.patch(
@@ -843,8 +801,8 @@ class TestProfileDetailAPIView(APITestCase):
                 "service_info": "Service info from test case",
                 "product_info": "Product info from test case",
                 "address": "Kyiv",
-                "banner_image": self.right_image,
-                "logo_image": self.right_image_logo,
+                "banner": self.banner.uuid,
+                "logo": self.logo.uuid,
                 "person_position": "director",
                 "startup_idea": "StartUp idea from test case",
                 "is_startup": True,
@@ -878,8 +836,8 @@ class TestProfileDetailAPIView(APITestCase):
                 "service_info": "Service info from test case",
                 "product_info": "Product info from test case",
                 "address": "Kyiv",
-                "banner_image": self.right_image,
-                "logo_image": self.right_image_logo,
+                "banner": self.banner.uuid,
+                "logo": self.logo.uuid,
                 "person_position": "director",
                 "startup_idea": "StartUp idea from test case",
                 "is_startup": True,
@@ -908,8 +866,8 @@ class TestProfileDetailAPIView(APITestCase):
                 "service_info": "Service info from test case",
                 "product_info": "Product info from test case",
                 "address": "Kyiv",
-                "banner_image": self.right_image,
-                "logo_image": self.right_image_logo,
+                "banner": self.banner.uuid,
+                "logo": self.logo.uuid,
                 "person_position": "director",
                 "startup_idea": "StartUp idea from test case",
                 "is_startup": True,
@@ -937,8 +895,6 @@ class TestProfileDetailAPIView(APITestCase):
                 "service_info": "Service info from test case",
                 "product_info": "Product info from test case",
                 "address": "Kyiv",
-                "banner_image": self.wrong_image,
-                "logo_image": self.right_image_logo,
                 "person_position": "director",
                 "startup_idea": "StartUp idea from test case",
                 "is_startup": True,
@@ -968,8 +924,8 @@ class TestProfileDetailAPIView(APITestCase):
                 "service_info": "Service info from test case",
                 "product_info": "Product info from test case",
                 "address": "Kyiv",
-                "banner_image": self.right_image,
-                "logo_image": self.right_image_logo,
+                "banner": self.banner.uuid,
+                "logo": self.logo.uuid,
                 "person_position": "director",
                 "startup_idea": "StartUp idea from test case",
                 "is_startup": True,
@@ -1050,8 +1006,8 @@ class TestProfileDetailAPIView(APITestCase):
             "startup_idea": "StartUp idea from test case",
             "is_startup": True,
             "is_registered": False,
-            "banner_image": self.right_image,
-            "logo_image": self.right_image_logo,
+            "banner": self.banner.uuid,
+            "logo": self.logo.uuid,
             "name": "Comp name from test case",
             "categories": [category.id],
             "activities": [activity.id],
