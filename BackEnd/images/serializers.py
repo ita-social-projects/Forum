@@ -2,7 +2,6 @@ from rest_framework import serializers
 from images.models import ProfileImage
 
 from validation.validate_image import (
-    validate_image_format,
     validate_banner_size,
     validate_logo_size,
 )
@@ -37,9 +36,8 @@ class ImageSerializer(serializers.ModelSerializer):
 
     def validate(self, value):
         image = value.get("image_path")
-        image_type = value.get("image_type")
+        image_type = self.context.get("image_type")
         if image:
-            validate_image_format(image)
             if image_type == "banner":
                 validate_banner_size(image)
             else:

@@ -34,6 +34,12 @@ class ImageCreateAPIView(CreateAPIView):
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        image_type = self.kwargs.get("image_type")
+        context.update({"image_type": image_type})
+        return context
+
     def perform_create(self, serializer):
         image = serializer.validated_data.get("image_path")
         if image:
