@@ -11,7 +11,7 @@ from profiles.factories import (
     ActivityFactory,
     RegionFactory,
 )
-from BackEnd.images.factories import ProfileimageFactory
+from images.factories import ProfileimageFactory
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
 
