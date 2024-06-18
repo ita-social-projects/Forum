@@ -1,3 +1,5 @@
+from uuid import UUID
+
 import pytz
 from django.utils.datetime_safe import datetime
 
@@ -24,3 +26,19 @@ class AnyInt:
 
     def __eq__(self, other):
         return type(other) == int
+
+
+class AnyUUID:
+    """ Placeholder to put in unittests in case we expect some integer
+        (let's say, an object UUID) which is hard to determine and we don't
+        care about specific value.
+    """
+    def __eq__(self, other):
+        try:
+            if type(other) == str:
+                UUID(other, version=4)
+                return True
+        except ValueError:
+            pass
+
+        return False
