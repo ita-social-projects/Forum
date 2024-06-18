@@ -76,6 +76,18 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
         many=True, slug_field="name", read_only=True
     )
     regions = AdminRegionSerialaizer(many=True, read_only=True)
+    banner_image = serializers.ImageField(
+        source="banner.image_path", required=False
+    )
+    logo_image = serializers.ImageField(
+        source="logo.image_path", required=False
+    )
+    banner_approved_image = serializers.ImageField(
+        source="banner_approved.image_path", required=False
+    )
+    logo_approved_image = serializers.ImageField(
+        source="logo_approved.image_path", required=False
+    )
 
     class Meta:
         model = Profile
@@ -97,6 +109,13 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
             "product_info",
             "address",
             "startup_idea",
+            "banner",
+            "logo",
+            "banner_approved",
+            "logo_approved",
             "banner_image",
+            "banner_approved_image",
+            "logo_image",
+            "logo_approved_image",
             "is_deleted",
         )

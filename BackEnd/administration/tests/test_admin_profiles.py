@@ -108,7 +108,10 @@ class TestAdminProfilesAPITests(APITestCase):
             "product_info": "test product info",
             "address": "Test Country, Test City, St. Test, 1",
             "startup_idea": "Test startup idea",
-            "banner_image": "http://testserver/media/Test_banner_image",
+            "banner": None,
+            "logo": None,
+            "banner_approved": None,
+            "logo_approved": None,
             "is_deleted": False,
         }
         self.assertEqual(data, response.json())
