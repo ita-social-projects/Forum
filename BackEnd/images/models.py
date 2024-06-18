@@ -25,7 +25,13 @@ class ProfileImage(models.Model):
     )
     image_type = models.CharField(max_length=10, choices=IMAGE_TYPES)
     content_type = models.CharField(max_length=5, blank=True)
-    image_path = models.ImageField(upload_to=image_directory_path, validators=[FileExtensionValidator(allowed_extensions=["jpeg", "png", "jpg"])], blank=True)
+    image_path = models.ImageField(
+        upload_to=image_directory_path,
+        validators=[
+            FileExtensionValidator(allowed_extensions=["jpeg", "png", "jpg"])
+        ],
+        blank=True,
+    )
     image_size = models.PositiveIntegerField(null=True)
     hash_md5 = models.CharField(max_length=32, blank=True)
     is_approved = models.BooleanField(default=False)

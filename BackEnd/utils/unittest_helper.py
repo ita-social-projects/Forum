@@ -29,10 +29,11 @@ class AnyInt:
 
 
 class AnyUUID:
-    """ Placeholder to put in unittests in case we expect some integer
-        (let's say, an object UUID) which is hard to determine and we don't
-        care about specific value.
+    """Placeholder to put in unittests in case we expect some integer
+    (let's say, an object UUID) which is hard to determine and we don't
+    care about specific value.
     """
+
     def __eq__(self, other):
         try:
             if type(other) == str:

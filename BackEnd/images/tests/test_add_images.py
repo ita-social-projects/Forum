@@ -9,6 +9,7 @@ from utils.unittest_helper import AnyInt, AnyStr, AnyUUID
 
 class TestBannerChange(APITestCase):
     maxDiff = None
+
     def setUp(self) -> None:
         self.right_banner = open(
             os.path.join(os.getcwd(), "images", "tests", "img", "img_2mb.png"),
@@ -19,7 +20,13 @@ class TestBannerChange(APITestCase):
             "rb",
         )
         self.wrong_format_banner = open(
-            os.path.join(os.getcwd(), "images", "tests", "img", "img_wrong_format_banner.gif"),
+            os.path.join(
+                os.getcwd(),
+                "images",
+                "tests",
+                "img",
+                "img_wrong_format_banner.gif",
+            ),
             "rb",
         )
         self.right_logo = open(
@@ -33,7 +40,13 @@ class TestBannerChange(APITestCase):
             "rb",
         )
         self.wrong_format_logo = open(
-            os.path.join(os.getcwd(), "images", "tests", "img", "img_wrong_format_logo.gif"),
+            os.path.join(
+                os.getcwd(),
+                "images",
+                "tests",
+                "img",
+                "img_wrong_format_logo.gif",
+            ),
             "rb",
         )
 
@@ -79,9 +92,9 @@ class TestBannerChange(APITestCase):
                 "hash_md5": AnyStr(),
                 "is_approved": False,
                 "is_deleted": False,
-                "created_at": AnyStr()
+                "created_at": AnyStr(),
             },
-            response.json()
+            response.json(),
         )
 
     def test_post_valid_logo_authorized(self):
@@ -102,9 +115,9 @@ class TestBannerChange(APITestCase):
                 "hash_md5": AnyStr(),
                 "is_approved": False,
                 "is_deleted": False,
-                "created_at": AnyStr()
+                "created_at": AnyStr(),
             },
-            response.json()
+            response.json(),
         )
 
     def test_post_wrong_size_banner_authorized(self):
@@ -114,12 +127,13 @@ class TestBannerChange(APITestCase):
             data={"image_path": self.wrong_size_banner},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual({
-            "non_field_errors": [
-                "Image size exceeds the maximum allowed (5MB)."
-            ]
-        },
-            response.json()
+        self.assertEqual(
+            {
+                "non_field_errors": [
+                    "Image size exceeds the maximum allowed (5MB)."
+                ]
+            },
+            response.json(),
         )
 
     def test_post_wrong_size_logo_authorized(self):
@@ -129,12 +143,13 @@ class TestBannerChange(APITestCase):
             data={"image_path": self.wrong_size_logo},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual({
-            "non_field_errors": [
-                "Image size exceeds the maximum allowed (1MB)."
-            ]
-        },
-            response.json()
+        self.assertEqual(
+            {
+                "non_field_errors": [
+                    "Image size exceeds the maximum allowed (1MB)."
+                ]
+            },
+            response.json(),
         )
 
     def test_post_wrong_format_logo_authorized(self):
@@ -144,11 +159,14 @@ class TestBannerChange(APITestCase):
             data={"image_path": self.wrong_format_logo},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual({
-            "image_path": ['File extension “gif” is not allowed. Allowed extensions are: '
-                'jpeg, png, jpg.']
-        },
-            response.json()
+        self.assertEqual(
+            {
+                "image_path": [
+                    "File extension “gif” is not allowed. Allowed extensions are: "
+                    "jpeg, png, jpg."
+                ]
+            },
+            response.json(),
         )
 
     def test_post_wrong_format_banner_authorized(self):
@@ -158,9 +176,12 @@ class TestBannerChange(APITestCase):
             data={"image_path": self.wrong_format_banner},
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual({
-            "image_path": ['File extension “gif” is not allowed. Allowed extensions are: '
-                'jpeg, png, jpg.']
-        },
-            response.json()
+        self.assertEqual(
+            {
+                "image_path": [
+                    "File extension “gif” is not allowed. Allowed extensions are: "
+                    "jpeg, png, jpg."
+                ]
+            },
+            response.json(),
         )

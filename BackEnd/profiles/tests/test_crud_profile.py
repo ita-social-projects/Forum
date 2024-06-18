@@ -18,8 +18,12 @@ from utils.unittest_helper import AnyInt
 
 class TestProfileDetailAPIView(APITestCase):
     def setUp(self) -> None:
-        self.banner_path = os.path.join(os.getcwd(), "images", "tests", "img", "img_2mb.png")
-        self.logo_path = os.path.join(os.getcwd(), "images", "tests", "img", "img_300kb.png")
+        self.banner_path = os.path.join(
+            os.getcwd(), "images", "tests", "img", "img_2mb.png"
+        )
+        self.logo_path = os.path.join(
+            os.getcwd(), "images", "tests", "img", "img_300kb.png"
+        )
 
         self.banner = ProfileimageFactory(image_path=self.banner_path)
         self.logo = ProfileimageFactory(image_path=self.logo_path)
