@@ -60,9 +60,7 @@ class ImageCreateAPIView(CreateAPIView):
 
 
 class ImageDestroyAPIView(DestroyAPIView):
-    permission_classes = [
-        IsAuthenticated, IsAdminUser
-    ]
+    permission_classes = [IsAuthenticated, IsAdminUser]
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
     queryset = ProfileImage.objects.filter(is_deleted=False)
