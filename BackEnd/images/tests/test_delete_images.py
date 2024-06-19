@@ -28,6 +28,7 @@ class TestBannerChange(APITestCase):
             path=f"/api/image/banner/{self.banner.uuid}",
         )
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+        self.assertTrue(self.banner.is_deleted)
 
     def test_delete_logo_authorized_user_is_staff(self):
         self.client.force_authenticate(self.user_is_staff)
@@ -35,6 +36,7 @@ class TestBannerChange(APITestCase):
             path=f"/api/image/logo/{self.logo.uuid}",
         )
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+        self.assertTrue(self.logo.is_deleted)
 
     def test_delete_banner_authorized_user_is_not_staff(self):
         self.client.force_authenticate(self.user)
