@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from profiles.models import Profile, Category, SavedCompany
+from profiles.models import Profile
 from profiles.serializers import (
     CategorySerializer,
     ActivitySerializer,
@@ -15,6 +15,12 @@ class CompanySerializers(serializers.ModelSerializer):
     is_saved = serializers.SerializerMethodField()
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
+    banner_approved_image = serializers.ImageField(
+        source="banner_approved.image_path", required=False, read_only=True
+    )
+    logo_approved_image = serializers.ImageField(
+        source="logo_approved.image_path", required=False, read_only=True
+    )
 
     class Meta:
         model = Profile
@@ -27,8 +33,8 @@ class CompanySerializers(serializers.ModelSerializer):
             "regions_ukr_display",
             "founded",
             "address",
-            "banner_image",
-            "logo_image",
+            "banner_approved_image",
+            "logo_approved_image",
             "person",
             "is_saved",
         )
@@ -48,6 +54,12 @@ class CompanyAdvancedSerializers(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
+    banner_approved_image = serializers.ImageField(
+        source="banner_approved.image_path", required=False, read_only=True
+    )
+    logo_approved_image = serializers.ImageField(
+        source="logo_approved.image_path", required=False, read_only=True
+    )
 
     class Meta:
         model = Profile
@@ -64,8 +76,8 @@ class CompanyAdvancedSerializers(serializers.ModelSerializer):
             "product_info",
             "founded",
             "address",
-            "banner_image",
-            "logo_image",
+            "banner_approved_image",
+            "logo_approved_image",
             "person",
         )
 
