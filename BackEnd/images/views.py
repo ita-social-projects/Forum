@@ -2,7 +2,7 @@ from PIL import Image
 from hashlib import md5
 from rest_framework.generics import CreateAPIView, DestroyAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from drf_spectacular.utils import extend_schema_view, extend_schema
 
 from images.models import ProfileImage
@@ -61,13 +61,13 @@ class ImageCreateAPIView(CreateAPIView):
 
 class ImageDestroyAPIView(DestroyAPIView):
     permission_classes = [
-        IsAuthenticated,
+        IsAuthenticated, IsAdminUser
     ]
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
     queryset = ProfileImage.objects.filter(is_deleted=False)
-    lookup_field = 'pk'
-    lookup_url_kwarg = 'image_uuid'
+    lookup_field = "pk"
+    lookup_url_kwarg = "image_uuid"
 
     def perform_destroy(self, instance):
         instance.is_deleted = True
