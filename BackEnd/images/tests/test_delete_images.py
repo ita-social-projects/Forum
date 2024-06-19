@@ -27,6 +27,7 @@ class TestBannerChange(APITestCase):
         response = self.client.delete(
             path=f"/api/image/banner/{self.banner.uuid}",
         )
+        self.banner.refresh_from_db()
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
         self.assertTrue(self.banner.is_deleted)
 
@@ -35,6 +36,7 @@ class TestBannerChange(APITestCase):
         response = self.client.delete(
             path=f"/api/image/logo/{self.logo.uuid}",
         )
+        self.logo.refresh_from_db()
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
         self.assertTrue(self.logo.is_deleted)
 
