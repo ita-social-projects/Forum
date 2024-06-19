@@ -15,10 +15,7 @@ from .serializers import ImageSerializer
             "multipart/form-data": {
                 "type": "object",
                 "properties": {
-                    "banner": {"type": "string", "format": "binary"},
-                    "banner_approved": {"type": "string", "format": "binary"},
-                    "logo": {"type": "string", "format": "binary"},
-                    "logo_approved": {"type": "string", "format": "binary"},
+                    "image_path": {"type": "string", "format": "binary"},
                 },
             }
         },
