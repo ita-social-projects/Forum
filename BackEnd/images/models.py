@@ -19,7 +19,7 @@ class ProfileImage(models.Model):
     )
 
     uuid = models.UUIDField(primary_key=True, default=uuid4)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, related_name="created_images"
     )
