@@ -1,8 +1,7 @@
 from profiles.models import Profile, Activity, Category, Region
 
 
-def completeness_count(serializer):
-    instance = serializer.save()
+def completeness_count(instance):
     instance.completeness = 0
     if instance.banner_approved:
         instance.completeness += 100
