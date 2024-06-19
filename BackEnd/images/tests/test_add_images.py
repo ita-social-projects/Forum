@@ -8,7 +8,6 @@ from utils.unittest_helper import AnyInt, AnyStr, AnyUUID
 
 
 class TestBannerChange(APITestCase):
-    maxDiff = None
 
     def setUp(self) -> None:
         self.right_banner = open(
