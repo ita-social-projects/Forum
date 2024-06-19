@@ -1,6 +1,7 @@
 import { HashLink } from 'react-router-hash-link';
 import { Link } from 'react-router-dom';
 import css from './FooterNavigation.module.css';
+import useScrollToTop from '../../../../hooks/useScrollToTop';
 
 const PAGE_NAVIGATION_LINKS = [
   {
@@ -51,6 +52,8 @@ const CONTACTS = [
 ];
 
 function FooterNavigation() {
+  useScrollToTop();
+
   return (
     <div className={css['navigation-content']}>
       <div className={css['navigation-content-section']}>
