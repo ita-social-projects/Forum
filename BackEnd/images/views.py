@@ -66,6 +66,8 @@ class ImageDestroyAPIView(DestroyAPIView):
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
     queryset = ProfileImage.objects.filter(is_deleted=False)
+    lookup_field = 'pk'
+    lookup_url_kwarg = 'image_uuid'
 
     def perform_destroy(self, instance):
         instance.is_deleted = True
