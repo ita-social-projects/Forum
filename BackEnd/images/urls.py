@@ -7,7 +7,7 @@ urlpatterns = [
     path(
         "image/<str:image_type>/",
         ImageCreateAPIView.as_view(),
-        name="banner_change",
+        name="image_create",
     ),
     path(
         "image/<str:image_type>/<uuid:image_uuid>",
