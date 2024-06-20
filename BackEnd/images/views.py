@@ -5,6 +5,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from drf_spectacular.utils import extend_schema_view, extend_schema
 
+from profiles.permissions import UserIsImageOwner
 from images.models import ProfileImage
 from .serializers import ImageSerializer
 
@@ -60,7 +61,7 @@ class ImageCreateAPIView(CreateAPIView):
 
 
 class ImageDestroyAPIView(DestroyAPIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminUser | UserIsImageOwner]
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
     queryset = ProfileImage.objects.filter(is_deleted=False)
