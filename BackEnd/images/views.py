@@ -40,15 +40,10 @@ class ImageCreateAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         image = serializer.validated_data.get("image_path")
-        if image:
-            image_size = image.size
-            with Image.open(image) as img:
-                content_type = img.format
-                hash_md5 = md5(img.tobytes()).hexdigest()
-        else:
-            image_size = None
-            content_type = ""
-            hash_md5 = ""
+        image_size = image.size
+        with Image.open(image) as img:
+            content_type = img.format
+            hash_md5 = md5(img.tobytes()).hexdigest()
         user = self.request.user
         image_type = self.kwargs.get("image_type")
         serializer.save(
