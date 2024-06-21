@@ -46,6 +46,7 @@
     color: var(--main-header-color);
     text-transform: uppercase;
     margin-bottom: 24px;
+    white-space: nowrap;
 }
 
 .link_text:hover {
