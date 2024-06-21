@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './cookiesPolicyComponent.module.css';
 import CookiesPolicyText from './text.js';
 import TEXT_CONTENT from './text.js';
 import LinkContainer from './LinkContainer.jsx';
 import renderContent from './RenderContent.jsx';
+import useScrollToTop from '../../hooks/useScrollToTop';
 
 const CookiesPolicy = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useScrollToTop();
 
   return (
     <div className={styles['cookies_policy']}>
