@@ -4,11 +4,10 @@ import LinkContainer from '../CookiesPolicyPage/LinkContainer.jsx';
 import styles from './Contact.module.css';
 import contactText from './text';
 import TEXT_CONTENT from './text';
+import useScrollToTop from '../../hooks/useScrollToTop';
 
 const Contact = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useScrollToTop();
 
   return (
     <div className={styles['contact_container']}>
