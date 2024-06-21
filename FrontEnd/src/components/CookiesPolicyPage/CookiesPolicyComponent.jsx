@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './cookiesPolicyComponent.module.css';
 import CookiesPolicyText from './text.js';
 import TEXT_CONTENT from './text.js';
