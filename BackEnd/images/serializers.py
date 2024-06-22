@@ -36,7 +36,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
     def validate(self, value):
         image = value.get("image_path")
-        image_type = self.context.get("image_type")
+        image_type = self.context["view"].kwargs["image_type"]
         if image:
             if image_type == "banner":
                 validate_banner_size(image)
