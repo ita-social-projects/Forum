@@ -32,26 +32,16 @@ class ImageCreateAPIView(CreateAPIView):
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser, FormParser)
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        image_type = self.kwargs.get("image_type")
-        context.update({"image_type": image_type})
-        return context
-
     def perform_create(self, serializer):
         image = serializer.validated_data.get("image_path")
-        image_size = image.size
         with Image.open(image) as img:
-            content_type = img.format
             hash_md5 = md5(img.tobytes()).hexdigest()
-        user = self.request.user
-        image_type = self.kwargs.get("image_type")
         serializer.save(
-            image_type=image_type,
-            content_type=content_type,
+            image_type=self.kwargs.get("image_type"),
+            content_type=image.name.split(".")[-1],
             hash_md5=hash_md5,
-            image_size=image_size,
-            created_by=user,
+            image_size=image.size,
+            created_by=self.request.user,
         )
 
 
