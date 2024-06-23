@@ -38,7 +38,7 @@ class ImageCreateAPIView(CreateAPIView):
             hash_md5 = md5(img.tobytes()).hexdigest()
         serializer.save(
             image_type=self.kwargs.get("image_type"),
-            content_type=image.name.split(".")[-1],
+            content_type=image.name.split(".")[-1].lower(),
             hash_md5=hash_md5,
             image_size=image.size,
             created_by=self.request.user,
