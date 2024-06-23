@@ -8,7 +8,7 @@ const LinkContainer = () => {
   return (
     <div className={styles['link']}>
       <NavLink to="/privacy-policy/" className={getClassName}>
-        Privacy Policy
+        Політика конфіденційності
       </NavLink>
       <NavLink to="/terms-and-conditions/" className={getClassName}>
         Terms & Conditions
