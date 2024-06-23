@@ -39,6 +39,7 @@
     color: var(--main-footer-background);
     text-transform: uppercase;
     margin-bottom: 24px;
+    whiter-space: nowrap;
 }
 
 .link_text__active{
