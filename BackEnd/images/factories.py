@@ -12,7 +12,7 @@ class ProfileimageFactory(factory.django.DjangoModelFactory):
     image_type = factory.fuzzy.FuzzyChoice(
         ProfileImage.IMAGE_TYPES, getter=lambda c: c[0]
     )
-    content_type = "JPEG"
+    content_type = "jpeg"
     image_path = factory.django.ImageField(filename="test.jpeg")
     is_approved = False
     is_deleted = False
