@@ -27,7 +27,13 @@ const POLICY_LINKS = [
 function FooterPolicy() {
     return (
         <div className={css['policy-content']}>
-            <div className={css['policy-content-logo']}>forum</div>
+            <img
+                className={css['main-logo']}
+                src={`${process.env.REACT_APP_PUBLIC_URL}/craftMerge-logo-white.svg`}
+                alt="forum-logo"
+                width="199"
+                height="24"
+            ></img>
             <div className={css['policy-content-links']}>
                 {POLICY_LINKS.map((element) => (
                     <Link
