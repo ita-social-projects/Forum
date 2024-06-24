@@ -10,20 +10,20 @@ function Navbar(props) {
     <div className={css['navbar-content']}>
       <div className={css['navbar-logo__text']}>
         <Link to="/">
-          <img
-            className={css['main-logo']}
-            src={`${process.env.REACT_APP_PUBLIC_URL}/forum-logo.ico`}
-            alt="forum-logo"
-            width="48"
-            height="48"
-          ></img>
+            <img
+                className={css['main-logo']}
+                src={`${process.env.REACT_APP_PUBLIC_URL}/craftMerge-logo.svg`}
+                alt="forum-logo"
+                width="199"
+                height="24"
+            ></img>
         </Link>
       </div>
-      <div className={css['navbar-utility-bar']}>
-        {props.page === 'login' || props.page === 'registration' ? null : (
-          <>
-            <Menu />
-            <SearchBox></SearchBox>
+        <div className={css['navbar-utility-bar']}>
+            {props.page === 'login' || props.page === 'registration' ? null : (
+                <>
+                    <Menu/>
+                    <SearchBox></SearchBox>
           </>
         )}
         {props.isAuthorized === true ? <Profile /> : <Buttons />}
