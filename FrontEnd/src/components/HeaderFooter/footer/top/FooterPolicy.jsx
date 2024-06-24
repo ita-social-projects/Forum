@@ -9,7 +9,7 @@ const POLICY_LINKS = [
     },
     {
         id: 'i1',
-        title: 'Terms & Conditions',
+        title: 'Умови користування',
         link: 'terms-and-conditions/'
     },
     {

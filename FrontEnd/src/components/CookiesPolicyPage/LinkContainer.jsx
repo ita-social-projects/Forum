@@ -11,7 +11,7 @@ const LinkContainer = () => {
         Політика конфіденційності
       </NavLink>
       <NavLink to="/terms-and-conditions/" className={getClassName}>
-        Terms & Conditions
+        Умови користування
       </NavLink>
       <NavLink to="/cookies-policy/" className={getClassName}>
         Cookie Policy

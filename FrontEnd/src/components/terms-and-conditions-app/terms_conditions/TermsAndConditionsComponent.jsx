@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './TermsAndConditionsComponent.module.css';
 import TermsAndConditionsText from './text';
 import TEXT_CONTENT from './text';
 import LinkContainer from '../../CookiesPolicyPage/LinkContainer.jsx';
 import renderContent from '../../CookiesPolicyPage/RenderContent.jsx';
+import useScrollToTop from '../../../hooks/useScrollToTop';
+
 
 const TermsAndConditions = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useScrollToTop();
 
   return (
     <div className={styles['TermsAndConditions']}>
