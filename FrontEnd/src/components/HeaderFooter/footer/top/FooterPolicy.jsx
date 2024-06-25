@@ -30,7 +30,7 @@ function FooterPolicy() {
             <img
                 className={css['main-logo']}
                 src={`${process.env.REACT_APP_PUBLIC_URL}/craftMerge-logo-white.svg`}
-                alt="forum-logo"
+                alt="craft-merge-logo"
                 width="199"
                 height="24"
             ></img>
