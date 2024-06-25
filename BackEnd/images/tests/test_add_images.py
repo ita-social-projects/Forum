@@ -11,40 +11,32 @@ class TestBannerChange(APITestCase):
 
     def setUp(self) -> None:
         self.right_banner = open(
-            os.path.join(os.getcwd(), "images", "tests", "img", "img_2mb.png"),
+            os.path.join(os.getcwd(), "images/tests/img/img_2mb.png"),
             "rb",
         )
         self.wrong_size_banner = open(
-            os.path.join(os.getcwd(), "images", "tests", "img", "img_7mb.png"),
+            os.path.join(os.getcwd(), "images/tests/img/img_7mb.png"),
             "rb",
         )
         self.wrong_format_banner = open(
             os.path.join(
                 os.getcwd(),
-                "images",
-                "tests",
-                "img",
-                "img_wrong_format_banner.gif",
+                "images/tests/img/img_wrong_format_banner.gif",
             ),
             "rb",
         )
         self.right_logo = open(
-            os.path.join(
-                os.getcwd(), "images", "tests", "img", "img_300kb.png"
-            ),
+            os.path.join(os.getcwd(), "images/tests/img/img_300kb.png"),
             "rb",
         )
         self.wrong_size_logo = open(
-            os.path.join(os.getcwd(), "images", "tests", "img", "img_7mb.png"),
+            os.path.join(os.getcwd(), "images/tests/img/img_7mb.png"),
             "rb",
         )
         self.wrong_format_logo = open(
             os.path.join(
                 os.getcwd(),
-                "images",
-                "tests",
-                "img",
-                "img_wrong_format_logo.gif",
+                "images/tests/img/img_wrong_format_logo.gif",
             ),
             "rb",
         )

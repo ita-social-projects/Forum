@@ -20,10 +20,10 @@ from utils.dump_response import dump  # noqa
 class TestCompletenessUpdate(APITestCase):
     def setUp(self) -> None:
         self.banner_path = os.path.join(
-            os.getcwd(), "images", "tests", "img", "img_2mb.png"
+            os.getcwd(), "images/tests/img/img_2mb.png"
         )
         self.logo_path = os.path.join(
-            os.getcwd(), "images", "tests", "img", "img_300kb.png"
+            os.getcwd(), "images/tests/img/img_300kb.png"
         )
 
         self.banner = ProfileimageFactory(image_path=self.banner_path)
