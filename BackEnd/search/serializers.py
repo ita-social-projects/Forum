@@ -23,10 +23,7 @@ class ProfileImageField(serializers.Field):
         return None
 
     def to_internal_value(self, data):
-        profile_image = ProfileImage.objects.filter(
-            uuid=data, is_deleted=False
-        ).first()
-        return profile_image
+        return ProfileImage.objects.filter(uuid=data, is_deleted=False).first()
 
 
 class CompanySerializers(serializers.ModelSerializer):
