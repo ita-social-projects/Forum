@@ -35,11 +35,11 @@ class ImageSerializer(serializers.ModelSerializer):
         )
 
     def validate(self, value):
-        image = value.get("image_path")
-        image_type = self.context["view"].kwargs["image_type"]
-        if image:
-            if image_type == "banner":
-                validate_banner_size(image)
-            else:
-                validate_logo_size(image)
+        validator_function = {
+            ProfileImage.BANNER: validate_banner_size,
+            ProfileImage.LOGO: validate_logo_size,
+        }[self.context["view"].kwargs["image_type"]]
+
+        validator_function(value.get("image_path"))
+
         return value
