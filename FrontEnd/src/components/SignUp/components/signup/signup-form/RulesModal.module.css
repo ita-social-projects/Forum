@@ -23,3 +23,9 @@
   border-radius: 5px;
   text-align: center;
 }
+
+p {
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 22px;
+}
