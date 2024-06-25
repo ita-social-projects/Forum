@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const POLICY_LINKS = [
     {
         id: 'i0',
-        title: 'Privacy Policy',
+        title: 'Політика конфіденційності ',
         link: 'privacy-policy/'
     },
     {

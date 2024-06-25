@@ -15,7 +15,6 @@
     line-height: 38px;
     letter-spacing: 0em;
     text-align: left;
-    margin-bottom: 12px;
 }
 
 .privacy_policy__link_container {
@@ -56,12 +55,12 @@
     width: auto;
     height: 266px;
     margin-left: -100px;
-    margin-top: 332px;
+    margin-top: 100px;
 }
 
 .privacy_policy__img2{
     height: 266px;
-    margin-top: 688px;
+    margin-top: 335px;
     width: auto;
     margin-left: -100px;    
 }
