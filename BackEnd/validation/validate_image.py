@@ -9,15 +9,15 @@ MAX_ALLOWED_LOGO_IMAGE_SIZE = 1 * 1024 * 1024
 
 def validate_image_format(image: Image):
     valid_formats = ["PNG", "JPEG"]
-    img = Image.open(image)
-    format_ = img.format
-    if format_ not in valid_formats:
-        raise ValidationError(
-            "Unsupported image format. Only PNG and JPEG are allowed."
-        )
+    with Image.open(image) as img:
+        format_ = img.format
+        if format_ not in valid_formats:
+            raise ValidationError(
+                "Unsupported image format. Only PNG and JPEG are allowed."
+            )
 
 
-def validate_image_size(image_file):
+def validate_banner_size(image_file):
     max_size = image_file.size
     if max_size > MAX_ALLOWED_BANNER_IMAGE_SIZE:
         raise ValidationError("Image size exceeds the maximum allowed (5MB).")

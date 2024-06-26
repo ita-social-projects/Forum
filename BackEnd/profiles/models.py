@@ -2,15 +2,11 @@ from django.db import models
 from django.core.validators import MaxLengthValidator
 
 from authentication.models import CustomUser
+from images.models import ProfileImage
 from .managers import ProfileManager
 from validation.validate_edrpou import validate_edrpou
 from validation.validate_rnokpp import validate_rnokpp
 from validation.validate_foundation_year import validate_foundation_year_range
-from validation.validate_image import (
-    validate_image_size,
-    validate_logo_size,
-    validate_image_format,
-)
 from validation.validate_phone_number import (
     validate_phone_number_len,
     validate_phone_number_is_digit,
@@ -80,18 +76,37 @@ class Profile(models.Model):
     address = models.TextField(blank=True, default="")
     startup_idea = models.TextField(blank=True, default="")
 
-    banner_image = models.ImageField(
-        upload_to="banners",
-        validators=[validate_image_format, validate_image_size],
+    banner = models.ForeignKey(
+        ProfileImage,
+        on_delete=models.CASCADE,
+        related_name="profile_banner",
         null=True,
         blank=True,
+        default=None,
     )
-
-    logo_image = models.ImageField(
-        upload_to="logos",
-        validators=[validate_image_format, validate_logo_size],
+    logo = models.ForeignKey(
+        ProfileImage,
+        on_delete=models.CASCADE,
+        related_name="profile_logo",
         null=True,
         blank=True,
+        default=None,
+    )
+    banner_approved = models.ForeignKey(
+        ProfileImage,
+        on_delete=models.CASCADE,
+        related_name="profile_banner_approved",
+        null=True,
+        blank=True,
+        default=None,
+    )
+    logo_approved = models.ForeignKey(
+        ProfileImage,
+        on_delete=models.CASCADE,
+        related_name="profile_logo_approved",
+        null=True,
+        blank=True,
+        default=None,
     )
 
     is_deleted = models.BooleanField(default=False)

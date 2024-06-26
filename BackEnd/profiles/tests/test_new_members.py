@@ -9,21 +9,25 @@ from profiles.factories import (
     CategoryFactory,
     RegionFactory,
 )
+from images.factories import ProfileimageFactory
 from profiles.models import Profile
 
 from utils.unittest_helper import utc_datetime
+from utils.completeness_counter import completeness_count
 from utils.dump_response import dump  # noqa
 
 
 class TestCompletenessUpdate(APITestCase):
     def setUp(self) -> None:
-        self.right_image = open(
-            os.path.join(
-                os.getcwd(), "images", "tests", "img", "img_300kb.png"
-            ),
-            "rb",
+        self.banner_path = os.path.join(
+            os.getcwd(), "images/tests/img/img_2mb.png"
+        )
+        self.logo_path = os.path.join(
+            os.getcwd(), "images/tests/img/img_300kb.png"
         )
 
+        self.banner = ProfileimageFactory(image_path=self.banner_path)
+        self.logo = ProfileimageFactory(image_path=self.logo_path)
         self.kryvyi_rig_user = UserFactory()
 
         self.cheese_category = CategoryFactory(name="cheese")
@@ -38,9 +42,6 @@ class TestCompletenessUpdate(APITestCase):
             person=self.kryvyi_rig_user,
             regions=[self.dnipro_region],
         )
-
-    def tearDown(self) -> None:
-        self.right_image.close()
 
     def test_completeness_after_update_region(self):
         self.client.force_authenticate(self.kryvyi_rig_user)
@@ -64,18 +65,26 @@ class TestCompletenessUpdate(APITestCase):
         self.client.force_authenticate(self.kryvyi_rig_user)
         self.client.patch(
             path=f"/api/profiles/{self.company_kryvyi_rig.id}",
-            data={"logo_image": self.right_image},
+            data={"logo": self.logo.uuid},
         )
         comp = Profile.objects.filter(name="Kryvyi_rig_art").first()
+        # assume, moderator approved logo and it was moved to logo_approved field
+        comp.logo_approved = comp.logo
+        comp.save()
+        completeness_count(comp)
         self.assertEqual(comp.completeness, 2)
 
     def test_completeness_after_update_banner(self):
         self.client.force_authenticate(self.kryvyi_rig_user)
         self.client.patch(
             path=f"/api/profiles/{self.company_kryvyi_rig.id}",
-            data={"banner_image": self.right_image},
+            data={"banner": self.banner.uuid},
         )
         comp = Profile.objects.filter(name="Kryvyi_rig_art").first()
+        # assume, moderator approved banner and it was moved to banner_approved field
+        comp.banner_approved = comp.banner
+        comp.save()
+        completeness_count(comp)
         self.assertEqual(comp.completeness, 101)
 
     def test_completeness_after_update_category(self):
@@ -91,21 +100,18 @@ class TestCompletenessUpdate(APITestCase):
         self.client.force_authenticate(self.kryvyi_rig_user)
         self.client.patch(
             path=f"/api/profiles/{self.company_kryvyi_rig.id}",
-            data={"banner_image": self.right_image, "region": "Kyiv"},
+            data={"banner": self.banner.uuid, "region": "Kyiv"},
         )
         comp = Profile.objects.filter(name="Kryvyi_rig_art").first()
+        # assume, moderator approved banner and it was moved to banner_approved field
+        comp.banner_approved = comp.banner
+        comp.save()
+        completeness_count(comp)
         self.assertEqual(comp.completeness, 101)
 
 
 class TestCompanyOrder(APITestCase):
     def setUp(self) -> None:
-        self.right_image = open(
-            os.path.join(
-                os.getcwd(), "images", "tests", "img", "img_300kb.png"
-            ),
-            "rb",
-        )
-
         self.kyiv_user = UserFactory()
         self.dnipro_user = UserFactory()
         self.kharkiv_user = UserFactory()
@@ -154,9 +160,6 @@ class TestCompanyOrder(APITestCase):
         )
         self.company_kirovohrad.created_at = utc_datetime(2023, 12, 5)
         self.company_kirovohrad.save()
-
-    def tearDown(self) -> None:
-        self.right_image.close()
 
     def test_get_less_companies(self):
         response = self.client.get(
