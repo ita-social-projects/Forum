@@ -27,7 +27,7 @@ export default function ProfileCard({ isAuthorized, data }) {
       categories: data.categories,
       isSaved: data.is_saved,
       commonInfo: data.common_info,
-      logo: data.logo_image,
+      logo: data.logo,
     };
   }, [data]);
 
@@ -61,7 +61,7 @@ export default function ProfileCard({ isAuthorized, data }) {
           <img
             className={css.logo}
             src={
-              profile.logo ||
+              profile.logo?.path ||
               `${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`
             }
             alt="Company logo"
@@ -106,7 +106,7 @@ ProfileCard.propTypes = {
     person: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     address: PropTypes.string,
-    region_display: PropTypes.string,
+    regions_ukr_display: PropTypes.string,
     categories: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,
@@ -121,6 +121,9 @@ ProfileCard.propTypes = {
     ),
     common_info: PropTypes.string,
     is_saved: PropTypes.bool.isRequired,
-    logo_image: PropTypes.string,
+    logo: PropTypes.shape({
+      path: PropTypes.string,
+      uuid: PropTypes.string,
+    }),
   }).isRequired,
 };
