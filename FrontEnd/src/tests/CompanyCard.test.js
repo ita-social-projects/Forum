@@ -26,7 +26,7 @@ const company_liked = {
   founded: 2006,
   service_info: 'Testinfo',
   address: 'Testadress',
-  banner_image: '',
+  banner: null,
   is_saved: true,
   categories: [
     {
@@ -60,7 +60,7 @@ const company_unliked = {
   founded: 2006,
   service_info: 'Testinfo_unlike',
   address: 'Testadress_unlike',
-  banner_image: '',
+  banner: null,
   is_saved: false,
   categories: [
     {
@@ -113,7 +113,7 @@ describe('CompanyCard component unit tests', () => {
             address: 'Testadress',
             categories: [1, 2],
             activities: [],
-            banner_image: null,
+            banner: null,
             is_saved: true,
           },
         ],

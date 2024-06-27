@@ -38,7 +38,7 @@ describe('SearchResults component unit tests', () => {
         founded: 1980,
         service_info: null,
         address: 'Kyiv',
-        banner_image: null,
+        banner: null,
         is_saved: true,
       },
       {
@@ -54,7 +54,7 @@ describe('SearchResults component unit tests', () => {
         founded: 2007,
         service_info: null,
         address: 'Dnipro',
-        banner_image: null,
+        banner: null,
         is_saved: false,
       },
       {
@@ -65,7 +65,7 @@ describe('SearchResults component unit tests', () => {
         founded: null,
         service_info: null,
         address: 'Zaporija',
-        banner_image: null,
+        banner: null,
       },
       {
         id: 4,
@@ -75,7 +75,7 @@ describe('SearchResults component unit tests', () => {
         founded: null,
         service_info: null,
         address: null,
-        banner_image: null,
+        banner: null,
       },
       {
         id: 5,
@@ -85,7 +85,7 @@ describe('SearchResults component unit tests', () => {
         founded: null,
         service_info: null,
         address: null,
-        banner_image: null,
+        banner: null,
       },
       {
         id: 6,
@@ -95,7 +95,7 @@ describe('SearchResults component unit tests', () => {
         founded: null,
         service_info: null,
         address: null,
-        banner_image: null,
+        banner: null,
       },
       {
         id: 7,
@@ -105,7 +105,7 @@ describe('SearchResults component unit tests', () => {
         founded: null,
         service_info: null,
         address: null,
-        banner_image: null,
+        banner: null,
       },
     ];
 
