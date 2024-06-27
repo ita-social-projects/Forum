@@ -583,8 +583,14 @@ GeneralInfo.propTypes = {
     is_startup: PropTypes.bool,
     categories: PropTypes.array,
     activities: PropTypes.array,
-    banner_image: PropTypes.string,
-    logo_image: PropTypes.string,
+    banner: PropTypes.shape({
+      uuid: PropTypes.string,
+      path: PropTypes.string,
+    }),
+    logo: PropTypes.shape({
+      uuid: PropTypes.string,
+      path: PropTypes.string,
+    }),
   }).isRequired,
   currentFormNameHandler: PropTypes.func,
   curForm: PropTypes.string,
