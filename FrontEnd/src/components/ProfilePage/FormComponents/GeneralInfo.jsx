@@ -342,15 +342,21 @@ const GeneralInfo = (props) => {
       name === 'banner'
       ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
       : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
+    try {
+      const response = await axios.delete(imageUrl);
+      console.log('RESPONSE', response);
+      if (name === 'banner') setBannerImage(null);
+      if (name === 'logo') setLogoImage(null);
 
-    await axios.delete(imageUrl);
-    if (name === 'banner') setBannerImage(null);
-    if (name === 'logo') setLogoImage(null);
-
-    setProfile((prevState) => {
-      const newState = { ...prevState, [name]: null };
-      return newState;
+      setProfile((prevState) => {
+        const newState = { ...prevState, [name]: null };
+        return newState;
     });
+  } catch (error) {
+    console.error('Error deleting image:',
+      error.response ? error.response.data : error.message);
+    toast.error('Не вдалося видалити банер/лого, сталася помилка');
+  }
   };
 
   const errorMessages = {
