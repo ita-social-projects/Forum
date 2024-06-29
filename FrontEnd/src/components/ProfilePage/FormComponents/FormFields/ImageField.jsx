@@ -66,8 +66,8 @@ const ImageField = ({
         {name === 'banner' && value && (
           <>
             {renderInput()}
-            {renderUpdateImageLabel('змінити банер')}
-            {renderDeleteButton('видалити банер')}
+            {renderUpdateImageLabel('змінити')}
+            {renderDeleteButton('видалити зображення')}
           </>
         )}
       </div>
@@ -104,7 +104,7 @@ const ImageField = ({
           <div className={css['upload-file__wrapper--logo']}>
             <div className={css['upload-file__logo']} style={backgroundImage} />
             {renderInput()}
-            {renderUpdateImageLabel('змінити логотип')}
+            {renderUpdateImageLabel('змінити')}
             {renderDeleteButton('видалити логотип')}
           </div>
         )}
