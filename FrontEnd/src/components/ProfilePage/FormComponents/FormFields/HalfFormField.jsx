@@ -2,10 +2,14 @@ import { PropTypes } from 'prop-types';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './HalfFormField.module.css';
 import { Tooltip } from 'antd';
+import { useMask } from '@react-input/mask';
 
 const LENGTH_EMAIL = 19;
 
 const HalfFormField = (props) => {
+  // Use the useMask hook here inside the functional component
+  const inputRef = useMask({ mask: '380XXXXXXXXX', replacement: { X: /\d/ } });
+
   const shouldShowTooltip =
     props.name === 'email' && props.value.length > LENGTH_EMAIL;
 
@@ -43,6 +47,7 @@ const HalfFormField = (props) => {
             onBlur={props.onBlur}
             onKeyDown={preventEnterSubmit}
             onChange={props.updateHandler}
+            ref={inputRef} // Apply the ref from useMask here
             required={props.requredField ? 'required' : ''}
             disabled={props.name === 'email' ? 'disabled' : ''}
             maxLength={props.maxLength}
