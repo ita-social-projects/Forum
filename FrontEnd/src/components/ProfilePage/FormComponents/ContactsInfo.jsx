@@ -22,8 +22,6 @@ const ContactsInfo = (props) => {
   const [phoneNumberError, setPhoneNumberError] = useState(null);
   const { setFormIsDirty } = useContext(DirtyFormContext);
 
-  // TODO: update default values as new fields added
-
   const fields = {
     phone: { defaultValue: mainProfile?.phone ?? null },
     address: { defaultValue: mainProfile?.address ?? null },
@@ -119,7 +117,7 @@ const ContactsInfo = (props) => {
               <HalfFormField
                 inputType="tel"
                 name="phone"
-                fieldPlaceholder="38"
+                fieldPlaceholder="+380XXXXXXXXX"
                 label={LABELS.phone}
                 updateHandler={onUpdatePhoneNumberField}
                 requredField={false}
