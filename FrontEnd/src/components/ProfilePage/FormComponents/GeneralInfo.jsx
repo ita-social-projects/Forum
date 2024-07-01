@@ -343,7 +343,7 @@ const GeneralInfo = (props) => {
       ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
       : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
     try {
-      const response = await axios.delete(imageUrl);
+      await axios.delete(imageUrl);
       if (name === 'banner') setBannerImage(null);
       if (name === 'logo') setLogoImage(null);
 
