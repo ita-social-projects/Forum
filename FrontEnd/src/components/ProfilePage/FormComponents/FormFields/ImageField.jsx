@@ -67,7 +67,7 @@ const ImageField = ({
           <>
             {renderInput()}
             {renderUpdateImageLabel('змінити')}
-            {renderDeleteButton('видалити зображення')}
+            {renderDeleteButton('видалити')}
           </>
         )}
       </div>
@@ -105,7 +105,7 @@ const ImageField = ({
             <div className={css['upload-file__logo']} style={backgroundImage} />
             {renderInput()}
             {renderUpdateImageLabel('змінити')}
-            {renderDeleteButton('видалити логотип')}
+            {renderDeleteButton('видалити')}
           </div>
         )}
       </div>
