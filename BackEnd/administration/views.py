@@ -5,6 +5,7 @@ from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
+    RetrieveUpdateAPIView,
 )
 
 from administration.serializers import (
@@ -12,8 +13,10 @@ from administration.serializers import (
     AdminCompanyDetailSerializer,
     AdminUserListSerializer,
     AdminUserDetailSerializer,
+    AutoModerationHoursSerializer,
 )
 from administration.pagination import ListPagination
+from administration.models import AutoModeration
 from authentication.models import CustomUser
 from profiles.models import Profile
 
@@ -80,3 +83,15 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.select_related("person").prefetch_related(
         "regions", "categories", "activities"
     )
+
+
+class AutoModerationHoursView(RetrieveUpdateAPIView):
+    """
+    View for retrieving and updating 'auto_moderation_hours' - a value that sets 
+    the auto-approve delay (part of the moderation functionality)
+    """
+    permission_classes = [IsStaffUser]
+    serializer_class = AutoModerationHoursSerializer
+
+    def get_object(self):
+        return AutoModeration.get_auto_moderation_hours()

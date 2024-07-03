@@ -4,6 +4,7 @@ from profiles.models import (
     Profile,
     Region,
 )
+from .models import AutoModeration
 
 
 class AdminRegionSerialaizer(serializers.ModelSerializer):
@@ -119,3 +120,9 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
             "logo_approved_image",
             "is_deleted",
         )
+
+
+class AutoModerationHoursSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AutoModeration
+        fields = ("auto_moderation_hours",)

@@ -8,10 +8,11 @@ def validate_auto_moderation_hours(value: int):
 
 
 class AutoModeration(models.Model):
+
     auto_moderation_hours = models.PositiveSmallIntegerField(default=12, validators=[validate_auto_moderation_hours])
 
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):   #we want to ensure, that there is only one db record for this
         self.pk = 1
         super().save(*args, **kwargs)    
 
