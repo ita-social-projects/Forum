@@ -87,9 +87,10 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
 
 class AutoModerationHoursView(RetrieveUpdateAPIView):
     """
-    View for retrieving and updating 'auto_moderation_hours' - a value that sets 
+    View for retrieving and updating 'auto_moderation_hours' - a value that sets
     the auto-approve delay (part of the moderation functionality)
     """
+
     permission_classes = [IsStaffUser]
     serializer_class = AutoModerationHoursSerializer
 

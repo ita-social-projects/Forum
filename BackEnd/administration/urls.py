@@ -5,7 +5,7 @@ from administration.views import (
     ProfileDetailView,
     UsersListView,
     UserDetailView,
-    AutoModerationHoursView
+    AutoModerationHoursView,
 )
 
 app_name = "administration"
@@ -15,5 +15,9 @@ urlpatterns = [
     path("users/<pk>/", UserDetailView.as_view(), name="user-detail"),
     path("profiles/", ProfilesListView.as_view(), name="profile-list"),
     path("profiles/<pk>/", ProfileDetailView.as_view(), name="profile-detail"),
-    path("automoderation/", AutoModerationHoursView.as_view(), name="automoderation_hours"),
+    path(
+        "automoderation/",
+        AutoModerationHoursView.as_view(),
+        name="automoderation_hours",
+    ),
 ]
