@@ -122,9 +122,7 @@ class Profile(models.Model):
     updated_at = models.DateField(auto_now=True)
     completeness = models.SmallIntegerField(default=0)
     status = models.CharField(
-        max_length=15,
-        choices=STATUS_CHOICES,
-        default="undefined"
+        max_length=15, choices=STATUS_CHOICES, default="undefined"
     )
 
     objects = ProfileManager.as_manager()
