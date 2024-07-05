@@ -23,6 +23,13 @@ class Region(models.Model):
 
 
 class Profile(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending Moderation'),
+        ('blocked', 'Blocked'),
+        ('approved', 'Approved'),
+        ('auto_approved', 'Auto Approved'),
+    ]
+
     id = models.AutoField(primary_key=True)
 
     name = models.CharField(max_length=100, default=None, null=True)
@@ -113,6 +120,12 @@ class Profile(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     completeness = models.SmallIntegerField(default=0)
+
+    status = models.CharField(
+        max_length=15,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
 
     objects = ProfileManager.as_manager()
 
