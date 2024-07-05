@@ -23,6 +23,9 @@ const checkFormIsDirty = (fields, userData, profileData) => {
       if (type === 'array') {
         return !compareArrays(defaultValue, currentValue);
       }
+      if (type === 'image') {
+        return defaultValue?.uuid !== currentValue?.uuid;
+      }
       if (key === 'founded') {
         if ((defaultValue !== null && currentValue !== null && defaultValue.toString() !== currentValue.toString()) ||
             (defaultValue === null && (currentValue !== null && currentValue !== ''))) {

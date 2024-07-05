@@ -5,13 +5,13 @@ import classes from './BannerImage.module.css';
 function BannerImage ({ data }) {
 
     const backgroundImage = {
-        background: `url(${data.banner_image}) lightgray 50% / cover no-repeat`,
+        background: `url(${data.banner?.path}) lightgray 50% / cover no-repeat`,
       };
 
     return (
         <div className={classes['banner-image__block']} style={backgroundImage}>
-            <div className={classNames({[classes['default-banner']]: !data.banner_image})}>
-                {!data.banner_image &&
+            <div className={classNames({[classes['default-banner']]: !data.banner?.path})}>
+                {!data.banner?.path &&
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="103"
@@ -31,6 +31,8 @@ export default BannerImage;
 
 BannerImage.propTypes = {
     data: PropTypes.shape({
-        banner_image: PropTypes.string,
+        banner: PropTypes.shape({
+            path: PropTypes.string,
+        })
     }),
 };

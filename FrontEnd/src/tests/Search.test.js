@@ -46,7 +46,7 @@ describe('Search component unit tests', () => {
               founded: 1980,
               service_info: null,
               address: 'Kyiv',
-              banner_image: null,
+              banner: null,
             },
             {
               id: 2,
@@ -61,7 +61,7 @@ describe('Search component unit tests', () => {
               founded: 2007,
               service_info: null,
               address: 'Dnipro',
-              banner_image: null,
+              banner: null,
             },
             {
               id: 3,
@@ -71,7 +71,7 @@ describe('Search component unit tests', () => {
               founded: null,
               service_info: null,
               address: 'Zaporija',
-              banner_image: null,
+              banner: null,
             },
           ],
         });
