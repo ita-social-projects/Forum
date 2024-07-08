@@ -25,7 +25,7 @@ function TitleInfo({ isAuthorized, data }) {
       regions: data.regions_ukr_display ? data.regions_ukr_display : '',
       categories: data.categories ? data.categories : null,
       isSaved: data.is_saved,
-      logo: data.logo_image,
+      logo: data.logo,
     };
   }, [data]);
 
@@ -56,12 +56,12 @@ function TitleInfo({ isAuthorized, data }) {
   return (
     <div className={classes['title-block']}>
       <div className={classes['title-block__logo']}>
-        {!profile.logo ? (
+        {!profile.logo?.path ? (
           <DefaultLogo />
         ) : (
           <img
             className={classes['logo']}
-            src={profile.logo}
+            src={profile.logo?.path}
             alt="Company logo"
           />
         )}
@@ -132,7 +132,7 @@ TitleInfo.propTypes = {
     name: PropTypes.string.isRequired,
     person: PropTypes.number,
     address: PropTypes.string,
-    region_display: PropTypes.string,
+    regions_ukr_display: PropTypes.string,
     categories: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,
@@ -146,6 +146,9 @@ TitleInfo.propTypes = {
       })
     ),
     is_saved: PropTypes.bool.isRequired,
-    logo_image: PropTypes.string,
+    logo: PropTypes.shape({
+      path: PropTypes.string,
+      uuid: PropTypes.string,
+    }),
   }).isRequired,
 };
