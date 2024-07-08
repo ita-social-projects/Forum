@@ -15,6 +15,20 @@ const LABELS = {
   address: 'Поштова адреса',
 };
 
+const formatPhoneNumber = (phoneNumber) => {
+  if (!phoneNumber) return '';
+  const cleaned = phoneNumber.replace(/\s+/g, '');
+  if (cleaned.length === 12 && cleaned.startsWith('380')) {
+    return `+380${cleaned.slice(3, 5)} ${cleaned.slice(5, 8)} ${cleaned.slice(8, 10)} ${cleaned.slice(10)}`;
+  }
+  return phoneNumber;
+};
+
+
+const cleanPhoneNumber = (phoneNumber) => {
+  return phoneNumber.replace(/[^\d]/g, '');
+};
+
 const ContactsInfo = (props) => {
   const { user } = useAuth();
   const { profile: mainProfile, mutate: profileMutate } = useProfile();
@@ -36,6 +50,15 @@ const ContactsInfo = (props) => {
     props.currentFormNameHandler(props.curForm);
   }, []);
 
+  useEffect(() => {
+    if (mainProfile?.phone) {
+      setProfile((prevState) => ({
+        ...prevState,
+        phone: formatPhoneNumber(mainProfile.phone),
+      }));
+    }
+  }, [mainProfile]);
+
   const onUpdateField = (e) => {
     setProfile((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
@@ -44,11 +67,12 @@ const ContactsInfo = (props) => {
 
   const onUpdatePhoneNumberField = (e) => {
     const receivedPhoneNumber = e.target.value;
-    const parsedNumber = Number(receivedPhoneNumber);
+    const cleanedNumber = receivedPhoneNumber.replace(/\s/g, '').slice(3);
+    const parsedNumber = Number(cleanedNumber);
     const isInteger = Number.isInteger(parsedNumber);
     if (isInteger) {
-      if (receivedPhoneNumber && receivedPhoneNumber.length !== 12) {
-        setPhoneNumberError('Номер повинен містити 12 цифр');
+      if (receivedPhoneNumber && cleanedNumber.length !== 10) {
+        setPhoneNumberError('Номер повинен містити 9 цифр після коду країни');
       } else {
         setPhoneNumberError(null);
       }
@@ -62,11 +86,8 @@ const ContactsInfo = (props) => {
 
   const validateForm = () => {
     let isValid = true;
-    if (
-      profile.phoneNumber &&
-      (profile.phoneNumber.length !== 12 ||
-        !Number.isInteger(Number(profile.phoneNumber)))
-    ) {
+    const phoneNumber = profile.phone.replace(/\s/g, '').slice(3);
+    if (profile.phone && (phoneNumber.length !== 10 || !Number.isInteger(Number(phoneNumber)))) {
       isValid = false;
     }
     return isValid;
@@ -80,10 +101,11 @@ const ContactsInfo = (props) => {
       );
     } else {
       try {
+        const phone = cleanPhoneNumber(profile.phone);
         const response = await axios.patch(
           `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
           {
-            phone: profile.phone,
+            phone,
             address: profile.address,
           }
         );
@@ -117,7 +139,7 @@ const ContactsInfo = (props) => {
               <HalfFormField
                 inputType="tel"
                 name="phone"
-                fieldPlaceholder="+380XXXXXXXXX"
+                fieldPlaceholder="+380XX XXX XX XX"
                 label={LABELS.phone}
                 updateHandler={onUpdatePhoneNumberField}
                 requredField={false}
