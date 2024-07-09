@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Docker compouse DOWN old Django container and frontend container (+internal nginx)
         run:  docker compose -f docker-compose.dev.yml down -v
