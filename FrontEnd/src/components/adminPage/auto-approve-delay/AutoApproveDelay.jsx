@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { Tooltip } from 'antd';
 import axios from 'axios';
 import css from './AutoApproveDelay.module.css';
 
@@ -41,7 +42,12 @@ const AutoApproveDelay = () => {
     };
     return (
         <div className={css['autoapprove-section']}>
+            <Tooltip
+                title={'Введіть значення 1-48'}
+                placement="top"
+                pointAtCenter={true}>
             <input className={css['autoapprove-input']} type="number" step={1} onChange={handleInputChange} value={delay} />
+            </Tooltip>
             {error &&
                 <p className={css['error-message']}>{error}</p>}
             <button className={css['save-button']} onClick={handleSubmit}>Змінити</button>
