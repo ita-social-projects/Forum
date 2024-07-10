@@ -227,6 +227,7 @@
   line-height: 20px;
   letter-spacing: -0.14px;
   text-decoration-line: underline;
+  cursor: pointer;
 }
 
 .rules__checkbox {
