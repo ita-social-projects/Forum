@@ -1,0 +1,1 @@
+import{a as r,b as a,c as e,d as s,e as t}from"../_rollupPluginBabelHelpers-D3WySQMf.js";var n=function(e){function n(r,a){var e;return s(this,n),(e=t(this,n,[r])).name="SyntheticChangeError",e.cause=a,e}return r(n,e),a(n)}(e(Error));export{n as default};

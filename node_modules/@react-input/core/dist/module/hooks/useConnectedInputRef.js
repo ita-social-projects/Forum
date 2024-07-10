@@ -1,0 +1,1 @@
+import{_ as r}from"../_rollupPluginBabelHelpers-D3WySQMf.js";import{useCallback as t}from"react";function e(e,n){return t((function(t){e.current=t,"function"==typeof n?n(t):"object"===r(n)&&null!==n&&(n.current=t)}),[e,n])}export{e as default};

@@ -1,0 +1,1 @@
+"use strict";var e=require("../_rollupPluginBabelHelpers-czPpl2Ww.js"),r=require("react");module.exports=function(u,t){return r.useCallback((function(r){u.current=r,"function"==typeof t?t(r):"object"===e._typeof(t)&&null!==t&&(t.current=r)}),[u,t])};

@@ -1,0 +1,1 @@
+"use strict";var r=require("../_rollupPluginBabelHelpers-czPpl2Ww.js"),e=function(e){function t(e,a){var s;return r._classCallCheck(this,t),(s=r._callSuper(this,t,[e])).name="SyntheticChangeError",s.cause=a,s}return r._inherits(t,e),r._createClass(t)}(r._wrapNativeSuper(Error));module.exports=e;

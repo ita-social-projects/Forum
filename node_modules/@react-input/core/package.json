@@ -1,0 +1,97 @@
+{
+  "name": "@react-input/core",
+  "version": "1.0.12",
+  "author": "Nikolay Goncharuk <goncharuk.bro@gmail.com>",
+  "description": "The core of the packages included in the `@react-input` scope.",
+  "keywords": [
+    "react",
+    "react-hook",
+    "input",
+    "input-element",
+    "input-control",
+    "input-event"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoncharukBro/react-input.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/GoncharukBro/react-input/issues"
+  },
+  "homepage": "https://github.com/GoncharukBro/react-input/tree/main/packages/core#readme",
+  "license": "MIT",
+  "module": "dist/module/index.js",
+  "main": "dist/node/index.cjs",
+  "types": "dist/@types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/module/index.js",
+      "require": "./dist/node/index.cjs",
+      "types": "./dist/@types/index.d.ts"
+    },
+    "./*": {
+      "import": [
+        "./dist/module/*.js",
+        "./dist/module/*/index.js"
+      ],
+      "require": [
+        "./dist/node/*.cjs",
+        "./dist/node/*/index.cjs"
+      ],
+      "types": [
+        "./dist/@types/*.d.ts",
+        "./dist/@types/*/index.d.ts"
+      ]
+    },
+    "./*.js": {
+      "import": [
+        "./dist/module/*.js",
+        "./dist/module/*/index.js"
+      ],
+      "require": [
+        "./dist/node/*.cjs",
+        "./dist/node/*/index.cjs"
+      ],
+      "types": [
+        "./dist/@types/*.d.ts",
+        "./dist/@types/*/index.d.ts"
+      ]
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "dist/@types/index.d.ts": [
+        "dist/@types/index.d.ts"
+      ],
+      "*": [
+        "dist/@types/*",
+        "dist/@types/*/index.d.ts"
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "write:entries": "ts-node ../../scripts/write-entries.ts",
+    "build": "npm run write:entries && ts-node ../../scripts/build.ts",
+    "release:major": "ts-node ../../scripts/release.ts major",
+    "release:minor": "ts-node ../../scripts/release.ts minor",
+    "release:patch": "ts-node ../../scripts/release.ts patch"
+  },
+  "peerDependencies": {
+    "@types/react": ">=16.8",
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  }
+}
