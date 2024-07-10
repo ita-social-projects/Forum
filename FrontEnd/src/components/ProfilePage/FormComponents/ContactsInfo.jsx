@@ -9,6 +9,8 @@ import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
 import css from './FormComponents.module.css';
+import { useMask } from '@react-input/mask';
+
 
 const LABELS = {
   phone: 'Телефон',
@@ -33,6 +35,7 @@ const ContactsInfo = (props) => {
   const { user } = useAuth();
   const { profile: mainProfile, mutate: profileMutate } = useProfile();
   const [profile, setProfile] = useState(props.profile);
+  const [phone, setPhone] = useState(formatPhoneNumber(profile?.phone));
   const [phoneNumberError, setPhoneNumberError] = useState(null);
   const { setFormIsDirty } = useContext(DirtyFormContext);
 
@@ -45,6 +48,8 @@ const ContactsInfo = (props) => {
     const isDirty = checkFormIsDirty(fields, null, profile);
     setFormIsDirty(isDirty);
   }, [mainProfile, profile]);
+
+  const inputRef = useMask({ mask: '+380XX XXX XX XX', replacement: { X: /\d/ } });
 
   useEffect(() => {
     props.currentFormNameHandler(props.curForm);
@@ -79,6 +84,7 @@ const ContactsInfo = (props) => {
     } else {
       setPhoneNumberError('Номер повинен містити лише цифри');
     }
+    setPhone(formatPhoneNumber(e.target.value));
     setProfile((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
@@ -139,11 +145,12 @@ const ContactsInfo = (props) => {
               <HalfFormField
                 inputType="tel"
                 name="phone"
+                ref={inputRef}
                 fieldPlaceholder="+380XX XXX XX XX"
                 label={LABELS.phone}
                 updateHandler={onUpdatePhoneNumberField}
                 requredField={false}
-                value={profile.phone ?? ''}
+                value={phone ?? ''}
                 error={phoneNumberError}
               />
             </div>
