@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useState, useEffect } from 'react';
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import { useAuth, useProfile } from '../../../hooks';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
+import { formatPhoneNumber } from '../../../utils/formatPhoneNumber';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
@@ -16,16 +16,6 @@ const LABELS = {
   phone: 'Телефон',
   address: 'Поштова адреса',
 };
-
-const formatPhoneNumber = (phoneNumber) => {
-  if (!phoneNumber) return '';
-  const cleaned = phoneNumber.replace(/\s+/g, '');
-  if (cleaned.length === 12 && cleaned.startsWith('380')) {
-    return `+380${cleaned.slice(3, 5)} ${cleaned.slice(5, 8)} ${cleaned.slice(8, 10)} ${cleaned.slice(10)}`;
-  }
-  return phoneNumber;
-};
-
 
 const cleanPhoneNumber = (phoneNumber) => {
   return phoneNumber.replace(/[^\d]/g, '');
