@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Docker compouse DOWN old containers
         run:  docker compose -f docker-compose.db.yml down -v
       - name: Docker compouse UP new containers

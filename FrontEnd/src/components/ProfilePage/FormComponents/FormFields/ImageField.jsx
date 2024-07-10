@@ -2,62 +2,83 @@ import classNames from 'classnames';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './ImageField.module.css';
 
-const ImageField = (props) => {
+const ImageField = ({
+  name,
+  label,
+  accept,
+  inputType = 'text',
+  value,
+  updateHandler,
+  onDeleteImage,
+  error,
+}) => {
   const backgroundImage = {
-    background: `url(${props.value}) lightgray 50% / cover no-repeat`,
+    background: `url(${value}) lightgray 50% / cover no-repeat`,
   };
 
-  return (
-    <div
-      className={classNames(css['fields__column'], {
-        [css['fields__column--logo']]: props.name === 'logo_image',
-      })}
+  const renderInput = () => (
+    <input
+      accept={accept}
+      id={name}
+      type={inputType}
+      className={css['upload-file__input']}
+      name={name}
+      onChange={updateHandler}
+      onKeyDown={preventEnterSubmit}
+    />
+  );
+
+  const renderUpdateImageLabel = (text) => (
+    <label className={css['update-file__label']} htmlFor={name}>
+      <img
+        className={css['upload-file__icon']}
+        src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/camera_icon.png`}
+        alt="Change icon"
+      />
+      <span className={css['update-file__text']}>{text}</span>
+    </label>
+  );
+
+  const renderDeleteButton = (text) => (
+    <button
+      type="button"
+      className={css['upload-file__delete--wrapper']}
+      onKeyDown={preventEnterSubmit}
+      onClick={() => onDeleteImage(name)}
     >
+      <img
+        className={css['upload-file__icon']}
+        src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`}
+        alt="Delete icon"
+      />
+      <span className={css['upload-file__delete--text']}>{text}</span>
+    </button>
+  );
+
+  return (
+    <div className={classNames(css['fields__column'], {
+      [css['fields__column--logo']]: name === 'logo',
+    })}>
       <div className={css['fields__label']}>
-        {props.requredField && (
-          <label className={css['fields__label--required']}>*</label>
-        )}
-        <label
-          className={classNames(css['fields__label--text'], {
-            [css['fields__field--notrequired']]: !props.requiredField,
-          })}
-        >
-          {props.label}
+        <label className={classNames(css['fields__label--text'], css['fields__field--notrequired'])}>
+          {label}
         </label>
-        {props.name === 'banner_image' && props.value && (
-          <button
-            className={css['upload-file__delete--wrapper']}
-            onKeyDown={preventEnterSubmit}
-            onClick={() => props.onDeleteImage(props.name)}
-          >
-            <img
-              className={css['upload-file__delete--trashBin']}
-              src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`}
-              alt="Delete icon"
-            />
-            <span className={css['upload-file__delete--text']}>
-              видалити зображення
-            </span>
-          </button>
+        {name === 'banner' && value && (
+          <>
+            {renderInput()}
+            {renderUpdateImageLabel('змінити')}
+            {renderDeleteButton('видалити')}
+          </>
         )}
       </div>
       <div>
-        <input
-          accept={props.accept}
-          id={props.name}
-          type={props.inputType ? props.inputType : 'text'}
-          className={css['upload-file__input']}
-          name={props.name}
-          onChange={props.updateHandler}
-          onKeyDown={preventEnterSubmit}
-          required={props.requredField ? 'required' : ''}
-        />
-        {!props.value && (
-          <label className={css['upload-file__label']} htmlFor={props.name}>
+        {renderInput()}
+        {!value && (
+          <label className={css['upload-file__label']} htmlFor={name}>
             <span className={css['upload-file__text']}>Оберіть файл</span>
           </label>
         )}
-        {props.name === 'banner_image' && props.value && (
+        {name === 'banner' && value && (
           <>
             <div className={css['upload-file__wrapper--banner-page']}>
               <span className={css['upload-file__banner-image--title']}>
@@ -79,27 +100,16 @@ const ImageField = (props) => {
             </div>
           </>
         )}
-        {props.name === 'logo_image' && props.value && (
+        {name === 'logo' && value && (
           <div className={css['upload-file__wrapper--logo']}>
             <div className={css['upload-file__logo']} style={backgroundImage} />
-            <button
-              className={css['upload-file__delete--wrapper']}
-              onKeyDown={preventEnterSubmit}
-              onClick={() => props.onDeleteImage(props.name)}
-            >
-              <img
-                className={css['upload-file__delete--trashBin']}
-                src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectordelete.png`}
-                alt="Delete icon"
-              />
-              <span className={css['upload-file__delete--text']}>
-                видалити логотип
-              </span>
-            </button>
+            {renderInput()}
+            {renderUpdateImageLabel('змінити')}
+            {renderDeleteButton('видалити')}
           </div>
         )}
       </div>
-      {props.error && <div className={css['error-message']}>{props.error}</div>}
+      {error && <div className={css['error-message']}>{error}</div>}
     </div>
   );
 };

@@ -35,5 +35,4 @@ class AdminProfileFactory(factory.django.DjangoModelFactory):
     person_position = "Test person position"
     official_name = "Test official name"
     startup_idea = "Test startup idea"
-    banner_image = "Test_banner_image"
     is_deleted = False

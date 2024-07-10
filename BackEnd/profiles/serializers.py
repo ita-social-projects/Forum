@@ -7,6 +7,7 @@ from .models import (
     ViewedCompany,
     Region,
 )
+from images.models import ProfileImage
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
 
 
@@ -28,12 +29,29 @@ class RegionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ProfileImageField(serializers.Field):
+
+    def to_representation(self, value):
+        if value.is_deleted == False:
+            return {
+                "uuid": value.uuid,
+                "path": self.context["request"].build_absolute_uri(
+                    value.image_path.url
+                ),
+            }
+
+    def to_internal_value(self, data):
+        return ProfileImage.objects.filter(uuid=data, is_deleted=False).first()
+
+
 class ProfileListSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
+    banner = ProfileImageField(source="banner_approved", read_only=True)
+    logo = ProfileImageField(source="logo_approved", read_only=True)
 
     class Meta:
         model = Profile
@@ -51,8 +69,8 @@ class ProfileListSerializer(serializers.ModelSerializer):
             "founded",
             "categories",
             "activities",
-            "banner_image",
-            "logo_image",
+            "banner",
+            "logo",
             "is_saved",
         )
 
@@ -76,9 +94,10 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
-    banner_image = serializers.ImageField(required=False)
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
+    banner = ProfileImageField(source="banner_approved", read_only=True)
+    logo = ProfileImageField(source="logo_approved", read_only=True)
 
     class Meta:
         model = Profile
@@ -101,8 +120,8 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "activities",
             "service_info",
             "product_info",
-            "banner_image",
-            "logo_image",
+            "banner",
+            "logo",
             "is_saved",
         )
         read_only_fields = (
@@ -124,8 +143,8 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "activities",
             "service_info",
             "product_info",
-            "banner_image",
-            "logo_image",
+            "banner",
+            "logo",
         )
 
     def get_is_saved(self, obj) -> bool:
@@ -139,11 +158,14 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
 
 
 class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
+    email = serializers.ReadOnlyField(source="person.email")
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     email = serializers.ReadOnlyField(source="person.email")
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
+    banner = ProfileImageField()
+    logo = ProfileImageField()
 
     class Meta:
         model = Profile
@@ -170,8 +192,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "product_info",
             "address",
             "startup_idea",
-            "banner_image",
-            "logo_image",
+            "banner",
+            "logo",
             "is_deleted",
         )
         read_only_fields = (
@@ -197,8 +219,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "product_info",
             "address",
             "startup_idea",
-            "banner_image",
-            "logo_image",
+            "banner",
+            "logo",
             "is_deleted",
         )
 
@@ -208,6 +230,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
 
 class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField(source="person.email")
+    banner = ProfileImageField()
+    logo = ProfileImageField()
 
     class Meta:
         model = Profile
@@ -233,8 +257,8 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             "product_info",
             "address",
             "startup_idea",
-            "banner_image",
-            "logo_image",
+            "banner",
+            "logo",
             "is_deleted",
         )
         read_only_fields = ("person",)

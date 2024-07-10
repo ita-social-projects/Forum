@@ -139,8 +139,8 @@ class TestCompanyFilter(APITestCase):
                 "product_info": "fruits from Dnipro",
                 "founded": 2022,
                 "address": "Test Country, Test City, St. Test, 1",
-                "banner_image": None,
-                "logo_image": None,
+                "banner": None,
+                "logo": None,
                 "person": self.company_kyiv.person_id,
             }
         ]

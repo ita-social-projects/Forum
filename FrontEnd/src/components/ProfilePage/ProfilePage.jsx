@@ -24,7 +24,7 @@ const ProfilePage = () => {
         <>
           <Description
             companyName={profile.name}
-            companyLogo={profile.logo_image}
+            companyLogo={profile?.logo?.path}
             formName={formName}
           />
           <ProfileContent

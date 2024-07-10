@@ -203,7 +203,8 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
             djoser_utils.logout_user(self.request)
 
     def perform_update(self, serializer):
-        completeness_count(serializer)
+        profile = serializer.save()
+        completeness_count(profile)
 
 
 class ProfileViewCreate(CreateAPIView):

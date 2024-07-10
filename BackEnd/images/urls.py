@@ -1,9 +1,17 @@
 from django.urls import path
-from .views import BannerRetrieveUpdate, LogoRetrieveUpdate
+from .views import ImageCreateAPIView, ImageDestroyAPIView
 
 app_name = "images"
 
 urlpatterns = [
-    path("banner/<pk>/", BannerRetrieveUpdate.as_view(), name="banner_change"),
-    path("logo/<pk>/", LogoRetrieveUpdate.as_view(), name="logo_change"),
+    path(
+        "image/<str:image_type>/",
+        ImageCreateAPIView.as_view(),
+        name="image_create",
+    ),
+    path(
+        "image/<str:image_type>/<uuid:image_uuid>",
+        ImageDestroyAPIView.as_view(),
+        name="image_delete",
+    ),
 ]

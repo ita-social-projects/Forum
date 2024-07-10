@@ -56,9 +56,9 @@ export default function CompanyCard({
         >
         <div className={styles['company-card__block']}>
           <div className={styles['company-card__image-frame']}>
-            {profile.banner_image ? (
+            {profile.banner?.path ? (
               <img
-                src={profile.banner_image}
+                src={profile.banner?.path}
                 alt="Company Banner"
                 className={styles['company-card__image']}
               />
@@ -116,9 +116,9 @@ export default function CompanyCard({
         </div>
         <div className={styles['company-card__logo']}>
           <div className={styles['company-card__logo-ellipse']}>
-            {profile.logo_image ? (
+            {profile.logo?.path ? (
               <img
-                src={profile.logo_image}
+                src={profile.logo?.path}
                 alt="Logo"
                 className={styles['company-card__logo-image']}
               />

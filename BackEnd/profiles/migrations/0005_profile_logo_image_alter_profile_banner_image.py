@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='profile',
             name='banner_image',
-            field=models.ImageField(null=True, upload_to='banners', validators=[validation.validate_image.validate_image_format, validation.validate_image.validate_image_size]),
+            field=models.ImageField(null=True, upload_to='banners', validators=[validation.validate_image.validate_image_format, validation.validate_image.validate_banner_size]),
         ),
     ]

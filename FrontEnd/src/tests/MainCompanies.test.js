@@ -40,7 +40,7 @@ const results = [
     founded: 2007,
     service_info: null,
     address: 'Dnipro',
-    banner_image: null,
+    banner: null,
     is_saved: false,
   },
   {
@@ -51,7 +51,7 @@ const results = [
     founded: null,
     service_info: null,
     address: 'Zaporija',
-    banner_image: null,
+    banner: null,
   },
   {
     id: 4,
@@ -61,7 +61,7 @@ const results = [
     founded: null,
     service_info: null,
     address: null,
-    banner_image: null,
+    banner: null,
   },
   {
     id: 5,
@@ -71,7 +71,7 @@ const results = [
     founded: null,
     service_info: null,
     address: null,
-    banner_image: null,
+    banner: null,
   },
   {
     id: 6,
@@ -81,7 +81,7 @@ const results = [
     founded: null,
     service_info: null,
     address: null,
-    banner_image: null,
+    banner: null,
   },
 ];
 

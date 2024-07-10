@@ -27,8 +27,8 @@ const LABELS = {
   regions: 'Регіон(и)',
   categories: 'Категорія(ї)',
   activities: 'Вид(и) діяльності',
-  banner_image: 'Зображення для банера',
-  logo_image: 'Логотип',
+  banner: 'Зображення для банера',
+  logo: 'Логотип',
   common_info: 'Інформація про компанію',
   is_registered: 'Зареєстрована компанія',
   is_startup: 'Стартап проект, який шукає інвестиції',
@@ -60,8 +60,8 @@ const GeneralInfo = (props) => {
   const { profile: mainProfile, mutate: profileMutate } = useProfile();
   const [profile, setProfile] = useState(props.profile);
   const [formStateErr, setFormStateErr] = useState(ERRORS);
-  const [bannerImage, setBannerImage] = useState(props.profile.banner_image);
-  const [logoImage, setLogoImage] = useState(props.profile.logo_image);
+  const [bannerImage, setBannerImage] = useState(props.profile.banner?.path);
+  const [logoImage, setLogoImage] = useState(props.profile.logo?.path);
   const [bannerImageError, setBannerImageError] = useState(null);
   const [logoImageError, setLogoImageError] = useState(null);
   const [edrpouFieldError, setEdrpouFieldError] = useState(null);
@@ -91,8 +91,8 @@ const GeneralInfo = (props) => {
     regions: { defaultValue: mainProfile?.regions ?? [], type: 'array' },
     categories: { defaultValue: mainProfile?.categories ?? [], type: 'array' },
     activities: { defaultValue: mainProfile?.activities ?? [], type: 'array' },
-    banner_image: { defaultValue: mainProfile?.banner_image ?? null },
-    logo_image: { defaultValue: mainProfile?.logo_image ?? null },
+    banner: { defaultValue: mainProfile?.banner ?? null, type: 'image' },
+    logo: { defaultValue: mainProfile?.logo ?? null, type: 'image' },
     common_info: { defaultValue: mainProfile?.common_info ?? null },
     is_registered: { defaultValue: mainProfile?.is_registered ?? null },
     is_startup: { defaultValue: mainProfile?.is_startup ?? null },
@@ -284,32 +284,15 @@ const GeneralInfo = (props) => {
   const uploadImage = async (url, imageKey, image) => {
     if (image instanceof File || image === '') {
       const formData = new FormData();
-      formData.append(imageKey, image);
+      formData.append('image_path', image);
       try {
-        const response = await axios.put(url, formData);
-        const data = response.data;
-        profileMutate((prevState) => {
-          return { ...prevState, [imageKey]: data[imageKey] };
-        });
+        const response = await axios.post(url, formData);
         setProfile((prevState) => {
-          return { ...prevState, [imageKey]: data[imageKey] };
+          return { ...prevState, [imageKey]: {
+            ...prevState[imageKey],
+            uuid: response.data.uuid
+          }};
         });
-        if (imageKey === 'banner_image') {
-          setBannerImage(data.banner_image);
-        } else {
-          setLogoImage(data.logo_image);
-        }
-        data[imageKey] === null
-          ? toast.success(
-              imageKey === 'banner_image'
-                ? 'Банер видалено з профілю'
-                : 'Логотип видалено з профілю'
-            )
-          : toast.success(
-              imageKey === 'banner_image'
-                ? 'Банер успішно додано у профіль'
-                : 'Логотип успішно додано у профіль'
-            );
       } catch (error) {
         console.error(
           'Error uploading image:',
@@ -324,39 +307,55 @@ const GeneralInfo = (props) => {
 
   const checkMaxImageSize = (name, image) => {
     const maxSize =
-      name === 'banner_image' ? BANNER_IMAGE_SIZE : LOGO_IMAGE_SIZE;
+      name === 'banner' ? BANNER_IMAGE_SIZE : LOGO_IMAGE_SIZE;
     if (image.size > maxSize) {
-      name === 'banner_image' &&
+      name === 'banner' &&
         setBannerImageError('Максимальний розмір файлу 5 Mb');
-      name === 'logo_image' &&
+      name === 'logo' &&
         setLogoImageError('Максимальний розмір файлу 1 Mb');
     } else {
-      name === 'banner_image' && setBannerImageError(null);
-      name === 'logo_image' && setLogoImageError(null);
+      name === 'banner' && setBannerImageError(null);
+      name === 'logo' && setLogoImageError(null);
       return true;
     }
   };
 
-  const onUpdateImageField = (e) => {
+  const onUpdateImageField = async (e) => {
     const file = e.target.files[0];
     e.target.value = '';
-    const imageUrl = URL.createObjectURL(file);
+    const imageUrl =
+      e.target.name === 'banner'
+      ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/`
+      : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/`;
+    const setImage =
+      e.target.name === 'banner'
+      ? setBannerImage
+      : setLogoImage;
     if (file && checkMaxImageSize(e.target.name, file)) {
-      e.target.name === 'banner_image' && setBannerImage(file);
-      e.target.name === 'logo_image' && setLogoImage(file);
-      setProfile((prevState) => {
-        const newState = { ...prevState, [e.target.name]: imageUrl };
-        return newState;
-      });
+      setImage(URL.createObjectURL(file));
+      await uploadImage(imageUrl, e.target.name, file);
     }
   };
 
-  const deleteImageHandler = (name) => {
-    name === 'logo_image' ? setLogoImage('') : setBannerImage('');
-    setProfile((prevState) => {
-      const newState = { ...prevState, [name]: '' };
-      return newState;
+  const deleteImageHandler = async (name) => {
+    const imageUrl =
+      name === 'banner'
+      ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
+      : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
+    try {
+      await axios.delete(imageUrl);
+      if (name === 'banner') setBannerImage(null);
+      if (name === 'logo') setLogoImage(null);
+
+      setProfile((prevState) => {
+        const newState = { ...prevState, [name]: null };
+        return newState;
     });
+  } catch (error) {
+    console.error('Error deleting image:',
+      error.response ? error.response.data : error.message);
+    toast.error('Не вдалося видалити банер/лого, сталася помилка');
+  }
   };
 
   const errorMessages = {
@@ -399,6 +398,8 @@ const GeneralInfo = (props) => {
             official_name: profile.official_name,
             edrpou: profile.edrpou,
             rnokpp: profile.rnokpp,
+            banner: profile.banner?.uuid,
+            logo: profile.logo?.uuid,
             regions: profile.regions.map((obj) => obj.id),
             common_info: profile.common_info,
             is_startup: profile.is_startup,
@@ -410,17 +411,6 @@ const GeneralInfo = (props) => {
         profileMutate(response.data);
         toast.success('Зміни успішно збережено');
         setFormIsDirty(false);
-
-        await uploadImage(
-          `${process.env.REACT_APP_BASE_API_URL}/api/banner/${user.profile_id}/`,
-          'banner_image',
-          bannerImage
-        );
-        await uploadImage(
-          `${process.env.REACT_APP_BASE_API_URL}/api/logo/${user.profile_id}/`,
-          'logo_image',
-          logoImage
-        );
       } catch (error) {
         handleError(error);
       }
@@ -539,20 +529,20 @@ const GeneralInfo = (props) => {
             <ImageField
               accept="image/png, image/jpeg"
               inputType="file"
-              name="banner_image"
-              label={LABELS.banner_image}
+              name="banner"
+              label={LABELS.banner}
               updateHandler={onUpdateImageField}
-              value={profile.banner_image ?? ''}
+              value={bannerImage}
               error={bannerImageError}
               onDeleteImage={deleteImageHandler}
             />
             <ImageField
               accept="image/png, image/jpeg"
               inputType="file"
-              name="logo_image"
-              label={LABELS.logo_image}
+              name="logo"
+              label={LABELS.logo}
               updateHandler={onUpdateImageField}
-              value={profile.logo_image ?? ''}
+              value={logoImage}
               error={logoImageError}
               onDeleteImage={deleteImageHandler}
             />
@@ -598,8 +588,14 @@ GeneralInfo.propTypes = {
     is_startup: PropTypes.bool,
     categories: PropTypes.array,
     activities: PropTypes.array,
-    banner_image: PropTypes.string,
-    logo_image: PropTypes.string,
+    banner: PropTypes.shape({
+      uuid: PropTypes.string,
+      path: PropTypes.string,
+    }),
+    logo: PropTypes.shape({
+      uuid: PropTypes.string,
+      path: PropTypes.string,
+    }),
   }).isRequired,
   currentFormNameHandler: PropTypes.func,
   curForm: PropTypes.string,
