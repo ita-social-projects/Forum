@@ -91,7 +91,7 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
     the auto-approve delay (part of the moderation functionality)
     """
 
-    permission_classes = [IsStaffUser]
+    # permission_classes = [IsStaffUser]
     serializer_class = AutoModerationHoursSerializer
 
     def get_object(self):
