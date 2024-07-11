@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        <style>
+        .button {
+            padding: 10px 20px;
+            color: black;
+            text-decoration: none;
+            border: 1px solid black;
+            border-radius: 5px;
+            display: inline-block;
+            font-family: Arial, sans-serif;
+            margin: 5px;
+        }
+        .button-approve {
+            background-color: white;
+        }
+        .button-reject {
+            background-color: white;
+        }
+        .button:hover {
+            background-color: lightgray;
+        }
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 10px;
+        }
+        .image-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 10px;
+        }
+        </style>
+    </head>
+<body>
+    <div style="font-family: Arial, sans-serif; color: #333;">
+        <div style="text-align: center;">
+            <img src="{{protocol}}://178.212.110.52/craftMerge-logo.png" alt="CRAFTMERGE" style="width: 100px;"/>
+        </div>
+        <p>Доброго дня,</p>
+        <p>Вам надійшов запит на затвердження змін в обліковому записі компанії <strong>{{ profile_name }}</strong> на сайті CraftMerge.</p>
+        <p>Перегляньте зміни та затвердіть або скасуйте їх.</p>
+        <p>Дата змін: <strong>{{ updated_at }}</strong></p>
+        <p>Банер:</p>
+        <img src="cid:{{ banner.uuid }}" alt="Банер" style="background: lightgray  50% center / cover no-repeat; height: 200px; width: 1500px;"/>
+        <p><b>Логотип:</b></p>
+        <div class="image-container">
+            <img src="cid:{{ logo.uuid }}" alt="Логотип" />
+        </div>
+        <div style="margin: 20px 0;">
+            <a href="#" class="button button-approve"">ЗАТВЕРДИТИ</a>
+            <a href="#" class="button button-reject">СКАСУВАТИ</a>
+        </div>
+        <p>Примітка: запит буде автоматично затверджений через 24 години</p>
+        <p>З повагою,<br>Команда CraftMerge</p>
+    </div>
+</body>
+</html>
