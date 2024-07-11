@@ -1,5 +1,5 @@
 from django.utils.timezone import now
-
+from utils.completeness_counter import completeness_count
 from images.models import ProfileImage
 
 
@@ -14,10 +14,10 @@ class ModerationManager:
             image.is_approved = True
             image.save()
             setattr(self.profile, f'{image_type}_approved', image)
+            completeness_count(self.profile)
             self.profile.save()
         else:
-            self.profile.moderation_status = "pending moderation"
-            self.profile.status_updated_at = now()
+            self.profile.status = "pending"
             self.profile.save()
             self.moderation_is_needed = True
 
