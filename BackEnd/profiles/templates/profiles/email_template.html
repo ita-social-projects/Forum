@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="uk">
-    <head>
-        <style>
+<head>
+    <style>
+        body {
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        p, b {
+            color: black;
+        }
         .button {
             padding: 10px 20px;
             color: black;
@@ -22,41 +29,62 @@
             background-color: lightgray;
         }
         .image-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
             margin-top: 10px;
+        }
+        .image-container p {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: black;
         }
         .image-container img {
             width: 100px;
             height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            margin-top: 10px;
+            display: block;
+            margin-top: 5px;
         }
-        </style>
-    </head>
+        .banner {
+            width: 100%;
+            max-width: 1500px;
+            height: 200px;
+            background: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
 <body>
-    <div style="font-family: Arial, sans-serif; color: #333;">
-        <div style="text-align: center;">
+    <divd>
+        <div>
             <img src="{{protocol}}://178.212.110.52/craftMerge-logo.png" alt="CRAFTMERGE" style="width: 100px;"/>
         </div>
         <p>Доброго дня,</p>
-        <p>Вам надійшов запит на затвердження змін в обліковому записі компанії <strong>{{ profile_name }}</strong> на сайті CraftMerge.</p>
+        <p>Вам надійшов запит на затвердження змін в обліковому записі компанії {{ profile_name }} на сайті CraftMerge.</p>
         <p>Перегляньте зміни та затвердіть або скасуйте їх.</p>
-        <p>Дата змін: <strong>{{ updated_at }}</strong></p>
-        <p>Банер:</p>
-        <img src="cid:{{ banner.uuid }}" alt="Банер" style="background: lightgray  50% center / cover no-repeat; height: 200px; width: 1500px;"/>
+        <p><b>Дата змін: </b>{{ updated_at }}</p>
+        <p><b>Банер:</b></p>
+        <div class="banner">
+            <img src="cid:{{ banner.uuid }}" alt="Банер"/>   
+        </div>
         <p><b>Логотип:</b></p>
         <div class="image-container">
-            <img src="cid:{{ logo.uuid }}" alt="Логотип" />
+            <img src="cid:{{ logo.uuid }}" alt="Логотип"/>
         </div>
         <div style="margin: 20px 0;">
-            <a href="#" class="button button-approve"">ЗАТВЕРДИТИ</a>
+            <a href="#" class="button button-approve">ЗАТВЕРДИТИ</a>
             <a href="#" class="button button-reject">СКАСУВАТИ</a>
         </div>
-        <p>Примітка: запит буде автоматично затверджений через 24 години</p>
-        <p>З повагою,<br>Команда CraftMerge</p>
+        <p><b>Примітка:</b> <i>запит буде автоматично затверджений через 72 години</i></p>
+        <p>З повагою,</p>
+        <p>Команда CraftMerge</p>
     </div>
 </body>
 </html>
