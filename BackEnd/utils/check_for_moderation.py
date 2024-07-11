@@ -3,36 +3,6 @@ from django.utils.timezone import now
 from images.models import ProfileImage
 
 
-def check_for_moderation(profile):
-    moderation_is_needed = False
-    if profile.banner != profile.banner_approved:
-        banner = ProfileImage.objects.filter(hash_md5=profile.banner.hash_md5).exclude(uuid=profile.banner_id).first()
-        if banner and banner.is_approved:
-            profile.banner.is_approved = True
-            profile.banner.save()
-            profile.banner_approved = profile.banner
-            profile.save()
-        else:
-            profile.moderation_status = "pending moderation"
-            profile.status_updated_at = now()
-            profile.save()
-            moderation_is_needed = True
-    if profile.logo != profile.logo_approved:
-        logo = ProfileImage.objects.filter(hash_md5=profile.logo.hash_md5).exclude(uuid=profile.logo_id).first()
-        if logo and logo.is_approved:
-            profile.logo.is_approved = True
-            profile.logo.save()
-            profile.logo_approved = profile.logo
-            profile.save()
-        else:
-            profile.moderation_status = "pending moderation"
-            profile.status_updated_at = now()
-            profile.save()
-            moderation_is_needed = True
-    return moderation_is_needed
-
-
-
 class ModerationManager:
     def __init__(self, profile):
         self.profile = profile
