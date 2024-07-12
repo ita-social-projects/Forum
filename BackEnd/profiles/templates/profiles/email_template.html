@@ -68,14 +68,18 @@
         <p>Вам надійшов запит на затвердження змін в обліковому записі компанії {{ profile_name }} на сайті CraftMerge.</p>
         <p>Перегляньте зміни та затвердіть або скасуйте їх.</p>
         <p><b>Дата змін: </b>{{ updated_at }}</p>
+        {% if banner %}
         <p><b>Банер:</b></p>
         <div class="banner">
             <img src="cid:{{ banner.uuid }}" alt="Банер"/>   
         </div>
+        {% endif %}
+        {% if logo %}
         <p><b>Логотип:</b></p>
         <div class="image-container">
             <img src="cid:{{ logo.uuid }}" alt="Логотип"/>
         </div>
+        {% endif %}
         <div style="margin: 20px 0;">
             <a href="#" class="button button-approve">ЗАТВЕРДИТИ</a>
             <a href="#" class="button button-reject">СКАСУВАТИ</a>

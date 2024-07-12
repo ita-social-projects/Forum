@@ -1,4 +1,3 @@
-from django.utils.timezone import now
 from utils.completeness_counter import completeness_count
 from images.models import ProfileImage
 
@@ -9,8 +8,10 @@ class ModerationManager:
         self.moderation_is_needed = False
 
     def update_image(self, image, image_type):
-        existing_image = ProfileImage.objects.filter(hash_md5=image.hash_md5).exclude(uuid=image.uuid).first()
-        if existing_image and image.is_approved:
+        existing_image = ProfileImage.objects.filter(
+            hash_md5=image.hash_md5, is_approved=True).exclude(uuid=image.uuid).first()
+        print(existing_image) # 0d225102-903f-44ca-9b4e-cdde6116a63f
+        if existing_image:
             image.is_approved = True
             image.save()
             setattr(self.profile, f'{image_type}_approved', image)
@@ -27,3 +28,4 @@ class ModerationManager:
         if self.profile.logo != self.profile.logo_approved:
             self.update_image(self.profile.logo, 'logo')
         return self.moderation_is_needed
+    
