@@ -10,7 +10,6 @@ class ModerationManager:
     def update_image(self, image, image_type):
         existing_image = ProfileImage.objects.filter(
             hash_md5=image.hash_md5, is_approved=True).exclude(uuid=image.uuid).first()
-        print(existing_image) # 0d225102-903f-44ca-9b4e-cdde6116a63f
         if existing_image:
             image.is_approved = True
             image.save()
