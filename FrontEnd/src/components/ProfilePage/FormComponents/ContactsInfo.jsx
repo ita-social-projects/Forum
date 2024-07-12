@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import { useAuth, useProfile } from '../../../hooks';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
+import defineChanges from '../../../utils/defineChanges';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
@@ -24,11 +25,6 @@ const formatPhoneNumber = (phoneNumber) => {
   return phoneNumber;
 };
 
-
-const cleanPhoneNumber = (phoneNumber) => {
-  return phoneNumber.replace(/[^\d]/g, '');
-};
-
 const ContactsInfo = (props) => {
   const { user } = useAuth();
   const { profile: mainProfile, mutate: profileMutate } = useProfile();
@@ -37,7 +33,7 @@ const ContactsInfo = (props) => {
   const { setFormIsDirty } = useContext(DirtyFormContext);
 
   const fields = {
-    phone: { defaultValue: mainProfile?.phone ?? null },
+    phone: { defaultValue: mainProfile?.phone ?? null, type: 'phone'},
     address: { defaultValue: mainProfile?.address ?? null },
   };
 
@@ -100,14 +96,11 @@ const ContactsInfo = (props) => {
         'Зміни не можуть бути збережені, перевірте правильність заповнення полів'
       );
     } else {
+      const data = defineChanges(fields, profile, null);
       try {
-        const phone = cleanPhoneNumber(profile.phone);
         const response = await axios.patch(
           `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
-          {
-            phone,
-            address: profile.address,
-          }
+          data.profileChanges
         );
         const updatedProfileData = response.data;
         profileMutate(updatedProfileData);
