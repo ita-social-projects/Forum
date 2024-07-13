@@ -1,7 +1,6 @@
 import css from './ProfileFormButton.module.css';
 
 const ProfileFormButton = (props) => {
-  console.log('PROPS', props.formState);
   return (
     <div className={css['sign-up-footer__buttons']}>
       <button
