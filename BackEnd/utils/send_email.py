@@ -1,11 +1,24 @@
+from datetime import timedelta
 import os
 from email.mime.image import MIMEImage
 from django.utils.timezone import now
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
-
+from administration.models import AutoModeration
 from .check_for_moderation import ModerationManager
+
+
+
+def define_ending(hours):
+    result_of_hours = None
+    if hours % 10 == 1 and hours != 11:
+        result_of_hours = f'{hours} годину'
+    elif hours % 10 in range(2, 5) and hours != 12:
+        result_of_hours = f'{hours} години'
+    else:
+        result_of_hours = f'{hours} годин'
+    return result_of_hours
 
 
 def attach_image(email, image, content_id):
@@ -20,8 +33,9 @@ def attach_image(email, image, content_id):
 def send_moderation_email(profile):
     manager = ModerationManager(profile)
     if manager.check_for_moderation():
-        update_time = now().strftime('%d.%m.%Y %H:%M')
-        update_date = now().strftime("%d.%m.%Y")
+        update_datetime = now()+timedelta(hours=3)
+        update_time = update_datetime.strftime('%d.%m.%Y %H:%M')
+        update_date = update_datetime.strftime('%d.%m.%Y')
         banner = profile.banner if profile.banner != profile.banner_approved else None
         logo = profile.logo if profile.logo != profile.logo_approved else None
         approve_url = None
@@ -32,8 +46,8 @@ def send_moderation_email(profile):
                 "banner": banner,
                 "logo": logo,
                 "updated_at": update_time,
-                "date": update_date,
-                "moderation_time": "",
+                "moderation_time": define_ending(AutoModeration.get_auto_moderation_hours()
+                                                 .auto_moderation_hours),
                 "approve_url": approve_url,
                 "reject_url": reject_url,
             }
@@ -44,7 +58,7 @@ def send_moderation_email(profile):
             "на затвердження змін в обліковому записі компанії",
             body=email_body,
             from_email=settings.EMAIL_HOST_USER,
-            to=["dancisinandrij@gmail.com",],
+            to=[settings.EMAIL_HOST_USER,],
         )
 
         email.content_subtype = "html"
