@@ -9,7 +9,6 @@ def image_directory_path(instance, filename):
 
 
 class ProfileImage(models.Model):
-
     BANNER = "banner"
     LOGO = "logo"
 
