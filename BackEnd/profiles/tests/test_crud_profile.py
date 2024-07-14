@@ -786,7 +786,11 @@ class TestProfileDetailAPIView(APITestCase):
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
-    @mock.patch("utils.send_email.attach_image", new_callable=mock.mock_open, read_data=b"image")
+    @mock.patch(
+        "utils.send_email.attach_image",
+        new_callable=mock.mock_open,
+        read_data=b"image",
+    )
     def test_full_update_profile_authorized_with_full_data(self, mock_file):
         category = CategoryFactory()
         activity = ActivityFactory()
