@@ -14,6 +14,7 @@ from profiles.factories import (
 from images.factories import ProfileimageFactory
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 class TestProfileDetailAPIView(APITestCase):
@@ -785,7 +786,8 @@ class TestProfileDetailAPIView(APITestCase):
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
-    def test_full_update_profile_authorized_with_full_data(self):
+    @mock.patch("utils.send_email.attach_image", new_callable=mock.mock_open, read_data=b"image")
+    def test_full_update_profile_authorized_with_full_data(self, mock_file):
         category = CategoryFactory()
         activity = ActivityFactory()
         region = RegionFactory()
@@ -819,6 +821,7 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(
             status.HTTP_200_OK, response.status_code, response.content
         )
+        mock_file.assert_called()
 
     def test_full_update_profile_unauthorized(self):
         category = CategoryFactory()
