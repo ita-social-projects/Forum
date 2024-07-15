@@ -11,7 +11,6 @@ import Loader from '../../loader/Loader';
 import css from './FormComponents.module.css';
 import { useMask } from '@react-input/mask';
 
-
 const LABELS = {
   phone: 'Телефон',
   address: 'Поштова адреса',

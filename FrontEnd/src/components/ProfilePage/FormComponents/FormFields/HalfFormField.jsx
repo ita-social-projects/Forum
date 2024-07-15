@@ -17,12 +17,12 @@ const HalfFormField = forwardRef(function HalfFormField(props, ref) {
   return (
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>
-        {props.requiredField && (
+        {props.requredField && (
           <label className={css['fields__label--required']}>*</label>
         )}
         <label
           className={`${css['fields__label--text']} ${
-            !props.requiredField && css['fields__field--notrequired']
+            !props.requredField && css['fields__field--notrequired']
           }`}
         >
           {props.label}
@@ -45,13 +45,13 @@ const HalfFormField = forwardRef(function HalfFormField(props, ref) {
             onKeyDown={preventEnterSubmit}
             onChange={props.updateHandler}
             ref={ref}
-            required={props.requiredField ? 'required' : ''}
+            required={props.requredField ? 'required' : ''}
             disabled={props.name === 'email' ? 'disabled' : ''}
             maxLength={props.maxLength}
           />
         </Tooltip>
       </div>
-      {(props.requiredField || props.error) && (
+      {(props.requredField || props.error) && (
         <div className={css['error-message']}>
           {Array.isArray(props.error) ? (
             props.error.map((error, index) => <span key={index}>{error}</span>)
@@ -65,7 +65,7 @@ const HalfFormField = forwardRef(function HalfFormField(props, ref) {
 });
 
 HalfFormField.propTypes = {
-  requiredField: PropTypes.bool,
+  requredField: PropTypes.bool,
   inputType: PropTypes.string,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
