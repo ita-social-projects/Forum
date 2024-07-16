@@ -1,15 +1,12 @@
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './HalfFormField.module.css';
 import { Tooltip } from 'antd';
-import { useMask } from '@react-input/mask';
+import { forwardRef } from 'react';
 
 const LENGTH_EMAIL = 19;
 
-const HalfFormField = (props) => {
-
-  const inputRef = useMask({ mask: '+380XX XXX XX XX', replacement: { X: /\d/ } });
-
+const HalfFormField = forwardRef(function HalfFormField(props, ref) {
   const shouldShowTooltip =
     props.name === 'email' && props.value.length > LENGTH_EMAIL;
 
@@ -47,7 +44,7 @@ const HalfFormField = (props) => {
             onBlur={props.onBlur}
             onKeyDown={preventEnterSubmit}
             onChange={props.updateHandler}
-            ref={inputRef}
+            ref={ref}
             required={props.requredField ? 'required' : ''}
             disabled={props.name === 'email' ? 'disabled' : ''}
             maxLength={props.maxLength}
@@ -65,9 +62,7 @@ const HalfFormField = (props) => {
       )}
     </div>
   );
-};
-
-export default HalfFormField;
+});
 
 HalfFormField.propTypes = {
   requredField: PropTypes.bool,
@@ -83,3 +78,5 @@ HalfFormField.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
   ]),
 };
+
+export default HalfFormField;
