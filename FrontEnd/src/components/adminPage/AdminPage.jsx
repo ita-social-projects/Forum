@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify';
 import './AdminGlobal.css';
 import Header from './header/Header';
 import Menu from './menu/Menu';
@@ -10,6 +11,7 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './mainPage/MainPage';
 import { useAuth } from '../../hooks';
 import Loader from '../loader/Loader';
+import AutoApproveDelay from './auto-approve-delay/AutoApproveDelay';
 
 function AdminPage() {
     const { isLoading, isAuth, isStaff } = useAuth();
@@ -21,6 +23,7 @@ function AdminPage() {
             <Route path="/users/:id" element={<UserDetail />} />
             <Route path="/profiles" element={<ProfilesTable />} />
             <Route path="/profile/:id" element={<ProfileDetail />} />
+            <Route path="/automoderation" element={<AutoApproveDelay />} />
         </>
     ) : (
         <Route path="/customadmin/" />
@@ -37,6 +40,12 @@ function AdminPage() {
                     </Routes>
                 </div>
             }
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                theme="colored"
+                icon={false}
+            />
         </div>
     );
 }
