@@ -18,6 +18,7 @@ import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
 import validateEdrpou from '../../../utils/validateEdrpou';
 import validateRnokpp from '../../../utils/validateRnokpp';
+import BanerModeration from './BanerModeration';
 
 const LABELS = {
   name: 'Назва компанії',
@@ -536,6 +537,7 @@ const GeneralInfo = (props) => {
               error={bannerImageError}
               onDeleteImage={deleteImageHandler}
             />
+            <BanerModeration />
             <ImageField
               accept="image/png, image/jpeg"
               inputType="file"
