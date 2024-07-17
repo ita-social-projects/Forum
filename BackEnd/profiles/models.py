@@ -1,8 +1,8 @@
 from django.db import models
 from django.core.validators import MaxLengthValidator
+from django.utils.timezone import now
 
 from authentication.models import CustomUser
-from django.utils.timezone import now
 from images.models import ProfileImage
 from .managers import ProfileManager
 from validation.validate_edrpou import validate_edrpou
