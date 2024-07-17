@@ -537,7 +537,6 @@ const GeneralInfo = (props) => {
               error={bannerImageError}
               onDeleteImage={deleteImageHandler}
             />
-            <BanerModeration />
             <ImageField
               accept="image/png, image/jpeg"
               inputType="file"
@@ -548,6 +547,7 @@ const GeneralInfo = (props) => {
               error={logoImageError}
               onDeleteImage={deleteImageHandler}
             />
+            <BanerModeration />
             <TextField
               name="common_info"
               label={LABELS.common_info}
