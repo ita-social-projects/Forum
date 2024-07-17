@@ -1,0 +1,32 @@
+/* BanerModeration.css */
+.moderation-container {
+    padding: 20px;
+  }
+  
+  .moderation-warning {
+    display: flex;
+    align-items: flex-start;
+    color: black;
+  }
+  
+  .warning-icon {
+    background-color: #ffa500;
+    color: white;
+    border-radius: 50%;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .moderation-text {
+    color: black;
+  }
+  
+  .attention {
+    font-weight: bold;
+  }
+  
