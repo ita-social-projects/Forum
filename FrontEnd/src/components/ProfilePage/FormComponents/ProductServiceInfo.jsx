@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
+import defineChanges from '../../../utils/defineChanges';
 import { useAuth, useProfile } from '../../../hooks';
 import TextField from './FormFields/TextField';
 import Loader from '../../loader/Loader';
@@ -21,8 +22,6 @@ const ProductServiceInfo = (props) => {
   const { profile: mainProfile, mutate: profileMutate } = useProfile();
   const [profile, setProfile] = useState(props.profile);
   const { setFormIsDirty } = useContext(DirtyFormContext);
-
-  // TODO: update default values as new fields added
 
   const fields = {
     product_info: { defaultValue: mainProfile?.product_info ?? null },
@@ -48,12 +47,10 @@ const ProductServiceInfo = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      const data = defineChanges(fields, profile, null);
       const response = await axios.patch(
         `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
-        {
-          product_info: profile.product_info,
-          service_info: profile.service_info,
-        }
+        data.profileChanges
       );
       const updatedProfileData = response.data;
       profileMutate(updatedProfileData);
