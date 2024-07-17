@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxLengthValidator
 
 from authentication.models import CustomUser
+from django.utils.timezone import now
 from images.models import ProfileImage
 from .managers import ProfileManager
 from validation.validate_edrpou import validate_edrpou
@@ -120,7 +121,7 @@ class Profile(models.Model):
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    status_updated_at = models.DateTimeField()
+    status_updated_at = models.DateTimeField(default=now)
     completeness = models.SmallIntegerField(default=0)
     status = models.CharField(
         max_length=15, choices=STATUS_CHOICES, default="undefined"
