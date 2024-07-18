@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { useAuth, useProfile } from '../../../hooks';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
+import defineChanges from '../../../utils/defineChanges';
 import css from './FormComponents.module.css';
 
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
@@ -391,23 +392,11 @@ const GeneralInfo = (props) => {
         'Зміни не можуть бути збережені, перевірте правильність заповнення полів'
       );
     } else {
+      const data = defineChanges(fields, profile, null);
       try {
         const response = await axios.patch(
           `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
-          {
-            name: profile.name,
-            official_name: profile.official_name,
-            edrpou: profile.edrpou,
-            rnokpp: profile.rnokpp,
-            banner: profile.banner?.uuid,
-            logo: profile.logo?.uuid,
-            regions: profile.regions.map((obj) => obj.id),
-            common_info: profile.common_info,
-            is_startup: profile.is_startup,
-            is_registered: profile.is_registered,
-            activities: profile.activities.map((obj) => obj.id),
-            categories: profile.categories.map((obj) => obj.id),
-          }
+            data.profileChanges
         );
         profileMutate(response.data);
         toast.success('Зміни успішно збережено');
