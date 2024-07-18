@@ -8,6 +8,7 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
 )
 
+from profiles.permissions import RequestIsReadOnly
 from administration.serializers import (
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
@@ -91,7 +92,7 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
     the auto-approve delay (part of the moderation functionality)
     """
 
-    permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUser | RequestIsReadOnly]
     serializer_class = AutoModerationHoursSerializer
 
     def get_object(self):
