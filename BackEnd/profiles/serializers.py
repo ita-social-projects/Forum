@@ -30,7 +30,6 @@ class RegionSerializer(serializers.ModelSerializer):
 
 
 class ProfileImageField(serializers.Field):
-
     def to_representation(self, value):
         if value.is_deleted == False:
             return {

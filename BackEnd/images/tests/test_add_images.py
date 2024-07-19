@@ -8,7 +8,6 @@ from utils.unittest_helper import AnyInt, AnyStr, AnyUUID
 
 
 class TestBannerChange(APITestCase):
-
     def setUp(self) -> None:
         self.right_banner = open(
             os.path.join(os.getcwd(), "images/tests/img/img_2mb.png"),
