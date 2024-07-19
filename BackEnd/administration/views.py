@@ -1,3 +1,9 @@
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiExample,
+    OpenApiResponse,
+)
+
 from rest_framework.permissions import (
     BasePermission,
 )
@@ -19,15 +25,7 @@ from administration.pagination import ListPagination
 from administration.models import AutoModeration
 from authentication.models import CustomUser
 from profiles.models import Profile
-
-
-class IsStaffUser(BasePermission):
-    """
-    Custom is staff permission.
-    """
-
-    def has_permission(self, request, view):
-        return request.user.is_staff
+from .permissions import IsStaffUser, IsStaffUserOrReadOnly
 
 
 class UsersListView(ListAPIView):
@@ -85,13 +83,41 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     )
 
 
+@extend_schema(
+    request=AutoModerationHoursSerializer,
+    responses={
+        200: OpenApiResponse(
+            response=AutoModerationHoursSerializer,
+            examples=[
+                OpenApiExample(
+                    "Valid example",
+                    summary="Valid example",
+                    description="A valid example with auto_moderation_hours set to 24",
+                    value={"auto_moderation_hours": 24},
+                )
+            ],
+        ),
+        400: OpenApiResponse(
+            response=AutoModerationHoursSerializer,
+            examples=[
+                OpenApiExample(
+                    "Invalid example",
+                    summary="Invalid example",
+                    description="An invalid example with auto_moderation_hours set to 50 (out of range)",
+                    value={"auto_moderation_hours": 50},
+                )
+            ],
+        ),
+    },
+)
 class AutoModerationHoursView(RetrieveUpdateAPIView):
     """
     View for retrieving and updating 'auto_moderation_hours' - a value that sets
-    the auto-approve delay (part of the moderation functionality)
+    the auto-approve delay (part of the moderation functionality).
+    Value must be an integer between 1 and 48
     """
 
-    permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUserOrReadOnly]
     serializer_class = AutoModerationHoursSerializer
 
     def get_object(self):

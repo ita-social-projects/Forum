@@ -7,7 +7,6 @@ class TokenDestroyViewExtension(OpenApiViewExtension):
     target_class = TokenDestroyView
 
     def view_replacement(self):
-
         class Fixed(self.target_class):
             serializer_class = None
 

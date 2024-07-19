@@ -11,7 +11,6 @@ from utils.regions_ukr_names import get_regions_ukr_names_as_string
 
 
 class ProfileImageField(serializers.Field):
-
     def to_representation(self, value):
         if value.is_deleted == False:
             return {
