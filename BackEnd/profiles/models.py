@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxLengthValidator
+from django.utils.timezone import now
 
 from authentication.models import CustomUser
 from images.models import ProfileImage
@@ -120,6 +121,7 @@ class Profile(models.Model):
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
+    status_updated_at = models.DateTimeField(default=now)
     completeness = models.SmallIntegerField(default=0)
     status = models.CharField(
         max_length=15, choices=STATUS_CHOICES, default="undefined"
