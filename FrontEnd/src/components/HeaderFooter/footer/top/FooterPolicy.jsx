@@ -13,11 +13,6 @@ const POLICY_LINKS = [
         link: 'terms-and-conditions/'
     },
     {
-        id: 'i2',
-        title: 'Cookie Policy',
-        link: 'cookies-policy/'
-    },
-    {
         id: 'i3',
         title: 'Contact',
         link: 'Contact/'
