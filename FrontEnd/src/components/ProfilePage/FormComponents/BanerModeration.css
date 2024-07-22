@@ -1,7 +1,8 @@
   .moderation-warning {
-    display: flex;
-    align-items: flex-start;
-    color: black;
+  display: flex;
+  align-items: flex-start;
+  color: black;
+  margin-bottom: 20px;
   }
   
   .warning-icon {
@@ -18,10 +19,14 @@
   }
   
   .moderation-text {
-    color: black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: black;
   }
   
-  .attention {
-    font-weight: bold;
+  .moderation-text span {
+    display: block;
   }
   
