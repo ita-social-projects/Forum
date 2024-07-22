@@ -15,4 +15,8 @@ export const MAIN_PAGE_TEXT = [
         title: 'Delete Profiles:',
         text: 'In case of policy violations or other issues.'
     },
+    {
+        title: 'Set autoapprove timeout:',
+        text: 'Specify the time (from 1 to 48 hours) after which the user\'s request to change the banner/logo will be approved automatically.'
+    }
 ];

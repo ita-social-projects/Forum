@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
+import defineChanges from '../../../utils/defineChanges';
 import { useAuth, useProfile } from '../../../hooks';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
@@ -67,12 +68,11 @@ const AdditionalInfo = (props) => {
         'Зміни не можуть бути збережені, перевірте правильність заповнення полів'
       );
     } else {
+      const data  = defineChanges(fields, profile, null);
       try {
         const response = await axios.patch(
           `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
-          {
-            founded: profile.founded,
-          }
+          data.profileChanges
         );
         const updatedProfileData = response.data;
         profileMutate(updatedProfileData);

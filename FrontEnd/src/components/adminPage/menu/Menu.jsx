@@ -15,6 +15,11 @@ const MENU = [
         title: 'Компанії',
         link: '/customadmin/profiles/'
     },
+    {
+        id: 'am3',
+        title: 'Зміна часу автомодерації',
+        link: '/customadmin/automoderation/'
+    }
 ];
 
 function Menu() {

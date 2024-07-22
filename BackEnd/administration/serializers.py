@@ -123,6 +123,8 @@ class AdminCompanyDetailSerializer(serializers.ModelSerializer):
 
 
 class AutoModerationHoursSerializer(serializers.ModelSerializer):
+    auto_moderation_hours = serializers.IntegerField(min_value=1, max_value=48)
+
     class Meta:
         model = AutoModeration
         fields = ("auto_moderation_hours",)

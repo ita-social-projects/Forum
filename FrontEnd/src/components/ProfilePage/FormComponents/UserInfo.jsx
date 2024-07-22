@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import { useAuth, useProfile } from '../../../hooks';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
+import defineChanges from '../../../utils/defineChanges';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../loader/Loader';
 import css from './FormComponents.module.css';
@@ -156,20 +157,17 @@ const UserInfo = (props) => {
         'Зміни не можуть бути збережені, перевірте правильність заповнення полів'
       );
     } else {
+      const userData = defineChanges(fields, null, updateUser);
+      const profileData = defineChanges(fields, updateProfile, null);
       axios
         .all([
           axios.patch(
             `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`,
-            {
-              surname: updateUser.surname,
-              name: updateUser.name,
-            }
+            userData.userChanges
           ),
           axios.patch(
             `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
-            {
-              person_position: updateProfile.person_position,
-            }
+            profileData.profileChanges
           ),
         ])
         .then(

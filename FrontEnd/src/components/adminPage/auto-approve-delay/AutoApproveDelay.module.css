@@ -1,0 +1,44 @@
+.autoapprove-section {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+}
+
+.autoapprove-input {
+    width: 150px;
+    height: 20px;
+}
+.save-button {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 150px;
+    
+    border-radius: 4px;
+    border: 1px solid #1F9A7C;
+    background: #1F9A7C;
+
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+
+    /* Button Text */
+    color: #FFF;
+    text-align: center;
+    font-feature-settings: 'calt' off;
+    text-decoration: none;
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+    cursor: pointer;
+}
+
+.error-message {
+    color: rgb(212, 21, 21);
+    font-family: var(--font-main);
+    font-size: 14px;
+}

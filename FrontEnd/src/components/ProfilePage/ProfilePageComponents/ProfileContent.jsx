@@ -208,7 +208,7 @@ const ProfileContent = (props) => {
                 </DirtyFormContext.Provider>
             </div>
 
-            {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} />}
+            {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} formState={formIsDirty}/>}
 
             {blocker.state === 'blocked' &&
                 (
