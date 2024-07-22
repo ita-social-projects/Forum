@@ -216,7 +216,7 @@ const UserInfo = (props) => {
                     ? formStateErr['surname']['message']
                     : null
                 }
-                requredField={true}
+                requiredField={true}
                 value={updateUser.surname}
                 maxLength={50}
               />
@@ -231,7 +231,7 @@ const UserInfo = (props) => {
                     ? formStateErr['name']['message']
                     : null
                 }
-                requredField={true}
+                requiredField={true}
                 value={updateUser.name}
                 maxLength={50}
               />
@@ -248,7 +248,7 @@ const UserInfo = (props) => {
                     ? formStateErr['person_position']['message']
                     : null
                 }
-                requredField={false}
+                requiredField={false}
                 value={updateProfile.person_position ?? ''}
                 maxLength={50}
               />
@@ -256,7 +256,7 @@ const UserInfo = (props) => {
                 inputType="text"
                 name="email"
                 label={LABELS.email}
-                requredField={true}
+                requiredField={true}
                 value={updateUser.email}
               />
             </div>

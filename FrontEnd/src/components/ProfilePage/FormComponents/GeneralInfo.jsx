@@ -427,7 +427,7 @@ const GeneralInfo = (props) => {
                     ? formStateErr['name']['message']
                     : null
                 }
-                requredField={true}
+                requiredField={true}
                 value={profile.name}
                 maxLength={100}
               />
@@ -488,7 +488,7 @@ const GeneralInfo = (props) => {
                   options={fetchedActivities}
                   label={LABELS.activities}
                   updateHandler={onUpdateActivities}
-                  requredField={true}
+                  requiredField={true}
                   value={profile.activities.map((obj) => obj.name) ?? ''}
                   error={
                     formStateErr['activities']['error']
@@ -505,7 +505,7 @@ const GeneralInfo = (props) => {
                   options={fetchedCategories}
                   label={LABELS.categories}
                   updateHandler={onUpdateCategories}
-                  requredField={true}
+                  requiredField={true}
                   value={profile.categories.map((obj) => obj.name) ?? ''}
                   error={
                     formStateErr['categories']['error']
@@ -551,7 +551,7 @@ const GeneralInfo = (props) => {
               valueStartup={profile.is_startup}
               updateHandler={onChangeCheckbox}
               error={companyTypeError}
-              requredField={true}
+              requiredField={true}
             />
           </div>
         </form>
