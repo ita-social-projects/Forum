@@ -1,0 +1,32 @@
+  .moderation-warning {
+  display: flex;
+  align-items: flex-start;
+  color: black;
+  margin-bottom: 20px;
+  }
+  
+  .warning-icon {
+    background-color: #ffa500;
+    color: white;
+    border-radius: 50%;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .moderation-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: black;
+  }
+  
+  .moderation-text span {
+    display: block;
+  }
+  
