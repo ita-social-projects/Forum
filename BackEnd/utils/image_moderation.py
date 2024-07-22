@@ -27,10 +27,4 @@ class ModerationManager:
             self.update_image(self.profile.banner, "banner")
         if self.profile.logo != self.profile.logo_approved:
             self.update_image(self.profile.logo, "logo")
-        if (
-            self.profile.banner.is_deleted and self.profile.logo.is_approved
-        ) or (
-            self.profile.logo.is_deleted and self.profile.banner.is_approved
-        ):
-            self.moderation_is_needed = False
         return self.moderation_is_needed
