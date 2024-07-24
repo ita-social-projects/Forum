@@ -35,7 +35,7 @@ describe('CookieMod component unit tests', () => {
 
     const linkElement = screen.getByText(/про кукі-файли/i);
     expect(linkElement).toBeInTheDocument();
-    expect(linkElement).toHaveAttribute('href', '/cookies-policy');
+    expect(linkElement).toHaveAttribute('href', '/privacy-policy#17');
   });
 
   test('renders hidden cookie modal window', () => {
