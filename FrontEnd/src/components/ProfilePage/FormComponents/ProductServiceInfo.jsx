@@ -81,7 +81,7 @@ const ProductServiceInfo = (props) => {
               name="product_info"
               label={LABELS.product_info}
               updateHandler={onUpdateTextAreaField}
-              requredField={false}
+              requiredField={false}
               value={profile.product_info ?? ''}
               maxLength={TEXT_AREA_MAX_LENGTH}
             />
@@ -89,7 +89,7 @@ const ProductServiceInfo = (props) => {
               name="service_info"
               label={LABELS.service_info}
               updateHandler={onUpdateTextAreaField}
-              requredField={false}
+              requiredField={false}
               value={profile.service_info ?? ''}
               maxLength={TEXT_AREA_MAX_LENGTH}
             />

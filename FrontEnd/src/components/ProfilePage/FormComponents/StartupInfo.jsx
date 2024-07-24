@@ -79,7 +79,7 @@ const StartupInfo = (props) => {
               name="startup_idea"
               label={LABELS.startup_idea}
               updateHandler={onUpdateTextAreaField}
-              requredField={false}
+              requiredField={false}
               value={profile.startup_idea ?? ''}
               maxLength={TEXT_AREA_MAX_LENGTH}
             />

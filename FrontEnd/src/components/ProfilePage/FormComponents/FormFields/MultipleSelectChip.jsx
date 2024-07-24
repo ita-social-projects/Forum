@@ -7,12 +7,12 @@ export default function MultipleSelectChip(props) {
   return (
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>
-        {props.requredField && (
+        {props.requiredField && (
           <label className={css['fields__label--required']}>*</label>
         )}
         <label
           className={`${css['fields__label--text']} ${
-            !props.requredField && css['fields__field--notrequired']
+            !props.requiredField && css['fields__field--notrequired']
           }`}
         >
           {props.label}
@@ -39,7 +39,7 @@ export default function MultipleSelectChip(props) {
           }))}
         />
       </Space>
-      {props.requredField && (
+      {props.requiredField && (
         <div className={css['error-message']}>{props.error}</div>
       )}
     </div>
@@ -47,7 +47,7 @@ export default function MultipleSelectChip(props) {
 }
 
 MultipleSelectChip.propTypes = {
-  requredField: PropTypes.bool,
+  requiredField: PropTypes.bool,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.array,

@@ -7,12 +7,12 @@ const CheckBoxField = (props) => {
   return (
     <div className={css['representative']}>
       <div className={css['representative__label']}>
-        {props.requredField && (
+        {props.requiredField && (
           <label className={css['representative__label--required']}>*</label>
         )}
         <label
           className={`${css['representative__label--text']} ${
-            !props.requredField && css['fields__field--notrequired']
+            !props.requiredField && css['fields__field--notrequired']
           }`}
         >
           Кого ви представляєте?
@@ -42,7 +42,7 @@ const CheckBoxField = (props) => {
           </label>
         </div>
       </div>
-      {(props.requredField || props.error) && (
+      {(props.requiredField || props.error) && (
         <span className={css['error-message']}>{props.error}</span>
       )}
     </div>
@@ -52,7 +52,7 @@ const CheckBoxField = (props) => {
 export default CheckBoxField;
 
 CheckBoxField.propTypes = {
-  requredField: PropTypes.bool.isRequired,
+  requiredField: PropTypes.bool.isRequired,
   nameRegister: PropTypes.string.isRequired,
   valueRegister: PropTypes.bool.isRequired,
   nameStartup: PropTypes.string.isRequired,
