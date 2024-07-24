@@ -8,7 +8,7 @@ const RenderingTextContainer = ({ item, styles }) => {
 
   const renderHeading = () => {
     const HeadingTag = `h${item.level}`;
-    return <HeadingTag className={styles['text_content__heading']} key={item.id || uuidv4()}>{item.text}</HeadingTag>;
+    return <HeadingTag className={styles['text_content__heading']} id={item.id} key={item.id || uuidv4()}>{item.text}</HeadingTag>;
   };
 
   const renderParagraphMarginBottom = () => (
@@ -45,7 +45,7 @@ const RenderingTextContainer = ({ item, styles }) => {
 
 RenderingTextContainer.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     type: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     level: PropTypes.number,
