@@ -2,9 +2,9 @@ import LoginPage from './LoginPage';
 import SignUpInvitation from './SignUpInvitation';
 import classes from './Login.module.css';
 
-const Login = (props) => {
+const Login = () => {
   return <div className={classes.login}>
-    <LoginPage setErrorMessage={props.setErrorMessage} />
+    <LoginPage />
     <SignUpInvitation />
   </div>;
 };
