@@ -8,7 +8,7 @@ const RenderingTextContainer = ({ item, styles }) => {
 
   const renderHeading = () => {
     const HeadingTag = `h${item.level}`;
-    return <HeadingTag className={styles['text_content__heading']} id={item.id} key={item.id || uuidv4()}>{item.text}</HeadingTag>;
+    return <HeadingTag className={styles['text_content__heading']} key={item.id || uuidv4()}>{item.text}</HeadingTag>;
   };
 
   const renderParagraphMarginBottom = () => (
