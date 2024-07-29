@@ -33,6 +33,7 @@
   margin-right: 50px;
   padding: 4px;
   margin-left: 64px;
+  cursor: pointer;
 }
 
 .red-btn {
@@ -45,6 +46,7 @@
   margin: 10px;
   margin-left: 20px;
   padding: 4px;
+  cursor: pointer;
 }
 
 .cookie-image {
