@@ -9,7 +9,7 @@ class ModerationManager:
         self.moderation_is_needed = False
         self.banner_logo = {"banner": None, "logo": None}
 
-    def update_image(self):
+    def update_status(self):
         self.profile.status = "pending"
         self.profile.status_updated_at = now()
         self.profile.save()
