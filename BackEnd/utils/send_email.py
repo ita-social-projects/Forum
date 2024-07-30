@@ -9,6 +9,10 @@ from administration.models import AutoModeration
 from .image_moderation import ModerationManager
 
 
+EMAIL_CONTENT_SUBTYPE = "html"
+PROTOCOL = "http"
+
+
 def define_ending(hours):
     result_of_hours = None
     if hours % 10 == 1 and hours != 11:
@@ -34,28 +38,21 @@ def attach_image(email, image, content_id):
 def send_moderation_email(profile):
     manager = ModerationManager(profile)
     if manager.check_for_moderation():
-        update_datetime = now() + timedelta(hours=3)
-        update_time = update_datetime.strftime("%d.%m.%Y %H:%M")
-        update_date = update_datetime.strftime("%d.%m.%Y")
-        banner = (
-            profile.banner
-            if profile.banner != profile.banner_approved
-            else None
-        )
-        logo = profile.logo if profile.logo != profile.logo_approved else None
-        approve_url = None
-        reject_url = None
+        update_time = now().strftime("%d.%m.%Y %H:%M")
+        update_date = now().strftime("%d.%m.%Y")
+        banner = manager.banner_logo["banner"]
+        logo = manager.banner_logo["logo"]
         context = {
             "profile_name": profile.name,
-            "protocol": "http",
+            "protocol": PROTOCOL,
             "banner": banner,
             "logo": logo,
             "updated_at": update_time,
             "moderation_time": define_ending(
                 AutoModeration.get_auto_moderation_hours().auto_moderation_hours
             ),
-            "approve_url": approve_url,
-            "reject_url": reject_url,
+            "approve_url": None,
+            "reject_url": None,
         }
 
         email_body = render_to_string("profiles/email_template.html", context)
@@ -69,7 +66,7 @@ def send_moderation_email(profile):
             ],
         )
 
-        email.content_subtype = "html"
+        email.content_subtype = EMAIL_CONTENT_SUBTYPE
 
         if banner:
             attach_image(email, banner, banner.uuid)

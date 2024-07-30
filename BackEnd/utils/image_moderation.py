@@ -7,26 +7,22 @@ class ModerationManager:
     def __init__(self, profile):
         self.profile = profile
         self.moderation_is_needed = False
+        self.banner_logo = {"banner": None, "logo": None}
 
-    def update_image(self, image, image_type):
-        existing_image = ProfileImage.objects.filter(
-            hash_md5=image.hash_md5, is_approved=True
-        ).first()
-        if existing_image:
-            image.is_approved = True
-            image.save()
-            setattr(self.profile, f"{image_type}_approved", image)
-            completeness_count(self.profile)
-            self.profile.save()
-        else:
-            self.profile.status = "pending"
-            self.profile.status_updated_at = now()
-            self.profile.save()
-            self.moderation_is_needed = True
+    def update_image(self):
+        self.profile.status = "pending"
+        self.profile.status_updated_at = now()
+        self.profile.save()
+        self.moderation_is_needed = True
+
+    def needs_moderation(self, image):
+        return image and not image.is_approved and not image.is_deleted
 
     def check_for_moderation(self):
-        if self.profile.banner != self.profile.banner_approved:
-            self.update_image(self.profile.banner, "banner")
-        if self.profile.logo != self.profile.logo_approved:
-            self.update_image(self.profile.logo, "logo")
+        if self.needs_moderation(self.profile.banner):
+            self.update_image()
+            self.banner_logo["banner"] = self.profile.banner
+        if self.needs_moderation(self.profile.logo):
+            self.update_image()
+            self.banner_logo["logo"] = self.profile.logo
         return self.moderation_is_needed
