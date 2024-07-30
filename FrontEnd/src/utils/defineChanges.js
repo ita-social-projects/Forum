@@ -26,7 +26,7 @@ const defineChanges = (fields, profile, user) => {
         } else {
             if (!compareValues(defaultValue, currentValue, type)) {
                 if (type === 'image') {
-                    profileChanges[field] = currentValue.uuid;
+                    profileChanges[field] = currentValue?.uuid;
                 } else if (['regions', 'activities', 'categories'].includes(field)) {
                     profileChanges[field] = currentValue.map((obj) => obj.id);
                 } else if (field === 'phone') {
