@@ -19,7 +19,7 @@
   padding: 20px;
   border-radius: 12px;
   background-color: white;
-  width: 300px;
+  width: 400px;
 }
 
 .green-btn {
@@ -32,6 +32,8 @@
   margin: 14px;
   margin-right: 50px;
   padding: 4px;
+  margin-left: 64px;
+  cursor: pointer;
 }
 
 .red-btn {
@@ -44,10 +46,11 @@
   margin: 10px;
   margin-left: 20px;
   padding: 4px;
+  cursor: pointer;
 }
 
 .cookie-image {
-  margin-left: 95px;
+  margin-left: 150px;
   margin-right: 50px;
   width: 100px;
   height: 70px;
@@ -56,4 +59,10 @@
 .cookie-text {
   text-align: justify;
   color: #187860;
+}
+
+.cookie-details {
+  text-align: justify;
+  color: #187860;
+  padding-top: 8px;
 }

@@ -13,9 +13,6 @@ const LinkContainer = () => {
       <NavLink to="/terms-and-conditions/" className={getClassName}>
         Умови користування
       </NavLink>
-      <NavLink to="/cookies-policy/" className={getClassName}>
-        Cookie Policy
-      </NavLink>
       <NavLink to="/contact/" className={getClassName}>
         Contact
       </NavLink>
