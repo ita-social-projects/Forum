@@ -20,9 +20,9 @@ class ModerationManager:
 
     def check_for_moderation(self):
         if self.needs_moderation(self.profile.banner):
-            self.update_image()
+            self.update_status()
             self.banner_logo["banner"] = self.profile.banner
         if self.needs_moderation(self.profile.logo):
-            self.update_image()
+            self.update_status()
             self.banner_logo["logo"] = self.profile.logo
         return self.moderation_is_needed
