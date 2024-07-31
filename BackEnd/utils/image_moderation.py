@@ -1,6 +1,4 @@
 from django.utils.timezone import now
-from utils.completeness_counter import completeness_count
-from images.models import ProfileImage
 
 
 class ModerationManager:

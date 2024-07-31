@@ -1,7 +1,5 @@
-from datetime import timedelta
 import os
 from email.mime.image import MIMEImage
-from django.utils.timezone import now
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -38,8 +36,8 @@ def attach_image(email, image, content_id):
 def send_moderation_email(profile):
     manager = ModerationManager(profile)
     if manager.check_for_moderation():
-        update_time = now().strftime("%d.%m.%Y %H:%M")
-        update_date = now().strftime("%d.%m.%Y")
+        update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
+        update_date = profile.status_updated_at.strftime("%d.%m.%Y")
         banner = manager.banner_logo["banner"]
         logo = manager.banner_logo["logo"]
         context = {
