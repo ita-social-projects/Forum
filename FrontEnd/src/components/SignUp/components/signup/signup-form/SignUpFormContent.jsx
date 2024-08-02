@@ -49,6 +49,7 @@ export function SignUpFormContentComponent(props) {
   });
 
   const { setIsValid } = props;
+  // modal start
   const [isModalOpen, setIsModalOpen] = useState(false);
   SignUpFormContentComponent.propTypes = {
     setIsValid: PropTypes.func.isRequired,
@@ -59,6 +60,7 @@ export function SignUpFormContentComponent(props) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  // modal end
   const navigate = useNavigate();
 
   const togglePassword = () => {
