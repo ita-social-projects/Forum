@@ -79,6 +79,7 @@
     line-height: 20px; /* 125% */
     letter-spacing: -0.16px;
     position: absolute;
+    text-transform: uppercase;
 }
 
 .about-us-cards-section__cards-content__text {
