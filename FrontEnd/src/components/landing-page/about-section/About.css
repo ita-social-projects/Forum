@@ -25,7 +25,7 @@
     position: absolute;
 }
 .about-us-section-content__text {
-    padding: 80px 104px;
+    padding: 80px 0 0 104px;
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
