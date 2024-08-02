@@ -12,6 +12,8 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 24px;
+    position: relative;
+    z-index: 1; 
 }
 .about-us-text-section__header-text {
     width: 971px;
@@ -74,53 +76,13 @@
     margin-right: 8px;
 }
 
-.about-us-text-section__ellipses-groups {
+.about-us-text-section__dots {
     width: 353px;
-    position: relative;
-    left: -110px;
-    bottom: 210px;
-}
-.about-us-text-section__first_ellipses-group {
-    width: 179px;
-    height: 150px;
-    left: 174px;
-    top: 116px;
+    height: 266px;
+    padding-top: 20px;
+    margin: 0 auto;
+    object-fit: cover; 
     position: absolute;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-}
-.about-us-text-section__second_ellipses-group {
-    width: 179px;
-    height: 150px;
-    left: 0;
-    top: 116px;
-    position: absolute;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-}
-.about-us-text-section__third_ellipses-group {
-    width: 179px;
-    height: 150px;
-    left: 174px;
-    top: 0;
-    position: absolute;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-}
-.about-us-text-section__fourse_ellipses-group {
-    width: 179px;
-    height: 150px;
-    left: 0;
-    top: 0;
-    position: absolute;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
+    transform: translateX(-50%); 
+    z-index: 0;
 }
