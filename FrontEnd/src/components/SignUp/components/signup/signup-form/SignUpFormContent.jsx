@@ -29,7 +29,7 @@ export function SignUpFormContentComponent(props) {
     requiredRepresentative: 'Будь ласка, оберіть кого ви представляєте',
     email: 'Електронна пошта не відповідає вимогам',
     password: 'Пароль не відповідає вимогам',
-    confirmPassword: 'Паролі не збігаються',
+    confirmPassword: 'Паролі не співпадають',
     nameSurnameFieldLength: 'Введіть від 2 до 50 символів',
     companyFieldLength: 'Введіть від 2 до 100 символів',
     notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
@@ -49,7 +49,6 @@ export function SignUpFormContentComponent(props) {
   });
 
   const { setIsValid } = props;
-  // modal start
   const [isModalOpen, setIsModalOpen] = useState(false);
   SignUpFormContentComponent.propTypes = {
     setIsValid: PropTypes.func.isRequired,
@@ -60,7 +59,6 @@ export function SignUpFormContentComponent(props) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  // modal end
   const navigate = useNavigate();
 
   const togglePassword = () => {
@@ -106,6 +104,24 @@ export function SignUpFormContentComponent(props) {
   useEffect(() => {
     setIsValid(isValid);
   }, [isValid, setIsValid]);
+
+  useEffect(() => {
+    if (watch('password') && watch('confirmPassword')) {
+      if (watch('password') !== watch('confirmPassword')) {
+        setError('password', {
+          type: 'manual',
+          message: errorMessageTemplates.confirmPassword,
+        });
+        setError('confirmPassword', {
+          type: 'manual',
+          message: errorMessageTemplates.confirmPassword,
+        });
+      } else {
+        clearErrors('password');
+        clearErrors('confirmPassword');
+      }
+    }
+  }, [watch('password'), watch('confirmPassword'), setError, clearErrors]);
 
   const onSubmit = () => {
     const dataToSend = {
@@ -262,7 +278,15 @@ export function SignUpFormContentComponent(props) {
               </span>
             </div>
             <div className={styles['signup-form__error']}>
-              {errors.password && errors.password.message}
+              {errors.password && errors.password.type === 'required' && (
+                <p>{errorMessageTemplates.required}</p>
+              )}
+              {errors.password && errors.password.type === 'pattern' && (
+                <p>{errorMessageTemplates.password}</p>
+              )}
+              {errors.password && errors.password.type === 'manual' && (
+                <p>{errors.password.message}</p>
+              )}
             </div>
           </div>
           <div className={styles['signup-form__column']}>
