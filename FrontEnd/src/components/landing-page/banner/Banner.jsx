@@ -23,11 +23,11 @@ const MainBanner = (props) => {
       <div className="main-banner-group__frame-rectangle12" />
       <div className="main-banner-group__frame-rectangle13" />
       <div className="main-banner-group__frame-description">
-        <div className="main-banner-group__banner-text">
-          Це унікальний майданчик <br />
-          для обміну інформацією і досвідом з тими, хто втілює свої ідеї в
-          життя.
-        </div>
+        <h2 className="main-banner-group__banner-text">
+          CRAFTMERGE - обʼєднуємо<br />
+          крафтових виробників та <br />
+          інноваторів
+        </h2>
         {!props.isAuthorized ? (
           <div className="main-banner-group__frame-login">
             <div className="main-banner-group__login-button">
