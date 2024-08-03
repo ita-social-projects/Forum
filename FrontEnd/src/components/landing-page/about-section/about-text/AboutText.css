@@ -28,7 +28,7 @@
     width: 971px;
     height: 62px;
     color: #292E32;
-    font-feature-settings: 'calt' off;
+    /* font-feature-settings: 'calt' off; */
     font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
@@ -79,8 +79,8 @@
 .about-us-text-section__dots {
     width: 353px;
     height: 266px;
-    padding-top: 20px;
-    margin: 0 auto;
+    padding-top: 10px;
+    /* margin: 0 auto; */
     object-fit: cover; 
     position: absolute;
     transform: translateX(-50%); 
