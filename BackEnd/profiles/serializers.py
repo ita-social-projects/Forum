@@ -388,26 +388,23 @@ class ProfileModerationSerializer(serializers.Serializer):
     action = serializers.CharField()
     timestamp = serializers.IntegerField()
 
-
-    def validate_uid(self,value):
+    def validate_uid(self, value):
         try:
-           Profile.objects.get(pk=decode_uid(value))
+            Profile.objects.get(pk=decode_uid(value))
         except Profile.DoesNotExist:
-            raise serializers.ValidationError(
-                "Profile does not exist"
-            )
+            raise serializers.ValidationError("Profile does not exist")
         return value
 
     def validate_action(self, value):
         if value not in ["approve", "reject"]:
-            raise serializers.ValidationError(
-                "Action is not allowed"
-            )
+            raise serializers.ValidationError("Action is not allowed")
         return value
 
     def validate_timestamp(self, value):
         try:
-            profile = Profile.objects.get(pk=decode_uid(self.initial_data.get("uid")))
+            profile = Profile.objects.get(
+                pk=decode_uid(self.initial_data.get("uid"))
+            )
             validate_url(profile, value)
         except ValidationError as error:
             raise serializers.ValidationError(error.message)

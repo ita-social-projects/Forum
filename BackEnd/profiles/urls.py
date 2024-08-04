@@ -39,5 +39,9 @@ urlpatterns = [
     path("categories/<pk>/", CategoryDetail.as_view(), name="category-detail"),
     path("activities/<pk>/", ActivityDetail.as_view(), name="activity-detail"),
     path("regions/<pk>/", RegionDetail.as_view(), name="region-detail"),
-    path("profiles/moderation/", ProfileModeration.as_view(), name="profile-moderation")
+    path(
+        "profiles/moderation/",
+        ProfileModeration.as_view(),
+        name="profile-moderation",
+    ),
 ]

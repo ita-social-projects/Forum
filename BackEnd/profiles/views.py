@@ -46,7 +46,7 @@ from .serializers import (
     ActivitySerializer,
     RegionSerializer,
     ProfileCreateSerializer,
-    ProfileModerationSerializer
+    ProfileModerationSerializer,
 )
 from .filters import ProfileFilter
 
@@ -270,12 +270,14 @@ class RegionDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAdminUser,)
     queryset = Region.objects.all()
 
+
 class ProfileModeration(APIView):
     queryset = Profile.objects.active_only()
 
     def get_object(self):
-        return get_object_or_404(self.queryset, pk=decode_uid(self.request.data.get("uid")))
-
+        return get_object_or_404(
+            self.queryset, pk=decode_uid(self.request.data.get("uid"))
+        )
 
     def post(self, request, *args, **kwargs):
         profile = self.get_object()
