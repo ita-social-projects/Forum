@@ -1,14 +1,17 @@
 import os
+from decouple import config
 from email.mime.image import MIMEImage
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
 from administration.models import AutoModeration
 from .image_moderation import ModerationManager
+from .moderation_url import generate_profile_moderation_url
 
 
 EMAIL_CONTENT_SUBTYPE = "html"
 PROTOCOL = "http"
+DOMAIN = config("ALLOWED_ENV_HOST")
 
 
 def define_ending(hours):
@@ -34,6 +37,7 @@ def attach_image(email, image, content_id):
 
 
 def send_moderation_email(profile):
+    print('DOMAIN', DOMAIN)
     manager = ModerationManager(profile)
     if manager.check_for_moderation():
         update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
@@ -43,13 +47,14 @@ def send_moderation_email(profile):
         context = {
             "profile_name": profile.name,
             "protocol": PROTOCOL,
+            "domain": DOMAIN,
             "banner": banner,
             "logo": logo,
             "updated_at": update_time,
             "moderation_time": define_ending(
                 AutoModeration.get_auto_moderation_hours().auto_moderation_hours
             ),
-            "approve_url": None,
+            "approve_url": generate_profile_moderation_url(profile, "approve"),
             "reject_url": None,
         }
 
@@ -60,7 +65,7 @@ def send_moderation_email(profile):
             body=email_body,
             from_email=settings.EMAIL_HOST_USER,
             to=[
-                settings.EMAIL_HOST_USER,
+                'liliya961@gmail.com',
             ],
         )
 
