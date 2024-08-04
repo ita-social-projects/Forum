@@ -1,14 +1,14 @@
 .main-banner-group {
-    width: 1512px;
+    width: var(--main-block-size);
     height: 500px;
     flex-shrink: 0;
     position: relative;
 }
 .main-banner-group__main-rectangle {
-    width: 1512px;
+    width: var(--main-block-size);
     height: 500px;
     flex-shrink: 0;
-    background: #1F9A7C;
+    background: var(--banner-main-dark-color);
     left: 0;
     top: 0;
     position: absolute;
@@ -99,7 +99,7 @@
 }
 .main-banner-group__banner-text {
     width: 584px;
-    color: #000;
+    color: var(-banner-main-font-color);
     font-family: var(--font-main);
     font-size: 40px;
     font-style: normal;
@@ -121,8 +121,8 @@
     align-items: center;
     gap: 10px;
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
-    background: #1F9A7C;
+    border: 1px solid var(--banner-main-dark-color);
+    background: var(--banner-main-dark-color);
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     top: 245px;
     position: relative;
@@ -148,7 +148,7 @@
     align-items: center;
     gap: 10px;
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
+    border: 1px solid var(--banner-main-dark-color);
     background: #FFF;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
     top: 245px;
@@ -156,7 +156,7 @@
 }
 
 .main-banner-group__register-button-text {
-    color: #1F9A7C;
+    color: var(--banner-main-dark-color);
     text-align: center;
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
