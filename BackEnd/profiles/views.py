@@ -10,15 +10,19 @@ from rest_framework.generics import (
     DestroyAPIView,
     RetrieveUpdateDestroyAPIView,
 )
+from rest_framework.views import APIView
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
     IsAuthenticated,
     IsAdminUser,
 )
 from rest_framework.response import Response
+from rest_framework import status
+from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 from utils.completeness_counter import completeness_count
 from utils.send_email import send_moderation_email
-from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
+from utils.moderation_url import decode_uid
+from utils.image_moderation import ModerationManager
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -42,6 +46,7 @@ from .serializers import (
     ActivitySerializer,
     RegionSerializer,
     ProfileCreateSerializer,
+    ProfileModerationSerializer
 )
 from .filters import ProfileFilter
 
@@ -264,3 +269,27 @@ class RegionDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = RegionSerializer
     permission_classes = (IsAdminUser,)
     queryset = Region.objects.all()
+
+class ProfileModeration(APIView):
+    queryset = Profile.objects.active_only()
+
+    def get_object(self):
+        return get_object_or_404(self.queryset, pk=decode_uid(self.request.data.get("uid")))
+
+
+    def post(self, request, *args, **kwargs):
+        profile = self.get_object()
+        serializer = ProfileModerationSerializer(data=request.data)
+
+        manager = ModerationManager(profile)
+
+        if serializer.is_valid(raise_exception=True):
+            if request.data.get("action") == "approve":
+                manager.approve_image()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        elif request.data.get("action") == "reject":
+            pass
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
