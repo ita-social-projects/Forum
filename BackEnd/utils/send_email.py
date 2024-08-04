@@ -37,7 +37,6 @@ def attach_image(email, image, content_id):
 
 
 def send_moderation_email(profile):
-    print('DOMAIN', DOMAIN)
     manager = ModerationManager(profile)
     if manager.check_for_moderation():
         update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
