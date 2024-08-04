@@ -64,7 +64,7 @@ def send_moderation_email(profile):
             body=email_body,
             from_email=settings.EMAIL_HOST_USER,
             to=[
-                'liliya961@gmail.com',
+                settings.EMAIL_HOST_USER,
             ],
         )
 
