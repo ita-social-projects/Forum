@@ -56,9 +56,10 @@
     font-weight: 600;
     line-height: 30px; /* 187.5% */
     letter-spacing: -0.16px;
-    content: "\2022";
+    /* content: "\2022"; */
 }
 .about-us-text-section__paragraph-two {
+    align-self: flex-start;
     width: 489px;
     flex-shrink: 0;
     color: var(--about-text-font-color);
@@ -72,7 +73,7 @@
 }
 .about-us-text-section__paragraph-one span::before,
 .about-us-text-section__paragraph-two span::before {
-    content: "\2022";
+    /* content: "\2022"; */
     margin-right: 8px;
 }
 

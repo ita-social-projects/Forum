@@ -18,9 +18,9 @@ const AboutSectionText = () => {
           <ul className="about-us-text-section__paragraph-one">
             {renderParagraphs(1)}
           </ul>
-          <div className="about-us-text-section__paragraph-two">
+          <ul className="about-us-text-section__paragraph-two">
             {renderParagraphs(2)}
-          </div>
+          </ul>
         </div>
       </div>
       <img className="about-us-text-section__dots"
