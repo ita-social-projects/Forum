@@ -24,6 +24,7 @@ import { RestorePasswordPage } from '../RestorePassword/pages/RestorePasswordPag
 import { RestorePasswordModalPage } from '../RestorePassword/pages/RestorePasswordModalPage';
 import { RestorePasswordSuccessPage } from '../RestorePassword/pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../RestorePassword/pages/RestorePasswordFailedPage';
+import { ModerationModal } from '../moderation/ModerationModal';
 import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
@@ -160,6 +161,8 @@ function BasicPage() {
         <Route
           path="/search"
           element={<Search isAuthorized={isAuth} userData={user} />}
+        />
+        <Route path="/moderation/:uid/:timestamp/:action" element={<ModerationModal />}
         />
         <Route path="*" element={< ErrorPage404 />} />
       </Routes>)}
