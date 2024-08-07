@@ -33,7 +33,6 @@
   margin-top: 80px;
   margin-left: 125px;
   object-fit: cover;
-  opacity: 0.7;
 }
 
 .company-card__tooltip {
@@ -48,7 +47,6 @@
   border-top-right-radius: 11px;
   flex-shrink: 0;
   object-fit: cover;
-  opacity: 0.7;
 }
 
 .company-card__text-block {

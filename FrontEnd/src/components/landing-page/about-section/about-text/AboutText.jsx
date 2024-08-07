@@ -1,77 +1,34 @@
 import './AboutText.css';
-import Ellipses from '../../ellipses/Ellipses';
+import AboutText from './text.js';
 
 const AboutSectionText = () => {
-    return (
-          <div className="about-us-text-section">
-            <div className="about-us-text-section__text-field">
-              <div className="about-us-text-section__header-text">ДЛЯ КОГО</div>
-              <div className="about-us-text-section__text">
-                Об’єднання представників найрізноманітніших галузей для пошуку інноваційних рішень проблемних питань,
-                <br/>перспектив співпраці з прогресивними учасниками еко середовища галузі, зокрема з технологічними парками,
-                <br/>з можливостями доступу до інвестиційних програм та інноваційних пропозицій.
-                <br/></div>
-              <div className="about-us-text-section__paragraphs">
-                <div className="about-us-text-section__paragraph-one">
-                  <span>виробників крафтової продукції у сфері виноробства,</span>
-                  <br/>
-                  <span>сироваріння, медоваріння тощо;</span>
-                  <br/>
-                  <span>сомельє та рестораторів;</span>
-                  <br/>
-                  <span>представників готельно-ресторанного бізнесу;</span>
-                  <br/>
-                  <span>представників роздрібних та гуртових торгових мереж;</span>
-                </div>
-                <div className="about-us-text-section__paragraph-two">
-                  <span>представників пакувальної індустрії;</span>
-                  <br/>
-                  <span>представників логістичних компаній та служб доставки;</span>
-                  <br/>
-                  <span>стартаперів у сфері виноробства, сироваріння,</span>
-                  <br/>
-                  <span>медоваріння та інших супутніх галузей;</span>
-                  <br/>
-                  <span>інших фахівців галузі.</span>
-                </div>
-              </div>
-            </div>
-            <div className="about-us-text-section__ellipses-groups">
-              <div className="about-us-text-section__first_ellipses-group">
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-              </div>
-              <div className="about-us-text-section__second_ellipses-group">
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-              </div>
-              <div className="about-us-text-section__third_ellipses-group">
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-              </div>
-              <div className="about-us-text-section__fourse_ellipses-group">
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-                <Ellipses type="green" count={7} />
-              </div>
-            </div>
-          </div>
-    );
+  const renderParagraphs = (paragraphNumber) => {
+    return AboutText.content
+      .filter(item => item.paragraph === paragraphNumber)
+      .map((item, index) => (
+        <li key={index}>{item.text}</li>
+      ));
+  };
+
+  return (
+    <div className="about-us-text-section">
+      <div className="about-us-text-section__text-field">
+        <div className="about-us-text-section__header-text">{AboutText.title}</div>
+        <div className="about-us-text-section__paragraphs">
+          <ul className="about-us-text-section__paragraph-one">
+            {renderParagraphs(1)}
+          </ul>
+          <ul className="about-us-text-section__paragraph-two">
+            {renderParagraphs(2)}
+          </ul>
+        </div>
+      </div>
+      <img className="about-us-text-section__dots"
+        src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_10x12.png`}
+        alt="dots_10x12.png" />
+    </div>
+  );
 };
 
 export default AboutSectionText;
+
