@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <style>
+        body {
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        p, b {
+            color: black;
+        }
+        .button {
+            padding: 10px 20px;
+            color: black;
+            text-decoration: none;
+            border: 1px solid black;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: lightgray;
+        }
+        .image-container {
+            margin-top: 10px;
+        }
+        .image-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin-top: 5px;
+        }
+        .banner img {
+            max-width: 500px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="{{protocol}}://178.212.110.52/craftMerge-logo.png" alt="CRAFTMERGE"/>
+        <p>Доброго дня,</p>
+        <p>Вам надійшов запит на затвердження змін в обліковому записі компанії {{ profile_name }} на сайті CraftMerge.</p>
+        <p>Перегляньте зміни та затвердіть або скасуйте їх.</p>
+        <p><b>Дата змін: </b>{{ updated_at }} UTC</p>
+        {% if banner %}
+        <p><b>Банер:</b></p>
+        <div class="banner">
+            <img src="cid:{{ banner.uuid }}" alt="Банер"/>   
+        </div>
+        {% endif %}
+        {% if logo %}
+        <p><b>Логотип:</b></p>
+        <div class="image-container">
+            <img src="cid:{{ logo.uuid }}" alt="Логотип"/>
+        </div>
+        {% endif %}
+        <div style="margin: 20px 0;">
+            <a href="#" class="button button-approve">ЗАТВЕРДИТИ</a>
+            <a href="#" class="button button-reject">СКАСУВАТИ</a>
+        </div>
+        <p><b>Примітка:</b> <i>запит буде автоматично затверджений через {{ moderation_time }}</i></p>
+        <p>З повагою,</p>
+        <p>Команда CraftMerge</p>
+    </div>
+</body>
+</html>
