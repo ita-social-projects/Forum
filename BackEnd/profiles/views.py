@@ -1,4 +1,7 @@
 from django.db import transaction
+from django.core.signing import BadSignature
+from django.core.exceptions import ValidationError
+from django.http import Http404
 from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
@@ -20,9 +23,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 from utils.completeness_counter import completeness_count
-from utils.send_email import send_moderation_email
-from utils.moderation_url import decode_uid
-from utils.image_moderation import ModerationManager
+from utils.moderation.send_email import send_moderation_email
+from utils.moderation.moderation_url import decode_uid
+from utils.moderation.image_moderation import ModerationManager
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -275,23 +278,22 @@ class ProfileModeration(APIView):
     queryset = Profile.objects.active_only()
 
     def get_object(self):
-        return get_object_or_404(
-            self.queryset, pk=decode_uid(self.request.data.get("uid"))
-        )
+        try:
+            pk = decode_uid(self.request.data.get("uid"))
+        except ValueError:
+            raise Http404
+        return get_object_or_404(self.queryset, pk=pk)
 
     def post(self, request, *args, **kwargs):
         profile = self.get_object()
-        serializer = ProfileModerationSerializer(data=request.data)
+        serializer = ProfileModerationSerializer(
+            data=request.data, context={"profile": profile}
+        )
 
         manager = ModerationManager(profile)
 
         if serializer.is_valid(raise_exception=True):
-            if request.data.get("action") == "approve":
-                manager.approve_image()
-
+            manager.handle_moderation_action(request.data.get("action"))
             return Response(status=status.HTTP_204_NO_CONTENT)
-
-        elif request.data.get("action") == "reject":
-            pass
 
         return Response(status=status.HTTP_400_BAD_REQUEST)

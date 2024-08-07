@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.core.exceptions import ValidationError
 from .models import (
     Profile,
     Activity,
@@ -10,7 +9,7 @@ from .models import (
 )
 from images.models import ProfileImage
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
-from utils.moderation_url import decode_uid
+from utils.moderation.moderation_actions import ModerationActions
 from validation.validate_moderation_url import validate_url
 
 
@@ -385,27 +384,12 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 
 class ProfileModerationSerializer(serializers.Serializer):
     uid = serializers.CharField()
-    action = serializers.CharField()
+    action = serializers.ChoiceField(
+        choices=ModerationActions.choices(),
+        error_messages={"invalid_choice": "Action is not allowed"},
+    )
     timestamp = serializers.IntegerField()
 
-    def validate_uid(self, value):
-        try:
-            Profile.objects.get(pk=decode_uid(value))
-        except Profile.DoesNotExist:
-            raise serializers.ValidationError("Profile does not exist")
-        return value
-
-    def validate_action(self, value):
-        if value not in ["approve", "reject"]:
-            raise serializers.ValidationError("Action is not allowed")
-        return value
-
     def validate_timestamp(self, value):
-        try:
-            profile = Profile.objects.get(
-                pk=decode_uid(self.initial_data.get("uid"))
-            )
-            validate_url(profile, value)
-        except ValidationError as error:
-            raise serializers.ValidationError(error.message)
+        validate_url(self.context.get("profile"), value)
         return value
