@@ -383,7 +383,7 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 
 
 class ProfileModerationSerializer(serializers.Serializer):
-    uid = serializers.CharField()
+    id = serializers.CharField()
     action = serializers.ChoiceField(
         choices=ModerationActions.choices(),
         error_messages={"invalid_choice": "Action is not allowed"},

@@ -1,6 +1,4 @@
 from django.db import transaction
-from django.core.signing import BadSignature
-from django.core.exceptions import ValidationError
 from django.http import Http404
 from django.utils.functional import cached_property
 from django.utils.timezone import now
@@ -24,7 +22,7 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 from utils.completeness_counter import completeness_count
 from utils.moderation.send_email import send_moderation_email
-from utils.moderation.moderation_url import decode_uid
+from utils.moderation.moderation_url import decode_id
 from utils.moderation.image_moderation import ModerationManager
 
 from forum.pagination import ForumPagination
@@ -279,7 +277,7 @@ class ProfileModeration(APIView):
 
     def get_object(self):
         try:
-            pk = decode_uid(self.request.data.get("uid"))
+            pk = decode_id(self.request.data.get("id"))
         except ValueError:
             raise Http404
         return get_object_or_404(self.queryset, pk=pk)

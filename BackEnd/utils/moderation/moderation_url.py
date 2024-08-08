@@ -3,13 +3,13 @@ from django.core.signing import Signer, BadSignature
 signer = Signer()
 
 
-def encode_uid(pk):
-    return signer.sign_object({"pk": pk})
+def encode_id(id):
+    return signer.sign_object({"id": id})
 
 
-def decode_uid(signed_pk):
+def decode_id(signed_id):
     try:
-        pk = signer.unsign_object(signed_pk)["pk"]
+        pk = signer.unsign_object(signed_id)["id"]
     except BadSignature:
         raise ValueError("Invalid pk")
     return pk
@@ -17,5 +17,5 @@ def decode_uid(signed_pk):
 
 def generate_profile_moderation_url(profile, action):
     timestamp = int(profile.status_updated_at.timestamp())
-    uid = encode_uid(profile.id)
-    return f"moderation/{uid}/{timestamp}/{action}"
+    id = encode_id(profile.id)
+    return f"moderation/{id}/{timestamp}/{action}"
