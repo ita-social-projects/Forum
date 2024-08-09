@@ -44,6 +44,7 @@ from .serializers import (
 )
 from .filters import ProfileFilter
 
+from .tasks import t_cel
 
 class SavedCompaniesCreate(CreateAPIView):
     """
@@ -204,6 +205,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         profile = serializer.save()
+        task = t_cel.apply_async((self.kwargs.get("pk"), self.request.data.get("official_name","None")), countdown=10)
         completeness_count(profile)
 
 
