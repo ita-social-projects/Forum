@@ -74,8 +74,8 @@ services:
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       - CORS_ORIGIN_WHITELIST=${CORS_ORIGIN_WHITELIST}
       - ALLOWED_ENV_HOST=${ALLOWED_ENV_HOST}
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - CELERY_BROKER_URL=${REDIS_URL}
+      - CELERY_RESULT_BACKEND=${REDIS_URL}
   redis:
     image: redis:latest
     container_name: redis
