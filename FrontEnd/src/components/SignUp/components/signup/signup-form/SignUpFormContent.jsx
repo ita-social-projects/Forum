@@ -280,15 +280,7 @@ export function SignUpFormContentComponent(props) {
               </span>
             </div>
             <div className={styles['signup-form__error']}>
-              {errors.password && errors.password.type === 'required' && (
-                <p>{errorMessageTemplates.required}</p>
-              )}
-              {errors.password && errors.password.type === 'pattern' && (
-                <p>{errorMessageTemplates.password}</p>
-              )}
-              {errors.password && errors.password.type === 'manual' && (
-                <p>{errors.password.message}</p>
-              )}
+            {errors.password && <p>{errors.password.message}</p>}
             </div>
           </div>
           <div className={styles['signup-form__column']}>
