@@ -28,26 +28,24 @@ class TestSendModerationEmail(APITestCase):
             edrpou="99999999",
         )
 
-
-    @mock.patch('utils.send_email.EmailMultiAlternatives')
-    @mock.patch('utils.send_email.render_to_string')
+    @mock.patch("utils.send_email.EmailMultiAlternatives")
+    @mock.patch("utils.send_email.render_to_string")
     @mock.patch(
         "utils.send_email.attach_image",
         new_callable=mock.mock_open,
         read_data=b"image",
     )
-    def test_send_moderation_email(self, mock_file, mock_render_to_string, mock_email_multi_alternatives):
+    def test_send_moderation_email(
+        self, mock_file, mock_render_to_string, mock_email_multi_alternatives
+    ):
         self.client.force_authenticate(self.user)
         response = self.client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
-            data={
-                "banner": self.banner.uuid,
-                "logo": self.logo.uuid
-            },
+            data={"banner": self.banner.uuid, "logo": self.logo.uuid},
         )
-        
+
         mock_email_multi_alternatives.assert_called_once()
         mock_render_to_string.assert_called_once()
         email_instance = mock_email_multi_alternatives.return_value
@@ -56,20 +54,24 @@ class TestSendModerationEmail(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
         email_data = mock_render_to_string.call_args[0][1]
-        self.assertEqual(self.profile.name, email_data['profile_name'])
-        self.assertEqual(self.banner.uuid, str(email_data['banner'].uuid))
-        self.assertEqual(self.logo.uuid, str(email_data['logo'].uuid))
-        self.assertEqual(self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"), email_data['updated_at'])
+        self.assertEqual(self.profile.name, email_data["profile_name"])
+        self.assertEqual(self.banner.uuid, str(email_data["banner"].uuid))
+        self.assertEqual(self.logo.uuid, str(email_data["logo"].uuid))
+        self.assertEqual(
+            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
+            email_data["updated_at"],
+        )
 
-    
-    @mock.patch('utils.send_email.EmailMultiAlternatives')
-    @mock.patch('utils.send_email.render_to_string')
+    @mock.patch("utils.send_email.EmailMultiAlternatives")
+    @mock.patch("utils.send_email.render_to_string")
     @mock.patch(
         "utils.send_email.attach_image",
         new_callable=mock.mock_open,
         read_data=b"image",
     )
-    def test_send_moderation_email_only_banner(self, mock_file, mock_render_to_string, mock_email_multi_alternatives):
+    def test_send_moderation_email_only_banner(
+        self, mock_file, mock_render_to_string, mock_email_multi_alternatives
+    ):
         self.client.force_authenticate(self.user)
         response = self.client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -79,7 +81,7 @@ class TestSendModerationEmail(APITestCase):
                 "banner": self.banner.uuid,
             },
         )
-        
+
         mock_email_multi_alternatives.assert_called_once()
         mock_render_to_string.assert_called_once()
         email_instance = mock_email_multi_alternatives.return_value
@@ -88,19 +90,24 @@ class TestSendModerationEmail(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
         email_data = mock_render_to_string.call_args[0][1]
-        self.assertEqual(self.profile.name, email_data['profile_name'])
-        self.assertEqual(self.banner.uuid, str(email_data['banner'].uuid))
-        self.assertEqual(None, email_data['logo'])
-        self.assertEqual(self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"), email_data['updated_at'])
+        self.assertEqual(self.profile.name, email_data["profile_name"])
+        self.assertEqual(self.banner.uuid, str(email_data["banner"].uuid))
+        self.assertIsNone(None, email_data["logo"])
+        self.assertEqual(
+            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
+            email_data["updated_at"],
+        )
 
-    @mock.patch('utils.send_email.EmailMultiAlternatives')
-    @mock.patch('utils.send_email.render_to_string')
+    @mock.patch("utils.send_email.EmailMultiAlternatives")
+    @mock.patch("utils.send_email.render_to_string")
     @mock.patch(
         "utils.send_email.attach_image",
         new_callable=mock.mock_open,
         read_data=b"image",
     )
-    def test_send_moderation_email_only_logo(self, mock_file, mock_render_to_string, mock_email_multi_alternatives):
+    def test_send_moderation_email_only_logo(
+        self, mock_file, mock_render_to_string, mock_email_multi_alternatives
+    ):
         self.client.force_authenticate(self.user)
         response = self.client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -110,7 +117,7 @@ class TestSendModerationEmail(APITestCase):
                 "logo": self.logo.uuid,
             },
         )
-        
+
         mock_email_multi_alternatives.assert_called_once()
         mock_render_to_string.assert_called_once()
         email_instance = mock_email_multi_alternatives.return_value
@@ -119,11 +126,13 @@ class TestSendModerationEmail(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
         email_data = mock_render_to_string.call_args[0][1]
-        self.assertEqual(self.profile.name, email_data['profile_name'])
-        self.assertEqual(None, email_data['banner'])
-        self.assertEqual(self.logo.uuid, str(email_data['logo'].uuid))
-        self.assertEqual(self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"), email_data['updated_at'])
-    
+        self.assertEqual(self.profile.name, email_data["profile_name"])
+        self.assertIsNone(email_data["banner"])
+        self.assertEqual(self.logo.uuid, str(email_data["logo"].uuid))
+        self.assertEqual(
+            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
+            email_data["updated_at"],
+        )
 
 
 class TestSendModerationManager(APITestCase):
@@ -162,14 +171,14 @@ class TestSendModerationManager(APITestCase):
         self.assertFalse(self.manager.needs_moderation(self.banner))
         self.assertFalse(self.manager.needs_moderation(self.logo))
 
-    @mock.patch('utils.image_moderation.now', return_value=now())
+    @mock.patch("utils.image_moderation.now", return_value=now())
     def test_update_status(self, mock_now):
         self.manager.update_status()
         self.assertEqual(self.profile.status, "pending")
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
 
-    @mock.patch('utils.image_moderation.now', return_value=now())
+    @mock.patch("utils.image_moderation.now", return_value=now())
     def test_check_for_moderation(self, mock_now):
         self.profile.banner = self.banner
         self.profile.logo = self.logo
@@ -177,9 +186,12 @@ class TestSendModerationManager(APITestCase):
         self.assertEqual(self.profile.status, "pending")
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
-        self.assertEqual(self.manager.banner_logo, {'banner': self.banner, 'logo': self.logo})
+        self.assertEqual(
+            self.manager.banner_logo,
+            {"banner": self.banner, "logo": self.logo},
+        )
 
-    @mock.patch('utils.image_moderation.now', return_value=now())
+    @mock.patch("utils.image_moderation.now", return_value=now())
     def test_check_for_moderation_deleted_banner(self, mock_now):
         self.banner.is_deleted = True
         self.profile.banner = self.banner
@@ -188,9 +200,11 @@ class TestSendModerationManager(APITestCase):
         self.assertEqual(self.profile.status, "pending")
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
-        self.assertEqual(self.manager.banner_logo, {'banner': None, 'logo': self.logo})
+        self.assertEqual(
+            self.manager.banner_logo, {"banner": None, "logo": self.logo}
+        )
 
-    @mock.patch('utils.image_moderation.now', return_value=now())
+    @mock.patch("utils.image_moderation.now", return_value=now())
     def test_check_for_moderation_deleted_logo(self, mock_now):
         self.logo.is_deleted = True
         self.profile.banner = self.banner
@@ -199,7 +213,9 @@ class TestSendModerationManager(APITestCase):
         self.assertEqual(self.profile.status, "pending")
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
-        self.assertEqual(self.manager.banner_logo, {'banner': self.banner, 'logo': None})
+        self.assertEqual(
+            self.manager.banner_logo, {"banner": self.banner, "logo": None}
+        )
 
     # needs improvement for undefined status
     def test_check_for_moderation_deleted_both(self):
@@ -209,4 +225,6 @@ class TestSendModerationManager(APITestCase):
         self.profile.logo = self.logo
         self.manager.check_for_moderation()
         self.assertFalse(self.manager.moderation_is_needed)
-        self.assertEqual(self.manager.banner_logo, {'banner': None, 'logo': None})
+        self.assertEqual(
+            self.manager.banner_logo, {"banner": None, "logo": None}
+        )
