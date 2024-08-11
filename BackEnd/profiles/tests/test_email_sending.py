@@ -1,8 +1,10 @@
 import os
+from django.conf import settings
 from rest_framework.test import APITestCase
 from unittest import mock
-from rest_framework import status
 from django.utils.timezone import now
+from django.core import mail
+from utils.send_email import send_moderation_email
 from utils.image_moderation import ModerationManager
 from authentication.factories import UserFactory
 from profiles.factories import ProfileStartupFactory
@@ -11,15 +13,8 @@ from images.factories import ProfileimageFactory
 
 class TestSendModerationEmail(APITestCase):
     def setUp(self):
-        self.banner_path = os.path.join(
-            os.getcwd(), "images/tests/img/img_2mb.png"
-        )
-        self.logo_path = os.path.join(
-            os.getcwd(), "images/tests/img/img_300kb.png"
-        )
-
-        self.banner = ProfileimageFactory(image_path=self.banner_path)
-        self.logo = ProfileimageFactory(image_path=self.logo_path)
+        self.banner = ProfileimageFactory(image_type="banner")
+        self.logo = ProfileimageFactory(image_type="logo")
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
@@ -28,124 +23,76 @@ class TestSendModerationEmail(APITestCase):
             edrpou="99999999",
         )
 
-    @mock.patch("utils.send_email.EmailMultiAlternatives")
-    @mock.patch("utils.send_email.render_to_string")
-    @mock.patch(
-        "utils.send_email.attach_image",
-        new_callable=mock.mock_open,
-        read_data=b"image",
-    )
-    def test_send_moderation_email(
-        self, mock_file, mock_render_to_string, mock_email_multi_alternatives
-    ):
-        self.client.force_authenticate(self.user)
-        response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(
-                profile_id=self.profile.id
-            ),
-            data={"banner": self.banner.uuid, "logo": self.logo.uuid},
-        )
+    def test_send_moderation_email(self):
+        self.profile.banner = self.banner
+        self.profile.logo = self.logo
 
-        mock_email_multi_alternatives.assert_called_once()
-        mock_render_to_string.assert_called_once()
-        email_instance = mock_email_multi_alternatives.return_value
-        mock_file.assert_called()
-        email_instance.send.assert_called_once()
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        send_moderation_email(self.profile)
 
-        email_data = mock_render_to_string.call_args[0][1]
-        self.assertEqual(self.profile.name, email_data["profile_name"])
-        self.assertEqual(self.banner.uuid, str(email_data["banner"].uuid))
-        self.assertEqual(self.logo.uuid, str(email_data["logo"].uuid))
+        self.assertEqual(len(mail.outbox), 1)
+        email_data = mail.outbox[0]
         self.assertEqual(
-            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
-            email_data["updated_at"],
+            email_data.subject,
+            f"{self.profile.name} - {self.profile.status_updated_at.strftime('%d.%m.%Y')}: Запит на затвердження змін в обліковому записі компанії",
         )
+        self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
+        self.assertIn(self.profile.name, email_data.body)
 
-    @mock.patch("utils.send_email.EmailMultiAlternatives")
-    @mock.patch("utils.send_email.render_to_string")
-    @mock.patch(
-        "utils.send_email.attach_image",
-        new_callable=mock.mock_open,
-        read_data=b"image",
-    )
-    def test_send_moderation_email_only_banner(
-        self, mock_file, mock_render_to_string, mock_email_multi_alternatives
-    ):
-        self.client.force_authenticate(self.user)
-        response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(
-                profile_id=self.profile.id
-            ),
-            data={
-                "banner": self.banner.uuid,
-            },
-        )
-
-        mock_email_multi_alternatives.assert_called_once()
-        mock_render_to_string.assert_called_once()
-        email_instance = mock_email_multi_alternatives.return_value
-        mock_file.assert_called()
-        email_instance.send.assert_called_once()
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-
-        email_data = mock_render_to_string.call_args[0][1]
-        self.assertEqual(self.profile.name, email_data["profile_name"])
-        self.assertEqual(self.banner.uuid, str(email_data["banner"].uuid))
-        self.assertIsNone(None, email_data["logo"])
+        self.assertEqual(len(email_data.attachments), 2)
         self.assertEqual(
-            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
-            email_data["updated_at"],
+            email_data.attachments[0].get_filename(),
+            os.path.basename(self.banner.image_path.name),
         )
-
-    @mock.patch("utils.send_email.EmailMultiAlternatives")
-    @mock.patch("utils.send_email.render_to_string")
-    @mock.patch(
-        "utils.send_email.attach_image",
-        new_callable=mock.mock_open,
-        read_data=b"image",
-    )
-    def test_send_moderation_email_only_logo(
-        self, mock_file, mock_render_to_string, mock_email_multi_alternatives
-    ):
-        self.client.force_authenticate(self.user)
-        response = self.client.patch(
-            path="/api/profiles/{profile_id}".format(
-                profile_id=self.profile.id
-            ),
-            data={
-                "logo": self.logo.uuid,
-            },
-        )
-
-        mock_email_multi_alternatives.assert_called_once()
-        mock_render_to_string.assert_called_once()
-        email_instance = mock_email_multi_alternatives.return_value
-        mock_file.assert_called()
-        email_instance.send.assert_called_once()
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-
-        email_data = mock_render_to_string.call_args[0][1]
-        self.assertEqual(self.profile.name, email_data["profile_name"])
-        self.assertIsNone(email_data["banner"])
-        self.assertEqual(self.logo.uuid, str(email_data["logo"].uuid))
         self.assertEqual(
-            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
-            email_data["updated_at"],
+            email_data.attachments[1].get_filename(),
+            os.path.basename(self.logo.image_path.name),
+        )
+
+    def test_send_moderation_email_only_banner(self):
+        self.profile.banner = self.banner
+
+        send_moderation_email(self.profile)
+
+        self.assertEqual(len(mail.outbox), 1)
+        email_data = mail.outbox[0]
+        self.assertEqual(
+            email_data.subject,
+            f"{self.profile.name} - {self.profile.status_updated_at.strftime('%d.%m.%Y')}: Запит на затвердження змін в обліковому записі компанії",
+        )
+        self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
+        self.assertIn(self.profile.name, email_data.body)
+
+        self.assertEqual(len(email_data.attachments), 1)
+        self.assertEqual(
+            email_data.attachments[0].get_filename(),
+            os.path.basename(self.banner.image_path.name),
+        )
+
+    def test_send_moderation_email_only_logo(self):
+        self.profile.logo = self.logo
+
+        send_moderation_email(self.profile)
+
+        self.assertEqual(len(mail.outbox), 1)
+        email_data = mail.outbox[0]
+        self.assertEqual(
+            email_data.subject,
+            f"{self.profile.name} - {self.profile.status_updated_at.strftime('%d.%m.%Y')}: Запит на затвердження змін в обліковому записі компанії",
+        )
+        self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
+        self.assertIn(self.profile.name, email_data.body)
+
+        self.assertEqual(len(email_data.attachments), 1)
+        self.assertEqual(
+            email_data.attachments[0].get_filename(),
+            os.path.basename(self.logo.image_path.name),
         )
 
 
 class TestSendModerationManager(APITestCase):
     def setUp(self):
-        self.banner_path = os.path.join(
-            os.getcwd(), "images/tests/img/img_2mb.png"
-        )
-        self.logo_path = os.path.join(
-            os.getcwd(), "images/tests/img/img_300kb.png"
-        )
-
-        self.banner = ProfileimageFactory(image_path=self.banner_path)
-        self.logo = ProfileimageFactory(image_path=self.logo_path)
+        self.banner = ProfileimageFactory(image_type="banner")
+        self.logo = ProfileimageFactory(image_type="logo")
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
