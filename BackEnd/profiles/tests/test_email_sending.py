@@ -4,6 +4,7 @@ from rest_framework.test import APITestCase
 from unittest import mock
 from django.utils.timezone import now
 from django.core import mail
+from administration.models import AutoModeration
 from utils.send_email import send_moderation_email
 from utils.image_moderation import ModerationManager
 from authentication.factories import UserFactory
@@ -23,6 +24,10 @@ class TestSendModerationEmail(APITestCase):
             edrpou="99999999",
         )
 
+    def test_send_moderation_email_no_banner_no_logo(self):
+        send_moderation_email(self.profile)
+        self.assertEqual(len(mail.outbox), 0)
+
     def test_send_moderation_email(self):
         self.profile.banner = self.banner
         self.profile.logo = self.logo
@@ -37,6 +42,10 @@ class TestSendModerationEmail(APITestCase):
         )
         self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
         self.assertIn(self.profile.name, email_data.body)
+        self.assertIn(
+            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
+            email_data.body,
+        )
 
         self.assertEqual(len(email_data.attachments), 2)
         self.assertEqual(
@@ -61,6 +70,10 @@ class TestSendModerationEmail(APITestCase):
         )
         self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
         self.assertIn(self.profile.name, email_data.body)
+        self.assertIn(
+            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
+            email_data.body,
+        )
 
         self.assertEqual(len(email_data.attachments), 1)
         self.assertEqual(
@@ -81,6 +94,10 @@ class TestSendModerationEmail(APITestCase):
         )
         self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
         self.assertIn(self.profile.name, email_data.body)
+        self.assertIn(
+            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
+            email_data.body,
+        )
 
         self.assertEqual(len(email_data.attachments), 1)
         self.assertEqual(
