@@ -7,6 +7,8 @@
   }
     
   .frame-img-left {
+    width: 179px;
+    height: 150px;
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
@@ -16,6 +18,8 @@
   }
   
   .frame-img-right {
+    width: 179px;
+    height: 150px;
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
