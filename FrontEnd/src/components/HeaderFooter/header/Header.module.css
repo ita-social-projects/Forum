@@ -5,7 +5,7 @@
 }
 
 .header-divider {
-    width: 1512px;
+    width: var(--main-block-size);
     height: 1px;
 
     background: var(--main-black-20, #E2E5EB);
