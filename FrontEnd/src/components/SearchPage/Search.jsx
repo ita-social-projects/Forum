@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
 import SearchResults from './search_field/SearchResults';
-import frame42 from './img/frame42.png';
 import link_to_left from './img/link_to_left.svg';
 import link_to_right from './img/link_to_right.svg';
-import styles from './search_page.module.css';
+import styles from './search.module.css';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
@@ -70,9 +69,12 @@ export function Search({ isAuthorized }) {
 
   return (
     <div className={styles['main_block_outer']}>
+
       <BreadCrumbs currentPage="Пошук" />
       <div className={styles['main_block']}>
-        <img className={styles['frame-img-right']} src={frame42} alt="frame" />
+      <img className={styles['dot-img-right']}
+        src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+        alt="dots_7x6.png" />
         <div className={styles['new-companies-search_count']}>
           {searchResults && (
             <div>
