@@ -44,6 +44,7 @@ from .serializers import (
     ProfileCreateSerializer,
 )
 from .filters import ProfileFilter
+from .signals import profile_retrieved
 
 
 class SavedCompaniesCreate(CreateAPIView):
@@ -156,7 +157,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        company_id = int(self.kwargs.get("pk"))
+        company_id = int(self.kwargs.get(self.lookup_field))
 
         if self.request.user.is_authenticated:
             saved_companies_pk = frozenset(
@@ -167,9 +168,11 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
             context.update({"saved_companies_pk": saved_companies_pk})
 
             if company_id in saved_companies_pk:
-                SavedCompany.objects.filter(
-                    user=self.request.user, company=company_id
-                ).update(is_updated=False)
+                profile_retrieved.send(
+                    sender=SavedCompany,
+                    company=company_id,
+                    user=self.request.user,
+                )
 
         return context
 
