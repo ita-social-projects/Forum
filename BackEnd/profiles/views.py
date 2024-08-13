@@ -282,3 +282,7 @@ class ProfileModeration(UpdateAPIView):
             raise Http404
 
         return get_object_or_404(self.queryset, pk=profile_id)
+
+    def perform_update(self, serializer):
+        profile = serializer.save()
+        completeness_count(profile)
