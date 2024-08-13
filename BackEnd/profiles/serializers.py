@@ -194,6 +194,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "banner",
             "logo",
             "is_deleted",
+            "status",
         )
         read_only_fields = (
             "id",
@@ -221,6 +222,7 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "banner",
             "logo",
             "is_deleted",
+            "status",
         )
 
     def get_regions_ukr_display(self, obj) -> str:
