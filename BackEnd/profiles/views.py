@@ -10,20 +10,18 @@ from rest_framework.generics import (
     ListCreateAPIView,
     DestroyAPIView,
     RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
 )
-from rest_framework.views import APIView
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
     IsAuthenticated,
     IsAdminUser,
 )
 from rest_framework.response import Response
-from rest_framework import status
 from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 from utils.completeness_counter import completeness_count
 from utils.moderation.send_email import send_moderation_email
-from utils.moderation.moderation_url import decode_id
-from utils.moderation.image_moderation import ModerationManager
+from utils.moderation.encode_decode_id import decode_id
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -272,26 +270,15 @@ class RegionDetail(RetrieveUpdateDestroyAPIView):
     queryset = Region.objects.all()
 
 
-class ProfileModeration(APIView):
+class ProfileModeration(UpdateAPIView):
+    serializer_class = ProfileModerationSerializer
     queryset = Profile.objects.active_only()
+    lookup_url_kwarg = "profile_id"
 
     def get_object(self):
         try:
-            pk = decode_id(self.request.data.get("id"))
+            profile_id = decode_id(self.kwargs.get(self.lookup_url_kwarg))
         except ValueError:
             raise Http404
-        return get_object_or_404(self.queryset, pk=pk)
 
-    def post(self, request, *args, **kwargs):
-        profile = self.get_object()
-        serializer = ProfileModerationSerializer(
-            data=request.data, context={"profile": profile}
-        )
-
-        manager = ModerationManager(profile)
-
-        if serializer.is_valid(raise_exception=True):
-            manager.handle_moderation_action(request.data.get("action"))
-            return Response(status=status.HTTP_204_NO_CONTENT)
-
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return get_object_or_404(self.queryset, pk=profile_id)

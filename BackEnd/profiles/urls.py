@@ -40,7 +40,7 @@ urlpatterns = [
     path("activities/<pk>/", ActivityDetail.as_view(), name="activity-detail"),
     path("regions/<pk>/", RegionDetail.as_view(), name="region-detail"),
     path(
-        "profiles/moderation/",
+        "profiles/<str:profile_id>/images_moderation/",
         ProfileModeration.as_view(),
         name="profile-moderation",
     ),

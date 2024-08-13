@@ -1,5 +1,6 @@
 from django.core.signing import Signer, BadSignature
 
+
 signer = Signer()
 
 
@@ -13,9 +14,3 @@ def decode_id(signed_id):
     except BadSignature:
         raise ValueError("Invalid pk")
     return pk
-
-
-def generate_profile_moderation_url(profile, action):
-    timestamp = int(profile.status_updated_at.timestamp())
-    id = encode_id(profile.id)
-    return f"moderation/{id}/{timestamp}/{action}"

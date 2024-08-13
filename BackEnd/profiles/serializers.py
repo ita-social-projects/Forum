@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.utils.timezone import now
 from .models import (
     Profile,
     Activity,
@@ -9,8 +10,7 @@ from .models import (
 )
 from images.models import ProfileImage
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
-from utils.moderation.moderation_actions import ModerationActions
-from validation.validate_moderation_url import validate_url
+from utils.moderation.moderation_action import ModerationAction
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -383,13 +383,49 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 
 
 class ProfileModerationSerializer(serializers.Serializer):
-    id = serializers.CharField()
     action = serializers.ChoiceField(
-        choices=ModerationActions.choices(),
+        choices=ModerationAction.choices(),
         error_messages={"invalid_choice": "Action is not allowed"},
+        write_only=True,
     )
-    timestamp = serializers.IntegerField()
+    banner_approved = ProfileImageField()
+    logo_approved = ProfileImageField()
+    status_updated_at = serializers.DateTimeField(read_only=True)
+    status = serializers.CharField(read_only=True)
 
-    def validate_timestamp(self, value):
-        validate_url(self.context.get("profile"), value)
+    def validate(self, value):
+        profile = self.instance
+        banner = value.get("banner_approved")
+        logo = value.get("logo_approved")
+        if profile.status != profile.PENDING:
+            raise serializers.ValidationError(
+                "The change approval request has been processed. URL is outdated"
+            )
+        else:
+            if (banner and profile.banner != banner) or (
+                logo and profile.logo != logo
+            ):
+                raise serializers.ValidationError(
+                    "There is a new request for moderation. URL is outdated"
+                )
         return value
+
+    def update(self, instance, validated_data):
+        action = validated_data.get("action")
+        banner_approved = validated_data.get("banner_approved")
+        logo_approved = validated_data.get("logo_approved")
+        if action == ModerationAction.approve:
+            if banner_approved:
+                instance.banner.is_approved = True
+                instance.banner_approved = banner_approved
+                instance.banner.save()
+            if logo_approved:
+                instance.logo.is_approved = True
+                instance.logo_approved = logo_approved
+                instance.logo.save()
+            instance.status = instance.APPROVED
+            instance.status_updated_at = now()
+            instance.save()
+            return instance
+        else:
+            raise serializers.ValidationError("Invalid action provided.")
