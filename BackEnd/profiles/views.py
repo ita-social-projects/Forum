@@ -156,6 +156,8 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
+        company_id = int(self.kwargs.get("pk"))
+
         if self.request.user.is_authenticated:
             saved_companies_pk = frozenset(
                 SavedCompany.objects.filter(
@@ -163,6 +165,12 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
                 ).values_list("company_id", flat=True)
             )
             context.update({"saved_companies_pk": saved_companies_pk})
+
+            if company_id in saved_companies_pk:
+                SavedCompany.objects.filter(
+                    user=self.request.user, company=company_id
+                ).update(is_updated=False)
+
         return context
 
     def get_serializer_class(self):
@@ -207,6 +215,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile = serializer.save()
         completeness_count(profile)
         send_moderation_email(profile)
+        SavedCompany.objects.filter(company=profile).update(is_updated=True)
 
 
 class ProfileViewCreate(CreateAPIView):
