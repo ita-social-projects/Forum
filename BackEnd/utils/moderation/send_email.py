@@ -49,7 +49,7 @@ def attach_image(email, image, content_id):
         email.attach(img)
 
 
-def send_moderation_email(profile):
+def check_for_moderation_and_send_email(profile):
     manager = ModerationManager(profile)
     if manager.check_for_moderation():
         update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
@@ -92,3 +92,6 @@ def send_moderation_email(profile):
             attach_image(email, logo, logo.uuid)
 
         email.send(fail_silently=False)
+        return True
+    else:
+        return False

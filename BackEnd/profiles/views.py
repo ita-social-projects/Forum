@@ -20,7 +20,7 @@ from rest_framework.permissions import (
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 from utils.completeness_counter import completeness_count
-from utils.moderation.send_email import send_moderation_email
+from utils.moderation.send_email import check_for_moderation_and_send_email
 from utils.moderation.encode_decode_id import decode_id
 
 from forum.pagination import ForumPagination
@@ -49,7 +49,9 @@ from .serializers import (
 )
 from .filters import ProfileFilter
 
-from .tasks import t_cel
+from .tasks import celery_autoapprove
+from administration.models import AutoapproveTask, AutoModeration
+
 
 class SavedCompaniesCreate(CreateAPIView):
     """
@@ -210,9 +212,17 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         profile = serializer.save()
-        task = t_cel.apply_async((self.kwargs.get("pk"), self.request.data.get("official_name","None")), countdown=10)
         completeness_count(profile)
-        send_moderation_email(profile)
+        moderation_needed = check_for_moderation_and_send_email(profile)
+        if moderation_needed:
+            banner_uuid = str(profile.banner.uuid)
+            logo_uuid = str(profile.logo.uuid)
+            delay = AutoModeration.get_auto_moderation_hours().auto_moderation_hours
+            result = celery_autoapprove.apply_async(
+                (profile.id, banner_uuid, logo_uuid), countdown=delay)
+            task = AutoapproveTask(
+                celery_task_id=result.id, profile=profile, logo=logo_uuid, banner=banner_uuid)
+            task.save()
 
 
 class ProfileViewCreate(CreateAPIView):
