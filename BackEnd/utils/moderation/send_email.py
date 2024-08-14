@@ -1,14 +1,19 @@
 import os
+from urllib.parse import urlencode
+
+from decouple import config
 from email.mime.image import MIMEImage
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
 from administration.models import AutoModeration
 from .image_moderation import ModerationManager
+from .encode_decode_id import encode_id
 
 
 EMAIL_CONTENT_SUBTYPE = "html"
 PROTOCOL = "http"
+DOMAIN = config("ALLOWED_ENV_HOST")
 
 
 def define_ending(hours):
@@ -20,6 +25,17 @@ def define_ending(hours):
     else:
         result_of_hours = f"{hours} годин"
     return result_of_hours
+
+
+def generate_profile_moderation_url(profile_id, banner, logo, action):
+    query_params = {}
+    if banner:
+        query_params["banner"] = banner.uuid
+    if logo:
+        query_params["logo"] = logo.uuid
+    params = urlencode(query_params)
+    id = encode_id(profile_id)
+    return f"moderation/{id}/{action}/?{params}"
 
 
 def attach_image(email, image, content_id):
@@ -43,13 +59,16 @@ def send_moderation_email(profile):
         context = {
             "profile_name": profile.name,
             "protocol": PROTOCOL,
+            "domain": DOMAIN,
             "banner": banner,
             "logo": logo,
             "updated_at": update_time,
             "moderation_time": define_ending(
                 AutoModeration.get_auto_moderation_hours().auto_moderation_hours
             ),
-            "approve_url": None,
+            "approve_url": generate_profile_moderation_url(
+                profile.id, banner, logo, "approve"
+            ),
             "reject_url": None,
         }
 

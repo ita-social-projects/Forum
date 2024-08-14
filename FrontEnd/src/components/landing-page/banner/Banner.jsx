@@ -1,5 +1,4 @@
 import './Banner.css';
-import Ellipses from '../ellipses/Ellipses';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
@@ -8,14 +7,9 @@ const MainBanner = (props) => {
     <div className="main-banner-group">
       <div className="main-banner-group__main-rectangle" />
       <div className="main-banner-group__white-rectangle">
-        <div className="main-banner-group__green-ellipses">
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-        </div>
+        <img className="main-banner-group__green-dots"
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
       </div>
       <div className="main-banner-group__frame-rectangle9" />
       <div className="main-banner-group__frame-rectangle10" />
@@ -49,14 +43,9 @@ const MainBanner = (props) => {
           </div>
         ) : null}
       </div>
-      <div className="main-banner-group__white-ellipses">
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-      </div>
+        <img className="main-banner-group__white-dots"
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6W.png`}
+          alt="dots_7x6W.png" />
       <img
         className="main-banner-group__banner-image1"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img1.jpeg`}

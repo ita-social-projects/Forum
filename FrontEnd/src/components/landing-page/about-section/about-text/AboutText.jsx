@@ -24,8 +24,8 @@ const AboutSectionText = () => {
         </div>
       </div>
       <img className="about-us-text-section__dots"
-        src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_10x12.png`}
-        alt="dots_10x12.png" />
+        src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_12x10.png`}
+        alt="dots_12x10.png" />
     </div>
   );
 };
