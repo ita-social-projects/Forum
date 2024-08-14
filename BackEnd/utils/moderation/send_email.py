@@ -35,7 +35,12 @@ def generate_profile_moderation_url(profile_id, banner, logo, action):
         query_params["logo"] = logo.uuid
     params = urlencode(query_params)
     id = encode_id(profile_id)
-    return f"moderation/{id}/{action}/?{params}"
+    url = (
+        f"moderation/{id}/{action}/?{params}"
+        if params
+        else f"moderation/{id}/{action}/"
+    )
+    return url
 
 
 def attach_image(email, image, content_id):
@@ -69,7 +74,9 @@ def send_moderation_email(profile):
             "approve_url": generate_profile_moderation_url(
                 profile.id, banner, logo, "approve"
             ),
-            "reject_url": None,
+            "reject_url": generate_profile_moderation_url(
+                profile.id, None, None, "reject"
+            ),
         }
 
         email_body = render_to_string("profiles/email_template.html", context)
