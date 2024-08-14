@@ -414,6 +414,7 @@ class ProfileModerationSerializer(serializers.Serializer):
         action = validated_data.get("action")
         banner_approved = validated_data.get("banner_approved")
         logo_approved = validated_data.get("logo_approved")
+
         if action == ModerationAction.approve:
             if banner_approved:
                 instance.banner.is_approved = True
@@ -424,8 +425,17 @@ class ProfileModerationSerializer(serializers.Serializer):
                 instance.logo_approved = logo_approved
                 instance.logo.save()
             instance.status = instance.APPROVED
-            instance.status_updated_at = now()
-            instance.save()
-            return instance
+
+        elif action == ModerationAction.reject:
+            instance.status = instance.BLOCKED
+            instance.is_deleted = True
+            instance.person.is_active = False
+            instance.person.save()
+
         else:
             raise serializers.ValidationError("Invalid action provided.")
+
+        instance.status_updated_at = now()
+        instance.save()
+        return instance
+
