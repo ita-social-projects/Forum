@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.conf import settings as django_settings
 from djoser.conf import settings as djoser_settings
@@ -19,6 +19,7 @@ from validation.validate_password import (
     validate_password_long,
     validate_password_include_symbols,
 )
+from validation.validate_profile import validate_profile
 
 User = get_user_model()
 
@@ -105,6 +106,11 @@ class UserListSerializer(UserSerializer):
 
 class CustomTokenCreateSerializer(TokenCreateSerializer):
     def validate(self, attrs):
+        try:
+            validate_profile(attrs.get("email"))
+        except ValidationError as error:
+            raise serializers.ValidationError(error.message)
+
         try:
             return self.validate_for_rate(attrs)
         except RateLimitException:
