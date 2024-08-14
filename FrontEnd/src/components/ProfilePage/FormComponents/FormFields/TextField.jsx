@@ -6,12 +6,12 @@ const TextField = (props) => {
   return (
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>
-        {props.requredField && (
+        {props.requiredField && (
           <label className={css['fields__label--required']}>*</label>
         )}
         <label
           className={`${css['fields__label--text']} ${
-            !props.requredField && css['fields__field--notrequired']
+            !props.requiredField && css['fields__field--notrequired']
           }`}
         >
           {props.label}
@@ -27,7 +27,7 @@ const TextField = (props) => {
           }
           onChange={props.updateHandler}
           onKeyDown={preventEnterSubmit}
-          required={props.requredField ? 'required' : ''}
+          required={props.requiredField ? 'required' : ''}
           disabled={props.name === 'email' ? 'disabled' : ''}
           onBlur={props.onBlur}
         ></textarea>
@@ -35,7 +35,7 @@ const TextField = (props) => {
       <div className={css['count__symbols']}>
         {props.value.length} / {props.maxLength}
       </div>
-      {props.requredField && (
+      {props.requiredField && (
         <div className={css['error-message']}>{props.error}</div>
       )}
     </div>
@@ -45,7 +45,7 @@ const TextField = (props) => {
 export default TextField;
 
 TextField.propTypes = {
-  requredField: PropTypes.bool,
+  requiredField: PropTypes.bool,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,

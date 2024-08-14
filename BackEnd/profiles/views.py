@@ -17,6 +17,7 @@ from rest_framework.permissions import (
 )
 from rest_framework.response import Response
 from utils.completeness_counter import completeness_count
+from utils.send_email import send_moderation_email
 from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 
 from forum.pagination import ForumPagination
@@ -207,6 +208,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile = serializer.save()
         task = t_cel.apply_async((self.kwargs.get("pk"), self.request.data.get("official_name","None")), countdown=10)
         completeness_count(profile)
+        send_moderation_email(profile)
 
 
 class ProfileViewCreate(CreateAPIView):

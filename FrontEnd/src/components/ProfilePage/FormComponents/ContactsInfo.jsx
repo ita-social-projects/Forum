@@ -132,7 +132,7 @@ const ContactsInfo = (props) => {
                 fieldPlaceholder="+380XX XXX XX XX"
                 label={LABELS.phone}
                 updateHandler={onUpdatePhoneNumberField}
-                requredField={false}
+                requiredField={false}
                 value={phone ?? ''}
                 error={phoneNumberError}
               />
@@ -141,7 +141,7 @@ const ContactsInfo = (props) => {
               name="address"
               label={LABELS.address}
               updateHandler={onUpdateField}
-              requredField={false}
+              requiredField={false}
               value={profile.address ?? ''}
             />
           </div>

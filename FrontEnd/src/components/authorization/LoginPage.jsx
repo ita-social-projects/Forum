@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useStopwatch } from 'react-timer-hook';
+import { toast } from 'react-toastify';
 
 import validator from 'validator';
 import EyeVisible from './EyeVisible';
@@ -11,7 +12,7 @@ import classes from './LoginPage.module.css';
 import { useAuth } from '../../hooks/';
 import checkIfStaff from '../adminPage/checkIfStaff';
 
-const LoginContent = (props) => {
+const LoginContent = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +27,7 @@ const LoginContent = (props) => {
 
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
-    email: 'Формат електронної пошти некоректний',
+    email: 'Електронна пошта не відповідає вимогам',
     unspecifiedError: 'Електронна пошта чи пароль вказані некоректно',
     rateError: 'Небезпечні дії на сторінці. Сторінка заблокована на 10 хвилин',
   };
@@ -42,19 +43,13 @@ const LoginContent = (props) => {
     mode: 'all',
   });
 
-  const { setErrorMessage } = props;
-
   useEffect(() => {
     let errorMessage = '';
 
     if (errors.email?.message && errors.password?.message) {
-      if (errors.email.message === errors.password.message) {
-        errorMessage = errors.email.message;
-      } else {
-        errorMessage = `${errors.email?.message || ''}\n${
-          errors.password?.message || ''
-        }`;
-      }
+      errorMessage = errors.email.message === errors.password.message
+        ? errors.email.message
+        : `${errors.email?.message || ''}\n${errors.password?.message || ''}`;
     } else if (errors.email?.message) {
       errorMessage = errors.email.message;
     } else if (errors.password?.message) {
@@ -65,13 +60,12 @@ const LoginContent = (props) => {
       errorMessage = errors.rateError.message;
     }
 
-    setErrorMessage(errorMessage);
+    errorMessage && toast.error(errorMessage);
   }, [
     errors.email?.message,
     errors.password?.message,
     errors.unspecifiedError?.message,
     errors.rateError?.message,
-    setErrorMessage,
   ]);
 
   useEffect(() => {

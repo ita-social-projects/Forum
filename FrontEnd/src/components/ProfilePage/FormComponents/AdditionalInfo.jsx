@@ -106,7 +106,7 @@ const AdditionalInfo = (props) => {
                 name="founded"
                 label={LABELS.founded}
                 updateHandler={onUpdateFoundationYearField}
-                requredField={false}
+                requiredField={false}
                 value={profile.founded ?? ''}
                 error={foundationYearError}
               />
