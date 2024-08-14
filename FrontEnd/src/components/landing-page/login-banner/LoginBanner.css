@@ -57,7 +57,9 @@
     position: absolute;
 }
 
-.login-banner-group__content__ellipses {
+.login-banner-group__content__dots {
+    width: 63px;
+    height: 150px;
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;

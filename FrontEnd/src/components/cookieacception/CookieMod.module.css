@@ -1,6 +1,6 @@
 .modal-window {
   height: 100vh;
-  width: 100vw;
+  width: var(--main-block-size);
   background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
