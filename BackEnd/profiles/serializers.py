@@ -388,8 +388,8 @@ class ProfileModerationSerializer(serializers.Serializer):
         error_messages={"invalid_choice": "Action is not allowed"},
         write_only=True,
     )
-    banner_approved = ProfileImageField()
-    logo_approved = ProfileImageField()
+    banner_approved = ProfileImageField(write_only=True)
+    logo_approved = ProfileImageField(write_only=True)
     status_updated_at = serializers.DateTimeField(read_only=True)
     status = serializers.CharField(read_only=True)
 
