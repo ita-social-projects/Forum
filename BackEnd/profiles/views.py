@@ -272,7 +272,7 @@ class RegionDetail(RetrieveUpdateDestroyAPIView):
 
 class ProfileModeration(UpdateAPIView):
     serializer_class = ProfileModerationSerializer
-    queryset = Profile.objects.active_only()
+    queryset = Profile.objects.all()
     lookup_url_kwarg = "profile_id"
 
     def get_object(self):
