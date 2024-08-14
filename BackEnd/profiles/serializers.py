@@ -438,4 +438,3 @@ class ProfileModerationSerializer(serializers.Serializer):
         instance.status_updated_at = now()
         instance.save()
         return instance
-
