@@ -9,10 +9,12 @@
         p, b {
             color: black;
         }
+        a.button {
+            text-decoration: none;
+            color: black;
+        }
         .button {
             padding: 10px 20px;
-            color: black;
-            text-decoration: none;
             border: 1px solid black;
             border-radius: 5px;
             display: inline-block;
@@ -48,7 +50,7 @@
         {% if banner %}
         <p><b>Банер:</b></p>
         <div class="banner">
-            <img src="cid:{{ banner.uuid }}" alt="Банер"/>   
+            <img src="cid:{{ banner.uuid }}" alt="Банер"/>
         </div>
         {% endif %}
         {% if logo %}
@@ -58,7 +60,7 @@
         </div>
         {% endif %}
         <div style="margin: 20px 0;">
-            <a href="#" class="button button-approve">ЗАТВЕРДИТИ</a>
+            <a href="{{protocol}}://{{ domain }}/{{ approve_url }}" class="button button-approve">ЗАТВЕРДИТИ</a>
             <a href="#" class="button button-reject">СКАСУВАТИ</a>
         </div>
         <p><b>Примітка:</b> <i>запит буде автоматично затверджений через {{ moderation_time }}</i></p>

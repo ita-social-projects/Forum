@@ -4,9 +4,8 @@ from rest_framework.test import APITestCase
 from unittest import mock
 from django.utils.timezone import now
 from django.core import mail
-from administration.models import AutoModeration
-from utils.send_email import send_moderation_email
-from utils.image_moderation import ModerationManager
+from utils.moderation.send_email import send_moderation_email
+from utils.moderation.image_moderation import ModerationManager
 from authentication.factories import UserFactory
 from profiles.factories import ProfileStartupFactory
 from images.factories import ProfileimageFactory
@@ -135,14 +134,14 @@ class TestSendModerationManager(APITestCase):
         self.assertFalse(self.manager.needs_moderation(self.banner))
         self.assertFalse(self.manager.needs_moderation(self.logo))
 
-    @mock.patch("utils.image_moderation.now", return_value=now())
+    @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_update_status(self, mock_now):
         self.manager.update_status()
         self.assertEqual(self.profile.status, "pending")
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
 
-    @mock.patch("utils.image_moderation.now", return_value=now())
+    @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_check_for_moderation(self, mock_now):
         self.profile.banner = self.banner
         self.profile.logo = self.logo
@@ -155,7 +154,7 @@ class TestSendModerationManager(APITestCase):
             {"banner": self.banner, "logo": self.logo},
         )
 
-    @mock.patch("utils.image_moderation.now", return_value=now())
+    @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_check_for_moderation_deleted_banner(self, mock_now):
         self.banner.is_deleted = True
         self.profile.banner = self.banner
@@ -168,7 +167,7 @@ class TestSendModerationManager(APITestCase):
             self.manager.banner_logo, {"banner": None, "logo": self.logo}
         )
 
-    @mock.patch("utils.image_moderation.now", return_value=now())
+    @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_check_for_moderation_deleted_logo(self, mock_now):
         self.logo.is_deleted = True
         self.profile.banner = self.banner
