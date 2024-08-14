@@ -1,14 +1,24 @@
 import axios from 'axios';
 import{ useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import MainPage from '../landing-page/MainPage';
 import classes from './ModerationModal.module.css';
 
 
 export function ModerationModal() {
-    const { uid, timestamp, action } = useParams();
+    const { id, action} = useParams();
     const [moderationStatus, setModerationStatus] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+
+    const [searchParams] = useSearchParams();
+    const banner = searchParams.get('banner');
+    const logo = searchParams.get('logo');
+
+    const data = {
+      action,
+      ...(banner && { banner_approved: banner }),
+      ...(logo && { logo_approved: logo }),
+    };
 
     const errorMessages = {
       'There is a new request for moderation. URL is outdated' :
@@ -19,13 +29,9 @@ export function ModerationModal() {
 
     const handleModeration = async () => {
       try {
-        await axios.post(
-          `${process.env.REACT_APP_BASE_API_URL}/api/profiles/moderation/`,
-          {
-            uid: uid,
-            timestamp: timestamp,
-            action: action
-          }
+        await axios.patch(
+          `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${id}/images_moderation/`,
+          data
         );
         action === 'approve' ? setModerationStatus('Зміни успішно затверджено') : setModerationStatus('Зміни успішно скасовано. Профіль компанії заблоковано');
         setModalVisible(true);

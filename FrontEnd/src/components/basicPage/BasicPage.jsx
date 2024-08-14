@@ -162,7 +162,7 @@ function BasicPage() {
           path="/search"
           element={<Search isAuthorized={isAuth} userData={user} />}
         />
-        <Route path="/moderation/:uid/:timestamp/:action" element={<ModerationModal />}
+        <Route path="/moderation/:id/:action" element={<ModerationModal />}
         />
         <Route path="*" element={< ErrorPage404 />} />
       </Routes>)}
