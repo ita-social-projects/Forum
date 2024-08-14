@@ -1,5 +1,5 @@
 .banner-image__block {
-    width: 1512px;
+    width: var(--main-block-size);
     height: 200px;
     flex-shrink: 0;
 }
@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 1512px;
+    width: var(--main-block-size);
     height: 200px;
     flex-shrink: 0;
     background: var(--main-grey-20, #DEE1E8);

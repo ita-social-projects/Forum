@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import styles from './SignUpPage.module.css';
-import DotDecorComponent from '../UI/dotDecor/DotDecor';
 import { SignUpFormComponent } from '../components/signup/SignUpForm';
 
 export function SignUpPage() {
   return (
     <div className={styles['sign-up']}>
       <div className={styles['sign-up__body']}>
-        <DotDecorComponent position={'up-right'} />
+        <img className={styles['sign-up-img-left']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
         <div className={styles.container}>
           <SignUpFormComponent />
           <div className={styles['sign-in-line']}>
@@ -19,7 +20,9 @@ export function SignUpPage() {
             </Link>
           </div>
         </div>
-        <DotDecorComponent position={'down-left'} />
+        <img className={styles['sign-up-img-right']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
       </div>
     </div>
   );

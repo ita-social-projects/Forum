@@ -1,5 +1,5 @@
 .menu {
-    width: 1512px;
+    width: var(--main-block-size);
     display: flex;
     flex-direction: column;
     justify-content: center;

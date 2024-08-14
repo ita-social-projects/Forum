@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import styles from './RestorePasswordPage.module.css';
-import DotDecorComponent from '../UI/dotDecor/DotDecor';
 import { RestorePasswordFormComponent } from '../components/restorepassword/RestorePasswordForm';
 
 export function RestorePasswordPage() {
   return (
     <div className={styles['reset-password']}>
       <div className={styles['reset-password__body']}>
-        <DotDecorComponent position={'up-right'} />
+        <img className={styles['sign-up-img-right']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
         <div className={styles.container}>
           <RestorePasswordFormComponent />
           <div className={styles['sign-in-line']}>
@@ -19,7 +20,9 @@ export function RestorePasswordPage() {
             </Link>
           </div>
         </div>
-        <DotDecorComponent position={'down-left'} />
+        <img className={styles['sign-up-img-left']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
       </div>
     </div>
   );

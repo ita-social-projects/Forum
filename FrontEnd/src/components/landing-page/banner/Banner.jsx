@@ -1,5 +1,4 @@
 import './Banner.css';
-import Ellipses from '../ellipses/Ellipses';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
@@ -8,14 +7,9 @@ const MainBanner = (props) => {
     <div className="main-banner-group">
       <div className="main-banner-group__main-rectangle" />
       <div className="main-banner-group__white-rectangle">
-        <div className="main-banner-group__green-ellipses">
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-          <Ellipses type="green" count={7} />
-        </div>
+        <img className="main-banner-group__green-dots"
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
       </div>
       <div className="main-banner-group__frame-rectangle9" />
       <div className="main-banner-group__frame-rectangle10" />
@@ -23,11 +17,11 @@ const MainBanner = (props) => {
       <div className="main-banner-group__frame-rectangle12" />
       <div className="main-banner-group__frame-rectangle13" />
       <div className="main-banner-group__frame-description">
-        <div className="main-banner-group__banner-text">
-          Це унікальний майданчик <br />
-          для обміну інформацією і досвідом з тими, хто втілює свої ідеї в
-          життя.
-        </div>
+        <h2 className="main-banner-group__banner-text">
+          CRAFTMERGE - обʼєднуємо<br />
+          крафтових виробників та <br />
+          інноваторів
+        </h2>
         {!props.isAuthorized ? (
           <div className="main-banner-group__frame-login">
             <div className="main-banner-group__login-button">
@@ -49,28 +43,23 @@ const MainBanner = (props) => {
           </div>
         ) : null}
       </div>
-      <div className="main-banner-group__white-ellipses">
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-        <Ellipses type="white" count={7} />
-      </div>
+        <img className="main-banner-group__white-dots"
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6W.png`}
+          alt="dots_7x6W.png" />
       <img
         className="main-banner-group__banner-image1"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img1.jpeg`}
-        alt=""
+        alt="banner-img"
       />
       <img
         className="main-banner-group__banner-image2"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img2.jpeg`}
-        alt=""
+        alt="banner-img"
       />
       <img
         className="main-banner-group__banner-image3"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img3.jpeg`}
-        alt=""
+        alt="banner-img"
       />
       <div className="main-banner-wine">
         <div className="main-banner-group__frame">
@@ -78,7 +67,7 @@ const MainBanner = (props) => {
             <div className="winemaking">
               <img
                 src={`${process.env.REACT_APP_PUBLIC_URL}/svg/winemaking.svg`}
-                alt=""
+                alt="winemaking"
                 width="16"
                 height="18"
               />
@@ -102,7 +91,7 @@ const MainBanner = (props) => {
         <div className="cheese">
           <img
             src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cheese.svg`}
-            alt=""
+            alt="cheese"
             width="20"
             height="20"
           />
@@ -114,7 +103,7 @@ const MainBanner = (props) => {
             <div className="delivery">
               <img
                 src={`${process.env.REACT_APP_PUBLIC_URL}/svg/delivery.svg`}
-                alt=""
+                alt="delivery"
                 width="20"
                 height="20"
               />
