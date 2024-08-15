@@ -45,6 +45,7 @@ from .serializers import (
     RegionSerializer,
     ProfileCreateSerializer,
     ProfileModerationSerializer,
+    SavedCompanyUpdateSerializer,
 )
 from .filters import ProfileFilter
 
@@ -67,15 +68,22 @@ class SavedCompaniesUpdateDestroy(RetrieveUpdateDestroyAPIView):
     """
 
     permission_classes = [IsAuthenticated]
-    serializer_class = SavedCompanySerializer
     lookup_field = "company_id"
     lookup_url_kwarg = "company_pk"
 
     def get_queryset(self):
         return SavedCompany.objects.filter(user_id=self.request.user.id)
 
-    def partial_update(self, request, *args, **kwargs):
-        return super().partial_update(request, *args, **kwargs)
+    def get_serializer_class(self):
+        if self.request.method == "PATCH":
+            return SavedCompanyUpdateSerializer
+        else:
+            return SavedCompanySerializer
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        instance.is_updated = False
+        instance.save()
 
 
 class ProfileList(ListCreateAPIView):

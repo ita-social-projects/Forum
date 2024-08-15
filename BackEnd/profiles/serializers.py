@@ -49,7 +49,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
-    is_updated = serializers.SerializerMethodField()
+    saved_is_updated = serializers.SerializerMethodField()
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
     banner = ProfileImageField(source="banner_approved", read_only=True)
@@ -74,7 +74,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
             "banner",
             "logo",
             "is_saved",
-            "is_updated",
+            "saved_is_updated",
         )
 
     def get_is_saved(self, obj) -> bool:
@@ -83,7 +83,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
             return obj.pk in self.context["saved_companies_pk"]
         return False
 
-    def get_is_updated(self, obj) -> bool:
+    def get_saved_is_updated(self, obj) -> bool:
         user = self.context["request"].user
         if user.is_authenticated:
             saved_company = SavedCompany.objects.filter(
@@ -107,7 +107,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
-    is_updated = serializers.SerializerMethodField()
+    saved_is_updated = serializers.SerializerMethodField()
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
     banner = ProfileImageField(source="banner_approved", read_only=True)
@@ -137,7 +137,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "banner",
             "logo",
             "is_saved",
-            "is_updated",
+            "saved_is_updated",
         )
         read_only_fields = (
             "id",
@@ -168,7 +168,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             return obj.pk in self.context["saved_companies_pk"]
         return False
 
-    def get_is_updated(self, obj) -> bool:
+    def get_saved_is_updated(self, obj) -> bool:
         user = self.context["request"].user
         if user.is_authenticated:
             saved_company = SavedCompany.objects.filter(
@@ -340,6 +340,15 @@ class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
         )
 
 
+class SavedCompanyUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SavedCompany
+        fields = (
+            "is_updated",
+        )
+
+
 class SavedCompanySerializer(serializers.ModelSerializer):
     company_pk = serializers.IntegerField(write_only=True)
 
@@ -386,11 +395,6 @@ class SavedCompanySerializer(serializers.ModelSerializer):
             **validated_data,
         )
         return saved_company
-
-    def update(self, instance, validated_data):
-        instance.is_updated = validated_data.get("is_updated", False)
-        instance.save()
-        return instance
 
 
 class ViewedCompanySerializer(serializers.ModelSerializer):
