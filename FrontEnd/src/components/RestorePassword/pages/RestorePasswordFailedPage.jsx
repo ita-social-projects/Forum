@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import styles from './RestorePasswordSuccessPage.module.css';
-import DotDecorComponent from '../UI/dotDecor/DotDecor';
 
 export function RestorePasswordFailedPage() {
   return (
     <div className={styles['modal']}>
       <div className={styles['modal__body']}>
-        <DotDecorComponent position={'up-right'} />
+        <img className={styles['sign-up-img-right']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
         <div className={styles['container-modal']}>
           <div className={styles['modal__header']}>Посилання неактивне</div>
           <div className={styles['modal__footer--text']}>
@@ -22,7 +23,9 @@ export function RestorePasswordFailedPage() {
             </div>
           </div>
         </div>
-        <DotDecorComponent position={'down-left'} />
+        <img className={styles['sign-up-img-left']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
       </div>
     </div>
   );

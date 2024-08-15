@@ -1,19 +1,21 @@
 .main-banner-group {
-    width: 1512px;
+    width: var(--main-block-size);
     height: 500px;
     flex-shrink: 0;
     position: relative;
 }
+
 .main-banner-group__main-rectangle {
-    width: 1512px;
+    width: var(--main-block-size);
     height: 500px;
     flex-shrink: 0;
-    background: #1F9A7C;
+    background: var(--banner-main-dark-color);
     left: 0;
     top: 0;
     position: absolute;
 
 }
+
 .main-banner-group__white-rectangle {
     width: 786px;
     height: 500px;
@@ -61,6 +63,7 @@
     top: 78.87px;
     position: absolute;
 }
+
 .main-banner-group__frame-rectangle12 {
     width: 210px;
     height: 171px;
@@ -86,6 +89,7 @@
     top: 293.30px;
     position: absolute;
 }
+
 .main-banner-group__frame-description {
     display: inline-flex;
     flex-direction: column;
@@ -97,23 +101,27 @@
     top: 112px;
     position: absolute;
 }
+
 .main-banner-group__banner-text {
     width: 584px;
-    color: #000;
+    color: var(-banner-main-font-color);
     font-family: var(--font-main);
     font-size: 40px;
     font-style: normal;
     font-weight: 700;
-    line-height: 120%; /* 48px */
+    line-height: 120%;
+    /* 48px */
     letter-spacing: 0.4px;
     position: absolute;
 }
+
 .main-banner-group__frame-login {
     display: flex;
     align-items: flex-start;
     gap: 12px;
     position: absolute;
 }
+
 .main-banner-group__login-button {
     display: flex;
     padding: 5px 15px;
@@ -121,8 +129,8 @@
     align-items: center;
     gap: 10px;
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
-    background: #1F9A7C;
+    border: 1px solid var(--banner-main-dark-color);
+    background: var(--banner-main-dark-color);
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     top: 245px;
     position: relative;
@@ -136,7 +144,8 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 20px; /* 125% */
+    line-height: 20px;
+    /* 125% */
     letter-spacing: -0.16px;
     text-decoration: none;
 }
@@ -148,7 +157,7 @@
     align-items: center;
     gap: 10px;
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
+    border: 1px solid var(--banner-main-dark-color);
     background: #FFF;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
     top: 245px;
@@ -156,26 +165,19 @@
 }
 
 .main-banner-group__register-button-text {
-    color: #1F9A7C;
+    color: var(--banner-main-dark-color);
     text-align: center;
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 20px; /* 125% */
+    line-height: 20px;
+    /* 125% */
     letter-spacing: -0.16px;
     text-decoration: none;
 }
-.main-banner-group__white-ellipses {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    right: 10px;
-    top: 75px;
-    position: absolute;
-}
+
 .main-banner-group__banner-image1 {
     width: 199px;
     height: 258px;
@@ -187,6 +189,7 @@
     position: absolute;
     object-fit: cover;
 }
+
 .main-banner-group__banner-image2 {
     width: 220px;
     height: 148px;
@@ -198,6 +201,7 @@
     position: absolute;
     object-fit: cover;
 }
+
 .main-banner-group__banner-image3 {
     width: 212px;
     height: 182px;
@@ -210,15 +214,6 @@
     object-fit: cover;
 }
 
-.main-banner-group__green-ellipses {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    right: -25px;
-    bottom: 3px;
-    position: absolute;
-}
 .main-banner-wine {
     width: 123px;
     height: 36px;
@@ -239,6 +234,7 @@
     align-items: center;
     gap: 8px;
 }
+
 .main-banner-wine__winemaking {
     display: flex;
     padding: 9px 10.5px;
@@ -247,16 +243,19 @@
     border-radius: 16px;
     background: #BE4F28;
 }
+
 .winemaking {
     width: 15px;
     height: 18px;
     fill: #FFF;
 }
+
 .main-banner-group__content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
+
 .main-banner-group__banner-item-text {
     color: #292E32;
     font-feature-settings: 'calt' off;
@@ -264,9 +263,11 @@
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
+    /* 160% */
     text-transform: uppercase;
 }
+
 .main-banner-group__banner-item-counter {
     color: #BE4F28;
     font-feature-settings: 'calt' off;
@@ -274,9 +275,11 @@
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
+    /* 160% */
     text-transform: uppercase;
 }
+
 .main-banner-cheese {
     display: flex;
     width: 180px;
@@ -290,11 +293,13 @@
     top: 427px;
     position: absolute;
 }
+
 .banner-cheese {
     display: flex;
     align-items: flex-start;
     gap: 8px;
 }
+
 .main-banner-cheese__cheese {
     display: inline-flex;
     padding: 8px;
@@ -308,11 +313,13 @@
     top: 301px;
     position: absolute;
 }
+
 .cheese {
     width: 20px;
     height: 20px;
     position: relative;
 }
+
 .main-banner-delivery {
     display: inline-flex;
     padding: 6px 16px;
@@ -326,6 +333,7 @@
     top: 237px;
     position: absolute;
 }
+
 .main-banner-delivery__delivery {
     display: flex;
     padding: 8px;
@@ -334,9 +342,33 @@
     border-radius: 16px;
     background: #FFDEC6;
 }
+
 .delivery {
     width: 20px;
     height: 20px;
     position: relative;
 }
 
+.main-banner-group__white-dots {
+    width: 179px;
+    height: 150px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    right: 10px;
+    top: 75px;
+    position: absolute;
+}
+
+.main-banner-group__green-dots {
+    width: 179px;
+    height: 150px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    right: -25px;
+    bottom: 3px;
+    position: absolute;
+}

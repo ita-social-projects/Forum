@@ -10,6 +10,7 @@ from .views import (
     ActivityDetail,
     RegionDetail,
     ProfileViewCreate,
+    ProfileModeration,
 )
 
 app_name = "profiles"
@@ -38,4 +39,9 @@ urlpatterns = [
     path("categories/<pk>/", CategoryDetail.as_view(), name="category-detail"),
     path("activities/<pk>/", ActivityDetail.as_view(), name="activity-detail"),
     path("regions/<pk>/", RegionDetail.as_view(), name="region-detail"),
+    path(
+        "profiles/<str:profile_id>/images_moderation/",
+        ProfileModeration.as_view(),
+        name="profile-moderation",
+    ),
 ]

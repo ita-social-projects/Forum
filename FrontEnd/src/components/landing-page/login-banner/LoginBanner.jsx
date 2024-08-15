@@ -1,5 +1,4 @@
 import './LoginBanner.css';
-import Ellipses from '../ellipses/Ellipses';
 import { Link } from 'react-router-dom';
 
 const MainLoginBanner = () => {
@@ -14,14 +13,9 @@ const MainLoginBanner = () => {
           alt=""
         />
         <div className="login-banner-group__content__login-rectangle" />
-        <div className="login-banner-group__content__ellipses">
-          <Ellipses type="white" count={3} />
-          <Ellipses type="white" count={3} />
-          <Ellipses type="white" count={3} />
-          <Ellipses type="white" count={3} />
-          <Ellipses type="white" count={3} />
-          <Ellipses type="white" count={3} />
-        </div>
+        <img className="login-banner-group__content__dots"
+        src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_3x5W.png`}
+        alt="dots_3x5W.png" />
         <div className="login-banner-group__login-section-basic">
           <div className="login-banner-group__login-section">
             <div className="login-banner-group__text-section" />

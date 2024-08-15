@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import MainBanner from './banner/Banner';
-import MainPartners from './partners/Partners';
+// import MainPartners from './partners/Partners';
 import MainCompanies from './companies/Companies';
 import MainLoginBanner from './login-banner/LoginBanner';
 import MainAboutSection from './about-section/About';
@@ -19,7 +19,7 @@ const MainPage = ({ isAuthorized }) => {
         <MainBanner isAuthorized={isAuthorized} />
         <div className={css['main-app-body']}>
           <MainCompanies isAuthorized={isAuthorized} />
-          <MainPartners />
+          {/* <MainPartners /> */}
           {!isAuthorized ? <MainLoginBanner /> : null}
           <MainAboutSection />
           <div>

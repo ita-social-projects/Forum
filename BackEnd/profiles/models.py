@@ -24,12 +24,19 @@ class Region(models.Model):
 
 
 class Profile(models.Model):
+
+    UNDEFINED = "undefined"
+    PENDING = "pending"
+    BLOCKED = "blocked"
+    APPROVED = "approved"
+    AUTOAPPROVED = "auto_approved"
+
     STATUS_CHOICES = [
-        ("undefined", "Undefined"),
-        ("pending", "Pending Moderation"),
-        ("blocked", "Blocked"),
-        ("approved", "Approved"),
-        ("auto_approved", "Auto Approved"),
+        (UNDEFINED, "Undefined"),
+        (PENDING, "Pending Moderation"),
+        (BLOCKED, "Blocked"),
+        (APPROVED, "Approved"),
+        (AUTOAPPROVED, "Auto Approved"),
     ]
 
     id = models.AutoField(primary_key=True)
@@ -46,7 +53,7 @@ class Profile(models.Model):
     person_position = models.CharField(max_length=50, blank=True, default="")
 
     official_name = models.CharField(
-        max_length=255, unique=True, null=True, blank=True, default=None
+        max_length=255, null=True, blank=True, default=None
     )
 
     regions = models.ManyToManyField("Region", blank=True)
@@ -124,7 +131,7 @@ class Profile(models.Model):
     status_updated_at = models.DateTimeField(default=now)
     completeness = models.SmallIntegerField(default=0)
     status = models.CharField(
-        max_length=15, choices=STATUS_CHOICES, default="undefined"
+        max_length=15, choices=STATUS_CHOICES, default=UNDEFINED
     )
 
     objects = ProfileManager.as_manager()

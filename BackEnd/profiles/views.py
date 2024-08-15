@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.http import Http404
 from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
@@ -8,6 +9,7 @@ from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
 )
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
@@ -15,9 +17,10 @@ from rest_framework.permissions import (
     IsAdminUser,
 )
 from rest_framework.response import Response
-from utils.completeness_counter import completeness_count
-from utils.send_email import send_moderation_email
 from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
+from utils.completeness_counter import completeness_count
+from utils.moderation.send_email import send_moderation_email
+from utils.moderation.encode_decode_id import decode_id
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -41,6 +44,7 @@ from .serializers import (
     ActivitySerializer,
     RegionSerializer,
     ProfileCreateSerializer,
+    ProfileModerationSerializer,
 )
 from .filters import ProfileFilter
 
@@ -268,3 +272,21 @@ class RegionDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = RegionSerializer
     permission_classes = (IsAdminUser,)
     queryset = Region.objects.all()
+
+
+class ProfileModeration(UpdateAPIView):
+    serializer_class = ProfileModerationSerializer
+    queryset = Profile.objects.active_only()
+    lookup_url_kwarg = "profile_id"
+
+    def get_object(self):
+        try:
+            profile_id = decode_id(self.kwargs.get(self.lookup_url_kwarg))
+        except ValueError:
+            raise Http404
+
+        return get_object_or_404(self.queryset, pk=profile_id)
+
+    def perform_update(self, serializer):
+        profile = serializer.save()
+        completeness_count(profile)
