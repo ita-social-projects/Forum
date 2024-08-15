@@ -341,12 +341,9 @@ class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
 
 
 class SavedCompanyUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = SavedCompany
-        fields = (
-            "is_updated",
-        )
+        fields = ("is_updated",)
 
 
 class SavedCompanySerializer(serializers.ModelSerializer):
