@@ -1,25 +1,3 @@
-.modal {
-    position: absolute;
-    top: 50%;
-    left: 52%;
-    transform: translate(-50%, -50%);
-    width: 610px;
-    max-width: 90%;
-    border-radius: 8px;
-    background: var(--wf-base-white, #fff);
-    z-index: 999;
-}
-
-.blur-background {
-    backdrop-filter: blur(3px);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 997;
-}
-
 .modal__content {
     display: flex;
     padding: 16px 24px;
