@@ -371,17 +371,14 @@ class SavedCompanySerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"company_pk": ["Company does not exist"]}
             )
-        if self.context["request"].method == "POST":
-            if SavedCompany.objects.filter(
-                user=user, company=company_pk
-            ).exists():
-                raise serializers.ValidationError(
-                    {
-                        "company_pk": [
-                            "Company is already in users saved companies list"
-                        ]
-                    }
-                )
+        if SavedCompany.objects.filter(user=user, company=company_pk).exists():
+            raise serializers.ValidationError(
+                {
+                    "company_pk": [
+                        "Company is already in users saved companies list"
+                    ]
+                }
+            )
         return attrs
 
     def create(self, validated_data):
