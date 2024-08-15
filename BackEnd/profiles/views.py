@@ -7,7 +7,6 @@ from djoser import utils as djoser_utils
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
-    DestroyAPIView,
     RetrieveUpdateDestroyAPIView,
 )
 from rest_framework.permissions import (
@@ -44,7 +43,6 @@ from .serializers import (
     ProfileCreateSerializer,
 )
 from .filters import ProfileFilter
-from .signals import profile_retrieved
 
 
 class SavedCompaniesCreate(CreateAPIView):
@@ -59,17 +57,21 @@ class SavedCompaniesCreate(CreateAPIView):
 
 
 @extend_schema(responses={204: {}})
-class SavedCompaniesDestroy(DestroyAPIView):
+class SavedCompaniesUpdateDestroy(RetrieveUpdateDestroyAPIView):
     """
-    Remove the company from the saved list.
+    Update status or Remove the company from the saved list.
     """
 
     permission_classes = [IsAuthenticated]
+    serializer_class = SavedCompanySerializer
     lookup_field = "company_id"
     lookup_url_kwarg = "company_pk"
 
     def get_queryset(self):
         return SavedCompany.objects.filter(user_id=self.request.user.id)
+
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class ProfileList(ListCreateAPIView):
@@ -157,8 +159,6 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        company_id = int(self.kwargs.get(self.lookup_field))
-
         if self.request.user.is_authenticated:
             saved_companies_pk = frozenset(
                 SavedCompany.objects.filter(
@@ -166,14 +166,6 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
                 ).values_list("company_id", flat=True)
             )
             context.update({"saved_companies_pk": saved_companies_pk})
-
-            if company_id in saved_companies_pk:
-                profile_retrieved.send(
-                    sender=SavedCompany,
-                    company=company_id,
-                    user=self.request.user,
-                )
-
         return context
 
     def get_serializer_class(self):

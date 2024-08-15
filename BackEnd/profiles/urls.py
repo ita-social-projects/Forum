@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SavedCompaniesCreate, SavedCompaniesDestroy
+from .views import SavedCompaniesCreate, SavedCompaniesUpdateDestroy
 from .views import (
     ProfileList,
     ProfileDetail,
@@ -24,8 +24,8 @@ urlpatterns = [
     ),
     path(
         "saved-list/<int:company_pk>/",
-        SavedCompaniesDestroy.as_view(),
-        name="saved_companies_destroy",
+        SavedCompaniesUpdateDestroy.as_view(),
+        name="saved_companies_update_destroy",
     ),
     path(
         "company-view/<int:profile_id>/",
