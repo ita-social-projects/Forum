@@ -17,12 +17,6 @@ class ModerationManager:
             self.content_deleted = True
             self.profile.save()
 
-    def delete_approved_image(self, approved_image):
-        if self.profile.status == self.profile.PENDING and approved_image:
-            approved_image.is_deleted = True
-            completeness_count(self.profile)  # needs improvement
-            approved_image.save()
-
     def handle_undefined_status(self):
         banner = self.profile.banner
         logo = self.profile.logo
@@ -32,12 +26,6 @@ class ModerationManager:
                 self.content_deleted = True
             self.profile.status = self.profile.UNDEFINED
             self.profile.status_updated_at = now()
-
-        if banner and banner.is_deleted:
-            self.delete_approved_image(self.profile.banner_approved)
-
-        if logo and logo.is_deleted:
-            self.delete_approved_image(self.profile.logo_approved)
         self.profile.save()
 
     def update_status(self):
