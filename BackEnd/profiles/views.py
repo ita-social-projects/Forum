@@ -61,7 +61,7 @@ class SavedCompaniesCreate(CreateAPIView):
     pagination_class = ForumPagination
 
 
-@extend_schema(responses={204: {}})
+@extend_schema(responses={200: {}, 204: {}})
 class SavedCompaniesUpdateDestroy(RetrieveUpdateDestroyAPIView):
     """
     Update status or Remove the company from the saved list.
