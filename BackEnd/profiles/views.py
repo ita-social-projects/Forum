@@ -217,11 +217,18 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         if moderation_needed:
             banner_uuid = str(profile.banner.uuid)
             logo_uuid = str(profile.logo.uuid)
-            delay = AutoModeration.get_auto_moderation_hours().auto_moderation_hours
+            delay = (
+                AutoModeration.get_auto_moderation_hours().auto_moderation_hours
+            )
             result = celery_autoapprove.apply_async(
-                (profile.id, banner_uuid, logo_uuid), countdown=delay)
+                (profile.id, banner_uuid, logo_uuid), countdown=delay
+            )
             task = AutoapproveTask(
-                celery_task_id=result.id, profile=profile, logo=logo_uuid, banner=banner_uuid)
+                celery_task_id=result.id,
+                profile=profile,
+                logo=logo_uuid,
+                banner=banner_uuid,
+            )
             task.save()
 
 

@@ -429,9 +429,14 @@ class ProfileModerationSerializer(serializers.Serializer):
             instance.status_updated_at = now()
             instance.save()
             autoappove_instance = AutoapproveTask.objects.filter(
-                profile=instance, banner=str(banner_approved.uuid), logo=str(logo_approved.uuid)).first()
+                profile=instance,
+                banner=str(banner_approved.uuid),
+                logo=str(logo_approved.uuid),
+            ).first()
             if autoappove_instance:
-                celery_task = AsyncResult(id=autoappove_instance.celery_task_id)
+                celery_task = AsyncResult(
+                    id=autoappove_instance.celery_task_id
+                )
                 celery_task.revoke()
             return instance
         else:

@@ -3,6 +3,7 @@ from celery import shared_task
 from .models import Profile
 from images.models import ProfileImage
 
+
 @shared_task
 def celery_autoapprove(profile_id, banner_uuid, logo_uuid):
     profile = Profile.objects.get(pk=profile_id)
@@ -16,7 +17,3 @@ def celery_autoapprove(profile_id, banner_uuid, logo_uuid):
     profile.save()
     banner.save()
     logo.save()
-
-    
-
-
