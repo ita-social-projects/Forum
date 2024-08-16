@@ -82,8 +82,6 @@ class SavedCompaniesUpdateDestroy(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        instance.is_updated = False
-        instance.save()
 
 
 class ProfileList(ListCreateAPIView):
