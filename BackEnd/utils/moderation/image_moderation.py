@@ -1,7 +1,5 @@
 from django.utils.timezone import now
 
-from utils.completeness_counter import completeness_count
-
 
 class ModerationManager:
     def __init__(self, profile):
