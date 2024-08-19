@@ -231,8 +231,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
 
 class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField(source="person.email")
-    banner = ProfileImageField(allow_null=True)
-    logo = ProfileImageField(allow_null=True)
+    banner = ProfileImageField()
+    logo = ProfileImageField()
 
     class Meta:
         model = Profile
