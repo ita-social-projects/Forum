@@ -8,7 +8,6 @@ from djoser import utils as djoser_utils
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
-    DestroyAPIView,
     RetrieveUpdateDestroyAPIView,
     UpdateAPIView,
 )
@@ -46,6 +45,7 @@ from .serializers import (
     RegionSerializer,
     ProfileCreateSerializer,
     ProfileModerationSerializer,
+    SavedCompanyUpdateSerializer,
 )
 from .filters import ProfileFilter
 
@@ -61,10 +61,10 @@ class SavedCompaniesCreate(CreateAPIView):
     pagination_class = ForumPagination
 
 
-@extend_schema(responses={204: {}})
-class SavedCompaniesDestroy(DestroyAPIView):
+@extend_schema(responses={200: {}, 204: {}})
+class SavedCompaniesUpdateDestroy(RetrieveUpdateDestroyAPIView):
     """
-    Remove the company from the saved list.
+    Update status or Remove the company from the saved list.
     """
 
     permission_classes = [IsAuthenticated]
@@ -73,6 +73,12 @@ class SavedCompaniesDestroy(DestroyAPIView):
 
     def get_queryset(self):
         return SavedCompany.objects.filter(user_id=self.request.user.id)
+
+    def get_serializer_class(self):
+        if self.request.method == "PATCH":
+            return SavedCompanyUpdateSerializer
+        else:
+            return SavedCompanySerializer
 
 
 class ProfileList(ListCreateAPIView):
@@ -211,6 +217,7 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile = serializer.save()
         completeness_count(profile)
         send_moderation_email(profile)
+        SavedCompany.objects.filter(company=profile).update(is_updated=True)
 
 
 class ProfileViewCreate(CreateAPIView):
