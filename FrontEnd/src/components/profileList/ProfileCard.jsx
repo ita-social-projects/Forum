@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Typography } from 'antd';
@@ -9,12 +9,19 @@ import css from './ProfileCard.module.css';
 import axios from 'axios';
 import CategoryBadges from '../MiniComponents/CategoryBadges';
 import StarForLike from '../MiniComponents/StarForLike';
+import BellForUpdates from '../MiniComponents/BellForUpdates';
 
 const { Paragraph } = Typography;
 
 export default function ProfileCard({ isAuthorized, data }) {
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(data.is_saved);
+  const [savedIsUpdated, setIsUpdated] = useState(data.saved_is_updated);
+
+  useEffect(() => {
+    setIsUpdated(data.saved_is_updated);
+  }, [data.saved_is_updated]);
+
   const profile = useMemo(() => {
     return {
       id: data.id,
@@ -26,6 +33,7 @@ export default function ProfileCard({ isAuthorized, data }) {
       region: data.regions_ukr_display ? data.regions_ukr_display : '',
       categories: data.categories,
       isSaved: data.is_saved,
+      savedIsUpdated: data.saved_is_updated,
       commonInfo: data.common_info,
       logo: data.logo,
     };
@@ -51,11 +59,23 @@ export default function ProfileCard({ isAuthorized, data }) {
     }
   };
 
+  const handleProfileViewed = async () => {
+    if (profile.savedIsUpdated) {
+      profile.savedIsUpdated = false;
+      try {
+        await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}/`, { company_pk: profile.id, is_updated: profile.savedIsUpdated });
+      } catch (error) {
+      console.error(error);
+      }
+    }
+  };
+
   return (
     <div className={css['company-card']}>
       <Link
         className={css['company-card__link']}
         to={`/profile-detail/${profile.id}`}
+        onClick={handleProfileViewed}
       >
         <div className={css['logo-box']}>
           <img
@@ -89,12 +109,18 @@ export default function ProfileCard({ isAuthorized, data }) {
           </div>
         </div>
       </Link>
-      <StarForLike
-        isSaved={isSaved}
-        isAuthorized={isAuthorized}
-        ownProfile={ownProfile}
-        handleClick={isSaved ? handleDeleteSaved : handleSave}
-      ></StarForLike>
+      <div className={css['icon-container']}>
+        <BellForUpdates
+          className={savedIsUpdated ? '' : 'hidden'}
+          savedIsUpdated={savedIsUpdated}
+        ></BellForUpdates>
+        <StarForLike
+          isSaved={isSaved}
+          isAuthorized={isAuthorized}
+          ownProfile={ownProfile}
+          handleClick={isSaved ? handleDeleteSaved : handleSave}
+        ></StarForLike>
+      </div>
     </div>
   );
 }
@@ -121,6 +147,7 @@ ProfileCard.propTypes = {
     ),
     common_info: PropTypes.string,
     is_saved: PropTypes.bool.isRequired,
+    saved_is_updated: PropTypes.bool.isRequired,
     logo: PropTypes.shape({
       path: PropTypes.string,
       uuid: PropTypes.string,

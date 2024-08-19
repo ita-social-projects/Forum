@@ -107,7 +107,7 @@
 }
 
 .content__common-info {
-  width: 1169px;
+  width: 1150px;
   color: var(--main-grey-90, #25292c);
   font-feature-settings: "calt" off;
 
@@ -126,4 +126,12 @@
   align-self: stretch;
   max-width: 100%;
   gap: 8px;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 100%;
 }
