@@ -1,0 +1,9 @@
+.bell {
+  color: #ffd800;
+  font-size: 24px;
+  margin-right: 5px;
+}
+
+.bell.hidden {
+  visibility: hidden;
+}
