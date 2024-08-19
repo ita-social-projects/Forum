@@ -160,6 +160,7 @@ class SavedCompany(models.Model):
         CustomUser, on_delete=models.CASCADE, related_name="saved_list_items"
     )
     added_at = models.DateTimeField(auto_now_add=True)
+    is_updated = models.BooleanField(default=False)
 
 
 class ViewedCompany(models.Model):
