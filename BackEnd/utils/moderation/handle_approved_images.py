@@ -12,8 +12,8 @@ class ApprovedImages:
             completeness_count(self.profile)
 
     def check_approved_images(self):
-        if self.profile.banner and self.profile.banner.is_deleted:
+        if not self.profile.banner:
             self.delete_approved_image(self.profile.banner_approved)
 
-        if self.profile.logo and self.profile.logo.is_deleted:
+        if not self.profile.logo:
             self.delete_approved_image(self.profile.logo_approved)
