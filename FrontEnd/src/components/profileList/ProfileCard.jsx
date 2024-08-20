@@ -16,10 +16,10 @@ const { Paragraph } = Typography;
 export default function ProfileCard({ isAuthorized, data }) {
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(data.is_saved);
-  const [savedIsUpdated, setIsUpdated] = useState(data.saved_is_updated);
+  const [savedIsUpdated, setSavedIsUpdated] = useState(data.saved_is_updated);
 
   useEffect(() => {
-    setIsUpdated(data.saved_is_updated);
+  setSavedIsUpdated(data.saved_is_updated);
   }, [data.saved_is_updated]);
 
   const profile = useMemo(() => {
@@ -60,12 +60,14 @@ export default function ProfileCard({ isAuthorized, data }) {
   };
 
   const handleProfileViewed = async () => {
-    if (profile.savedIsUpdated) {
-      profile.savedIsUpdated = false;
+    if (savedIsUpdated) {
       try {
-        await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}/`, { company_pk: profile.id, is_updated: profile.savedIsUpdated });
+        await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}/`, {
+          is_updated: false
+        });
+        setSavedIsUpdated(false);
       } catch (error) {
-      console.error(error);
+        console.error(error);
       }
     }
   };
