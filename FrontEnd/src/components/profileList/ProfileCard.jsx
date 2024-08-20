@@ -61,13 +61,14 @@ export default function ProfileCard({ isAuthorized, data }) {
 
   const handleProfileViewed = async () => {
     if (savedIsUpdated) {
+      setSavedIsUpdated(false);
       try {
         await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}/`, {
           is_updated: false
         });
-        setSavedIsUpdated(false);
       } catch (error) {
         console.error(error);
+        setSavedIsUpdated(true);
       }
     }
   };
