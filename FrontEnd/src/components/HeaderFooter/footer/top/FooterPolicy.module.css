@@ -5,17 +5,6 @@
     gap: 79px;
 }
 
-.policy-content-logo {
-    color: var(--main-white, #FFF);
-    font-feature-settings: 'calt' off;
-    font-family: var(--font-logo);
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: -0.32px;
-}
-
 .policy-content-links {
     display: flex;
     align-items: flex-start;
@@ -23,11 +12,10 @@
 }
 
 .policy-content-links__text {
-    color: var(--wf-base-500, #A0ABC0);
+    color: var(--footer-links-font-color);
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
-
     font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
@@ -35,4 +23,9 @@
     line-height: 150%;
     letter-spacing: -0.14px;
     white-space: nowrap;
+}
+
+.policy-content__main_logo {
+    width: 199px;
+    height: 24px;
 }

@@ -1,11 +1,17 @@
 import css from './FooterBottom.module.css';
-import logo from './opentech_logo.svg';
 
 function FooterBottom() {
     return (
         <div className={css['footer-bottom']}>
-            <div className={css['footer-bottom__text']}>Copyright 2023 Forum. All rights reserved.</div>
-            <img className={css['footer-bottom-logo__svg']} src={logo} alt=""/>
+            <p className={css['footer-bottom__text']}>
+                Copyright 2023 Forum. All rights reserved.
+            </p>
+            <img
+                className={css['footer-bottom-logo__svg']}
+                src={`${process.env.REACT_APP_PUBLIC_URL}/img/opentech_logo.svg`}
+                alt="opentech_logo"
+                title="opentech_logo"
+            />
         </div>
     );
 }

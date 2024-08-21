@@ -62,6 +62,13 @@
   --toastify-toast-min-height: 22px;
   --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));
   --toastify-text-color-error: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  /* Header */
+
+  /* Footer */
+  --footer-backround: #3C4044;
+  --footer-font-color: #FFF;
+  --footer-links-font-color: #A0ABC0;
+  --footer-bottom-backround: #333;
 
   /* main pages About block*/
   --about-text-font-color: #292E32;

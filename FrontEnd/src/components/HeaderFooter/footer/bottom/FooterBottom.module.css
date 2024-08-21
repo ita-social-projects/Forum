@@ -1,17 +1,15 @@
 .footer-bottom {
     display: flex;
-    width: 1304px;
-    padding: 6px 104px;
-    align-items: flex-start;
-    gap: 864px;
-
-    background: var(--gray-1, #333);
+    width: var(--main-block-size);
+    height: 33px;
+    justify-content: flex-start;
+    background: var(--footer-bottom-backround);
 }
 
 .footer-bottom__text {
-    color: var(--wf-base-white, #FFF);
+    color: var(--footer-font-color);
     font-feature-settings: 'calt' off;
-
+    padding: 6px 0px 0px 104px;
     font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
@@ -23,4 +21,5 @@
 .footer-bottom-logo__svg {
     width: 165px;
     height: 20px;
+    padding-left: 55%;
 }
