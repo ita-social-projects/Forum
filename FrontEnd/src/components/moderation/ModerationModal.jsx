@@ -16,8 +16,8 @@ export function ModerationModal() {
 
   const data = {
     action,
-    ...(banner && { banner_approved: banner }),
-    ...(logo && { logo_approved: logo }),
+    ...(banner && { banner: banner }),
+    ...(logo && { logo: logo }),
   };
 
   const errorMessages = {
