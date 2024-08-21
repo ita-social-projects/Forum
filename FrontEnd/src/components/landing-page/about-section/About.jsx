@@ -31,6 +31,8 @@ const MainAboutSection = () => {
             className="about-us-section-content__image"
             src={`${process.env.REACT_APP_PUBLIC_URL}/img/about.jpeg`}
             alt="about_img"
+            loading="lazy"
+            title="about_img"
           />
         </div>
       </div>
