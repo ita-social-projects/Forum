@@ -465,16 +465,13 @@ class ProfileModerationSerializer(serializers.Serializer):
             instance.status = instance.APPROVED
             instance.status_updated_at = now()
             instance.save()
-            autoappove_instance = AutoapproveTask.objects.filter(
-                profile=instance,
-                banner=str(banner_approved.uuid),
-                logo=str(logo_approved.uuid),
-            ).first()
+            autoappove_instance = AutoapproveTask.objects.filter(profile=instance).first()
             if autoappove_instance:
                 celery_task = AsyncResult(
                     id=autoappove_instance.celery_task_id
                 )
                 celery_task.revoke()
+                autoappove_instance.delete()
             return instance
         else:
             raise serializers.ValidationError("Invalid action provided.")

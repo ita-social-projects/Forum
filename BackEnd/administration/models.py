@@ -32,5 +32,4 @@ class AutoModeration(models.Model):
 class AutoapproveTask(models.Model):
     celery_task_id = models.CharField()
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    banner = models.CharField()
-    logo = models.CharField()
+

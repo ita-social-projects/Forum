@@ -5,6 +5,7 @@ from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
 import django_filters
 from djoser import utils as djoser_utils
+from celery.result import AsyncResult
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
@@ -225,15 +226,19 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
             logo_uuid = str(profile.logo.uuid)
             delay = (
                 AutoModeration.get_auto_moderation_hours().auto_moderation_hours
-            )
+            ) * 60 * 60
             result = celery_autoapprove.apply_async(
                 (profile.id, banner_uuid, logo_uuid), countdown=delay
             )
+            old_task = AutoapproveTask.objects.filter(profile=profile).first()
+            if old_task:
+                celery_old_task = AsyncResult(id=old_task.celery_task_id)
+                celery_old_task.revoke()
+                old_task.delete()
+
             task = AutoapproveTask(
                 celery_task_id=result.id,
-                profile=profile,
-                logo=logo_uuid,
-                banner=banner_uuid,
+                profile=profile
             )
             task.save()
         SavedCompany.objects.filter(company=profile).update(is_updated=True)
