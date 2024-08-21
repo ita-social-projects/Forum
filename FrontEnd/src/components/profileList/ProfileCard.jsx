@@ -112,18 +112,18 @@ export default function ProfileCard({ isAuthorized, data }) {
           </div>
         </div>
       </Link>
-      <div className={css['icon-container']}>
+      <div className={css['bell-container']}>
         <BellForUpdates
           className={savedIsUpdated ? '' : 'hidden'}
           savedIsUpdated={savedIsUpdated}
         ></BellForUpdates>
+      </div>
         <StarForLike
           isSaved={isSaved}
           isAuthorized={isAuthorized}
           ownProfile={ownProfile}
           handleClick={isSaved ? handleDeleteSaved : handleSave}
         ></StarForLike>
-      </div>
     </div>
   );
 }
