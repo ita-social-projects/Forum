@@ -127,3 +127,11 @@
   max-width: 100%;
   gap: 8px;
 }
+
+.bell-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 100%;
+}
