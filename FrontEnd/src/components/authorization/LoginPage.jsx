@@ -75,6 +75,7 @@ const LoginContent = () => {
   useEffect(() => {
     clearErrors('unspecifiedError');
     clearErrors('rateError');
+    clearErrors('blockedUserError');
   }, [getValues('email'), getValues('password'), clearErrors]);
 
   const disabled = !isValid || (isRunning && minutes < 10);
@@ -113,7 +114,7 @@ const LoginContent = () => {
             message: errorMessageTemplates.rateError,
           });
         } else if (resp == 'Profile has been blocked.') {
-            setError('rateError', {
+            setError('blockedUserError', {
               type: 'manual',
               message: errorMessageTemplates.blockedUserError,
           });
