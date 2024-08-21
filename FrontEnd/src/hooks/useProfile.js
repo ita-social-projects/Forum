@@ -19,7 +19,7 @@ export default function useProfile() {
       })
       .then(res => res.data)
       .catch((error) => {
-        if (error.response && error.response.status === 401 || error.response && error.response.status === 404) {
+        if (error.response && (error.response.status === 401 || error.response.status === 404)) {
           logout();
         }
         console.error('An error occurred while fetching the data.', error);
