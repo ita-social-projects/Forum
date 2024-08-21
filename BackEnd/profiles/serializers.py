@@ -425,15 +425,15 @@ class ProfileModerationSerializer(serializers.Serializer):
         error_messages={"invalid_choice": "Action is not allowed"},
         write_only=True,
     )
-    banner_approved = ProfileImageField(write_only=True)
-    logo_approved = ProfileImageField(write_only=True)
+    banner = ProfileImageField(write_only=True)
+    logo = ProfileImageField(write_only=True)
     status_updated_at = serializers.DateTimeField(read_only=True)
     status = serializers.CharField(read_only=True)
 
-    def validate(self, value):
+    def validate(self, attrs):
         profile = self.instance
-        banner = value.get("banner_approved")
-        logo = value.get("logo_approved")
+        banner = attrs.get("banner")
+        logo = attrs.get("logo")
         if profile.status != profile.PENDING:
             raise serializers.ValidationError(
                 "The change approval request has been processed. URL is outdated"
@@ -445,24 +445,33 @@ class ProfileModerationSerializer(serializers.Serializer):
                 raise serializers.ValidationError(
                     "There is a new request for moderation. URL is outdated"
                 )
-        return value
+        return attrs
 
     def update(self, instance, validated_data):
         action = validated_data.get("action")
-        banner_approved = validated_data.get("banner_approved")
-        logo_approved = validated_data.get("logo_approved")
+        banner = validated_data.get("banner")
+        logo = validated_data.get("logo")
+
         if action == ModerationAction.approve:
-            if banner_approved:
+            if banner:
                 instance.banner.is_approved = True
-                instance.banner_approved = banner_approved
+                instance.banner_approved = banner
                 instance.banner.save()
-            if logo_approved:
+            if logo:
                 instance.logo.is_approved = True
-                instance.logo_approved = logo_approved
+                instance.logo_approved = logo
                 instance.logo.save()
             instance.status = instance.APPROVED
-            instance.status_updated_at = now()
-            instance.save()
-            return instance
+
+        elif action == ModerationAction.reject:
+            instance.status = instance.BLOCKED
+            instance.is_deleted = True
+            instance.person.is_active = False
+            instance.person.save()
+
         else:
             raise serializers.ValidationError("Invalid action provided.")
+
+        instance.status_updated_at = now()
+        instance.save()
+        return instance
