@@ -9,7 +9,10 @@ class ModerationManager:
         self.content_deleted = False
 
     def handle_approved_status(self, secondary_image):
-        if self.profile.status == self.profile.PENDING and secondary_image.is_approved:
+        if (
+            self.profile.status == self.profile.PENDING
+            and secondary_image.is_approved
+        ):
             self.profile.status = self.profile.APPROVED
             self.profile.status_updated_at = now()
             self.content_deleted = True
