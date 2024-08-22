@@ -135,8 +135,8 @@ class TestSendModerationManager(APITestCase):
         self.assertFalse(self.manager.needs_moderation(self.profile.logo))
 
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
-    def test_update_status(self, mock_now):
-        self.manager.update_status()
+    def test_update_pending_status(self, mock_now):
+        self.manager.update_pending_status()
         self.assertEqual(self.profile.status, "pending")
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
