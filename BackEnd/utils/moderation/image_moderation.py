@@ -29,7 +29,7 @@ class ModerationManager:
             self.profile.status_updated_at = now()
         self.profile.save()
 
-    def update_status(self):
+    def update_pending_status(self):
         self.profile.status = self.profile.PENDING
         self.profile.status_updated_at = now()
         self.profile.save()
@@ -40,13 +40,13 @@ class ModerationManager:
 
     def check_for_moderation(self):
         if self.needs_moderation(self.profile.banner):
-            self.update_status()
+            self.update_pending_status()
             self.banner_logo["banner"] = self.profile.banner
         elif not self.profile.banner and self.profile.logo:
             self.handle_approved_status(self.profile.logo)
 
         if self.needs_moderation(self.profile.logo):
-            self.update_status()
+            self.update_pending_status()
             self.banner_logo["logo"] = self.profile.logo
         elif not self.profile.logo and self.profile.banner:
             self.handle_approved_status(self.profile.banner)
