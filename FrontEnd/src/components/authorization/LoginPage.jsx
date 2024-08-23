@@ -30,6 +30,7 @@ const LoginContent = () => {
     email: 'Електронна пошта не відповідає вимогам',
     unspecifiedError: 'Електронна пошта чи пароль вказані некоректно',
     rateError: 'Небезпечні дії на сторінці. Сторінка заблокована на 10 хвилин',
+    blockedUserError: 'Профіль компанії було заблоковано внаслідок розміщення неприйнятного контенту',
   };
 
   const {
@@ -58,6 +59,8 @@ const LoginContent = () => {
       errorMessage = errors.unspecifiedError.message;
     } else if (errors.rateError?.message) {
       errorMessage = errors.rateError.message;
+    } else if (errors.blockedUserError?.message) {
+      errorMessage = errors.blockedUserError.message;
     }
 
     errorMessage && toast.error(errorMessage);
@@ -66,11 +69,13 @@ const LoginContent = () => {
     errors.password?.message,
     errors.unspecifiedError?.message,
     errors.rateError?.message,
+    errors.blockedUserError?.message,
   ]);
 
   useEffect(() => {
     clearErrors('unspecifiedError');
     clearErrors('rateError');
+    clearErrors('blockedUserError');
   }, [getValues('email'), getValues('password'), clearErrors]);
 
   const disabled = !isValid || (isRunning && minutes < 10);
@@ -107,6 +112,11 @@ const LoginContent = () => {
           setError('rateError', {
             type: 'manual',
             message: errorMessageTemplates.rateError,
+          });
+        } else if (resp == 'Profile has been blocked.') {
+            setError('blockedUserError', {
+              type: 'manual',
+              message: errorMessageTemplates.blockedUserError,
           });
         }
       }
