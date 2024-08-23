@@ -69,7 +69,9 @@ def check_for_moderation_and_send_email(profile):
             "approve_url": generate_profile_moderation_url(
                 profile.id, banner, logo, "approve"
             ),
-            "reject_url": None,
+            "reject_url": generate_profile_moderation_url(
+                profile.id, banner, logo, "reject"
+            ),
         }
 
         email_body = render_to_string("profiles/email_template.html", context)

@@ -60,8 +60,8 @@
         </div>
         {% endif %}
         <div style="margin: 20px 0;">
-            <a href="{{domain}}/{{approve_url}}" class="button button-approve">ЗАТВЕРДИТИ</a>
-            <a href="#" class="button button-reject">СКАСУВАТИ</a>
+            <a href="{{protocol}}://{{ domain }}/{{ approve_url }}" class="button button-approve">ЗАТВЕРДИТИ</a>
+            <a href="{{protocol}}://{{ domain }}/{{ reject_url }}" class="button button-reject">СКАСУВАТИ</a>
         </div>
         <p><b>Примітка:</b> <i>запит буде автоматично затверджений через {{ moderation_time }}</i></p>
         <p>З повагою,</p>
