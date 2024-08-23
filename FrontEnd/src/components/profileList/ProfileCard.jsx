@@ -19,7 +19,7 @@ export default function ProfileCard({ isAuthorized, data }) {
   const [savedIsUpdated, setSavedIsUpdated] = useState(data.saved_is_updated);
 
   useEffect(() => {
-  setSavedIsUpdated(data.saved_is_updated);
+    setSavedIsUpdated(data.saved_is_updated);
   }, [data.saved_is_updated]);
 
   const profile = useMemo(() => {
@@ -114,8 +114,7 @@ export default function ProfileCard({ isAuthorized, data }) {
       </Link>
       <div className={css['bell-container']}>
         <BellForUpdates
-          className={savedIsUpdated ? '' : 'hidden'}
-          savedIsUpdated={savedIsUpdated}
+          savedIsUpdated={data.saved_is_updated}
         ></BellForUpdates>
       </div>
         <StarForLike
