@@ -7,7 +7,6 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
 from administration.models import AutoModeration
-from .image_moderation import ModerationManager
 from .encode_decode_id import encode_id
 
 
