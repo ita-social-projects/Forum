@@ -27,7 +27,6 @@ class TestProfileModeration(APITestCase):
         self.moderator_client = APIClient()
 
     def test_approve_banner_and_logo(self):
-        self.client.force_authenticate(self.user)
 
         # user updates both banner and logo
         self.user_client.patch(
