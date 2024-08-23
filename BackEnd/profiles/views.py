@@ -5,7 +5,6 @@ from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
 import django_filters
 from djoser import utils as djoser_utils
-from celery.result import AsyncResult
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
@@ -50,9 +49,6 @@ from .serializers import (
     SavedCompanyUpdateSerializer,
 )
 from .filters import ProfileFilter
-
-from .tasks import celery_autoapprove
-
 
 
 class SavedCompaniesCreate(CreateAPIView):
@@ -223,11 +219,9 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         SavedCompany.objects.filter(company=profile).update(is_updated=True)
         completeness_count(profile)
         moderation_manager = ModerationManager(profile)
-        if moderation_manager.check_for_moderation():     
-            send_moderation_email(profile) 
-            moderation_manager.schedule_autoapprove()  
-
-
+        if moderation_manager.check_for_moderation():
+            send_moderation_email(profile)
+            moderation_manager.schedule_autoapprove()
 
 
 class ProfileViewCreate(CreateAPIView):

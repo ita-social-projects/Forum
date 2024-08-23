@@ -92,4 +92,3 @@ def send_moderation_email(profile):
         attach_image(email, logo, logo.uuid)
 
     email.send(fail_silently=False)
-

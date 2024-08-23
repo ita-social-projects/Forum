@@ -1,4 +1,3 @@
-from celery.result import AsyncResult
 from rest_framework import serializers
 from django.utils.timezone import now
 from .models import (
@@ -473,7 +472,7 @@ class ProfileModerationSerializer(serializers.Serializer):
 
         else:
             raise serializers.ValidationError("Invalid action provided.")
-        
+
         moderation_manager = ModerationManager(profile=instance)
         moderation_manager.revoke_deprecated_autoapprove()
 
