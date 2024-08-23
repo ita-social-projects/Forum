@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
 
 from authentication.factories import UserFactory
 from profiles.factories import (
@@ -21,11 +21,16 @@ class TestProfileModeration(APITestCase):
         self.user = UserFactory()
         self.profile = ProfileCompanyFactory.create(person=self.user)
 
+        self.user_client = APIClient()
+        self.user_client.force_authenticate(self.user)
+
+        self.moderator_client = APIClient()
+
     def test_approve_banner_and_logo(self):
         self.client.force_authenticate(self.user)
 
         # user updates both banner and logo
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -37,7 +42,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves request
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
@@ -64,10 +69,9 @@ class TestProfileModeration(APITestCase):
         self.assertEqual(self.profile.APPROVED, self.profile.status)
 
     def test_approve_banner(self):
-        self.client.force_authenticate(self.user)
 
         # user updates only banner
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -78,7 +82,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves request
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
@@ -101,10 +105,9 @@ class TestProfileModeration(APITestCase):
         self.assertEqual(self.profile.APPROVED, self.profile.status)
 
     def test_approve_logo(self):
-        self.client.force_authenticate(self.user)
 
         # user updates logo
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -115,7 +118,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves request
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
@@ -138,10 +141,9 @@ class TestProfileModeration(APITestCase):
         self.assertEqual(self.profile.APPROVED, self.profile.status)
 
     def test_approve_banner_and_logo_processed_request(self):
-        self.client.force_authenticate(self.user)
 
         # user updates both banner and logo
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -153,7 +155,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves request
-        self.client.patch(
+        self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
@@ -165,7 +167,7 @@ class TestProfileModeration(APITestCase):
         )
 
         # moderator approves request one more time
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
@@ -187,10 +189,9 @@ class TestProfileModeration(APITestCase):
         )
 
     def test_approve_banner_and_logo_outdated_request(self):
-        self.client.force_authenticate(self.user)
 
         # user updates both banner and logo
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -205,7 +206,7 @@ class TestProfileModeration(APITestCase):
         first_logo = self.profile.logo.uuid
 
         # user updates both banner and logo again during pending request
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -218,7 +219,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves first request
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
@@ -243,10 +244,9 @@ class TestProfileModeration(APITestCase):
         self.assertEqual(self.profile.PENDING, self.profile.status)
 
     def test_approve_banner_and_logo_wrong_action(self):
-        self.client.force_authenticate(self.user)
 
         # user updates both banner and logo
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -258,7 +258,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves request
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
@@ -275,10 +275,9 @@ class TestProfileModeration(APITestCase):
         )
 
     def test_approve_banner_and_logo_error_in_signed_id(self):
-        self.client.force_authenticate(self.user)
 
         # user updates both banner and logo
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -290,7 +289,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves request
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id="some_wrong_signed_id"
             ),
@@ -305,10 +304,9 @@ class TestProfileModeration(APITestCase):
         self.assertEqual({"detail": "Not found."}, response.json())
 
     def test_approve_banner_and_logo_non_existing_profile(self):
-        self.client.force_authenticate(self.user)
 
         # user updates both banner and logo
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -320,7 +318,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves request
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(0)
             ),
@@ -335,10 +333,9 @@ class TestProfileModeration(APITestCase):
         self.assertEqual({"detail": "Not found."}, response.json())
 
     def test_approve_banner_and_logo_empty_image_fields(self):
-        self.client.force_authenticate(self.user)
 
         # user updates both banner and logo
-        self.client.patch(
+        self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
@@ -350,7 +347,7 @@ class TestProfileModeration(APITestCase):
         self.profile.refresh_from_db()
 
         # moderator approves request
-        response = self.client.patch(
+        response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
