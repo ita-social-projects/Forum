@@ -49,51 +49,47 @@ def attach_image(email, image, content_id):
         email.attach(img)
 
 
-def check_for_moderation_and_send_email(profile):
-    manager = ModerationManager(profile)
-    if manager.check_for_moderation():
-        update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
-        update_date = profile.status_updated_at.strftime("%d.%m.%Y")
-        banner = manager.banner_logo["banner"]
-        logo = manager.banner_logo["logo"]
-        context = {
-            "profile_name": profile.name,
-            "protocol": PROTOCOL,
-            "domain": DOMAIN,
-            "banner": banner,
-            "logo": logo,
-            "updated_at": update_time,
-            "moderation_time": define_ending(
-                AutoModeration.get_auto_moderation_hours().auto_moderation_hours
-            ),
-            "approve_url": generate_profile_moderation_url(
-                profile.id, banner, logo, "approve"
-            ),
-            "reject_url": generate_profile_moderation_url(
-                profile.id, banner, logo, "reject"
-            ),
-        }
+def send_moderation_email(profile):
+    update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
+    update_date = profile.status_updated_at.strftime("%d.%m.%Y")
+    banner = profile.banner
+    logo = profile.logo
+    context = {
+        "profile_name": profile.name,
+        "protocol": PROTOCOL,
+        "domain": DOMAIN,
+        "banner": banner,
+        "logo": logo,
+        "updated_at": update_time,
+        "moderation_time": define_ending(
+            AutoModeration.get_auto_moderation_hours().auto_moderation_hours
+        ),
+        "approve_url": generate_profile_moderation_url(
+            profile.id, banner, logo, "approve"
+        ),
+        "reject_url": generate_profile_moderation_url(
+            profile.id, banner, logo, "reject"
+        ),
+    }
 
-        email_body = render_to_string("profiles/email_template.html", context)
-        email = EmailMultiAlternatives(
-            subject=f"{profile.name} - {update_date}: Запит "
-            "на затвердження змін в обліковому записі компанії",
-            body=email_body,
-            from_email=settings.EMAIL_HOST_USER,
-            to=[
-                settings.EMAIL_HOST_USER,
-            ],
-        )
+    email_body = render_to_string("profiles/email_template.html", context)
+    email = EmailMultiAlternatives(
+        subject=f"{profile.name} - {update_date}: Запит "
+        "на затвердження змін в обліковому записі компанії",
+        body=email_body,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[
+            settings.EMAIL_HOST_USER,
+        ],
+    )
 
-        email.content_subtype = EMAIL_CONTENT_SUBTYPE
+    email.content_subtype = EMAIL_CONTENT_SUBTYPE
 
-        if banner:
-            attach_image(email, banner, banner.uuid)
+    if banner:
+        attach_image(email, banner, banner.uuid)
 
-        if logo:
-            attach_image(email, logo, logo.uuid)
+    if logo:
+        attach_image(email, logo, logo.uuid)
 
-        email.send(fail_silently=False)
-        return True
-    else:
-        return False
+    email.send(fail_silently=False)
+

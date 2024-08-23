@@ -20,8 +20,9 @@ from rest_framework.permissions import (
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 from utils.completeness_counter import completeness_count
-from utils.moderation.send_email import check_for_moderation_and_send_email
+from utils.moderation.send_email import send_moderation_email
 from utils.moderation.encode_decode_id import decode_id
+from utils.moderation.image_moderation import ModerationManager
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -51,7 +52,7 @@ from .serializers import (
 from .filters import ProfileFilter
 
 from .tasks import celery_autoapprove
-from administration.models import AutoapproveTask, AutoModeration
+
 
 
 class SavedCompaniesCreate(CreateAPIView):
@@ -219,29 +220,14 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         profile = serializer.save()
-        completeness_count(profile)
-        moderation_needed = check_for_moderation_and_send_email(profile)
-        if moderation_needed:
-            banner_uuid = str(profile.banner.uuid)
-            logo_uuid = str(profile.logo.uuid)
-            delay = (
-                AutoModeration.get_auto_moderation_hours().auto_moderation_hours
-            ) * 60 * 60
-            result = celery_autoapprove.apply_async(
-                (profile.id, banner_uuid, logo_uuid), countdown=delay
-            )
-            old_task = AutoapproveTask.objects.filter(profile=profile).first()
-            if old_task:
-                celery_old_task = AsyncResult(id=old_task.celery_task_id)
-                celery_old_task.revoke()
-                old_task.delete()
-
-            task = AutoapproveTask(
-                celery_task_id=result.id,
-                profile=profile
-            )
-            task.save()
         SavedCompany.objects.filter(company=profile).update(is_updated=True)
+        completeness_count(profile)
+        moderation_manager = ModerationManager(profile)
+        if moderation_manager.check_for_moderation():     
+            send_moderation_email(profile) 
+            moderation_manager.schedule_autoapprove()  
+
+
 
 
 class ProfileViewCreate(CreateAPIView):

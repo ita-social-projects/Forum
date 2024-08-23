@@ -12,7 +12,7 @@ from .models import (
 from images.models import ProfileImage
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
 from utils.moderation.moderation_action import ModerationAction
-from administration.models import AutoapproveTask
+from utils.moderation.image_moderation import ModerationManager
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -474,14 +474,9 @@ class ProfileModerationSerializer(serializers.Serializer):
         else:
             raise serializers.ValidationError("Invalid action provided.")
         
-        autoappove_instance = AutoapproveTask.objects.filter(profile=instance).first()
-        if autoappove_instance:
-            celery_task = AsyncResult(
-                id=autoappove_instance.celery_task_id
-            )
-            celery_task.revoke()
-            autoappove_instance.delete()
-            
+        moderation_manager = ModerationManager(profile=instance)
+        moderation_manager.revoke_deprecated_autoapprove()
+
         instance.status_updated_at = now()
         instance.save()
         return instance
