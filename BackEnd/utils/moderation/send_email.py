@@ -6,6 +6,7 @@ from email.mime.image import MIMEImage
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
+from .handle_approved_images import ApprovedImages
 from administration.models import AutoModeration
 from .image_moderation import ModerationManager
 from .encode_decode_id import encode_id
@@ -51,7 +52,10 @@ def attach_image(email, image, content_id):
 
 def send_moderation_email(profile):
     manager = ModerationManager(profile)
-    if manager.check_for_moderation():
+    approved_images = ApprovedImages(profile)
+    email_is_needed = manager.check_for_moderation()
+    approved_images.check_approved_images()
+    if email_is_needed or manager.content_deleted:
         update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
         update_date = profile.status_updated_at.strftime("%d.%m.%Y")
         banner = manager.banner_logo["banner"]
@@ -62,6 +66,7 @@ def send_moderation_email(profile):
             "domain": DOMAIN,
             "banner": banner,
             "logo": logo,
+            "banner_logo_deleted": manager.content_deleted,
             "updated_at": update_time,
             "moderation_time": define_ending(
                 AutoModeration.get_auto_moderation_hours().auto_moderation_hours

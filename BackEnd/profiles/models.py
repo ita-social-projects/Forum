@@ -24,7 +24,6 @@ class Region(models.Model):
 
 
 class Profile(models.Model):
-
     UNDEFINED = "undefined"
     PENDING = "pending"
     BLOCKED = "blocked"
