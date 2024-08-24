@@ -129,14 +129,14 @@ class TestSendModerationManager(APITestCase):
         self.assertFalse(self.manager.needs_moderation(self.logo))
 
     def test_needs_moderation_deleted_image(self):
-        self.banner.is_deleted = True
-        self.logo.is_deleted = True
-        self.assertFalse(self.manager.needs_moderation(self.banner))
-        self.assertFalse(self.manager.needs_moderation(self.logo))
+        self.profile.banner = None
+        self.profile.logo = None
+        self.assertFalse(self.manager.needs_moderation(self.profile.banner))
+        self.assertFalse(self.manager.needs_moderation(self.profile.logo))
 
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
-    def test_update_status(self, mock_now):
-        self.manager.update_status()
+    def test_update_pending_status(self, mock_now):
+        self.manager.update_pending_status()
         self.assertEqual(self.profile.status, "pending")
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
@@ -156,8 +156,7 @@ class TestSendModerationManager(APITestCase):
 
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_check_for_moderation_deleted_banner(self, mock_now):
-        self.banner.is_deleted = True
-        self.profile.banner = self.banner
+        self.profile.banner = None
         self.profile.logo = self.logo
         self.manager.check_for_moderation()
         self.assertEqual(self.profile.status, "pending")
@@ -169,9 +168,8 @@ class TestSendModerationManager(APITestCase):
 
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_check_for_moderation_deleted_logo(self, mock_now):
-        self.logo.is_deleted = True
         self.profile.banner = self.banner
-        self.profile.logo = self.logo
+        self.profile.logo = None
         self.manager.check_for_moderation()
         self.assertEqual(self.profile.status, "pending")
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
@@ -182,10 +180,8 @@ class TestSendModerationManager(APITestCase):
 
     # needs improvement for undefined status
     def test_check_for_moderation_deleted_both(self):
-        self.banner.is_deleted = True
-        self.profile.banner = self.banner
-        self.logo.is_deleted = True
-        self.profile.logo = self.logo
+        self.profile.banner = None
+        self.profile.logo = None
         self.manager.check_for_moderation()
         self.assertFalse(self.manager.moderation_is_needed)
         self.assertEqual(
