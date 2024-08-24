@@ -434,6 +434,12 @@ class ProfileModerationSerializer(serializers.Serializer):
         profile = self.instance
         banner = attrs.get("banner")
         logo = attrs.get("logo")
+
+        if not logo and not banner:
+            raise serializers.ValidationError(
+                "At least one image (logo or banner) must be provided for the moderation request."
+            )
+
         if profile.status != profile.PENDING:
             raise serializers.ValidationError(
                 "The change approval request has been processed. URL is outdated"
