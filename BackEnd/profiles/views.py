@@ -222,11 +222,14 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         deletion_checker = ApprovedImagesDeleter(profile)
         deletion_checker.handle_potential_deletion()
         moderation_manager = ModerationManager(profile)
-        if moderation_manager.check_for_moderation():
+        if (
+            moderation_manager.check_for_moderation()
+            or moderation_manager.content_deleted
+        ):
             banner = moderation_manager.images["banner"]
             logo = moderation_manager.images["logo"]
             is_deleted = moderation_manager.content_deleted
-            send_moderation_email(profile,banner, logo, is_deleted)
+            send_moderation_email(profile, banner, logo, is_deleted)
             moderation_manager.schedule_autoapprove()
 
 
