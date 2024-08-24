@@ -29,7 +29,7 @@ class TestSendModerationEmail(APITestCase):
         manager = ModerationManager(self.profile)
         manager.check_for_moderation()
         banner = manager.images["banner"]
-        logo =  manager.images["logo"]
+        logo = manager.images["logo"]
         content_is_deleted = manager.content_deleted
         send_moderation_email(self.profile, banner, logo, content_is_deleted)
 
@@ -62,7 +62,7 @@ class TestSendModerationEmail(APITestCase):
         manager = ModerationManager(self.profile)
         manager.check_for_moderation()
         banner = manager.images["banner"]
-        logo =  manager.images["logo"]
+        logo = manager.images["logo"]
         content_is_deleted = manager.content_deleted
         send_moderation_email(self.profile, banner, logo, content_is_deleted)
 
@@ -91,7 +91,7 @@ class TestSendModerationEmail(APITestCase):
         manager = ModerationManager(self.profile)
         manager.check_for_moderation()
         banner = manager.images["banner"]
-        logo =  manager.images["logo"]
+        logo = manager.images["logo"]
         content_is_deleted = manager.content_deleted
         send_moderation_email(self.profile, banner, logo, content_is_deleted)
 
@@ -194,6 +194,4 @@ class TestSendModerationManager(APITestCase):
         self.profile.logo = None
         self.manager.check_for_moderation()
         self.assertFalse(self.manager.moderation_is_needed)
-        self.assertEqual(
-            self.manager.images, {"banner": None, "logo": None}
-        )
+        self.assertEqual(self.manager.images, {"banner": None, "logo": None})
