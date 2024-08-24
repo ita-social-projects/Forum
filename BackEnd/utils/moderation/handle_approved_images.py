@@ -2,7 +2,6 @@ from ..completeness_counter import completeness_count
 
 
 class ApprovedImagesDeleter:
-
     """
     Entity that handles the deletion of approved images if a user deletes an image under moderation.
     """
