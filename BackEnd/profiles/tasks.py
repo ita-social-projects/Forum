@@ -2,6 +2,7 @@ from celery import shared_task
 
 from .models import Profile
 from images.models import ProfileImage
+from utils.completeness_counter import completeness_count
 
 
 @shared_task
@@ -17,3 +18,4 @@ def celery_autoapprove(profile_id, banner_uuid, logo_uuid):
     profile.save()
     banner.save()
     logo.save()
+    completeness_count(profile)
