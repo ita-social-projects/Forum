@@ -60,27 +60,28 @@ function TitleInfo({ isAuthorized, data }) {
           <DefaultLogo />
         ) : (
           <img
-            className={classes['logo']}
+            className={classes['title-block__logo']}
             src={profile.logo?.path}
             alt="Company logo"
+            title="Company logo"
           />
         )}
       </div>
       <div className={classes['title-block__about']}>
-        <div className={classes['title-block__activity']}>
+        <p className={classes['title-block__activity']}>
           {profile.activities}
-        </div>
+        </p>
         <div className={classes['title-block__company']}>
-          <div className={classes['title-block__company_name']}>
+          <h2 className={classes['title-block__company_name']}>
             {profile.name}
-          </div>
+          </h2>
           <div className={classes['title-block__company_category']}>
             <CategoryBadges categories={profile.categories} />
           </div>
         </div>
-        <div className={classes['title-block__company_region']}>
+        <p className={classes['title-block__company_region']}>
           {profile.regions}
-        </div>
+        </p>
       </div>
       {isAuthorized ? (
         <>
