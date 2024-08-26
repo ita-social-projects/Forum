@@ -143,10 +143,11 @@ ProfileCard.propTypes = {
     ),
     common_info: PropTypes.string,
     is_saved: PropTypes.bool.isRequired,
-    saved_is_updated: PropTypes.bool.isRequired,
     logo: PropTypes.shape({
       path: PropTypes.string,
       uuid: PropTypes.string,
     }),
   }).isRequired,
+  savedIsUpdated: PropTypes.bool.isRequired,
+  onClearUpdate: PropTypes.func.isRequired,
 };
