@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Typography } from 'antd';
@@ -13,15 +13,9 @@ import BellForUpdates from '../MiniComponents/BellForUpdates';
 
 const { Paragraph } = Typography;
 
-export default function ProfileCard({ isAuthorized, data }) {
+export default function ProfileCard({ isAuthorized, data, savedIsUpdated, onClearUpdate }) {
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(data.is_saved);
-  const [savedIsUpdated, setSavedIsUpdated] = useState(data.saved_is_updated);
-
-  useEffect(() => {
-    setSavedIsUpdated(data.saved_is_updated);
-  }, [data.saved_is_updated]);
-
   const profile = useMemo(() => {
     return {
       id: data.id,
@@ -33,7 +27,7 @@ export default function ProfileCard({ isAuthorized, data }) {
       region: data.regions_ukr_display ? data.regions_ukr_display : '',
       categories: data.categories,
       isSaved: data.is_saved,
-      savedIsUpdated: data.saved_is_updated,
+      savedIsUpdated: savedIsUpdated,
       commonInfo: data.common_info,
       logo: data.logo,
     };
@@ -61,14 +55,14 @@ export default function ProfileCard({ isAuthorized, data }) {
 
   const handleProfileViewed = async () => {
     if (savedIsUpdated) {
-      setSavedIsUpdated(false);
+      onClearUpdate(false);
       try {
         await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}/`, {
           is_updated: false
         });
       } catch (error) {
         console.error(error);
-        setSavedIsUpdated(true);
+        onClearUpdate(true);
       }
     }
   };
@@ -114,7 +108,7 @@ export default function ProfileCard({ isAuthorized, data }) {
       </Link>
       <div className={css['bell-container']}>
         <BellForUpdates
-          savedIsUpdated={data.saved_is_updated}
+          savedIsUpdated={savedIsUpdated}
         ></BellForUpdates>
       </div>
         <StarForLike
