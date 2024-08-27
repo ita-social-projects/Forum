@@ -4,6 +4,7 @@ from rest_framework.test import APITestCase
 from unittest import mock
 from django.utils.timezone import now
 from django.core import mail
+from utils.moderation.handle_approved_images import ApprovedImagesDeleter
 from utils.moderation.send_email import send_moderation_email
 from utils.moderation.image_moderation import ModerationManager
 from authentication.factories import UserFactory
@@ -305,3 +306,29 @@ class TestSendModerationManager(APITestCase):
         self.assertFalse(self.manager.moderation_is_needed)
         self.assertFalse(self.manager.content_deleted)
         self.assertEqual(self.manager.images, {"banner": None, "logo": None})
+
+
+class TestApprovedImagesDeleter(APITestCase):
+    def setUp(self):
+        self.banner = ProfileimageFactory(image_type="banner")
+        self.logo = ProfileimageFactory(image_type="logo")
+        self.user = UserFactory(email="test1@test.com")
+        self.profile = ProfileStartupFactory.create(
+            person=self.user,
+            official_name="Test Official Startup",
+            phone="380100102034",
+            edrpou="99999999",
+        )
+        self.deletion_checker = ApprovedImagesDeleter(self.profile)
+
+    def test_handle_potential_deletion_banner(self):
+        self.profile.banner_approved = self.banner
+        self.profile.status = self.profile.PENDING
+        self.deletion_checker.handle_potential_deletion()
+        self.assertTrue(self.profile.banner_approved.is_deleted)
+
+    def test_handle_potential_deletion_logo(self):
+        self.profile.logo_approved = self.logo
+        self.profile.status = self.profile.PENDING
+        self.deletion_checker.handle_potential_deletion()
+        self.assertTrue(self.profile.logo_approved.is_deleted)
