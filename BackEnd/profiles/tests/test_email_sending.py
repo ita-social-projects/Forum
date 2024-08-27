@@ -23,6 +23,7 @@ class TestSendModerationEmail(APITestCase):
             edrpou="99999999",
         )
 
+    # tests for new images
     def test_send_moderation_email(self):
         self.profile.banner = self.banner
         self.profile.logo = self.logo
@@ -114,6 +115,69 @@ class TestSendModerationEmail(APITestCase):
             os.path.basename(self.logo.image_path.name),
         )
 
+    def test_send_moderation_email_new_banner_approved_logo(self):
+        self.profile.banner = self.banner
+        self.profile.logo = self.logo
+        self.profile.logo.is_approved = True
+
+        manager = ModerationManager(self.profile)
+        manager.check_for_moderation()
+        banner = manager.images["banner"]
+        logo = manager.images["logo"]
+        content_is_deleted = manager.content_deleted
+        send_moderation_email(self.profile, banner, logo, content_is_deleted)
+
+        self.assertEqual(len(mail.outbox), 1)
+        email_data = mail.outbox[0]
+        self.assertEqual(
+            email_data.subject,
+            f"{self.profile.name} - {self.profile.status_updated_at.strftime('%d.%m.%Y')}: Запит на затвердження змін в обліковому записі компанії",
+        )
+        self.assertIn(self.profile.name, email_data.body)
+        self.assertIn(
+            self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
+            email_data.body,
+        )
+
+        self.assertEqual(len(email_data.attachments), 1)
+        self.assertEqual(
+            email_data.attachments[0].get_filename(),
+            os.path.basename(self.banner.image_path.name),
+        )
+
+    # test for deleted images
+    def test_content_deleted_email_with_pending_status(self):
+        self.profile.status = self.profile.PENDING
+        manager = ModerationManager(self.profile)
+        manager.check_for_moderation()
+        banner = manager.images["banner"]
+        logo = manager.images["logo"]
+        content_is_deleted = manager.content_deleted
+        send_moderation_email(self.profile, banner, logo, content_is_deleted)
+
+        self.assertIn(
+            "Інформуємо про те що попередньо доданий контент було видалено користувачем.",
+            mail.outbox[0].body,
+        )
+        self.assertEqual(self.profile.status, self.profile.UNDEFINED)
+
+    def test_remove_pending_image_keep_approved_image(self):
+        self.profile.banner = self.banner
+        self.profile.banner.is_approved = True
+        self.profile.status = self.profile.PENDING
+        manager = ModerationManager(self.profile)
+        manager.check_for_moderation()
+        banner = manager.images["banner"]
+        logo = manager.images["logo"]
+        content_is_deleted = manager.content_deleted
+        send_moderation_email(self.profile, banner, logo, content_is_deleted)
+
+        self.assertIn(
+            "Інформуємо про те що попередньо доданий контент було видалено користувачем.",
+            mail.outbox[0].body,
+        )
+        self.assertEqual(self.profile.status, self.profile.APPROVED)
+
 
 class TestSendModerationManager(APITestCase):
     def setUp(self):
@@ -139,24 +203,23 @@ class TestSendModerationManager(APITestCase):
         self.assertFalse(self.manager.needs_moderation(self.logo))
 
     def test_needs_moderation_deleted_image(self):
-        self.profile.banner = None
-        self.profile.logo = None
         self.assertFalse(self.manager.needs_moderation(self.profile.banner))
         self.assertFalse(self.manager.needs_moderation(self.profile.logo))
 
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_update_pending_status(self, mock_now):
         self.manager.update_pending_status()
-        self.assertEqual(self.profile.status, "pending")
+        self.assertEqual(self.profile.status, self.profile.PENDING)
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
 
+    # cases for moderation is needed
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_check_for_moderation(self, mock_now):
         self.profile.banner = self.banner
         self.profile.logo = self.logo
         self.manager.check_for_moderation()
-        self.assertEqual(self.profile.status, "pending")
+        self.assertEqual(self.profile.status, self.profile.PENDING)
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
         self.assertEqual(
@@ -165,11 +228,10 @@ class TestSendModerationManager(APITestCase):
         )
 
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
-    def test_check_for_moderation_deleted_banner(self, mock_now):
-        self.profile.banner = None
+    def test_check_for_moderation_empty_banner(self, mock_now):
         self.profile.logo = self.logo
         self.manager.check_for_moderation()
-        self.assertEqual(self.profile.status, "pending")
+        self.assertEqual(self.profile.status, self.profile.PENDING)
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
         self.assertEqual(
@@ -177,21 +239,69 @@ class TestSendModerationManager(APITestCase):
         )
 
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
-    def test_check_for_moderation_deleted_logo(self, mock_now):
+    def test_check_for_moderation_empty_logo(self, mock_now):
         self.profile.banner = self.banner
-        self.profile.logo = None
         self.manager.check_for_moderation()
-        self.assertEqual(self.profile.status, "pending")
+        self.assertEqual(self.profile.status, self.profile.PENDING)
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
         self.assertEqual(
             self.manager.images, {"banner": self.banner, "logo": None}
         )
 
-    # needs improvement for undefined status
-    def test_check_for_moderation_deleted_both(self):
-        self.profile.banner = None
-        self.profile.logo = None
+    @mock.patch("utils.moderation.image_moderation.now", return_value=now())
+    def test_check_for_moderation_with_approved_image(self, mock_now):
+        self.profile.banner = self.banner
+        self.profile.banner.is_approved = True
+        self.profile.logo = self.logo
         self.manager.check_for_moderation()
+        self.assertEqual(self.profile.status, self.profile.PENDING)
+        self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
+        self.assertTrue(self.manager.moderation_is_needed)
+        self.assertEqual(
+            self.manager.images,
+            {"banner": None, "logo": self.logo},
+        )
+
+    @mock.patch("utils.moderation.image_moderation.now", return_value=now())
+    def test_handle_approved_image_status_pending(self, mock_now):
+        self.profile.banner = self.banner
+        self.profile.banner.is_approved = True
+        self.profile.status = self.profile.PENDING
+        self.manager.check_for_moderation()
+        self.assertEqual(self.profile.status, self.profile.APPROVED)
+        self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertFalse(self.manager.moderation_is_needed)
+        self.assertTrue(self.manager.content_deleted)
+        self.assertEqual(
+            self.manager.images,
+            {"banner": None, "logo": None},
+        )
+
+    def test_handle_approved_image_status_approved(self):
+        self.profile.banner = self.banner
+        self.profile.banner.is_approved = True
+        self.profile.status = self.profile.APPROVED
+        self.manager.check_for_moderation()
+        self.assertEqual(self.profile.status, self.profile.APPROVED)
+        self.assertFalse(self.manager.moderation_is_needed)
+        self.assertEqual(
+            self.manager.images,
+            {"banner": None, "logo": None},
+        )
+
+    def test_handle_undefined_status(self):
+        self.profile.status = self.profile.PENDING
+        self.manager.check_for_moderation()
+        self.assertEqual(self.profile.status, self.profile.UNDEFINED)
+        self.assertFalse(self.manager.moderation_is_needed)
+        self.assertTrue(self.manager.content_deleted)
+        self.assertEqual(self.manager.images, {"banner": None, "logo": None})
+
+    def test_handle_undefined_status_deletion_after_approve(self):
+        self.profile.status = self.profile.APPROVED
+        self.manager.check_for_moderation()
+        self.assertEqual(self.profile.status, self.profile.UNDEFINED)
+        self.assertFalse(self.manager.moderation_is_needed)
+        self.assertFalse(self.manager.content_deleted)
         self.assertEqual(self.manager.images, {"banner": None, "logo": None})
