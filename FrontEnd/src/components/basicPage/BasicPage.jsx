@@ -26,7 +26,7 @@ import { RestorePasswordSuccessPage } from '../RestorePassword/pages/RestorePass
 import { RestorePasswordFailedPage } from '../RestorePassword/pages/RestorePasswordFailedPage';
 import { ModerationModal } from '../moderation/ModerationModal';
 import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
-import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
+import TermsAndConditions from '../TermsAndConditionsApp/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
 import { Search } from '../SearchPage/Search';
 import './customToastStyles.css';
