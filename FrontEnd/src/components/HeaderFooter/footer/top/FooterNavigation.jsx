@@ -1,5 +1,7 @@
+import React, { useState, useEffect } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import css from './FooterNavigation.module.css';
 import useScrollToTop from '../../../../hooks/useScrollToTop';
 
@@ -43,16 +45,27 @@ const SERVICES_LINKS = [
     link: '/profiles/other-services',
   },
 ];
-const CONTACTS = [
-  'Контакти',
-  'qwerty@gmail.com',
-  '+38 050 234 23 23',
-  'Львівська Політехніка',
-  'вул. Степана Бандери 12, Львів',
-];
 
 function FooterNavigation() {
   useScrollToTop();
+  const [contacts, setContacts] = useState(null);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const response = await axios.get('/contacts/');
+        setContacts(response.data);
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+      }
+    };
+
+    fetchContacts();
+  }, []);
+
+  if (!contacts) {
+    return <p>Loading...</p>; // Показуємо лоадер, поки дані завантажуються
+  }
 
   return (
     <div className={css['navigation-content']}>
@@ -79,14 +92,11 @@ function FooterNavigation() {
         ))}
       </div>
       <div className={css['navigation-content-section']}>
-        {CONTACTS.map((element, index) => (
-          <p
-            key={index}
-            className={css['navigation-content-section-service__text']}
-          >
-            {element}
-          </p>
-        ))}
+        <h4>Контакти</h4>
+        <p>{contacts.email}</p>
+        <p>{contacts.phone}</p>
+        <p>{contacts.university}</p>
+        <p>{contacts.address}</p>
       </div>
     </div>
   );

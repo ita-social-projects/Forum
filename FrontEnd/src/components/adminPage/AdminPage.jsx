@@ -12,6 +12,7 @@ import MainPage from './mainPage/MainPage';
 import { useAuth } from '../../hooks';
 import Loader from '../loader/Loader';
 import AutoApproveDelay from './auto-approve-delay/AutoApproveDelay';
+import Contacts from './detail-view/Contacts';
 
 function AdminPage() {
     const { isLoading, isAuth, isStaff } = useAuth();
@@ -24,6 +25,7 @@ function AdminPage() {
             <Route path="/profiles" element={<ProfilesTable />} />
             <Route path="/profile/:id" element={<ProfileDetail />} />
             <Route path="/automoderation" element={<AutoApproveDelay />} />
+            <Route path="/contacts" element={<Contacts />} />
         </>
     ) : (
         <Route path="/customadmin/" />
