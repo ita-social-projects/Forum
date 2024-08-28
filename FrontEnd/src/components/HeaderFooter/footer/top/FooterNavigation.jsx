@@ -49,22 +49,29 @@ const SERVICES_LINKS = [
 function FooterNavigation() {
   useScrollToTop();
   const [contacts, setContacts] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await axios.get('/contacts/');
+        const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/contacts/`;
+        const response = await axios.get(url);
         setContacts(response.data);
       } catch (error) {
         console.error('Error fetching contacts:', error);
+        setError('Не вдалося отримати контактну інформацію');
       }
     };
 
     fetchContacts();
   }, []);
 
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   if (!contacts) {
-    return <p>Loading...</p>; // Показуємо лоадер, поки дані завантажуються
+    return <p>Loading...</p>;
   }
 
   return (
@@ -91,8 +98,8 @@ function FooterNavigation() {
           </Link>
         ))}
       </div>
-      <div className={css['navigation-content-section']}>
-        <h4>Контакти</h4>
+      <div className={css['navigation-content-section-service__text']}>
+        <p>Контакти</p>
         <p>{contacts.email}</p>
         <p>{contacts.phone}</p>
         <p>{contacts.university}</p>
