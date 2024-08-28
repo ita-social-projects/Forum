@@ -75,6 +75,7 @@ services:
       - ALLOWED_ENV_HOST=${ALLOWED_ENV_HOST}
       - CELERY_BROKER_URL=${REDIS_URL}
       - CELERY_RESULT_BACKEND=${REDIS_URL}
+      - REDIS_URL=${REDIS_URL}
     networks:
       - forum_network      
   redis:
