@@ -1,7 +1,7 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import CookieMod from '../components/cookieacception/CookieMod';
+import CookieMod from '../CookieMod';
 
 afterEach(cleanup);
 

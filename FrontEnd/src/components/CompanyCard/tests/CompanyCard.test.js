@@ -1,7 +1,7 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import CompanyCard from '../components/CompanyCard/CompanyCard';
+import CompanyCard from '../CompanyCard';
 
 const mockedUser = {
   email: 'test@test.com',
@@ -10,7 +10,7 @@ const mockedUser = {
   profile_id: 1,
   surname: 'Test',
 };
-jest.mock('../hooks/useAuth', () => ({
+jest.mock('../../../hooks/useAuth', () => ({
   useAuth: () => {
     return mockedUser;
   },

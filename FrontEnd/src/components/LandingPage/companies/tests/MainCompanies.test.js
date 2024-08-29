@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import MainCompanies from '../components/landing-page/companies/Companies';
+import MainCompanies from '../Companies';
 
 afterEach(() => {
   jest.resetAllMocks();

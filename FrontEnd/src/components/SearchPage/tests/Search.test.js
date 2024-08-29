@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import Search from '../components/SearchPage/Search';
+import Search from '../Search';
 
 afterEach(() => {
   jest.resetAllMocks();
