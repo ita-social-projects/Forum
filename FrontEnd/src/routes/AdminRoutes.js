@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBrowserRouter} from 'react-router-dom';
 import {AuthProvider} from '../context';
-import AdminPage from '../components/AdminPage/AdminPage';
+import AdminPage from '../pages/AdminPage/AdminPage';
 
 const adminRouter = createBrowserRouter([
     {

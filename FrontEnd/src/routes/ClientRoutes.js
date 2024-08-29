@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBrowserRouter} from 'react-router-dom';
-import BasicPage from '../components/BasicPage/BasicPage';
+import BasicPage from '../pages/BasicPage/BasicPage';
 import {AuthProvider} from '../context';
 
 const clientRouter = createBrowserRouter([
