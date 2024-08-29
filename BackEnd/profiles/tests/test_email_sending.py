@@ -23,15 +23,15 @@ class TestSendModerationEmail(APITestCase):
             edrpou="99999999",
         )
 
-    def test_send_moderation_email_no_banner_no_logo(self):
-        send_moderation_email(self.profile)
-        self.assertEqual(len(mail.outbox), 0)
-
     def test_send_moderation_email(self):
         self.profile.banner = self.banner
         self.profile.logo = self.logo
-
-        send_moderation_email(self.profile)
+        manager = ModerationManager(self.profile)
+        manager.check_for_moderation()
+        banner = manager.images["banner"]
+        logo = manager.images["logo"]
+        content_is_deleted = manager.content_deleted
+        send_moderation_email(self.profile, banner, logo, content_is_deleted)
 
         self.assertEqual(len(mail.outbox), 1)
         email_data = mail.outbox[0]
@@ -59,7 +59,12 @@ class TestSendModerationEmail(APITestCase):
     def test_send_moderation_email_only_banner(self):
         self.profile.banner = self.banner
 
-        send_moderation_email(self.profile)
+        manager = ModerationManager(self.profile)
+        manager.check_for_moderation()
+        banner = manager.images["banner"]
+        logo = manager.images["logo"]
+        content_is_deleted = manager.content_deleted
+        send_moderation_email(self.profile, banner, logo, content_is_deleted)
 
         self.assertEqual(len(mail.outbox), 1)
         email_data = mail.outbox[0]
@@ -83,7 +88,12 @@ class TestSendModerationEmail(APITestCase):
     def test_send_moderation_email_only_logo(self):
         self.profile.logo = self.logo
 
-        send_moderation_email(self.profile)
+        manager = ModerationManager(self.profile)
+        manager.check_for_moderation()
+        banner = manager.images["banner"]
+        logo = manager.images["logo"]
+        content_is_deleted = manager.content_deleted
+        send_moderation_email(self.profile, banner, logo, content_is_deleted)
 
         self.assertEqual(len(mail.outbox), 1)
         email_data = mail.outbox[0]
@@ -150,7 +160,7 @@ class TestSendModerationManager(APITestCase):
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
         self.assertEqual(
-            self.manager.banner_logo,
+            self.manager.images,
             {"banner": self.banner, "logo": self.logo},
         )
 
@@ -163,7 +173,7 @@ class TestSendModerationManager(APITestCase):
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
         self.assertEqual(
-            self.manager.banner_logo, {"banner": None, "logo": self.logo}
+            self.manager.images, {"banner": None, "logo": self.logo}
         )
 
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
@@ -175,7 +185,7 @@ class TestSendModerationManager(APITestCase):
         self.assertEqual(self.profile.status_updated_at, mock_now.return_value)
         self.assertTrue(self.manager.moderation_is_needed)
         self.assertEqual(
-            self.manager.banner_logo, {"banner": self.banner, "logo": None}
+            self.manager.images, {"banner": self.banner, "logo": None}
         )
 
     # needs improvement for undefined status
@@ -184,6 +194,4 @@ class TestSendModerationManager(APITestCase):
         self.profile.logo = None
         self.manager.check_for_moderation()
         self.assertFalse(self.manager.moderation_is_needed)
-        self.assertEqual(
-            self.manager.banner_logo, {"banner": None, "logo": None}
-        )
+        self.assertEqual(self.manager.images, {"banner": None, "logo": None})

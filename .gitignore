@@ -11,6 +11,7 @@ env
 /.DS_Store
 __pycache__/
 /FrontEnd/node_modules
+django.log
 
 BackEnd/public/*
 !BackEnd/public/media/.gitkeep
