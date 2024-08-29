@@ -10,7 +10,7 @@ import css from './AdminPage.module.css';
 import { Routes, Route } from 'react-router-dom';
 import MainPage from './mainPage/MainPage';
 import { useAuth } from '../../hooks';
-import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 import AutoApproveDelay from './auto-approve-delay/AutoApproveDelay';
 
 function AdminPage() {
