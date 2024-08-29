@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-import Loader from '../loader/Loader';
-import ErrorPage404 from '../errorPages/ErrorPage404';
+import Loader from '../Loader/Loader';
+import ErrorPage404 from '../ErrorPages/ErrorPage404';
 import MainInfoSection from './MainInfo/MainInfoSection';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 import BannerImage from './BannerImage';

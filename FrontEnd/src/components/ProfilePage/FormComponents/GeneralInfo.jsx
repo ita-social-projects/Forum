@@ -16,7 +16,7 @@ import HalfFormField from './FormFields/HalfFormField';
 import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
 import TextField from './FormFields/TextField';
-import Loader from '../../loader/Loader';
+import Loader from '../../Loader/Loader';
 import validateEdrpou from '../../../utils/validateEdrpou';
 import validateRnokpp from '../../../utils/validateRnokpp';
 import BanerModeration from './BanerModeration';

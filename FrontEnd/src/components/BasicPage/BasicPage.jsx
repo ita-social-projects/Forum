@@ -5,15 +5,15 @@ import { ConfigProvider } from 'antd';
 import { SWRConfig } from 'swr';
 import 'react-toastify/dist/ReactToastify.css';
 
-import AuthorizationPage from '../authorization/AuthorizationPage';
+import AuthorizationPage from '../Authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../HeaderFooter/footer/Footer';
 import Header from '../HeaderFooter/header/Header';
-import Loader from '../loader/Loader';
-import MainPage from '../landing-page/MainPage';
+import Loader from '../Loader/Loader';
+import MainPage from '../LandingPage/MainPage';
 import PrivacyPolicy from '../PrivacyPolicyPage/PrivacyPolicyPage';
 import ProfileDetailPage from '../ProfileDetail/ProfileDetailPage';
-import ProfileListPage from '../profileList/ProfileListPage';
+import ProfileListPage from '../ProfileList/ProfileListPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import { SignUpPage } from '../SignUp/pages/SignUpPage';
 import { SignUpModalPage } from '../SignUp/pages/SignUpModalPage';
@@ -24,14 +24,14 @@ import { RestorePasswordPage } from '../RestorePassword/pages/RestorePasswordPag
 import { RestorePasswordModalPage } from '../RestorePassword/pages/RestorePasswordModalPage';
 import { RestorePasswordSuccessPage } from '../RestorePassword/pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../RestorePassword/pages/RestorePasswordFailedPage';
-import { ModerationModal } from '../moderation/ModerationModal';
+import { ModerationModal } from '../Moderation/ModerationModal';
 import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
 import TermsAndConditions from '../TermsAndConditionsApp/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
 import { Search } from '../SearchPage/Search';
 import './customToastStyles.css';
 import Contact from '../Contact/Contact';
-import ErrorPage404 from '../errorPages/ErrorPage404';
+import ErrorPage404 from '../ErrorPages/ErrorPage404';
 
 function BasicPage() {
   const { isAuth, user, logout, isLoading } = useAuth();

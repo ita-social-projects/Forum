@@ -7,7 +7,7 @@ import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import defineChanges from '../../../utils/defineChanges';
 import { useAuth, useProfile } from '../../../hooks';
 import TextField from './FormFields/TextField';
-import Loader from '../../loader/Loader';
+import Loader from '../../Loader/Loader';
 import css from './FormComponents.module.css';
 
 const LABELS = {

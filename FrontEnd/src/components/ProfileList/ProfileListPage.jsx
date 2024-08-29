@@ -5,8 +5,8 @@ import axios from 'axios';
 import { Radio } from 'antd';
 import useSWR from 'swr';
 
-import ErrorPage404 from '../errorPages/ErrorPage404';
-import Loader from '../loader/Loader';
+import ErrorPage404 from '../ErrorPages/ErrorPage404';
+import Loader from '../Loader/Loader';
 import ProfileList from './ProfileList';
 
 import css from './ProfileListPage.module.css';

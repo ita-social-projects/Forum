@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { PASSWORD_PATTERN } from '../../../../../constants/constants';
-import EyeInvisible from '../../../../authorization/EyeInvisible';
-import EyeVisible from '../../../../authorization/EyeVisible';
+import EyeInvisible from '../../../../Authorization/EyeInvisible';
+import EyeVisible from '../../../../Authorization/EyeVisible';
 import styles from './RestorePasswordFormContent.module.css';
 
 export function RestorePasswordFormContentComponent({ setIsValid }) {

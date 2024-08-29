@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Tooltip } from 'antd';
-import EyeInvisible from '../../../../authorization/EyeInvisible';
-import EyeVisible from '../../../../authorization/EyeVisible';
+import EyeInvisible from '../../../../Authorization/EyeInvisible';
+import EyeVisible from '../../../../Authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
 import {

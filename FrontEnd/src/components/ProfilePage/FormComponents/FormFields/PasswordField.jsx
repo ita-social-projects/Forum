@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import EyeInvisible from '../../../authorization/EyeInvisible';
-import EyeVisible from '../../../authorization/EyeVisible';
+import EyeInvisible from '../../../Authorization/EyeInvisible';
+import EyeVisible from '../../../Authorization/EyeVisible';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './PasswordField.module.css';
 import { PASSWORD_PATTERN } from '../../../../constants/constants';

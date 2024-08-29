@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import AuthorizationPage from '../../authorization/AuthorizationPage';
+import AuthorizationPage from '../../Authorization/AuthorizationPage';
 import styles from './ActivateProfileModal.module.css';
 
 export function ActivationProfilePage() {

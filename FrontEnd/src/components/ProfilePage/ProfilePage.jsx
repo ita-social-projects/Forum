@@ -3,7 +3,7 @@ import Description from './ProfilePageComponents/Description';
 import ProfileContent from './ProfilePageComponents/ProfileContent';
 import { useState } from 'react';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
-import Loader from '../loader/Loader';
+import Loader from '../Loader/Loader';
 import { useAuth, useProfile } from '../../hooks';
 
 const ProfilePage = () => {
