@@ -1,0 +1,14 @@
+.tooltip-container{
+  display: flex;
+  position:absolute;
+  padding-top: 5px;
+  padding-left: 3px;
+}
+
+.custom-tooltip .ant-tooltip-content {
+  padding: 1000px; /* Зміщуємо тултіп вправо */
+
+}
+.custom-tooltip .ant-tooltip-arrow {
+  left: 100px; /* Зміщуємо стрілку тултіпа вправо */
+}
