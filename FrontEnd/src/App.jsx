@@ -1,30 +1,9 @@
 import React from 'react';
 import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import AdminPage from './components/AdminPage/AdminPage';
-import BasicPage from './components/BasicPage/BasicPage';
-import { AuthProvider } from './context';
+import { RouterProvider } from 'react-router-dom';
+import router from './routes/Router';
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: '/*',
-      element: (
-        <AuthProvider>
-          <BasicPage />
-        </AuthProvider>
-      ),
-    },
-    {
-      path: '/customadmin/*',
-      element: (
-        <AuthProvider>
-          <AdminPage />
-        </AuthProvider>
-      ),
-    },
-  ]);
-
   return (
     <div className="App">
       <h1>
