@@ -19,6 +19,11 @@ const MENU = [
         id: 'am3',
         title: 'Зміна часу автомодерації',
         link: '/customadmin/automoderation/'
+    },
+    {
+        id: 'am4',
+        title: 'Email',
+        link: '/customadmin/email/'
     }
 ];
 
