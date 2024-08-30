@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './ImageField.module.css';
+import PendingStatus from '../../../MiniComponents/PendingModerationIcon/PendingStatus';
+import useProfile from '../../../../hooks/useProfile';
 
 const ImageField = ({
   name,
@@ -12,6 +14,8 @@ const ImageField = ({
   onDeleteImage,
   error,
 }) => {
+  const { profile } = useProfile();
+
   const backgroundImage = {
     background: `url(${value}) lightgray 50% / cover no-repeat`,
   };
@@ -84,28 +88,35 @@ const ImageField = ({
               <span className={css['upload-file__banner-image--title']}>
                 Зображення для банера на сторінці профайлу
               </span>
-              <div
+              <div className={css['tooltip-container']}>
+                <PendingStatus profile={profile} />
+                <div
                 className={css['upload-file__banner-image--page']}
                 style={backgroundImage}
-              />
+                />
+              </div>
             </div>
             <div className={css['upload-file__wrapper--banner-card']}>
               <span className={css['upload-file__banner-image--title']}>
                 Зображення для карток
               </span>
-              <div
-                className={css['upload-file__banner-image--card']}
-                style={backgroundImage}
-              />
-            </div>
+              <div> <PendingStatus profile={profile} />
+                <div
+                  className={css['upload-file__banner-image--card']}
+                  style={backgroundImage}
+                />
+              </div>
+              </div>
           </>
         )}
         {name === 'logo' && value && (
+        <div> <PendingStatus profile={profile} />
           <div className={css['upload-file__wrapper--logo']}>
             <div className={css['upload-file__logo']} style={backgroundImage} />
             {renderInput()}
             {renderUpdateImageLabel('змінити')}
             {renderDeleteButton('видалити')}
+          </div>
           </div>
         )}
       </div>
