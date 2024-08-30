@@ -10,6 +10,8 @@ export function AuthProvider({ children }) {
   const [isLoading, setLoading] = useState(true);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
   const [isStaff, setIsStaff] = useState(false);
+  const [toastIsShown, setToastIsShown] = useState(false);
+  console.log('INITIALLY', toastIsShown);
   const { data, error, mutate } = useSWR(
     authToken
       ? [`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, authToken]
@@ -36,6 +38,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem('isAuth', true);
     axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
     setIsAuth(true);
+    setToastIsShown(false);
   };
 
   const logout = () => {
@@ -49,20 +52,25 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    axios.interceptors.response.use(
+    const authInterceptor = axios.interceptors.response.use(
       response => response,
       error => {
         if (error.response && error.response.status === 401) {
-            if (error.response.data.detail === 'Your session has expired. Please login again.') {
-              toast.error('Ваше сеанс завершився. Будь ласка, увійдіть ще раз.');
-            }
+          if (error.response.data.detail === 'Your session has expired. Please login again.') {
+            console.log('BEFORE', toastIsShown);
+            !toastIsShown && toast.error('Ваше сеанс завершився. Будь ласка, увійдіть ще раз.');
+            setToastIsShown(true);
+          }
+          console.log('AFTER', toastIsShown);
           logout();
         }
         return Promise.reject(error);
       }
     );
-
     setLoading(false);
+    return () => {
+      axios.interceptors.response.eject(authInterceptor);
+    };
   }, []);
 
   useEffect(() => {
