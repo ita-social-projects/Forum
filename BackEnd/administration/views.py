@@ -20,9 +20,10 @@ from administration.serializers import (
     AdminUserListSerializer,
     AdminUserDetailSerializer,
     AutoModerationHoursSerializer,
+    ModerationEmailSerializer,
 )
 from administration.pagination import ListPagination
-from administration.models import AutoModeration
+from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly
@@ -122,3 +123,10 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return AutoModeration.get_auto_moderation_hours()
+
+class ModerationEmailView(RetrieveUpdateAPIView):
+    queryset = ModerationEmail.objects.all()
+    serializer_class = ModerationEmailSerializer
+
+    def get_object(self):
+        return ModerationEmail.objects.first()
