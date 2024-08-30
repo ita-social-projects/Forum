@@ -1,8 +1,15 @@
+import logging
+
 from django.utils.timezone import now
 from celery.result import AsyncResult
+from kombu.exceptions import OperationalError
+from redis.exceptions import ConnectionError
 
 from administration.models import AutoapproveTask, AutoModeration
 from profiles.tasks import celery_autoapprove
+
+
+logger = logging.getLogger(__name__)
 
 
 class ModerationManager:
@@ -59,34 +66,42 @@ class ModerationManager:
         return self.moderation_is_needed
 
     def schedule_autoapprove(self):
-        self.revoke_deprecated_autoapprove()
-        if self.needs_moderation and not self.content_deleted:
-            banner_uuid = str(self.profile.banner.uuid)
-            logo_uuid = str(self.profile.logo.uuid)
-            delay = (
-                (
-                    AutoModeration.get_auto_moderation_hours().auto_moderation_hours
+        try:
+            self.revoke_deprecated_autoapprove()
+            if self.needs_moderation and not self.content_deleted:
+                banner = self.images.get("banner")
+                logo = self.images.get("logo")
+                banner_uuid = str(banner.uuid) if banner else None
+                logo_uuid = str(logo.uuid) if logo else None
+                delay = (
+                    (
+                        AutoModeration.get_auto_moderation_hours().auto_moderation_hours
+                    )
+                    * 60
+                    * 60
                 )
-                * 60
-                * 60
-            )
-            result = celery_autoapprove.apply_async(
-                (self.profile.id, banner_uuid, logo_uuid), countdown=delay
-            )
+                result = celery_autoapprove.apply_async(
+                    (self.profile.id, banner_uuid, logo_uuid), countdown=delay
+                )
 
-            task = AutoapproveTask(
-                celery_task_id=result.id, profile=self.profile
-            )
-            task.save()
+                task = AutoapproveTask(
+                    celery_task_id=result.id, profile=self.profile
+                )
+                task.save()
+        except (OperationalError, ConnectionError) as e:
+            logger.error(e)
 
     def revoke_deprecated_autoapprove(self):
-        deprecated_task = AutoapproveTask.objects.filter(
-            profile=self.profile
-        ).first()
+        try:
+            deprecated_task = AutoapproveTask.objects.filter(
+                profile=self.profile
+            ).first()
 
-        if deprecated_task:
-            celery_deprecated_task = AsyncResult(
-                id=deprecated_task.celery_task_id
-            )
-            celery_deprecated_task.revoke()
-            deprecated_task.delete()
+            if deprecated_task:
+                celery_deprecated_task = AsyncResult(
+                    id=deprecated_task.celery_task_id
+                )
+                celery_deprecated_task.revoke()
+                deprecated_task.delete()
+        except (OperationalError, ConnectionError) as e:
+            logger.error(e)
