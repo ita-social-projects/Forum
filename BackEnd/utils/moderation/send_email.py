@@ -6,9 +6,7 @@ from email.mime.image import MIMEImage
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
-from .handle_approved_images import ApprovedImages
 from administration.models import AutoModeration
-from .image_moderation import ModerationManager
 from .encode_decode_id import encode_id
 
 
@@ -50,52 +48,45 @@ def attach_image(email, image, content_id):
         email.attach(img)
 
 
-def send_moderation_email(profile):
-    manager = ModerationManager(profile)
-    approved_images = ApprovedImages(profile)
-    email_is_needed = manager.check_for_moderation()
-    approved_images.check_approved_images()
-    if email_is_needed or manager.content_deleted:
-        update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
-        update_date = profile.status_updated_at.strftime("%d.%m.%Y")
-        banner = manager.banner_logo["banner"]
-        logo = manager.banner_logo["logo"]
-        context = {
-            "profile_name": profile.name,
-            "protocol": PROTOCOL,
-            "domain": DOMAIN,
-            "banner": banner,
-            "logo": logo,
-            "banner_logo_deleted": manager.content_deleted,
-            "updated_at": update_time,
-            "moderation_time": define_ending(
-                AutoModeration.get_auto_moderation_hours().auto_moderation_hours
-            ),
-            "approve_url": generate_profile_moderation_url(
-                profile.id, banner, logo, "approve"
-            ),
-            "reject_url": generate_profile_moderation_url(
-                profile.id, banner, logo, "reject"
-            ),
-        }
+def send_moderation_email(profile, banner, logo, content_is_deleted):
+    update_time = profile.status_updated_at.strftime("%d.%m.%Y %H:%M")
+    update_date = profile.status_updated_at.strftime("%d.%m.%Y")
+    context = {
+        "profile_name": profile.name,
+        "protocol": PROTOCOL,
+        "domain": DOMAIN,
+        "banner": banner,
+        "logo": logo,
+        "banner_logo_deleted": content_is_deleted,
+        "updated_at": update_time,
+        "moderation_time": define_ending(
+            AutoModeration.get_auto_moderation_hours().auto_moderation_hours
+        ),
+        "approve_url": generate_profile_moderation_url(
+            profile.id, banner, logo, "approve"
+        ),
+        "reject_url": generate_profile_moderation_url(
+            profile.id, banner, logo, "reject"
+        ),
+    }
 
-        email_body = render_to_string("profiles/email_template.html", context)
-        email = EmailMultiAlternatives(
-            subject=f"{profile.name} - {update_date}: Запит "
-            "на затвердження змін в обліковому записі компанії",
-            body=email_body,
-            from_email=settings.EMAIL_HOST_USER,
-            to=[
-                settings.EMAIL_HOST_USER,
-            ],
-        )
+    email_body = render_to_string("profiles/email_template.html", context)
+    email = EmailMultiAlternatives(
+        subject=f"{profile.name} - {update_date}: Запит "
+        "на затвердження змін в обліковому записі компанії",
+        body=email_body,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[
+            settings.EMAIL_HOST_USER,
+        ],
+    )
 
-        email.content_subtype = EMAIL_CONTENT_SUBTYPE
+    email.content_subtype = EMAIL_CONTENT_SUBTYPE
 
-        if banner:
-            attach_image(email, banner, banner.uuid)
+    if banner:
+        attach_image(email, banner, banner.uuid)
 
-        if logo:
-            attach_image(email, logo, logo.uuid)
+    if logo:
+        attach_image(email, logo, logo.uuid)
 
-        email.send(fail_silently=False)
+    email.send(fail_silently=False)

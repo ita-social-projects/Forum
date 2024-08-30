@@ -4,7 +4,6 @@ import { useAuth } from '../../../../hooks';
 
 import DropdownMenu from './DropdownMenu';
 import css from './Profile.module.css';
-import avatar_image from './Avatar.png';
 
 
 function Profile() {
@@ -30,8 +29,8 @@ function Profile() {
     <div className={css['header-profile-section']}>
       <img
         className={css['header-profile__avatar']}
-        src={avatar_image}
-        alt=""
+        src={`${process.env.REACT_APP_PUBLIC_URL}/img/Avatar.png`}
+        alt="avatar"
         onClick={navigateToProfile}
       />
       <DropdownMenu toggleText="Профіль">

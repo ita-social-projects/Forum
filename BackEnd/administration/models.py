@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from profiles.models import Profile
 
 
 def validate_auto_moderation_hours(value: int):
@@ -26,3 +27,8 @@ class AutoModeration(models.Model):
             pk=1, defaults={"auto_moderation_hours": 12}
         )
         return obj
+
+
+class AutoapproveTask(models.Model):
+    celery_task_id = models.CharField()
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)

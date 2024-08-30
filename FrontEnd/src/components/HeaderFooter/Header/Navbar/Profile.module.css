@@ -5,6 +5,8 @@
 }
 
 .header-profile__avatar {
+  width: 27px;
+  height: 27px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

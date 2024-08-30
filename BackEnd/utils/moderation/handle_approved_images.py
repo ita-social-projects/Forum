@@ -1,7 +1,11 @@
 from ..completeness_counter import completeness_count
 
 
-class ApprovedImages:
+class ApprovedImagesDeleter:
+    """
+    Entity that handles the deletion of approved images if a user deletes an image under moderation.
+    """
+
     def __init__(self, profile):
         self.profile = profile
 
@@ -11,7 +15,7 @@ class ApprovedImages:
             approved_image.save()
             completeness_count(self.profile)
 
-    def check_approved_images(self):
+    def handle_potential_deletion(self):
         if not self.profile.banner:
             self.delete_approved_image(self.profile.banner_approved)
 
