@@ -13,7 +13,6 @@ from utils.dump_response import dump  # noqa
 
 class TestProfileModeration(APITestCase):
     def setUp(self) -> None:
-
         self.banner = ProfileimageFactory(image_type="banner")
         self.logo = ProfileimageFactory(image_type="logo")
         self.second_banner = ProfileimageFactory(image_type="banner")
@@ -29,7 +28,6 @@ class TestProfileModeration(APITestCase):
         self.unregistered_user_client = APIClient()
 
     def test_reject_banner_and_logo(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -71,7 +69,6 @@ class TestProfileModeration(APITestCase):
         self.assertFalse(self.user.is_active)
 
     def test_reject_banner(self):
-
         # user updates only banner
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -109,7 +106,6 @@ class TestProfileModeration(APITestCase):
         self.assertFalse(self.user.is_active)
 
     def test_reject_logo(self):
-
         # user updates logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -147,7 +143,6 @@ class TestProfileModeration(APITestCase):
         self.assertFalse(self.user.is_active)
 
     def test_reject_banner_and_logo_processed_request(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -195,7 +190,6 @@ class TestProfileModeration(APITestCase):
         )
 
     def test_reject_banner_and_logo_outdated_request(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -248,7 +242,6 @@ class TestProfileModeration(APITestCase):
         self.assertEqual(self.profile.PENDING, self.profile.status)
 
     def test_reject_banner_and_logo_wrong_action(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -279,7 +272,6 @@ class TestProfileModeration(APITestCase):
         )
 
     def test_reject_banner_and_logo_error_in_signed_id(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -308,7 +300,6 @@ class TestProfileModeration(APITestCase):
         self.assertEqual({"detail": "Not found."}, response.json())
 
     def test_reject_banner_and_logo_non_existing_profile(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -337,7 +328,6 @@ class TestProfileModeration(APITestCase):
         self.assertEqual({"detail": "Not found."}, response.json())
 
     def test_reject_banner_and_logo_empty_image_fields(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -370,7 +360,6 @@ class TestProfileModeration(APITestCase):
         )
 
     def test_login_blocked_user_due_to_rejected_request(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -413,7 +402,6 @@ class TestProfileModeration(APITestCase):
         )
 
     def test_register_blocked_user_due_to_rejected_request(self):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
