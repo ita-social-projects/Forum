@@ -264,6 +264,7 @@ class TestSendModerationManager(APITestCase):
             {"banner": None, "logo": self.logo},
         )
 
+    # handle the deletion of a new image
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_handle_approved_image_status_pending(self, mock_now):
         self.profile.banner = self.banner
@@ -279,6 +280,7 @@ class TestSendModerationManager(APITestCase):
             {"banner": None, "logo": None},
         )
 
+    # handle the deletion one of an approved images
     def test_handle_approved_image_status_approved(self):
         self.profile.banner = self.banner
         self.profile.banner.is_approved = True
@@ -299,7 +301,7 @@ class TestSendModerationManager(APITestCase):
         self.assertTrue(self.manager.content_deleted)
         self.assertEqual(self.manager.images, {"banner": None, "logo": None})
 
-    def test_handle_undefined_status_deletion_after_approve(self):
+    def test_undefined_status_after_approved_images_deleted(self):
         self.profile.status = self.profile.APPROVED
         self.manager.check_for_moderation()
         self.assertEqual(self.profile.status, self.profile.UNDEFINED)
