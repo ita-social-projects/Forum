@@ -68,9 +68,8 @@ export function AuthProvider({ children }) {
       }
     );
     setLoading(false);
-    return () => {
-      axios.interceptors.response.eject(authInterceptor);
-    };
+    return () => axios.interceptors.response.eject(authInterceptor);
+
   }, []);
 
   useEffect(() => {
