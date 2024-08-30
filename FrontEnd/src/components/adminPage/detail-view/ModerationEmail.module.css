@@ -8,6 +8,7 @@
 .moderation_email-input {
     width: 250px;
     height: 22px;
+    padding: 0 2px;
 }
 
 .save-button {
