@@ -787,11 +787,16 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     @mock.patch(
-        "utils.send_email.attach_image",
+        "utils.moderation.image_moderation.ModerationManager.schedule_autoapprove"
+    )
+    @mock.patch(
+        "utils.moderation.send_email.attach_image",
         new_callable=mock.mock_open,
         read_data=b"image",
     )
-    def test_full_update_profile_authorized_with_full_data(self, mock_file):
+    def test_full_update_profile_authorized_with_full_data(
+        self, mock_file, mock_autoapprove
+    ):
         category = CategoryFactory()
         activity = ActivityFactory()
         region = RegionFactory()
@@ -826,6 +831,7 @@ class TestProfileDetailAPIView(APITestCase):
             status.HTTP_200_OK, response.status_code, response.content
         )
         mock_file.assert_called()
+        mock_autoapprove.assert_called_once()
 
     def test_full_update_profile_unauthorized(self):
         category = CategoryFactory()

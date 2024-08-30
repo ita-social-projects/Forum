@@ -15,11 +15,11 @@ const TermsAndConditions = () => {
       <div className={styles['TermsAndConditions__link_container']}>
         <LinkContainer />
         <img className={styles['TermsAndConditions__img1']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots.png`}
-          alt="dots.png" />
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_12x10.png`}
+          alt="dots_12x10.png" />
         <img className={styles['TermsAndConditions__img2']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots.png`}
-          alt="dots.png" />
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_12x10.png`}
+          alt="dots_12x10.png" />
       </div>
       <div className={styles['TermsAndConditions__text_container']}>
         <h2 className={styles['TermsAndConditions__title']}>{TermsAndConditionsText.title} </h2>

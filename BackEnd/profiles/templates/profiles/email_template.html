@@ -9,10 +9,12 @@
         p, b {
             color: black;
         }
+        a.button {
+            text-decoration: none;
+            color: black;
+        }
         .button {
             padding: 10px 20px;
-            color: black;
-            text-decoration: none;
             border: 1px solid black;
             border-radius: 5px;
             display: inline-block;
@@ -42,13 +44,17 @@
     <div>
         <img src="{{protocol}}://178.212.110.52/craftMerge-logo.png" alt="CRAFTMERGE"/>
         <p>Доброго дня,</p>
+        {% if not banner_logo_deleted %}
         <p>Вам надійшов запит на затвердження змін в обліковому записі компанії {{ profile_name }} на сайті CraftMerge.</p>
         <p>Перегляньте зміни та затвердіть або скасуйте їх.</p>
+        {% else %}
+        <p>Інформуємо про те що попередньо доданий контент було видалено користувачем.</p>
+        {% endif %}
         <p><b>Дата змін: </b>{{ updated_at }} UTC</p>
         {% if banner %}
         <p><b>Банер:</b></p>
         <div class="banner">
-            <img src="cid:{{ banner.uuid }}" alt="Банер"/>   
+            <img src="cid:{{ banner.uuid }}" alt="Банер"/>
         </div>
         {% endif %}
         {% if logo %}
@@ -57,11 +63,15 @@
             <img src="cid:{{ logo.uuid }}" alt="Логотип"/>
         </div>
         {% endif %}
+        {% if not banner_logo_deleted %}
         <div style="margin: 20px 0;">
-            <a href="#" class="button button-approve">ЗАТВЕРДИТИ</a>
-            <a href="#" class="button button-reject">СКАСУВАТИ</a>
+            <a href="{{protocol}}://{{ domain }}/{{ approve_url }}" class="button button-approve">ЗАТВЕРДИТИ</a>
+            <a href="{{protocol}}://{{ domain }}/{{ reject_url }}" class="button button-reject">СКАСУВАТИ</a>
         </div>
         <p><b>Примітка:</b> <i>запит буде автоматично затверджений через {{ moderation_time }}</i></p>
+        {% else %}
+        <p>Запит на модерацію <b>скасовано</b>.</p>
+        {% endif %}
         <p>З повагою,</p>
         <p>Команда CraftMerge</p>
     </div>

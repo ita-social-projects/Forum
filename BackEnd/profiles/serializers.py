@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.utils.timezone import now
 from .models import (
     Profile,
     Activity,
@@ -9,6 +10,8 @@ from .models import (
 )
 from images.models import ProfileImage
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
+from utils.moderation.moderation_action import ModerationAction
+from utils.moderation.image_moderation import ModerationManager
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -47,6 +50,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
+    saved_is_updated = serializers.SerializerMethodField()
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
     banner = ProfileImageField(source="banner_approved", read_only=True)
@@ -71,12 +75,23 @@ class ProfileListSerializer(serializers.ModelSerializer):
             "banner",
             "logo",
             "is_saved",
+            "saved_is_updated",
         )
 
     def get_is_saved(self, obj) -> bool:
         user = self.context["request"].user
         if user.is_authenticated:
             return obj.pk in self.context["saved_companies_pk"]
+        return False
+
+    def get_saved_is_updated(self, obj) -> bool:
+        user = self.context["request"].user
+        if user.is_authenticated:
+            saved_company = SavedCompany.objects.filter(
+                user=user, company=obj
+            ).first()
+            if saved_company:
+                return saved_company.is_updated
         return False
 
     def get_regions_ukr_display(self, obj) -> str:
@@ -93,6 +108,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
     is_saved = serializers.SerializerMethodField()
+    saved_is_updated = serializers.SerializerMethodField()
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
     banner = ProfileImageField(source="banner_approved", read_only=True)
@@ -122,6 +138,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             "banner",
             "logo",
             "is_saved",
+            "saved_is_updated",
         )
         read_only_fields = (
             "id",
@@ -150,6 +167,16 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         if user.is_authenticated:
             return obj.pk in self.context["saved_companies_pk"]
+        return False
+
+    def get_saved_is_updated(self, obj) -> bool:
+        user = self.context["request"].user
+        if user.is_authenticated:
+            saved_company = SavedCompany.objects.filter(
+                user=user, company=obj
+            ).first()
+            if saved_company:
+                return saved_company.is_updated
         return False
 
     def get_regions_ukr_display(self, obj) -> str:
@@ -233,8 +260,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
 
 class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField(source="person.email")
-    banner = ProfileImageField()
-    logo = ProfileImageField()
+    banner = ProfileImageField(allow_null=True)
+    logo = ProfileImageField(allow_null=True)
 
     class Meta:
         model = Profile
@@ -318,12 +345,25 @@ class ProfileSensitiveDataROSerializer(serializers.ModelSerializer):
         )
 
 
+class SavedCompanyUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SavedCompany
+        fields = ("is_updated",)
+
+
 class SavedCompanySerializer(serializers.ModelSerializer):
     company_pk = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = SavedCompany
-        fields = ("id", "user", "company", "company_pk", "added_at")
+        fields = (
+            "id",
+            "user",
+            "company",
+            "company_pk",
+            "added_at",
+            "is_updated",
+        )
         read_only_fields = [
             "user",
             "company",
@@ -382,3 +422,70 @@ class ViewedCompanySerializer(serializers.ModelSerializer):
 
     def get_company_name(self, obj) -> str:
         return obj.company_name
+
+
+class ProfileModerationSerializer(serializers.Serializer):
+    action = serializers.ChoiceField(
+        choices=ModerationAction.choices(),
+        error_messages={"invalid_choice": "Action is not allowed"},
+        write_only=True,
+    )
+    banner = ProfileImageField(write_only=True)
+    logo = ProfileImageField(write_only=True)
+    status_updated_at = serializers.DateTimeField(read_only=True)
+    status = serializers.CharField(read_only=True)
+
+    def validate(self, attrs):
+        profile = self.instance
+        banner = attrs.get("banner")
+        logo = attrs.get("logo")
+
+        if not logo and not banner:
+            raise serializers.ValidationError(
+                "At least one image (logo or banner) must be provided for the moderation request."
+            )
+
+        if profile.status != profile.PENDING:
+            raise serializers.ValidationError(
+                "The change approval request has been processed. URL is outdated"
+            )
+        else:
+            if (banner and profile.banner != banner) or (
+                logo and profile.logo != logo
+            ):
+                raise serializers.ValidationError(
+                    "There is a new request for moderation. URL is outdated"
+                )
+        return attrs
+
+    def update(self, instance, validated_data):
+        action = validated_data.get("action")
+        banner = validated_data.get("banner")
+        logo = validated_data.get("logo")
+
+        if action == ModerationAction.approve:
+            if banner:
+                instance.banner.is_approved = True
+                instance.banner_approved = banner
+                instance.banner.save()
+            if logo:
+                instance.logo.is_approved = True
+                instance.logo_approved = logo
+                instance.logo.save()
+            instance.status = instance.APPROVED
+
+        elif action == ModerationAction.reject:
+            instance.status = instance.BLOCKED
+            instance.is_deleted = True
+            instance.person.is_active = False
+            instance.person.save()
+
+        else:
+            raise serializers.ValidationError("Invalid action provided.")
+
+        moderation_manager = ModerationManager(profile=instance)
+        moderation_manager.revoke_deprecated_autoapprove()
+
+        instance.status_updated_at = now()
+        instance.save()
+        return instance

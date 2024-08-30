@@ -2,7 +2,7 @@
 
 .main_block_outer {
   padding-top: 10px;
-  width: 1512px;
+  width: var(--main-block-size);
 }
 
 .new-companies-main {
@@ -39,11 +39,15 @@
   margin: 145px;
 }
 
-.frame-img-right {
+.dot-img-right {
+  width: 179px;
+  height: 150px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  margin: 0px 354px 473px 1330px;
   position: absolute;
-  top: 30px;
-  right: 0;
-  transform: translateY(-50%);
 }
 
 .new-companies-result_pages {
@@ -75,3 +79,4 @@
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
 }
+

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SavedCompaniesCreate, SavedCompaniesDestroy
+from .views import SavedCompaniesCreate, SavedCompaniesUpdateDestroy
 from .views import (
     ProfileList,
     ProfileDetail,
@@ -10,6 +10,7 @@ from .views import (
     ActivityDetail,
     RegionDetail,
     ProfileViewCreate,
+    ProfileModeration,
 )
 
 app_name = "profiles"
@@ -24,8 +25,8 @@ urlpatterns = [
     ),
     path(
         "saved-list/<int:company_pk>/",
-        SavedCompaniesDestroy.as_view(),
-        name="saved_companies_destroy",
+        SavedCompaniesUpdateDestroy.as_view(),
+        name="saved_companies_update_destroy",
     ),
     path(
         "company-view/<int:profile_id>/",
@@ -38,4 +39,9 @@ urlpatterns = [
     path("categories/<pk>/", CategoryDetail.as_view(), name="category-detail"),
     path("activities/<pk>/", ActivityDetail.as_view(), name="activity-detail"),
     path("regions/<pk>/", RegionDetail.as_view(), name="region-detail"),
+    path(
+        "profiles/<str:profile_id>/images_moderation/",
+        ProfileModeration.as_view(),
+        name="profile-moderation",
+    ),
 ]

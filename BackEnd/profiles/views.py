@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.http import Http404
 from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
@@ -7,8 +8,8 @@ from djoser import utils as djoser_utils
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
-    DestroyAPIView,
     RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
 )
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
@@ -16,9 +17,12 @@ from rest_framework.permissions import (
     IsAdminUser,
 )
 from rest_framework.response import Response
-from utils.completeness_counter import completeness_count
-from utils.send_email import send_moderation_email
 from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
+from utils.completeness_counter import completeness_count
+from utils.moderation.send_email import send_moderation_email
+from utils.moderation.encode_decode_id import decode_id
+from utils.moderation.image_moderation import ModerationManager
+from utils.moderation.handle_approved_images import ApprovedImagesDeleter
 
 from forum.pagination import ForumPagination
 from .models import SavedCompany, Profile, Category, Activity, Region
@@ -42,6 +46,8 @@ from .serializers import (
     ActivitySerializer,
     RegionSerializer,
     ProfileCreateSerializer,
+    ProfileModerationSerializer,
+    SavedCompanyUpdateSerializer,
 )
 from .filters import ProfileFilter
 
@@ -57,10 +63,10 @@ class SavedCompaniesCreate(CreateAPIView):
     pagination_class = ForumPagination
 
 
-@extend_schema(responses={204: {}})
-class SavedCompaniesDestroy(DestroyAPIView):
+@extend_schema(responses={200: {}, 204: {}})
+class SavedCompaniesUpdateDestroy(RetrieveUpdateDestroyAPIView):
     """
-    Remove the company from the saved list.
+    Update status or Remove the company from the saved list.
     """
 
     permission_classes = [IsAuthenticated]
@@ -69,6 +75,12 @@ class SavedCompaniesDestroy(DestroyAPIView):
 
     def get_queryset(self):
         return SavedCompany.objects.filter(user_id=self.request.user.id)
+
+    def get_serializer_class(self):
+        if self.request.method == "PATCH":
+            return SavedCompanyUpdateSerializer
+        else:
+            return SavedCompanySerializer
 
 
 class ProfileList(ListCreateAPIView):
@@ -205,8 +217,20 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         profile = serializer.save()
+        SavedCompany.objects.filter(company=profile).update(is_updated=True)
         completeness_count(profile)
-        send_moderation_email(profile)
+        deletion_checker = ApprovedImagesDeleter(profile)
+        deletion_checker.handle_potential_deletion()
+        moderation_manager = ModerationManager(profile)
+        if (
+            moderation_manager.check_for_moderation()
+            or moderation_manager.content_deleted
+        ):
+            banner = moderation_manager.images["banner"]
+            logo = moderation_manager.images["logo"]
+            is_deleted = moderation_manager.content_deleted
+            send_moderation_email(profile, banner, logo, is_deleted)
+            moderation_manager.schedule_autoapprove()
 
 
 class ProfileViewCreate(CreateAPIView):
@@ -264,3 +288,21 @@ class RegionDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = RegionSerializer
     permission_classes = (IsAdminUser,)
     queryset = Region.objects.all()
+
+
+class ProfileModeration(UpdateAPIView):
+    serializer_class = ProfileModerationSerializer
+    queryset = Profile.objects.all()
+    lookup_url_kwarg = "profile_id"
+
+    def get_object(self):
+        try:
+            profile_id = decode_id(self.kwargs.get(self.lookup_url_kwarg))
+        except ValueError:
+            raise Http404
+
+        return get_object_or_404(self.queryset, pk=profile_id)
+
+    def perform_update(self, serializer):
+        profile = serializer.save()
+        completeness_count(profile)

@@ -17,6 +17,7 @@ env:
   EMAIL_HOST_PASSWORD: Test1234
   CORS_ORIGIN_WHITELIST: ''
   ALLOWED_ENV_HOST: ''
+  REDIS_URL: ${{ vars.REDIS_URL }}
 
 
 jobs:
