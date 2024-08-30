@@ -9,8 +9,8 @@ function FooterBottom() {
             <img
                 className={css['footer-bottom-logo__svg']}
                 src={`${process.env.REACT_APP_PUBLIC_URL}/img/opentech_logo.svg`}
-                alt="opentech_logo"
-                title="opentech_logo"
+                alt="Opentech logo"
+                title="Opentech logo"
             />
         </div>
     );

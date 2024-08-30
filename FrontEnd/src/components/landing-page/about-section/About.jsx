@@ -30,9 +30,9 @@ const MainAboutSection = () => {
           <img
             className="about-us-section-content__image"
             src={`${process.env.REACT_APP_PUBLIC_URL}/img/about.jpeg`}
-            alt="about_img"
+            alt="about img"
             loading="lazy"
-            title="about_img"
+            title="about img"
           />
         </div>
       </div>
