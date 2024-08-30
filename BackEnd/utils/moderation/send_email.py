@@ -10,6 +10,7 @@ from .handle_approved_images import ApprovedImages
 from administration.models import AutoModeration
 from .image_moderation import ModerationManager
 from .encode_decode_id import encode_id
+from administration.models import ModerationEmail
 
 
 EMAIL_CONTENT_SUBTYPE = "html"
@@ -86,7 +87,7 @@ def send_moderation_email(profile):
             body=email_body,
             from_email=settings.EMAIL_HOST_USER,
             to=[
-                settings.EMAIL_HOST_USER,
+                ModerationEmail.objects.first(),
             ],
         )
 
