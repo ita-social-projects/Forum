@@ -1,12 +1,10 @@
-@import '../CompanyCard/variables.css';
-
 .main_block_outer {
   padding-top: 10px;
   width: var(--main-block-size);
 }
 
 .new-companies-main {
-  background-color: var(--new-companies-main);
+  background-color: var(--search-new-companies-main);
 }
 
 .main_block {
@@ -34,7 +32,7 @@
 
 .search_result_error {
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--search-text-color);
   font: normal normal bold 20px/2 Inter;
   margin: 145px;
 }
@@ -74,9 +72,8 @@
 
 .pagination button.active {
   background-color: none;
-  color: var(--pagination-style-color);
-  border: 1px solid var(--pagination-style-color);
+  color: var(--search-pagination-style-color);
+  border: 1px solid var(--search-pagination-style-color);
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
 }
-

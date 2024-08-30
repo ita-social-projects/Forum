@@ -1,17 +1,16 @@
 .footer-top {
     display: flex;
-    width: 1304px;
-    padding: 24px 104px;
+    width: var(--main-block-size);
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     gap: 32px;
-
-    background: var(--main-black-80, #3C4044);
+    background: var(--footer-backround);
 }
 
 .footer-top-content {
     display: flex;
     align-items: flex-start;
     gap: 180px;
+    padding: 24px 104px;
 }

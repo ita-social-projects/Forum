@@ -56,7 +56,7 @@ function Startup ({ data }) {
                 <div className={classes['startup']}>
                     <div className={classes['startup__title']}>
                         <div className={classes['startup__title--block']}>
-                            <p className={classes['startup__title--text']}>Стартап</p>
+                            <h2 className={classes['startup__title--text']}>Стартап</h2>
                         </div>
                         <div className={classes['startup__title--divider']}></div>
                     </div>

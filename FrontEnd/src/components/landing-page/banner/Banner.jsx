@@ -49,17 +49,17 @@ const MainBanner = (props) => {
       <img
         className="main-banner-group__banner-image1"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img1.jpeg`}
-        alt="banner-img"
+        alt="banner img"
       />
       <img
         className="main-banner-group__banner-image2"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img2.jpeg`}
-        alt="banner-img"
+        alt="banner img"
       />
       <img
         className="main-banner-group__banner-image3"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img3.jpeg`}
-        alt="banner-img"
+        alt="banner img"
       />
       <div className="main-banner-wine">
         <div className="main-banner-group__frame">

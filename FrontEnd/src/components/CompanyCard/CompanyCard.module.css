@@ -1,5 +1,3 @@
-@import 'variables.css';
-
 .company-card {
   width: 360px;
   min-height: 415px;
@@ -81,7 +79,7 @@
 .company-card__name-text {
   width: 328px;
   height: 48px;
-  color: var(--text-color);
+  color: var(--companies-card-text-color);
   font-family: var(--font-main);
   font-size: 20px;
   font-style: normal;
@@ -93,11 +91,11 @@
 
 .company-card__name-text_link {
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--companies-card-text-color);
 }
 
 .company-card__name-text_link:visited {
-  color: var(--text-color);
+  color: var(--companies-card-text-color);
 }
 
 .company-card__region-text {
