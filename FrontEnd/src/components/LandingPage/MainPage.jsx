@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import MainBanner from './banner/Banner';
+import MainBanner from './Banner/Banner';
 // import MainPartners from './partners/Partners';
-import MainCompanies from './companies/Companies';
-import MainLoginBanner from './login-banner/LoginBanner';
-import MainAboutSection from './about-section/About';
+import MainCompanies from './Companies/Companies';
+import MainLoginBanner from './LoginBanner/LoginBanner';
+import MainAboutSection from './AboutSection/About';
 import CookieMod from '../CookieAcception/CookieMod';
 import css from './MainPage.module.css';
 import PropTypes from 'prop-types';

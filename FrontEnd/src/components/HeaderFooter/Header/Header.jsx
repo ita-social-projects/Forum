@@ -1,6 +1,6 @@
 import css from './Header.module.css';
-import HeaderMenu from './menu/HeaderMenu';
-import Navbar from './navbar/Navbar';
+import HeaderMenu from './Menu/HeaderMenu';
+import Navbar from './Navbar/Navbar';
 
 function Header(props) {
   return (

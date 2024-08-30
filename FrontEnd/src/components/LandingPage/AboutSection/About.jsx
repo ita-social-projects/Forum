@@ -1,7 +1,7 @@
 import './About.css';
 import React from 'react';
-import AboutSectionCards from './cards/AboutCards';
-import AboutSectionText from './about-text/AboutText';
+import AboutSectionCards from './Cards/AboutCards';
+import AboutSectionText from './AboutText/AboutText';
 import AboutTextContent from './AboutMainText.js';
 
 const MainAboutSection = () => {

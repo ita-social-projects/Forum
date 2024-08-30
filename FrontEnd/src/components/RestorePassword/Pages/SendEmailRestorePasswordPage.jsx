@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import styles from './RestorePasswordPage.module.css';
-import { RestorePasswordFormComponent } from '../components/restorepassword/RestorePasswordForm';
+import styles from './SendEmailRestorePassword.module.css';
+import { SendEmailRestorePasswordFormComponent } from '../Components/RestorePassword/SendEmailForm';
 
-export function RestorePasswordPage() {
+export function SendEmailRestorePasswordPage() {
   return (
     <div className={styles['reset-password']}>
       <div className={styles['reset-password__body']}>
@@ -10,7 +10,7 @@ export function RestorePasswordPage() {
           src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
           alt="dots_7x6.png" />
         <div className={styles.container}>
-          <RestorePasswordFormComponent />
+          <SendEmailRestorePasswordFormComponent />
           <div className={styles['sign-in-line']}>
             <div className={styles['sign-in-line__text']}>
               Вже були на нашому сайті?

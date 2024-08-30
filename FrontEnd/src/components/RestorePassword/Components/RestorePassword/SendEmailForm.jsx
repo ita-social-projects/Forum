@@ -1,5 +1,5 @@
 import styles from './SendEmailForm.module.css';
-import { SendEmailRestorePasswordFormContentComponent } from './restorepassword-form/EmailFormContent';
+import { SendEmailRestorePasswordFormContentComponent } from './RestorePasswordForm/EmailFormContent';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

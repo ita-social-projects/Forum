@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import styles from './CookieMod.module.css';
-import cookiesimage from './cookieimg/homecookies.png';
+import cookiesimage from './CookieImg/homecookies.png';
 import { useState } from 'react';
 
 const CookieMod = ({ active, setActive }) => {

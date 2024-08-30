@@ -1,6 +1,6 @@
-import FooterTop from './top/FooterTop';
-import FooterBottom from './bottom/FooterBottom';
-import ShortFooter from './short/ShortFooter';
+import FooterTop from './Top/FooterTop';
+import FooterBottom from './Bottom/FooterBottom';
+import ShortFooter from './Short/ShortFooter';
 import css from './Footer.module.css';
 
 const UNSUITABLE_PAGES = ['login', 'register'];

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { RestorePasswordFormContentComponent } from './restorepassword-form/RestorePasswordFormContent';
+import { RestorePasswordFormContentComponent } from './RestorePasswordForm/RestorePasswordFormContent';
 import styles from './RestorePasswordForm.module.css';
 
 
