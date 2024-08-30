@@ -4,7 +4,7 @@ from profiles.models import (
     Profile,
     Region,
 )
-from .models import AutoModeration
+from .models import AutoModeration, ModerationEmail
 
 
 class AdminRegionSerialaizer(serializers.ModelSerializer):
@@ -128,3 +128,11 @@ class AutoModerationHoursSerializer(serializers.ModelSerializer):
     class Meta:
         model = AutoModeration
         fields = ("auto_moderation_hours",)
+
+
+class ModerationEmailSerializer(serializers.ModelSerializer):
+    email_moderation = serializers.EmailField()
+
+    class Meta:
+        model = ModerationEmail
+        fields = ['email_moderation']
