@@ -6,6 +6,7 @@ from administration.views import (
     UsersListView,
     UserDetailView,
     AutoModerationHoursView,
+    ModerationEmailView,
 )
 
 app_name = "administration"
@@ -20,4 +21,5 @@ urlpatterns = [
         AutoModerationHoursView.as_view(),
         name="automoderation_hours",
     ),
+    path("email/", ModerationEmailView.as_view(), name="moderation-email"),
 ]
