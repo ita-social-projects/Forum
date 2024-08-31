@@ -314,8 +314,12 @@ class TestApprovedImagesDeleter(APITestCase):
     def setUp(self):
         self.banner = ProfileimageFactory(image_type="banner")
         self.logo = ProfileimageFactory(image_type="logo")
-        self.banner_approved = ProfileimageFactory(image_type="banner", is_approved=True)
-        self.logo_approved = ProfileimageFactory(image_type="logo", is_approved=True)
+        self.banner_approved = ProfileimageFactory(
+            image_type="banner", is_approved=True
+        )
+        self.logo_approved = ProfileimageFactory(
+            image_type="logo", is_approved=True
+        )
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
@@ -325,7 +329,7 @@ class TestApprovedImagesDeleter(APITestCase):
             banner=self.banner,
             logo=self.logo,
             banner_approved=self.banner_approved,
-            logo_approved=self.logo_approved
+            logo_approved=self.logo_approved,
         )
         self.deletion_checker = ApprovedImagesDeleter(self.profile)
 
