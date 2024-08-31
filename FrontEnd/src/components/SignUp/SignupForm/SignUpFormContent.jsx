@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Tooltip } from 'antd';
-import EyeInvisible from '../../../../Authorization/EyeInvisible';
-import EyeVisible from '../../../../Authorization/EyeVisible';
+import EyeInvisible from '../../Authorization/EyeInvisible';
+import EyeVisible from '../../Authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
 import {
@@ -13,7 +13,7 @@ import {
   PASSWORD_PATTERN,
   NAME_SURNAME_PATTERN,
   COMPANY_NAME_PATTERN,
-} from '../../../../../constants/constants';
+} from '../../../constants/constants';
 
 const RulesModal = React.lazy(() => import('./RulesModal'));
 

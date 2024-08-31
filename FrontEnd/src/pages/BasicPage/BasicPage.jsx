@@ -15,10 +15,10 @@ import PrivacyPolicy from '../../components/PrivacyPolicyPage/PrivacyPolicyPage'
 import ProfileDetailPage from '../../components/ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../../components/ProfileList/ProfileListPage';
 import ProfilePage from '../../components/ProfilePage/ProfilePage';
-import { SignUpPage } from '../../components/SignUp/pages/SignUpPage';
-import { SignUpModalPage } from '../../components/SignUp/pages/SignUpModalPage';
-import { ResendActivationPage } from '../../components/SignUp/pages/ResendActivationPage';
-import { ActivationProfilePage } from '../../components/SignUp/pages/ActivateProfilePage';
+import { SignUpPage } from './SignUp/SignUpPage';
+import { SignUpModalPage } from './SignUp/SignUpModalPage';
+import { ResendActivationPage } from './SignUp/ResendActivationPage';
+import { ActivationProfilePage } from './SignUp/ActivateProfilePage';
 import { SendEmailRestorePasswordPage } from '../../components/RestorePassword/Pages/SendEmailRestorePasswordPage';
 import { RestorePasswordPage } from '../../components/RestorePassword/Pages/RestorePasswordPage';
 import { RestorePasswordModalPage } from '../../components/RestorePassword/Pages/RestorePasswordModalPage';

@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import styles from './SignUpPage.module.css';
-import { ResendActivationFormComponent } from '../components/signup/ResendActivationForm';
+import { SignUpFormComponent } from '../../../components/SignUp/SignUpForm';
 
-export function ResendActivationPage() {
+export function SignUpPage() {
   return (
     <div className={styles['sign-up']}>
       <div className={styles['sign-up__body']}>
-      <img className={styles['sign-up-img-right']}
+        <img className={styles['sign-up-img-left']}
           src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
           alt="dots_7x6.png" />
         <div className={styles.container}>
-          <ResendActivationFormComponent />
+          <SignUpFormComponent />
           <div className={styles['sign-in-line']}>
             <div className={styles['sign-in-line__text']}>
               Вже були на нашому сайті?
@@ -20,7 +20,7 @@ export function ResendActivationPage() {
             </Link>
           </div>
         </div>
-        <img className={styles['sign-up-img-left']}
+        <img className={styles['sign-up-img-right']}
           src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
           alt="dots_7x6.png" />
       </div>

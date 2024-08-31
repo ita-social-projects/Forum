@@ -1,5 +1,5 @@
 import styles from './SignUpForm.module.css';
-import { SignUpFormContentComponent } from './signup-form/SignUpFormContent';
+import { SignUpFormContentComponent } from './SignupForm/SignUpFormContent';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

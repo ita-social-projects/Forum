@@ -1,5 +1,5 @@
 import styles from './ResendActivationForm.module.css';
-import { ResendActivationFormContentComponent } from './signup-form/ResendActivationFormContent';
+import { ResendActivationFormContentComponent } from './SignupForm/ResendActivationFormContent';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
