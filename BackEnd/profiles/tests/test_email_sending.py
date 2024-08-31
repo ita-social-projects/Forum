@@ -314,22 +314,32 @@ class TestApprovedImagesDeleter(APITestCase):
     def setUp(self):
         self.banner = ProfileimageFactory(image_type="banner")
         self.logo = ProfileimageFactory(image_type="logo")
+        self.banner_approved = ProfileimageFactory(image_type="banner", is_approved=True)
+        self.logo_approved = ProfileimageFactory(image_type="logo", is_approved=True)
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
             person=self.user,
             official_name="Test Official Startup",
             phone="380100102034",
             edrpou="99999999",
+            banner=self.banner,
+            logo=self.logo,
+            banner_approved=self.banner_approved,
+            logo_approved=self.logo_approved
         )
         self.deletion_checker = ApprovedImagesDeleter(self.profile)
 
+    # user removes banner from profile
     def test_handle_potential_deletion_banner(self):
+        self.profile.banner = None
         self.profile.banner_approved = self.banner
         self.profile.status = self.profile.PENDING
         self.deletion_checker.handle_potential_deletion()
         self.assertTrue(self.profile.banner_approved.is_deleted)
 
+    # user removes logo from profile
     def test_handle_potential_deletion_logo(self):
+        self.profile.logo = None
         self.profile.logo_approved = self.logo
         self.profile.status = self.profile.PENDING
         self.deletion_checker.handle_potential_deletion()
