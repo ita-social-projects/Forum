@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import css from './PaginationButtons.module.css';
-import { PAGE_SIZES_SELECTOR } from '../constants';
+import { PAGE_SIZES_SELECTOR } from '../../../routes/AdminPage/constants';
 
 function PaginationButtons({ currentPage, totalPages, onPageChange, pageSize, onPageSizeChange }) {
     const goToPreviousPage = () => {
