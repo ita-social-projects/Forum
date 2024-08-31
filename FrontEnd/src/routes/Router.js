@@ -1,7 +1,7 @@
 import {createBrowserRouter} from 'react-router-dom';
 import {AuthProvider} from '../context';
-import AdminPage from '../pages/AdminPage/AdminPage';
-import BasicPage from '../pages/BasicPage/BasicPage';
+import AdminPage from './AdminPage/AdminPage';
+import BasicPage from './BasicPage/BasicPage';
 import React from 'react';
 
 
