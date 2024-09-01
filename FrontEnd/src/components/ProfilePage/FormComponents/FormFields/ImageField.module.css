@@ -103,7 +103,7 @@
     gap: 4px;
     align-self: stretch;
 
-    color: var(--Main-Grey-90, #25292C);
+    color: var(--main-grey-90, #25292C);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 14px;

@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
@@ -13,14 +11,14 @@ from utils.unittest_helper import AnyStr
 from utils.dump_response import dump  # noqa
 
 
-@patch("profiles.views.ModerationManager.schedule_autoapprove")
 class TestProfileModeration(APITestCase):
     def setUp(self) -> None:
+
         self.banner = ProfileimageFactory(image_type="banner")
         self.logo = ProfileimageFactory(image_type="logo")
         self.second_banner = ProfileimageFactory(image_type="banner")
         self.second_logo = ProfileimageFactory(image_type="logo")
-        self.user = UserFactory()
+        self.user = UserFactory(email="test@test.com")
         self.profile = ProfileCompanyFactory.create(person=self.user)
 
         self.user_client = APIClient()
@@ -28,7 +26,10 @@ class TestProfileModeration(APITestCase):
 
         self.moderator_client = APIClient()
 
-    def test_approve_banner_and_logo(self, mock_manager):
+        self.unregistered_user_client = APIClient()
+
+    def test_reject_banner_and_logo(self):
+
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -41,7 +42,7 @@ class TestProfileModeration(APITestCase):
         )
         self.profile.refresh_from_db()
 
-        # moderator approves request
+        # moderator rejects request
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
@@ -49,27 +50,28 @@ class TestProfileModeration(APITestCase):
             data={
                 "banner": self.profile.banner.uuid,
                 "logo": self.profile.logo.uuid,
-                "action": "approve",
+                "action": "reject",
             },
         )
 
         self.profile.refresh_from_db()
+        self.user.refresh_from_db()
         self.banner.refresh_from_db()
         self.logo.refresh_from_db()
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(
-            {"status_updated_at": AnyStr(), "status": "approved"},
+            {"status_updated_at": AnyStr(), "status": "blocked"},
             response.json(),
         )
-        self.assertTrue(self.banner.is_approved)
-        self.assertTrue(self.logo.is_approved)
-        self.assertEqual(self.profile.banner_approved, self.profile.banner)
-        self.assertEqual(self.profile.logo_approved, self.profile.logo)
-        self.assertEqual(self.profile.APPROVED, self.profile.status)
-        mock_manager.assert_called_once()
+        self.assertFalse(self.banner.is_approved)
+        self.assertFalse(self.logo.is_approved)
+        self.assertEqual(self.profile.BLOCKED, self.profile.status)
+        self.assertTrue(self.profile.is_deleted)
+        self.assertFalse(self.user.is_active)
 
-    def test_approve_banner(self, mock_manager):
+    def test_reject_banner(self):
+
         # user updates only banner
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -81,31 +83,33 @@ class TestProfileModeration(APITestCase):
         )
         self.profile.refresh_from_db()
 
-        # moderator approves request
+        # moderator rejects request
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
             data={
                 "banner": self.profile.banner.uuid,
-                "action": "approve",
+                "action": "reject",
             },
         )
 
         self.profile.refresh_from_db()
+        self.user.refresh_from_db()
         self.banner.refresh_from_db()
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(
-            {"status_updated_at": AnyStr(), "status": "approved"},
+            {"status_updated_at": AnyStr(), "status": "blocked"},
             response.json(),
         )
-        self.assertTrue(self.banner.is_approved)
-        self.assertEqual(self.profile.banner_approved, self.profile.banner)
-        self.assertEqual(self.profile.APPROVED, self.profile.status)
-        mock_manager.assert_called_once()
+        self.assertFalse(self.banner.is_approved)
+        self.assertEqual(self.profile.BLOCKED, self.profile.status)
+        self.assertTrue(self.profile.is_deleted)
+        self.assertFalse(self.user.is_active)
 
-    def test_approve_logo(self, mock_manager):
+    def test_reject_logo(self):
+
         # user updates logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -117,31 +121,33 @@ class TestProfileModeration(APITestCase):
         )
         self.profile.refresh_from_db()
 
-        # moderator approves request
+        # moderator rejects request
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
             data={
                 "logo": self.profile.logo.uuid,
-                "action": "approve",
+                "action": "reject",
             },
         )
 
         self.profile.refresh_from_db()
+        self.user.refresh_from_db()
         self.logo.refresh_from_db()
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(
-            {"status_updated_at": AnyStr(), "status": "approved"},
+            {"status_updated_at": AnyStr(), "status": "blocked"},
             response.json(),
         )
-        self.assertTrue(self.logo.is_approved)
-        self.assertEqual(self.profile.logo_approved, self.profile.logo)
-        self.assertEqual(self.profile.APPROVED, self.profile.status)
-        mock_manager.assert_called_once()
+        self.assertFalse(self.logo.is_approved)
+        self.assertEqual(self.profile.BLOCKED, self.profile.status)
+        self.assertTrue(self.profile.is_deleted)
+        self.assertFalse(self.user.is_active)
 
-    def test_approve_banner_and_logo_processed_request(self, mock_manager):
+    def test_reject_banner_and_logo_processed_request(self):
+
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -154,7 +160,7 @@ class TestProfileModeration(APITestCase):
         )
         self.profile.refresh_from_db()
 
-        # moderator approves request
+        # moderator rejects request
         self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
@@ -162,11 +168,11 @@ class TestProfileModeration(APITestCase):
             data={
                 "banner": self.profile.banner.uuid,
                 "logo": self.profile.logo.uuid,
-                "action": "approve",
+                "action": "reject",
             },
         )
 
-        # moderator approves request one more time
+        # moderator rejects request one more time
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
@@ -174,7 +180,7 @@ class TestProfileModeration(APITestCase):
             data={
                 "banner": self.profile.banner.uuid,
                 "logo": self.profile.logo.uuid,
-                "action": "approve",
+                "action": "reject",
             },
         )
 
@@ -187,9 +193,9 @@ class TestProfileModeration(APITestCase):
             },
             response.json(),
         )
-        mock_manager.assert_called_once()
 
-    def test_approve_banner_and_logo_outdated_request(self, mock_manager):
+    def test_reject_banner_and_logo_outdated_request(self):
+
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -216,9 +222,7 @@ class TestProfileModeration(APITestCase):
             },
         )
 
-        self.profile.refresh_from_db()
-
-        # moderator approves first request
+        # moderator rejects first request
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
@@ -226,7 +230,7 @@ class TestProfileModeration(APITestCase):
             data={
                 "banner": first_banner,
                 "logo": first_logo,
-                "action": "approve",
+                "action": "reject",
             },
         )
 
@@ -242,9 +246,9 @@ class TestProfileModeration(APITestCase):
         self.assertNotEqual(self.profile.banner, first_banner)
         self.assertNotEqual(self.profile.logo, first_logo)
         self.assertEqual(self.profile.PENDING, self.profile.status)
-        mock_manager.assert_called()
 
-    def test_approve_banner_and_logo_wrong_action(self, mock_manager):
+    def test_reject_banner_and_logo_wrong_action(self):
+
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -257,7 +261,7 @@ class TestProfileModeration(APITestCase):
         )
         self.profile.refresh_from_db()
 
-        # moderator approves request
+        # moderator rejects request
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
@@ -273,9 +277,9 @@ class TestProfileModeration(APITestCase):
         self.assertEqual(
             {"action": ["Action is not allowed"]}, response.json()
         )
-        mock_manager.assert_called_once()
 
-    def test_approve_banner_and_logo_error_in_signed_id(self, mock_manager):
+    def test_reject_banner_and_logo_error_in_signed_id(self):
+
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -288,7 +292,7 @@ class TestProfileModeration(APITestCase):
         )
         self.profile.refresh_from_db()
 
-        # moderator approves request
+        # moderator rejects request
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id="some_wrong_signed_id"
@@ -296,15 +300,15 @@ class TestProfileModeration(APITestCase):
             data={
                 "banner": self.profile.banner.uuid,
                 "logo": self.profile.logo.uuid,
-                "action": "approve",
+                "action": "reject",
             },
         )
 
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
         self.assertEqual({"detail": "Not found."}, response.json())
-        mock_manager.assert_called_once()
 
-    def test_approve_banner_and_logo_non_existing_profile(self, mock_manager):
+    def test_reject_banner_and_logo_non_existing_profile(self):
+
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -317,7 +321,7 @@ class TestProfileModeration(APITestCase):
         )
         self.profile.refresh_from_db()
 
-        # moderator approves request
+        # moderator rejects request
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(0)
@@ -325,15 +329,15 @@ class TestProfileModeration(APITestCase):
             data={
                 "banner": self.profile.banner.uuid,
                 "logo": self.profile.logo.uuid,
-                "action": "approve",
+                "action": "reject",
             },
         )
 
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
         self.assertEqual({"detail": "Not found."}, response.json())
-        mock_manager.assert_called_once()
 
-    def test_approve_banner_and_logo_empty_image_fields(self, mock_manager):
+    def test_reject_banner_and_logo_empty_image_fields(self):
+
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -344,15 +348,14 @@ class TestProfileModeration(APITestCase):
                 "logo": self.logo.uuid,
             },
         )
-        self.profile.refresh_from_db()
 
-        # moderator approves request
+        # moderator rejects request
         response = self.moderator_client.patch(
             path="/api/profiles/{profile_id}/images_moderation/".format(
                 profile_id=encode_id(self.profile.id)
             ),
             data={
-                "action": "approve",
+                "action": "reject",
             },
         )
 
@@ -365,4 +368,96 @@ class TestProfileModeration(APITestCase):
             },
             response.json(),
         )
-        mock_manager.assert_called_once()
+
+    def test_login_blocked_user_due_to_rejected_request(self):
+
+        # user updates both banner and logo
+        self.user_client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={
+                "banner": self.banner.uuid,
+                "logo": self.logo.uuid,
+            },
+        )
+        self.profile.refresh_from_db()
+
+        # moderator rejects request
+        self.moderator_client.patch(
+            path="/api/profiles/{profile_id}/images_moderation/".format(
+                profile_id=encode_id(self.profile.id)
+            ),
+            data={
+                "banner": self.profile.banner.uuid,
+                "logo": self.profile.logo.uuid,
+                "action": "reject",
+            },
+        )
+        self.user.refresh_from_db()
+        self.user.set_password("Test1234")
+        self.user.save()
+
+        # user with blocked profile tries to log in
+        response = self.user_client.post(
+            path="/api/auth/token/login/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+            },
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            {"non_field_errors": ["Profile has been blocked."]},
+            response.json(),
+        )
+
+    def test_register_blocked_user_due_to_rejected_request(self):
+
+        # user updates both banner and logo
+        self.user_client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={
+                "banner": self.banner.uuid,
+                "logo": self.logo.uuid,
+            },
+        )
+        self.profile.refresh_from_db()
+
+        # moderator rejects request
+        self.moderator_client.patch(
+            path="/api/profiles/{profile_id}/images_moderation/".format(
+                profile_id=encode_id(self.profile.id)
+            ),
+            data={
+                "banner": self.profile.banner.uuid,
+                "logo": self.profile.logo.uuid,
+                "action": "reject",
+            },
+        )
+
+        # user with blocked profile tries to sign up with the same email
+        response = self.unregistered_user_client.post(
+            path="/api/auth/users/",
+            data={
+                "email": "test@test.com",
+                "password": "Test1234",
+                "re_password": "Test1234",
+                "name": "Test",
+                "surname": "Test",
+                "company": {
+                    "name": "Test Company",
+                    "is_registered": True,
+                    "is_startup": False,
+                    "is_fop": False,
+                },
+            },
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            {"email": ["Email is already registered"]},
+            response.json(),
+        )

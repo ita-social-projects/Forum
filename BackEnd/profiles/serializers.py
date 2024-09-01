@@ -11,6 +11,7 @@ from .models import (
 from images.models import ProfileImage
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
 from utils.moderation.moderation_action import ModerationAction
+from utils.moderation.image_moderation import ModerationManager
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -477,6 +478,9 @@ class ProfileModerationSerializer(serializers.Serializer):
 
         else:
             raise serializers.ValidationError("Invalid action provided.")
+
+        moderation_manager = ModerationManager(profile=instance)
+        moderation_manager.revoke_deprecated_autoapprove()
 
         instance.status_updated_at = now()
         instance.save()

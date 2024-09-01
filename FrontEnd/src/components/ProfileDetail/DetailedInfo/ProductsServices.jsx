@@ -1,7 +1,5 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useContext} from 'react';
 import { PropTypes } from 'prop-types';
-import { useEffect } from 'react';
-import { useContext } from 'react';
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 import classes from './ProductsServices.module.css';
 import ReadMore from './ReadMore';
@@ -28,14 +26,14 @@ function ProductsServices ({ data }) {
             <div id="products-services" className={classes['products-services']}>
                 <div className={classes['products-services__title']}>
                     <div className={classes['products-services__title--block']}>
-                        <p className={classes['products-services__title--text']}>Товари / послуги</p>
+                        <h3 className={classes['products-services__title--text']}>Товари / послуги</h3>
                     </div>
                     <div className={classes['products-services__title--divider']}></div>
                 </div>
                 <div className={classes['products-services__content']}>
                     {profile.products &&
                     <div className={classes['products-services__content--block']}>
-                        <p className={classes['products-services__content--title']}>Товари</p>
+                        <h4 className={classes['products-services__content--title']}>Товари</h4>
                         <div className={classes['products-services__content--description']}>
                             <ReadMore>
                                 {profile.products}
@@ -44,7 +42,7 @@ function ProductsServices ({ data }) {
                     </div>}
                     {profile.services &&
                     <div className={classes['products-services__content--block']}>
-                        <p className={classes['products-services__content--title']}>Послуги</p>
+                        <h4 className={classes['products-services__content--title']}>Послуги</h4>
                         <div className={classes['products-services__content--description']}>
                             <ReadMore>
                                 {profile.services}

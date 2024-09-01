@@ -58,7 +58,7 @@ function ProfileDetailNavBar({ data }) {
   }, [navigate, hash.pathname]);
 
   return (
-    <div>
+    <div className={classes['navbar-menu__main']}>
       <div className={classes['navbar-menu']}>
         {Object.entries(companyType()).map(
           ([link, label]) =>

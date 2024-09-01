@@ -12,10 +12,9 @@
 }
 
 .navigation-content-section__text {
-    color: var(--main-white, #FFF);
+    color: var(--footer-font-color);
     font-feature-settings: 'calt' off;
     text-decoration: none;
-
     font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
@@ -25,10 +24,9 @@
 }
 
 .navigation-content-section-service__text {
-    color: var(--main-white, #FFF);
+    color: var(--footer-font-color);
     font-feature-settings: 'calt' off;
     text-decoration: none;
-
     font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;

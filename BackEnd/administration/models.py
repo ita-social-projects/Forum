@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from authentication.models import CustomUser
+from profiles.models import Profile
+
 
 def validate_auto_moderation_hours(value: int):
     if value < 1 or value > 48:
@@ -28,9 +30,16 @@ class AutoModeration(models.Model):
         return obj
 
 
+class AutoapproveTask(models.Model):
+    celery_task_id = models.CharField()
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+
 class ModerationEmail(models.Model):
     superuser = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     email_moderation = models.EmailField(unique=True)
 
     def __str__(self):
         return self.superuser.email
+
+
