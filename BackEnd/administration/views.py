@@ -124,6 +124,7 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
     def get_object(self):
         return AutoModeration.get_auto_moderation_hours()
 
+
 class ModerationEmailView(RetrieveUpdateAPIView):
     queryset = ModerationEmail.objects.all()
     serializer_class = ModerationEmailSerializer

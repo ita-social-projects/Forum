@@ -71,7 +71,6 @@ def send_moderation_email(profile, banner, logo, content_is_deleted):
         ),
     }
 
-
     email_body = render_to_string("profiles/email_template.html", context)
     email = EmailMultiAlternatives(
         subject=f"{profile.name} - {update_date}: Запит "

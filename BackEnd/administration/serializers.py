@@ -135,4 +135,4 @@ class ModerationEmailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ModerationEmail
-        fields = ['email_moderation']
+        fields = ["email_moderation"]
