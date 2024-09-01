@@ -36,8 +36,6 @@ class AutoapproveTask(models.Model):
 
 
 class ModerationEmail(models.Model):
-    superuser = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     email_moderation = models.EmailField(unique=True)
-
     def __str__(self):
-        return self.superuser.email
+        return self.email_moderation
