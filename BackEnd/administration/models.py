@@ -33,4 +33,4 @@ class ModerationEmail(models.Model):
     email_moderation = models.EmailField(unique=True)
 
     def __str__(self):
-        return f"ModerationEmail: {self.superuser.email}"
+        return self.superuser.email
