@@ -9,6 +9,7 @@ from utils.moderation.image_moderation import ModerationManager
 from authentication.factories import UserFactory
 from profiles.factories import ProfileStartupFactory
 from images.factories import ProfileimageFactory
+from administration.models import ModerationEmail
 
 
 class TestSendModerationEmail(APITestCase):
@@ -22,6 +23,7 @@ class TestSendModerationEmail(APITestCase):
             phone="380100102034",
             edrpou="99999999",
         )
+        self.moderation_email = ModerationEmail.objects.create(email_moderation="test_moderation@example.com")
 
     def test_send_moderation_email(self):
         self.profile.banner = self.banner
@@ -39,7 +41,7 @@ class TestSendModerationEmail(APITestCase):
             email_data.subject,
             f"{self.profile.name} - {self.profile.status_updated_at.strftime('%d.%m.%Y')}: Запит на затвердження змін в обліковому записі компанії",
         )
-        self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
+        self.assertIn(self.moderation_email, email_data.to)
         self.assertIn(self.profile.name, email_data.body)
         self.assertIn(
             self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
@@ -72,7 +74,7 @@ class TestSendModerationEmail(APITestCase):
             email_data.subject,
             f"{self.profile.name} - {self.profile.status_updated_at.strftime('%d.%m.%Y')}: Запит на затвердження змін в обліковому записі компанії",
         )
-        self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
+        self.assertIn(self.moderation_email, email_data.to)
         self.assertIn(self.profile.name, email_data.body)
         self.assertIn(
             self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
@@ -101,7 +103,7 @@ class TestSendModerationEmail(APITestCase):
             email_data.subject,
             f"{self.profile.name} - {self.profile.status_updated_at.strftime('%d.%m.%Y')}: Запит на затвердження змін в обліковому записі компанії",
         )
-        self.assertIn(settings.EMAIL_HOST_USER, email_data.to)
+        self.assertIn(self.moderation_email, email_data.to)
         self.assertIn(self.profile.name, email_data.body)
         self.assertIn(
             self.profile.status_updated_at.strftime("%d.%m.%Y %H:%M"),
