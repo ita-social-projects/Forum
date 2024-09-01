@@ -15,7 +15,6 @@ EMAIL_CONTENT_SUBTYPE = "html"
 PROTOCOL = "http"
 DOMAIN = config("ALLOWED_ENV_HOST")
 
-
 def define_ending(hours):
     result_of_hours = None
     if hours % 10 == 1 and hours != 11:
