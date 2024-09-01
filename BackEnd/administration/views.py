@@ -26,7 +26,7 @@ from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
-from .permissions import IsStaffUser, IsStaffUserOrReadOnly
+from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 
 
 class UsersListView(ListAPIView):
@@ -126,6 +126,13 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
 
 
 class ModerationEmailView(RetrieveUpdateAPIView):
+    """
+    View for retrieving and updating the ModerationEmail instance.
+    Requires the user to be a superuser.
+    """
+
+    permission_classes = [IsSuperUser]
+
     queryset = ModerationEmail.objects.all()
     serializer_class = ModerationEmailSerializer
 
