@@ -161,6 +161,8 @@ class TestSendModerationEmail(APITestCase):
             mail.outbox[0].body,
         )
         self.assertEqual(self.profile.status, self.profile.UNDEFINED)
+        self.assertIsNone(self.profile.banner)
+        self.assertIsNone(self.profile.logo)
 
     def test_remove_pending_image_keep_approved_image(self):
         self.profile.banner = self.banner
@@ -178,6 +180,8 @@ class TestSendModerationEmail(APITestCase):
             mail.outbox[0].body,
         )
         self.assertEqual(self.profile.status, self.profile.APPROVED)
+        self.assertTrue(self.profile.banner.is_approved)
+        self.assertIsNone(self.profile.logo)
 
 
 class TestSendModerationManager(APITestCase):
