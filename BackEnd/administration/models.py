@@ -37,5 +37,6 @@ class AutoapproveTask(models.Model):
 
 class ModerationEmail(models.Model):
     email_moderation = models.EmailField(unique=True)
+
     def __str__(self):
         return self.email_moderation

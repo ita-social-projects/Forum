@@ -23,7 +23,9 @@ class TestSendModerationEmail(APITestCase):
             phone="380100102034",
             edrpou="99999999",
         )
-        self.moderation_email = ModerationEmail.objects.create(email_moderation="test_moderation@example.com")
+        self.moderation_email = ModerationEmail.objects.create(
+            email_moderation="test_moderation@example.com"
+        )
 
     def test_send_moderation_email(self):
         self.profile.banner = self.banner
