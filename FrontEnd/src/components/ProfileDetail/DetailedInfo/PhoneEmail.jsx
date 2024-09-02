@@ -10,7 +10,7 @@ import { Tooltip } from 'antd';
 
 const LENGTH_EMAIL = 14;
 
-function PhoneEmail({ profileId, personId }) {
+function PhoneEmail({ isAuthorized, profileId, personId }) {
   const [isContactsShown, setContactsShown] = useState(false);
   const [isPhoneCopied, setIsPhoneCopied] = useState(false);
   const [isEmailCopied, setIsEmailCopied] = useState(false);
@@ -40,7 +40,7 @@ function PhoneEmail({ profileId, personId }) {
   };
 
   const { data: profileData } = useSWR(
-    `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`,
+    [`${process.env.REACT_APP_BASE_API_URL}/api/profiles/${profileId}?with_contacts=True`, isAuthorized],
     (url) =>
       axios
         .get(url)
