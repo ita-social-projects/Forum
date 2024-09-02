@@ -66,9 +66,10 @@ class ModerationManager:
         return self.moderation_is_needed
 
     def schedule_autoapprove(self):
+        """Make shure that you called check_for_moderation on your ModerationManager instance, before scheduling autoapprove."""
         try:
             self.revoke_deprecated_autoapprove()
-            if self.needs_moderation and not self.content_deleted:
+            if self.moderation_is_needed and not self.content_deleted:
                 banner = self.images.get("banner")
                 logo = self.images.get("logo")
                 banner_uuid = str(banner.uuid) if banner else None

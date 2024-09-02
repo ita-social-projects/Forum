@@ -17,7 +17,6 @@ from utils.dump_response import dump  # noqa
 @patch("profiles.views.ModerationManager.revoke_deprecated_autoapprove")
 class TestProfileModeration(APITestCase):
     def setUp(self) -> None:
-
         self.banner = ProfileimageFactory(image_type="banner")
         self.logo = ProfileimageFactory(image_type="logo")
         self.second_banner = ProfileimageFactory(image_type="banner")
@@ -33,7 +32,6 @@ class TestProfileModeration(APITestCase):
         self.unregistered_user_client = APIClient()
 
     def test_reject_banner_and_logo(self, mock_revoke, mock_schedule):
-
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -77,7 +75,6 @@ class TestProfileModeration(APITestCase):
         mock_revoke.assert_called_once()
 
     def test_reject_banner(self, mock_revoke, mock_schedule):
-
         # user updates only banner
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -114,10 +111,9 @@ class TestProfileModeration(APITestCase):
         self.assertTrue(self.profile.is_deleted)
         self.assertFalse(self.user.is_active)
         mock_schedule.assert_called_once()
-        mock_revoke.assert_called_once()        
+        mock_revoke.assert_called_once()
 
     def test_reject_logo(self, mock_revoke, mock_schedule):
-
         # user updates logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -154,10 +150,11 @@ class TestProfileModeration(APITestCase):
         self.assertTrue(self.profile.is_deleted)
         self.assertFalse(self.user.is_active)
         mock_schedule.assert_called_once()
-        mock_revoke.assert_called_once()        
+        mock_revoke.assert_called_once()
 
-    def test_reject_banner_and_logo_processed_request(self, mock_revoke, mock_schedule):
-
+    def test_reject_banner_and_logo_processed_request(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -204,10 +201,11 @@ class TestProfileModeration(APITestCase):
             response.json(),
         )
         mock_schedule.assert_called_once()
-        mock_revoke.assert_called_once()        
+        mock_revoke.assert_called_once()
 
-    def test_reject_banner_and_logo_outdated_request(self, mock_revoke, mock_schedule):
-
+    def test_reject_banner_and_logo_outdated_request(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -259,10 +257,11 @@ class TestProfileModeration(APITestCase):
         self.assertNotEqual(self.profile.logo, first_logo)
         self.assertEqual(self.profile.PENDING, self.profile.status)
         mock_schedule.assert_has_calls([call(), call()])
-        mock_revoke.assert_not_called()        
+        mock_revoke.assert_not_called()
 
-    def test_reject_banner_and_logo_wrong_action(self, mock_revoke, mock_schedule):
-
+    def test_reject_banner_and_logo_wrong_action(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -294,8 +293,9 @@ class TestProfileModeration(APITestCase):
         mock_schedule.assert_called_once()
         mock_revoke.assert_not_called()
 
-    def test_reject_banner_and_logo_error_in_signed_id(self, mock_revoke, mock_schedule):
-
+    def test_reject_banner_and_logo_error_in_signed_id(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -325,8 +325,9 @@ class TestProfileModeration(APITestCase):
         mock_schedule.assert_called_once()
         mock_revoke.assert_not_called()
 
-    def test_reject_banner_and_logo_non_existing_profile(self, mock_revoke, mock_schedule):
-
+    def test_reject_banner_and_logo_non_existing_profile(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -356,8 +357,9 @@ class TestProfileModeration(APITestCase):
         mock_schedule.assert_called_once()
         mock_revoke.assert_not_called()
 
-    def test_reject_banner_and_logo_empty_image_fields(self, mock_revoke, mock_schedule):
-
+    def test_reject_banner_and_logo_empty_image_fields(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -389,10 +391,11 @@ class TestProfileModeration(APITestCase):
             response.json(),
         )
         mock_schedule.assert_called_once()
-        mock_revoke.assert_not_called()    
+        mock_revoke.assert_not_called()
 
-    def test_login_blocked_user_due_to_rejected_request(self, mock_revoke, mock_schedule):
-
+    def test_login_blocked_user_due_to_rejected_request(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -436,8 +439,9 @@ class TestProfileModeration(APITestCase):
         mock_schedule.assert_called_once()
         mock_revoke.assert_called_once()
 
-    def test_register_blocked_user_due_to_rejected_request(self, mock_revoke, mock_schedule):
-
+    def test_register_blocked_user_due_to_rejected_request(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -486,4 +490,4 @@ class TestProfileModeration(APITestCase):
             response.json(),
         )
         mock_schedule.assert_called_once()
-        mock_revoke.assert_called_once()        
+        mock_revoke.assert_called_once()

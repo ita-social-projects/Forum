@@ -1,5 +1,6 @@
 from celery import shared_task
 
+from administration.models import AutoapproveTask
 from .models import Profile
 from images.models import ProfileImage
 from utils.completeness_counter import completeness_count
@@ -23,3 +24,6 @@ def celery_autoapprove(profile_id, banner_uuid, logo_uuid):
     profile.status = profile.AUTOAPPROVED
     profile.save()
     completeness_count(profile)
+    deprecated_record = AutoapproveTask.objects.filter(profile=profile).first()
+    if deprecated_record:
+        deprecated_record.delete()
