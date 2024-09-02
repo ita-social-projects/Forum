@@ -1,4 +1,4 @@
-from unittest.mock import patch, call, MagicMock
+from unittest.mock import patch, call
 
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
