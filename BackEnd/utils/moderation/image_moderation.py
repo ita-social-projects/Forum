@@ -79,7 +79,7 @@ class ModerationManager:
                         AutoModeration.get_auto_moderation_hours().auto_moderation_hours
                     )
                     * 60
-                    * 60
+                    # * 60
                 )
                 result = celery_autoapprove.apply_async(
                     (self.profile.id, banner_uuid, logo_uuid), countdown=delay
