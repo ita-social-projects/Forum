@@ -4,9 +4,7 @@ import { PropTypes } from 'prop-types';
 import PhoneEmail from './PhoneEmail';
 import classes from './DataContacts.module.css';
 
-function DataContacts ({ data }) {
-
-    // TODO: implement logic for getting data from db when it's added on server side
+function DataContacts ({ data, isAuthorized }) {
 
     const companyData = {
         'ЄДРПОУ': data.edrpou,
@@ -18,7 +16,7 @@ function DataContacts ({ data }) {
 
     const companyContacts = {
         'Сайт': '',
-        'PhoneEmail': <PhoneEmail profileId={data.id} personId={data.person}/>,
+        'PhoneEmail': <PhoneEmail isAuthorized={isAuthorized} profileId={data.id} personId={data.person}/>,
         'Поштова адреса': data.address,
         'Соціальні мережі': [
             {

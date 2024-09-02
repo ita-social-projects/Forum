@@ -10,7 +10,6 @@
     cursor: pointer;
 }
 
-.read-more__text,
 .read-more {
     font-family: var(--font-main);
     color: var(--main-grey-90, #25292C);
