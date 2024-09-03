@@ -132,8 +132,6 @@ class ModerationEmailView(RetrieveUpdateAPIView):
     """
 
     permission_classes = [IsSuperUser]
-
-    queryset = ModerationEmail.objects.all()
     serializer_class = ModerationEmailSerializer
 
     def get_object(self):
