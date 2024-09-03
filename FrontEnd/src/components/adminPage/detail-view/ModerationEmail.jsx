@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Tooltip } from 'antd';
 import useSWR from 'swr';
@@ -15,9 +15,11 @@ const ModerationEmail = () => {
     const [error, setError] = useState(null);
 
     // Update email state when data is fetched
-    if (data && data.email_moderation && email === null) {
-        setEmail(data.email_moderation);
-    }
+    useEffect(() => {
+        if (data && data.email_moderation && email === null) {
+            setEmail(data.email_moderation);
+        }
+    }, [data]);
 
     const handleInputChange = (e) => {
         let value = e.target.value;
@@ -26,13 +28,12 @@ const ModerationEmail = () => {
     };
 
     const handleSubmit = () => {
-        // Assuming 'delay' is a typo and should be 'email'
         !error && axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/admin/email/`, { 'email_moderation': email })
             .then(() => {
                 toast.success('Зміни успішно застосовано.');
                 mutate({ ...data, email_moderation: email });
             })
-            .catch((e) => toast.error(e.message));
+            .catch(() => toast.error('Eлектронна пошта вказана невірно.'));
     };
 
     return (
