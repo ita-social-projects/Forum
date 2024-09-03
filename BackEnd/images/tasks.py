@@ -4,6 +4,7 @@ from datetime import timedelta
 from django.db.models import Sum, Count
 from django.utils import timezone
 
+from utils.images.send_email import send_email_about_banners_and_logos
 from .models import ProfileImage
 
 
@@ -20,7 +21,9 @@ def celery_send_email_images():
         count=Count('uuid')
     )
 
-    logo_total_size_kb = (logo_data['total_size'] / 1024).round(2)
-    banner_total_size_kb = (banner_data['total_size'] / 1024).round(2)
+    logo_total_size_kb = round(logo_data['total_size'] / 1024, 2)
+    banner_total_size_kb = round(banner_data['total_size'] / 1024, 2)
+
+    send_email_about_banners_and_logos(banner_data['count'], logo_data['count'], banner_total_size_kb,logo_total_size_kb)
 
     print(str(logo_total_size_kb) + 'kb', str(banner_total_size_kb) + 'kb')
