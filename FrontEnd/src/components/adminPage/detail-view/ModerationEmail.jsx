@@ -16,15 +16,14 @@ const ModerationEmail = () => {
 
     // Update email state when data is fetched
     useEffect(() => {
-        if (data && data.email_moderation && email === null) {
+        if (data && data.email_moderation) {
             setEmail(data.email_moderation);
         }
     }, [data]);
 
     const handleInputChange = (e) => {
-        let value = e.target.value;
         setError(null);
-        setEmail(value);
+        setEmail(e.target.value);
     };
 
     const handleSubmit = () => {
