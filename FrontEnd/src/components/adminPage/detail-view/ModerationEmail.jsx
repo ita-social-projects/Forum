@@ -12,7 +12,6 @@ const ModerationEmail = () => {
 
     // Define email and setEmail using useState
     const [email, setEmail] = useState(null);
-    const [error, setError] = useState(null);
 
     // Update email state when data is fetched
     useEffect(() => {
@@ -22,12 +21,11 @@ const ModerationEmail = () => {
     }, [data]);
 
     const handleInputChange = (e) => {
-        setError(null);
         setEmail(e.target.value);
     };
 
     const handleSubmit = () => {
-        !error && axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/admin/email/`, { 'email_moderation': email })
+        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/admin/email/`, { 'email_moderation': email })
             .then(() => {
                 toast.success('Зміни успішно застосовано.');
                 mutate({ ...data, email_moderation: email });
@@ -43,8 +41,6 @@ const ModerationEmail = () => {
                 pointAtCenter={true}>
                 <input className={css['moderation_email-input']} type="email" onChange={handleInputChange} value={email || ''} />
             </Tooltip>
-            {error &&
-                <p className={css['error-message']}>{error}</p>}
             <button className={css['save-button']} onClick={handleSubmit}>Змінити</button>
         </div>
     );
