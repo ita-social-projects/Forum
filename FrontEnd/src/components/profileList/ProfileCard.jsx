@@ -9,10 +9,11 @@ import css from './ProfileCard.module.css';
 import axios from 'axios';
 import CategoryBadges from '../MiniComponents/CategoryBadges';
 import StarForLike from '../MiniComponents/StarForLike';
+import BellForUpdates from '../MiniComponents/BellForUpdates';
 
 const { Paragraph } = Typography;
 
-export default function ProfileCard({ isAuthorized, data }) {
+export default function ProfileCard({ isAuthorized, data, savedIsUpdated, onClearUpdate }) {
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(data.is_saved);
   const profile = useMemo(() => {
@@ -26,6 +27,7 @@ export default function ProfileCard({ isAuthorized, data }) {
       region: data.regions_ukr_display ? data.regions_ukr_display : '',
       categories: data.categories,
       isSaved: data.is_saved,
+      savedIsUpdated: savedIsUpdated,
       commonInfo: data.common_info,
       logo: data.logo,
     };
@@ -51,11 +53,26 @@ export default function ProfileCard({ isAuthorized, data }) {
     }
   };
 
+  const handleProfileViewed = async () => {
+    if (savedIsUpdated) {
+      onClearUpdate(false);
+      try {
+        await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}/`, {
+          is_updated: false
+        });
+      } catch (error) {
+        console.error(error);
+        onClearUpdate(true);
+      }
+    }
+  };
+
   return (
     <div className={css['company-card']}>
       <Link
         className={css['company-card__link']}
         to={`/profile-detail/${profile.id}`}
+        onClick={handleProfileViewed}
       >
         <div className={css['logo-box']}>
           <img
@@ -89,12 +106,17 @@ export default function ProfileCard({ isAuthorized, data }) {
           </div>
         </div>
       </Link>
-      <StarForLike
-        isSaved={isSaved}
-        isAuthorized={isAuthorized}
-        ownProfile={ownProfile}
-        handleClick={isSaved ? handleDeleteSaved : handleSave}
-      ></StarForLike>
+      <div className={css['bell-container']}>
+        <BellForUpdates
+          savedIsUpdated={savedIsUpdated}
+        ></BellForUpdates>
+      </div>
+        <StarForLike
+          isSaved={isSaved}
+          isAuthorized={isAuthorized}
+          ownProfile={ownProfile}
+          handleClick={isSaved ? handleDeleteSaved : handleSave}
+        ></StarForLike>
     </div>
   );
 }
@@ -126,4 +148,6 @@ ProfileCard.propTypes = {
       uuid: PropTypes.string,
     }),
   }).isRequired,
+  savedIsUpdated: PropTypes.bool.isRequired,
+  onClearUpdate: PropTypes.func.isRequired,
 };

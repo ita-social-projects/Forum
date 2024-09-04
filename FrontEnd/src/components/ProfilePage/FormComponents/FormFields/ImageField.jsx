@@ -75,7 +75,7 @@ const ImageField = ({
           </>
         )}
       </div>
-      <div>
+      <div className={css['upload-file__main']}>
         {renderInput()}
         {!value && (
           <label className={css['upload-file__label']} htmlFor={name}>

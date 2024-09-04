@@ -75,7 +75,7 @@ export default function ProfileListPage({ isAuthorized }) {
 
   return (
     <div className={css.page}>
-      {error && error.status !==401 ? (
+      {error && error.response.status !==401 ? (
         <ErrorPage404 />
       ) : (
         <div className={css['page-content']}>

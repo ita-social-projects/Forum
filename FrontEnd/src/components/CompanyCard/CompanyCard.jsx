@@ -61,12 +61,16 @@ export default function CompanyCard({
                 src={profile.banner?.path}
                 alt="Company Banner"
                 className={styles['company-card__image']}
+                title="Company Banner"
+                loading="lazy"
               />
             ) : (
               <img
                 className={styles['company-card__empty-image']}
                 src={`${process.env.REACT_APP_PUBLIC_URL}/svg/profile-view-image-empty.svg`}
                 alt={profile.name}
+                title={profile.name}
+                loading="lazy"
               />
             )}
           </div>
@@ -76,27 +80,27 @@ export default function CompanyCard({
               placement="bottom"
               pointAtCenter={true}
             >
-              <div className={styles['company-card__category-text']}>
+              <p className={styles['company-card__category-text']}>
                 {activitiesSliceString}
-              </div>
+              </p>
             </Tooltip>
             <div className={styles['company-card__text-block__header']}>
-              <div className={styles['company-card__name-text']}>
+              <h3 className={styles['company-card__name-text']}>
                 {profile.name}
-              </div>
+              </h3>
             </div>
             <Tooltip
               title={profile.regions_ukr_display}
               placement="bottom"
               pointAtCenter={true}
             >
-              <div className={styles['company-card__region-text']}>
+              <p className={styles['company-card__region-text']}>
                 {profile.regions_ukr_display
                   ? profile.regions_ukr_display.length < lengthOfRegion
                     ? profile.regions_ukr_display
                     : `${profile.regions_ukr_display.substring(0, 35)}...`
                   : ''}
-              </div>
+              </p>
             </Tooltip>
             <div className={styles['company-card__footer_content']}>
               <Tooltip

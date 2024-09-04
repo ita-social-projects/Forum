@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { List } from 'antd';
 import ProfileCard from './ProfileCard';
 import css from './ProfileList.module.css';
@@ -27,6 +28,23 @@ export default function ProfileList({
   data,
   paginationFunc,
 }) {
+  const [savedIsUpdatedMap, setSavedIsUpdatedMap] = useState({});
+
+  useEffect(() => {
+    const initialMap = data.results.reduce((acc, item) => {
+      acc[item.id] = item.saved_is_updated;
+      return acc;
+    }, {});
+    setSavedIsUpdatedMap(initialMap);
+  }, [data]);
+
+  const handleClearUpdate = (profileId, isUpdated) => {
+    setSavedIsUpdatedMap((prev) => ({
+      ...prev,
+      [profileId]: isUpdated,
+    }));
+  };
+
   return (
     <List
       pagination={{
@@ -45,7 +63,12 @@ export default function ProfileList({
       split={false}
       renderItem={(item) => (
         <List.Item key={item.id}>
-          <ProfileCard isAuthorized={isAuthorized} data={item} />
+          <ProfileCard
+              isAuthorized={isAuthorized}
+              data={item}
+              savedIsUpdated={savedIsUpdatedMap[item.id]}
+              onClearUpdate={(isUpdated) => handleClearUpdate(item.id, isUpdated)}
+          />
         </List.Item>
       )}
     />

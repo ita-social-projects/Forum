@@ -21,7 +21,7 @@ const ReadMore = ({ children }) => {
 
   const ellipsisSymbol = ellipsis ? (
     <span className={classes['read-more-symbol']} onClick={toggleReadMore}>
-    {ELLIPSIS_PARAMETERS.symbol}
+      {ELLIPSIS_PARAMETERS.symbol}
     </span>
   ) : null;
 

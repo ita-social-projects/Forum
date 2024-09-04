@@ -11,6 +11,7 @@
 }
 
 .read-more {
+    font-family: var(--font-main);
     color: var(--main-grey-90, #25292C);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
