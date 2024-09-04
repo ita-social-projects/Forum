@@ -6,7 +6,11 @@ import axios from 'axios';
 import css from './AutoApproveDelay.module.css';
 
 const AutoApproveDelay = () => {
-    const fetcher = url => axios.get(url).then(res => res.data).catch(() => toast.error('Помилка зв`язку із сервером.'));
+    const fetcher = url => axios.get(url).then(res => res.data).catch((e) => {
+        if (!e.response || e.response.status !== 401) {
+            toast.error('Помилка зв`язку із сервером.');
+        }
+    });
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/automoderation/`;
     const { data, mutate } = useSWR(url, fetcher);
     const [delay, setDelay] = useState(null);
