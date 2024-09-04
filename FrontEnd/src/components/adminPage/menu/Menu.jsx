@@ -22,7 +22,7 @@ const MENU = [
     },
     {
         id: 'am4',
-        title: 'Email',
+        title: 'Пошта адміністратора',
         link: '/customadmin/email/'
     }
 ];
