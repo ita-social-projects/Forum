@@ -8,6 +8,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from administration.models import AutoModeration
 from .encode_decode_id import encode_id
+from administration.models import ModerationEmail
 
 
 EMAIL_CONTENT_SUBTYPE = "html"
@@ -77,7 +78,7 @@ def send_moderation_email(profile, banner, logo, content_is_deleted):
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
         to=[
-            settings.EMAIL_HOST_USER,
+            ModerationEmail.objects.first(),
         ],
     )
 
