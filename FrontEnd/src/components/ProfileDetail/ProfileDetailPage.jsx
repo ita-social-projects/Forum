@@ -42,7 +42,7 @@ function ProfileDetailPage({ isAuthorized }) {
       ) : (
           <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
             <div className={classes['banner-tooltip']}>
-              <PendingStatus profile={profile} />
+            <PendingStatus profile={profile} elementType="banner" />
             </div>
             <BannerImage data={fetchedProfile} />
             <div className={classes['profile-page']}>
@@ -52,7 +52,7 @@ function ProfileDetailPage({ isAuthorized }) {
                 data={fetchedProfile}
               />
               <div className={classes['logo-tooltip']}>
-                <PendingStatus profile={profile} />
+                <PendingStatus profile={profile} elementType="logo" />
               </div>
               <DetailedInfoSection
                 containsNotRequiredData={containsNotRequiredData}
