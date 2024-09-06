@@ -126,6 +126,7 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return AutoModeration.get_auto_moderation_hours()
+    
 
 class ModerationEmailView(RetrieveUpdateAPIView):
     """
@@ -138,6 +139,8 @@ class ModerationEmailView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return ModerationEmail.objects.first()
+    
+
 class ContactsView(View):
     
     def get(self, request):
