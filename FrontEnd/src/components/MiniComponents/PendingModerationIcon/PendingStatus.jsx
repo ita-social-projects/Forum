@@ -5,15 +5,15 @@ import css from './PendingStatus.css';
 const PendingStatus = ({ profile, elementType }) => {
   if (!profile || profile.status !== 'pending') return null;
 
-  const bannerApproved = profile.banner_approved;
-  const logoApproved = profile.logo_approved;
+  const bannerApproved = profile.banner_approved_id;
+  const logoApproved = profile.logo_approved_id;
 
   const isBanner = elementType === 'banner';
   const isLogo = elementType === 'logo';
-  const shouldShowTooltip = (isBanner && !bannerApproved) || (isLogo && !logoApproved);
+  const shouldShowTooltip = (isBanner && bannerApproved == null) || (isLogo && logoApproved == null);
 
-  console.log('banner_approved:', profile?.banner_approved);
-  console.log('logo_approved:', profile.logo_approved);
+  console.log('banner_approved:', profile?.banner_approved_id);
+  console.log('logo_approved:', profile.logo_approved_id);
 
   if (!shouldShowTooltip) return null;
 
