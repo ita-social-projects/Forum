@@ -148,4 +148,3 @@ class ContactsView(View):
 
     def get(self, request):
         return JsonResponse(CONTACTS_INFO)
-    
