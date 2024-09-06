@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from django.views import View
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
@@ -14,6 +16,7 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
 )
 
+from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
@@ -124,7 +127,6 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
     def get_object(self):
         return AutoModeration.get_auto_moderation_hours()
 
-
 class ModerationEmailView(RetrieveUpdateAPIView):
     """
     View for retrieving and updating the ModerationEmail instance.
@@ -136,3 +138,7 @@ class ModerationEmailView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return ModerationEmail.objects.first()
+class ContactsView(View):
+    
+    def get(self, request):
+        return JsonResponse(CONTACTS_INFO)
