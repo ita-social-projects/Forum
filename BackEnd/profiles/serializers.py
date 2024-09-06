@@ -1,3 +1,5 @@
+from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
 from rest_framework import serializers
 from django.utils.timezone import now
 from .models import (
@@ -32,6 +34,15 @@ class RegionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+@extend_schema_field(
+    {
+        "type": "object",
+        "properties": {
+            "uuid": {"type": "string", "format": "uuid"},
+            "path": {"type": "string", "format": "uri"},
+        },
+    }
+)
 class ProfileImageField(serializers.Field):
     def to_representation(self, value):
         if value.is_deleted == False:
