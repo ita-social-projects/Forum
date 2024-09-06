@@ -122,8 +122,7 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
     """
 
     permission_classes = [IsStaffUserOrReadOnly]
-    serializer_class = AutoModerationHoursSerializer
-    
+    serializer_class = AutoModerationHoursSerializer    
 
 def get_object(self):
     return AutoModeration.get_auto_moderation_hours()
@@ -145,4 +144,5 @@ class ModerationEmailView(RetrieveUpdateAPIView):
 class ContactsView(View):
 
     def get(self, request):
-        return JsonResponse(CONTACTS_INFO)    
+        return JsonResponse(CONTACTS_INFO)   
+    
