@@ -124,25 +124,24 @@ class AutoModerationHoursView(RetrieveUpdateAPIView):
     permission_classes = [IsStaffUserOrReadOnly]
     serializer_class = AutoModerationHoursSerializer
 
-    def get_object(self):
-        return AutoModeration.get_auto_moderation_hours()
-    
+def get_object(self):
+    return AutoModeration.get_auto_moderation_hours()
+
 
 class ModerationEmailView(RetrieveUpdateAPIView):
     """
     View for retrieving and updating the ModerationEmail instance.
     Requires the user to be a superuser.
     """
-
     permission_classes = [IsSuperUser]
     serializer_class = ModerationEmailSerializer
 
     def get_object(self):
         return ModerationEmail.objects.first()
-    
+
 
 class ContactsView(View):
-    
+
     def get(self, request):
         return JsonResponse(CONTACTS_INFO)
     
