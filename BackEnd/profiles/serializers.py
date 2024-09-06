@@ -1,5 +1,4 @@
 from drf_spectacular.utils import extend_schema_field
-from drf_spectacular.types import OpenApiTypes
 from rest_framework import serializers
 from django.utils.timezone import now
 from .models import (
