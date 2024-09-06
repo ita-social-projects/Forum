@@ -269,8 +269,8 @@ LOGGING = {
 }
 
 CONTACTS_INFO = {
-    'email': 'craft.forum0@gmail.com',
-    'phone': '+38 050 234 23 23',
-    'university': 'Львівська Політехніка',
-    'address': 'вул. Степана Бандери 12, Львів',
+    "email": "craft.forum0@gmail.com",
+    "phone": "+38 050 234 23 23",
+    "university": "Львівська Політехніка",
+    "address": "вул. Степана Бандери 12, Львів",
 }
