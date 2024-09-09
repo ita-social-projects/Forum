@@ -29,13 +29,17 @@ urlpatterns = [
     ),
     path("api/", include("search.urls", namespace="search")),
     path("api/", include("images.urls", namespace="images")),
-    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-    path(
-        "api/schema/docs/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
-        name="schema_docs",
-    ),
     path("__debug__/", include("debug_toolbar.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
+
+if settings.DEBUG:
+    urlpatterns += [
+        path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+        path(
+            "api/schema/docs/",
+            SpectacularSwaggerView.as_view(url_name="schema"),
+            name="schema_docs",
+        ),
+    ]
