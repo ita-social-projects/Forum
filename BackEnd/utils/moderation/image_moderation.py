@@ -89,6 +89,8 @@ class ModerationManager:
         self.handle_undefined_status()
         if self.profile.banner and self.profile.logo:
             self.handle_both_approved()
+        if not self.profile.banner and self.profile.logo:
+            self.handle_approved_status(self.profile.logo)
         return self.moderation_is_needed
 
     def schedule_autoapprove(self):
