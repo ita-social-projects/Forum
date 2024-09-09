@@ -22,6 +22,8 @@ class ModerationManager:
 
     def handle_both_approved(self):
         if self.profile.banner.is_approved and self.profile.logo.is_approved:
+            if self.profile.status == self.profile.PENDING:
+                self.content_deleted = True
             self.profile.status = self.profile.APPROVED
             self.profile.save()
 
