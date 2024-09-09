@@ -26,4 +26,4 @@ def celery_send_email_images():
 
     send_email_about_banners_and_logos(banner_data['count'], logo_data['count'], banner_total_size_kb,logo_total_size_kb)
 
-    print(str(logo_total_size_kb) + 'kb', str(banner_total_size_kb) + 'kb')
+
