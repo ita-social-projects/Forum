@@ -49,17 +49,14 @@ class ModerationManager:
         self.profile.save()
 
     def update_pending_status(self, image_type, image):
-        existing_image = (
-            ProfileImage.objects.filter(
-                hash_md5=image.hash_md5, is_approved=True
-            )
-            .first()
-        )
+        existing_image = ProfileImage.objects.filter(
+            hash_md5=image.hash_md5, is_approved=True
+        ).first()
         if existing_image:
             image.is_approved = True
             image.save()
             if self.profile.status != self.profile.PENDING:
-                self.profile.status = self.profile.APPROVED 
+                self.profile.status = self.profile.APPROVED
             self.profile.status_updated_at = now()
             setattr(self.profile, f"{image_type}_approved", image)
             # completeness_count(self.profile)
@@ -77,12 +74,12 @@ class ModerationManager:
 
     def check_for_moderation(self):
         if self.needs_moderation(self.profile.banner):
-            self.update_pending_status('banner', self.profile.banner)
+            self.update_pending_status("banner", self.profile.banner)
         elif not self.profile.banner and self.profile.logo:
             self.handle_approved_status(self.profile.logo)
 
         if self.needs_moderation(self.profile.logo):
-            self.update_pending_status('logo',self.profile.logo)
+            self.update_pending_status("logo", self.profile.logo)
         elif not self.profile.logo and self.profile.banner:
             self.handle_approved_status(self.profile.banner)
 
