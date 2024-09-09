@@ -32,7 +32,6 @@ const CookieMod = ({ active, setActive }) => {
   return cookies.first ? null : (
     <div
       className={`${styles['modal-window']} ${active && styles['active']}`}
-      onClick={() => setActive(false)}
     >
       <div className={styles['modal-content']} data-testid="cookiemodal" onClick={(e) => e.stopPropagation()}>
         <p className={styles['cookie-text']}>

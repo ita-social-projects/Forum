@@ -212,7 +212,7 @@ const ProfileContent = (props) => {
 
             {blocker.state === 'blocked' &&
                 (
-                <MyModal visible={modal} setVisisble={setModal}>
+                <MyModal visible={modal}>
                     <WarnUnsavedDataModal onCancel={cancelNavigation} onConfirm={confirmNavigation} />
                 </MyModal>)
             }

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from authentication.models import CustomUser
 from profiles.models import Profile
 
 
@@ -32,3 +33,10 @@ class AutoModeration(models.Model):
 class AutoapproveTask(models.Model):
     celery_task_id = models.CharField()
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+
+class ModerationEmail(models.Model):
+    email_moderation = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.email_moderation
