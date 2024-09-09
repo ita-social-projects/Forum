@@ -44,7 +44,18 @@ class ProfileImageField(serializers.Field):
 
     def to_internal_value(self, data):
         return ProfileImage.objects.filter(uuid=data, is_deleted=False).first()
+    
 
+class ProfileImageFieldApprovedStatus(ProfileImageField):
+    def to_representation(self, value):
+        if not value.is_deleted:
+            return {
+                "uuid": value.uuid,
+                "path": self.context["request"].build_absolute_uri(value.image_path.url),
+                "is_approved": value.is_approved, 
+            }
+        return None  
+    
 
 class ProfileListSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
@@ -190,8 +201,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField(source="person.email")
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
-    banner = ProfileImageField()
-    logo = ProfileImageField()
+    banner = ProfileImageFieldApprovedStatus()
+    logo = ProfileImageFieldApprovedStatus()
 
     class Meta:
         model = Profile
