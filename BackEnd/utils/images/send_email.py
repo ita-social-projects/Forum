@@ -8,13 +8,15 @@ PROTOCOL = "http"
 DOMAIN = config("ALLOWED_ENV_HOST")
 
 
-def send_email_about_banners_and_logos(num_of_banners, num_of_logos, size_of_banners_kb, size_of_logos_kb):
+def send_email_about_banners_and_logos(
+    num_of_banners, num_of_logos, size_of_banners_kb, size_of_logos_kb
+):
     context = {
-        'protocol': PROTOCOL,
-        'num_of_banners': num_of_banners,
-        'num_of_logos': num_of_logos,
-        'size_of_banners': size_of_banners_kb,
-        'size_of_logos': size_of_logos_kb,
+        "protocol": PROTOCOL,
+        "num_of_banners": num_of_banners,
+        "num_of_logos": num_of_logos,
+        "size_of_banners": size_of_banners_kb,
+        "size_of_logos": size_of_logos_kb,
     }
 
     email_body = render_to_string("images/email_template.html", context)
@@ -25,7 +27,6 @@ def send_email_about_banners_and_logos(num_of_banners, num_of_logos, size_of_ban
         to=[
             settings.EMAIL_HOST_USER,
         ],
-
     )
 
     email.content_subtype = EMAIL_CONTENT_SUBTYPE
