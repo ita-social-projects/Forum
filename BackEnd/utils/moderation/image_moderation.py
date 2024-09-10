@@ -59,8 +59,8 @@ class ModerationManager:
                 self.profile.status = self.profile.APPROVED
             self.profile.status_updated_at = now()
             setattr(self.profile, f"{image_type}_approved", image)
-            # completeness_count(self.profile)
             self.profile.save()
+            completeness_count(self.profile)
         else:
             updated_image = getattr(self.profile, image_type)
             self.profile.status = self.profile.PENDING
