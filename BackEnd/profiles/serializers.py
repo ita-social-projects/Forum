@@ -54,18 +54,20 @@ class ProfileImageField(serializers.Field):
 
     def to_internal_value(self, data):
         return ProfileImage.objects.filter(uuid=data, is_deleted=False).first()
-    
+
 
 class ProfileImageFieldApprovedStatus(ProfileImageField):
     def to_representation(self, value):
         if not value.is_deleted:
             return {
                 "uuid": value.uuid,
-                "path": self.context["request"].build_absolute_uri(value.image_path.url),
-                "is_approved": value.is_approved, 
+                "path": self.context["request"].build_absolute_uri(
+                    value.image_path.url
+                ),
+                "is_approved": value.is_approved,
             }
-        return None  
-    
+        return None
+
 
 class ProfileListSerializer(serializers.ModelSerializer):
     activities = ActivitySerializer(many=True, read_only=True)
@@ -244,7 +246,6 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "is_deleted",
             "status",
             "status_updated_at",
-
         )
         read_only_fields = (
             "id",
