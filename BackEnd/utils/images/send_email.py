@@ -11,8 +11,10 @@ DOMAIN = config("ALLOWED_ENV_HOST")
 
 
 def set_admin_email():
-    email = ModerationEmail.objects.first()
-    if email is None:
+    instance = ModerationEmail.objects.first()
+    if instance:
+        email = instance.email_moderation
+    else:
         email = settings.EMAIL_HOST_USER
     return email
 
