@@ -3,9 +3,18 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+from administration.models import ModerationEmail
+
 EMAIL_CONTENT_SUBTYPE = "html"
 PROTOCOL = "http"
 DOMAIN = config("ALLOWED_ENV_HOST")
+
+
+def set_admin_email():
+    email = ModerationEmail.objects.first()
+    if email is None:
+        email = settings.EMAIL_HOST_USER
+    return email
 
 
 def send_email_about_banners_and_logos(
@@ -19,13 +28,14 @@ def send_email_about_banners_and_logos(
         "size_of_logos": size_of_logos_kb,
     }
 
+    recipient = set_admin_email()
     email_body = render_to_string("images/email_template.html", context)
     email = EmailMultiAlternatives(
         subject="Information about number and size of banners and logos",
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
         to=[
-            settings.EMAIL_HOST_USER,
+            recipient,
         ],
     )
 
