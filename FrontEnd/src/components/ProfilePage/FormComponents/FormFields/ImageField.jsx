@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './ImageField.module.css';
 import PendingStatus from '../../../MiniComponents/PendingModerationIcon/PendingStatus';
-import useProfile from '../../../../hooks/useProfile';
 
 const ImageField = ({
   name,
@@ -12,9 +11,9 @@ const ImageField = ({
   value,
   updateHandler,
   onDeleteImage,
+  profile,
   error,
 }) => {
-  const { profile } = useProfile();
 
   const backgroundImage = {
     background: `url(${value}) lightgray 50% / cover no-repeat`,

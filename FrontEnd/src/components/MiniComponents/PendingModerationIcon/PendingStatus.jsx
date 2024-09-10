@@ -1,5 +1,5 @@
 import { Tooltip } from 'antd';
-import css from './PendingStatus.css';
+import styles from './PendingStatus.module.css';
 
 const PendingStatus = ({ profile, elementType }) => {
 
@@ -21,7 +21,7 @@ const PendingStatus = ({ profile, elementType }) => {
 
   return (
     (profile?.status === 'pending' && shouldShowTooltip) ? (
-    <div className="tooltip-container">
+    <div className={styles['tooltip-container']}>
       <Tooltip
         title={tooltipText}
         placement="bottomLeft"
@@ -30,7 +30,6 @@ const PendingStatus = ({ profile, elementType }) => {
         <img
           src={`${process.env.REACT_APP_PUBLIC_URL}/img/moderation-icon.png`}
           alt="Pending status icon"
-          className={css['moderation-icon']}
         />
       </Tooltip>
     </div>

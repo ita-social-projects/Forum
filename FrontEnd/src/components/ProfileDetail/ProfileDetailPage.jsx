@@ -12,7 +12,6 @@ import BannerImage from './BannerImage';
 import { ActiveLinksContext } from '../../context/ActiveLinksContext';
 import classes from './ProfileDetailPage.module.css';
 import PendingStatus from '../MiniComponents/PendingModerationIcon/PendingStatus';
-import useProfile from '../../hooks/useProfile';
 
 function ProfileDetailPage({ isAuthorized }) {
   const [activeLinks, setActiveLinks] = useState([]);
@@ -32,7 +31,6 @@ function ProfileDetailPage({ isAuthorized }) {
 
   const notRequiredData = ['address', 'banner', 'logo', 'common_info', 'edrpou', 'rnokpp', 'founded', 'official_name', 'product_info', 'service_info', 'startup_idea', 'logistics', 'cooperation'];
   const containsNotRequiredData = fetchedProfile ? Object.keys(fetchedProfile).some(key => notRequiredData.includes(key) && fetchedProfile[key] !== '' && fetchedProfile[key] !== null) : false;
-  const { profile } = useProfile();
   return (error && error.status !== 401) ? (
     <ErrorPage404 />
   ) : (
@@ -42,7 +40,7 @@ function ProfileDetailPage({ isAuthorized }) {
       ) : (
           <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
             <div className={classes['banner-tooltip']}>
-            <PendingStatus profile={profile} elementType="banner" />
+            <PendingStatus profile={fetchedProfile} elementType="banner" />
             </div>
             <BannerImage data={fetchedProfile} />
             <div className={classes['profile-page']}>
@@ -52,7 +50,7 @@ function ProfileDetailPage({ isAuthorized }) {
                 data={fetchedProfile}
               />
               <div className={classes['logo-tooltip']}>
-                <PendingStatus profile={profile} elementType="logo" />
+                <PendingStatus profile={fetchedProfile} elementType="logo" />
               </div>
               <DetailedInfoSection
                 containsNotRequiredData={containsNotRequiredData}

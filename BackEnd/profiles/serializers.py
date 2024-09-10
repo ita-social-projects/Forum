@@ -66,7 +66,6 @@ class ProfileImageFieldApprovedStatus(ProfileImageField):
                 ),
                 "is_approved": value.is_approved,
             }
-        return None
 
 
 class ProfileListSerializer(serializers.ModelSerializer):
