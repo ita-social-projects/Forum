@@ -98,13 +98,13 @@ function FooterNavigation() {
           </Link>
         ))}
       </div>
-      <div className={css['navigation-content-section-service__text']}>
-        <p>Контакти</p>
-        <p>{contacts.email}</p>
-        <p>{contacts.phone}</p>
-        <p>{contacts.university}</p>
-        <p>{contacts.address}</p>
-      </div>
+      <div className={css['navigation-content-section']}>
+        <p className={css['navigation-content-section-service__text']}>Контакти</p>
+        <p className={css['navigation-content-section-service__text']}>{contacts.email}</p>
+        <p className={css['navigation-content-section-service__text']}>{contacts.phone}</p>
+        <p className={css['navigation-content-section-service__text']}>{contacts.university}</p>
+        <p className={css['navigation-content-section-service__text']}>{contacts.address}</p>
+     </div>
     </div>
   );
 }
