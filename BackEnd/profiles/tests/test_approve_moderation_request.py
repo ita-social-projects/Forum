@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import patch, call
 
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
@@ -14,6 +14,7 @@ from utils.dump_response import dump  # noqa
 
 
 @patch("profiles.views.ModerationManager.schedule_autoapprove")
+@patch("profiles.views.ModerationManager.revoke_deprecated_autoapprove")
 class TestProfileModeration(APITestCase):
     def setUp(self) -> None:
         self.banner = ProfileimageFactory(image_type="banner")
@@ -28,7 +29,7 @@ class TestProfileModeration(APITestCase):
 
         self.moderator_client = APIClient()
 
-    def test_approve_banner_and_logo(self, mock_manager):
+    def test_approve_banner_and_logo(self, mock_revoke, mock_schedule):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -67,9 +68,10 @@ class TestProfileModeration(APITestCase):
         self.assertEqual(self.profile.banner_approved, self.profile.banner)
         self.assertEqual(self.profile.logo_approved, self.profile.logo)
         self.assertEqual(self.profile.APPROVED, self.profile.status)
-        mock_manager.assert_called_once()
+        mock_schedule.assert_called_once()
+        mock_revoke.assert_called_once()
 
-    def test_approve_banner(self, mock_manager):
+    def test_approve_banner(self, mock_revoke, mock_schedule):
         # user updates only banner
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -103,9 +105,10 @@ class TestProfileModeration(APITestCase):
         self.assertTrue(self.banner.is_approved)
         self.assertEqual(self.profile.banner_approved, self.profile.banner)
         self.assertEqual(self.profile.APPROVED, self.profile.status)
-        mock_manager.assert_called_once()
+        mock_schedule.assert_called_once()
+        mock_revoke.assert_called_once()
 
-    def test_approve_logo(self, mock_manager):
+    def test_approve_logo(self, mock_revoke, mock_schedule):
         # user updates logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -139,9 +142,12 @@ class TestProfileModeration(APITestCase):
         self.assertTrue(self.logo.is_approved)
         self.assertEqual(self.profile.logo_approved, self.profile.logo)
         self.assertEqual(self.profile.APPROVED, self.profile.status)
-        mock_manager.assert_called_once()
+        mock_schedule.assert_called_once()
+        mock_revoke.assert_called_once()
 
-    def test_approve_banner_and_logo_processed_request(self, mock_manager):
+    def test_approve_banner_and_logo_processed_request(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -187,9 +193,12 @@ class TestProfileModeration(APITestCase):
             },
             response.json(),
         )
-        mock_manager.assert_called_once()
+        mock_schedule.assert_called_once()
+        mock_revoke.assert_called_once()
 
-    def test_approve_banner_and_logo_outdated_request(self, mock_manager):
+    def test_approve_banner_and_logo_outdated_request(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -242,9 +251,12 @@ class TestProfileModeration(APITestCase):
         self.assertNotEqual(self.profile.banner, first_banner)
         self.assertNotEqual(self.profile.logo, first_logo)
         self.assertEqual(self.profile.PENDING, self.profile.status)
-        mock_manager.assert_called()
+        mock_schedule.assert_has_calls([call(), call()])
+        mock_revoke.assert_not_called()
 
-    def test_approve_banner_and_logo_wrong_action(self, mock_manager):
+    def test_approve_banner_and_logo_wrong_action(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -273,9 +285,12 @@ class TestProfileModeration(APITestCase):
         self.assertEqual(
             {"action": ["Action is not allowed"]}, response.json()
         )
-        mock_manager.assert_called_once()
+        mock_schedule.assert_called_once()
+        mock_revoke.assert_not_called()
 
-    def test_approve_banner_and_logo_error_in_signed_id(self, mock_manager):
+    def test_approve_banner_and_logo_error_in_signed_id(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -302,9 +317,12 @@ class TestProfileModeration(APITestCase):
 
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
         self.assertEqual({"detail": "Not found."}, response.json())
-        mock_manager.assert_called_once()
+        mock_schedule.assert_called_once()
+        mock_revoke.assert_not_called()
 
-    def test_approve_banner_and_logo_non_existing_profile(self, mock_manager):
+    def test_approve_banner_and_logo_non_existing_profile(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -331,9 +349,12 @@ class TestProfileModeration(APITestCase):
 
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
         self.assertEqual({"detail": "Not found."}, response.json())
-        mock_manager.assert_called_once()
+        mock_schedule.assert_called_once()
+        mock_revoke.assert_not_called()
 
-    def test_approve_banner_and_logo_empty_image_fields(self, mock_manager):
+    def test_approve_banner_and_logo_empty_image_fields(
+        self, mock_revoke, mock_schedule
+    ):
         # user updates both banner and logo
         self.user_client.patch(
             path="/api/profiles/{profile_id}".format(
@@ -365,4 +386,5 @@ class TestProfileModeration(APITestCase):
             },
             response.json(),
         )
-        mock_manager.assert_called_once()
+        mock_schedule.assert_called_once()
+        mock_revoke.assert_not_called()

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import axios from 'axios';
 import { AuthContext } from '../context';
@@ -52,12 +53,16 @@ export function AuthProvider({ children }) {
       response => response,
       error => {
         if (error.response && error.response.status === 401) {
+          if (error.response.data.detail === 'Your session has expired. Please login again.') {
+            toast.error('Ваше сеанс завершився. Будь ласка, увійдіть ще раз.', {
+              toastId: 'toastID',
+            });
+          }
           logout();
         }
         return Promise.reject(error);
       }
     );
-
     setLoading(false);
   }, []);
 
