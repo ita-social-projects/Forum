@@ -30,4 +30,3 @@ def send_email_about_banners_and_logos(num_of_banners, num_of_logos, size_of_ban
 
     email.content_subtype = EMAIL_CONTENT_SUBTYPE
     email.send(fail_silently=False)
-
