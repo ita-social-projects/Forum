@@ -47,6 +47,7 @@
 
   /* button color*/
   --main-button-color: #1F9A7C;
+  --button-color-hover: #0b6c61 ;
   --light-button-color: #FFFFFF;
 
   /* fonts */
@@ -55,13 +56,14 @@
   --font-error: 'Roboto', sans-serif;
   --font-logo: 'Geologica', sans-serif;
 
-  --toastify-color-error: var(--Dust-Red-1, #FFF1F0);
-  --toastify-color-success: #F1FFF7;
+  --toastify-color-error: #FFF1F0;
+  --toastify-color-success: #1F9A7C;
   --toastify-font-family: var(--font-main);
+  --toastify-close-button: rgba(0, 0, 0, 0.85);
   --toastify-toast-width: 395px;
   --toastify-toast-min-height: 22px;
-  --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));
-  --toastify-text-color-error: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  --toastify-text-color-success: rgba(0, 0, 0, 0.85);
+  --toastify-text-color-error: rgba(0, 0, 0, 0.85);
   /* Header */
 
   /* Footer */
@@ -102,4 +104,29 @@
   --main-black-90: #292e32;
   --primary-green-80: #1f9a7c;
 
+  /* customTheme */
+  --carousel-color: #40af85;
+
+  --radio-color: #1f9a7c;
+  --radio-color-border: #DEE1E8;
+  --radio-button-color: #25292C;
+  --radio-font-size: 16;
+
+  --pagination-color: #1F9A7C;
+  --pagination-color-hover: #0b6c61;
+
+  /* Select */
+  --select-primary-color: #1f9a7c;
+  --select-border-radius: 2px;
+  --select-option-padding: 5px 12px;
+  --select-option-font-size: 14px;
+  --select-option-line-height: 22px;
+  --select-option-selected-bg: #effff6;
+  --select-option-selected-color: #25292c;
+  --select-multiple-color: #D9D9D9;
+  --select-multiple-bg: #F8F8F8;
+
+  /* Checkbox */
+  --checkbox-primary-color: #1f9a7c;
+  --checkbox-primary-hover-color: #1f9a7c;
 }
