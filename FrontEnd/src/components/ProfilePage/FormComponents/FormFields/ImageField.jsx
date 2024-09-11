@@ -59,11 +59,18 @@ const ImageField = ({
   );
 
   return (
-    <div className={classNames(css['fields__column'], {
-      [css['fields__column--logo']]: name === 'logo',
-    })}>
+    <div
+      className={classNames(css['fields__column'], {
+        [css['fields__column--logo']]: name === 'logo',
+      })}
+    >
       <div className={css['fields__label']}>
-        <label className={classNames(css['fields__label--text'], css['fields__field--notrequired'])}>
+        <label
+          className={classNames(
+            css['fields__label--text'],
+            css['fields__field--notrequired']
+          )}
+        >
           {label}
         </label>
         {name === 'banner' && value && (
@@ -90,8 +97,8 @@ const ImageField = ({
               <div className={css['tooltip-container']}>
                 <PendingStatus profile={profile} elementType="banner" />
                 <div
-                className={css['upload-file__banner-image--page']}
-                style={backgroundImage}
+                  className={css['upload-file__banner-image--page']}
+                  style={backgroundImage}
                 />
               </div>
             </div>
@@ -99,23 +106,25 @@ const ImageField = ({
               <span className={css['upload-file__banner-image--title']}>
                 Зображення для карток
               </span>
-              <div> <PendingStatus profile={profile} elementType="banner" />
+              <div>
+                <PendingStatus profile={profile} elementType="banner" />
                 <div
                   className={css['upload-file__banner-image--card']}
                   style={backgroundImage}
                 />
               </div>
-              </div>
+            </div>
           </>
         )}
         {name === 'logo' && value && (
-        <div> <PendingStatus profile={profile} elementType="logo" />
-          <div className={css['upload-file__wrapper--logo']}>
-            <div className={css['upload-file__logo']} style={backgroundImage} />
-            {renderInput()}
-            {renderUpdateImageLabel('змінити')}
-            {renderDeleteButton('видалити')}
-          </div>
+          <div>
+            <PendingStatus profile={profile} elementType="logo" />
+            <div className={css['upload-file__wrapper--logo']}>
+              <div className={css['upload-file__logo']} style={backgroundImage} />
+              {renderInput()}
+              {renderUpdateImageLabel('змінити')}
+              {renderDeleteButton('видалити')}
+            </div>
           </div>
         )}
       </div>
