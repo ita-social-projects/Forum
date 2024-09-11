@@ -1,7 +1,7 @@
 import {createBrowserRouter} from 'react-router-dom';
 import {AuthProvider} from '../context';
-import AdminPage from './AdminPage/AdminPage';
-import BasicPage from './BasicPage/BasicPage';
+import AdminRouter from './AdminRouter';
+import ClientRouter from './ClientRouter';
 import React from 'react';
 
 
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
       path: '/*',
       element: (
         <AuthProvider>
-          <BasicPage />
+          <ClientRouter />
         </AuthProvider>
       ),
     },
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
       path: '/customadmin/*',
       element: (
         <AuthProvider>
-          <AdminPage />
+          <AdminRouter />
         </AuthProvider>
       ),
     },

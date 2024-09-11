@@ -1,22 +1,22 @@
 import { ToastContainer } from 'react-toastify';
-import './AdminGlobal.css';
-import Header from '../../components/Header/Header';
-import Menu from './Menu/Menu';
-import UserDetail from './DetailView/UserDetail';
-import UserTable from '../../components/Admin/Table/UserTable';
-import ProfilesTable from '../../components/Admin/Table/ProfilesTable';
-import ProfileDetail from './DetailView/ProfileDetail';
-import css from './AdminPage.module.css';
+import '../pages/AdminPage/AdminGlobal.css';
+import Header from '../components/Header/Header';
+import Menu from '../pages/AdminPage/Menu/Menu';
+import UserDetail from '../pages/AdminPage/DetailView/UserDetail';
+import UserTable from '../components/Admin/Table/UserTable';
+import ProfilesTable from '../components/Admin/Table/ProfilesTable';
+import ProfileDetail from '../pages/AdminPage/DetailView/ProfileDetail';
+import css from '../pages/AdminPage/AdminPage.module.css';
 import { Routes, Route } from 'react-router-dom';
-import MainPage from './MainPage/MainPage';
-import { useAuth } from '../../hooks';
-import Loader from '../../components/Loader/Loader';
-import AutoApproveDelay from './AutoApproveDelay/AutoApproveDelay';
-import ModerationEmail from './DetailView/ModerationEmail';
+import MainPage from '../pages/AdminPage/MainPage/MainPage';
+import { useAuth } from '../hooks';
+import Loader from '../components/Loader/Loader';
+import AutoApproveDelay from '../pages/AdminPage/AutoApproveDelay/AutoApproveDelay';
+import ModerationEmail from '../pages/AdminPage/DetailView/ModerationEmail';
 
 
 
-function AdminPage() {
+function AdminRouter() {
     const { isLoading, isAuth, isStaff } = useAuth();
     const renderMenu = isStaff && isAuth ? <Menu /> : null;
     const authRoutes = isStaff && isAuth ? (
@@ -54,4 +54,4 @@ function AdminPage() {
     );
 }
 
-export default AdminPage;
+export default AdminRouter;

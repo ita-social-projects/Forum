@@ -10,7 +10,7 @@ import EyeVisible from './EyeVisible';
 import EyeInvisible from './EyeInvisible';
 import classes from './LoginPage.module.css';
 import { useAuth } from '../../hooks/';
-import checkIfStaff from '../../routes/AdminPage/checkIfStaff';
+import checkIfStaff from '../../pages/AdminPage/checkIfStaff';
 
 const LoginContent = () => {
   const { login } = useAuth();
