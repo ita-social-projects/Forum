@@ -1,7 +1,7 @@
 import { HashLink } from 'react-router-hash-link';
 import { Link } from 'react-router-dom';
 import css from './FooterNavigation.module.css';
-import useScrollToTop from '../../../../hooks/useScrollToTop';
+import useScrollToTop from '../../../hooks/useScrollToTop';
 
 const PAGE_NAVIGATION_LINKS = [
   {

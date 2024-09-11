@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import AuthorizationPage from '../../components/Authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../../components/CookiesPolicyPage/CookiesPolicyComponent';
-import Footer from '../../components/HeaderFooter/Footer/Footer';
-import Header from '../../components/HeaderFooter/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
 import Loader from '../../components/Loader/Loader';
 import MainPage from '../../components/LandingPage/MainPage';
 import PrivacyPolicy from '../../components/PrivacyPolicyPage/PrivacyPolicyPage';

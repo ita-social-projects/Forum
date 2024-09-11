@@ -1,18 +1,18 @@
 import { ToastContainer } from 'react-toastify';
 import './AdminGlobal.css';
-import Header from './header/Header';
-import Menu from './menu/Menu';
-import UserDetail from './detail-view/UserDetail';
-import UserTable from './table/UserTable';
-import ProfilesTable from './table/ProfilesTable';
-import ProfileDetail from './detail-view/ProfileDetail';
+import Header from '../../components/Header/Header';
+import Menu from './Menu/Menu';
+import UserDetail from './DetailView/UserDetail';
+import UserTable from '../../components/Admin/Table/UserTable';
+import ProfilesTable from '../../components/Admin/Table/ProfilesTable';
+import ProfileDetail from './DetailView/ProfileDetail';
 import css from './AdminPage.module.css';
 import { Routes, Route } from 'react-router-dom';
-import MainPage from './mainPage/MainPage';
+import MainPage from './MainPage/MainPage';
 import { useAuth } from '../../hooks';
-import Loader from '../loader/Loader';
-import AutoApproveDelay from './auto-approve-delay/AutoApproveDelay';
-import ModerationEmail from './detail-view/ModerationEmail';
+import Loader from '../../components/Loader/Loader';
+import AutoApproveDelay from './AutoApproveDelay/AutoApproveDelay';
+import ModerationEmail from './DetailView/ModerationEmail';
 
 
 
