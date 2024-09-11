@@ -35,9 +35,7 @@ const ReadMore = ({ children }) => {
           : false
       }
     >
-      <p className={classes['read-more__text']}>
-        {text}
-      </p>
+      {text}
     </Paragraph>
   );
 };

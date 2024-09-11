@@ -64,7 +64,7 @@ export function ModerationModal() {
   return (
     <div>
       <MainPage />
-        <MyModal visible={modalVisible} setVisisble={setModalVisible}>
+        <MyModal visible={modalVisible}>
             <div className={classes['modal__content']}>{moderationStatus}</div>
             <div className={classes['modal__footer']}>
               <div className={classes['button-container']}>

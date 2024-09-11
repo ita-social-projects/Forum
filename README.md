@@ -174,6 +174,7 @@ DEBUG=True or False
 ENGINE= # docker-compose.dev.yml
 POSTGRES_DB= sample filling =>  forum  # docker-compose
 ALLOWED_ENV_HOST=sample filling => "http://localhost:8080" # docker-compose and settings.py
+REDIS_URL= sample filling =>  redis://localhost:6379/0 #local
 ```
 - User, run the local server on port localhost:8000
 ``` shell
@@ -181,6 +182,31 @@ $ python manage.py makemigrations
 $ python manage.py migrate
 $ python manage.py runserver
 ```
+### Celery and Redis
+Correct application operation (in terms of moderation autoapprove functionality, to be precise) requires a running Celery worker and a Redis server. The simplest way to start Redis is:
+
+`docker run --rm -p 6379:6379 redis:7`
+
+Docker will automatically download the image and run the Redis server with the ports exposed. Redis will be available at 127.0.0.1:6379. You should place this host and port in the environment variable REDIS_URL, which Celery uses through Django's settings.py.
+
+Don't forget to install Celery via pip.  
+```instal
+pip install -r requirements.txt
+```
+Add in BackEnd .env
+```.env 
+REDIS_URL= redis://localhost:6379/0
+```
+
+The Celery worker itself needs to be started in a separate terminal (in the directory where manage.py is located) with the command:
+
+`celery -A forum worker --loglevel=info`
+
+On some Windows machines, there might be issues, in that case try:
+
+`celery -A forum worker --loglevel=info -P eventlet`
+
+
 ### Node JS  frontend server
 - Setup frontend .env
 > Setup frontend .env

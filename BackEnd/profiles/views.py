@@ -25,6 +25,7 @@ from utils.moderation.image_moderation import ModerationManager
 from utils.moderation.handle_approved_images import ApprovedImagesDeleter
 
 from forum.pagination import ForumPagination
+from images.models import ProfileImage
 from .models import SavedCompany, Profile, Category, Activity, Region
 from .permissions import (
     UserIsProfileOwnerOrReadOnly,
@@ -219,18 +220,22 @@ class ProfileDetail(RetrieveUpdateDestroyAPIView):
         profile = serializer.save()
         SavedCompany.objects.filter(company=profile).update(is_updated=True)
         completeness_count(profile)
-        deletion_checker = ApprovedImagesDeleter(profile)
-        deletion_checker.handle_potential_deletion()
-        moderation_manager = ModerationManager(profile)
         if (
-            moderation_manager.check_for_moderation()
-            or moderation_manager.content_deleted
+            ProfileImage.BANNER in serializer.validated_data.keys()
+            or ProfileImage.LOGO in serializer.validated_data.keys()
         ):
-            banner = moderation_manager.images["banner"]
-            logo = moderation_manager.images["logo"]
-            is_deleted = moderation_manager.content_deleted
-            send_moderation_email(profile, banner, logo, is_deleted)
-            moderation_manager.schedule_autoapprove()
+            deletion_checker = ApprovedImagesDeleter(profile)
+            deletion_checker.handle_potential_deletion()
+            moderation_manager = ModerationManager(profile)
+            if (
+                moderation_manager.check_for_moderation()
+                or moderation_manager.content_deleted
+            ):
+                banner = moderation_manager.images["banner"]
+                logo = moderation_manager.images["logo"]
+                is_deleted = moderation_manager.content_deleted
+                send_moderation_email(profile, banner, logo, is_deleted)
+                moderation_manager.schedule_autoapprove()
 
 
 class ProfileViewCreate(CreateAPIView):
