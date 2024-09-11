@@ -1,0 +1,7 @@
+.tooltip-container{
+    display: flex;
+    position:absolute;
+    padding-top: 5px;
+    padding-left: 3px;
+  }
+  
