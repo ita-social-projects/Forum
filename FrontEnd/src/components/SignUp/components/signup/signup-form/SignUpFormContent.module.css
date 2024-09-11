@@ -23,7 +23,7 @@
 .signup-form__column {
   display: flex;
   width: 257px;
-  height: 84px;
+  min-height: 84px;
   padding-bottom: 0px;
   flex-direction: column;
   align-items: flex-start;
@@ -169,8 +169,8 @@
 
 .signup-form__error {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
   align-self: stretch;
   color: var(--red-red-100, #f34444);
   font-family: var(--font-messages);
