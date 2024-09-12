@@ -8,6 +8,7 @@ from redis.exceptions import ConnectionError
 from images.models import ProfileImage
 from administration.models import AutoapproveTask, AutoModeration
 from profiles.tasks import celery_autoapprove
+from utils.completeness_counter import completeness_count
 
 
 logger = logging.getLogger(__name__)
