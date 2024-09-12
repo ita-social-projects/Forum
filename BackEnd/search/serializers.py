@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from profiles.models import Profile
@@ -10,6 +11,15 @@ from profiles.serializers import (
 from utils.regions_ukr_names import get_regions_ukr_names_as_string
 
 
+@extend_schema_field(
+    {
+        "type": "object",
+        "properties": {
+            "uuid": {"type": "string", "format": "uuid"},
+            "path": {"type": "string", "format": "uri"},
+        },
+    }
+)
 class ProfileImageField(serializers.Field):
     def to_representation(self, value):
         if value.is_deleted == False:

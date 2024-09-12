@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './ImageField.module.css';
+import PendingStatus from '../../../MiniComponents/PendingModerationIcon/PendingStatus';
 
 const ImageField = ({
   name,
@@ -10,8 +11,10 @@ const ImageField = ({
   value,
   updateHandler,
   onDeleteImage,
+  profile,
   error,
 }) => {
+
   const backgroundImage = {
     background: `url(${value}) lightgray 50% / cover no-repeat`,
   };
@@ -56,11 +59,18 @@ const ImageField = ({
   );
 
   return (
-    <div className={classNames(css['fields__column'], {
-      [css['fields__column--logo']]: name === 'logo',
-    })}>
+    <div
+      className={classNames(css['fields__column'], {
+        [css['fields__column--logo']]: name === 'logo',
+      })}
+    >
       <div className={css['fields__label']}>
-        <label className={classNames(css['fields__label--text'], css['fields__field--notrequired'])}>
+        <label
+          className={classNames(
+            css['fields__label--text'],
+            css['fields__field--notrequired']
+          )}
+        >
           {label}
         </label>
         {name === 'banner' && value && (
@@ -84,28 +94,37 @@ const ImageField = ({
               <span className={css['upload-file__banner-image--title']}>
                 Зображення для банера на сторінці профайлу
               </span>
-              <div
-                className={css['upload-file__banner-image--page']}
-                style={backgroundImage}
-              />
+              <div className={css['tooltip-container']}>
+                <PendingStatus profile={profile} elementType="banner" />
+                <div
+                  className={css['upload-file__banner-image--page']}
+                  style={backgroundImage}
+                />
+              </div>
             </div>
             <div className={css['upload-file__wrapper--banner-card']}>
               <span className={css['upload-file__banner-image--title']}>
                 Зображення для карток
               </span>
-              <div
-                className={css['upload-file__banner-image--card']}
-                style={backgroundImage}
-              />
+              <div>
+                <PendingStatus profile={profile} elementType="banner" />
+                <div
+                  className={css['upload-file__banner-image--card']}
+                  style={backgroundImage}
+                />
+              </div>
             </div>
           </>
         )}
         {name === 'logo' && value && (
-          <div className={css['upload-file__wrapper--logo']}>
-            <div className={css['upload-file__logo']} style={backgroundImage} />
-            {renderInput()}
-            {renderUpdateImageLabel('змінити')}
-            {renderDeleteButton('видалити')}
+          <div>
+            <PendingStatus profile={profile} elementType="logo" />
+            <div className={css['upload-file__wrapper--logo']}>
+              <div className={css['upload-file__logo']} style={backgroundImage} />
+              {renderInput()}
+              {renderUpdateImageLabel('змінити')}
+              {renderDeleteButton('видалити')}
+            </div>
           </div>
         )}
       </div>
