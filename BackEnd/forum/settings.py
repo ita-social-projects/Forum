@@ -268,3 +268,6 @@ LOGGING = {
         },
     },
 }
+
+# ReCaptcha
+RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY")
