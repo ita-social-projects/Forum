@@ -18,6 +18,7 @@ env:
   CORS_ORIGIN_WHITELIST: ''
   ALLOWED_ENV_HOST: ''
   REDIS_URL: ${{ vars.REDIS_URL }}
+  RECAPTCHA_PRIVATE_KEY: ''
 
 
 jobs:
