@@ -1,6 +1,7 @@
 from django.urls import path
 
 from administration.views import (
+    ContactsView,
     ProfilesListView,
     ProfileDetailView,
     UsersListView,
@@ -22,4 +23,5 @@ urlpatterns = [
         name="automoderation_hours",
     ),
     path("email/", ModerationEmailView.as_view(), name="moderation-email"),
+    path("contacts/", ContactsView.as_view(), name="contacts"),
 ]
