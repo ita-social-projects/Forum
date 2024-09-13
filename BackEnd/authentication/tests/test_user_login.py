@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from rest_framework import status
 from rest_framework.test import APITestCase
 from time import sleep
@@ -9,6 +11,10 @@ from utils.unittest_helper import AnyStr
 
 class UserLoginAPITests(APITestCase):
     def setUp(self):
+        patcher = patch("authentication.serializers.verify_recaptcha", return_value=True)
+        self.mock_verify_recaptcha = patcher.start()
+        self.addCleanup(patcher.stop)
+
         self.user = UserFactory(email="test@test.com")
 
     def test_login_successful(self):
@@ -20,6 +26,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -35,6 +42,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "tost@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -56,6 +64,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test5678",
+                "captcha": "dummy_captcha",
             },
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -77,6 +86,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
         self.client.post(
@@ -84,6 +94,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
 
@@ -92,6 +103,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
         sleep(6)
@@ -110,6 +122,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
 
@@ -118,6 +131,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
         self.client.post(
@@ -125,6 +139,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
         sleep(6)
@@ -133,6 +148,7 @@ class UserLoginAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
 

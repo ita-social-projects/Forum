@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -8,6 +10,10 @@ from time import sleep
 
 class UserLogoutAPITests(APITestCase):
     def setUp(self):
+        patcher = patch("authentication.serializers.verify_recaptcha", return_value=True)
+        self.mock_verify_recaptcha = patcher.start()
+        self.addCleanup(patcher.stop)
+
         self.user = UserFactory(email="test@test.com")
 
     def test_logout_successful(self):
@@ -19,6 +25,7 @@ class UserLogoutAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         ).data["auth_token"]
         self.client.credentials(
