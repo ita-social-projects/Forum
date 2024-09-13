@@ -14,7 +14,7 @@ const MainAboutSection = () => {
     ));
 
   return (
-    <div className="about-us-section">
+    <div className="about-us-section" id="about-us">
       <AboutSectionText />
       <AboutSectionCards />
       <div className="about-us-section-content">
