@@ -19,13 +19,13 @@ class TestSendModerationEmail(APITestCase):
         self.previously_approved_banner = ProfileimageFactory(
             image_type="banner",
             hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5",
-            is_approved=True
+            is_approved=True,
         )
         self.logo = ProfileimageFactory(image_type="logo")
         self.previously_approved_logo = ProfileimageFactory(
             image_type="banner",
             hash_md5="b4094f9fa6e298a6e25c1dba791868fe",
-            is_approved=True
+            is_approved=True,
         )
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
@@ -162,8 +162,7 @@ class TestSendModerationEmail(APITestCase):
 
     def test_send_moderation_email_previously_approved_banner(self):
         new_banner = ProfileimageFactory(
-            image_type="banner",
-            hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
+            image_type="banner", hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
         )
         self.profile.banner = new_banner
         self.profile.logo = self.logo
@@ -195,8 +194,7 @@ class TestSendModerationEmail(APITestCase):
 
     def test_send_moderation_email_previously_approved_logo(self):
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         self.profile.banner = self.banner
         self.profile.logo = new_logo
@@ -267,8 +265,7 @@ class TestSendModerationEmail(APITestCase):
         self.profile.banner = self.banner
         self.profile.status = self.profile.PENDING
         new_banner = ProfileimageFactory(
-            image_type="banner",
-            hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
+            image_type="banner", hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
         )
         self.profile.banner = new_banner
         manager = ModerationManager(self.profile)
@@ -290,8 +287,7 @@ class TestSendModerationEmail(APITestCase):
         self.profile.logo = self.logo
         self.profile.status = self.profile.PENDING
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         self.profile.logo = new_logo
         manager = ModerationManager(self.profile)
@@ -314,12 +310,10 @@ class TestSendModerationEmail(APITestCase):
         self.profile.logo = self.logo
         self.profile.status = self.profile.PENDING
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         new_banner = ProfileimageFactory(
-            image_type="banner",
-            hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
+            image_type="banner", hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
         )
         self.profile.logo = new_logo
         self.profile.banner = new_banner
@@ -345,13 +339,13 @@ class TestSendModerationManager(APITestCase):
         self.previously_approved_banner = ProfileimageFactory(
             image_type="banner",
             hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5",
-            is_approved=True
+            is_approved=True,
         )
         self.logo = ProfileimageFactory(image_type="logo")
         self.previously_approved_logo = ProfileimageFactory(
             image_type="banner",
             hash_md5="b4094f9fa6e298a6e25c1dba791868fe",
-            is_approved=True
+            is_approved=True,
         )
         self.user = UserFactory(email="test1@test.com")
         self.profile = ProfileStartupFactory.create(
@@ -393,8 +387,7 @@ class TestSendModerationManager(APITestCase):
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_update_pending_status_previously_approved_banner(self, mock_now):
         new_banner = ProfileimageFactory(
-            image_type="banner",
-            hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
+            image_type="banner", hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
         )
         self.profile.banner = new_banner
         self.manager.update_pending_status("banner", self.profile.banner)
@@ -405,8 +398,7 @@ class TestSendModerationManager(APITestCase):
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_update_pending_status_previously_approved_logo(self, mock_now):
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         self.profile.logo = new_logo
         self.manager.update_pending_status("logo", self.profile.logo)
@@ -418,8 +410,7 @@ class TestSendModerationManager(APITestCase):
         self.profile.banner = self.banner
         self.profile.status = self.profile.PENDING
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         self.profile.logo = new_logo
         self.manager.update_pending_status("logo", self.profile.logo)
@@ -443,8 +434,7 @@ class TestSendModerationManager(APITestCase):
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_check_for_moderation_previously_approved_banner(self, mock_now):
         new_banner = ProfileimageFactory(
-            image_type="banner",
-            hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
+            image_type="banner", hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
         )
         self.profile.banner = new_banner
         self.profile.logo = self.logo
@@ -461,8 +451,7 @@ class TestSendModerationManager(APITestCase):
     def test_check_for_moderation_previously_approved_logo(self, mock_now):
         self.profile.banner = self.banner
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         self.profile.logo = new_logo
         self.manager.check_for_moderation()
@@ -512,8 +501,7 @@ class TestSendModerationManager(APITestCase):
 
     def test_previously_approved_banner_empty_logo(self):
         new_banner = ProfileimageFactory(
-            image_type="banner",
-            hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
+            image_type="banner", hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
         )
         self.profile.banner = new_banner
         self.manager.check_for_moderation()
@@ -526,8 +514,7 @@ class TestSendModerationManager(APITestCase):
 
     def test_previously_approved_logo_empty_banner(self):
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         self.profile.logo = new_logo
         self.manager.check_for_moderation()
@@ -587,12 +574,10 @@ class TestSendModerationManager(APITestCase):
     def test_handle_both_approved(self, mock_now):
         self.profile.status = self.profile.PENDING
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         new_banner = ProfileimageFactory(
-            image_type="banner",
-            hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
+            image_type="banner", hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
         )
         self.profile.logo = new_logo
         self.profile.banner = new_banner
@@ -606,12 +591,10 @@ class TestSendModerationManager(APITestCase):
     @mock.patch("utils.moderation.image_moderation.now", return_value=now())
     def test_handle_both_approved_pending_status(self, mock_now):
         new_logo = ProfileimageFactory(
-            image_type="logo",
-            hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
+            image_type="logo", hash_md5="b4094f9fa6e298a6e25c1dba791868fe"
         )
         new_banner = ProfileimageFactory(
-            image_type="banner",
-            hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
+            image_type="banner", hash_md5="0dc41dd9dcbc75e730642dbfb87cd1d5"
         )
         self.profile.logo = new_logo
         self.profile.banner = new_banner
