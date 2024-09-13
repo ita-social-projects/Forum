@@ -10,7 +10,9 @@ from utils.dump_response import dump  # noqa
 
 class UserRegistrationAPITests(APITestCase):
     def setUp(self):
-        patcher = patch("authentication.serializers.verify_recaptcha", return_value=True)
+        patcher = patch(
+            "authentication.serializers.verify_recaptcha", return_value=True
+        )
         self.mock_verify_recaptcha = patcher.start()
         self.addCleanup(patcher.stop)
 

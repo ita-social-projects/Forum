@@ -20,8 +20,7 @@ from validation.validate_password import (
     validate_password_include_symbols,
 )
 from validation.validate_profile import validate_profile
-
-from utils.recaptcha import verify_recaptcha
+from validation.validate_recaptcha import verify_recaptcha
 
 User = get_user_model()
 
