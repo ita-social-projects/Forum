@@ -8,5 +8,13 @@ services:
       - 80:80
     networks:
       - forum_network
+    volumes:
+      - media:/home/forum/app/public/media
+
 networks:
   forum_network:
+
+volumes:
+  media:
+    external:
+      name: forum_media    
