@@ -10,15 +10,15 @@
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--error {
-    border: 1px solid var(--Dust-Red-2, #FFCCC7);
+    border: 1px solid var(--toastify-color-error);
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--success {
-    border: 1px solid #1F9A7C;
+    border: 1px solid var(--toastify-color-success);
 }
 
 .Toastify__close-button {
-    color: var(--character-title-85, rgba(0, 0, 0, 0.85));
+    color: var(--toastify-close-button);
 }
 
 .Toastify__toast-body {

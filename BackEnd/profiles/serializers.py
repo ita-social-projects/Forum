@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 from django.utils.timezone import now
 from .models import (
@@ -32,6 +33,15 @@ class RegionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+@extend_schema_field(
+    {
+        "type": "object",
+        "properties": {
+            "uuid": {"type": "string", "format": "uuid"},
+            "path": {"type": "string", "format": "uri"},
+        },
+    }
+)
 class ProfileImageField(serializers.Field):
     def to_representation(self, value):
         if value.is_deleted == False:
@@ -44,6 +54,18 @@ class ProfileImageField(serializers.Field):
 
     def to_internal_value(self, data):
         return ProfileImage.objects.filter(uuid=data, is_deleted=False).first()
+
+
+class ProfileImageFieldApprovedStatus(ProfileImageField):
+    def to_representation(self, value):
+        if not value.is_deleted:
+            return {
+                "uuid": value.uuid,
+                "path": self.context["request"].build_absolute_uri(
+                    value.image_path.url
+                ),
+                "is_approved": value.is_approved,
+            }
 
 
 class ProfileListSerializer(serializers.ModelSerializer):
@@ -190,8 +212,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
     email = serializers.ReadOnlyField(source="person.email")
     regions = RegionSerializer(many=True, read_only=True)
     regions_ukr_display = serializers.SerializerMethodField()
-    banner = ProfileImageField()
-    logo = ProfileImageField()
+    banner = ProfileImageFieldApprovedStatus()
+    logo = ProfileImageFieldApprovedStatus()
 
     class Meta:
         model = Profile
@@ -221,6 +243,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "banner",
             "logo",
             "is_deleted",
+            "status",
+            "status_updated_at",
         )
         read_only_fields = (
             "id",
@@ -248,6 +272,8 @@ class ProfileOwnerDetailViewSerializer(serializers.ModelSerializer):
             "banner",
             "logo",
             "is_deleted",
+            "status",
+            "status_updated_at",
         )
 
     def get_regions_ukr_display(self, obj) -> str:

@@ -1,9 +1,11 @@
-import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { SWRConfig } from 'swr';
+
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './customToastStyles.css';
+import customTheme from './customTheme.js';
 
 import AuthorizationPage from '../authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../CookiesPolicyPage/CookiesPolicyComponent';
@@ -29,59 +31,11 @@ import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
 import TermsAndConditions from '../terms-and-conditions-app/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../../hooks';
 import { Search } from '../SearchPage/Search';
-import './customToastStyles.css';
 import Contact from '../Contact/Contact';
 import ErrorPage404 from '../errorPages/ErrorPage404';
 
 function BasicPage() {
   const { isAuth, user, logout, isLoading } = useAuth();
-
-  const customTheme = {
-    components: {
-      Carousel: {
-        colorBgContainer: '#40af85',
-        dotActiveWidth: 32,
-        dotWidth: 32,
-        dotHeight: 6,
-        lineHeight: 1,
-      },
-      Button: {
-        defaultColor: '#1F9A7C',
-        colorPrimaryHover: '#0b6c61',
-        fontWeight: 600,
-        contentFontSize: 16,
-        fontFamilyCode: 'Inter',
-      },
-      Radio: {
-        colorPrimary: '#1f9a7c',
-        borderRadius: 2,
-        colorBorder: '#DEE1E8',
-        buttonColor: '#25292C',
-        fontFamily: 'Inter',
-        fontSize: 16,
-        algorithm: true, // Enable algorithm
-      },
-      Pagination: {
-        colorPrimary: '#1F9A7C',
-        colorPrimaryHover: '#0b6c61',
-      },
-      Select: {
-        colorPrimary: '#1f9a7c',
-        borderRadiusSM: '2px',
-        optionPadding: '5px 12px',
-        optionFontSize: 14,
-        optionLineHeight: '22px',
-        optionSelectedBg: '#EFFFF6',
-        optionSelectedColor: '#25292C',
-        multipleItemBorderColor: '#D9D9D9',
-        multipleItemBg: '#F8F8F8',
-      },
-      Checkbox: {
-        colorPrimary: '#1f9a7c',
-        colorPrimaryHover: '#1f9a7c',
-      }
-    },
-  };
 
   return (
     <ConfigProvider
@@ -95,19 +49,19 @@ function BasicPage() {
           }
         }
       }}>
-      <Header isAuthorized={isAuth} />
-      {isLoading ? <Loader /> :
-      (<Routes>
-        <Route path="/" element={<MainPage isAuthorized={isAuth} />} />
-        {isAuth ? (
-          <Route path="/profile/*" element={<ProfilePage />} />
-          ) : (
-          <Route path="/profile/*" element={<Navigate to="/" />} />
-          )}
-        <Route
-          path="/profile-detail/:id"
-          element={<ProfileDetailPage isAuthorized={isAuth} />}
-        />
+        <Header isAuthorized={isAuth} />
+        {isLoading ? <Loader /> :
+          (<Routes>
+            <Route path="/" element={<MainPage isAuthorized={isAuth} />} />
+            {isAuth ? (
+              <Route path="/profile/*" element={<ProfilePage />} />
+            ) : (
+              <Route path="/profile/*" element={<Navigate to="/" />} />
+            )}
+            <Route
+              path="/profile-detail/:id"
+              element={<ProfileDetailPage isAuthorized={isAuth} />}
+            />
         <Route
           path="/profiles/:filter"
           element={<ProfileListPage isAuthorized={isAuth} />}
