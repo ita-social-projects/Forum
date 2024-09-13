@@ -13,7 +13,7 @@ import { useAuth } from '../../hooks';
 import Loader from '../loader/Loader';
 import AutoApproveDelay from './auto-approve-delay/AutoApproveDelay';
 import ModerationEmail from './detail-view/ModerationEmail';
-
+import Contacts from './detail-view/Contacts';
 
 
 function AdminPage() {
@@ -28,6 +28,7 @@ function AdminPage() {
             <Route path="/profile/:id" element={<ProfileDetail />} />
             <Route path="/automoderation" element={<AutoApproveDelay />} />
             <Route path="/email" element={<ModerationEmail />} />
+            <Route path="/contacts" element={<Contacts />} />
         </>
     ) : (
         <Route path="/customadmin/" />

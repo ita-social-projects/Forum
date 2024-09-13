@@ -16,6 +16,11 @@ const MENU = [
         link: '/customadmin/profiles/'
     },
     {
+        id: 'am4',
+        title: 'Контакти',
+        link: '/customadmin/contacts/'
+    },
+    {
         id: 'am3',
         title: 'Зміна часу автомодерації',
         link: '/customadmin/automoderation/'

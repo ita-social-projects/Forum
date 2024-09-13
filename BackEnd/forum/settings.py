@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     "search",
     "drf_spectacular",
     "images",
-    "forum.apps.ForumConfig",
 ]
 
 MIDDLEWARE = [
@@ -238,7 +237,6 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }
 
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -267,4 +265,11 @@ LOGGING = {
             "propagate": True,
         },
     },
+}
+
+CONTACTS_INFO = {
+    "email": "craft.forum0@gmail.com",
+    "phone": "+38 050 234 23 23",
+    "university": "Львівська Політехніка",
+    "address": "вул. Степана Бандери 12, Львів",
 }
