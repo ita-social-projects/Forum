@@ -1,4 +1,4 @@
-import CompanyCard from '../../CompanyCard/CompanyCard';
+import CompanyCard from '../../../components/CompanyCard/CompanyCard';
 import styles from './SearchResulys.module.css';
 import PropTypes from 'prop-types';
 

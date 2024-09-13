@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './TermsAndConditionsComponent.module.css';
 import TermsAndConditionsText from './text';
 import TEXT_CONTENT from './text';
-import LinkContainer from '../../CookiesPolicyPage/LinkContainer.jsx';
-import renderContent from '../../CookiesPolicyPage/RenderContent.jsx';
+import LinkContainer from '../../../pages/CookiesPolicyPage/LinkContainer.jsx';
+import renderContent from '../../../pages/CookiesPolicyPage/RenderContent.jsx';
 import useScrollToTop from '../../../hooks/useScrollToTop';
 
 

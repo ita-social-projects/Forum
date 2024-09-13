@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
+import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import SearchResults from './SearchField/SearchResults';
 import link_to_left from './img/link_to_left.svg';
 import link_to_right from './img/link_to_right.svg';

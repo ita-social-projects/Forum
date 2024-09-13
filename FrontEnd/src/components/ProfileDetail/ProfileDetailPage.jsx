@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 import Loader from '../Loader/Loader';
-import ErrorPage404 from '../ErrorPages/ErrorPage404';
+import ErrorPage404 from '../../pages/ErrorPages/ErrorPage404';
 import MainInfoSection from './MainInfo/MainInfoSection';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 import BannerImage from './BannerImage';

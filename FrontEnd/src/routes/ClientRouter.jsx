@@ -6,12 +6,12 @@ import { SWRConfig } from 'swr';
 import 'react-toastify/dist/ReactToastify.css';
 
 import AuthorizationPage from '../components/Authorization/AuthorizationPage';
-import CookiesPolicyComponent from '../components/CookiesPolicyPage/CookiesPolicyComponent';
+import CookiesPolicyComponent from '../pages/CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import Loader from '../components/Loader/Loader';
 import MainPage from '../components/LandingPage/MainPage';
-import PrivacyPolicy from '../components/PrivacyPolicyPage/PrivacyPolicyPage';
+import PrivacyPolicy from '../pages/PrivacyPolicyPage/PrivacyPolicyPage';
 import ProfileDetailPage from '../components/ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../components/ProfileList/ProfileListPage';
 import ProfilePage from '../components/ProfilePage/ProfilePage';
@@ -28,10 +28,10 @@ import { ModerationModal } from '../components/Moderation/ModerationModal';
 import ScrollToTopButton from '../components/ScrollToTopButton/ScrollToTopButton';
 import TermsAndConditions from '../components/TermsAndConditionsApp/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../hooks';
-import { Search } from '../components/SearchPage/Search';
+import { Search } from '../pages/SearchPage/Search';
 import '../pages/BasicPage/customToastStyles.css';
 import Contact from '../components/Contact/Contact';
-import ErrorPage404 from '../components/ErrorPages/ErrorPage404';
+import ErrorPage404 from '../pages/ErrorPages/ErrorPage404';
 
 function ClientRouter() {
   const { isAuth, user, logout, isLoading } = useAuth();
