@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import PasswordField from './FormFields/PasswordField';
-import Loader from '../../Loader/Loader';
+import Loader from '../../../components/Loader/Loader';
 import css from './ChangePassword.module.css';
 
 export default function ChangePassword(props) {

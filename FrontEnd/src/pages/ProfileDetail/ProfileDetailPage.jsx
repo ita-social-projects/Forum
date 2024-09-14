@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 import ErrorPage404 from '../../pages/ErrorPages/ErrorPage404';
 import MainInfoSection from './MainInfo/MainInfoSection';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 import BannerImage from './BannerImage';
 import { ActiveLinksContext } from '../../context/ActiveLinksContext';
 import classes from './ProfileDetailPage.module.css';
-import PendingStatus from '../MiniComponents/PendingModerationIcon/PendingStatus';
+import PendingStatus from '../../components/MiniComponents/PendingModerationIcon/PendingStatus';
 
 function ProfileDetailPage({ isAuthorized }) {
   const [activeLinks, setActiveLinks] = useState([]);

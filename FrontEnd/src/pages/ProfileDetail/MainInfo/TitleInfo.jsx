@@ -6,8 +6,8 @@ import classNames from 'classnames';
 import { useAuth } from '../../../hooks';
 import DefaultLogo from './DefaultLogo';
 import classes from './TitleInfo.module.css';
-import CategoryBadges from '../../MiniComponents/CategoryBadges';
-import StarForLike from '../../MiniComponents/StarForLike';
+import CategoryBadges from '../../../components/MiniComponents/CategoryBadges';
+import StarForLike from '../../../components/MiniComponents/StarForLike';
 
 function TitleInfo({ isAuthorized, data }) {
   const { user } = useAuth();

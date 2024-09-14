@@ -10,11 +10,11 @@ import CookiesPolicyComponent from '../pages/CookiesPolicyPage/CookiesPolicyComp
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import Loader from '../components/Loader/Loader';
-import MainPage from '../components/LandingPage/MainPage';
+import MainPage from '../pages/LandingPage/MainPage';
 import PrivacyPolicy from '../pages/PrivacyPolicyPage/PrivacyPolicyPage';
-import ProfileDetailPage from '../components/ProfileDetail/ProfileDetailPage';
-import ProfileListPage from '../components/ProfileList/ProfileListPage';
-import ProfilePage from '../components/ProfilePage/ProfilePage';
+import ProfileDetailPage from '../pages/ProfileDetail/ProfileDetailPage';
+import ProfileListPage from '../pages/ProfileList/ProfileListPage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import { SignUpPage } from '../pages/BasicPage/SignUp/SignUpPage';
 import { SignUpModalPage } from '../pages/BasicPage/SignUp/SignUpModalPage';
 import { ResendActivationPage } from '../pages/BasicPage/SignUp/ResendActivationPage';

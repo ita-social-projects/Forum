@@ -2,8 +2,8 @@ import css from './ProfilePage.module.css';
 import Description from './ProfilePageComponents/Description';
 import ProfileContent from './ProfilePageComponents/ProfileContent';
 import { useState } from 'react';
-import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
-import Loader from '../Loader/Loader';
+import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
+import Loader from '../../components/Loader/Loader';
 import { useAuth, useProfile } from '../../hooks';
 
 const ProfilePage = () => {

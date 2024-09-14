@@ -4,7 +4,7 @@ import MainBanner from './Banner/Banner';
 import MainCompanies from './Companies/Companies';
 import MainLoginBanner from './LoginBanner/LoginBanner';
 import MainAboutSection from './AboutSection/About';
-import CookieMod from '../CookieAcception/CookieMod';
+import CookieMod from '../../components/CookieAcception/CookieMod';
 import css from './MainPage.module.css';
 import PropTypes from 'prop-types';
 

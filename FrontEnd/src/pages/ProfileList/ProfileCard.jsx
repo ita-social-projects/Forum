@@ -7,9 +7,9 @@ import { PropTypes } from 'prop-types';
 import { useAuth } from '../../hooks';
 import css from './ProfileCard.module.css';
 import axios from 'axios';
-import CategoryBadges from '../MiniComponents/CategoryBadges';
-import StarForLike from '../MiniComponents/StarForLike';
-import BellForUpdates from '../MiniComponents/BellForUpdates';
+import CategoryBadges from '../../components/MiniComponents/CategoryBadges';
+import StarForLike from '../../components/MiniComponents/StarForLike';
+import BellForUpdates from '../../components/MiniComponents/BellForUpdates';
 
 const { Paragraph } = Typography;
 

@@ -8,7 +8,7 @@ import defineChanges from '../../../utils/defineChanges';
 import { formatPhoneNumber } from '../../../utils/formatPhoneNumber';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
-import Loader from '../../Loader/Loader';
+import Loader from '../../../components/Loader/Loader';
 import css from './FormComponents.module.css';
 import { useMask } from '@react-input/mask';
 

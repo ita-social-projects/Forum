@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
 import css from './ImageField.module.css';
-import PendingStatus from '../../../MiniComponents/PendingModerationIcon/PendingStatus';
+import PendingStatus from '../../../../components/MiniComponents/PendingModerationIcon/PendingStatus';
 
 const ImageField = ({
   name,

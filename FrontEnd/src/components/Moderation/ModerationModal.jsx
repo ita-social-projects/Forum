@@ -1,8 +1,8 @@
 import axios from 'axios';
 import{ useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import MainPage from '../LandingPage/MainPage';
-import MyModal from '../ProfilePage/UI/MyModal/MyModal';
+import MainPage from '../../pages/LandingPage/MainPage';
+import MyModal from '../../pages/ProfilePage/UI/MyModal/MyModal';
 import classes from './ModerationModal.module.css';
 
 export function ModerationModal() {

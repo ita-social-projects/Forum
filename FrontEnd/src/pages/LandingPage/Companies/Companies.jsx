@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import styles from './Companies.module.css';
-import CompanyCard from '../../CompanyCard/CompanyCard';
+import CompanyCard from '../../../components/CompanyCard/CompanyCard';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 

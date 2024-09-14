@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import PaginationButtons from './PaginationButtons';
 import axios from 'axios';
 import useSWR from 'swr';
-import { DEFAULT_PAGE_SIZE } from '../../../pages/AdminPage/constants';
+import { DEFAULT_PAGE_SIZE } from '../AdminPage/constants';
 
 const COLUMN_NAMES = ['ID', 'ФІО', 'Пошта'];
 
