@@ -47,6 +47,7 @@
 
   /* button color*/
   --main-button-color: #1F9A7C;
+  --button-color-hover: #0b6c61 ;
   --light-button-color: #FFFFFF;
 
   /* fonts */
@@ -55,13 +56,18 @@
   --font-error: 'Roboto', sans-serif;
   --font-logo: 'Geologica', sans-serif;
 
-  --toastify-color-error: var(--Dust-Red-1, #FFF1F0);
+  --toastify-color-error: #FFF1F0;
   --toastify-color-success: #F1FFF7;
   --toastify-font-family: var(--font-main);
+  --toastify-close-button: rgba(0, 0, 0, 0.85);
   --toastify-toast-width: 395px;
   --toastify-toast-min-height: 22px;
-  --toastify-text-color-success: var(--character-title-85, rgba(0, 0, 0, 0.85));
-  --toastify-text-color-error: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  --toastify-text-color-success: rgba(0, 0, 0, 0.85);
+  --toastify-text-color-error: rgba(0, 0, 0, 0.85);
+  --toastify-custom-error: #FFCCC7;
+  --toastify-custom-success: #1F9A7C;
+  --toastify-custom-close-button: rgba(0, 0, 0, 0.85);
+
   /* Header */
 
   /* Footer */
@@ -101,5 +107,5 @@
   --main-white: #FFF;
   --main-black-90: #292e32;
   --primary-green-80: #1f9a7c;
-
+  --character-title-85: rgba(0, 0, 0, 0.85);
 }

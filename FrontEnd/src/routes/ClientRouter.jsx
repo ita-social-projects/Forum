@@ -3,7 +3,11 @@ import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { SWRConfig } from 'swr';
+
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './customToastStyles.css';
+import customTheme from './customTheme.js';
 
 import AuthorizationPage from '../components/Authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../pages/CookiesPolicyPage/CookiesPolicyComponent';
@@ -179,4 +183,4 @@ function ClientRouter() {
   );
 }
 
-export default ClientRouter;
+export default BasicPage;

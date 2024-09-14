@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from django.views import View
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
@@ -14,6 +16,7 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
 )
 
+from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
@@ -136,3 +139,12 @@ class ModerationEmailView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return ModerationEmail.objects.first()
+
+
+class ContactsView(View):
+    """
+    View for retrieving contact information.
+    """
+
+    def get(self, request):
+        return JsonResponse(CONTACTS_INFO)

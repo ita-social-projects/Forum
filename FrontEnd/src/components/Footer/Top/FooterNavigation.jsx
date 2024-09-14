@@ -1,5 +1,7 @@
+import React, { useState, useEffect } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import css from './FooterNavigation.module.css';
 import useScrollToTop from '../../../hooks/useScrollToTop';
 
@@ -43,16 +45,34 @@ const SERVICES_LINKS = [
     link: '/profiles/other-services',
   },
 ];
-const CONTACTS = [
-  'Контакти',
-  'qwerty@gmail.com',
-  '+38 050 234 23 23',
-  'Львівська Політехніка',
-  'вул. Степана Бандери 12, Львів',
-];
 
 function FooterNavigation() {
   useScrollToTop();
+  const [contacts, setContacts] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/contacts/`;
+        const response = await axios.get(url);
+        setContacts(response.data);
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+        setError('Не вдалося отримати контактну інформацію');
+      }
+    };
+
+    fetchContacts();
+  }, []);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (!contacts) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className={css['navigation-content']}>
@@ -79,15 +99,12 @@ function FooterNavigation() {
         ))}
       </div>
       <div className={css['navigation-content-section']}>
-        {CONTACTS.map((element, index) => (
-          <p
-            key={index}
-            className={css['navigation-content-section-service__text']}
-          >
-            {element}
-          </p>
-        ))}
-      </div>
+        <p className={css['navigation-content-section-service__text']}>Контакти</p>
+        <p className={css['navigation-content-section-service__text']}>{contacts.email}</p>
+        <p className={css['navigation-content-section-service__text']}>{contacts.phone}</p>
+        <p className={css['navigation-content-section-service__text']}>{contacts.university}</p>
+        <p className={css['navigation-content-section-service__text']}>{contacts.address}</p>
+     </div>
     </div>
   );
 }

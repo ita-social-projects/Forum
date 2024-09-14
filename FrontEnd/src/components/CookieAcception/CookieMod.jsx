@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import styles from './CookieMod.module.css';
-import cookiesimage from './CookieImg/homecookies.png';
 import { useState } from 'react';
 
 const CookieMod = ({ active, setActive }) => {
@@ -63,7 +62,11 @@ const CookieMod = ({ active, setActive }) => {
             </p>
           </div>
         )}
-        <img src={cookiesimage} alt="" className={styles['cookie-image']} />
+        <img
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/homecookies.png`}
+          alt="cookies"
+          className={styles['cookie-image']}
+        />
         <button className={styles['green-btn']} onClick={accessCookie}>
           Погоджуюсь
         </button>
