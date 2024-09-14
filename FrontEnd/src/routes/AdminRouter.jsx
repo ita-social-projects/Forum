@@ -13,7 +13,7 @@ import { useAuth } from '../hooks';
 import Loader from '../components/Loader/Loader';
 import AutoApproveDelay from '../pages/AdminPage/AutoApproveDelay/AutoApproveDelay';
 import ModerationEmail from '../pages/AdminPage/DetailView/ModerationEmail';
-import Contacts from './detail-view/Contacts';
+import Contacts from '../pages/AdminPage/DetailView/Contacts';
 
 
 function AdminRouter() {
