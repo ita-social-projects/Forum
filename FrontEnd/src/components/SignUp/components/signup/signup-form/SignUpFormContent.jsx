@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -33,6 +34,7 @@ export function SignUpFormContentComponent(props) {
     nameSurnameFieldLength: 'Введіть від 2 до 50 символів',
     companyFieldLength: 'Введіть від 2 до 100 символів',
     notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
+    maxLength: 'Кількість символів перевищує максимально допустиму (50 символів)',
   };
 
   const {
@@ -43,9 +45,11 @@ export function SignUpFormContentComponent(props) {
     setValue,
     setError,
     clearErrors,
+    trigger,
     formState: { errors, isValid },
   } = useForm({
     mode: 'all',
+    criteriaMode: 'all',
   });
 
   const { setIsValid } = props;
@@ -107,23 +111,15 @@ export function SignUpFormContentComponent(props) {
     setIsValid(isValid);
   }, [isValid, setIsValid]);
 
+  const handleValidation = async () => {
+    await trigger(['password', 'confirmPassword']);
+  };
+
   useEffect(() => {
     if (watch('password') && watch('confirmPassword')) {
-      if (watch('password') !== watch('confirmPassword')) {
-        setError('password', {
-          type: 'manual',
-          message: errorMessageTemplates.confirmPassword,
-        });
-        setError('confirmPassword', {
-          type: 'manual',
-          message: errorMessageTemplates.confirmPassword,
-        });
-      } else {
-        clearErrors('password');
-        clearErrors('confirmPassword');
-      }
+      handleValidation();
     }
-  }, [watch('password'), watch('confirmPassword'), setError, clearErrors]);
+  }, [watch('confirmPassword'), watch('password')]);
 
   const onSubmit = () => {
     const dataToSend = {
@@ -269,8 +265,15 @@ export function SignUpFormContentComponent(props) {
                     value: PASSWORD_PATTERN,
                     message: errorMessageTemplates.password,
                   },
+                  maxLength: {
+                    value: 50,
+                    message: errorMessageTemplates.maxLength
+                  },
+                  validate: (value) =>
+                    watch('confirmPassword') !== value
+                      ? errorMessageTemplates.confirmPassword
+                      : null,
                 })}
-                maxLength={50}
               />
               <span
                 className={styles['password-visibility']}
@@ -280,7 +283,16 @@ export function SignUpFormContentComponent(props) {
               </span>
             </div>
             <div className={styles['signup-form__error']}>
-            {errors.password && <p>{errors.password.message}</p>}
+              <ErrorMessage
+                errors={errors}
+                name="password"
+                render={({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              />
             </div>
           </div>
           <div className={styles['signup-form__column']}>
@@ -304,12 +316,15 @@ export function SignUpFormContentComponent(props) {
                 type={showConfirmPassword ? 'text' : 'password'}
                 {...register('confirmPassword', {
                   required: errorMessageTemplates.required,
+                  maxLength: {
+                    value: 50,
+                    message: errorMessageTemplates.maxLength
+                  },
                   validate: (value) =>
                     watch('password') !== value
                       ? errorMessageTemplates.confirmPassword
                       : null,
                 })}
-                maxLength={50}
               />
               <span
                 className={styles['password-visibility']}
@@ -319,7 +334,11 @@ export function SignUpFormContentComponent(props) {
               </span>
             </div>
             <div className={styles['signup-form__error']}>
-              {errors.confirmPassword && errors.confirmPassword.message}
+              <ErrorMessage
+                errors={errors}
+                name="confirmPassword"
+                render={({ message }) => <p>{message}</p>}
+                />
             </div>
           </div>
         </div>
