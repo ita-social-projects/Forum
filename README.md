@@ -230,6 +230,7 @@ For proper ReCAPTCHA setup provide public and private keys from Google:
 Add in BackEnd .env
 ```.env 
 RECAPTCHA_V2_PRIVATE_KEY = "your-private-key"
+RECAPTCHA_URL="https://www.google.com/recaptcha/api/siteverify"
 ```
 
 Add in FrontEnd .env
