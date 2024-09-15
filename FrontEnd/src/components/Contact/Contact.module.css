@@ -38,6 +38,7 @@
     font-weight: 400;
     line-height: 20px;
     margin-bottom: 5px;
+    margin-top: 20px;
     display: block;
 }
 
@@ -117,7 +118,6 @@
 .contact__input, .contact__textarea, .contact__select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     transition: border-color 0.3s ease;
@@ -137,7 +137,7 @@
     color: gray;
 }
 
-.contact__button {
+.contact__button_send {
     padding: 10px 20px;
     background-color: #28a745;
     color: white;
@@ -145,8 +145,36 @@
     border-radius: 4px;
     cursor: pointer;
     margin-top: 20px;
+    margin-right: 10px;
 }
 
-.contact__button:hover {
+.contact__button_send:hover {
     background-color: #218838;
+}
+
+.contact__button_cancel {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.contact__button_cancel:hover {
+    background-color: #c82333;
+}
+
+.contact__error {
+display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    color: var(--red-red-100, #f34444);
+    font-family: var(--font-messages);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
 }
