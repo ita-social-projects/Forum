@@ -538,7 +538,7 @@ export function SignUpFormContentComponent(props) {
         </div>
         <ReCAPTCHA
           ref={reCaptchaRef}
-          sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+          sitekey={process.env.REACT_APP_RECAPTCHA_V2_SITE_KEY}
           size="invisible"
         />
       </form>
