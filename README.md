@@ -222,7 +222,7 @@ or
 PORT=8080 npm restart
 ```
 
-### Google ReCAPTCHA
+### Google ReCAPTCHA V2
 The project is currently using ReCAPTCHA V2 Invisible. Note that if the free monthly Google quota expires, users will be able to sign in and sign up without ReCAPTCHA verification.
 
 For proper ReCAPTCHA setup provide public and private keys from Google:
