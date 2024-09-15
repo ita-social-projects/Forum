@@ -267,8 +267,8 @@ LOGGING = {
     },
 }
 
-# ReCaptcha
-RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY")
+# ReCaptcha V2 Invisible
+RECAPTCHA_V2_PRIVATE_KEY = config("RECAPTCHA_V2_PRIVATE_KEY")
 
 CONTACTS_INFO = {
     "email": "craft.forum0@gmail.com",

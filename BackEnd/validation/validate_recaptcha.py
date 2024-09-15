@@ -8,7 +8,7 @@ def verify_recaptcha(token):
     """
     recaptcha_url = "https://www.google.com/recaptcha/api/siteverify"
     recaptcha_data = {
-        "secret": settings.RECAPTCHA_PRIVATE_KEY,
+        "secret": settings.RECAPTCHA_V2_PRIVATE_KEY,
         "response": token,
     }
     response = requests.post(recaptcha_url, data=recaptcha_data)
