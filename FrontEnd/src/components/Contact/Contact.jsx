@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
 import LinkContainer from '../CookiesPolicyPage/LinkContainer.jsx';
 import styles from './Contact.module.css';
+import contactText from './text';
 import useScrollToTop from '../../hooks/useScrollToTop';
+import React, { useState } from 'react';
 
 const Contact = () => {
   useScrollToTop();
+
 
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('Привіт, хочу повідомити...');
@@ -25,22 +27,23 @@ const Contact = () => {
     <div className={styles['contact_container']}>
       <div className={styles['contact__link_container']}>
         <LinkContainer />
+        <img className={styles['contact__img1']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_12x10.png`}
+          alt="dots_12x10.png" />
       </div>
-
-      <div className={styles['contact__form_container']}>
-        <h2 className={styles['contact__title']}>Зворотній зв&apos;язок</h2>
+      <div className={styles['contact__text_container']}>
+        <h2 className={styles['contact__title']}>{contactText.title}</h2>
         <form onSubmit={handleSubmit} className={styles['contact__form']}>
-          <label className={styles['contact__label']} htmlFor="email">Email:</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            className={styles['contact__input']}
-            placeholder="Ваша пошта"
-            required
-          />
-
+            <label className={styles['contact__label']} htmlFor="email">Email:</label>
+            <input
+                id="email"
+                type="email"
+                 value={email}
+                onChange={handleEmailChange}
+                className={styles['contact__input']}
+                placeholder="Ваша пошта"
+                required
+            />
           <label className={styles['contact__label']} htmlFor="category">Категорія:</label>
           <select
             id="category"
@@ -65,12 +68,12 @@ const Contact = () => {
             placeholder="Ваше повідомлення"
             required
           />
-
           <button type="submit" className={styles['contact__button']}>Надіслати</button>
         </form>
       </div>
     </div>
   );
 };
+
 
 export default Contact;

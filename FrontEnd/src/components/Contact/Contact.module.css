@@ -1,13 +1,21 @@
 .contact_container {
     display: flex;
-    justify-content: space-between;
-    margin: 80px 100px;
+    margin: 80px 100px 80px 100px;
     width: 100%;
+    max-height: auto;
+    background-color: var(--light-text-color);
+    scroll-behavior: smooth;
+    color: var(--main-text-color);
 }
 
-.contact__link_container {
-    width: 30%;
-    margin-right: 50px;
+.contact__title{
+    font-family: var(--font-main);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 12px;
 }
 
 .contact__form_container {
@@ -18,22 +26,102 @@
     border-radius: 10px;
 }
 
-.contact__title {
+.contact__link_container {
+    margin-right: 100px;
+    max-width: 234px;
+    max-height: 1400px;
+}
+
+.contact__label {
     font-family: var(--font-main);
-    font-size: 32px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-main);
+    font-size: 20px;
     font-weight: 700;
-    line-height: 38px;
-    margin-bottom: 20px;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.link_text {
+    color: var(--main-footer-background);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+.link_text__active{
+    width: 234px;
+    color: var(--main-header-color);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+.link_text:hover {
+    color: var(--main-header-color);
+}
+
+.contact__img1{
+    width: auto;
+    height: 266px;
+    margin-left: -100px;
+    margin-top: 332px;
+}
+
+.contact__text_container{
+    display: flex;
+    flex-direction: column;
+    max-width: 971px;
+}
+
+.text_content {
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.text_content__margin_bottom{
+    margin-bottom: 24px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.text_content__heading{
+    margin-top: 24px;
+
+}
+
+.custom-list {
+    margin:0px;
+    padding-left: 16px;
+}
+
+.custom-list__item{
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
 }
 
 .contact__input, .contact__textarea, .contact__select {
-    width: 100%; /* Забезпечує однакову ширину для всіх полів */
+    width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     transition: border-color 0.3s ease;
-    box-sizing: border-box; /* Включає відступи і кордони в ширину */
+    box-sizing: border-box;
 }
 
 .contact__textarea {
