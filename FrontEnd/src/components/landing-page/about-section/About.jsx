@@ -13,13 +13,14 @@ const MainAboutSection = () => {
       </React.Fragment>
     ));
 
+
   return (
     <div className="about-us-section">
       <AboutSectionText />
       <AboutSectionCards />
-      <div className="about-us-section-content">
-        <div className="about-us-rectangle">
-          <div className="about-us-section-content__text">
+      <div className="about-us-section-content" >
+        <div id={'about-us'} className="about-us-rectangle" >
+          <div className="about-us-section-content__text" >
             <h2 className="about-us-section-content__header-text">{AboutTextContent.header}</h2>
             {AboutTextContent.contents.map(({ id, text }) => (
               <p className="about-us-section-content__smart-text" key={id}>
@@ -41,4 +42,3 @@ const MainAboutSection = () => {
 };
 
 export default MainAboutSection;
-
