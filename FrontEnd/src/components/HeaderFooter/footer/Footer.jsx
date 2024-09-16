@@ -7,7 +7,7 @@ const UNSUITABLE_PAGES = ['login', 'register'];
 
 function Footer(props) {
     return (
-        <footer className={css['footer-content']}>
+        <footer className={css['footer-content-main']}>
             {UNSUITABLE_PAGES.includes(props.page) ? (<ShortFooter/>) :
                 (<>
                     <FooterTop></FooterTop>
