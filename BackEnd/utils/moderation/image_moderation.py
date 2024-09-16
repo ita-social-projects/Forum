@@ -26,6 +26,7 @@ class ModerationManager:
             if self.profile.status == self.profile.PENDING:
                 self.content_deleted = True
             self.profile.status = self.profile.APPROVED
+            self.profile.status_updated_at = now()
             self.profile.save()
 
     def handle_approved_status(self, secondary_image):
@@ -58,7 +59,7 @@ class ModerationManager:
             image.save()
             if self.profile.status != self.profile.PENDING:
                 self.profile.status = self.profile.APPROVED
-            self.profile.status_updated_at = now()
+                self.profile.status_updated_at = now()
             setattr(self.profile, f"{image_type}_approved", image)
             self.profile.save()
             completeness_count(self.profile)
