@@ -11,16 +11,18 @@ export function SignUpModalPage() {
         <div className={styles['container-modal']}>
           <div className={styles['modal__header']}>Реєстрація майже завершена</div>
           <div className={styles['modal__footer']}>
-            <p>
-              На зазначену Вами електронну пошту відправлено листа. <br />
-              Будь ласка перейдіть за посиланням з листа для підтвердження вказаної електронної адреси. <br />
-              На цьому реєстрацію завершено. <br />
+            <div>
+              <p>
+                На зазначену Вами електронну пошту відправлено листа. <br />
+                Будь ласка перейдіть за посиланням з листа для підтвердження вказаної електронної адреси. <br />
+                На цьому реєстрацію завершено. <br />
+              </p>
               <div className={styles['resend-line']}>
                 <Link to="/sign-up/resend-activation" className={styles['resend-line__link']}>
                   Не отримали лист?
                 </Link>
               </div>
-            </p>
+            </div>
           </div>
           <div className={styles['modal__footer']}>
             <div className={styles['button-container']}>
