@@ -33,7 +33,7 @@ const MainAboutSection = () => {
             src={`${process.env.REACT_APP_PUBLIC_URL}/img/about.jpeg`}
             alt="about img"
             loading="lazy"
-            title="about img"
+            title="About CarftMerge"
           />
         </div>
       </div>
