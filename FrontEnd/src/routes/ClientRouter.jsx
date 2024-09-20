@@ -5,7 +5,7 @@ import { ConfigProvider } from 'antd';
 import { SWRConfig } from 'swr';
 
 import 'react-toastify/dist/ReactToastify.css';
-import customTheme from '../pages/BasicPage/customTheme.js';
+import customTheme from '../pages/CustomThemes/customTheme.js';
 
 import AuthorizationPage from '../components/Authorization/AuthorizationPage';
 import CookiesPolicyComponent from '../pages/CookiesPolicyPage/CookiesPolicyComponent';
@@ -17,10 +17,10 @@ import PrivacyPolicy from '../pages/PrivacyPolicyPage/PrivacyPolicyPage';
 import ProfileDetailPage from '../pages/ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../pages/ProfileList/ProfileListPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
-import { SignUpPage } from '../pages/BasicPage/SignUp/SignUpPage';
-import { SignUpModalPage } from '../pages/BasicPage/SignUp/SignUpModalPage';
-import { ResendActivationPage } from '../pages/BasicPage/SignUp/ResendActivationPage';
-import { ActivationProfilePage } from '../pages/BasicPage/SignUp/ActivateProfilePage';
+import { SignUpPage } from '../components/SignUp/SignUp/SignUpPage';
+import { SignUpModalPage } from '../components/SignUp/SignUp/SignUpModalPage';
+import { ResendActivationPage } from '../components/SignUp/SignUp/ResendActivationPage';
+import { ActivationProfilePage } from '../components/SignUp/SignUp/ActivateProfilePage';
 import { SendEmailRestorePasswordPage } from '../pages/RestorePassword/Pages/SendEmailRestorePasswordPage';
 import { RestorePasswordPage } from '../pages/RestorePassword/Pages/RestorePasswordPage';
 import { RestorePasswordModalPage } from '../pages/RestorePassword/Pages/RestorePasswordModalPage';
@@ -31,7 +31,7 @@ import ScrollToTopButton from '../components/ScrollToTopButton/ScrollToTopButton
 import TermsAndConditions from '../components/TermsAndConditionsApp/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../hooks';
 import { Search } from '../pages/SearchPage/Search';
-import '../pages/BasicPage/customToastStyles.css';
+import '../pages/CustomThemes/customToastStyles.css';
 import Contact from '../components/Contact/Contact';
 import ErrorPage404 from '../pages/ErrorPages/ErrorPage404';
 
