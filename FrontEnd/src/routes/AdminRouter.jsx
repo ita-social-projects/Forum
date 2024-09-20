@@ -1,6 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import '../pages/AdminPage/AdminGlobal.css';
-import Header from '../components/Header/Header';
+import Header from '../components/Admin/Header/Header';
 import Menu from '../pages/AdminPage/Menu/Menu';
 import UserDetail from '../pages/AdminPage/DetailView/UserDetail';
 import UserTable from '../pages/UserTable/UserTable';
