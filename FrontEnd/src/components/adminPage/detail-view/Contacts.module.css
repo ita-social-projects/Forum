@@ -1,0 +1,43 @@
+/* Contacts.module.css */
+
+/* Загальний контейнер для контактної інформації */
+.contacts-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Стилі для заголовка */
+.contacts-container h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Контейнер для інформації про контакти */
+.contacts-info {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Стилі для кожного параграфа в контактній інформації */
+.contacts-info p {
+    font-size: 18px;
+    color: #555;
+    margin: 10px 0;
+}
+
+/* Стилі для повідомлення про помилку */
+.error-message {
+    color: red;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Стилі для індикатора завантаження */
+.loading {
+    font-size: 18px;
+    color: #666;
+}

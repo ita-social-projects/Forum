@@ -3,8 +3,8 @@ import styles from './PendingStatus.module.css';
 
 const PendingStatus = ({ profile, elementType }) => {
 
-  const bannerApproved = profile?.banner.is_approved;
-  const logoApproved = profile?.logo.is_approved;
+  const bannerApproved = profile?.banner?.is_approved;
+  const logoApproved = profile?.logo?.is_approved;
 
   const shouldShowTooltip = (elementType === 'banner' && bannerApproved === false)
     || (elementType === 'logo' && logoApproved === false);

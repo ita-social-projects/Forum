@@ -20,6 +20,7 @@ from validation.validate_password import (
     validate_password_include_symbols,
 )
 from validation.validate_profile import validate_profile
+from validation.validate_recaptcha import verify_recaptcha
 
 User = get_user_model()
 
@@ -42,13 +43,23 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
     password = serializers.CharField(
         style={"input_type": "password"}, write_only=True
     )
+    captcha = serializers.CharField(
+        write_only=True, allow_blank=True, allow_null=True
+    )
 
     class Meta(UserCreatePasswordRetypeSerializer.Meta):
         model = User
-        fields = ("email", "password", "name", "surname", "company")
+        fields = ("email", "password", "name", "surname", "company", "captcha")
 
     def validate(self, value):
         custom_errors = defaultdict(list)
+        captcha_token = value.get("captcha")
+
+        if captcha_token and not verify_recaptcha(captcha_token):
+            custom_errors["captcha"].append(
+                "Invalid reCAPTCHA. Please try again."
+            )
+
         self.fields.pop("re_password", None)
         re_password = value.pop("re_password")
         email = value.get("email").lower()
@@ -79,6 +90,7 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
         return value
 
     def create(self, validated_data):
+        validated_data.pop("captcha", None)
         company_data = validated_data.pop("company")
         user = User.objects.create(**validated_data)
         user.set_password(validated_data["password"])
@@ -105,7 +117,18 @@ class UserListSerializer(UserSerializer):
 
 
 class CustomTokenCreateSerializer(TokenCreateSerializer):
+    captcha = serializers.CharField(
+        write_only=True, allow_blank=True, allow_null=True
+    )
+
     def validate(self, attrs):
+        captcha_token = attrs.get("captcha")
+
+        if captcha_token and not verify_recaptcha(captcha_token):
+            raise serializers.ValidationError(
+                "Invalid reCAPTCHA. Please try again."
+            )
+
         try:
             validate_profile(attrs.get("email"))
         except ValidationError as error:
