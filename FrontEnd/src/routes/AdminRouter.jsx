@@ -1,10 +1,10 @@
 import { ToastContainer } from 'react-toastify';
 import '../pages/AdminPage/AdminGlobal.css';
-import Header from '../components/Admin/Header/Header';
+import Header from '../pages/AdminPage/Header/Header';
 import Menu from '../pages/AdminPage/Menu/Menu';
 import UserDetail from '../pages/AdminPage/DetailView/UserDetail';
-import UserTable from '../pages/UserProfilesTable/UserTable';
-import ProfilesTable from '../pages/UserProfilesTable/ProfilesTable';
+import UserTable from '../pages/AdminPage/UserProfilesTable/UserTable';
+import ProfilesTable from '../pages/AdminPage/UserProfilesTable/ProfilesTable';
 import ProfileDetail from '../pages/AdminPage/DetailView/ProfileDetail';
 import css from '../pages/AdminPage/AdminPage.module.css';
 import { Routes, Route } from 'react-router-dom';

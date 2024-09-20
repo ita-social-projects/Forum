@@ -1,4 +1,4 @@
-import Login from './/Login';
+import Login from './Login';
 import classes from './AuthorizationPage.module.css';
 
 const AuthorizationPage = () => {
