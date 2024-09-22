@@ -1,25 +1,18 @@
 .navbar-content {
   display: flex;
-  width: 1305px;
   padding: 8px 104px;
   align-items: center;
   justify-content: space-between;
 }
 
-/* .navbar-logo__text {
-    color: #292E32;
-    font-feature-settings: 'calt' off;
-    font-family: var(--font-logo);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: -0.24px;
-} */
+.navbar-logo__text{
+  display: flex;
+}
 
-.navbar-logo__img {
-  width: 600px;
-  height: 400px;
+.navbar-main-logo{
+  display: flex;
+  width: 199px;
+  height: 24px;
 }
 
 .navbar-utility-bar {
