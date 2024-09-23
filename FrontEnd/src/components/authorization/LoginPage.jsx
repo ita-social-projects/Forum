@@ -57,13 +57,14 @@ const LoginContent = () => {
       errorMessage = errors.password.message;
     } else if (errors.unspecifiedError?.message) {
       errorMessage = errors.unspecifiedError.message;
+      toast.error(errorMessage);
     } else if (errors.rateError?.message) {
       errorMessage = errors.rateError.message;
+      toast.error(errorMessage);
     } else if (errors.blockedUserError?.message) {
       errorMessage = errors.blockedUserError.message;
+      toast.error(errorMessage);
     }
-
-    errorMessage && toast.error(errorMessage);
   }, [
     errors.email?.message,
     errors.password?.message,
