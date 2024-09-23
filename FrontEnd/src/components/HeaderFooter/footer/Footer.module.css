@@ -1,4 +1,4 @@
-.footer-content {
-    margin-top: auto;
-    width: var(--main-block-size);
+.footer-content-main {
+    display: flex;
+    flex-direction: column;
 }

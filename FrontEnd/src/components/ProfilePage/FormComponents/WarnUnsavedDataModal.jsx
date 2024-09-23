@@ -9,7 +9,7 @@ const WarnUnsavedDataModal = ({ onCancel, onConfirm }) => {
                     Збереження введених даних
                 </p>
                 <button onClick={onCancel} className={classes['modal-header--close-icon']}>
-                    <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} />
+                    <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} alt="Cancel button" />
                 </button>
             </div>
             <div className={classes['modal-content']}>

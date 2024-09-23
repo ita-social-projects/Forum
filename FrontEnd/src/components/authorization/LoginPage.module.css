@@ -76,6 +76,7 @@
   flex-direction: column;
   align-items: center;
   align-self: stretch;
+  overflow: hidden;
 }
 
 .login-content__email input {
@@ -122,6 +123,7 @@
   border-radius: 2px;
   border: 1px solid #d9d9d9;
   background: #fff;
+  overflow: hidden;
 }
 
 .login-content__password__wrapper {
@@ -235,8 +237,7 @@
   letter-spacing: -0.16px;
 }
 
-.login-footer-buttons__signin__disabled
- {
+.login-footer-buttons__signin__disabled {
   opacity: 50%;
   cursor: default;
 }

@@ -25,8 +25,8 @@ function FooterPolicy() {
             <img
                 className={css['policy-content__main-logo']}
                 src={`${process.env.REACT_APP_PUBLIC_URL}/craftMerge-logo-white.svg`}
-                alt="craft merge logo"
-                title="CraftMerge logo">
+                alt="Footer craft merge logo"
+                title="CraftMerge">
             </img>
             <div className={css['policy-content-links']}>
                 {POLICY_LINKS.map((element) => (

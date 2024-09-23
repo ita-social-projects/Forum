@@ -1,6 +1,5 @@
 .footer-bottom {
     display: flex;
-    width: var(--main-block-size);
     height: 33px;
     justify-content: flex-start;
     background: var(--footer-bottom-backround);
