@@ -169,6 +169,9 @@ export function SignUpFormContentComponent(props) {
         if (error.response && error.response.status === 400) {
           toast.error('Не вдалося зареєструвати користувача, сталася помилка');
         }
+      })
+      .finally(()=>{
+        reCaptchaRef.current.reset();
       });
   };
 
