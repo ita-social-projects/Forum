@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import icon_search from './search-icon.svg';
 import { useNavigate } from 'react-router-dom';
 import css from './SearchBox.module.css';
 
@@ -36,7 +35,7 @@ function SearchBox() {
         className={css['header-search-form__addon']}
         disabled={!searchTerm.trim()}
       >
-        <img src={icon_search} alt="" />
+        <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/search-icon.svg`} alt="Search" />
       </button>
     </div>
   );

@@ -30,7 +30,7 @@ function Profile() {
       <img
         className={css['header-profile__avatar']}
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/Avatar.png`}
-        alt="avatar"
+        alt="Avatar"
         onClick={navigateToProfile}
       />
       <DropdownMenu toggleText="Профіль">

@@ -222,19 +222,20 @@ or
 PORT=8080 npm restart
 ```
 
-### Google ReCAPTCHA
+### Google ReCAPTCHA V2
 The project is currently using ReCAPTCHA V2 Invisible. Note that if the free monthly Google quota expires, users will be able to sign in and sign up without ReCAPTCHA verification.
 
 For proper ReCAPTCHA setup provide public and private keys from Google:
 
 Add in BackEnd .env
 ```.env 
-RECAPTCHA_PRIVATE_KEY = "your-private-key"
+RECAPTCHA_V2_PRIVATE_KEY = "your-private-key"
+RECAPTCHA_URL="https://www.google.com/recaptcha/api/siteverify"
 ```
 
 Add in FrontEnd .env
 ```.env 
-REACT_APP_RECAPTCHA_SITE_KEY = "your-public-key"
+REACT_APP_RECAPTCHA_V2_SITE_KEY = "your-public-key"
 ```
 
 ### How to run Docker

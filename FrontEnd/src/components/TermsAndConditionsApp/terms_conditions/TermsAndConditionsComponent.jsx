@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './TermsAndConditionsComponent.module.css';
 import TermsAndConditionsText from './text';
 import TEXT_CONTENT from './text';

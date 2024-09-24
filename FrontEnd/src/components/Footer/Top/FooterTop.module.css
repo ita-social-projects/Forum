@@ -1,6 +1,5 @@
 .footer-top {
     display: flex;
-    width: var(--main-block-size);
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;

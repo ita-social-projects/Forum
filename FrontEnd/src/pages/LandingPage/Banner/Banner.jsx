@@ -49,17 +49,17 @@ const MainBanner = (props) => {
       <img
         className="main-banner-group__banner-image1"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img1.jpeg`}
-        alt="banner img"
+        alt="Banner img"
       />
       <img
         className="main-banner-group__banner-image2"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img2.jpeg`}
-        alt="banner img"
+        alt="Banner img"
       />
       <img
         className="main-banner-group__banner-image3"
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/banner-img3.jpeg`}
-        alt="banner img"
+        alt="Banner img"
       />
       <div className="main-banner-wine">
         <div className="main-banner-group__frame">
@@ -67,7 +67,7 @@ const MainBanner = (props) => {
             <div className="winemaking">
               <img
                 src={`${process.env.REACT_APP_PUBLIC_URL}/svg/winemaking.svg`}
-                alt="winemaking"
+                alt="Winemaking"
                 width="16"
                 height="18"
               />
@@ -91,7 +91,7 @@ const MainBanner = (props) => {
         <div className="cheese">
           <img
             src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cheese.svg`}
-            alt="cheese"
+            alt="Cheese"
             width="20"
             height="20"
           />
@@ -103,7 +103,7 @@ const MainBanner = (props) => {
             <div className="delivery">
               <img
                 src={`${process.env.REACT_APP_PUBLIC_URL}/svg/delivery.svg`}
-                alt="delivery"
+                alt="Delivery"
                 width="20"
                 height="20"
               />

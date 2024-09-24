@@ -4,7 +4,7 @@ function FooterBottom() {
     return (
         <div className={css['footer-bottom']}>
             <p className={css['footer-bottom__text']}>
-                Copyright 2023 Forum. All rights reserved.
+                Copyright 2023 CraftMerge. All rights reserved.
             </p>
             <img
                 className={css['footer-bottom-logo__svg']}
