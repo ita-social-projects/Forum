@@ -54,12 +54,6 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
     def validate(self, value):
         custom_errors = defaultdict(list)
         captcha_token = value.get("captcha")
-
-        if captcha_token and not verify_recaptcha(captcha_token):
-            custom_errors["captcha"].append(
-                "Invalid reCAPTCHA. Please try again."
-            )
-
         self.fields.pop("re_password", None)
         re_password = value.pop("re_password")
         email = value.get("email").lower()
@@ -85,6 +79,10 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
             custom_errors["password"].append(error.message)
         if value["password"] != re_password:
             custom_errors["password"].append("Passwords don't match.")
+        if captcha_token and not verify_recaptcha(captcha_token):
+            custom_errors["captcha"].append(
+                "Invalid reCAPTCHA. Please try again."
+            )
         if custom_errors:
             raise serializers.ValidationError(custom_errors)
         return value
@@ -124,11 +122,6 @@ class CustomTokenCreateSerializer(TokenCreateSerializer):
     def validate(self, attrs):
         captcha_token = attrs.get("captcha")
 
-        if captcha_token and not verify_recaptcha(captcha_token):
-            raise serializers.ValidationError(
-                "Invalid reCAPTCHA. Please try again."
-            )
-
         try:
             validate_profile(attrs.get("email"))
         except ValidationError as error:
@@ -138,6 +131,11 @@ class CustomTokenCreateSerializer(TokenCreateSerializer):
             return self.validate_for_rate(attrs)
         except RateLimitException:
             self.fail("inactive_account")
+
+        if captcha_token and not verify_recaptcha(captcha_token):
+            raise serializers.ValidationError(
+                "Invalid reCAPTCHA. Please try again."
+            )
 
     @RateLimitDecorator(
         calls=django_settings.ATTEMPTS_FOR_LOGIN,

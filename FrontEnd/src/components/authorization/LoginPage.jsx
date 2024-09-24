@@ -131,6 +131,8 @@ const LoginContent = () => {
           });
         }
       }
+    } finally {
+      reCaptchaRef.current.reset();
     }
   };
 
