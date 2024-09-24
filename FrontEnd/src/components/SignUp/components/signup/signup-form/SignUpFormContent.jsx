@@ -171,7 +171,7 @@ export function SignUpFormContentComponent(props) {
         }
       })
       .finally(()=>{
-        reCaptchaRef.current.reset();
+        reCaptchaRef.current?.reset();
       });
   };
 

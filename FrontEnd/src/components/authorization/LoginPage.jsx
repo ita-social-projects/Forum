@@ -132,7 +132,7 @@ const LoginContent = () => {
         }
       }
     } finally {
-      reCaptchaRef.current.reset();
+      reCaptchaRef.current?.reset();
     }
   };
 
