@@ -393,9 +393,8 @@ class TestProfileModeration(APITestCase):
         mock_schedule.assert_called_once()
         mock_revoke.assert_not_called()
 
-    @patch("authentication.serializers.verify_recaptcha", return_value=True)
     def test_login_blocked_user_due_to_rejected_request(
-        self, mock_revoke, mock_schedule, mock_verify_recaptcha
+        self, mock_revoke, mock_schedule
     ):
         # user updates both banner and logo
         self.user_client.patch(
