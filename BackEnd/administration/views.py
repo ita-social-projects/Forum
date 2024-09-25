@@ -34,7 +34,7 @@ from .serializers import FeedbackSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from utils.administration.send_email_feedback import send_email_feedback
+from utils.administration.send_email_feedback import send_email_feedback_func
 
 class UsersListView(ListAPIView):
     """
@@ -162,7 +162,7 @@ class FeedbackView(APIView):
             message = serializer.validated_data['message']
             category = serializer.validated_data['category']
             
-            send_email_feedback(email, message, category)
+            send_email_feedback_func(email, message, category)
             
             return Response({"message": "Ваше повідомлення надіслано успішно!"}, status=status.HTTP_200_OK)
         
