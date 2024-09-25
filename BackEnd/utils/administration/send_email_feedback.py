@@ -5,7 +5,7 @@ from django.conf import settings
 EMAIL_CONTENT_SUBTYPE = "html"
 
 
-def send_email_feedback_func(user_email, message, category):
+def send_email_feedback(user_email, message, category):
     """ Function for sending feedback letters to the administrator and the user. """
     context = {
         "category": category,
