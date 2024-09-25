@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import renderContent from '../../pages/CookiesPolicyPage/RenderContent.jsx';  
-import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';  
+import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';
 import styles from './Contact.module.css';
 import contactText from './text';
 import useScrollToTop from '../../hooks/useScrollToTop';
@@ -67,13 +66,11 @@ const Contact = () => {
 
       if (response.status === 200) {
         alert('Ваше повідомлення надіслано успішно!');
-        // Очищення полів форми після успішної відправки
         setEmail('');
         setMessage('Привіт, хочу повідомити...');
         setCategory('');
       }
     } catch (error) {
-      // Виведення помилок
       if (error.response && error.response.data) {
         alert('Сталася помилка: ' + JSON.stringify(error.response.data));
       } else {
@@ -81,7 +78,6 @@ const Contact = () => {
       }
     }
   };
-
   return (
     <div className={styles['contact_container']}>
       <div className={styles['contact__link_container']}>
