@@ -1,8 +1,9 @@
+import React, { useState } from 'react';
+import axios from 'axios';
 import LinkContainer from '../CookiesPolicyPage/LinkContainer.jsx';
 import styles from './Contact.module.css';
 import contactText from './text';
 import useScrollToTop from '../../hooks/useScrollToTop';
-import React, { useState } from 'react';
 import {
     EMAIL_PATTERN,
     MESSAGE_PATTERN
@@ -43,7 +44,7 @@ const Contact = () => {
 
   const handleCategoryChange = (e) => setCategory(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!EMAIL_PATTERN.test(email)) {
@@ -56,9 +57,28 @@ const Contact = () => {
       return;
     }
 
-    console.log('Email:', email);
-    console.log('Message:', message);
-    console.log('Category:', category);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/admin/feedback/`, {
+        email: email,
+        message: message,
+        category: category
+      });
+
+      if (response.status === 200) {
+        alert('Ваше повідомлення надіслано успішно!');
+        // Очищення полів форми після успішної відправки
+        setEmail('');
+        setMessage('Привіт, хочу повідомити...');
+        setCategory('');
+      }
+    } catch (error) {
+      // Виведення помилок
+      if (error.response && error.response.data) {
+        alert('Сталася помилка: ' + JSON.stringify(error.response.data));
+      } else {
+        alert('Виникла проблема з підключенням до сервера: ' + error.message);
+      }
+    }
   };
 
   return (
