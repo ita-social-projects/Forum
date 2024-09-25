@@ -15,7 +15,7 @@ def send_email_feedback(user_email, message, category):
 
     admin_email = 'kyzuk.yr@gmail.com'
 
-    email_body_admin = render_to_string("emails/admin_feedback_template.html", context)
+    email_body_admin = render_to_string("administration/templates/admin_feedback_template.html", context)
     email_admin = EmailMultiAlternatives(
         subject=f"Нове повідомлення: {category}",
         body=email_body_admin,
@@ -25,7 +25,7 @@ def send_email_feedback(user_email, message, category):
     email_admin.content_subtype = EMAIL_CONTENT_SUBTYPE
     email_admin.send(fail_silently=False)
 
-    email_body_user = render_to_string("emails/user_feedback_template.html", context)
+    email_body_user = render_to_string("administration/templates/user_feedback_template.html", context)
     email_user = EmailMultiAlternatives(
         subject="Копія вашого повідомлення",
         body=email_body_user,

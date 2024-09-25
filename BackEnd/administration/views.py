@@ -16,7 +16,6 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
 )
 
-from utils.moderation import send_email_feedback
 from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
@@ -31,11 +30,11 @@ from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
-from django.core.mail import send_mail
 from .serializers import FeedbackSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from utils.administration.send_email_feedback import send_email_feedback
 
 class UsersListView(ListAPIView):
     """
@@ -156,20 +155,15 @@ class ContactsView(View):
     
 class FeedbackView(APIView):
     def post(self, request):
-        # Використовуємо Serializer для валідації даних
         serializer = FeedbackSerializer(data=request.data)
         
         if serializer.is_valid():
-            # Отримуємо валідовані дані з форми
             email = serializer.validated_data['email']
             message = serializer.validated_data['message']
             category = serializer.validated_data['category']
             
-            # Викликаємо функцію для відправки листів
             send_email_feedback(email, message, category)
             
-            # Відправляємо відповідь користувачу
             return Response({"message": "Ваше повідомлення надіслано успішно!"}, status=status.HTTP_200_OK)
         
-        # Якщо дані не валідні, повертаємо помилки
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
