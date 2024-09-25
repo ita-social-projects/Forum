@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import LinkContainer from '../CookiesPolicyPage/LinkContainer.jsx';
+import renderContent from '../../pages/CookiesPolicyPage/RenderContent.jsx';  
+import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';  
 import styles from './Contact.module.css';
 import contactText from './text';
 import useScrollToTop from '../../hooks/useScrollToTop';
