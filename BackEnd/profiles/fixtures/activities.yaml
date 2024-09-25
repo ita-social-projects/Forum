@@ -14,7 +14,7 @@
   pk: 4
   fields:
     name: HORECA
-  model: profiles.activity
+- model: profiles.activity
   pk: 5
   fields:
     name: Інші послуги
