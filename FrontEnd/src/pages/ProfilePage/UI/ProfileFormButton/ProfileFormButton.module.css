@@ -3,8 +3,6 @@
     align-items: flex-start;
     padding: 6px 0px;
     background: #EFFFF6;
-    margin-top: 140px;
-    width: var(--main-block-size);
 }
 
 .sign-up__button {
