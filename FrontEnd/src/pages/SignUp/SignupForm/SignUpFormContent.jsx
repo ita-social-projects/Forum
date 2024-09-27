@@ -10,7 +10,6 @@ import EyeVisible from '../../../pages/Authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
 import ReCAPTCHA from 'react-google-recaptcha';
-import ReCaptchaLoader from '../../../components/ReCaptcha/ReCartchaLoader.jsx';
 import {
   EMAIL_PATTERN,
   PASSWORD_PATTERN,
@@ -173,7 +172,6 @@ export function SignUpFormContentComponent(props) {
 
   return (
     <div className={styles['signup-form']}>
-      <ReCaptchaLoader/>
       <form
         id="signUpForm"
         className={styles['signup-form__container']}

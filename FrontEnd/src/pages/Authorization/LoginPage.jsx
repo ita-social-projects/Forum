@@ -12,7 +12,6 @@ import classes from './LoginPage.module.css';
 import { useAuth } from '../../hooks';
 import checkIfStaff from '../AdminPage/checkIfStaff';
 import ReCAPTCHA from 'react-google-recaptcha';
-import ReCaptchaLoader from '../../components/ReCaptcha/ReCartchaLoader';
 
 const LoginContent = () => {
   const { login } = useAuth();
@@ -141,7 +140,6 @@ const LoginContent = () => {
 
   return (
     <div className={classes['login-basic']}>
-      <ReCaptchaLoader/>
       <div className={classes['login-header']}>
         <p>Вхід на платформу</p>
       </div>
