@@ -139,7 +139,8 @@
 
 .contact__button_send {
     padding: 10px 20px;
-    background-color: #28a745;
+    border: 1px solid #1F9A7C;
+    background: #1F9A7C;
     color: white;
     border: none;
     border-radius: 4px;
@@ -177,4 +178,33 @@ display: flex;
     font-style: normal;
     font-weight: 400;
     line-height: 16px;
+}
+
+.modal_feedback {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Напівпрозорий сірий фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal_feedback_content {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Легка тінь */
+  width: 400px; /* Ширина модального вікна */
+  text-align: center;
+  border: 1px solid #ddd; /* Рамка */
+}
+
+.modal_feedback_content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
 }

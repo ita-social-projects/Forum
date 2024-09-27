@@ -16,6 +16,7 @@ const Contact = () => {
   const [category, setCategory] = useState('');
   const [emailError, setEmailError] = useState('');
   const [messageError, setMessageError] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const handleEmailChange = (e) => {
     const { value } = e.target;
@@ -56,10 +57,13 @@ const Contact = () => {
       return;
     }
 
-    console.log('Email:', email);
-    console.log('Message:', message);
-    console.log('Category:', category);
+    setShowModal(true);
   };
+
+  const handleRedirect = () => {
+    window.location.href = '/';
+  };
+
 
   return (
     <div className={styles['contact_container']}>
@@ -118,6 +122,18 @@ const Contact = () => {
           <button type="button" className={styles['contact__button_cancel']}>Відмінити</button>
         </form>
       </div>
+            {/* Modal */}
+      {showModal && (
+        <div className={styles['modal_feedback']}>
+          <div className={styles['modal_feedback_content']}>
+            <h2>Повідомлення успішно надіслано!</h2>
+            <button type="button" onClick={handleRedirect} className={styles['contact__button_send']}>
+              На головну
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
