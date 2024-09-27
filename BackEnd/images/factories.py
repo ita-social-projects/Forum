@@ -1,5 +1,4 @@
 import factory.fuzzy
-
 from .models import ProfileImage
 
 
@@ -14,5 +13,6 @@ class ProfileimageFactory(factory.django.DjangoModelFactory):
     )
     content_type = "jpeg"
     image_path = factory.django.ImageField(filename="test.jpeg")
+    hash_md5 = factory.Faker("md5")
     is_approved = False
     is_deleted = False

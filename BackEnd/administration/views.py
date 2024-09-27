@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from django.views import View
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
@@ -14,6 +16,7 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
 )
 
+from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
@@ -27,7 +30,11 @@ from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
-
+from .serializers import FeedbackSerializer
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
+from utils.administration.send_email_feedback import send_email_feedback
 
 class UsersListView(ListAPIView):
     """
@@ -136,3 +143,27 @@ class ModerationEmailView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return ModerationEmail.objects.first()
+
+
+class ContactsView(View):
+    """
+    View for retrieving contact information.
+    """
+
+    def get(self, request):
+        return JsonResponse(CONTACTS_INFO)
+    
+class FeedbackView(APIView):
+    def post(self, request):
+        serializer = FeedbackSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            email = serializer.validated_data['email']
+            message = serializer.validated_data['message']
+            category = serializer.validated_data['category']
+            
+            send_email_feedback(email, message, category)
+            
+            return Response({"message": "Ваше повідомлення надіслано успішно!"}, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -14,7 +14,6 @@ from profiles.factories import (
 from images.factories import ProfileimageFactory
 from utils.dump_response import dump  # noqa
 from utils.unittest_helper import AnyInt
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 class TestProfileDetailAPIView(APITestCase):

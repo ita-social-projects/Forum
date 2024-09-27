@@ -1,0 +1,28 @@
+.loader-content {
+    width: 1305px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-page {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-left: 104px;
+    margin-right: 104px;
+}
+
+.logo-tooltip{
+    display: flex;
+    position:absolute;
+    padding-top: 5px;
+    padding-left: 3px;
+}
+
+.banner-tooltip{
+    display: flex;
+    position:absolute;
+    padding-top: 12px;
+    padding-left: 112px;
+}

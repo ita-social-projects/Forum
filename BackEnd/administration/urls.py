@@ -1,12 +1,14 @@
 from django.urls import path
 
 from administration.views import (
+    ContactsView,
     ProfilesListView,
     ProfileDetailView,
     UsersListView,
     UserDetailView,
     AutoModerationHoursView,
     ModerationEmailView,
+    FeedbackView,
 )
 
 app_name = "administration"
@@ -22,4 +24,6 @@ urlpatterns = [
         name="automoderation_hours",
     ),
     path("email/", ModerationEmailView.as_view(), name="moderation-email"),
+    path("contacts/", ContactsView.as_view(), name="contacts"),
+    path("feedback/", FeedbackView.as_view(), name="feedback"),
 ]
