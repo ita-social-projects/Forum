@@ -16,48 +16,9 @@ import WarnUnsavedDataModal from '../FormComponents/WarnUnsavedDataModal';
 import ChangePassword from '../FormComponents/ChangePassword';
 import css from './ProfileContent.module.css';
 import tooltipInnerContentStyles from '../../CustomThemes/customProfileTooltipThemes';
+import INFOLINKS from './TextInfoLinks';
+import FORM_NAMES from './TextFormNames';
 
-
-const INFOLINKS = [
-    {
-        title: 'Інформація про користувача',
-        link: '/user-info',
-    },
-    {
-        title: 'Загальна інформація',
-        link: '/general-info',
-    },
-    {
-        title: 'Контакти',
-        link: '/contacts',
-    },
-    {
-        title: 'Інформація про товари/ послуги',
-        link: '/products-service-info',
-        tooltipText: 'Цей розділ доступний, коли обрано опцію "Зареєстрована компанія" у розділі Загальна інформація'
-    },
-    {
-        title: 'Додаткова інформація',
-        link: '/additional-info',
-        tooltipText: 'Цей розділ доступний, коли обрано опцію "Зареєстрована компанія" у розділі Загальна інформація'
-    },
-    {
-        title: 'Стартап',
-        link: '/startup',
-        tooltipText: 'Цей розділ доступний, коли обрано опцію "Стартап проект" у розділі Загальна інформація'
-    },
-];
-
-const FORM_NAMES = [
-    'UserInfo',
-    'GeneralInfo',
-    'ContactsInfo',
-    'ProductServiceInfo',
-    'AdditionalInfo',
-    'StartupInfo',
-    'Delete',
-    'ChangePassword'
-];
 
 const ProfileContent = (props) => {
     const [modal, setModal] = useState(false);
@@ -199,7 +160,7 @@ const ProfileContent = (props) => {
                     </Routes>
                 </DirtyFormContext.Provider>
             </div>
-            <div className={css['profile__elastic']} ></div>
+            {/* <div className={css['profile__elastic']} ></div> */}
             <div className={css['profile__button']}>
                 {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} formState={formIsDirty} />}
 

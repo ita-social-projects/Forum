@@ -9,7 +9,6 @@
 .profile__content {
     padding-left: 192px;
     display: flex;
-    align-items: flex-start;
     gap: 16px;
 }
 
@@ -50,10 +49,10 @@
     line-height: 22px;
     letter-spacing: -0.14px;
 }
-.profile__elastic {
+/* .profile__elastic {
     padding-top: 100px;
     height: 100%;
-}
+} */
 
 .profile__delete {
     color: #F15831;
