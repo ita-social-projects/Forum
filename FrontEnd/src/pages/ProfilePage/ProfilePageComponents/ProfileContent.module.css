@@ -3,13 +3,14 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    box-sizing: border-box;
 }
 
 .profile__content {
     padding-left: 192px;
+    min-height: var(--profile-min-height-block);
     display: flex;
     gap: 16px;
+
 }
 
 .profile__info-links {
@@ -17,7 +18,6 @@
     flex-direction: column;
     align-items: flex-start;
     width: 222px;
-    height: 240px;
     gap: 12px;
 }
 
@@ -49,10 +49,6 @@
     line-height: 22px;
     letter-spacing: -0.14px;
 }
-/* .profile__elastic {
-    padding-top: 100px;
-    height: 100%;
-} */
 
 .profile__delete {
     color: #F15831;
@@ -63,7 +59,6 @@
     border-bottom: 1px #E2E5EB solid;
 }
 
-.profile__button{
-    display: flex;
+.profile__button {
     padding-top: 40px;
 }

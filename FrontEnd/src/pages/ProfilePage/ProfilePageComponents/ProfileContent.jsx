@@ -160,7 +160,6 @@ const ProfileContent = (props) => {
                     </Routes>
                 </DirtyFormContext.Provider>
             </div>
-            {/* <div className={css['profile__elastic']} ></div> */}
             <div className={css['profile__button']}>
                 {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} formState={formIsDirty} />}
 
@@ -203,4 +202,4 @@ ProfileContent.propTypes = {
     }).isRequired,
     currentFormNameHandler: PropTypes.func,
     formName: PropTypes.string,
-  };
+};
