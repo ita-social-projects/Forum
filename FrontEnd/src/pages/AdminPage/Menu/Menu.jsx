@@ -16,17 +16,17 @@ const MENU = [
         link: '/customadmin/profiles/'
     },
     {
-        id: 'am4',
+        id: 'am3',
         title: 'Контакти',
         link: '/customadmin/contacts/'
     },
     {
-        id: 'am3',
+        id: 'am4',
         title: 'Зміна часу автомодерації',
         link: '/customadmin/automoderation/'
     },
     {
-        id: 'am4',
+        id: 'am5',
         title: 'Пошта адміністратора',
         link: '/customadmin/email/'
     }
