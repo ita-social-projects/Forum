@@ -69,6 +69,7 @@
   --toastify-custom-close-button: rgba(0, 0, 0, 0.85);
 
   /* Header */
+  --navbar-content-height: 32px;
 
   /* Footer */
   --footer-backround: #3C4044;
