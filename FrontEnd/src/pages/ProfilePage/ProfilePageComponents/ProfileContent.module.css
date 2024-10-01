@@ -6,11 +6,11 @@
 }
 
 .profile__content {
-    padding-left: 192px;
     min-height: var(--profile-min-height-block);
     display: flex;
+    padding-bottom: 45px;
+    padding-left: 192px;
     gap: 16px;
-
 }
 
 .profile__info-links {
@@ -57,8 +57,4 @@
 .profile__divider {
     width: 222px;
     border-bottom: 1px #E2E5EB solid;
-}
-
-.profile__button {
-    padding-top: 40px;
 }

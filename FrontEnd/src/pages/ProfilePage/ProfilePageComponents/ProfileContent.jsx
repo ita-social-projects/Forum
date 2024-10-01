@@ -160,7 +160,6 @@ const ProfileContent = (props) => {
                     </Routes>
                 </DirtyFormContext.Provider>
             </div>
-            <div className={css['profile__button']}>
                 {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} formState={formIsDirty} />}
 
                 {blocker.state === 'blocked' &&
@@ -169,7 +168,6 @@ const ProfileContent = (props) => {
                             <WarnUnsavedDataModal onCancel={cancelNavigation} onConfirm={confirmNavigation} />
                         </MyModal>)
                 }
-            </div>
         </div>
     );
 };

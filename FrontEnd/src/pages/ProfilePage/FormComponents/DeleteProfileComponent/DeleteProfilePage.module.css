@@ -1,3 +1,7 @@
+.button__delete-main {
+   height: calc(var(--profile-min-height-block) + 42px);
+}
+
 .button__delete {
     color: #F15831;
     cursor: pointer;
@@ -5,6 +9,7 @@
     height: 32px;
     padding: 5px 15px 5px 15px;
     margin-top: 8px;
+    margin-bottom: 10px;
     border-radius: 4px;
     gap: 10px;
     background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
@@ -16,7 +21,6 @@
     line-height: 20px;
     letter-spacing: -0.01em;
     text-align: center;
-    margin-bottom: 400px;
 }
 
 .text__for__delete {
