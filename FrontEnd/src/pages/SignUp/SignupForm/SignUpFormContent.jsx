@@ -23,6 +23,7 @@ export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const reCaptchaRef = useRef();
+  const onReCaptchaChange = () => reCaptchaRef.current = !reCaptchaRef.current;
   const toggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
@@ -164,9 +165,6 @@ export function SignUpFormContentComponent(props) {
         if (error.response && error.response.status === 400) {
           toast.error('Не вдалося зареєструвати користувача, сталася помилка');
         }
-      })
-      .finally(()=>{
-        reCaptchaRef.current?.reset();
       });
   };
 
@@ -560,6 +558,7 @@ export function SignUpFormContentComponent(props) {
           ref={reCaptchaRef}
           sitekey={process.env.REACT_APP_RECAPTCHA_V2_SITE_KEY}
           size="invisible"
+          onChange={onReCaptchaChange}
         />
       </form>
       <Suspense fallback={<div>Loading...</div>}>
