@@ -40,6 +40,7 @@ def send_email_about_banners_and_logos(
             recipient,
         ],
     )
-
+    print(settings.EMAIL_HOST_USER, set_admin_email())
+    print('werwerwe')
     email.content_subtype = EMAIL_CONTENT_SUBTYPE
     email.send(fail_silently=False)
