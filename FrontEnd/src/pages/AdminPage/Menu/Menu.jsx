@@ -29,6 +29,11 @@ const MENU = [
         id: 'am5',
         title: 'Пошта адміністратора',
         link: '/customadmin/email/'
+    },
+    {
+        id: 'am6',
+        title: 'Профіль адміністратора',
+        link: '/customadmin/admin-profile/'
     }
 ];
 

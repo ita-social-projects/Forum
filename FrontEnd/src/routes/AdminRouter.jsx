@@ -14,10 +14,11 @@ import Loader from '../components/Loader/Loader';
 import AutoApproveDelay from '../pages/AdminPage/AutoApproveDelay/AutoApproveDelay';
 import ModerationEmail from '../pages/AdminPage/DetailView/ModerationEmail';
 import Contacts from '../pages/AdminPage/DetailView/Contacts';
+import AdminProfilePage from '../pages/AdminPage/AdminProfile/AdminProfilePage';
 
 
 function AdminRouter() {
-    const { isLoading, isAuth, isStaff } = useAuth();
+    const { isLoading, isAuth, isStaff, user } = useAuth();
     const renderMenu = isStaff && isAuth ? <Menu /> : null;
     const authRoutes = isStaff && isAuth ? (
         <>
@@ -29,6 +30,7 @@ function AdminRouter() {
             <Route path="/automoderation" element={<AutoApproveDelay />} />
             <Route path="/email" element={<ModerationEmail />} />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/admin-profile" element={<AdminProfilePage user={user}/>} />
         </>
     ) : (
         <Route path="/customadmin/" />
