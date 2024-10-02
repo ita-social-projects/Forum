@@ -11,22 +11,16 @@
     flex-wrap: wrap;
 }
 
-.signup-form__row {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.signup-form__column {
+.admin-info-form__column {
     display: flex;
     width: 257px;
     min-height: 84px;
-    padding-bottom: 0px;
     flex-direction: column;
     align-items: flex-start;
+    gap: 4px;
 }
 
-.signup-form__label {
+.admin-info-form__label {
     display: flex;
     gap: 4px;
     align-self: stretch;
@@ -41,22 +35,7 @@
     text-align: left;
 }
 
-.signup-form__label--password {
-    display: flex;
-    align-self: stretch;
-    flex-direction: column;
-    color: var(--main-black-90, #292e32);
-    font-feature-settings: "calt" off;
-    text-align: left;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 10px;
-    letter-spacing: -0.14px;
-}
-
-.signup-form__label--hint {
+.admin-info-form__label--hint {
     align-self: stretch;
     font-size: 8px;
     line-height: 16px;
@@ -64,7 +43,7 @@
     top: 0px;
 }
 
-.signup-form__label--required {
+.admin-info-form__label--required {
     color: var(--dust-red-5, #ff4d4f);
     text-align: right;
     font-family: var(--font-messages);
@@ -76,7 +55,7 @@
     top: 10%;
 }
 
-.signup-form__label--required_special {
+.admin-info-form__label--required_special {
     color: var(--dust-red-5, #ff4d4f);
     text-align: right;
     font-family: var(--font-messages);
@@ -88,7 +67,7 @@
     bottom: 10%;
 }
 
-.signup-form__label--text {
+.admin-info-form__label--text {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -99,7 +78,7 @@
     color: var(--main-text-color);
 }
 
-.signup-form__field {
+.admin-info-form__field {
     display: flex;
     align-items: center;
     align-self: stretch;
@@ -107,41 +86,7 @@
     background: var(--main-white, #fff);
 }
 
-.signup-form__field__password {
-    display: flex;
-    padding-right: 10px;
-    align-items: center;
-    gap: 4px;
-    align-self: stretch;
-    border-radius: 2px;
-    border: 1px solid var(--neutral-5, #D9D9D9);
-    background: var(--main-white, #FFF);
-}
-
-.signup-form__input__password {
-    font-family: var(--font-messages);
-    height: 22px;
-    padding: 5px 12px;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    align-self: stretch;
-    gap: 4px;
-    flex: 1 0 0;
-    border: none;
-}
-
-.signup-form__field__password:focus-within {
-    border: 1px solid var(--main-header-color);
-}
-
-.signup-form__input__password:focus {
-    outline: none;
-}
-
-.signup-form__input {
+.admin-info-form__input {
     display: flex;
     height: 22px;
     padding: 5px 12px;
@@ -159,12 +104,12 @@
     line-height: 22px;
 }
 
-.signup-form__input:focus {
+.admin-info-form__input:focus {
     border: 1px solid var(--main-header-color);
     outline: none;
 }
 
-.signup-form__error {
+.admin-info-form__error {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -177,168 +122,7 @@
     line-height: 16px;
 }
 
-.signup-form__checkboxes-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.signup-form__checkboxes-container--rules {
-    display: flex;
-    width: 328px;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.rules__container {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    align-self: stretch;
-}
-
-.rules__line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.rules__line--text {
-    color: var(--main-black-90, #292e32);
-    font-feature-settings: "calt" off;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.14px;
-}
-
-.rules__line--link {
-    color: #00a3cf;
-    font-feature-settings: "calt" off;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.14px;
-    text-decoration-line: underline;
-    cursor: pointer;
-}
-
-.rules__checkbox {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.representative {
-    display: flex;
-    height: 100px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.representative__title {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--main-black-90, #292e32);
-    font-feature-settings: "calt" off;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: -0.14px;
-}
-
-.representative__container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-}
-
-.representative__content {
-    display: flex;
-    padding: 0px 11px;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.representative__column {
-    display: flex;
-    width: 246px;
-    align-items: flex-start;
-    gap: 273px;
-}
-
-.representative__option {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.representative__checkbox-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.representative__label {
-    color: var(--main-black-90, #292e32);
-    font-feature-settings: "calt" off;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.14px;
-    text-align: left;
-}
-
-input[type="checkbox"] {
-    appearance: none;
-    background-color: #fff;
-    margin: 0;
-    display: grid;
-    place-content: center;
-    border-radius: 2px;
-    border: 1px solid var(--main-black-20, #e2e5eb);
-}
-
-input[type="checkbox"]::before {
-    content: "";
-    width: 16px;
-    height: 16px;
-}
-
-input[type="checkbox"]:checked {
-    background: var(--primary-green-80, #1f9a7c);
-    border-radius: 2px;
-    border: 1px solid var(--primary-green-80, #1f9a7c);
-}
-
-input[type="checkbox"]:checked::before {
-    transform: scale(1);
-    content: "\2713";
-    font-size: 17px;
-    text-align: center;
-    position: relative;
-    bottom: 3px;
-    color: #f0f0f0;
-}
-
-.password-visibility {
-    cursor: pointer;
-}
-
 .admin-submit__container {
-    margin-bottom: 6px;
     margin-left: 15px;
 }
 
@@ -359,6 +143,7 @@ input[type="checkbox"]:checked::before {
     letter-spacing: -0.01em;
     text-align: center;
     cursor: pointer;
+    min-width: 155px;
 }
 
 .admin-submit__button:active {

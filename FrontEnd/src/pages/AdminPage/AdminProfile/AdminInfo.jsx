@@ -51,16 +51,16 @@ const AdminInfo = ({ user }) => {
         <div className={classes['admin-info-form']}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className={classes['admin-info-form__container']}>
-                <div className={classes['signup-form__column']}>
-                    <div className={classes['signup-form__label']}>
-                    <label className={classes['signup-form__label--required']}>
+                <div className={classes['admin-info-form__column']}>
+                    <div className={classes['admin-info-form__label']}>
+                    <label className={classes['admin-info-form__label--required']}>
                         *
                     </label>
-                    <label className={classes['signup-form__label--text']}>Ім‘я</label>
+                    <label className={classes['admin-info-form__label--text']}>Ім‘я</label>
                     </div>
-                    <div className={classes['signup-form__field']}>
+                    <div className={classes['admin-info-form__field']}>
                         <input
-                            className={classes['signup-form__input']}
+                            className={classes['admin-info-form__input']}
                             type="text"
                             placeholder="Ім‘я"
                             {...register('name', {
@@ -74,22 +74,22 @@ const AdminInfo = ({ user }) => {
                             onBlur={() => onBlurHandler('name')}
                         />
                     </div>
-                    <div className={classes['signup-form__error']}>
+                    <div className={classes['admin-info-form__error']}>
                     {errors.name && errors.name.message}
                     </div>
                 </div>
-                <div className={classes['signup-form__column']}>
-            <div className={classes['signup-form__label']}>
-              <label className={classes['signup-form__label--required']}>
+                <div className={classes['admin-info-form__column']}>
+            <div className={classes['admin-info-form__label']}>
+              <label className={classes['admin-info-form__label--required']}>
                 *
               </label>
-              <label className={classes['signup-form__label--text']}>
+              <label className={classes['admin-info-form__label--text']}>
                 Прізвище
               </label>
             </div>
-            <div className={classes['signup-form__field']}>
+            <div className={classes['admin-info-form__field']}>
                 <input
-                  className={classes['signup-form__input']}
+                  className={classes['admin-info-form__input']}
                   type="text"
                   placeholder="Прізвище"
                   {...register('surname', {
@@ -103,7 +103,7 @@ const AdminInfo = ({ user }) => {
                   onBlur={() => onBlurHandler('surname')}
                 />
             </div>
-            <div className={classes['signup-form__error']}>
+            <div className={classes['admin-info-form__error']}>
               {errors.surname && errors.surname.message}
             </div>
           </div>
@@ -114,7 +114,7 @@ const AdminInfo = ({ user }) => {
             >
                 Зберегти дані
             </button>
-            </div>
+          </div>
         </div>
     </form>
     </div>

@@ -53,47 +53,60 @@ export default function ChangeAdminPassword(props) {
     <div className={classes['form__container']}>
       {props.user ? (
         <form id="ChangePassword" onSubmit={handleSubmit(handleFormSubmit)}>
-          <PasswordField
-            inputId="currentPassword"
-            name="currentPassword"
-            label="Поточний пароль"
-            register={register}
-            error={errors}
-            showError={false}
-            watch={watch}
-            checkValid={false}
-            checkMatch={{
-              isCheck: false,
-              checkWith: null,
-            }}
-          />
-          <PasswordField
-            inputId="newPassword"
-            name="newPassword"
-            label="Новий пароль"
-            error={errors}
-            register={register}
-            showError={true}
-            watch={watch}
-            checkValid={true}
-            checkMatch={{
-              isCheck: false,
-              checkWith: null,
-            }}
-          />
-          <PasswordField
-            inputId="reNewPassword"
-            name="reNewPassword"
-            label="Повторіть новий пароль"
-            error={errors}
-            register={register}
-            watch={watch}
-            checkValid={false}
-            checkMatch={{
-              isCheck: true,
-              checkWith: 'newPassword',
-            }}
-          />
+          <div className={classes['form-current-password']}>
+            <PasswordField
+              inputId="currentPassword"
+              name="currentPassword"
+              label="Поточний пароль"
+              register={register}
+              error={errors}
+              showError={false}
+              watch={watch}
+              checkValid={false}
+              checkMatch={{
+                isCheck: false,
+                checkWith: null,
+              }}
+            />
+          </div>
+          <div className={classes['form-new-password']}>
+            <PasswordField
+              inputId="newPassword"
+              name="newPassword"
+              label="Новий пароль"
+              error={errors}
+              register={register}
+              showError={true}
+              watch={watch}
+              checkValid={true}
+              checkMatch={{
+                isCheck: false,
+                checkWith: null,
+              }}
+            />
+            <PasswordField
+              inputId="reNewPassword"
+              name="reNewPassword"
+              label="Повторіть новий пароль"
+              error={errors}
+              register={register}
+              watch={watch}
+              checkValid={false}
+              checkMatch={{
+                isCheck: true,
+                checkWith: 'newPassword',
+              }}
+            />
+
+          <div className={classes['admin-submit__container']}>
+            <button
+                className={classes['admin-submit__button']}
+                type="submit"
+            >
+                Змінити пароль
+            </button>
+          </div>
+          </div>
         </form>
       ) : (
         <Loader />
