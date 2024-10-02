@@ -1,28 +1,27 @@
-.loader-content {
-    width: 1305px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.profile-page {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    margin-left: 104px;
-    margin-right: 104px;
-}
-
-.logo-tooltip{
+.profile-detail__loader-content {
     display: flex;
-    position:absolute;
-    padding-top: 5px;
-    padding-left: 3px;
+    width: auto;
 }
 
-.banner-tooltip{
+.profile-detail__banner-tooltip {
     display: flex;
-    position:absolute;
+    position: absolute;
     padding-top: 12px;
     padding-left: 112px;
+}
+
+.profile-detail__page {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    min-height: calc(100vh - 504px);
+    margin-left: 104px;
+}
+
+.profile-detail__logo-tooltip {
+    display: flex;
+    position: absolute;
+    padding-top: 5px;
+    padding-left: 3px;
 }

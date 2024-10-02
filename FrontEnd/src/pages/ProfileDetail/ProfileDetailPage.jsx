@@ -35,22 +35,22 @@ function ProfileDetailPage({ isAuthorized }) {
   return (error && error.status !== 401) ? (
     <ErrorPage404 />
   ) : (
-    <div className={isLoading ? classes['loader-content'] : null}>
+    <div className={isLoading ? classes['profile-detail__loader-content'] : null}>
       {isLoading ? (
         <Loader />
       ) : (
           <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
-            <div className={classes['banner-tooltip']}>
+            <div className={classes['profile-detail__banner-tooltip']}>
             <PendingStatus profile={fetchedProfile} elementType="banner" />
             </div>
             <BannerImage data={fetchedProfile} />
-            <div className={classes['profile-page']}>
+            <div className={classes['profile-detail__page']}>
               <MainInfoSection
                 containsNotRequiredData={containsNotRequiredData}
                 isAuthorized={isAuthorized}
                 data={fetchedProfile}
               />
-              <div className={classes['logo-tooltip']}>
+              <div className={classes['profile-detail__logo-tooltip']}>
                 <PendingStatus profile={fetchedProfile} elementType="logo" />
               </div>
               <DetailedInfoSection
