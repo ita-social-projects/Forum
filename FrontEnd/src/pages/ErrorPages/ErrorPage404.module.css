@@ -1,11 +1,12 @@
-.page {
-  height: 800px;
+.ErrorPage404__page {
+  height: calc(100vh - 305px);
   display: flex;
   justify-content: center;
   background: var(--primary-green-80, #1f9a7c);
+  
 }
 
-.container {
+.ErrorPage404__container {
   display: flex;
   align-items: center;
   gap: 80px;
@@ -15,7 +16,7 @@
   font-style: normal;
 }
 
-.text404 {
+.ErrorPage404__text404 {
   display: flex;
   height: 178px;
   flex-direction: column;
@@ -26,28 +27,28 @@
   letter-spacing: -2px;
 }
 
-.block {
+.ErrorPage404__block {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 36px;
 }
 
-.explanation {
+.ErrorPage404__explanation {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 24px;
 }
 
-.main-text {
+.ErrorPage404__main-text {
   font-size: 48px;
   font-weight: 700;
   line-height: 120%;
   letter-spacing: 0.48px;
 }
 
-.details {
+.ErrorPage404__details {
   width: 548px;
   font-size: 16px;
   font-weight: 400;
@@ -55,6 +56,6 @@
   letter-spacing: -0.16px;
 }
 
-.button-text {
+.ErrorPage404__button-text {
   font-family: var(--font-main);
 }
