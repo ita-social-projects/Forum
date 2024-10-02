@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState, Suspense, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import EyeInvisible from '../../../pages/Authorization/EyeInvisible';
 import EyeVisible from '../../../pages/Authorization/EyeVisible';
 import styles from './SignUpFormContent.module.css';
 import PropTypes from 'prop-types';
+import ReCAPTCHA from 'react-google-recaptcha';
 import {
   EMAIL_PATTERN,
   PASSWORD_PATTERN,
@@ -21,6 +22,8 @@ const RulesModal = React.lazy(() => import('./RulesModal'));
 export function SignUpFormContentComponent(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const reCaptchaRef = useRef();
+  const onReCaptchaChange = () => reCaptchaRef.current = !reCaptchaRef.current;
   const toggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
@@ -121,13 +124,21 @@ export function SignUpFormContentComponent(props) {
     }
   }, [watch('confirmPassword'), watch('password')]);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    let recaptcha_token = null;
+    try {
+      recaptcha_token = await reCaptchaRef.current.executeAsync();
+    } catch (error) {
+      console.warn('reCAPTCHA failed or quota expired:', error);
+    }
+
     const dataToSend = {
       email: getValues('email'),
       password: getValues('password'),
       re_password: getValues('confirmPassword'),
       name: getValues('name'),
       surname: getValues('surname'),
+      captcha: recaptcha_token,
       company: {
         name: getValues('companyName'),
         is_registered: getValues('representative').indexOf('company') > -1,
@@ -543,6 +554,12 @@ export function SignUpFormContentComponent(props) {
             </div>
           </div>
         </div>
+        <ReCAPTCHA
+          ref={reCaptchaRef}
+          sitekey={process.env.REACT_APP_RECAPTCHA_V2_SITE_KEY}
+          size="invisible"
+          onChange={onReCaptchaChange}
+        />
       </form>
       <Suspense fallback={<div>Loading...</div>}>
         {isModalOpen && <RulesModal closeModal={closeModal} />}

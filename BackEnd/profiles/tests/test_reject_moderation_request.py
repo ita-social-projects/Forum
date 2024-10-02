@@ -429,6 +429,7 @@ class TestProfileModeration(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
@@ -439,8 +440,9 @@ class TestProfileModeration(APITestCase):
         mock_schedule.assert_called_once()
         mock_revoke.assert_called_once()
 
+    @patch("authentication.serializers.verify_recaptcha", return_value=True)
     def test_register_blocked_user_due_to_rejected_request(
-        self, mock_revoke, mock_schedule
+        self, mock_revoke, mock_schedule, mock_verify_recaptcha
     ):
         # user updates both banner and logo
         self.user_client.patch(
@@ -475,6 +477,7 @@ class TestProfileModeration(APITestCase):
                 "re_password": "Test1234",
                 "name": "Test",
                 "surname": "Test",
+                "captcha": "dummy_captcha",
                 "company": {
                     "name": "Test Company",
                     "is_registered": True,

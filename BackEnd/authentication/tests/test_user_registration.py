@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -8,6 +10,12 @@ from utils.dump_response import dump  # noqa
 
 class UserRegistrationAPITests(APITestCase):
     def setUp(self):
+        patcher = patch(
+            "authentication.serializers.verify_recaptcha", return_value=True
+        )
+        self.mock_verify_recaptcha = patcher.start()
+        self.addCleanup(patcher.stop)
+
         self.user = UserFactory(email="test@test.com")
 
     def test_register_user_yurosoba_successful(self):
@@ -19,6 +27,7 @@ class UserRegistrationAPITests(APITestCase):
                 "re_password": "Test1234",
                 "name": "Jane",
                 "surname": "Smith",
+                "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
                     "is_registered": True,
@@ -49,6 +58,7 @@ class UserRegistrationAPITests(APITestCase):
                 "re_password": "Test1234",
                 "name": "Jane",
                 "surname": "Smith",
+                "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
                     "is_registered": True,
@@ -79,6 +89,7 @@ class UserRegistrationAPITests(APITestCase):
                 "re_password": "Test1234",
                 "name": "Jane",
                 "surname": "Smith",
+                "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
                     "is_registered": True,
@@ -103,6 +114,7 @@ class UserRegistrationAPITests(APITestCase):
                 "re_password": "Test1234",
                 "name": "Test",
                 "surname": "Test",
+                "captcha": "dummy_captcha",
                 "company": {
                     "name": "Test Company",
                     "is_registered": True,
@@ -127,6 +139,7 @@ class UserRegistrationAPITests(APITestCase):
                 "re_password": "tess",
                 "name": "Jane",
                 "surname": "Smith",
+                "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
                     "is_registered": True,
@@ -157,6 +170,7 @@ class UserRegistrationAPITests(APITestCase):
                 "re_password": "Test1234",
                 "name": "Jane",
                 "surname": "Smith",
+                "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
                     "is_registered": False,
@@ -181,6 +195,7 @@ class UserRegistrationAPITests(APITestCase):
                 "re_password": "Test1234",
                 "name": "Jane",
                 "surname": "Smith",
+                "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
                     "is_registered": True,
