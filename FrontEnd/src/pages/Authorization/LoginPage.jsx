@@ -76,7 +76,6 @@ const LoginContent = () => {
   ]);
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_RECAPTCHA_V2_SITE_KEY);
     clearErrors('unspecifiedError');
     clearErrors('rateError');
     clearErrors('blockedUserError');
