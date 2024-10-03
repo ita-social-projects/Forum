@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react'; // Add useEffect and useRef here
 import axios from 'axios';
 import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';
 import styles from './Contact.module.css';
@@ -10,7 +10,7 @@ import {
 } from '../../constants/constants';
 import PropTypes from 'prop-types';
 import MultipleSelectChip from '../../pages/ProfilePage/FormComponents/FormFields/MultipleSelectChip.jsx';
-import Loader from '../Loader/Loader.jsx';
+import { Spin } from 'antd';
 
 const Contact = () => {
     useScrollToTop(); // Call the hook to scroll to top on component mount
@@ -22,6 +22,18 @@ const Contact = () => {
     const [emailError, setEmailError] = useState('');
     const [messageError, setMessageError] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [percent, setPercent] = useState(-50);
+    const timerRef = useRef();
+
+    useEffect(() => {
+        timerRef.current = setTimeout(() => {
+            setPercent((v) => {
+                const nextPercent = v + 5;
+                return nextPercent > 150 ? -50 : nextPercent;
+            });
+        }, 100);
+        return () => clearTimeout(timerRef.current);
+    }, [percent]);
 
     const categoryOptions = [
         { id: 1, name: 'Технічне питання' },
@@ -141,12 +153,11 @@ const Contact = () => {
                         required
                     />
                     {messageError && <p className={styles['contact__error']}>{messageError}</p>}
-                    <button type="submit" className={styles['contact__button_send']}>Надіслати</button>
+                    <button type="submit" className={styles['contact__button_send']}>
+                      {loading ? <Spin percent={percent} /> : 'Надіслати'}
+                    </button>
                     <button type="button" className={styles['contact__button_cancel']}>Відмінити</button>
                 </form>
-                {loading ? (
-                    <Loader />
-                ) : null}
             </div>
             {showModal && (
                 <div className={styles['modal_feedback']}>
