@@ -112,4 +112,5 @@
 
   --wf-base-white: #FFF;
   --profile-min-height-block: calc(100vh - 565px);
+  --min-height-body-main: calc(100vh - 305px);
 }
