@@ -1,4 +1,3 @@
-import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
