@@ -1,7 +1,7 @@
 .profile-detail__main {
     display: flex;
     flex-direction: column;
-    min-height: var(--min-height-body-main);
+    min-height: var(--min-height-block-main);
     align-content: center;
 }
 
