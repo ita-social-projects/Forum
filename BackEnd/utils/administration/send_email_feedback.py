@@ -2,6 +2,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 
+from utils.images.send_email import set_admin_email
+
 EMAIL_CONTENT_SUBTYPE = "html"
 
 
@@ -13,7 +15,7 @@ def send_email_feedback(user_email, message, category):
         "user_email": user_email,
     }
 
-    admin_email = 'kyzuk.yr@gmail.com'
+    admin_email = set_admin_email()
 
     email_body_admin = render_to_string("administration/admin_feedback_template.html", context)
     email_admin = EmailMultiAlternatives(
