@@ -111,8 +111,7 @@
   --character-title-85: rgba(0, 0, 0, 0.85);
 
   --wf-base-white: #FFF;
+  
   --profile-min-height-block: calc(100vh - 565px);
   --min-height-block-main: calc(100vh - 305px);
-  
-
 }
