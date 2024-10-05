@@ -29,3 +29,6 @@
 .Toastify__progress-bar-theme--colored.Toastify__progress-bar--error {
     background: none;
 }
+:where(.css-dev-only-do-not-override-p1i8zk).ant-spin .ant-spin-dot-holder {
+    color: #fff;
+}
