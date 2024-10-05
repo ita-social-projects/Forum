@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'; // Add useEffect and useRef here
 import axios from 'axios';
 import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';
-import styles from './Contact.module.css';
 import contactText from './text';
 import useScrollToTop from '../../hooks/useScrollToTop'; // Ensure this is used
 import {
@@ -10,6 +9,7 @@ import {
 } from '../../constants/constants';
 import PropTypes from 'prop-types';
 import MultipleSelectChip from '../../pages/ProfilePage/FormComponents/FormFields/MultipleSelectChip.jsx';
+import styles from './Contact.module.css';
 import { Spin } from 'antd';
 
 const Contact = () => {
@@ -131,7 +131,6 @@ const Contact = () => {
                         required
                     />
                     {emailError && <p className={styles['contact__error']}>{emailError}</p>}
-
                     <MultipleSelectChip
                         value={category ? [category] : []}
                         onChange={(value) => setCategory(value[0] || null)}
@@ -142,7 +141,6 @@ const Contact = () => {
                         name="category"
                         label="Категорія:"
                     />
-
                     <label className={styles['contact__label']} htmlFor="message">Повідомлення:</label>
                     <textarea
                         id="message"
@@ -153,22 +151,26 @@ const Contact = () => {
                         required
                     />
                     {messageError && <p className={styles['contact__error']}>{messageError}</p>}
-                    <button type="submit" className={styles['contact__button_send']}>
-                      {loading ? <Spin percent={percent} /> : 'Надіслати'}
-                    </button>
-                    <button type="button" className={styles['contact__button_cancel']}>Відмінити</button>
+                    <div className={styles['contact__button_container']}>
+                      <button type="submit" className={styles['contact__button_send']}>
+                        {loading ? <Spin percent={percent}/> : 'Надіслати'}
+                      </button>
+                      <button type="button" className={styles['contact__button_cancel']}>Відмінити</button>
+                    </div>
                 </form>
             </div>
             {showModal && (
                 <div className={styles['modal_feedback']}>
                     <div className={styles['modal_feedback_content']}>
                         <h2>Повідомлення успішно надіслано!</h2>
+                       <div className={styles['contact__button_modal_container']}>
                         <button type="button" onClick={handleRedirect} className={styles['contact__button_send']}>
                             На головну
                         </button>
                         <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
                             Закрити
                         </button>
+                       </div>
                     </div>
                 </div>
             )}
