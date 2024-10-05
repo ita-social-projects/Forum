@@ -8,7 +8,7 @@
     color: var(--main-text-color);
 }
 
-.contact__title{
+.contact__title {
     font-family: var(--font-main);
     font-size: 32px;
     font-weight: 700;
@@ -24,6 +24,8 @@
     flex-direction: column;
     padding: 20px;
     border-radius: 10px;
+    height: 400px;
+    position: relative;
 }
 
 .contact__link_container {
@@ -59,7 +61,7 @@
     margin-bottom: 24px;
 }
 
-.link_text__active{
+.link_text__active {
     width: 234px;
     color: var(--main-header-color);
     text-transform: uppercase;
@@ -70,14 +72,14 @@
     color: var(--main-header-color);
 }
 
-.contact__img1{
+.contact__img1 {
     width: auto;
     height: 266px;
     margin-left: -100px;
     margin-top: 332px;
 }
 
-.contact__text_container{
+.contact__text_container {
     display: flex;
     flex-direction: column;
     max-width: 971px;
@@ -90,7 +92,7 @@
     line-height: 22px;
 }
 
-.text_content__margin_bottom{
+.text_content__margin_bottom {
     margin-bottom: 24px;
     font-family: var(--font-main);
     font-size: 14px;
@@ -98,30 +100,34 @@
     line-height: 22px;
 }
 
-.text_content__heading{
+.text_content__heading {
     margin-top: 24px;
-
 }
 
 .custom-list {
-    margin:0px;
+    margin: 0px;
     padding-left: 16px;
 }
 
-.custom-list__item{
+.custom-list__item {
     font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
 }
 
-.contact__input, .contact__textarea, .contact__select {
-    width: 100%;
+.contact__input,
+.contact__textarea,
+.contact__select {
+    width: 350px;
     padding: 10px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     transition: border-color 0.3s ease;
     box-sizing: border-box;
+    min-height: 40px;
+    max-height: 60px;
+    resize: none;
 }
 
 .contact__textarea {
@@ -129,7 +135,9 @@
     min-height: 120px;
 }
 
-.contact__input:focus, .contact__textarea:focus, .contact__select:focus {
+.contact__input:focus,
+.contact__textarea:focus,
+.contact__select:focus {
     border-color: #1e90ff;
 }
 
@@ -138,15 +146,26 @@
 }
 
 .contact__button_send {
-    padding: 10px 20px;
-    border: 1px solid #1F9A7C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #1F9A7C;
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
     color: white;
-    border: none;
+    font-feature-settings: 'calt' off;
+    font-style: normal;
     border-radius: 4px;
+    border: 1px;
+    gap: 10px;
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    text-align: center;
     cursor: pointer;
-    margin-top: 20px;
-    margin-right: 10px;
+    width: 100px;
+    height: 32px;
 }
 
 .contact__button_send:hover {
@@ -154,13 +173,27 @@
 }
 
 .contact__button_cancel {
-    padding: 10px 20px;
-    background-color: #dc3545;
+    display: flex;
+    background-color: #e74c3c;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
     color: white;
-    border: none;
+    font-feature-settings: 'calt' off;
+    font-style: normal;
     border-radius: 4px;
+    border: 1px;
+    gap: 10px;
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    text-align: center;
     cursor: pointer;
-    margin-top: 20px;
+    width: 100px;
+    height: 32px;
+
 }
 
 .contact__button_cancel:hover {
@@ -168,7 +201,7 @@
 }
 
 .contact__error {
-display: flex;
+    display: flex;
     align-items: flex-start;
     gap: 10px;
     align-self: stretch;
@@ -181,30 +214,45 @@ display: flex;
 }
 
 .modal_feedback {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Напівпрозорий сірий фон */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Напівпрозорий сірий фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal_feedback_content {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Легка тінь */
-  width: 400px; /* Ширина модального вікна */
-  text-align: center;
-  border: 1px solid #ddd; /* Рамка */
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Легка тінь */
+    width: 400px; /* Ширина модального вікна */
+    text-align: center;
+    border: 1px solid #ddd; /* Рамка */
 }
 
 .modal_feedback_content h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.contact__button_container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.contact__button_modal_container {
+    display: flex;
+    gap: 10px;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center; /* Center the buttons vertically if needed */
+    margin-top: 20px;
 }
