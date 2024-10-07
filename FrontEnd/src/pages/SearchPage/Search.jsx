@@ -107,7 +107,7 @@ export function Search({ isAuthorized }) {
               <br />
               <p className={styles['search_result_error']}>
                 Пошук не дав результатів: компанії з іменем
-                <span className={styles['.search_result_error']}>
+                <span className={styles['search_result_error']}>
                   {` ${searchTerm} `}
                 </span>
                 не було виявлено на даний момент

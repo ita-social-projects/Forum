@@ -1,6 +1,6 @@
 .main_block_outer {
   padding-top: 10px;
-  width: var(--main-block-size);
+  min-height: var(--min-height-block-main);
 }
 
 .new-companies-main {
@@ -20,20 +20,20 @@
 
 .search_field_entered_value {
   color: #0b6c61;
-  font: normal normal normal 20px/2 Inter;
+  font: normal normal normal 20px/2 var(--font-main);
   font-weight: 600;
   font-style: italic;
 }
 
 .search_results_text {
-  font: Inter;
+  font: var(--font-main);
   font-weight: 700;
 }
 
 .search_result_error {
   font-weight: 600;
   color: var(--search-text-color);
-  font: normal normal bold 20px/2 Inter;
+  font: normal normal bold 20px/2 var(--font-main);
   margin: 145px;
 }
 
