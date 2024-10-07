@@ -1,12 +1,11 @@
 .admin-info-form {
     display: flex;
-    padding: 24px;
+    padding: 0px 24px;
 }
 
 .admin-info-form__container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     gap: 8px;
     flex-wrap: wrap;
 }
@@ -122,17 +121,13 @@
     line-height: 16px;
 }
 
-.admin-submit__container {
-    margin-left: 15px;
-}
-
 .admin-submit__button {
     display: flex;
     border-radius: 4px;
     border: 1px solid #1F9A7C;
-    background: white;
+    background: #1F9A7C;
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
-    color: #1F9A7C;
+    color: white;
     font-feature-settings: 'calt' off;
     font-style: normal;
     padding: 5px 15px 5px 15px;
@@ -143,7 +138,6 @@
     letter-spacing: -0.01em;
     text-align: center;
     cursor: pointer;
-    min-width: 155px;
 }
 
 .admin-submit__button:active {

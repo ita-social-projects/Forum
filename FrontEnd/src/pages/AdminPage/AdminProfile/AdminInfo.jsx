@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import classes from './AdminInfo.module.css';
 
@@ -16,7 +18,19 @@ const AdminInfo = ({ user }) => {
     });
 
     const onSubmit = (data) => {
-        console.log(data);
+      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, data)
+        .then(() => {
+          toast.success('Зміни успішно збережено');
+        })
+        .catch((error) => {
+          console.error(
+            'Помилка:',
+            error.response ? error.response.data : error.message
+          );
+          if (!error.response || error.response.status !== 401) {
+            toast.error('Не вдалося зберегти зміни, сталася помилка');
+          }
+        });
     };
 
     const errorMessageTemplates = {
@@ -112,7 +126,7 @@ const AdminInfo = ({ user }) => {
                 className={classes['admin-submit__button']}
                 type="submit"
             >
-                Зберегти дані
+                Зберегти
             </button>
           </div>
         </div>
