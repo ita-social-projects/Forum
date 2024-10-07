@@ -17,6 +17,3 @@ BackEnd/celerybeat-schedule.*
 BackEnd/public/*
 !BackEnd/public/media/.gitkeep
 !BackEnd/public/static/.gitkeep
-node_modules
-package-lock.json
-package.json
