@@ -67,11 +67,11 @@ function FooterNavigation() {
   }, []);
 
   if (error) {
-    return <p>{error}</p>;
+    return <p style={{ fontFamily: 'inherit', color: 'white'}}>{error}</p>;
   }
 
   if (!contacts) {
-    return <p>Loading...</p>;
+    return null;
   }
 
   return (
