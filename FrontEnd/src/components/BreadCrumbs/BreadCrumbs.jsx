@@ -1,7 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import css from './BreadCrumbs.module.css';
+
 import { useAuth } from '../../hooks';
+
+import css from './BreadCrumbs.module.css';
 
 const BreadCrumbs = ({ currentPage }) => {
   const navigate = useNavigate();

@@ -2,8 +2,10 @@ import axios from 'axios';
 import { PropTypes } from 'prop-types';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+
 import PasswordField from '../../ProfilePage/FormComponents/FormFields/PasswordField';
 import Loader from '../../../components/Loader/Loader';
+
 import classes from './ChangeAdminPassword.module.css';
 
 export default function ChangeAdminPassword(props) {

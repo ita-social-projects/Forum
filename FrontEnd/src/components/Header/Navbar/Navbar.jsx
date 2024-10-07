@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
-import css from './Navbar.module.css';
+
+import { useAuth } from '../../../hooks';
+
 import Menu from './Menu';
 import SearchBox from './SearchBox';
 import Profile from './Profile';
 import Buttons from './Buttons';
-import { useAuth } from '../../../hooks';
 
+import css from './Navbar.module.css';
 
 function Navbar (props) {
   const { isStaff} = useAuth();

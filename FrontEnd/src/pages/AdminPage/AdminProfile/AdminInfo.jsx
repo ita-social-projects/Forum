@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+
 import classes from './AdminInfo.module.css';
 
 const AdminInfo = ({ user }) => {
