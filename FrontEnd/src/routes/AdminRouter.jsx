@@ -1,21 +1,23 @@
 import { ToastContainer } from 'react-toastify';
-import '../pages/AdminPage/AdminGlobal.css';
+import { Routes, Route, useLocation } from 'react-router-dom';
+
+import { useAuth } from '../hooks';
+
 import Header from '../components/Header/Header';
 import Menu from '../pages/AdminPage/Menu/Menu';
 import UserDetail from '../pages/AdminPage/DetailView/UserDetail';
 import UserTable from '../pages/AdminPage/UserProfilesTable/UserTable';
 import ProfilesTable from '../pages/AdminPage/UserProfilesTable/ProfilesTable';
 import ProfileDetail from '../pages/AdminPage/DetailView/ProfileDetail';
-import css from '../pages/AdminPage/AdminPage.module.css';
-import { Routes, Route, useLocation } from 'react-router-dom';
 import MainPage from '../pages/AdminPage/MainPage/MainPage';
-import { useAuth } from '../hooks';
 import Loader from '../components/Loader/Loader';
 import AutoApproveDelay from '../pages/AdminPage/AutoApproveDelay/AutoApproveDelay';
 import ModerationEmail from '../pages/AdminPage/DetailView/ModerationEmail';
 import Contacts from '../pages/AdminPage/DetailView/Contacts';
 import AdminProfilePage from '../pages/AdminPage/AdminProfile/AdminProfilePage';
 
+import '../pages/AdminPage/AdminGlobal.css';
+import css from '../pages/AdminPage/AdminPage.module.css';
 
 function AdminRouter() {
     const { isLoading, isAuth, isStaff, user } = useAuth();
