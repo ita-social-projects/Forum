@@ -7,6 +7,12 @@
   background-color: var(--search-new-companies-main);
 }
 
+.new-companies-main__error {
+  display: flex;
+  min-height: 539px;
+  align-content: center;
+}
+
 .main_block {
   position: relative;
 }
@@ -31,10 +37,19 @@
 }
 
 .search_result_error {
+  margin-left: 140px;
+  margin-top: 15%;
+  width: 80%;
+  flex-direction: row;
   font-weight: 600;
   color: var(--search-text-color);
   font: normal normal bold 20px/2 var(--font-main);
-  margin: 145px;
+}
+
+.search_result_error_color {
+  color: #0b6c61;
+  font: normal normal normal 20px/2 var(--font-main);
+  font-weight: 600;
 }
 
 .dot-img-right {
@@ -44,7 +59,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 24px;
-  margin: 0px 354px 473px 1330px;
+  margin-top: 1%;
+  margin-left: 87%;
   position: absolute;
 }
 

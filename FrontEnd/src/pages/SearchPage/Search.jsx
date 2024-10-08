@@ -103,11 +103,10 @@ export function Search({ isAuthorized }) {
               <br />
             </>
           ) : (
-            <div>
-              <br />
+            <div className={styles['new-companies-main__error']}>
               <p className={styles['search_result_error']}>
                 Пошук не дав результатів: компанії з іменем
-                <span className={styles['search_result_error']}>
+                <span className={styles['search_result_error_color']}>
                   {` ${searchTerm} `}
                 </span>
                 не було виявлено на даний момент

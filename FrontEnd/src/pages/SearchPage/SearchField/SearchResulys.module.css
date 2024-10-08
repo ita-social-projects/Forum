@@ -11,10 +11,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-content: space-between;
-  margin: -10px; /* spacess beetwen ecompanies */
+  margin: -10px; 
 }
 
 .col-md-4 {
-  flex-basis: calc(33, 3% - 80px); /* 3 companies per row */
-  margin: 10px; /* spacess beetwen ecompanies */
+  flex-basis: calc(33, 3% - 80px);
+  margin: 10px;
 }
