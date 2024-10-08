@@ -10,6 +10,7 @@
 .new-companies-main__error {
   display: flex;
   min-height: 539px;
+  margin-top: 3%;
   align-content: center;
 }
 
@@ -62,6 +63,7 @@
   margin-top: 1%;
   margin-left: 87%;
   position: absolute;
+  z-index: 10;
 }
 
 .new-companies-result_pages {

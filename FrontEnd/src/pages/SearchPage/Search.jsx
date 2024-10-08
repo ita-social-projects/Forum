@@ -72,9 +72,9 @@ export function Search({ isAuthorized }) {
 
       <BreadCrumbs currentPage="Пошук" />
       <div className={styles['main_block']}>
-      <img className={styles['dot-img-right']}
-        src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
-        alt="dots_7x6.png" />
+        <img className={styles['dot-img-right']}
+          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
+          alt="dots_7x6.png" />
         <div className={styles['new-companies-search_count']}>
           {searchResults && (
             <div>
@@ -85,10 +85,8 @@ export function Search({ isAuthorized }) {
                 </span>
                 : {searchResults.length > 0 ? searchResults.length : 0}
               </h3>
-              <br />
             </div>
           )}
-          <br />
         </div>
         <div className={styles['new-companies-main']}>
           {!error && searchResults.length > 0 ? (
@@ -100,7 +98,6 @@ export function Search({ isAuthorized }) {
                 isAuthorized={isAuthorized}
                 changeCompanies={changeCompanies}
               />
-              <br />
             </>
           ) : (
             <div className={styles['new-companies-main__error']}>

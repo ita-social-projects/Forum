@@ -114,4 +114,5 @@
   
   --profile-min-height-block: calc(100vh - 565px);
   --min-height-block-main: calc(100vh - 305px);
+  --main_light-color: #F1FFF7;
 }
