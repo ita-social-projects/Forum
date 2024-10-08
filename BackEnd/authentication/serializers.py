@@ -13,7 +13,6 @@ from rest_framework import serializers
 from ratelimit.decorators import RateLimitDecorator
 from ratelimit.exception import RateLimitException
 
-
 from profiles.models import Profile
 from validation.validate_password import (
     validate_password_long,
@@ -32,6 +31,45 @@ class CustomProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ("name", "is_registered", "is_startup", "is_fop")
+
+
+class AdminRegistrationSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        write_only=True,
+    )
+    password = serializers.CharField(
+        style={"input_type": "password"}, write_only=True
+    )
+
+    class Meta:
+        model = User
+        fields = ("email", "password", "name", "surname")
+
+    def validate(self, value):
+        custom_errors = defaultdict(list)
+        email = value.get("email").lower()
+        password = value.get("password")
+        if User.objects.filter(email=email).exists():
+            custom_errors["email"].append("Email is already registered")
+        else:
+            value["email"] = email
+        try:
+            validate_password_long(password)
+        except ValidationError as error:
+            custom_errors["password"].append(error.message)
+        try:
+            validate_password_include_symbols(password)
+        except ValidationError as error:
+            custom_errors["password"].append(error.message)
+        if custom_errors:
+            raise serializers.ValidationError(custom_errors)
+        return value
+
+    def create(self, validated_data):
+        user = User.objects.create(**validated_data)
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
 
 
 class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):

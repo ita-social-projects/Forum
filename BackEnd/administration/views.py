@@ -5,6 +5,7 @@ from drf_spectacular.utils import (
     OpenApiExample,
     OpenApiResponse,
 )
+from rest_framework import status
 
 from rest_framework.permissions import (
     BasePermission,
@@ -14,8 +15,11 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
+    CreateAPIView,
 )
+from rest_framework.views import APIView
 
+from authentication.serializers import UserRegistrationSerializer, AdminRegistrationSerializer
 from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
@@ -29,6 +33,7 @@ from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
+from utils.administration.create_password import generate_password
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 
 
@@ -148,3 +153,31 @@ class ContactsView(View):
 
     def get(self, request):
         return JsonResponse(CONTACTS_INFO)
+
+
+class CreateAdminUserView(APIView):
+    def post(self, request):
+        name = "admin"
+        surname = "admin"
+        email = request.data["email"]
+        password = generate_password()
+        data = dict(
+            name=name,
+            surname=surname,
+            email=email,
+            password=password,
+        )
+        serialized = AdminRegistrationSerializer(data=data)
+        if serialized.is_valid():
+            admin = CustomUser.objects.create_user(
+                email=email,
+                name=name,
+                surname=surname,
+                password=password,
+                is_staff=True,
+                is_active=True,
+            )
+            admin.save()
+        else:
+            return JsonResponse(serialized.errors)
+        return JsonResponse(serialized.data)
