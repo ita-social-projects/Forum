@@ -71,7 +71,6 @@
 }
 
 .pagination {
-  background-color: var(--main_light-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,7 +79,7 @@
 
 .pagination button {
   all: unset;
-  border: none;
+  /* border: none; */
   font-size: 16px;
   font-weight: 500;
   padding: 8px 16px;
@@ -89,7 +88,7 @@
 }
 
 .pagination button.active {
-  background-color: none;
+  background-color: transparent;
   color: var(--search-pagination-style-color);
   border: 1px solid var(--search-pagination-style-color);
   border-radius: 5px;
