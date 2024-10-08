@@ -55,7 +55,7 @@
   align-items: flex-start;
   gap: 16px;
   border-radius: 0 0 12px 12px;
-  background: var(--main_light-color);
+  background: var(--company-card-color);
 }
 
 .company-card__text-block__header {
@@ -125,7 +125,7 @@
 }
 
 .company-card__badge-text {
-  color: var(--main_light-color);
+  color: var(--company-card-color);
   text-align: center;
   font-feature-settings: 'calt' off;
   font-family: var(--font-main);
@@ -148,7 +148,7 @@
   width: 64px;
   height: 64px;
   flex-shrink: 0;
-  background: var(--main_light-color);
+  background: var(--company-card-color);
   left: 0;
   top: 0;
   border-radius: 9999px;
@@ -160,7 +160,7 @@
   height: 54px;
   flex-shrink: 0;
   border-radius: 26px;
-  background: var(--main_light-color);
+  background: var(--company-card-color);
   left: 5px;
   top: 5px;
   position: absolute;
@@ -170,7 +170,7 @@
 .company-card__buttons {
   color: var(--companies-card-button);
   border: none;
-  background-color: var(--main_light-color);
+  background-color: var(--company-card-color);
 }
 
 .company-card__buttons:hover {

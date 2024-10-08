@@ -69,6 +69,7 @@
   --toastify-custom-close-button: rgba(0, 0, 0, 0.85);
 
   /* Header */
+  --navbar-content-height: 32px;
 
   /* Footer */
   --footer-backround: #3C4044;
@@ -108,4 +109,10 @@
   --main-black-90: #292e32;
   --primary-green-80: #1f9a7c;
   --character-title-85: rgba(0, 0, 0, 0.85);
+
+  --wf-base-white: #FFF;
+  
+  --profile-min-height-block: calc(100vh - 565px);
+  --min-height-block-main: calc(100vh - 305px);
+  --company-card-color: #FFF;
 }

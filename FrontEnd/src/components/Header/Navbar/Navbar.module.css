@@ -3,6 +3,7 @@
   padding: 8px 104px;
   align-items: center;
   justify-content: space-between;
+  height: var(--navbar-content-height);
 }
 
 .navbar-logo__text{
