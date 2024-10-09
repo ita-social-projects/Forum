@@ -1,7 +1,7 @@
 .auth-page {
     display: flex;
     width: var(--main-block-size);
-    height: 725px;
+    min-height: var(--min-height-block-main);
     flex-shrink: 0;
     background: #f1fff7;
   }

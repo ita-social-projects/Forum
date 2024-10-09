@@ -1,28 +1,31 @@
-.loader-content {
-    width: 1305px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.profile-page {
-    display: inline-flex;
+.profile-detail__main {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    margin-left: 104px;
-    margin-right: 104px;
+    min-height: var(--min-height-block-main);
+    align-content: center;
 }
 
-.logo-tooltip{
+.profile-detail__loader-content {
     display: flex;
-    position:absolute;
-    padding-top: 5px;
-    padding-left: 3px;
 }
 
-.banner-tooltip{
+.profile-detail__banner-tooltip {
     display: flex;
-    position:absolute;
+    position: absolute;
     padding-top: 12px;
     padding-left: 112px;
+}
+
+.profile-detail__page {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile-detail__logo-tooltip {
+    display: flex;
+    position: absolute;
+    padding-top: 5px;
+    padding-left: 3px;
 }

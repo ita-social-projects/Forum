@@ -29,37 +29,45 @@ function ProfileDetailPage({ isAuthorized }) {
     isLoading,
   } = useSWR(urlProfile, fetcher);
 
-  const notRequiredData = ['address', 'banner', 'logo', 'common_info', 'edrpou', 'rnokpp', 'founded', 'official_name', 'product_info', 'service_info', 'startup_idea', 'logistics', 'cooperation'];
-  const containsNotRequiredData = fetchedProfile ? Object.keys(fetchedProfile).some(key => notRequiredData.includes(key) && fetchedProfile[key] !== '' && fetchedProfile[key] !== null) : false;
+  const notRequiredData = [
+    'address', 'banner', 'logo', 'common_info', 'edrpou',
+    'rnokpp', 'founded', 'official_name', 'product_info',
+    'service_info', 'startup_idea', 'logistics', 'cooperation'
+  ];
+
+  const containsNotRequiredData = fetchedProfile ?
+    Object.keys(fetchedProfile).some(key => notRequiredData.includes(key) &&
+      fetchedProfile[key] !== '' &&
+      fetchedProfile[key] !== null) : false;
 
   return (error && error.status !== 401) ? (
     <ErrorPage404 />
   ) : (
-    <div className={isLoading ? classes['loader-content'] : null}>
+    <div className={isLoading ? classes['profile-detail__loader-content'] : classes['profile-detail__main'] }>
       {isLoading ? (
         <Loader />
       ) : (
-          <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
-            <div className={classes['banner-tooltip']}>
+        <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
+          <div className={classes['profile-detail__banner-tooltip']}>
             <PendingStatus profile={fetchedProfile} elementType="banner" />
+          </div>
+          <BannerImage data={fetchedProfile} />
+          <div className={classes['profile-detail__page']}>
+            <MainInfoSection
+              containsNotRequiredData={containsNotRequiredData}
+              isAuthorized={isAuthorized}
+              data={fetchedProfile}
+            />
+            <div className={classes['profile-detail__logo-tooltip']}>
+              <PendingStatus profile={fetchedProfile} elementType="logo" />
             </div>
-            <BannerImage data={fetchedProfile} />
-            <div className={classes['profile-page']}>
-              <MainInfoSection
-                containsNotRequiredData={containsNotRequiredData}
-                isAuthorized={isAuthorized}
-                data={fetchedProfile}
-              />
-              <div className={classes['logo-tooltip']}>
-                <PendingStatus profile={fetchedProfile} elementType="logo" />
-              </div>
-              <DetailedInfoSection
-                containsNotRequiredData={containsNotRequiredData}
-                isAuthorized={isAuthorized}
-                data={fetchedProfile}
-              />
-            </div>
-          </ActiveLinksContext.Provider>
+            <DetailedInfoSection
+              containsNotRequiredData={containsNotRequiredData}
+              isAuthorized={isAuthorized}
+              data={fetchedProfile}
+            />
+          </div>
+        </ActiveLinksContext.Provider>
       )}
     </div>
   );

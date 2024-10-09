@@ -1,5 +1,5 @@
 import CompanyCard from '../../../components/CompanyCard/CompanyCard';
-import styles from './SearchResulys.module.css';
+import styles from './SearchResults.module.css';
 import PropTypes from 'prop-types';
 
 const SearchResults = ({

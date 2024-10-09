@@ -2,6 +2,7 @@
   min-height: 470px;
   border-radius: 8px;
   background: var(--wf-base-white, #fff);
+  flex-grow: 1;
 }
 
 .page-content {

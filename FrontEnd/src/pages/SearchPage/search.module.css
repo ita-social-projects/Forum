@@ -1,10 +1,17 @@
 .main_block_outer {
   padding-top: 10px;
-  width: var(--main-block-size);
+  min-height: var(--min-height-block-main);
 }
 
 .new-companies-main {
   background-color: var(--search-new-companies-main);
+}
+
+.new-companies-main__error {
+  display: flex;
+  min-height: 539px;
+  margin-top: 3%;
+  align-content: center;
 }
 
 .main_block {
@@ -20,21 +27,30 @@
 
 .search_field_entered_value {
   color: #0b6c61;
-  font: normal normal normal 20px/2 Inter;
+  font: normal normal normal 20px/2 var(--font-main);
   font-weight: 600;
   font-style: italic;
 }
 
 .search_results_text {
-  font: Inter;
+  font: var(--font-main);
   font-weight: 700;
 }
 
 .search_result_error {
+  margin-left: 140px;
+  margin-top: 15%;
+  width: 80%;
+  flex-direction: row;
   font-weight: 600;
   color: var(--search-text-color);
-  font: normal normal bold 20px/2 Inter;
-  margin: 145px;
+  font: normal normal bold 20px/2 var(--font-main);
+}
+
+.search_result_error_color {
+  color: #0b6c61;
+  font: normal normal normal 20px/2 var(--font-main);
+  font-weight: 600;
 }
 
 .dot-img-right {
@@ -44,8 +60,10 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 24px;
-  margin: 0px 354px 473px 1330px;
+  margin-top: 1%;
+  margin-left: 87%;
   position: absolute;
+  z-index: 10;
 }
 
 .new-companies-result_pages {
@@ -53,7 +71,6 @@
 }
 
 .pagination {
-  background-color: var(--main_light-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,7 +79,7 @@
 
 .pagination button {
   all: unset;
-  border: none;
+  /* border: none; */
   font-size: 16px;
   font-weight: 500;
   padding: 8px 16px;
@@ -71,7 +88,7 @@
 }
 
 .pagination button.active {
-  background-color: none;
+  background-color: transparent;
   color: var(--search-pagination-style-color);
   border: 1px solid var(--search-pagination-style-color);
   border-radius: 5px;
