@@ -66,14 +66,6 @@ function FooterNavigation() {
     fetchContacts();
   }, []);
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!contacts) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <div className={css['navigation-content']}>
       <div className={css['navigation-content-section']}>
@@ -100,11 +92,19 @@ function FooterNavigation() {
       </div>
       <div className={css['navigation-content-section']}>
         <p className={css['navigation-content-section-service__text']}>Контакти</p>
-        <p className={css['navigation-content-section-service__text']}>{contacts.email}</p>
-        <p className={css['navigation-content-section-service__text']}>{contacts.phone}</p>
-        <p className={css['navigation-content-section-service__text']}>{contacts.university}</p>
-        <p className={css['navigation-content-section-service__text']}>{contacts.address}</p>
-     </div>
+        {error ? (
+          <p className={css['navigation-content-section-service__text']} style={{ color: 'white' }}>
+            {error}
+          </p>
+        ) : contacts && (
+          <>
+            <p className={css['navigation-content-section-service__text']}>{contacts.email}</p>
+            <p className={css['navigation-content-section-service__text']}>{contacts.phone}</p>
+            <p className={css['navigation-content-section-service__text']}>{contacts.university}</p>
+            <p className={css['navigation-content-section-service__text']}>{contacts.address}</p>
+          </>
+        )}
+      </div>
     </div>
   );
 }
