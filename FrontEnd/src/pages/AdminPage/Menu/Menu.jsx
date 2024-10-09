@@ -25,15 +25,16 @@ const MENU = [
         title: 'Зміна часу автомодерації',
         link: '/customadmin/automoderation/'
     },
-    {
-        id: 'am5',
-        title: 'Пошта адміністратора',
-        link: '/customadmin/email/'
-    }
+    // {
+    //     id: 'am5',
+    //     title: 'Пошта адміністратора',
+    //     link: '/customadmin/email/'
+    // }
 ];
 
 function Menu() {
-    const { isAuth, logout } = useAuth();
+    const { isAuth, logout, isSuperUser } = useAuth();
+
     const handleLogout = async () => {
         if (isAuth) {
             axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`)
@@ -48,6 +49,11 @@ function Menu() {
             {MENU.map((element) => (
                 <Link className={css['menu-section-element']} key={element.id} to={element.link}>{element.title}</Link>
             ))}
+            {isSuperUser && (
+                <Link className={css['menu-section-element']} to="/customadmin/email/">
+                    Пошта адміністратора
+                </Link>
+            )}
             <div className={css['menu-section-divider']}></div>
             <button className={css['menu-section-logout']} onClick={handleLogout}>Вихід</button>
         </div>

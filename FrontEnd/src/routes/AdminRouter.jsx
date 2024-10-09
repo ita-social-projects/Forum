@@ -17,7 +17,7 @@ import Contacts from '../pages/AdminPage/DetailView/Contacts';
 
 
 function AdminRouter() {
-    const { isLoading, isAuth, isStaff } = useAuth();
+    const { isLoading, isAuth, isStaff, isSuperUser } = useAuth();
     const renderMenu = isStaff && isAuth ? <Menu /> : null;
     const authRoutes = isStaff && isAuth ? (
         <>
@@ -27,7 +27,9 @@ function AdminRouter() {
             <Route path="/profiles" element={<ProfilesTable />} />
             <Route path="/profile/:id" element={<ProfileDetail />} />
             <Route path="/automoderation" element={<AutoApproveDelay />} />
-            <Route path="/email" element={<ModerationEmail />} />
+            {isSuperUser && (
+                <Route path="/email" element={<ModerationEmail />} />
+            )}
             <Route path="/contacts" element={<Contacts />} />
         </>
     ) : (

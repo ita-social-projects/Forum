@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
   const [isLoading, setLoading] = useState(true);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
   const [isStaff, setIsStaff] = useState(false);
+  const [isSuperUser, setIsSuperUser] = useState(false);
   const { data, error, mutate } = useSWR(
     authToken
       ? [`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, authToken]
@@ -78,6 +79,17 @@ export function AuthProvider({ children }) {
   }, [data, error]);
 
   useEffect(() => {
+    if (data) {
+      setUser(data);
+      setIsSuperUser(data.is_superuser);
+    }
+    if (error) {
+      setUser(null);
+    }
+    setLoading(false);
+  }, [data, error]);
+
+  useEffect(() => {
     if (authToken) {
       axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
     } else {
@@ -93,7 +105,7 @@ export function AuthProvider({ children }) {
     });
   });
 
-  const value = { login, logout, isAuth, authToken, isLoading, isStaff, user, error, mutate };
+  const value = { login, logout, isAuth, authToken, isLoading, isStaff, isSuperUser, user, error, mutate };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
