@@ -6,7 +6,7 @@ import AdminSubmitButton from '../../../components/MiniComponents/AdminSubmitBut
 
 import classes from './AdminInfo.module.css';
 
-const AdminInfo = ({ user }) => {
+const AdminInfo = ({ user, mutate }) => {
     const {
         register,
         handleSubmit,
@@ -24,6 +24,7 @@ const AdminInfo = ({ user }) => {
       axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, data)
         .then(() => {
           toast.success('Зміни успішно збережено');
+          mutate();
         })
         .catch((error) => {
           console.error(

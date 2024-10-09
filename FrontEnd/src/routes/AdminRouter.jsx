@@ -34,7 +34,7 @@ function AdminRouter() {
             <Route path="/automoderation" element={<AutoApproveDelay />} />
             <Route path="/email" element={<ModerationEmail />} />
             <Route path="/contacts" element={<Contacts />} />
-            <Route path="/admin-profile/*" element={<AdminProfilePage user={user}/>} />
+            <Route path="/admin-profile/*" element={<AdminProfilePage />} />
         </>
     ) : (
         <Route path="/customadmin/" />
