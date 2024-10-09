@@ -68,14 +68,16 @@ const AdminInfo = ({ user }) => {
             <div className={classes['admin-info-form__container']}>
                 <div className={classes['admin-info-form__column']}>
                     <div className={classes['admin-info-form__label']}>
-                    <label className={classes['admin-info-form__label--required']}>
+                    <label className={classes['admin-info-form__label--required']} htmlFor="name">
                         *
                     </label>
-                    <label className={classes['admin-info-form__label--text']}>Ім‘я</label>
+                    <label className={classes['admin-info-form__label--text']} htmlFor="name">Ім‘я</label>
                     </div>
                     <div className={classes['admin-info-form__field']}>
                         <input
                             className={classes['admin-info-form__input']}
+                            id="name"
+                            autoComplete="name"
                             type="text"
                             placeholder="Ім‘я"
                             {...register('name', {
@@ -95,16 +97,18 @@ const AdminInfo = ({ user }) => {
                 </div>
                 <div className={classes['admin-info-form__column']}>
             <div className={classes['admin-info-form__label']}>
-              <label className={classes['admin-info-form__label--required']}>
+              <label className={classes['admin-info-form__label--required']} htmlFor="surname">
                 *
               </label>
-              <label className={classes['admin-info-form__label--text']}>
+              <label className={classes['admin-info-form__label--text']} htmlFor="surname">
                 Прізвище
               </label>
             </div>
             <div className={classes['admin-info-form__field']}>
                 <input
                   className={classes['admin-info-form__input']}
+                  id="surname"
+                  autoComplete="family-name"
                   type="text"
                   placeholder="Прізвище"
                   {...register('surname', {

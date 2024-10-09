@@ -46,7 +46,7 @@ const PasswordField = (props) => {
           {label}
         </label>
         {label !== 'Поточний пароль' &&
-          <label className={css['password-field__label--hint']}>
+          <label className={css['password-field__label--hint']} htmlFor={inputId}>
               (Повинен містити від 8 символів, A-Z, a-z, 0-9)
           </label>
         }

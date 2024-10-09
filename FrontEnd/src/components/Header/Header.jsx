@@ -6,8 +6,7 @@ import Navbar from './Navbar/Navbar';
 import css from './Header.module.css';
 
 function Header(props) {
-  const location = useLocation();
-  const { pathname } = location;
+  const { pathname } = useLocation();
   const hideMenu = pathname === '/login' || pathname === '/sign-up' || pathname.includes('/customadmin');
 
   return (
