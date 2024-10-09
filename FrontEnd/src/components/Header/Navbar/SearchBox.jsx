@@ -19,6 +19,7 @@ function SearchBox() {
       <div className={css['header-search-form']}>
         <input
           className={css['header-search-form__input']}
+          id="search_box"
           value={searchTerm}
           type="text"
           placeholder="Пошук"
