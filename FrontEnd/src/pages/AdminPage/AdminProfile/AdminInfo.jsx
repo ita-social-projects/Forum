@@ -2,6 +2,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 
+import AdminSubmitButton from '../../../components/MiniComponents/AdminSubmitButton';
+
 import classes from './AdminInfo.module.css';
 
 const AdminInfo = ({ user }) => {
@@ -126,14 +128,7 @@ const AdminInfo = ({ user }) => {
               {errors.surname && errors.surname.message}
             </div>
           </div>
-          <div className={classes['admin-submit__container']}>
-            <button
-                className={classes['admin-submit__button']}
-                type="submit"
-            >
-                Зберегти
-            </button>
-          </div>
+          <AdminSubmitButton />
         </div>
     </form>
     </div>

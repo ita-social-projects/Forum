@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import PasswordField from '../../ProfilePage/FormComponents/FormFields/PasswordField';
 import Loader from '../../../components/Loader/Loader';
+import AdminSubmitButton from '../../../components/MiniComponents/AdminSubmitButton';
 
 import classes from './ChangeAdminPassword.module.css';
 
@@ -96,15 +97,7 @@ export default function ChangeAdminPassword(props) {
                 checkWith: 'newPassword',
               }}
             />
-
-          <div className={classes['admin-submit__container']}>
-            <button
-                className={classes['admin-submit__button']}
-                type="submit"
-            >
-                Змінити пароль
-            </button>
-          </div>
+          <AdminSubmitButton />
         </form>
       ) : (
         <Loader />
