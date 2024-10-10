@@ -13,7 +13,7 @@ from rest_framework.generics import (
 )
 from rest_framework.views import APIView
 
-from authentication.serializers import UserRegistrationSerializer, AdminRegistrationSerializer
+from authentication.serializers import AdminRegistrationSerializer
 from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
