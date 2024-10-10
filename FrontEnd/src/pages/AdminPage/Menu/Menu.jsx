@@ -25,11 +25,14 @@ const MENU = [
         title: 'Зміна часу автомодерації',
         link: '/customadmin/automoderation/'
     },
-    // {
-    //     id: 'am5',
-    //     title: 'Пошта адміністратора',
-    //     link: '/customadmin/email/'
-    // }
+];
+
+const SUPERUSER_MENU = [
+    {
+        id: 'am5',
+        title: 'Пошта адміністратора',
+        link: '/customadmin/email/'
+    }
 ];
 
 function Menu() {
@@ -49,11 +52,9 @@ function Menu() {
             {MENU.map((element) => (
                 <Link className={css['menu-section-element']} key={element.id} to={element.link}>{element.title}</Link>
             ))}
-            {isSuperUser && (
-                <Link className={css['menu-section-element']} to="/customadmin/email/">
-                    Пошта адміністратора
-                </Link>
-            )}
+            {isSuperUser && SUPERUSER_MENU.map((element) => (
+                <Link className={css['menu-section-element']} key={element.id} to={element.link}>{element.title}</Link>
+            ))}
             <div className={css['menu-section-divider']}></div>
             <button className={css['menu-section-logout']} onClick={handleLogout}>Вихід</button>
         </div>

@@ -71,16 +71,6 @@ export function AuthProvider({ children }) {
     if (data) {
       setUser(data);
       setIsStaff(data.is_staff);
-    }
-    if (error) {
-      setUser(null);
-    }
-    setLoading(false);
-  }, [data, error]);
-
-  useEffect(() => {
-    if (data) {
-      setUser(data);
       setIsSuperUser(data.is_superuser);
     }
     if (error) {
