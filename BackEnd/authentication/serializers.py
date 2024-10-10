@@ -57,10 +57,6 @@ class AdminRegistrationSerializer(serializers.ModelSerializer):
             validate_password_long(password)
         except ValidationError as error:
             custom_errors["password"].append(error.message)
-        try:
-            validate_password_include_symbols(password)
-        except ValidationError as error:
-            custom_errors["password"].append(error.message)
         if custom_errors:
             raise serializers.ValidationError(custom_errors)
         return value
