@@ -49,11 +49,13 @@ function Menu() {
 
     return (
         <div className={css['menu-section']}>
-            {MENU.map((element) => (
-                <Link className={css['menu-section-element']} key={element.id} to={element.link}>{element.title}</Link>
-            ))}
-            {isSuperUser && SUPERUSER_MENU.map((element) => (
-                <Link className={css['menu-section-element']} key={element.id} to={element.link}>{element.title}</Link>
+            {[
+                ...MENU,
+                ...(isSuperUser ? SUPERUSER_MENU : [])
+            ].map((element) => (
+                <Link className={css['menu-section-element']} key={element.id} to={element.link}>
+                    {element.title}
+                </Link>
             ))}
             <div className={css['menu-section-divider']}></div>
             <button className={css['menu-section-logout']} onClick={handleLogout}>Вихід</button>
