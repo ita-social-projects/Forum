@@ -71,7 +71,6 @@ export default function ChangePassword(props) {
             label="Поточний пароль"
             register={register}
             error={errors}
-            showError={false}
             watch={watch}
             checkValid={false}
             checkMatch={{
@@ -85,7 +84,6 @@ export default function ChangePassword(props) {
             label="Новий пароль"
             error={errors}
             register={register}
-            showError={true}
             watch={watch}
             checkValid={true}
             checkMatch={{
