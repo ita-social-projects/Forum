@@ -17,7 +17,7 @@ export default function ChangeAdminPassword(props) {
     getValues,
     watch,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({
     mode: 'all',
     defaultValues: {
@@ -55,14 +55,13 @@ export default function ChangeAdminPassword(props) {
   return (
     <div className={classes['form__container']}>
       {props.user ? (
-        <form id="ChangePassword" onSubmit={handleSubmit(handleFormSubmit)} noValidate >
+        <form id="ChangeAdminPassword" onSubmit={handleSubmit(handleFormSubmit)} >
             <PasswordField
-              inputId="currentPassword"
+              inputId="currentAdminPassword"
               name="currentPassword"
               label="Поточний пароль"
               register={register}
               error={errors}
-              showError={false}
               watch={watch}
               checkValid={false}
               checkMatch={{
@@ -71,12 +70,11 @@ export default function ChangeAdminPassword(props) {
               }}
             />
             <PasswordField
-              inputId="newPassword"
+              inputId="newAdminPassword"
               name="newPassword"
               label="Новий пароль"
               error={errors}
               register={register}
-              showError={true}
               watch={watch}
               checkValid={true}
               checkMatch={{
@@ -85,7 +83,7 @@ export default function ChangeAdminPassword(props) {
               }}
             />
             <PasswordField
-              inputId="reNewPassword"
+              inputId="reNewAdminPassword"
               name="reNewPassword"
               label="Повторіть новий пароль"
               error={errors}
@@ -97,7 +95,7 @@ export default function ChangeAdminPassword(props) {
                 checkWith: 'newPassword',
               }}
             />
-          <AdminSubmitButton />
+          <AdminSubmitButton disabled={!isDirty}/>
         </form>
       ) : (
         <Loader />

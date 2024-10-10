@@ -12,7 +12,7 @@ const AdminInfo = ({ user, mutate }) => {
         handleSubmit,
         setValue,
         getValues,
-        formState: { errors },
+        formState: { errors, isDirty },
     } = useForm({
         defaultValues: {
         'name': user.name,
@@ -129,7 +129,7 @@ const AdminInfo = ({ user, mutate }) => {
               {errors.surname && errors.surname.message}
             </div>
           </div>
-          <AdminSubmitButton />
+          <AdminSubmitButton disabled={!isDirty}/>
         </div>
     </form>
     </div>
