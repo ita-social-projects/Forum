@@ -5,17 +5,11 @@ from drf_spectacular.utils import (
     OpenApiExample,
     OpenApiResponse,
 )
-from rest_framework import status
 
-from rest_framework.permissions import (
-    BasePermission,
-)
 from rest_framework.generics import (
     ListAPIView,
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
-    CreateAPIView,
 )
 from rest_framework.views import APIView
 
