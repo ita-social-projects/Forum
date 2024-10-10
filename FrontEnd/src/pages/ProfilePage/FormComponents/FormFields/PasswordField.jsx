@@ -58,7 +58,6 @@ const PasswordField = (props) => {
             id={inputId}
             type={showPassword ? 'text' : 'password'}
             placeholder={label}
-            required
             {...register(name, {
               required: errorMessages.requiredField,
               pattern: checkValid && {
