@@ -19,7 +19,7 @@ def send_email_about_admin_registration(email, password):
     recipient = email
     email_body = render_to_string("administration/email_template.html", context)
     email = EmailMultiAlternatives(
-        subject="Information about number and size of banners and logos",
+        subject="Generated password for administrator",
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
         to=[
