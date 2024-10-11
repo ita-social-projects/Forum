@@ -1,15 +1,21 @@
-import css from './Navbar.module.css';
+import { Link } from 'react-router-dom';
+
+import { useAuth } from '../../../hooks';
+
 import Menu from './Menu';
 import SearchBox from './SearchBox';
 import Profile from './Profile';
 import Buttons from './Buttons';
-import { Link } from 'react-router-dom';
 
-function Navbar(props) {
+import css from './Navbar.module.css';
+
+function Navbar (props) {
+  const { isStaff} = useAuth();
+  const hideMenu = props.page === '/login' || props.page === '/sign-up' || props.page.includes('/customadmin');
   return (
     <div className={css['navbar-content']}>
       <div className={css['navbar-logo__text']}>
-        <Link to="/">
+        <Link to="/" target={isStaff ? '_blank' : null}>
           <img
             className={css['navbar-main-logo']}
             src={`${process.env.REACT_APP_PUBLIC_URL}/craftMerge-logo.svg`}
@@ -18,13 +24,13 @@ function Navbar(props) {
         </Link>
       </div>
       <div className={css['navbar-utility-bar']}>
-        {props.page === 'login' || props.page === 'registration' ? null : (
+        { hideMenu ? null : (
           <>
             <Menu />
             <SearchBox></SearchBox>
           </>
         )}
-        {props.isAuthorized === true ? <Profile /> : <Buttons />}
+        {props.isAuthorized === true ? <Profile /> : <Buttons adminPage={props.page.includes('/customadmin')} />}
       </div>
     </div>
   );

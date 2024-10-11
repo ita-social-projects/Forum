@@ -1,16 +1,17 @@
 .navbar-content {
   display: flex;
+  width: 70%;
   padding: 8px 104px;
   align-items: center;
   justify-content: space-between;
   height: var(--navbar-content-height);
 }
 
-.navbar-logo__text{
+.navbar-logo__text {
   display: flex;
 }
 
-.navbar-main-logo{
+.navbar-main-logo {
   display: flex;
   width: 199px;
   height: 24px;

@@ -1,22 +1,26 @@
 export const MAIN_PAGE_TEXT = [
     {
-        title: 'Check Profiles:',
-        text: 'Review user and company profiles.'
+        title: 'Перевіряти профілі:',
+        text: 'Переглянути профілі користувачів та компаній.'
     },
     {
-        title: 'Edit Profiles:',
-        text: 'Make necessary updates to profiles for accuracy.'
+        title: 'Редагувати профілі:',
+        text: 'Внести необхідні зміни в профілі.'
     },
     {
-        title: 'Approve Profiles:',
-        text: 'Give the green light to new profiles.'
+        title: 'Затверджувати профілі:',
+        text: 'Підтвердити дійсність нових профілів та затвердити зміни в існуючих.'
     },
     {
-        title: 'Delete Profiles:',
-        text: 'In case of policy violations or other issues.'
+        title: 'Видаляти профілі:',
+        text: 'Видалити профіль у разі порушення правил користування сайтом або з інших причин.'
     },
     {
-        title: 'Set autoapprove timeout:',
-        text: 'Specify the time (from 1 to 48 hours) after which the user\'s request to change the banner/logo will be approved automatically.'
+        title: 'Встановлювати таймаут для автозатвердження:',
+        text: 'Вказати час (від 1 до 48 годин), після якого запит користувача на зміну банера/логотипу буде підтверджено автоматично.'
+    },
+    {
+        title: 'Встановити електронну адресу модератора:',
+        text: 'Вказати електронну адресу, на яку будуть приходити листи із запитом на затвердження зміни банера/логотипу в профілі.'
     }
 ];
