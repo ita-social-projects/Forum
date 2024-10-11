@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Tooltip } from 'antd';
 import { useState } from 'react';
 import { EMAIL_PATTERN } from '../../../constants/constants';
 import css from './AdminRegistration.module.css';
@@ -39,11 +40,15 @@ const AdminRegistration = () => {
                     Електронна адреса
                 </label>
                 <div className={css['admin_registration-input-wrapper']}>
-                    <input className={css['admin_registration-input']}
-                        id="newAdminEmail" onChange={handleInputChange}
-                        type="text"
-                        placeholder="Введіть текст"
-                        autoComplete="email" />
+                    <Tooltip
+                        title={'Введіть тут електронну пошту особи, яку потрібно зареєструвати в якості адміністратора'}
+                        placement="bottom">
+                        <input className={css['admin_registration-input']}
+                            id="newAdminEmail" onChange={handleInputChange}
+                            type="text"
+                            placeholder="Введіть текст"
+                            autoComplete="email" />
+                    </Tooltip>
                     <button className={css['admin_registration-button']} onClick={handleSubmit}>
                         Згенерувати та надіслати пароль
                     </button>
