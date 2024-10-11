@@ -50,9 +50,8 @@ class AdminRegistrationSerializer(serializers.Serializer):
             email=email,
             name=name,
             surname=surname,
-            password=password,
-
         )
+        admin.set_password(password)
         admin.save()
         send_email_about_admin_registration(email, password)
         return admin
