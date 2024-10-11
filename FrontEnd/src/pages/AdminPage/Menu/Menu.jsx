@@ -1,8 +1,6 @@
-import css from './Menu.module.css';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../../hooks';
-import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
+import css from './Menu.module.css';
 
 const MENU = [
     {
@@ -38,23 +36,15 @@ const MENU = [
 ];
 
 function Menu() {
-    const { isAuth, logout } = useAuth();
-    const handleLogout = async () => {
-        if (isAuth) {
-            axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/auth/token/logout`)
-                .then(() => {
-                    logout();
-                });
-        }
-    };
 
     return (
         <div className={css['menu-section']}>
             {MENU.map((element) => (
-                <Link className={css['menu-section-element']} key={element.id} to={element.link}>{element.title}</Link>
+                <NavLink
+                    className={({ isActive }) => (`${css['menu-section-element']} ${isActive && css['menu-section-element__active']}`)}
+                    key={element.id} to={element.link}>{element.title}
+                </NavLink>
             ))}
-            <div className={css['menu-section-divider']}></div>
-            <button className={css['menu-section-logout']} onClick={handleLogout}>Вихід</button>
         </div>
     );
 }

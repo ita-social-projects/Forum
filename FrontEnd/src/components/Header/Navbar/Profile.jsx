@@ -7,7 +7,7 @@ import css from './Profile.module.css';
 
 
 function Profile() {
-  const { user, isAuth, logout } = useAuth();
+  const { user, isAuth, logout, isStaff } = useAuth();
   const navigate = useNavigate();
 
   const navigateToProfile = () => {
@@ -31,12 +31,12 @@ function Profile() {
         className={css['header-profile__avatar']}
         src={`${process.env.REACT_APP_PUBLIC_URL}/img/Avatar.png`}
         alt="Avatar"
-        onClick={navigateToProfile}
+        onClick={!isStaff ? navigateToProfile : null}
       />
-      <DropdownMenu toggleText="Профіль">
-        <Link to="/profile/user-info">Профіль</Link>
-        <button onClick={performLogout}>Вихід</button>
-      </DropdownMenu>
+        <DropdownMenu toggleText={isStaff ? 'Адміністратор' : 'Профіль'}>
+          <Link to={isStaff ? '/customadmin/admin-profile/admin-info' : '/profile/user-info'}>Профіль</Link>
+          <button onClick={performLogout}>Вихід</button>
+        </DropdownMenu>
     </div>
   );
 }
