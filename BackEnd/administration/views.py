@@ -5,7 +5,6 @@ from drf_spectacular.utils import (
     OpenApiExample,
     OpenApiResponse,
 )
-from rest_framework import generics
 
 from rest_framework.generics import (
     ListAPIView,
@@ -13,7 +12,6 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView, GenericAPIView,
 )
 from rest_framework.mixins import CreateModelMixin
-from rest_framework.views import APIView
 
 from administration.serializers import AdminRegistrationSerializer
 from forum.settings import CONTACTS_INFO
