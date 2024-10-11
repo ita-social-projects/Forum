@@ -44,7 +44,8 @@ const AdminRegistration = () => {
                         title={'Введіть тут електронну пошту особи, яку потрібно зареєструвати в якості адміністратора'}
                         placement="top">
                         <input className={css['admin_registration-input']}
-                            id="newAdminEmail" onChange={handleInputChange}
+                            id="newAdminEmail" 
+                            onChange={handleInputChange}
                             type="text"
                             placeholder="Введіть текст"
                             autoComplete="email" />
