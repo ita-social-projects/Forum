@@ -14,6 +14,7 @@ import Loader from '../components/Loader/Loader';
 import AutoApproveDelay from '../pages/AdminPage/AutoApproveDelay/AutoApproveDelay';
 import ModerationEmail from '../pages/AdminPage/DetailView/ModerationEmail';
 import Contacts from '../pages/AdminPage/DetailView/Contacts';
+import AdminRegistration from '../pages/AdminPage/AdminRegistration/AdminRegistration';
 
 
 function AdminRouter() {
@@ -29,6 +30,7 @@ function AdminRouter() {
             <Route path="/automoderation" element={<AutoApproveDelay />} />
             <Route path="/email" element={<ModerationEmail />} />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/admin_create" element={<AdminRegistration />} />
         </>
     ) : (
         <Route path="/customadmin/" />

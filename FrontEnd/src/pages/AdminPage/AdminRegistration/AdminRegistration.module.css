@@ -1,0 +1,68 @@
+.admin_registration-section {
+    display: flex;
+    flex-direction: column;
+    padding-left: 35px;
+    padding-top: 20px;
+}
+
+.admin_registration-outer-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 40px;
+}
+.admin_registration-asterisk {
+    font-family: var(--font-main);
+    font-size: 14px;
+    padding-right: 3px;
+    color: #FF4D4F;
+}
+
+.admin_registration-label {
+    flex: 1 0;
+    color: var(--main-black-90, #292E32);
+    font-feature-settings: 'calt' off;
+    font-style: normal;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    color: #292E32;
+}
+
+.admin_registration-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.admin_registration-input {
+    width: 320px;
+    height: 25px;
+    padding: 0 2px;
+    margin: auto;
+}
+
+.admin_registration-button {
+    padding: 5px 15px;
+    width: auto;
+    border-radius: 4px;
+    border: 1px solid #1F9A7C;
+    background: #1F9A7C;
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+    color: #FFF;
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+    cursor: pointer;
+}
+
+.admin_registration-error {
+    color: rgb(212, 21, 21);
+    font-family: var(--font-main);
+    font-size: 14px;
+}
