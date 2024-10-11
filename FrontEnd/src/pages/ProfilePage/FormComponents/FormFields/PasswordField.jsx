@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { PropTypes } from 'prop-types';
+import classNames from 'classnames';
+
 import EyeInvisible from '../../../Authorization/EyeInvisible';
 import EyeVisible from '../../../Authorization/EyeVisible';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
-import css from './PasswordField.module.css';
+
 import { PASSWORD_PATTERN } from '../../../../constants/constants';
+
+import css from './PasswordField.module.css';
 
 const PasswordField = (props) => {
   const errorMessages = {
@@ -34,11 +38,18 @@ const PasswordField = (props) => {
     <div className={css['password-field__item']}>
       <div className={css['password-field__label-wrapper']}>
         <label
-          className={error[name] ? css['error-dot'] : ''}
+           className={classNames(css['password-field__label--content'], css['error-dot'], {
+            [css['password-field__label--gap']]: label === 'Поточний пароль',
+          })}
           htmlFor={inputId}
         >
           {label}
         </label>
+        {label !== 'Поточний пароль' &&
+          <label className={css['password-field__label--hint']} htmlFor={inputId}>
+              (Повинен містити від 8 символів, A-Z, a-z, 0-9)
+          </label>
+        }
       </div>
       <div className={css['password-field__password']}>
         <div className={css['password-field__password__wrapper']}>
@@ -47,7 +58,6 @@ const PasswordField = (props) => {
             id={inputId}
             type={showPassword ? 'text' : 'password'}
             placeholder={label}
-            required
             {...register(name, {
               required: errorMessages.requiredField,
               pattern: checkValid && {

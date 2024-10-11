@@ -3,6 +3,10 @@ import { MemoryRouter } from 'react-router-dom';
 
 import Search from '../Search';
 
+jest.mock('../../../hooks', () => ({
+  useAuth: () => ({isStaff: false}),
+}));
+
 afterEach(() => {
   jest.resetAllMocks();
 });

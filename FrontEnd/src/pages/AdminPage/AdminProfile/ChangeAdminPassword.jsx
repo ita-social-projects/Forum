@@ -1,17 +1,16 @@
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { DirtyFormContext } from '../../../context/DirtyFormContext';
-import PasswordField from './FormFields/PasswordField';
-import Loader from '../../../components/Loader/Loader';
-import css from './ChangePassword.module.css';
 
-export default function ChangePassword(props) {
-  const { setFormIsDirty } = useContext(DirtyFormContext);
-  const { currentFormNameHandler, curForm } = props;
+import PasswordField from '../../ProfilePage/FormComponents/FormFields/PasswordField';
+import Loader from '../../../components/Loader/Loader';
+import AdminSubmitButton from '../../../components/MiniComponents/AdminSubmitButton';
+
+import classes from './ChangeAdminPassword.module.css';
+
+export default function ChangeAdminPassword(props) {
+
   const {
     register,
     handleSubmit,
@@ -27,14 +26,6 @@ export default function ChangePassword(props) {
       reNewPassword: '',
     },
   });
-
-  useEffect(() => {
-    currentFormNameHandler(curForm);
-  }, [currentFormNameHandler, curForm]);
-
-  useEffect(() => {
-    setFormIsDirty(isDirty);
-  }, [isDirty, setFormIsDirty]);
 
   const handleFormSubmit = () => {
     axios
@@ -62,48 +53,49 @@ export default function ChangePassword(props) {
   };
 
   return (
-    <div className={css['form__container']}>
+    <div className={classes['form__container']}>
       {props.user ? (
-        <form id="ChangePassword" onSubmit={handleSubmit(handleFormSubmit)}>
-          <PasswordField
-            inputId="currentPassword"
-            name="currentPassword"
-            label="Поточний пароль"
-            register={register}
-            error={errors}
-            watch={watch}
-            checkValid={false}
-            checkMatch={{
-              isCheck: false,
-              checkWith: null,
-            }}
-          />
-          <PasswordField
-            inputId="newPassword"
-            name="newPassword"
-            label="Новий пароль"
-            error={errors}
-            register={register}
-            watch={watch}
-            checkValid={true}
-            checkMatch={{
-              isCheck: false,
-              checkWith: null,
-            }}
-          />
-          <PasswordField
-            inputId="reNewPassword"
-            name="reNewPassword"
-            label="Повторіть новий пароль"
-            error={errors}
-            register={register}
-            watch={watch}
-            checkValid={false}
-            checkMatch={{
-              isCheck: true,
-              checkWith: 'newPassword',
-            }}
-          />
+        <form id="ChangeAdminPassword" onSubmit={handleSubmit(handleFormSubmit)} >
+            <PasswordField
+              inputId="currentAdminPassword"
+              name="currentPassword"
+              label="Поточний пароль"
+              register={register}
+              error={errors}
+              watch={watch}
+              checkValid={false}
+              checkMatch={{
+                isCheck: false,
+                checkWith: null,
+              }}
+            />
+            <PasswordField
+              inputId="newAdminPassword"
+              name="newPassword"
+              label="Новий пароль"
+              error={errors}
+              register={register}
+              watch={watch}
+              checkValid={true}
+              checkMatch={{
+                isCheck: false,
+                checkWith: null,
+              }}
+            />
+            <PasswordField
+              inputId="reNewAdminPassword"
+              name="reNewPassword"
+              label="Повторіть новий пароль"
+              error={errors}
+              register={register}
+              watch={watch}
+              checkValid={false}
+              checkMatch={{
+                isCheck: true,
+                checkWith: 'newPassword',
+              }}
+            />
+          <AdminSubmitButton disabled={!isDirty}/>
         </form>
       ) : (
         <Loader />
@@ -112,15 +104,12 @@ export default function ChangePassword(props) {
   );
 }
 
-ChangePassword.propTypes = {
+ChangeAdminPassword.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     email: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
-    profile_id: PropTypes.number.isRequired,
     is_staff: PropTypes.bool.isRequired,
   }).isRequired,
-  currentFormNameHandler: PropTypes.func.isRequired,
-  curForm: PropTypes.string.isRequired,
 };
