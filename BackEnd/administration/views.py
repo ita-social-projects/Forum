@@ -9,7 +9,7 @@ from drf_spectacular.utils import (
 from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
-    RetrieveUpdateAPIView, GenericAPIView,
+    RetrieveUpdateAPIView, GenericAPIView, CreateAPIView,
 )
 from rest_framework.mixins import CreateModelMixin
 
@@ -150,9 +150,8 @@ class ContactsView(View):
         return JsonResponse(CONTACTS_INFO)
 
 
-class CreateAdminUserView(CreateModelMixin,  GenericAPIView):
+class CreateAdminUserView(CreateAPIView):
     serializer_class = AdminRegistrationSerializer
-    queryset = CustomUser.objects.all()
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+
+
