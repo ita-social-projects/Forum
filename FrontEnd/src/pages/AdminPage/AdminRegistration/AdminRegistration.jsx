@@ -13,7 +13,7 @@ const AdminRegistration = () => {
         setEmail(e.target.value);
     };
 
-    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/admin_create/`;
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/admin-create/`;
 
     const handleSubmit = () => {
         EMAIL_PATTERN.test(email) ?

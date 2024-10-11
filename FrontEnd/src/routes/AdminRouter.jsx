@@ -36,7 +36,7 @@ function AdminRouter() {
             <Route path="/email" element={<ModerationEmail />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/admin-profile/*" element={<AdminProfilePage />} />
-            <Route path="/admin_create" element={<AdminRegistration />} />
+            <Route path="/admin-create" element={<AdminRegistration />} />
         </>
     ) : (
         <Route path="/customadmin/" />

@@ -31,7 +31,7 @@ const MENU = [
     {
         id: 'am6',
         title: 'Реєстрація адміністратора',
-        link: '/customadmin/admin_create/'
+        link: '/customadmin/admin-create/'
     }
 ];
 
