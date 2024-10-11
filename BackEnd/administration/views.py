@@ -9,9 +9,8 @@ from drf_spectacular.utils import (
 from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
-    RetrieveUpdateAPIView, GenericAPIView, CreateAPIView,
+    RetrieveUpdateAPIView, CreateAPIView,
 )
-from rest_framework.mixins import CreateModelMixin
 
 from administration.serializers import AdminRegistrationSerializer
 from forum.settings import CONTACTS_INFO
