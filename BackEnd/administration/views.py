@@ -10,7 +10,7 @@ from rest_framework import generics
 from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
-    RetrieveUpdateAPIView,
+    RetrieveUpdateAPIView, GenericAPIView,
 )
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.views import APIView
@@ -152,7 +152,7 @@ class ContactsView(View):
         return JsonResponse(CONTACTS_INFO)
 
 
-class CreateAdminUserView(CreateModelMixin,  generics.GenericAPIView):
+class CreateAdminUserView(CreateModelMixin,  GenericAPIView):
     serializer_class = AdminRegistrationSerializer
     queryset = CustomUser.objects.all()
 
