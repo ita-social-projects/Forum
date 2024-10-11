@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useStopwatch } from 'react-timer-hook';
@@ -11,11 +11,13 @@ import EyeInvisible from './EyeInvisible';
 import classes from './LoginPage.module.css';
 import { useAuth } from '../../hooks';
 import checkIfStaff from '../AdminPage/checkIfStaff';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const LoginContent = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const reCaptchaRef = useRef();
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -57,13 +59,14 @@ const LoginContent = () => {
       errorMessage = errors.password.message;
     } else if (errors.unspecifiedError?.message) {
       errorMessage = errors.unspecifiedError.message;
+      toast.error(errorMessage);
     } else if (errors.rateError?.message) {
       errorMessage = errors.rateError.message;
+      toast.error(errorMessage);
     } else if (errors.blockedUserError?.message) {
       errorMessage = errors.blockedUserError.message;
+      toast.error(errorMessage);
     }
-
-    errorMessage && toast.error(errorMessage);
   }, [
     errors.email?.message,
     errors.password?.message,
@@ -81,12 +84,20 @@ const LoginContent = () => {
   const disabled = !isValid || (isRunning && minutes < 10);
 
   const onSubmit = async (value) => {
+    let recaptcha_token = null;
+    try {
+      recaptcha_token = await reCaptchaRef.current.executeAsync();
+    } catch (error) {
+      console.warn('reCAPTCHA failed or quota expired:', error);
+    }
+
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}/api/auth/token/login/`,
         {
           email: value.email,
           password: value.password,
+          captcha: recaptcha_token,
         }
       );
       const authToken = response.data.auth_token;
@@ -120,6 +131,8 @@ const LoginContent = () => {
           });
         }
       }
+    } finally {
+      reCaptchaRef.current?.reset();
     }
   };
 
@@ -226,6 +239,11 @@ const LoginContent = () => {
             </button>
           </div>
         </div>
+        <ReCAPTCHA
+          ref={reCaptchaRef}
+          sitekey={process.env.REACT_APP_RECAPTCHA_V2_SITE_KEY}
+          size="invisible"
+        />
       </form>
     </div>
   );

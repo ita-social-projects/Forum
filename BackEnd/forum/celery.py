@@ -12,6 +12,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "every": {
         "task": "images.tasks.celery_send_email_images",
-        "schedule": crontab(day_of_month="1"),
+        "schedule": crontab(minute=0, hour=9, day_of_month="1"),
     }
 }

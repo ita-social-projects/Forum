@@ -1,8 +1,6 @@
 .container {
-    word-wrap: break-word;
-    width: var(--main-block-size);
-    margin-top: 32px;
-    margin-right: 488px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 32px;
     left: 192px;
-    gap: 40px;
 }

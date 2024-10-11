@@ -14,7 +14,7 @@ const DeleteProfilePage = (props) => {
     setModal(false);
   };
   return (
-    <div>
+    <div className={css['button__delete-main']}>
       <div className={css['text__for__delete']}>Видалити акаунт</div>
       <button className={css['button__delete']} onClick={() => setModal(true)}>
         Видалити

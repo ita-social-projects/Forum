@@ -108,7 +108,7 @@ export default function ProfileCard({ isAuthorized, data, savedIsUpdated, onClea
       </Link>
       <div className={css['bell-container']}>
         <BellForUpdates
-          savedIsUpdated={savedIsUpdated}
+          savedIsUpdated={savedIsUpdated || false}
         ></BellForUpdates>
       </div>
         <StarForLike
@@ -148,6 +148,6 @@ ProfileCard.propTypes = {
       uuid: PropTypes.string,
     }),
   }).isRequired,
-  savedIsUpdated: PropTypes.bool.isRequired,
-  onClearUpdate: PropTypes.func.isRequired,
+  savedIsUpdated: PropTypes.bool,
+  onClearUpdate: PropTypes.func,
 };
