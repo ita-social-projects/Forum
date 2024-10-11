@@ -151,6 +151,7 @@ class ContactsView(View):
 
 
 class CreateAdminUserView(CreateAPIView):
+    permission_classes = [IsSuperUser, ]
     serializer_class = AdminRegistrationSerializer
 
 
