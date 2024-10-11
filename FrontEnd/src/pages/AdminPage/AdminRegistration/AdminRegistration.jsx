@@ -42,7 +42,7 @@ const AdminRegistration = () => {
                 <div className={css['admin_registration-input-wrapper']}>
                     <Tooltip
                         title={'Введіть тут електронну пошту особи, яку потрібно зареєструвати в якості адміністратора'}
-                        placement="bottom">
+                        placement="top">
                         <input className={css['admin_registration-input']}
                             id="newAdminEmail" onChange={handleInputChange}
                             type="text"
