@@ -5,15 +5,17 @@ from drf_spectacular.utils import (
     OpenApiExample,
     OpenApiResponse,
 )
+from rest_framework import generics
 
 from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
 )
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.views import APIView
 
-from authentication.serializers import AdminRegistrationSerializer
+from administration.serializers import AdminRegistrationSerializer
 from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
@@ -150,30 +152,9 @@ class ContactsView(View):
         return JsonResponse(CONTACTS_INFO)
 
 
-class CreateAdminUserView(APIView):
-    def post(self, request):
-        name = "admin"
-        surname = "admin"
-        email = request.data["email"]
-        password = generate_password()
-        data = dict(
-            name=name,
-            surname=surname,
-            email=email,
-            password=password,
-        )
-        serialized = AdminRegistrationSerializer(data=data)
-        if serialized.is_valid():
-            admin = CustomUser.objects.create_user(
-                email=email,
-                name=name,
-                surname=surname,
-                password=password,
-                is_staff=True,
-                is_active=True,
-            )
-            admin.save()
-            send_email_about_admin_registration(email, password)
-        else:
-            return JsonResponse(serialized.errors)
-        return JsonResponse(serialized.data)
+class CreateAdminUserView(CreateModelMixin,  generics.GenericAPIView):
+    serializer_class = AdminRegistrationSerializer
+    queryset = CustomUser.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
