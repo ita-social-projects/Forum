@@ -9,7 +9,8 @@ from drf_spectacular.utils import (
 from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
-    RetrieveUpdateAPIView, CreateAPIView,
+    RetrieveUpdateAPIView,
+    CreateAPIView,
 )
 
 from administration.serializers import AdminRegistrationSerializer
@@ -150,8 +151,7 @@ class ContactsView(View):
 
 
 class CreateAdminUserView(CreateAPIView):
-    permission_classes = [IsSuperUser, ]
+    permission_classes = [
+        IsSuperUser,
+    ]
     serializer_class = AdminRegistrationSerializer
-
-
-
