@@ -50,6 +50,8 @@ class AdminRegistrationSerializer(serializers.Serializer):
             email=email,
             name=name,
             surname=surname,
+            is_staff=True,
+            is_active=True,
         )
         admin.set_password(password)
         admin.save()
