@@ -27,8 +27,6 @@ from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
-from utils.administration.create_password import generate_password
-from utils.administration.send_email import send_email_about_admin_registration
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 
 

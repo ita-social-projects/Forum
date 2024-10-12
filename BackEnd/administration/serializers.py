@@ -1,7 +1,4 @@
-from collections import defaultdict
-
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from authentication.models import CustomUser
 from profiles.models import (
@@ -10,7 +7,6 @@ from profiles.models import (
 )
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
-from validation.validate_password import validate_password_long
 from .models import AutoModeration, ModerationEmail
 
 User = get_user_model()
@@ -31,25 +27,18 @@ class AdminRegistrationSerializer(serializers.Serializer):
     )
 
     def validate(self, value):
-        custom_errors = defaultdict(list)
         email = value.get("email").lower()
 
         if User.objects.filter(email=email).exists():
-            custom_errors["email"].append("Email is already registered")
+            raise serializers.ValidationError("Email is already registered")
 
-        if custom_errors:
-            raise serializers.ValidationError(custom_errors)
         return value
 
     def create(self, validated_data):
         email = validated_data.get("email")
         password = generate_password()
-        name = "admin"
-        surname = "admin"
         admin = User.objects.create(
             email=email,
-            name=name,
-            surname=surname,
             is_staff=True,
             is_active=True,
         )
