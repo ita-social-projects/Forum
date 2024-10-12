@@ -152,6 +152,7 @@ class CreateAdminUserView(CreateAPIView):
     """
     View for creating an admin user.
     """
+
     permission_classes = [
         IsSuperUser,
     ]
