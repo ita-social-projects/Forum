@@ -30,7 +30,7 @@ class AdminRegistrationSerializer(serializers.Serializer):
         email = value.get("email").lower()
 
         if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError("Email is already registered")
+            raise serializers.ValidationError({"email": "Email is already registered"})
 
         return value
 
