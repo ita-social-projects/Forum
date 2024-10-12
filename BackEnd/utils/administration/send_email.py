@@ -17,7 +17,9 @@ def send_email_about_admin_registration(email, password):
     }
 
     recipient = email
-    email_body = render_to_string("administration/email_template.html", context)
+    email_body = render_to_string(
+        "administration/email_template.html", context
+    )
     email = EmailMultiAlternatives(
         subject="Generated password for administrator",
         body=email_body,
