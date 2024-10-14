@@ -139,7 +139,7 @@ const Contact = () => {
                     />
                     {emailError && <p className={styles['contact__error']}>{emailError}</p>}
                     <DropDownMenu
-                        value={category ? [category] : []} // Відображення повної назви категорії
+                        value={category ? [category] : []}
                         onChange={(value) => setCategory(value[0] || null)}
                         options={categoryOptions}
                         updateHandler={(value) => setCategory(value[0] || null)}
@@ -156,7 +156,8 @@ const Contact = () => {
                         className={styles['contact__textarea']}
                         placeholder="Ваше повідомлення"
                         required
-                    />
+                        spellCheck={false}
+                        />
                     {messageError && <p className={styles['contact__error']}>{messageError}</p>}
                     <div className={styles['contact__button_container']}>
                       <button type="submit" className={styles['contact__button_send']}>
@@ -169,8 +170,8 @@ const Contact = () => {
                 </form>
             </div>
             {showModal && (
-              <div className={styles['modal_feedback']}>
-                <div className={styles['modal_feedback_content']}>
+                <div className={styles['modal_feedback']}>
+                    <div className={styles['modal_feedback_content']}>
                   <button
                     className={styles['modal_feedback_close']}
                     onClick={closeModal}
@@ -178,17 +179,17 @@ const Contact = () => {
                   >
                     <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} alt="Close button" />
                   </button>
-                  <h2>Повідомлення успішно надіслано!</h2>
-                  <div className={styles['contact__button_modal_container']}>
-                    <button type="button" onClick={handleRedirect} className={styles['contact__button_send']}>
-                      На головну
-                    </button>
-                    <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
-                      Закрити
-                    </button>
-                  </div>
+                        <h2>Повідомлення успішно надіслано!</h2>
+                       <div className={styles['contact__button_modal_container']}>
+                        <button type="button" onClick={handleRedirect} className={styles['contact__button_send']}>
+                            На головну
+                        </button>
+                        <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
+                            Закрити
+                        </button>
+                       </div>
+                    </div>
                 </div>
-              </div>
             )}
         </div>
     );
