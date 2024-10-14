@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'; // Add useEffect and useRef here
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';
 import contactText from './text';
-import useScrollToTop from '../../hooks/useScrollToTop'; // Ensure this is used
+import useScrollToTop from '../../hooks/useScrollToTop';
 import {
     EMAIL_PATTERN,
     MESSAGE_PATTERN
@@ -13,7 +13,7 @@ import styles from './Contact.module.css';
 import { Spin } from 'antd';
 
 const Contact = () => {
-    useScrollToTop(); // Call the hook to scroll to top on component mount
+    useScrollToTop();
 
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
@@ -67,7 +67,6 @@ const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Валідація перед відправкою
         if (!EMAIL_PATTERN.test(email)) {
             setEmailError('Електронна пошта не відповідає вимогам');
             return;
@@ -97,6 +96,14 @@ const Contact = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleCancel = () => {
+        setEmail('');
+        setMessage('Привіт, хочу повідомити...');
+        setCategory(null);
+        setEmailError('');
+        setMessageError('');
     };
 
     const handleRedirect = () => {
@@ -155,24 +162,33 @@ const Contact = () => {
                       <button type="submit" className={styles['contact__button_send']}>
                         {loading ? <Spin percent={percent}/> : 'Надіслати'}
                       </button>
-                      <button type="button" className={styles['contact__button_cancel']}>Відмінити</button>
+                      <button type="button" onClick={handleCancel} className={styles['contact__button_cancel']}>
+                        Відмінити
+                      </button>
                     </div>
                 </form>
             </div>
             {showModal && (
-                <div className={styles['modal_feedback']}>
-                    <div className={styles['modal_feedback_content']}>
-                        <h2>Повідомлення успішно надіслано!</h2>
-                       <div className={styles['contact__button_modal_container']}>
-                        <button type="button" onClick={handleRedirect} className={styles['contact__button_send']}>
-                            На головну
-                        </button>
-                        <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
-                            Закрити
-                        </button>
-                       </div>
-                    </div>
+              <div className={styles['modal_feedback']}>
+                <div className={styles['modal_feedback_content']}>
+                  <button
+                    className={styles['modal_feedback_close']}
+                    onClick={closeModal}
+                    aria-label="Закрити модальне вікно"
+                  >
+                    <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} alt="Close button" />
+                  </button>
+                  <h2>Повідомлення успішно надіслано!</h2>
+                  <div className={styles['contact__button_modal_container']}>
+                    <button type="button" onClick={handleRedirect} className={styles['contact__button_send']}>
+                      На головну
+                    </button>
+                    <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
+                      Закрити
+                    </button>
+                  </div>
                 </div>
+              </div>
             )}
         </div>
     );
