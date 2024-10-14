@@ -167,14 +167,17 @@ class CreateAdminUserView(CreateAPIView):
 class FeedbackView(APIView):
     def post(self, request):
         serializer = FeedbackSerializer(data=request.data)
-        
+
         if serializer.is_valid():
-            email = serializer.validated_data['email']
-            message = serializer.validated_data['message']
-            category = serializer.validated_data['category']
-            
+            email = serializer.validated_data["email"]
+            message = serializer.validated_data["message"]
+            category = serializer.validated_data["category"]
+
             send_email_feedback(email, message, category)
-            
-            return Response({"message": "Ваше повідомлення надіслано успішно!"}, status=status.HTTP_200_OK)
-        
+
+            return Response(
+                {"message": "Ваше повідомлення надіслано успішно!"},
+                status=status.HTTP_200_OK,
+            )
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
