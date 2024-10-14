@@ -116,7 +116,18 @@
     line-height: 22px;
 }
 
-.contact__input,
+.contact__input{
+    width: 400px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 1px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    height: 30px;
+    resize: none;
+    outline: none;;
+}
+
 .contact__textarea,
 .contact__select {
     width: 400px;
@@ -138,7 +149,7 @@
 .contact__input:focus,
 .contact__textarea:focus,
 .contact__select:focus {
-    border-color: #1e90ff;
+    border-color: #D9D9D9;
 }
 
 .contact__select.placeholder {
