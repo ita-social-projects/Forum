@@ -28,11 +28,7 @@ from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
-from .serializers import FeedbackSerializer
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.views import APIView
-from utils.administration.send_email_feedback import send_email_feedback
+
 
 class UsersListView(ListAPIView):
     """
@@ -150,23 +146,6 @@ class ContactsView(View):
 
     def get(self, request):
         return JsonResponse(CONTACTS_INFO)
-<<<<<<< HEAD
-    
-class FeedbackView(APIView):
-    def post(self, request):
-        serializer = FeedbackSerializer(data=request.data)
-        
-        if serializer.is_valid():
-            email = serializer.validated_data['email']
-            message = serializer.validated_data['message']
-            category = serializer.validated_data['category']
-            
-            send_email_feedback(email, message, category)
-            
-            return Response({"message": "Ваше повідомлення надіслано успішно!"}, status=status.HTTP_200_OK)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-=======
 
 
 class CreateAdminUserView(CreateAPIView):
@@ -178,4 +157,4 @@ class CreateAdminUserView(CreateAPIView):
         IsSuperUser,
     ]
     serializer_class = AdminRegistrationSerializer
->>>>>>> 58035b49fbe67f4d145a0be7bf47d6b50f55e368
+    
