@@ -213,35 +213,6 @@
     line-height: 16px;
 }
 
-.modal_feedback {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Напівпрозорий сірий фон */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal_feedback_content {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Легка тінь */
-    width: 400px; /* Ширина модального вікна */
-    text-align: center;
-    border: 1px solid #ddd; /* Рамка */
-}
-
-.modal_feedback_content h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
 .contact__button_container {
     display: flex;
     gap: 10px;
@@ -252,7 +223,59 @@
 .contact__button_modal_container {
     display: flex;
     gap: 10px;
-    justify-content: center; /* Center the buttons horizontally */
-    align-items: center; /* Center the buttons vertically if needed */
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
+
+}
+
+.modal_feedback {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+
+}
+
+.modal_feedback_content {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    width: 550px;
+    height: 150px;
+    text-align: center;
+    display: flex; /* Включаємо Flexbox */
+    flex-direction: column; /* Розміщуємо елементи вертикально */
+    justify-content: center; /* Вирівнює контент по вертикалі */
+    align-items: center;
+
+}
+
+.contact__button_modal_container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+}
+
+.modal_feedback_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.modal_feedback_close img {
+    width: 20px;
+    height: 20px;
 }
