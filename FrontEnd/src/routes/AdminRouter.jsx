@@ -35,11 +35,13 @@ function AdminRouter() {
             <Route path="/profile/:id" element={<ProfileDetail />} />
             <Route path="/automoderation" element={<AutoApproveDelay />} />
             {isSuperUser && (
-                <Route path="/email" element={<ModerationEmail />} />
+                <>
+                    <Route path="/email" element={<ModerationEmail />} />
+                    <Route path="/admin-create" element={<AdminRegistration />} />
+                </>
             )}
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/admin-profile/*" element={<AdminProfilePage />} />
-            <Route path="/admin-create" element={<AdminRegistration />} />
         </>
     ) : (
         <Route path="/customadmin/" />
