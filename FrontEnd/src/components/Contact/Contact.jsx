@@ -8,7 +8,7 @@ import {
     MESSAGE_PATTERN
 } from '../../constants/constants';
 import PropTypes from 'prop-types';
-import MultipleSelectChip from '../../pages/ProfilePage/FormComponents/FormFields/MultipleSelectChip.jsx';
+import DropDownMenu from '../MiniComponents/DropDownMenu/DropDownMenu.jsx';
 import styles from './Contact.module.css';
 import { Spin } from 'antd';
 
@@ -131,8 +131,8 @@ const Contact = () => {
                         required
                     />
                     {emailError && <p className={styles['contact__error']}>{emailError}</p>}
-                    <MultipleSelectChip
-                        value={category ? [category] : []}
+                    <DropDownMenu
+                        value={category ? [category] : []} // Відображення повної назви категорії
                         onChange={(value) => setCategory(value[0] || null)}
                         options={categoryOptions}
                         updateHandler={(value) => setCategory(value[0] || null)}
