@@ -31,6 +31,12 @@ const SUPERUSER_MENU = [
         title: 'Пошта адміністратора',
         link: '/customadmin/email/'
     },
+    {
+        id: 'am6',
+        title: 'Реєстрація адміністратора',
+        link: '/customadmin/admin-create/'
+    }
+
 ];
 
 function Menu() {

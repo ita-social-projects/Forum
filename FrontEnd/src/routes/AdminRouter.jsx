@@ -15,6 +15,7 @@ import AutoApproveDelay from '../pages/AdminPage/AutoApproveDelay/AutoApproveDel
 import ModerationEmail from '../pages/AdminPage/DetailView/ModerationEmail';
 import Contacts from '../pages/AdminPage/DetailView/Contacts';
 import AdminProfilePage from '../pages/AdminPage/AdminProfile/AdminProfilePage';
+import AdminRegistration from '../pages/AdminPage/AdminRegistration/AdminRegistration';
 
 import '../pages/AdminPage/AdminGlobal.css';
 import css from '../pages/AdminPage/AdminPage.module.css';
@@ -34,7 +35,10 @@ function AdminRouter() {
             <Route path="/profile/:id" element={<ProfileDetail />} />
             <Route path="/automoderation" element={<AutoApproveDelay />} />
             {isSuperUser && (
-                <Route path="/email" element={<ModerationEmail />} />
+                <>
+                    <Route path="/email" element={<ModerationEmail />} />
+                    <Route path="/admin-create" element={<AdminRegistration />} />
+                </>
             )}
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/admin-profile/*" element={<AdminProfilePage />} />

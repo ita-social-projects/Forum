@@ -13,7 +13,7 @@ const AutoApproveDelay = () => {
     });
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/automoderation/`;
     const { data, mutate } = useSWR(url, fetcher);
-    const [delay, setDelay] = useState(null);
+    const [delay, setDelay] = useState('');
     const [error, setError] = useState(null);
 
     useEffect(() => {
