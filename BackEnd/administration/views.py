@@ -6,16 +6,14 @@ from drf_spectacular.utils import (
     OpenApiResponse,
 )
 
-from rest_framework.permissions import (
-    BasePermission,
-)
 from rest_framework.generics import (
     ListAPIView,
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
+    CreateAPIView,
 )
 
+from administration.serializers import AdminRegistrationSerializer
 from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
@@ -152,6 +150,7 @@ class ContactsView(View):
 
     def get(self, request):
         return JsonResponse(CONTACTS_INFO)
+<<<<<<< HEAD
     
 class FeedbackView(APIView):
     def post(self, request):
@@ -167,3 +166,16 @@ class FeedbackView(APIView):
             return Response({"message": "Ваше повідомлення надіслано успішно!"}, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+=======
+
+
+class CreateAdminUserView(CreateAPIView):
+    """
+    View for creating an admin user.
+    """
+
+    permission_classes = [
+        IsSuperUser,
+    ]
+    serializer_class = AdminRegistrationSerializer
+>>>>>>> 58035b49fbe67f4d145a0be7bf47d6b50f55e368

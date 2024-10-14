@@ -4,8 +4,8 @@ import css from './mainPage.module.css';
 function MainPage() {
     return (
         <div className={css['main-page-section']}>
-            <h2>Welcome to the admin panel</h2>
-            <p>Here, you can:</p>
+            <h2>Вітаємо в панелі адміністратора.</h2>
+            <p>Тут ви можете:</p>
             <br />
             {MAIN_PAGE_TEXT.map((element) => (
                 <div key={element.title}>

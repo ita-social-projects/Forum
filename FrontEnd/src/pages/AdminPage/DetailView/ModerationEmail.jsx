@@ -11,7 +11,7 @@ const ModerationEmail = () => {
     const { data, mutate } = useSWR(url, fetcher);
 
     // Define email and setEmail using useState
-    const [email, setEmail] = useState(null);
+    const [email, setEmail] = useState('');
 
     // Update email state when data is fetched
     useEffect(() => {
@@ -39,7 +39,7 @@ const ModerationEmail = () => {
                 title={'Введіть Email'}
                 placement="top"
                 pointAtCenter={true}>
-                <input className={css['moderation_email-input']} type="email" onChange={handleInputChange} value={email || ''} />
+                <input className={css['moderation_email-input']} type="email" onChange={handleInputChange} value={email} />
             </Tooltip>
             <button className={css['save-button']} onClick={handleSubmit}>Змінити</button>
         </div>

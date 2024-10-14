@@ -8,7 +8,11 @@ from administration.views import (
     UserDetailView,
     AutoModerationHoursView,
     ModerationEmailView,
+<<<<<<< HEAD
     FeedbackView,
+=======
+    CreateAdminUserView,
+>>>>>>> 58035b49fbe67f4d145a0be7bf47d6b50f55e368
 )
 
 app_name = "administration"
@@ -25,5 +29,9 @@ urlpatterns = [
     ),
     path("email/", ModerationEmailView.as_view(), name="moderation-email"),
     path("contacts/", ContactsView.as_view(), name="contacts"),
+<<<<<<< HEAD
     path("feedback/", FeedbackView.as_view(), name="feedback"),
+=======
+    path("admin_create/", CreateAdminUserView.as_view(), name="admin-create"),
+>>>>>>> 58035b49fbe67f4d145a0be7bf47d6b50f55e368
 ]
