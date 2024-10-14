@@ -146,6 +146,9 @@
     min-height: 120px;
 }
 
+.contact__input::placeholder {
+    opacity: 0.3; /* Повністю видимий плейсхолдер */
+}
 .contact__input:focus,
 .contact__textarea:focus,
 .contact__select:focus {
@@ -289,4 +292,10 @@
 .modal_feedback_close img {
     width: 20px;
     height: 20px;
+}
+
+.contact__select::placeholder {
+    color: #888888; /* Темніший колір для плейсхолдера */
+    font-size: 16px; /* Розмір шрифту */
+    opacity: 1; /* Повністю видимий плейсхолдер */
 }
