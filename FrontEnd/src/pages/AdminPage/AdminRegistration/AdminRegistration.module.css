@@ -28,8 +28,8 @@
 
 .admin_registration-input-wrapper {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
+    gap: 18px;
 }
 
 .admin_registration-input {
@@ -38,7 +38,12 @@
     margin: auto;
     padding: 3px 12px;
     border: 1px solid var(--border-input__admin-panel);
+    border-radius: 2px;
     font-size: 14px;
+}
+
+.admin_registration-input:focus {
+    outline: none;
 }
 
 .admin_registration-button {
@@ -61,4 +66,5 @@
     color: var(--error-notification-text-color__admin-panel);
     font-family: var(--font-main);
     font-size: 14px;
+    margin-top: 7px;
 }

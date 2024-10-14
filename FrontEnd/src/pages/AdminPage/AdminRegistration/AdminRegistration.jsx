@@ -52,7 +52,7 @@ const AdminRegistration = () => {
                             onChange={handleInputChange}
                             type="text"
                             placeholder="Введіть текст"
-                            autoComplete="email" />
+                            autoComplete="off" />
                     </Tooltip>
                     <button className={css['admin_registration-button']} onClick={handleSubmit}>
                         Згенерувати та надіслати пароль
