@@ -31,6 +31,7 @@ class UserSelfAPITests(APITestCase):
                 "surname": "Test",
                 "profile_id": AnyInt(),
                 "is_staff": False,
+                "is_superuser": False,
             },
             response.json(),
         )
@@ -54,6 +55,7 @@ class UserSelfAPITests(APITestCase):
                 "surname": "Ivanenko",
                 "profile_id": AnyInt(),
                 "is_staff": False,
+                "is_superuser": False,
             },
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -65,6 +67,7 @@ class UserSelfAPITests(APITestCase):
                 "surname": "Ivanenko",
                 "profile_id": AnyInt(),
                 "is_staff": False,
+                "is_superuser": False,
             },
             response.json(),
         )
@@ -86,6 +89,7 @@ class UserSelfAPITests(APITestCase):
                 "surname": "Petrenko",
                 "profile_id": AnyInt(),
                 "is_staff": False,
+                "is_superuser": False,
             },
             response.json(),
         )

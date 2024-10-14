@@ -110,6 +110,7 @@ class UserListSerializer(UserSerializer):
             "surname",
             "profile_id",
             "is_staff",
+            "is_superuser",
         )
 
 

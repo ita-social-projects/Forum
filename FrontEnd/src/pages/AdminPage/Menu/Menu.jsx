@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-
+import { useAuth } from '../../../hooks';
 import css from './Menu.module.css';
 
 const MENU = [
@@ -23,6 +23,9 @@ const MENU = [
         title: 'Зміна часу автомодерації',
         link: '/customadmin/automoderation/'
     },
+];
+
+const SUPERUSER_MENU = [
     {
         id: 'am5',
         title: 'Пошта адміністратора',
@@ -31,10 +34,14 @@ const MENU = [
 ];
 
 function Menu() {
+    const { isSuperUser } = useAuth();
 
     return (
         <div className={css['menu-section']}>
-            {MENU.map((element) => (
+            {[
+                ...MENU,
+                ...(isSuperUser ? SUPERUSER_MENU : [])
+            ].map((element) => (
                 <NavLink
                     className={({ isActive }) => (`${css['menu-section-element']} ${isActive && css['menu-section-element__active']}`)}
                     key={element.id} to={element.link}>{element.title}
