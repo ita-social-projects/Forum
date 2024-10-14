@@ -157,4 +157,3 @@ class CreateAdminUserView(CreateAPIView):
         IsSuperUser,
     ]
     serializer_class = AdminRegistrationSerializer
-    

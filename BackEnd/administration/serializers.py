@@ -170,19 +170,30 @@ class ModerationEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModerationEmail
         fields = ["email_moderation"]
+
+
 class FeedbackSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True, error_messages={
-        "required": "Будь ласка, вкажіть правильну адресу електронної скриньки."
-    })
-    message = serializers.CharField(min_length=10, required=True, error_messages={
-        "required": "Повідомлення не може бути порожнім.",
-        "min_length": "Повідомлення не може бути коротшим за 10 символів."
-    })
-    category = serializers.ChoiceField(choices=[
-        ('Технічне питання', 'Технічне питання'),
-        ('Рекомендації', 'Рекомендації'),
-        ('Питання', 'Питання'),
-        ('Інше', 'Інше')
-    ], required=True, error_messages={
-        "required": "Будь ласка, оберіть тип повідомлення."
-    })
+    email = serializers.EmailField(
+        required=True,
+        error_messages={
+            "required": "Будь ласка, вкажіть правильну адресу електронної скриньки."
+        },
+    )
+    message = serializers.CharField(
+        min_length=10,
+        required=True,
+        error_messages={
+            "required": "Повідомлення не може бути порожнім.",
+            "min_length": "Повідомлення не може бути коротшим за 10 символів.",
+        },
+    )
+    category = serializers.ChoiceField(
+        choices=[
+            ("Технічне питання", "Технічне питання"),
+            ("Рекомендації", "Рекомендації"),
+            ("Питання", "Питання"),
+            ("Інше", "Інше"),
+        ],
+        required=True,
+        error_messages={"required": "Будь ласка, оберіть тип повідомлення."},
+    )
