@@ -51,7 +51,7 @@ const AdminRegistration = () => {
                             id="newAdminEmail"
                             onChange={handleInputChange}
                             type="text"
-                            placeholder="Введіть текст"
+                            placeholder="Введіть електронну пошту"
                             autoComplete="off" />
                     </Tooltip>
                     <button className={css['admin_registration-button']} onClick={handleSubmit}>

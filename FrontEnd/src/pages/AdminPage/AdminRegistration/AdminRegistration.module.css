@@ -39,6 +39,7 @@
     padding: 3px 12px;
     border: 1px solid var(--border-input__admin-panel);
     border-radius: 2px;
+    font-family: var(--font-messages);
     font-size: 14px;
 }
 
