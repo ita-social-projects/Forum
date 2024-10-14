@@ -21,10 +21,11 @@ import '../pages/AdminPage/AdminGlobal.css';
 import css from '../pages/AdminPage/AdminPage.module.css';
 
 function AdminRouter() {
-    const { isLoading, isAuth, isStaff, user } = useAuth();
+    const { isLoading, isAuth, isStaff, isSuperUser, user } = useAuth();
     const { pathname } = useLocation();
     const hideMenu = pathname.includes('/admin-profile/');
     const renderMenu = isStaff && isAuth && !hideMenu ? <Menu /> : null;
+
     const authRoutes = isStaff && isAuth ? (
         <>
             <Route path="/" element={<MainPage />} />
@@ -33,7 +34,9 @@ function AdminRouter() {
             <Route path="/profiles" element={<ProfilesTable />} />
             <Route path="/profile/:id" element={<ProfileDetail />} />
             <Route path="/automoderation" element={<AutoApproveDelay />} />
-            <Route path="/email" element={<ModerationEmail />} />
+            {isSuperUser && (
+                <Route path="/email" element={<ModerationEmail />} />
+            )}
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/admin-profile/*" element={<AdminProfilePage />} />
             <Route path="/admin-create" element={<AdminRegistration />} />

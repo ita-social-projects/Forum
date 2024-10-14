@@ -80,6 +80,7 @@ class UserLogoutAPITests(APITestCase):
                 "surname": "Test",
                 "profile_id": AnyInt(),
                 "is_staff": False,
+                "is_superuser": False,
             },
             response.json(),
         )
