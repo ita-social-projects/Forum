@@ -57,7 +57,7 @@
     width: 400px;
     border-radius: 2px;
     border: 1px solid #D9D9D9;
-    background: #FFF;
+    background: var(--light-text-color);
 }
 .dropdown__select-container::after{
     border: 1px solid var(--main-button-color);
