@@ -6,16 +6,14 @@ from drf_spectacular.utils import (
     OpenApiResponse,
 )
 
-from rest_framework.permissions import (
-    BasePermission,
-)
 from rest_framework.generics import (
     ListAPIView,
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
+    CreateAPIView,
 )
 
+from administration.serializers import AdminRegistrationSerializer
 from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
@@ -148,3 +146,14 @@ class ContactsView(View):
 
     def get(self, request):
         return JsonResponse(CONTACTS_INFO)
+
+
+class CreateAdminUserView(CreateAPIView):
+    """
+    View for creating an admin user.
+    """
+
+    permission_classes = [
+        IsSuperUser,
+    ]
+    serializer_class = AdminRegistrationSerializer

@@ -13,7 +13,6 @@ from rest_framework import serializers
 from ratelimit.decorators import RateLimitDecorator
 from ratelimit.exception import RateLimitException
 
-
 from profiles.models import Profile
 from validation.validate_password import (
     validate_password_long,

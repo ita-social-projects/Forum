@@ -20,5 +20,6 @@ drf-spectacular==0.26.5
 ratelimit==2.2.1
 django-debug-toolbar==4.3.0
 celery==5.4.0
+passlib==1.7.4
 
 
