@@ -21,8 +21,12 @@ const AdminRegistration = () => {
                 .then(() => {
                     toast.success('Пароль надіслано на електронну адресу');
                 })
-                .catch(() => {
-                    toast.error('Виникла помилка');
+                .catch((err) => {
+                    if (err.response.data.email) {
+                        toast.error('Ця електронна пошта вже використовується');
+                    } else {
+                        toast.error('Виникла помилка');
+                    }
                 })
                 .finally(() => {
                     setError(null);
