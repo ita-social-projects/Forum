@@ -51,14 +51,21 @@ class AdminRegistrationSerializer(serializers.Serializer):
 
 
 class AdminUserListSerializer(serializers.ModelSerializer):
+    company_name = serializers.SerializerMethodField()
+
     class Meta:
         model = CustomUser
         fields = (
             "id",
             "email",
-            "name",
+            "name",  # TODO deleted and rename
             "surname",
+            "is_active",
+            "company_name",
         )
+
+    def get_company_name(self, obj) -> str:
+        return obj.profile.name if hasattr(obj, "profile") else ""
 
 
 class AdminUserDetailSerializer(serializers.ModelSerializer):

@@ -28,17 +28,40 @@ from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
+from django_filters.rest_framework import DjangoFilterBackend as filters
+from .filters import UsersFilter
 
 
 class UsersListView(ListAPIView):
     """
     List of users.
+    Query parameters:
+       ?sort=id&direction=asc
+    Filters:
+       ?company_name=
     """
 
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
-    queryset = CustomUser.objects.all().order_by("id")
+    queryset = CustomUser.objects.all()  # .order_by("id") TODO
+    filter_backends = [
+        filters,
+    ]
+    filterset_class = UsersFilter
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        status = self.request.query_params.get("status", None)
+        if status:
+            queryset = queryset.filter(status=status)
+
+        sort = self.request.query_params.get("sort", "name")
+        direction = self.request.query_params.get("direction", "asc")
+        if direction == "desc":
+            sort = f"-{sort}"
+        return queryset.order_by(sort)
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):

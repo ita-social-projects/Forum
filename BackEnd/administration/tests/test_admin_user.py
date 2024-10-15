@@ -44,6 +44,8 @@ class TestAdminUsersAPITests(APITestCase):
                 "email": "test39@test.com",
                 "name": "Test person 39",
                 "surname": "Test person 39 surname",
+                "is_active": True,
+                "company_name": "",
             }
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
