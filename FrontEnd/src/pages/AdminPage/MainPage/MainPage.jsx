@@ -5,6 +5,7 @@ function MainPage() {
     return (
         <div className={css['main-page-section']}>
             <h2>Вітаємо в панелі адміністратора.</h2>
+            <br />
             <p>Тут ви можете:</p>
             <br />
             {MAIN_PAGE_TEXT.map((element) => (
