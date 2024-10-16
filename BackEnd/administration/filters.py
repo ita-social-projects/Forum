@@ -1,6 +1,5 @@
 from django_filters import filters
 from django_filters.rest_framework import FilterSet
-from authentication.models import CustomUser
 
 
 class UsersFilter(FilterSet):
@@ -23,15 +22,3 @@ class UsersFilter(FilterSet):
             ("status", "status"),
         )
     )
-
-    class Meta:
-        model = CustomUser
-        fields = [
-            "id",
-            "name",
-            "surname",
-            "email",
-            "company_name",
-            "status",
-            "registration_date",
-        ]
