@@ -1,7 +1,6 @@
 from django_filters import filters
 from django_filters.rest_framework import FilterSet
 from authentication.models import CustomUser
-from rest_framework import viewsets
 
 
 class UsersFilter(FilterSet):
@@ -13,18 +12,10 @@ class UsersFilter(FilterSet):
     )
     status = filters.CharFilter(lookup_expr="icontains")
     registration_date = filters.CharFilter(lookup_expr="icontains")
-
-    def is_saved_filter(self, queryset, name, value):
-        if value:
-            if self.request.user.is_authenticated:
-                queryset = queryset.filter(saved_list__user=self.request.user)
-            else:
-                queryset = queryset.none()
-        return queryset
-
     ordering = filters.OrderingFilter(
         fields=(
             ("id", "id"),
+            ("name", "name"),
             ("surname", "surname"),
             ("email", "email"),
             ("company_name", "company_name"),
@@ -37,6 +28,7 @@ class UsersFilter(FilterSet):
         model = CustomUser
         fields = [
             "id",
+            "name",
             "surname",
             "email",
             "company_name",

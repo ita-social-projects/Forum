@@ -28,6 +28,7 @@ from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
+
 from django_filters.rest_framework import DjangoFilterBackend as filters
 from .filters import UsersFilter
 
@@ -44,7 +45,7 @@ class UsersListView(ListAPIView):
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
-    queryset = CustomUser.objects.all()  # .order_by("id") TODO
+    queryset = CustomUser.objects.all().order_by("id")
     filter_backends = [
         filters,
     ]

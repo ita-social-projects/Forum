@@ -52,20 +52,39 @@ class AdminRegistrationSerializer(serializers.Serializer):
 
 class AdminUserListSerializer(serializers.ModelSerializer):
     company_name = serializers.SerializerMethodField()
+    registration_date = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
         fields = (
             "id",
             "email",
-            "name",  # TODO deleted and rename
+            "name",
             "surname",
-            "is_active",
+            "status",
             "company_name",
+            "registration_date",
         )
 
     def get_company_name(self, obj) -> str:
-        return obj.profile.name if hasattr(obj, "profile") else ""
+        return obj.profile.name if hasattr(obj, "profile") else "No profile"
+
+    def get_registration_date(self, obj) -> str:
+        return (
+            obj.profile.created_at if hasattr(obj, "profile") else "No profile"
+        )
+
+    def get_status(self, obj) -> dict:
+        return {
+            "is_active": obj.is_active,
+            "is_deleted": obj.profile.is_deleted
+            if hasattr(obj, "profile")
+            else False,
+            "status": obj.profile.status
+            if hasattr(obj, "profile")
+            else "pending",
+        }
 
 
 class AdminUserDetailSerializer(serializers.ModelSerializer):
