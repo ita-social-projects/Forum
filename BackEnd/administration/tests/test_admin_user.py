@@ -23,6 +23,79 @@ class TestAdminUsersAPITestsNotStaff(APITestCase):
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
 
+class TestAdminUsersListAPITests(APITestCase):
+    def setUp(self):
+        self.users = AdminUserFactory.create_batch(2)
+        self.user = self.users[0]
+
+    def test_get_users_sort_desc(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/admin/users/?sort=id&direction=desc")
+        data = [
+            {
+                "id": 47,
+                "email": "test47@test.com",
+                "name": "Test person 47",
+                "surname": "Test person 47 surname",
+                "status": {
+                    "is_active": False,
+                    "is_staff": False,
+                    "is_superuser": False,
+                },
+                "company_name": "No profile",
+                "registration_date": "No profile",
+            },
+            {
+                "id": 46,
+                "email": "test46@test.com",
+                "name": "Test person 46",
+                "surname": "Test person 46 surname",
+                "status": {
+                    "is_active": False,
+                    "is_staff": False,
+                    "is_superuser": False,
+                },
+                "company_name": "No profile",
+                "registration_date": "No profile",
+            },
+        ]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(data, response.json())
+    
+    def test_get_users_sort_asc(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/admin/users/?sort=id&direction=asc")
+        data = [
+            {
+                "id": 44,
+                "email": "test44@test.com",
+                "name": "Test person 44",
+                "surname": "Test person 44 surname",
+                "status": {
+                    "is_active": False,
+                    "is_staff": False,
+                    "is_superuser": False,
+                },
+                "company_name": "No profile",
+                "registration_date": "No profile",
+            },
+            {
+                "id": 45,
+                "email": "test45@test.com",
+                "name": "Test person 45",
+                "surname": "Test person 45 surname",
+                "status": {
+                    "is_active": False,
+                    "is_staff": False,
+                    "is_superuser": False,
+                },
+                "company_name": "No profile",
+                "registration_date": "No profile",
+            },
+        ]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(data, response.json())
+
 class TestAdminUsersAPITests(APITestCase):
     def setUp(self):
         self.user = AdminUserFactory()
@@ -55,7 +128,28 @@ class TestAdminUsersAPITests(APITestCase):
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
-
+        
+    def test_get_users_filter(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/admin/users/?sort=id&direction=asc")
+        data = [
+            {
+                "id": 40,
+                "email": "test40@test.com",
+                "name": "Test person 40",
+                "surname": "Test person 40 surname",
+                "status": {
+                    "is_active": False,
+                    "is_staff": False,
+                    "is_superuser": False,
+                },
+                "company_name": "No profile",
+                "registration_date": "No profile",
+            }
+        ]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(data, response.json())
+    
     def test_get_user_id_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path=f"/api/admin/users/{self.user.id}/")
