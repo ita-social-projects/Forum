@@ -45,10 +45,8 @@ class UsersListView(ListAPIView):
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
-    queryset = CustomUser.objects.all().order_by("id")
-    filter_backends = [
-        filters,
-    ]
+    queryset = CustomUser.objects.all()
+    filter_backends = [filters]
     filterset_class = UsersFilter
 
     def get_queryset(self):

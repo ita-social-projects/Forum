@@ -76,15 +76,13 @@ class AdminUserListSerializer(serializers.ModelSerializer):
         )
 
     def get_status(self, obj) -> dict:
-        return {
-            "is_active": obj.is_active,
-            "is_deleted": obj.profile.is_deleted
-            if hasattr(obj, "profile")
-            else False,
-            "status": obj.profile.status
-            if hasattr(obj, "profile")
-            else "pending",
+        has_profile = hasattr(obj, "profile")
+        data = {
+            "is_active": obj.is_active if has_profile else False,
+            "is_staff": obj.is_staff if has_profile else False,
+            "is_superuser": obj.is_superuser if has_profile else False,
         }
+        return data
 
 
 class AdminUserDetailSerializer(serializers.ModelSerializer):

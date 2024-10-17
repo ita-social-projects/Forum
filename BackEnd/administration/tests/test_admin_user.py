@@ -45,9 +45,9 @@ class TestAdminUsersAPITests(APITestCase):
                 "name": "Test person 39",
                 "surname": "Test person 39 surname",
                 "status": {
-                    "is_active": True,
-                    "is_deleted": False,
-                    "status": "pending",
+                    "is_active": False,
+                    "is_staff": False,
+                    "is_superuser": False,
                 },
                 "company_name": "No profile",
                 "registration_date": "No profile",
