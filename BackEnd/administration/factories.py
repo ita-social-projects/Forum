@@ -15,6 +15,7 @@ class AdminUserFactory(factory.django.DjangoModelFactory):
 
     is_active = True
     is_staff = True
+    is_superuser = False
 
 
 class AdminProfileFactory(factory.django.DjangoModelFactory):
