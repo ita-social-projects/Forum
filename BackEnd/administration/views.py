@@ -37,9 +37,9 @@ class UsersListView(ListAPIView):
     """
     List of users.
     Query parameters:
-       ?sort=id&direction=asc
+       /?sort=id&direction=asc or /?sort=id&direction=desc
     Filters:
-       ?company_name=
+       /?company_name= ,/?status=active/inactive/staff/superuser/deleted
     """
 
     permission_classes = [IsStaffUser]
@@ -54,7 +54,16 @@ class UsersListView(ListAPIView):
 
         status = self.request.query_params.get("status", None)
         if status:
-            queryset = queryset.filter(status=status)
+            if status == "active":
+                queryset = queryset.filter(is_active=True)
+            elif status == "inactive":
+                queryset = queryset.filter(is_active=False)
+            elif status == "staff":
+                queryset = queryset.filter(is_staff=True)
+            elif status == "superuser":
+                queryset = queryset.filter(is_superuser=True)
+            elif status == "deleted":
+                queryset = queryset.filter(email__startswith="is_deleted_")
 
         sort = self.request.query_params.get("sort", "name")
         direction = self.request.query_params.get("direction", "asc")
