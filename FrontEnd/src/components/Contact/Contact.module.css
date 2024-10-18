@@ -148,7 +148,7 @@
 }
 
 .contact__input::placeholder {
-    opacity: 0.3; /* Повністю видимий плейсхолдер */
+    opacity: 0.3;
 }
 .contact__input:focus,
 .contact__textarea:focus,
@@ -265,9 +265,9 @@
     width: 550px;
     height: 150px;
     text-align: center;
-    display: flex; /* Включаємо Flexbox */
-    flex-direction: column; /* Розміщуємо елементи вертикально */
-    justify-content: center; /* Вирівнює контент по вертикалі */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 
 }
@@ -296,7 +296,7 @@
 }
 
 .contact__select::placeholder {
-    color: #888888; /* Темніший колір для плейсхолдера */
-    font-size: 16px; /* Розмір шрифту */
-    opacity: 1; /* Повністю видимий плейсхолдер */
+    color: #888888;
+    font-size: 16px;
+    opacity: 1
 }
