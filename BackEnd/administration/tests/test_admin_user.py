@@ -30,7 +30,9 @@ class TestAdminUsersListAPITests(APITestCase):
 
     def test_get_users_sort_desc(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path="/api/admin/users/?sort=id&direction=desc")
+        response = self.client.get(
+            path="/api/admin/users/?sort=id&direction=desc"
+        )
         data = [
             {
                 "id": 47,
@@ -38,9 +40,10 @@ class TestAdminUsersListAPITests(APITestCase):
                 "name": "Test person 47",
                 "surname": "Test person 47 surname",
                 "status": {
-                    "is_active": False,
-                    "is_staff": False,
+                    "is_active": True,
+                    "is_staff": True,
                     "is_superuser": False,
+                    "is_deleted": False,
                 },
                 "company_name": "No profile",
                 "registration_date": "No profile",
@@ -51,9 +54,10 @@ class TestAdminUsersListAPITests(APITestCase):
                 "name": "Test person 46",
                 "surname": "Test person 46 surname",
                 "status": {
-                    "is_active": False,
-                    "is_staff": False,
+                    "is_active": True,
+                    "is_staff": True,
                     "is_superuser": False,
+                    "is_deleted": False,
                 },
                 "company_name": "No profile",
                 "registration_date": "No profile",
@@ -61,10 +65,12 @@ class TestAdminUsersListAPITests(APITestCase):
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
-    
+
     def test_get_users_sort_asc(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path="/api/admin/users/?sort=id&direction=asc")
+        response = self.client.get(
+            path="/api/admin/users/?sort=id&direction=asc"
+        )
         data = [
             {
                 "id": 44,
@@ -72,9 +78,10 @@ class TestAdminUsersListAPITests(APITestCase):
                 "name": "Test person 44",
                 "surname": "Test person 44 surname",
                 "status": {
-                    "is_active": False,
-                    "is_staff": False,
+                    "is_active": True,
+                    "is_staff": True,
                     "is_superuser": False,
+                    "is_deleted": False,
                 },
                 "company_name": "No profile",
                 "registration_date": "No profile",
@@ -85,9 +92,10 @@ class TestAdminUsersListAPITests(APITestCase):
                 "name": "Test person 45",
                 "surname": "Test person 45 surname",
                 "status": {
-                    "is_active": False,
-                    "is_staff": False,
+                    "is_active": True,
+                    "is_staff": True,
                     "is_superuser": False,
+                    "is_deleted": False,
                 },
                 "company_name": "No profile",
                 "registration_date": "No profile",
@@ -95,6 +103,7 @@ class TestAdminUsersListAPITests(APITestCase):
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
+
 
 class TestAdminUsersAPITests(APITestCase):
     def setUp(self):
@@ -118,9 +127,10 @@ class TestAdminUsersAPITests(APITestCase):
                 "name": "Test person 39",
                 "surname": "Test person 39 surname",
                 "status": {
-                    "is_active": False,
-                    "is_staff": False,
+                    "is_active": True,
+                    "is_staff": True,
                     "is_superuser": False,
+                    "is_deleted": False,
                 },
                 "company_name": "No profile",
                 "registration_date": "No profile",
@@ -128,10 +138,12 @@ class TestAdminUsersAPITests(APITestCase):
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
-        
+
     def test_get_users_filter(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path="/api/admin/users/?sort=id&direction=asc")
+        response = self.client.get(
+            path="/api/admin/users/?sort=id&direction=asc"
+        )
         data = [
             {
                 "id": 40,
@@ -139,9 +151,10 @@ class TestAdminUsersAPITests(APITestCase):
                 "name": "Test person 40",
                 "surname": "Test person 40 surname",
                 "status": {
-                    "is_active": False,
-                    "is_staff": False,
+                    "is_active": True,
+                    "is_staff": True,
                     "is_superuser": False,
+                    "is_deleted": False,
                 },
                 "company_name": "No profile",
                 "registration_date": "No profile",
@@ -149,7 +162,7 @@ class TestAdminUsersAPITests(APITestCase):
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
-    
+
     def test_get_user_id_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path=f"/api/admin/users/{self.user.id}/")
