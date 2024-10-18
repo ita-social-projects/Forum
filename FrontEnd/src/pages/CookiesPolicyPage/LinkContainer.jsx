@@ -14,7 +14,7 @@ const LinkContainer = () => {
         Умови користування
       </NavLink>
       <NavLink to="/contact/" className={getClassName}>
-        Contact
+      Зворотній зв&apos;язок
       </NavLink>
     </div>
   );
