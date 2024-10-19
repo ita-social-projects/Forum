@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useStopwatch } from 'react-timer-hook';
 import { toast } from 'react-toastify';
+import classNames from 'classnames';
 
 import validator from 'validator';
 import EyeVisible from './EyeVisible';
@@ -29,7 +30,7 @@ const LoginContent = () => {
 
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
-    email: 'Електронна пошта не відповідає вимогам',
+    email: 'Введіть адресу електронної пошти у форматі name@example.com',
     unspecifiedError: 'Електронна пошта чи пароль вказані некоректно',
     rateError: 'Небезпечні дії на сторінці. Сторінка заблокована на 10 хвилин',
     blockedUserError: 'Профіль компанії було заблоковано внаслідок розміщення неприйнятного контенту',
@@ -137,13 +138,13 @@ const LoginContent = () => {
   };
 
   useEffect(() => {}, [disabled]);
-
+  console.log('ERRORS', errors);
   return (
     <div className={classes['login-basic']}>
       <div className={classes['login-header']}>
         <p>Вхід на платформу</p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes['login-form']} noValidate>
         <div className={classes['login-content']}>
           <div className={classes['login-content__items']}>
             <div className={classes['login-content__item']}>
@@ -157,12 +158,15 @@ const LoginContent = () => {
               >
                 Електронна пошта
               </label>
-              <div className={classes['login-content__email']}>
+              <div className={classNames(
+                classes['login-content__email'],
+                { [classes['login-content__email-error']]: errors.email }
+              )}>
                 <input
                   id="email"
                   type="email"
                   autoComplete="username"
-                  placeholder="Електронна пошта"
+                  placeholder="Введіть свою електрону пошту"
                   {...register('email', {
                     required: errorMessageTemplates.required,
                     validate: (value) =>
@@ -186,13 +190,17 @@ const LoginContent = () => {
               >
                 Пароль
               </label>
-              <div className={classes['login-content__password']}>
+              <div className={classNames(
+                  classes['login-content__password'],
+                  { [classes['login-content__password-error']]: errors.password },
+                  { [classes['login-content__show-password']]: showPassword }
+                )}>
                 <div className={classes['login-content__password__wrapper']}>
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
-                    placeholder="Пароль"
+                    placeholder="Введіть пароль"
                     {...register('password', {
                       required: errorMessageTemplates.required,
                     })}
@@ -205,27 +213,21 @@ const LoginContent = () => {
                   </span>
                 </div>
               </div>
-              <span className={classes['error-message']}>
-                {errors.password && errors.password.message}
-                {errors.required && errors.required.message}
-                {errors.unspecifiedError && errors.unspecifiedError.message}
-              </span>
+              <div className={classes['forget-password__wrapper']}>
+                <span className={classes['error-message']}>
+                  {errors.password && errors.password.message}
+                  {errors.required && errors.required.message}
+                  {errors.unspecifiedError && errors.unspecifiedError.message}
+                </span>
+                <Link to="/reset-password" className={classes['forget-password']}>
+                  Забули пароль?
+                </Link>
+              </div>
             </div>
-            <Link to="/reset-password" className={classes['forget-password']}>
-              Забули пароль?
-            </Link>
           </div>
         </div>
         <div className={classes['login-footer']}>
           <div className={classes['login-footer-buttons']}>
-            <Link to="/">
-              <button
-                type="button"
-                className={classes['login-footer-buttons__main']}
-              >
-                Головна
-              </button>
-            </Link>
             <button
               disabled={disabled}
               type="submit"
