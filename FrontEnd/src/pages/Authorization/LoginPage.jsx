@@ -138,7 +138,7 @@ const LoginContent = () => {
   };
 
   useEffect(() => {}, [disabled]);
-  console.log('ERRORS', errors);
+
   return (
     <div className={classes['login-basic']}>
       <div className={classes['login-header']}>
