@@ -1,8 +1,15 @@
 .login {
-  display: inline-flex;
+  display: flex;
+  align-self: center;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
-  margin: 159px 470px 158px 470px;
-  position: relative;
+  min-width: 345px;
+  gap: 24px;
+}
+
+
+@media screen and (min-width: var(--breakpoint-tablet)) and (max-width: var(--breakpoint-desktop)) {
+  .login {
+    min-width: none;
+  }
 }

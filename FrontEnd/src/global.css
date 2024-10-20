@@ -24,6 +24,10 @@
 
 :root {
 
+  --breakpoint-mobile: 375px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1512px;
+
   --main-block-size: 1512px;
 
   /* background color*/
@@ -118,4 +122,16 @@
   --profile-min-height-block: calc(100vh - 565px);
   --min-height-block-main: calc(100vh - 305px);
   --company-card-color: #FFF;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1511px) {
+  :root {
+    --main-block-size: 768px;
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 767px) {
+  :root {
+    --main-block-size: 375px;
+  }
 }
