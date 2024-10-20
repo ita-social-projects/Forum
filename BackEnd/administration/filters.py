@@ -6,7 +6,9 @@ class UsersFilter(FilterSet):
     """
     Filters
     /?id= ,/?name=, /?surname=, /?email= , /?is_active= , /?is_staff=,
-    /?is_superuser=,  /?is_deleted=,  /?company_name=, /?egistration_date=,
+    /?is_superuser=,  /?is_deleted=True or False,  /?company_name=, /?registration_date=,
+    Ordering sample
+    /?ordering=id asc or /?ordering=-id desc
     """
 
     id = filters.CharFilter(lookup_expr="icontains")
@@ -26,8 +28,6 @@ class UsersFilter(FilterSet):
     def filter_is_deleted(self, queryset, name, value):
         if value:
             queryset = queryset.filter(email__startswith="is_deleted_")
-        else:
-            queryset = queryset.exclude(email__startswith="is_deleted_")
         return queryset
 
     ordering = filters.OrderingFilter(
@@ -39,8 +39,8 @@ class UsersFilter(FilterSet):
             ("is_active", "is_active"),
             ("is_staff", "is_staff"),
             ("is_superuser", "is_superuser"),
+            ("is_deleted", "is_deleted"),
             ("profile__name", "company_name"),
             ("profile__created_at", "registration_date"),
-            ("email", "is_deleted"),
         )
     )

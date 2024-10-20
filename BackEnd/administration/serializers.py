@@ -68,12 +68,10 @@ class AdminUserListSerializer(serializers.ModelSerializer):
         )
 
     def get_company_name(self, obj) -> str:
-        return obj.profile.name if hasattr(obj, "profile") else "No profile"
+        return obj.profile.name if hasattr(obj, "profile") else None
 
     def get_registration_date(self, obj) -> str:
-        return (
-            obj.profile.created_at if hasattr(obj, "profile") else "No profile"
-        )
+        return obj.profile.created_at if hasattr(obj, "profile") else None
 
     def get_status(self, obj) -> dict:
         data = {

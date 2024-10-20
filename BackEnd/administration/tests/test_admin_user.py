@@ -45,8 +45,8 @@ class TestAdminUsersSortFilterAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             },
             {
                 "id": 48,
@@ -59,8 +59,8 @@ class TestAdminUsersSortFilterAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             },
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -83,8 +83,8 @@ class TestAdminUsersSortFilterAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             },
             {
                 "id": 47,
@@ -97,8 +97,8 @@ class TestAdminUsersSortFilterAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             },
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -121,8 +121,8 @@ class TestAdminUsersSortFilterAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             },
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -151,8 +151,8 @@ class TestAdminUsersStatusAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             },
             {
                 "id": 51,
@@ -165,8 +165,8 @@ class TestAdminUsersStatusAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             },
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -209,8 +209,8 @@ class TestAdminUsersAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             }
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -233,8 +233,8 @@ class TestAdminUsersAPITests(APITestCase):
                     "is_superuser": False,
                     "is_deleted": False,
                 },
-                "company_name": "No profile",
-                "registration_date": "No profile",
+                "company_name": None,
+                "registration_date": None,
             }
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
