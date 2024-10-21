@@ -24,10 +24,6 @@
 
 :root {
 
-  --breakpoint-mobile: 375px;
-  --breakpoint-tablet: 768px;
-  --breakpoint-desktop: 1512px;
-
   --main-block-size: 1512px;
 
   /* background color*/
