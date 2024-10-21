@@ -35,9 +35,19 @@ from .filters import UsersFilter
 
 class UsersListView(ListAPIView):
     """
-    List of users.
-    - Query parameters
-    - Filters: DjangoFilterBackend
+    View to list users with optional filtering and ordering.
+
+    ### Query Parameters:
+    -  **id** / **surname** / **email** /  **is_active** /  **is_staff** / **is_superuser** / **is_deleted**
+    - **company_name** /  **registration_date**
+
+    ### Ordering:
+    - Use the `ordering` parameter to sort the results.
+    - Example: `/users/?ordering=id` (ascending by ID) or `/users/?ordering=-id` (descending by ID).
+
+    ### Filters:
+    - Filters are applied using `DjangoFilterBackend`. All the above query parameters are supported for filtering.
+    **Without is_deleted**
     """
 
     permission_classes = [IsStaffUser]
