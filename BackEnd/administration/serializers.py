@@ -51,6 +51,10 @@ class AdminRegistrationSerializer(serializers.Serializer):
 
 
 class AdminUserListSerializer(serializers.ModelSerializer):
+    company_name = serializers.SerializerMethodField()
+    registration_date = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
+
     class Meta:
         model = CustomUser
         fields = (
@@ -58,7 +62,25 @@ class AdminUserListSerializer(serializers.ModelSerializer):
             "email",
             "name",
             "surname",
+            "status",
+            "company_name",
+            "registration_date",
         )
+
+    def get_company_name(self, obj) -> str:
+        return obj.profile.name if hasattr(obj, "profile") else None
+
+    def get_registration_date(self, obj) -> str:
+        return obj.profile.created_at if hasattr(obj, "profile") else None
+
+    def get_status(self, obj) -> dict:
+        data = {
+            "is_active": obj.is_active,
+            "is_staff": obj.is_staff,
+            "is_superuser": obj.is_superuser,
+            "is_deleted": obj.email.startswith("is_deleted_"),
+        }
+        return data
 
 
 class AdminUserDetailSerializer(serializers.ModelSerializer):
