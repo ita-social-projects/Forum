@@ -26,6 +26,7 @@ class TestAdminUsersAPITestsNotStaff(APITestCase):
 class TestAdminUsersOrderingFilterAPITests(APITestCase):
     def setUp(self):
         self.users = AdminUserFactory.create_batch(2)
+        AdminUserFactory.reset_sequence(1)
         self.user = self.users[0]
 
     def test_get_users_ordering_desc(self):
@@ -33,10 +34,10 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
         response = self.client.get(path="/api/admin/users/?ordering=-id")
         data = [
             {
-                "id": 49,
-                "email": "test49@test.com",
-                "name": "Test person 49",
-                "surname": "Test person 49 surname",
+                "id": 3,
+                "email": "test3@test.com",
+                "name": "Test person 3",
+                "surname": "Test person 3 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -47,10 +48,10 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
                 "registration_date": None,
             },
             {
-                "id": 48,
-                "email": "test48@test.com",
-                "name": "Test person 48",
-                "surname": "Test person 48 surname",
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -69,10 +70,10 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
         response = self.client.get(path="/api/admin/users/?ordering=id")
         data = [
             {
-                "id": 46,
-                "email": "test46@test.com",
-                "name": "Test person 46",
-                "surname": "Test person 46 surname",
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -83,10 +84,10 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
                 "registration_date": None,
             },
             {
-                "id": 47,
-                "email": "test47@test.com",
-                "name": "Test person 47",
-                "surname": "Test person 47 surname",
+                "id": 3,
+                "email": "test3@test.com",
+                "name": "Test person 3",
+                "surname": "Test person 3 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -102,13 +103,13 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
 
     def test_get_users_filter_id_surname(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(path="/api/admin/users/?id=44&surname=44")
+        response = self.client.get(path="/api/admin/users/?id=5&surname=5")
         data = [
             {
-                "id": 44,
-                "email": "test44@test.com",
-                "name": "Test person 44",
-                "surname": "Test person 44 surname",
+                "id": 5,
+                "email": "test5@test.com",
+                "name": "Test person 5",
+                "surname": "Test person 5 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -126,6 +127,7 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
 class TestAdminUsersStatusAPITests(APITestCase):
     def setUp(self):
         self.users = AdminUserFactory.create_batch(2)
+        AdminUserFactory.reset_sequence(1)
         self.user = self.users[0]
 
     def test_get_users_filter_status_active_staff(self):
@@ -135,10 +137,10 @@ class TestAdminUsersStatusAPITests(APITestCase):
         )
         data = [
             {
-                "id": 50,
-                "email": "test50@test.com",
-                "name": "Test person 50",
-                "surname": "Test person 50 surname",
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -149,10 +151,10 @@ class TestAdminUsersStatusAPITests(APITestCase):
                 "registration_date": None,
             },
             {
-                "id": 51,
-                "email": "test51@test.com",
-                "name": "Test person 51",
-                "surname": "Test person 51 surname",
+                "id": 3,
+                "email": "test3@test.com",
+                "name": "Test person 3",
+                "surname": "Test person 3 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -179,6 +181,7 @@ class TestAdminUsersStatusAPITests(APITestCase):
 class TestAdminUsersAPITests(APITestCase):
     def setUp(self):
         self.user = AdminUserFactory()
+        AdminUserFactory.reset_sequence(1)
 
     def test_get_users_not_authorized(self):
         response = self.client.get(path="/api/admin/users/?page=1&page_size=1")
@@ -193,10 +196,10 @@ class TestAdminUsersAPITests(APITestCase):
         response = self.client.get(path="/api/admin/users/")
         data = [
             {
-                "id": 39,
-                "email": "test39@test.com",
-                "name": "Test person 39",
-                "surname": "Test person 39 surname",
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -215,10 +218,10 @@ class TestAdminUsersAPITests(APITestCase):
         response = self.client.get(path="/api/admin/users/?ordering=id")
         data = [
             {
-                "id": 40,
-                "email": "test40@test.com",
-                "name": "Test person 40",
-                "surname": "Test person 40 surname",
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
                 "status": {
                     "is_active": True,
                     "is_staff": True,
@@ -235,11 +238,12 @@ class TestAdminUsersAPITests(APITestCase):
     def test_get_user_id_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path=f"/api/admin/users/{self.user.id}/")
+        AdminUserFactory.reset_sequence(1)
 
         data = {
-            "name": "Test person 37",
-            "surname": "Test person 37 surname",
-            "email": "test37@test.com",
+            "name": f"Test person {self.user.id}",
+            "surname": f"Test person {self.user.id} surname",
+            "email": f"test{self.user.id}@test.com",
             "is_active": True,
             "is_staff": True,
             "is_superuser": False,

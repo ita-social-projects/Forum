@@ -43,9 +43,11 @@ class UsersListView(ListAPIView):
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
-    queryset = CustomUser.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_class = UsersFilter
+
+    def get_queryset(self):
+        return CustomUser.objects.select_related("profile")
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
