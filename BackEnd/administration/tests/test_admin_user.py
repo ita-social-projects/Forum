@@ -23,16 +23,14 @@ class TestAdminUsersAPITestsNotStaff(APITestCase):
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
 
-class TestAdminUsersSortFilterAPITests(APITestCase):
+class TestAdminUsersOrderingFilterAPITests(APITestCase):
     def setUp(self):
         self.users = AdminUserFactory.create_batch(2)
         self.user = self.users[0]
 
-    def test_get_users_sort_desc(self):
+    def test_get_users_ordering_desc(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(
-            path="/api/admin/users/?sort=id&direction=desc"
-        )
+        response = self.client.get(path="/api/admin/users/?ordering=-id")
         data = [
             {
                 "id": 49,
@@ -66,11 +64,9 @@ class TestAdminUsersSortFilterAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
 
-    def test_get_users_sort_asc(self):
+    def test_get_users_ordering_asc(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(
-            path="/api/admin/users/?sort=id&direction=asc"
-        )
+        response = self.client.get(path="/api/admin/users/?ordering=id")
         data = [
             {
                 "id": 46,
@@ -104,11 +100,9 @@ class TestAdminUsersSortFilterAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
 
-    def test_get_users_filter_id_name_surname(self):
+    def test_get_users_filter_id_surname(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(
-            path="/api/admin/users/?id=44&name=44&surname=44"
-        )
+        response = self.client.get(path="/api/admin/users/?id=44&surname=44")
         data = [
             {
                 "id": 44,
@@ -137,7 +131,7 @@ class TestAdminUsersStatusAPITests(APITestCase):
     def test_get_users_filter_status_active_staff(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(
-            path="/api/admin/users/?status=active&status=staff"
+            path="/api/admin/users/?is_active=True&is_staff=True"
         )
         data = [
             {
@@ -172,10 +166,10 @@ class TestAdminUsersStatusAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, response.json())
 
-    def test_get_users_filter_status_superuser_staff(self):
+    def test_get_users_filter_status_superuser_staff_active(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(
-            path="/api/admin/users/?status=superuser&status=deleted&status=inactive"
+            path="/api/admin/users/?is_superuser=True&is_deleted=True&is_active=False"
         )
         data = []
         self.assertEqual(response.status_code, status.HTTP_200_OK)

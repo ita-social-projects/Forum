@@ -5,7 +5,7 @@ from django_filters.rest_framework import FilterSet
 class UsersFilter(FilterSet):
     """
     Filters
-    /?id= ,/?name=, /?surname=, /?email= , /?is_active= , /?is_staff=,
+    /?id= , /?surname=, /?email= , /?is_active= , /?is_staff=,
     /?is_superuser=,  /?is_deleted=True or False,  /?company_name=, /?registration_date=,
     Ordering sample
     /?ordering=id asc or /?ordering=-id desc
