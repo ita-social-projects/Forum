@@ -212,9 +212,7 @@ class TestAdminUsersAPITests(APITestCase):
 
     def test_get_users_filter(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(
-            path="/api/admin/users/?ordering=id"
-        )
+        response = self.client.get(path="/api/admin/users/?ordering=id")
         data = [
             {
                 "id": 40,
