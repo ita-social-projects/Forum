@@ -273,8 +273,8 @@ input:-webkit-autofill {
   -webkit-text-fill-color: var(--main-text-color) !important;
 }
 
-@media screen and (min-width: var(--breakpoint-tablet)) and (max-width: var(--breakpoint-desktop)) {
+@media only screen and (max-width: 767px) {
   .login-basic {
-    background: red;
+    width: 375px;
   }
 }
