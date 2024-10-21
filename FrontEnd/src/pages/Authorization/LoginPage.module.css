@@ -22,7 +22,7 @@
 
 .login-header p {
   color: var(--main-text-color);
-  font-family: var(--font-main);
+  font-family: var(--font-main-new);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
