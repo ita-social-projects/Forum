@@ -34,16 +34,35 @@ from rest_framework import status
 from rest_framework.views import APIView
 from utils.administration.send_email_feedback import send_email_feedback
 
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import UsersFilter
+
 
 class UsersListView(ListAPIView):
     """
-    List of users.
+    View to list users with optional filtering and ordering.
+
+    ### Query Parameters:
+    -  **id** / **surname** / **email** /  **is_active** /  **is_staff** / **is_superuser** / **is_deleted**
+    - **company_name** /  **registration_date**
+
+    ### Ordering:
+    - Use the `ordering` parameter to sort the results.
+    - Example: `/users/?ordering=id` (ascending by ID) or `/users/?ordering=-id` (descending by ID).
+
+    ### Filters:
+    - Filters are applied using `DjangoFilterBackend`. All the above query parameters are supported for filtering.
+    **Without is_deleted**
     """
 
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
-    queryset = CustomUser.objects.all().order_by("id")
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = UsersFilter
+
+    def get_queryset(self):
+        return CustomUser.objects.select_related("profile")
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
