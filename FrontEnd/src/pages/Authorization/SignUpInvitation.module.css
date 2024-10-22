@@ -6,9 +6,9 @@
 
 .signup-invitation p {
   margin: 0;
-  color: var(--link-text-color-new);
+  color: var(--link-text-color);
   font-feature-settings: "calt" off;
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -17,9 +17,9 @@
 }
 
 .signup-invitation a {
-  color: var(--link-text-color-new);
+  color: var(--link-text-color);
   font-feature-settings: "calt" off;
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 600;

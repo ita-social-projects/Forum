@@ -1,14 +1,14 @@
 .auth-page {
   display: flex;
   justify-content: center;
-  width: var(--main-block-size);
+  width: 100%;
   min-height: var(--min-height-block-main);
   flex-shrink: 0;
-  background: #F9F5EC;
+  background: var(--main-background);
 }
 
-@media only screen and (min-width: var(--breakpoint-tablet)) and (max-width: var(--breakpoint-desktop)) {
+@media only screen and (min-width: 768px) and (max-width: 1511px) {
   .auth-page {
-    max-width: var(--breakpoint-tablet);
+    min-width: 768px;
   }
 }

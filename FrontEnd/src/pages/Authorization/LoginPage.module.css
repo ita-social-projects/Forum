@@ -22,7 +22,7 @@
 
 .login-header p {
   color: var(--main-text-color);
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -55,7 +55,7 @@
   flex: 1 0 0;
   color: var(--main-text-color);
   font-feature-settings: "calt" off;
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 14px;
   font-weight: 400;
   line-height: 22px;
@@ -72,7 +72,7 @@
 
 .login-content__email input,
 .login-content__password input {
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   color: var(--main-text-color);
   border-radius: 2px;
   border: 1px solid #d9d9d9;
@@ -113,7 +113,7 @@
 .login-content__password input::placeholder {
   color: #adb3b9;
   font-feature-settings: "calt" off;
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -196,7 +196,7 @@
   color: var(--light-button-text-color);
   text-align: center;
   font-feature-settings: "calt" off;
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -214,9 +214,9 @@
 
 .error-message {
   align-self: stretch;
-  color: var(--error-text-color-new);
+  color: var(--error-text-color);
   font-feature-settings: "calt" off;
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
@@ -227,9 +227,9 @@
   position: absolute;
   margin-left: -10px;
   content: "*";
-  color: var(--error-text-color-new);
+  color: var(--error-text-color);
   text-align: right;
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 12px;
   font-weight: 400;
 }
@@ -244,9 +244,9 @@
   margin: 0;
   align-self: flex-end;
   text-decoration: none;
-  color: var(--link-text-color-new);
+  color: var(--link-text-color);
   font-feature-settings: 'calt' off;
-  font-family: var(--font-main-new);
+  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
