@@ -1,6 +1,6 @@
 .header-buttons-section {
     display: flex;
-    align-items: flex-start;
+    /*align-items: flex-start;*/
     gap: 12px;
 }
 
@@ -12,20 +12,17 @@
     gap: 10px;
 
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
-    background: #1F9A7C;
-
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+    background: #FFF;
 
     /* Button Text */
-    color: #FFF;
+    color: #000000;
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
     font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 20px;
     letter-spacing: -0.16px;
 }
@@ -38,30 +35,27 @@
     gap: 10px;
 
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
-    background: #FFF;
-
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+    background: #000000;
 
     /* Button Text */
-    color: #1F9A7C;
+    color: #FFF;
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
     font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 20px;
     letter-spacing: -0.16px;
 }
 
 .header-login__button:hover {
-    background: #FFF;
-    color: #1F9A7C;
+    background: #000000;
+    color: #FFF;
 }
 
 .header-register__button:hover {
-    background: #1F9A7C;
-    color: #FFF;
+    background: #FFF;
+    color: #000000;
 }

@@ -1,7 +1,7 @@
 .navbar-content {
   display: flex;
-  width: 70%;
-  padding: 8px 104px;
+  width: 100%;
+  padding: 16px 104px;
   align-items: center;
   justify-content: space-between;
   height: var(--navbar-content-height);
@@ -13,11 +13,20 @@
 
 .navbar-main-logo {
   display: flex;
-  width: 199px;
-  height: 24px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #000000;
+  width: 208px;
+  height: 30px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: left;
 }
 
 .navbar-utility-bar {
   display: flex;
   gap: 24px;
+  height: 40px;
 }

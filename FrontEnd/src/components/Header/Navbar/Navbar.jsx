@@ -16,19 +16,22 @@ function Navbar (props) {
     <div className={css['navbar-content']}>
       <div className={css['navbar-logo__text']}>
         <Link to="/" target={isStaff ? '_blank' : null}>
-          <img
-            className={css['navbar-main-logo']}
-            src={`${process.env.REACT_APP_PUBLIC_URL}/craftMerge-logo.svg`}
-            alt="CraftMerge logo"
-          ></img>
+          <div className={css['navbar-main-logo']}>
+            <img
+                // className={css['navbar-main-logo']}
+                src={`${process.env.REACT_APP_PUBLIC_URL}/craftMerge-logo.svg`}
+                alt="CraftMerge logo"
+            ></img>
+            <span>CRAFTMERGE</span>
+          </div>
         </Link>
       </div>
       <div className={css['navbar-utility-bar']}>
-        { hideMenu ? null : (
-          <>
-            <Menu />
-            <SearchBox></SearchBox>
-          </>
+        {hideMenu ? null : (
+            <>
+              <Menu/>
+              <SearchBox></SearchBox>
+            </>
         )}
         {props.isAuthorized === true ? <Profile /> : <Buttons adminPage={props.page.includes('/customadmin')} />}
       </div>
