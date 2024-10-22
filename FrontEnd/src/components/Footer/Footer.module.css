@@ -1,4 +1,30 @@
 .footer-content-main {
     display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+    background: var(--footer-backround);
+}
+
+.footer-top-content {
+    display: flex;
+    align-items: flex-start;
     flex-direction: column;
+    gap: 180px;
+    padding: 24px 104px;
+}
+
+
+@media (min-width: 375px) {
+    .footer-top-content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 768px) {
+    .footer-top-content {
+        display: flex;
+        flex-direction: row;
+    }
 }

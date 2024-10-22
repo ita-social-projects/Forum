@@ -1,18 +1,15 @@
-import FooterTop from './Top/FooterTop';
-import FooterBottom from './Bottom/FooterBottom';
-import ShortFooter from './Short/ShortFooter';
 import css from './Footer.module.css';
+import FooterPolicy from './FooterComponents/FooterPolicy';
+import FooterNavigation from './FooterComponents/FooterNavigation';
 
-const UNSUITABLE_PAGES = ['login', 'register'];
 
-function Footer(props) {
+function Footer() {
     return (
         <footer className={css['footer-content-main']}>
-            {UNSUITABLE_PAGES.includes(props.page) ? (<ShortFooter/>) :
-                (<>
-                    <FooterTop></FooterTop>
-                    <FooterBottom></FooterBottom>
-                </>)}
+            <div className={css['footer-top-content']}>
+                <FooterPolicy></FooterPolicy>
+                <FooterNavigation></FooterNavigation>
+            </div>
         </footer>
     );
 }
