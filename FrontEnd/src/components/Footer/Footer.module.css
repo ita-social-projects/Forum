@@ -1,29 +1,23 @@
-.footer-content-main {
+.footer-content {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 32px;
-    background: var(--footer-backround);
-}
-
-.footer-top-content {
-    display: flex;
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
     gap: 180px;
     padding: 24px 104px;
+    background: var(--footer-backround);
 }
 
 
 @media (min-width: 375px) {
-    .footer-top-content {
+    .footer-content {
         display: flex;
         flex-direction: column;
     }
 }
 
 @media (min-width: 768px) {
-    .footer-top-content {
+    .footer-content {
         display: flex;
         flex-direction: row;
     }

@@ -5,11 +5,9 @@ import FooterNavigation from './FooterComponents/FooterNavigation';
 
 function Footer() {
     return (
-        <footer className={css['footer-content-main']}>
-            <div className={css['footer-top-content']}>
+        <footer className={css['footer-content']}>
                 <FooterPolicy></FooterPolicy>
                 <FooterNavigation></FooterNavigation>
-            </div>
         </footer>
     );
 }
