@@ -1,21 +1,27 @@
 import React, { useEffect, useState, Suspense, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Tooltip } from 'antd';
+import ReCAPTCHA from 'react-google-recaptcha';
+import classNames from 'classnames';
+
 import EyeInvisible from '../../../pages/Authorization/EyeInvisible';
 import EyeVisible from '../../../pages/Authorization/EyeVisible';
+
 import styles from './SignUpFormContent.module.css';
+
 import PropTypes from 'prop-types';
-import ReCAPTCHA from 'react-google-recaptcha';
 import {
   EMAIL_PATTERN,
   PASSWORD_PATTERN,
   NAME_SURNAME_PATTERN,
   COMPANY_NAME_PATTERN,
 } from '../../../constants/constants';
+
 
 const RulesModal = React.lazy(() => import('./RulesModal'));
 
@@ -29,11 +35,9 @@ export function SignUpFormContentComponent(props) {
   };
 
   const errorMessageTemplates = {
-    required: 'Обов’язкове поле',
-    requiredRepresentative: 'Будь ласка, оберіть кого ви представляєте',
     email: 'Електронна пошта не відповідає вимогам',
     password: 'Пароль не відповідає вимогам',
-    confirmPassword: 'Паролі не співпадають',
+    confirmPassword: 'Паролі не співпадають. Будь ласка, введіть однакові паролі в обидва поля',
     nameSurnameFieldLength: 'Введіть від 2 до 50 символів',
     companyFieldLength: 'Введіть від 2 до 100 символів',
     notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
@@ -82,7 +86,7 @@ export function SignUpFormContentComponent(props) {
     if (!getValues('yurosoba') && !getValues('fop')) {
       setError('businessEntity', {
         type: 'manual',
-        message: errorMessageTemplates.requiredRepresentative,
+        message: 'Виберіть, який суб\'єкт господарювання ви представляєте',
       });
     } else {
       clearErrors('businessEntity');
@@ -159,7 +163,7 @@ export function SignUpFormContentComponent(props) {
         if (error.response.data.email) {
           setError('email', {
             type: 'manual',
-            message: 'Вже зареєстрована пошта',
+            message: 'Ця електронна пошта вже зареєстрована пошта',
           });
         }
         if (error.response && error.response.status === 400) {
@@ -177,253 +181,290 @@ export function SignUpFormContentComponent(props) {
         autoComplete="off"
         noValidate
       >
-        <div className={styles['signup-form__row']}>
-          <div className={styles['signup-form__column']}>
             <div className={styles['signup-form__label']}>
               <label className={styles['signup-form__label--required']}>
                 *
               </label>
               <label className={styles['signup-form__label--text']}>
-                Назва компанії
+                Обов&apos;язкові поля позначені зірочкою
               </label>
             </div>
-            <div className={styles['signup-form__field']}>
-              <Tooltip
-                title={
-                  !COMPANY_NAME_PATTERN.test(getValues('companyName')) &&
-                  'Назва повинна містити від 2 до 100 символів'
-                }
-                trigger="focus"
-                pointAtCenter={true}
-              >
-                <input
-                  className={styles['signup-form__input']}
-                  type="text"
-                  placeholder="Назва компанії"
-                  {...register('companyName', {
-                    required: errorMessageTemplates.required,
-                    pattern: {
-                      value: COMPANY_NAME_PATTERN,
-                    },
-                    minLength: {
-                      value: 2,
-                      message: errorMessageTemplates.companyFieldLength,
-                    },
-                  })}
-                  maxLength={100}
-                  onBlur={() => onBlurHandler('companyName')}
-                />
-              </Tooltip>
-            </div>
-            <div className={styles['signup-form__error']}>
-              {errors.companyName && errors.companyName.message}
-            </div>
-          </div>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
-                *
-              </label>
-              <label className={styles['signup-form__label--text']}>
-                Електронна пошта
-              </label>
-            </div>
-            <div className={styles['signup-form__field']}>
-              <Tooltip
-                title="Приклад електронної пошти logginname@example.com"
-                pointAtCenter={true}
-              >
-                <input
-                  className={styles['signup-form__input']}
-                  placeholder="Електронна пошта"
-                  type="email"
-                  {...register('email', {
-                    required: errorMessageTemplates.required,
-                    pattern: {
-                      value: EMAIL_PATTERN,
-                      message: errorMessageTemplates.email,
-                    },
-                  })}
-                />
-              </Tooltip>
-            </div>
-            <div className={styles['signup-form__error']}>
-              {errors.email && errors.email.message}
-            </div>
-          </div>
-        </div>
-        <div className={styles['signup-form__row']}>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required_special']}>
-                *
-              </label>
-              <div className={styles['signup-form__label--password']}>
-                <label>Пароль</label>
-                <label className={styles['signup-form__label--hint']}>
-                  (Повинен містити від 8 символів, A-Z, a-z, 0-9)
+            <div className={styles['signup-form__item']}>
+              <div className={styles['signup-form__label']}>
+                <label className={styles['signup-form__label--required']}>
+                  *
                 </label>
-              </div>
-            </div>
-            <div className={styles['signup-form__field__password']}>
-              <input
-                className={styles['signup-form__input__password']}
-                placeholder="Пароль"
-                type={showPassword ? 'text' : 'password'}
-                {...register('password', {
-                  required: errorMessageTemplates.required,
-                  pattern: {
-                    value: PASSWORD_PATTERN,
-                    message: errorMessageTemplates.password,
-                  },
-                  maxLength: {
-                    value: 50,
-                    message: errorMessageTemplates.maxLength
-                  },
-                  validate: (value) =>
-                    watch('confirmPassword') !== value
-                      ? errorMessageTemplates.confirmPassword
-                      : null,
-                })}
-              />
-              <span
-                className={styles['password-visibility']}
-                onClick={togglePassword}
-              >
-                {!showPassword ? <EyeInvisible /> : <EyeVisible />}
-              </span>
-            </div>
-            <div className={styles['signup-form__error']}>
-              <ErrorMessage
-                errors={errors}
-                name="password"
-                render={({ messages }) =>
-                  messages &&
-                  Object.entries(messages).map(([type, message]) => (
-                    <p key={type}>{message}</p>
-                  ))
-                }
-              />
-            </div>
-          </div>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required_special']}>
-                *
-              </label>
-              <div className={styles['signup-form__label--password']}>
                 <label className={styles['signup-form__label--text']}>
-                  Повторіть пароль
-                </label>
-                <label className={styles['signup-form__label--hint']}>
-                  (Повинен містити від 8 символів, A-Z, a-z, 0-9)
+                  Введіть назву вашої компанії
                 </label>
               </div>
+              <div className={styles['signup-form__field']}>
+                <Tooltip
+                  title={
+                    !COMPANY_NAME_PATTERN.test(getValues('companyName')) &&
+                    'Назва повинна містити від 2 до 100 символів'
+                  }
+                  trigger="focus"
+                  pointAtCenter={true}
+                >
+                  <input
+                    className={classNames(
+                      styles['signup-form__input'],
+                      {[styles['signup-form__input--error']]: errors.companyName}
+                    )}
+                    type="text"
+                    placeholder="Назва компанії"
+                    {...register('companyName', {
+                      required: 'Не ввели назву компанії',
+                      pattern: {
+                        value: COMPANY_NAME_PATTERN,
+                      },
+                      minLength: {
+                        value: 2,
+                        message: errorMessageTemplates.companyFieldLength,
+                      },
+                    })}
+                    maxLength={100}
+                    onBlur={() => {
+                      onBlurHandler('companyName');
+                      trigger('companyName');
+                    }}
+                  />
+                </Tooltip>
+              </div>
+              <div className={styles['signup-form__error']}>
+                {errors.companyName && errors.companyName.message}
+              </div>
             </div>
-            <div className={styles['signup-form__field__password']}>
-              <input
-                className={styles['signup-form__input__password']}
-                placeholder="Пароль"
-                type={showConfirmPassword ? 'text' : 'password'}
-                {...register('confirmPassword', {
-                  required: errorMessageTemplates.required,
-                  maxLength: {
-                    value: 50,
-                    message: errorMessageTemplates.maxLength
-                  },
-                  validate: (value) =>
-                    watch('password') !== value
-                      ? errorMessageTemplates.confirmPassword
-                      : null,
-                })}
-              />
-              <span
-                className={styles['password-visibility']}
-                onClick={toggleConfirmPassword}
-              >
-                {!showConfirmPassword ? <EyeInvisible /> : <EyeVisible />}
-              </span>
+            <div className={styles['signup-form__item']}>
+              <div className={styles['signup-form__label']}>
+                <label className={styles['signup-form__label--required']}>
+                  *
+                </label>
+                <label className={styles['signup-form__label--text']}>
+                  Введіть свою електронну пошту
+                </label>
+              </div>
+              <div className={styles['signup-form__field']}>
+                <Tooltip
+                  title="Приклад електронної пошти logginname@example.com"
+                  pointAtCenter={true}
+                >
+                  <input
+                    className={classNames(
+                      styles['signup-form__input'],
+                      {[styles['signup-form__input--error']]: errors.email}
+                    )}
+                    placeholder="Електронна пошта"
+                    type="email"
+                    {...register('email', {
+                      required: 'Не ввели електронну пошту',
+                      pattern: {
+                        value: EMAIL_PATTERN,
+                        message: errorMessageTemplates.email,
+                      },
+                    })}
+                  />
+                </Tooltip>
+              </div>
+              <div className={styles['signup-form__error']}>
+                {errors.email && errors.email.message}
+              </div>
             </div>
-            <div className={styles['signup-form__error']}>
-              <ErrorMessage
-                errors={errors}
-                name="confirmPassword"
-                render={({ message }) => <p>{message}</p>}
-                />
-            </div>
-          </div>
-        </div>
-        <div className={styles['signup-form__row']}>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
-                *
-              </label>
-              <label className={styles['signup-form__label--text']}>
-                Прізвище
-              </label>
-            </div>
-            <div className={styles['signup-form__field']}>
-              <Tooltip
-                title={
-                  !NAME_SURNAME_PATTERN.test(getValues('surname')) &&
-                  'Прізвище повинне містити від 2 до 50 символів'
-                }
-                trigger="focus"
-                pointAtCenter={true}
+            <div className={styles['signup-form__item']}>
+              <div className={styles['signup-form__label']}>
+                <label className={styles['signup-form__label--required_special']}>
+                  *
+                </label>
+                <div className={styles['signup-form__label--password']}>
+                  <label>Введіть пароль</label>
+                  <label className={styles['signup-form__label--hint']}>
+                    (Повинен містити від 8 символів, A-Z, a-z, 0-9)
+                  </label>
+                </div>
+              </div>
+              <div
+                className={classNames(
+                  styles['signup-form__field__password'],
+                  {
+                    [styles['signup-form__field__password--error']]: errors.password,
+                    [styles['signup-form__field__password--show']]: showPassword
+                  }
+                )}
               >
                 <input
-                  className={styles['signup-form__input']}
-                  type="text"
-                  placeholder="Прізвище"
-                  {...register('surname', {
-                    required: errorMessageTemplates.required,
-                    validate: validateNameSurname,
+                  className={styles['signup-form__input__password']}
+                  placeholder="Пароль"
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password', {
+                    required: 'Не ввели пароль',
+                    pattern: {
+                      value: PASSWORD_PATTERN,
+                      message: errorMessageTemplates.password,
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: errorMessageTemplates.maxLength
+                    },
+                    validate: (value) =>
+                      watch('confirmPassword') !== value
+                        ? errorMessageTemplates.confirmPassword
+                        : null,
                   })}
-                  maxLength={50}
-                  onBlur={() => onBlurHandler('surname')}
                 />
-              </Tooltip>
+                <span
+                  className={styles['password-visibility']}
+                  onClick={togglePassword}
+                >
+                  {!showPassword ? <EyeInvisible /> : <EyeVisible />}
+                </span>
+              </div>
+              <div className={styles['signup-form__error']}>
+                <ErrorMessage
+                  errors={errors}
+                  name="password"
+                  render={({ messages }) =>
+                    messages &&
+                    Object.entries(messages).map(([type, message]) => (
+                      <p key={type}>{message}</p>
+                    ))
+                  }
+                />
+              </div>
             </div>
-            <div className={styles['signup-form__error']}>
-              {errors.surname && errors.surname.message}
-            </div>
-          </div>
-          <div className={styles['signup-form__column']}>
-            <div className={styles['signup-form__label']}>
-              <label className={styles['signup-form__label--required']}>
-                *
-              </label>
-              <label className={styles['signup-form__label--text']}>Ім‘я</label>
-            </div>
-            <div className={styles['signup-form__field']}>
-              <Tooltip
-                title={
-                  !NAME_SURNAME_PATTERN.test(getValues('name')) &&
-                  'Ім‘я повинне містити від 2 до 50 символів'
-                }
-                trigger="focus"
-                pointAtCenter={true}
+            <div className={styles['signup-form__item']}>
+              <div className={styles['signup-form__label']}>
+                <label className={styles['signup-form__label--required_special']}>
+                  *
+                </label>
+                <div className={styles['signup-form__label--password']}>
+                  <label className={styles['signup-form__label--text']}>
+                    Введіть пароль ще раз
+                  </label>
+                  <label className={styles['signup-form__label--hint']}>
+                    (Повинен містити від 8 символів, A-Z, a-z, 0-9)
+                  </label>
+                </div>
+              </div>
+              <div className={classNames(
+                  styles['signup-form__field__password'],
+                  {
+                    [styles['signup-form__field__password--error']]: errors.confirmPassword,
+                    [styles['signup-form__field__password--show']]: showConfirmPassword
+                  }
+                )}
               >
                 <input
-                  className={styles['signup-form__input']}
-                  type="text"
-                  placeholder="Ім‘я"
-                  {...register('name', {
-                    required: errorMessageTemplates.required,
-                    validate: validateNameSurname,
+                  className={styles['signup-form__input__password']}
+                  placeholder="Пароль"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  {...register('confirmPassword', {
+                    required: 'Не ввели пароль ще раз',
+                    maxLength: {
+                      value: 50,
+                      message: errorMessageTemplates.maxLength
+                    },
+                    validate: (value) =>
+                      watch('password') !== value
+                        ? errorMessageTemplates.confirmPassword
+                        : null,
                   })}
-                  maxLength={50}
-                  onBlur={() => onBlurHandler('name')}
                 />
-              </Tooltip>
+                <span
+                  className={styles['password-visibility']}
+                  onClick={toggleConfirmPassword}
+                >
+                  {!showConfirmPassword ? <EyeInvisible /> : <EyeVisible />}
+                </span>
+              </div>
+              <div className={styles['signup-form__error']}>
+                <ErrorMessage
+                  errors={errors}
+                  name="confirmPassword"
+                  render={({ message }) => <p>{message}</p>}
+                  />
+              </div>
             </div>
-            <div className={styles['signup-form__error']}>
-              {errors.name && errors.name.message}
+            <div className={styles['signup-form__item']}>
+              <div className={styles['signup-form__label']}>
+                <label className={styles['signup-form__label--required']}>
+                  *
+                </label>
+                <label className={styles['signup-form__label--text']}>
+                  Введіть ваше прізвище
+                </label>
+              </div>
+              <div className={styles['signup-form__field']}>
+                <Tooltip
+                  title={
+                    !NAME_SURNAME_PATTERN.test(getValues('surname')) &&
+                    'Прізвище повинне містити від 2 до 50 символів'
+                  }
+                  trigger="focus"
+                  pointAtCenter={true}
+                >
+                  <input
+                    className={classNames(
+                      styles['signup-form__input'],
+                      {[styles['signup-form__input--error']]: errors.surname}
+                    )}
+                    type="text"
+                    placeholder="Прізвище"
+                    {...register('surname', {
+                      required: 'Не ввели прізвище',
+                      validate: validateNameSurname,
+                    })}
+                    maxLength={50}
+                    onBlur={() => {
+                      onBlurHandler('surname');
+                      trigger('surname');
+                    }}
+                  />
+                </Tooltip>
+              </div>
+              <div className={styles['signup-form__error']}>
+                {errors.surname && errors.surname.message}
+              </div>
             </div>
-          </div>
-        </div>
-        <div className={styles['signup-form__checkboxes-container']}>
+            <div className={styles['signup-form__item']}>
+              <div className={styles['signup-form__label']}>
+                <label className={styles['signup-form__label--required']}>
+                  *
+                </label>
+                <label className={styles['signup-form__label--text']}>Введіть ваше ім‘я</label>
+              </div>
+              <div className={styles['signup-form__field']}>
+                <Tooltip
+                  title={
+                    !NAME_SURNAME_PATTERN.test(getValues('name')) &&
+                    'Ім‘я повинне містити від 2 до 50 символів'
+                  }
+                  trigger="focus"
+                  pointAtCenter={true}
+                >
+                  <input
+                    className={classNames(
+                      styles['signup-form__input'],
+                      {[styles['signup-form__input--error']]: errors.name}
+                    )}
+                    type="text"
+                    placeholder="Ім‘я"
+                    {...register('name', {
+                      required: 'Не ввели ім\'я',
+                      validate: validateNameSurname,
+                    })}
+                    maxLength={50}
+                    onBlur={() => {
+                      onBlurHandler('name');
+                      trigger('name');
+                    }}
+                  />
+                </Tooltip>
+              </div>
+              <div className={styles['signup-form__error']}>
+                {errors.name && errors.name.message}
+              </div>
+            </div>
           <div className={styles['representative']}>
             <div className={styles['representative__title']}>
               <label className={styles['signup-form__label--required']}>
@@ -431,50 +472,48 @@ export function SignUpFormContentComponent(props) {
               </label>
               <label>Кого ви представляєте?</label>
             </div>
-            <div className={styles['representative__container']}>
               <div className={styles['representative__content']}>
-                <div className={styles['representative__column']}>
-                  <div className={styles['representative__option']}>
-                    <div
-                      className={styles['representative__checkbox-container']}
-                    >
-                      <input
-                        type="checkbox"
-                        name="company"
-                        value={'company'}
-                        {...register('representative', {
-                          required:
-                            errorMessageTemplates.requiredRepresentative,
-                        })}
-                      />
-                    </div>
-                    <label className={styles['representative__label']}>
-                      Зареєстрована компанія
-                    </label>
+                <div className={styles['representative__option']}>
+                  <div
+                    className={classNames(styles['representative__checkbox-container'], {
+                      [styles['representative__input--error']]: errors.representative,
+                    })}
+                  >
+                    <input
+                      type="checkbox"
+                      name="company"
+                      value={'company'}
+                      {...register('representative', {
+                        required:
+                          'Виберіть, кого ви представляєте',
+                      })}
+                    />
                   </div>
+                  <label className={styles['representative__label']}>
+                    Зареєстрована компанія
+                  </label>
                 </div>
-                <div className={styles['representative__column']}>
-                  <div className={styles['representative__option']}>
-                    <div
-                      className={styles['representative__checkbox-container']}
-                    >
-                      <input
-                        type="checkbox"
-                        name="startup"
-                        value={'startup'}
-                        {...register('representative', {
-                          required:
-                            errorMessageTemplates.requiredRepresentative,
-                        })}
-                      />
-                    </div>
-                    <label className={styles['representative__label']}>
-                      Стартап проект, який шукає інвестиції
-                    </label>
+                <div className={styles['representative__option']}>
+                  <div
+                    className={classNames(styles['representative__checkbox-container'], {
+                      [styles['representative__input--error']]: errors.representative,
+                    })}
+                  >
+                    <input
+                      type="checkbox"
+                      name="startup"
+                      value={'startup'}
+                      {...register('representative', {
+                        required:
+                          'Виберіть, кого ви представляєте',
+                      })}
+                    />
                   </div>
+                  <label className={styles['representative__label']}>
+                    Стартап проект, який шукає інвестиції
+                  </label>
                 </div>
               </div>
-            </div>
             <div className={styles['signup-form__error']}>
               {errors.representative && errors.representative.message}
             </div>
@@ -486,29 +525,13 @@ export function SignUpFormContentComponent(props) {
               </label>
               <label>Який суб&apos;єкт господарювання ви представляєте?</label>
             </div>
-            <div className={styles['representative__container']}>
+
               <div className={styles['representative__content']}>
-                <div className={styles['representative__column']}>
-                  <div className={styles['representative__option']}>
+              <div className={styles['representative__option']}>
                     <div
-                      className={styles['representative__checkbox-container']}
-                    >
-                      <input
-                        type="checkbox"
-                        {...register('yurosoba', {
-                          onChange: onChangeCheckbox,
-                        })}
-                      />
-                    </div>
-                    <label className={styles['representative__label']}>
-                      Юридична особа
-                    </label>
-                  </div>
-                </div>
-                <div className={styles['representative__column']}>
-                  <div className={styles['representative__option']}>
-                    <div
-                      className={styles['representative__checkbox-container']}
+                      className={classNames(styles['representative__checkbox-container'], {
+                        [styles['representative__input--error']]: errors.businessEntity,
+                      })}
                     >
                       <input
                         type="checkbox"
@@ -521,44 +544,46 @@ export function SignUpFormContentComponent(props) {
                       Фізична особа-підприємець
                     </label>
                   </div>
-                </div>
+                  <div className={styles['representative__option']}>
+                    <div
+                      className={classNames(styles['representative__checkbox-container'], {
+                        [styles['representative__input--error']]: errors.businessEntity,
+                      })}
+                    >
+                      <input
+                        type="checkbox"
+                        {...register('yurosoba', {
+                          onChange: onChangeCheckbox,
+                        })}
+                      />
+                    </div>
+                    <label className={styles['representative__label']}>
+                      Юридична особа
+                    </label>
+                  </div>
               </div>
-            </div>
             <div className={styles['signup-form__error']}>
               {errors.businessEntity && errors.businessEntity.message}
             </div>
           </div>
           <div className={styles['signup-form__checkboxes-container--rules']}>
-            <div className={styles['rules__container']}>
-              <label className={styles['signup-form__label--required']}>
-                *
-              </label>
-              <div className={styles['rules__line']}>
-                <input
-                  type="checkbox"
-                  className={styles['rules__checkbox']}
-                  {...register('rulesAgreement', {
-                    required: errorMessageTemplates.required,
-                  })}
-                />
-                <label className={styles['rules__line--text']}>
-                  Погоджуюсь з{' '}
-                  <a
-                    onClick={openModal}
-                    className={styles['rules__line--link']}
-                  >
-                    правилами використання
-                  </a>
-                </label>
-              </div>
-            </div>
+            <label className={styles['rules__line--text']}>
+              Реєструючись, я погоджуюсь з{' '}
+              <a
+                onClick={openModal}
+                className={styles['rules__line--link']}
+              >
+                правилами використання
+              </a>
+              {' '}сайту Craftmerge
+            </label>
           </div>
-        </div>
         <ReCAPTCHA
           ref={reCaptchaRef}
           sitekey={process.env.REACT_APP_RECAPTCHA_V2_SITE_KEY}
           size="invisible"
           onChange={onReCaptchaChange}
+          className={styles['signup-form__recaptcha']}
         />
       </form>
       <Suspense fallback={<div>Loading...</div>}>
