@@ -6,9 +6,3 @@
   flex-shrink: 0;
   background: var(--main-background);
 }
-
-@media only screen and (min-width: 768px) and (max-width: 1511px) {
-  .auth-page {
-    min-width: 768px;
-  }
-}
