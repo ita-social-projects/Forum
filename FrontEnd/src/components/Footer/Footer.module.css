@@ -1,18 +1,19 @@
 .footer-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 180px;
-    padding: 24px 104px;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
     background: var(--footer-backround);
+    
 }
-
 
 @media (min-width: 375px) {
     .footer-content {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        padding: 10px;
     }
 }
 
@@ -20,5 +21,9 @@
     .footer-content {
         display: flex;
         flex-direction: row;
+        padding: 24px 104px;
+        align-items: center;
+        gap: 180px;
     }
 }
+

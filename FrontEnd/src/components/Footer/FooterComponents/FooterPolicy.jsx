@@ -12,22 +12,12 @@ const POLICY_LINKS = [
         title: 'Умови користування',
         link: 'terms-and-conditions/'
     },
-    {
-        id: 'i3',
-        title: 'Contact',
-        link: 'Contact/'
-    }
 ];
 
 function FooterPolicy() {
     return (
         <div className={css['policy-content']}>
-            <img
-                className={css['policy-content__main-logo']}
-                src={`${process.env.REACT_APP_PUBLIC_URL}/craftMerge-logo-white.svg`}
-                alt="Footer craft merge logo"
-                title="CraftMerge">
-            </img>
+            <div className={css['policy-divider']}></div>
             <div className={css['policy-content-links']}>
                 {POLICY_LINKS.map((element) => (
                     <Link
@@ -37,6 +27,7 @@ function FooterPolicy() {
                         {element.title}
                     </Link>
                 ))}
+                <p className={css['policy-content__copyright']}> Copyright 2023 Forum. All rights reserved.</p>
             </div>
         </div>
     );
