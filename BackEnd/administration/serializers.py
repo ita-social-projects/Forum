@@ -198,9 +198,7 @@ class ModerationEmailSerializer(serializers.ModelSerializer):
 class FeedbackSerializer(serializers.Serializer):
     email = serializers.EmailField(
         required=True,
-        error_messages={
-            "required": "Please provide a valid email address."
-        },
+        error_messages={"required": "Please provide a valid email address."},
     )
     message = serializers.CharField(
         min_length=10,

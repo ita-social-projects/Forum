@@ -195,14 +195,14 @@ class FeedbackView(CreateAPIView):
 
         Returns:
         None
-        
+
         This method extracts the email, message, and category from the validated data in the serializer.
         It then calls the `send_email_feedback` function to send an email notification with the provided feedback details.
         """
         email = serializer.validated_data["email"]
         message = serializer.validated_data["message"]
         category = serializer.validated_data["category"]
-        
+
         send_email_feedback(email, message, category)
 
     def handle_exception(self, exc):

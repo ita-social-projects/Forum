@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class FeedbackCategory(Enum):
     TECHNICAL = "Технічне питання"
     RECOMMENDATION = "Рекомендації"
