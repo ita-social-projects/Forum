@@ -116,6 +116,6 @@
   --wf-base-white: #FFF;
 
   --profile-min-height-block: calc(100vh - 565px);
-  --min-height-block-main: 100vh;
+  --min-height-block-main: calc(100vh - 305px);
   --company-card-color: #FFF;
 }
