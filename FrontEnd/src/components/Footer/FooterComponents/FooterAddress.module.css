@@ -22,6 +22,18 @@
     gap: 6px;
 }
 
+.footer-phone__svg,
+.footer-mail__svg {
+    width: 24px;
+    height: 24px;
+}
+
+.footer-address__contacts-mail,
+.footer-address__contacts-phone {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
 
 .footer-address__text {
     color: var(--footer-font-color);
@@ -33,6 +45,7 @@
     font-weight: 400;
     line-height: 150%;
     letter-spacing: -0.14px;
+    gap: 10px;
 }
 
 @media (min-width: 375px) {

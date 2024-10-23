@@ -5,16 +5,20 @@
 }
 
 .policy-divider {
-    width:auto;
+    width: auto;
     height: 1px;
-    background:  #E2E5EB;
+    background: #E2E5EB;
 }
-
 
 .policy-content-links {
     display: flex;
     flex-direction: row;
     gap: 12px;
+}
+
+.policy-content__main {
+    display: flex;
+    flex-direction: column;
 }
 
 .policy-content-links__text,
@@ -34,9 +38,9 @@
 
 @media (min-width: 375px) {
     .policy-divider {
-        width:auto;
+        width: auto;
         height: 1px;
-        background:  #E2E5EB;
+        background: #E2E5EB;
     }
 
     .policy-content-links {
@@ -44,17 +48,29 @@
         flex-direction: row;
         gap: 12px;
     }
+
+    .policy-content__main {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
 }
 
 @media (min-width: 768px) {
     .policy-divider {
-        width:auto;
+        width: auto;
         height: 1px;
-        background:  none;
+        background: none;
     }
+
     .policy-content-links {
         display: flex;
         flex-direction: column;
         gap: 12px;
+    }
+
+    .policy-content__main {
+        display: flex;
+        flex-direction: column;
     }
 }

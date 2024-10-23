@@ -8,10 +8,12 @@ import useScrollToTop from '../../hooks/useScrollToTop';
 function Footer() {
     useScrollToTop();
     return (
-        <footer className={css['footer-content']}>
+        <footer className={css['footer-main']}>
+            <div className={css['footer-content']}>
             <FooterAddress></FooterAddress>
             <FooterNavigation></FooterNavigation>
             <FooterPolicy></FooterPolicy>
+            </div>
         </footer>
     );
 }

@@ -1,19 +1,22 @@
+.footer-main {
+    width: auto;
+    background: var(--footer-backround);
+    background-size: cover;
+}
+
 .footer-content {
     display: flex;
     flex-direction: column;
-    align-items: start;
     padding: 10px;
-    width: 100%;
-    background: var(--footer-backround);
-    
+    box-sizing: border-box;
 }
 
 @media (min-width: 375px) {
     .footer-content {
         display: flex;
         flex-direction: column;
-        align-items: start;
         padding: 10px;
+
     }
 }
 
@@ -22,8 +25,6 @@
         display: flex;
         flex-direction: row;
         padding: 24px 104px;
-        align-items: center;
-        gap: 180px;
+        gap: 2%;
     }
 }
-
