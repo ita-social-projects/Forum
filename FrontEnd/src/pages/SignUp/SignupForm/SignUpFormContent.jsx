@@ -195,7 +195,7 @@ export function SignUpFormContentComponent(props) {
                   *
                 </label>
                 <label className={styles['signup-form__label--text']}>
-                  Введіть назву вашої компанії
+                  Назва компанії
                 </label>
               </div>
               <div className={styles['signup-form__field']}>
@@ -213,7 +213,7 @@ export function SignUpFormContentComponent(props) {
                       {[styles['signup-form__input--error']]: errors.companyName}
                     )}
                     type="text"
-                    placeholder="Назва компанії"
+                    placeholder="Введіть назву вашої компанії"
                     {...register('companyName', {
                       required: 'Не ввели назву компанії',
                       pattern: {
@@ -242,7 +242,7 @@ export function SignUpFormContentComponent(props) {
                   *
                 </label>
                 <label className={styles['signup-form__label--text']}>
-                  Введіть свою електронну пошту
+                  Електронна пошта
                 </label>
               </div>
               <div className={styles['signup-form__field']}>
@@ -255,7 +255,7 @@ export function SignUpFormContentComponent(props) {
                       styles['signup-form__input'],
                       {[styles['signup-form__input--error']]: errors.email}
                     )}
-                    placeholder="Електронна пошта"
+                    placeholder="Введіть свою електронну пошту"
                     type="email"
                     {...register('email', {
                       required: 'Не ввели електронну пошту',
@@ -277,7 +277,7 @@ export function SignUpFormContentComponent(props) {
                   *
                 </label>
                 <div className={styles['signup-form__label--password']}>
-                  <label>Введіть пароль</label>
+                  <label>Пароль</label>
                   <label className={styles['signup-form__label--hint']}>
                     (Повинен містити від 8 символів, A-Z, a-z, 0-9)
                   </label>
@@ -294,7 +294,7 @@ export function SignUpFormContentComponent(props) {
               >
                 <input
                   className={styles['signup-form__input__password']}
-                  placeholder="Пароль"
+                  placeholder="Введіть пароль"
                   type={showPassword ? 'text' : 'password'}
                   {...register('password', {
                     required: 'Не ввели пароль',
@@ -339,7 +339,7 @@ export function SignUpFormContentComponent(props) {
                 </label>
                 <div className={styles['signup-form__label--password']}>
                   <label className={styles['signup-form__label--text']}>
-                    Введіть пароль ще раз
+                    Повторіть пароль
                   </label>
                   <label className={styles['signup-form__label--hint']}>
                     (Повинен містити від 8 символів, A-Z, a-z, 0-9)
@@ -356,7 +356,7 @@ export function SignUpFormContentComponent(props) {
               >
                 <input
                   className={styles['signup-form__input__password']}
-                  placeholder="Пароль"
+                  placeholder="Введіть пароль ще раз"
                   type={showConfirmPassword ? 'text' : 'password'}
                   {...register('confirmPassword', {
                     required: 'Не ввели пароль ще раз',
@@ -391,7 +391,7 @@ export function SignUpFormContentComponent(props) {
                   *
                 </label>
                 <label className={styles['signup-form__label--text']}>
-                  Введіть ваше прізвище
+                  Прізвище
                 </label>
               </div>
               <div className={styles['signup-form__field']}>
@@ -409,7 +409,7 @@ export function SignUpFormContentComponent(props) {
                       {[styles['signup-form__input--error']]: errors.surname}
                     )}
                     type="text"
-                    placeholder="Прізвище"
+                    placeholder="Введіть ваше прізвище"
                     {...register('surname', {
                       required: 'Не ввели прізвище',
                       validate: validateNameSurname,
@@ -431,7 +431,7 @@ export function SignUpFormContentComponent(props) {
                 <label className={styles['signup-form__label--required']}>
                   *
                 </label>
-                <label className={styles['signup-form__label--text']}>Введіть ваше ім‘я</label>
+                <label className={styles['signup-form__label--text']}>Ім‘я</label>
               </div>
               <div className={styles['signup-form__field']}>
                 <Tooltip
@@ -448,7 +448,7 @@ export function SignUpFormContentComponent(props) {
                       {[styles['signup-form__input--error']]: errors.name}
                     )}
                     type="text"
-                    placeholder="Ім‘я"
+                    placeholder="Введіть ваше ім‘я"
                     {...register('name', {
                       required: 'Не ввели ім\'я',
                       validate: validateNameSurname,

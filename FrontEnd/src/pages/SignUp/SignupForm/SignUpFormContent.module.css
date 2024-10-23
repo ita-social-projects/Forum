@@ -343,13 +343,9 @@ input[type="checkbox"]:checked {
 }
 
 input[type="checkbox"]:checked::before {
-  transform: scale(1);
-  content: "\2713";
-  font-size: 17px;
-  text-align: center;
-  position: relative;
-  bottom: 3px;
-  color: #f0f0f0;
+  background-image: url('/public/svg/check.svg');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .representative__checkbox-container.representative__input--error input[type="checkbox"] {
