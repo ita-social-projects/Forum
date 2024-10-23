@@ -204,7 +204,3 @@ class FeedbackView(CreateAPIView):
         category = serializer.validated_data["category"]
 
         send_email_feedback(email, message, category)
-
-    def handle_exception(self, exc):
-        response = super().handle_exception(exc)
-        return response
