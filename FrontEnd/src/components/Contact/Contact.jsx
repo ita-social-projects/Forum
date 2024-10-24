@@ -36,10 +36,10 @@ const Contact = () => {
     }, [percent]);
 
     const categoryOptions = [
-        { id: 1, name: 'Технічне питання' },
-        { id: 2, name: 'Рекомендації' },
-        { id: 3, name: 'Питання' },
-        { id: 4, name: 'Інше' },
+        { id: 'TECHNICAL', name: 'Технічне питання' },
+        { id: 'RECOMMENDATION', name: 'Рекомендації' },
+        { id: 'QUESTION', name: 'Питання' },
+        { id: 'OTHER', name: 'Інше' },
     ];
 
     const handleEmailChange = (e) => {

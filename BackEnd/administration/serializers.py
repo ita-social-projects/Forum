@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
 from profiles.models import (
     Profile,
@@ -197,25 +198,18 @@ class ModerationEmailSerializer(serializers.ModelSerializer):
 class FeedbackSerializer(serializers.Serializer):
     email = serializers.EmailField(
         required=True,
-        error_messages={
-            "required": "Будь ласка, вкажіть правильну адресу електронної скриньки."
-        },
+        error_messages={"required": "Please provide a valid email address."},
     )
     message = serializers.CharField(
         min_length=10,
         required=True,
         error_messages={
-            "required": "Повідомлення не може бути порожнім.",
-            "min_length": "Повідомлення не може бути коротшим за 10 символів.",
+            "required": "Message cannot be empty.",
+            "min_length": "Message must be at least 10 characters long.",
         },
     )
     category = serializers.ChoiceField(
-        choices=[
-            ("Технічне питання", "Технічне питання"),
-            ("Рекомендації", "Рекомендації"),
-            ("Питання", "Питання"),
-            ("Інше", "Інше"),
-        ],
+        choices=FeedbackCategory.choices(),
         required=True,
-        error_messages={"required": "Будь ласка, оберіть тип повідомлення."},
+        error_messages={"required": "Please select a category."},
     )

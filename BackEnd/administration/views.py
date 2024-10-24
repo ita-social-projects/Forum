@@ -183,20 +183,24 @@ class CreateAdminUserView(CreateAPIView):
     serializer_class = AdminRegistrationSerializer
 
 
-class FeedbackView(APIView):
-    def post(self, request):
-        serializer = FeedbackSerializer(data=request.data)
+class FeedbackView(CreateAPIView):
+    serializer_class = FeedbackSerializer
 
-        if serializer.is_valid():
-            email = serializer.validated_data["email"]
-            message = serializer.validated_data["message"]
-            category = serializer.validated_data["category"]
+    def perform_create(self, serializer):
+        """
+        Performs the creation of a new feedback record and sends an email notification.
 
-            send_email_feedback(email, message, category)
+        Parameters:
+        - serializer (FeedbackSerializer): The serializer instance containing validated data.
 
-            return Response(
-                {"message": "Ваше повідомлення надіслано успішно!"},
-                status=status.HTTP_200_OK,
-            )
+        Returns:
+        None
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        This method extracts the email, message, and category from the validated data in the serializer.
+        It then calls the `send_email_feedback` function to send an email notification with the provided feedback details.
+        """
+        email = serializer.validated_data["email"]
+        message = serializer.validated_data["message"]
+        category = serializer.validated_data["category"]
+
+        send_email_feedback(email, message, category)
