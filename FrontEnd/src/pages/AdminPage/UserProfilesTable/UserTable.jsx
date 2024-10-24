@@ -1,75 +1,199 @@
 import { useState } from 'react';
+import customTheme from '../../CustomThemes/customTheme';
 import css from './UserTable.module.css';
-import { useNavigate } from 'react-router-dom';
-import PaginationButtons from './PaginationButtons';
 import axios from 'axios';
 import useSWR from 'swr';
-import { DEFAULT_PAGE_SIZE } from '../constants';
+import { Table, ConfigProvider, Tag, Tooltip, Pagination } from 'antd';
+import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
-const COLUMN_NAMES = ['ID', 'ФІО', 'Пошта'];
+
+const LENGTH_EMAIL = 14;
+const DEFAULT_PAGE_SIZE = 3;
 
 function UserTable() {
-    const navigate = useNavigate();
-    const routeChange = (id) => {
-        const path = `../../customadmin/users/${id}`;
-        navigate(path);
-    };
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-    const handlePageSizeChange = (size) => {
-        setPageSize(size);
-        setCurrentPage(1);
-    };
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
+    const [sortInfo, setSortInfo] = useState({ field: 'registration_date', order: 'ascend' });
+    const [statusFilters, setStatusFilters] = useState([]);
 
-    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/?page=${currentPage}&page_size=${pageSize}`;
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users?` +
+        `page=${currentPage}&page_size=${pageSize}` +
+        (sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '') +
+        statusFilters.map((filter) => `&${filter}=true`).join('');
 
     async function fetcher(url) {
         const response = await axios.get(url);
         return response.data;
     }
-    const { data, error, isValidating: loading } = useSWR(url, fetcher);
 
+    const { data, error, isValidating: loading } = useSWR(url, fetcher);
     const users = data ? data.results : [];
+    const totalItems = data ? data.total_items : 0;
+
+    const handlePageChange = (page, size) => {
+        setCurrentPage(page);
+        setPageSize(size);
+    };
+
+    const handleTableChange = (pagination, filters, sorter) => {
+        if (sorter.field && (sorter.field !== sortInfo.field || sorter.order !== sortInfo.order)) {
+            if (sorter.field === sortInfo.field) {
+                const newOrder = sortInfo.order === 'ascend'
+                    ? 'descend'
+                    : sortInfo.order === 'descend'
+                    ? null
+                    : 'ascend';
+
+                setSortInfo({
+                    field: newOrder ? sorter.field : null,
+                    order: newOrder,
+                });
+            } else {
+                setSortInfo({ field: sorter.field, order: 'ascend' });
+            }
+        }
+
+        if (filters.status) {
+            setStatusFilters(filters.status);
+            setCurrentPage(1);
+        }
+    };
+
+    const getSortIcon = (sortOrder) => {
+        if (!sortOrder) return <span className={css['empty-icon']} />;
+        return sortOrder === 'ascend' ? (
+            <CaretUpOutlined className={css['icon']} />
+        ) : (
+            <CaretDownOutlined className={css['icon']} />
+        );
+    };
+
+    const renderStatusTags = (status) => {
+        const tags = [];
+
+        if (status.is_active) {
+            tags.push(<Tag color="green" key="active">Активний</Tag>);
+        }
+        if (status.is_staff) {
+            tags.push(<Tag color="blue" key="staff">Адміністратор</Tag>);
+        }
+        if (status.is_superuser) {
+            tags.push(<Tag color="purple" key="superuser">Суперадмін</Tag>);
+        }
+        if (status.is_deleted) {
+            tags.push(<Tag color="volcano" key="deleted">Видалений</Tag>);
+        }
+
+        return <>{tags}</>;
+    };
+
+    const columns = [
+        {
+            title: 'Прізвище та ім\'я',
+            dataIndex: 'surname',
+            key: 'surname',
+            sorter: true,
+            sortOrder: sortInfo.field === 'surname' ? sortInfo.order : null,
+            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            render: (_, record) => `${record.surname} ${record.name}`,
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+            sorter: true,
+            sortOrder: sortInfo.field === 'email' ? sortInfo.order : null,
+            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            render: (email) => (
+                <p>
+                    {email.length > LENGTH_EMAIL ? (
+                        <Tooltip title={email} placement="top">
+                            <span>{`${email.slice(0, LENGTH_EMAIL)}...`}</span>
+                        </Tooltip>
+                    ) : (
+                        <span>{email}</span>
+                    )}
+                </p>
+            ),
+        },
+        {
+            title: 'Компанія',
+            dataIndex: 'company_name',
+            key: 'company_name',
+            sorter: true,
+            sortOrder: sortInfo.field === 'company_name' ? sortInfo.order : null,
+            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            render: (company_name) => (
+                <p>
+                    {company_name && company_name.length > LENGTH_EMAIL ? (
+                        <Tooltip title={company_name} placement="top">
+                            <span>{`${company_name.slice(0, LENGTH_EMAIL)}...`}</span>
+                        </Tooltip>
+                    ) : (
+                        <span>{company_name}</span>
+                    )}
+                </p>
+            ),
+        },
+        {
+            title: 'Статус',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status) => renderStatusTags(status),
+            filters: [
+                { text: 'Aктивні', value: 'is_active' },
+                { text: 'Aдміністратори', value: 'is_staff' },
+                { text: 'Суперюзер', value: 'is_superuser' },
+                { text: 'Видалені', value: 'is_deleted' },
+            ],
+            onFilter: (value) => value
+        },
+        {
+            title: 'Дата реєстрації',
+            dataIndex: 'registration_date',
+            key: 'registration_date',
+            sorter: true,
+            sortOrder: sortInfo.field === 'registration_date' ? sortInfo.order : null,
+            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+        },
+        {
+            title: 'Дії',
+            dataIndex: 'actions',
+            key: 'actions',
+        },
+    ];
 
     return (
-        <div>
-            <PaginationButtons
-                totalPages={data ? data.total_pages : 1}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-                pageSize={pageSize}
-                onPageSizeChange={handlePageSizeChange}
-            />
-            <ul className={css['log-section']}>
-                {loading && <li className={css['log']} >Завантаження ...</li>}
-                {error && <li className={css['log']}>Виникла помилка: {error}</li>}
-            </ul>
-            <table className={css['table-section']}>
-                <thead>
-                    <tr className={css['table-header']}>
-                        {COLUMN_NAMES.map((column) => (
-                            <th key={column} className={css['table-header__text']}>
-                                {column}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id} className={css['table-element']} onClick={() => routeChange(user.id)}>
-                            <td className={css['table-element__text']}>{user.id}</td>
-                            <td className={css['table-element__text']}>
-                                {user.surname} {user.name}
-                            </td>
-                            <td className={css['table-element__text']}>{user.email}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+        <ConfigProvider theme={customTheme}>
+            <div className={css['table-container']}>
+                <ul className={css['log-section']}>
+                    {loading && <li className={css['log']}>Завантаження ...</li>}
+                    {error && <li className={css['log']}>Виникла помилка: {error.message}</li>}
+                </ul>
+                <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={totalItems}
+                    onChange={handlePageChange}
+                    onShowSizeChange={handlePageChange}
+                    showTitle={false}
+                    style={{ marginTop: '16px', textAlign: 'center', marginBottom: '16px' }}
+                />
+                <Table
+                    columns={columns}
+                    dataSource={users}
+                    onChange={handleTableChange}
+                    pagination={false}
+                    loading={loading}
+                    tableLayout="fixed"
+                    locale={{
+                        triggerDesc: 'Сортувати в порядку спадання',
+                        triggerAsc: 'Сортувати в порядку зростання',
+                        cancelSort: 'Відмінити сортування',
+                    }}
+                />
+            </div>
+        </ConfigProvider>
     );
 }
 

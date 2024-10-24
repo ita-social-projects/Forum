@@ -57,3 +57,18 @@
  .log {
     margin-bottom: 10px;
  }
+
+.table-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.icon {
+    font-size: 12px;
+}
+
+.empty-icon {
+    width: 12px;
+    height: 12px;
+}
