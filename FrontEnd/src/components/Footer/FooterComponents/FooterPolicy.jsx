@@ -29,7 +29,9 @@ function FooterPolicy() {
                         </Link>
                     ))}
                 </div>
-                <p className={css['policy-content__copyright']}> Copyright 2023 Forum. All rights reserved.</p>
+                <p className={css['policy-content__copyright']}>
+                    Copyright 2023 Forum. All rights reserved.
+                </p>
             </div>
         </div>
     );

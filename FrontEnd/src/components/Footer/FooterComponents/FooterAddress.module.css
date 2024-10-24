@@ -14,6 +14,11 @@
     display: flex;
 }
 
+.footer-address__text {
+    display: flex;
+    flex-direction: row;
+}
+
 .footer-address__company,
 .footer-address__contacts {
     display: flex;
@@ -46,6 +51,7 @@
     line-height: 150%;
     letter-spacing: -0.14px;
     gap: 10px;
+    width: 236px;
 }
 
 @media (min-width: 375px) {
@@ -55,6 +61,7 @@
         align-items: flex-start;
         flex-direction: column;
         gap: 10px;
+        width: 560px;
     }
 }
 
@@ -65,5 +72,10 @@
         align-items: flex-start;
         flex-direction: column;
         gap: 20px;
+        width: 241px;
+    }
+    .footer-address__text {
+        display: flex;
+        flex-direction: column;
     }
 }

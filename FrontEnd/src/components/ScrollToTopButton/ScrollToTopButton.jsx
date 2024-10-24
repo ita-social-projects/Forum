@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './ScrollToTopButton.css'; // Подключите свой CSS файл для стилизации кнопки
+import { useState, useEffect } from 'react';
+import './ScrollToTopButton.css';
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);

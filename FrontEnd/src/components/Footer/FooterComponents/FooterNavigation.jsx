@@ -43,6 +43,7 @@ function FooterNavigation() {
     <div className={css['navigation-content']}>
       <div className={css['navigation-content__company']}>
         <h3 className={css['navigation-content-company__header']}>Підприємства</h3>
+        <div className={css['navigation-content-company__text-block']}>
         {PAGE_NAVIGATION_LINKS.map((element) => (
           <HashLink
             key={element.link}
@@ -52,9 +53,11 @@ function FooterNavigation() {
             {element.title}
           </HashLink>
         ))}
+        </div>
       </div>
       <div className={css['navigation-content__section']}>
         <h3 className={css['navigation-content-section__header']}>Сектори</h3>
+        <div  className={css['navigation-content-section__text-block']}>
         {SERVICES_LINKS.map((element) => (
           <Link
             className={css['navigation-content-section__text']}
@@ -64,6 +67,7 @@ function FooterNavigation() {
             {element.title}
           </Link>
         ))}
+        </div>
       </div>
     </div>
   );

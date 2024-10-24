@@ -36,28 +36,30 @@ function FooterAddress() {
                 </p>
             ) : contacts && (
                 <>
-                    <div className={css['footer-address__company']}>
-                        <p className={css['footer-address__text']}>{contacts.university}</p>
-                        <p className={css['footer-address__text']}>{contacts.address}</p>
-                    </div>
-                    <div className={css['footer-address__contacts']}>
-                        <div className={css['footer-address__contacts-mail']}>
-                        <img
-                            className={css['footer-phone__svg']}
-                            src={`${process.env.REACT_APP_PUBLIC_URL}/svg/mail.svg`}
-                            alt="Footer craft merge logo"
-                            title="CraftMerge">
-                        </img>
-                        <p className={css['footer-address__text']}>{contacts.email}</p>
+                    <div className={css['footer-address__text']}>
+                        <div className={css['footer-address__company']}>
+                            <p className={css['footer-address__text']}>{contacts.university}</p>
+                            <p className={css['footer-address__text']}>{contacts.address}</p>
                         </div>
-                        <div className={css['footer-address__contacts-phone']}>
-                        <img
-                            className={css['footer-mail__svg']}
-                            src={`${process.env.REACT_APP_PUBLIC_URL}/svg/phone.svg`}
-                            alt="Footer craft merge logo"
-                            title="CraftMerge">
-                        </img>
-                        <p className={css['footer-address__text']}>{contacts.phone}</p>
+                        <div className={css['footer-address__contacts']}>
+                            <div className={css['footer-address__contacts-mail']}>
+                                <img
+                                    className={css['footer-phone__svg']}
+                                    src={`${process.env.REACT_APP_PUBLIC_URL}/svg/mail.svg`}
+                                    alt="Footer craft merge logo"
+                                    title="CraftMerge">
+                                </img>
+                                <p className={css['footer-address__text']}>{contacts.email}</p>
+                            </div>
+                            <div className={css['footer-address__contacts-phone']}>
+                                <img
+                                    className={css['footer-mail__svg']}
+                                    src={`${process.env.REACT_APP_PUBLIC_URL}/svg/phone.svg`}
+                                    alt="Footer craft merge logo"
+                                    title="CraftMerge">
+                                </img>
+                                <p className={css['footer-address__text']}>{contacts.phone}</p>
+                            </div>
                         </div>
                     </div>
                 </>
