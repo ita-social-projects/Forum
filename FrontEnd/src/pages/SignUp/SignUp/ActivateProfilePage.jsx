@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import AuthorizationPage from '../../../pages/Authorization/AuthorizationPage';
+import LoginPage from '../../../pages/Authorization/LoginPage';
 import styles from './ActivateProfileModal.module.css';
 
 export function ActivationProfilePage() {
@@ -37,7 +37,7 @@ export function ActivationProfilePage() {
 
   return (
     <div>
-      <AuthorizationPage />
+      <LoginPage />
       {modalVisible && (
         <div className={styles['modal']}>
           <div className={styles['modal__overlay']} onClick={closeModal}></div>
