@@ -17,7 +17,7 @@
 @font-face {
   font-family: 'Geologica';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   src: local('Geologica-VariableFont'), local('Geologica-VariableFont'),
     url('/public/fonts/Geologica-VariableFont.ttf') format('truetype');
 }

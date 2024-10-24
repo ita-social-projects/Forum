@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: space-between;
   height: var(--navbar-content-height);
+  font-family: var(--font-main);
 }
 
 .navbar-logo__text {
@@ -17,12 +18,10 @@
   justify-content: space-between;
   gap: 10px;
   color: #000000;
-  width: 200px;
+  width: 208px;
   height: 30px;
   font-size: 24px;
   font-weight: 700;
-  line-height: 30px;
-  text-align: left;
 }
 
 .navbar-utility-bar {
