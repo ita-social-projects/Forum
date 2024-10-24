@@ -1,6 +1,26 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  min-height: var(--min-height-block-main);
+  flex-shrink: 0;
+  background: var(--light-seashell-background);
+  padding: 80px 0;
+}
+
+.login {
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  align-items: center;
+  max-width: 572px;
+  min-width: 345px;
+  gap: 24px;
+}
+
 .login-basic {
   display: flex;
-  width: 572px;
+  width: 375px;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 2px;
@@ -273,8 +293,54 @@ input:-webkit-autofill {
   -webkit-text-fill-color: var(--main-text-color) !important;
 }
 
-@media only screen and (max-width: 767px) {
+.login-signup-invitation {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--light-seashell-background);
+}
+
+.login-signup-invitation p {
+  margin: 0;
+  color: var(--link-text-color);
+  font-feature-settings: "calt" off;
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+}
+
+.login-signup-invitation a {
+  color: var(--link-text-color);
+  font-feature-settings: "calt" off;
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1%;
+}
+
+.login-signup-invitation a:focus {
+  outline: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .login-page {
+    padding: 104px 0;
+  }
+
   .login-basic {
-    width: 375px;
+    width: 572px;
+  }
+}
+
+@media only screen and (min-width: 1512px) {
+  .login-page {
+    padding: 120px 0;
   }
 }

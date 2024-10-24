@@ -140,113 +140,121 @@ const LoginContent = () => {
   useEffect(() => {}, [disabled]);
 
   return (
-    <div className={classes['login-basic']}>
-      <div className={classes['login-header']}>
-        <p>Вхід на платформу</p>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)} className={classes['login-form']} noValidate>
-        <div className={classes['login-content']}>
-          <div className={classes['login-content__items']}>
-            <div className={classes['login-content__item']}>
-              <label
-                className={`${
-                  errors.email && getValues('email').trim().length === 0
-                    ? classes['error-dot']
-                    : ''
-                }`}
-                htmlFor="email"
-              >
-                Електронна пошта
-              </label>
-              <div className={classNames(
-                classes['login-content__email'],
-                { [classes['login-content__email-error']]: errors.email }
-              )}>
-                <input
-                  id="email"
-                  type="email"
-                  autoComplete="username"
-                  placeholder="Введіть свою електрону пошту"
-                  {...register('email', {
-                    required: errorMessageTemplates.required,
-                    validate: (value) =>
-                      validator.isEmail(value) || errorMessageTemplates.email,
-                  })}
-                />
-              </div>
-              <span className={classes['error-message']}>
-                {errors.email && errors.email.message}
-                {errors.required && errors.required.message}
-              </span>
-            </div>
-            <div className={classes['login-content__item']}>
-              <label
-                className={`${
-                  errors.password && getValues('password').trim().length === 0
-                    ? classes['error-dot']
-                    : ''
-                }`}
-                htmlFor="password"
-              >
-                Пароль
-              </label>
-              <div className={classNames(
-                  classes['login-content__password'],
-                  { [classes['login-content__password-error']]: errors.password },
-                  { [classes['login-content__show-password']]: showPassword }
-                )}>
-                <div className={classes['login-content__password__wrapper']}>
-                  <input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    autoComplete="current-password"
-                    placeholder="Введіть пароль"
-                    {...register('password', {
-                      required: errorMessageTemplates.required,
-                    })}
-                  />
-                  <span
-                    className={classes['password-visibility']}
-                    onClick={togglePassword}
-                  >
-                    {!showPassword ? <EyeInvisible /> : <EyeVisible />}
-                  </span>
+    <div className={classes['login-page']}>
+      <div className={classes.login}>
+        <div className={classes['login-basic']}>
+          <div className={classes['login-header']}>
+            <p>Вхід на платформу</p>
+          </div>
+            <form onSubmit={handleSubmit(onSubmit)} className={classes['login-form']} noValidate>
+              <div className={classes['login-content']}>
+                <div className={classes['login-content__items']}>
+                  <div className={classes['login-content__item']}>
+                    <label
+                      className={`${
+                        errors.email && getValues('email').trim().length === 0
+                          ? classes['error-dot']
+                          : ''
+                      }`}
+                      htmlFor="email"
+                    >
+                      Електронна пошта
+                    </label>
+                    <div className={classNames(
+                      classes['login-content__email'],
+                      { [classes['login-content__email-error']]: errors.email }
+                    )}>
+                      <input
+                        id="email"
+                        type="email"
+                        autoComplete="username"
+                        placeholder="Введіть свою електронну пошту"
+                        {...register('email', {
+                          required: errorMessageTemplates.required,
+                          validate: (value) =>
+                            validator.isEmail(value) || errorMessageTemplates.email,
+                        })}
+                      />
+                    </div>
+                    <span className={classes['error-message']}>
+                      {errors.email && errors.email.message}
+                      {errors.required && errors.required.message}
+                    </span>
+                  </div>
+                  <div className={classes['login-content__item']}>
+                    <label
+                      className={`${
+                        errors.password && getValues('password').trim().length === 0
+                          ? classes['error-dot']
+                          : ''
+                      }`}
+                      htmlFor="password"
+                    >
+                      Пароль
+                    </label>
+                    <div className={classNames(
+                        classes['login-content__password'],
+                        { [classes['login-content__password-error']]: errors.password },
+                        { [classes['login-content__show-password']]: showPassword }
+                      )}>
+                      <div className={classes['login-content__password__wrapper']}>
+                        <input
+                          id="password"
+                          type={showPassword ? 'text' : 'password'}
+                          autoComplete="current-password"
+                          placeholder="Введіть пароль"
+                          {...register('password', {
+                            required: errorMessageTemplates.required,
+                          })}
+                        />
+                        <span
+                          className={classes['password-visibility']}
+                          onClick={togglePassword}
+                        >
+                          {!showPassword ? <EyeInvisible /> : <EyeVisible />}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={classes['forget-password__wrapper']}>
+                      <span className={classes['error-message']}>
+                        {errors.password && errors.password.message}
+                        {errors.required && errors.required.message}
+                        {errors.unspecifiedError && errors.unspecifiedError.message}
+                      </span>
+                      <Link to="/reset-password" className={classes['forget-password']}>
+                        Забули пароль?
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className={classes['forget-password__wrapper']}>
-                <span className={classes['error-message']}>
-                  {errors.password && errors.password.message}
-                  {errors.required && errors.required.message}
-                  {errors.unspecifiedError && errors.unspecifiedError.message}
-                </span>
-                <Link to="/reset-password" className={classes['forget-password']}>
-                  Забули пароль?
-                </Link>
+              <div className={classes['login-footer']}>
+                <div className={classes['login-footer-buttons']}>
+                  <button
+                    disabled={disabled}
+                    type="submit"
+                    className={
+                      disabled
+                        ? classes['login-footer-buttons__signin__disabled']
+                        : classes['login-footer-buttons__signin']
+                    }
+                  >
+                    Увійти
+                  </button>
+                </div>
               </div>
-            </div>
+                <ReCAPTCHA
+                  ref={reCaptchaRef}
+                  sitekey={process.env.REACT_APP_RECAPTCHA_V2_SITE_KEY}
+                  size="invisible"
+                />
+            </form>
           </div>
+        <div className={classes['login-signup-invitation']}>
+          <p>Вперше на нашому сайті?</p>
+          <Link to="/sign-up">Зареєструйтесь</Link>
         </div>
-        <div className={classes['login-footer']}>
-          <div className={classes['login-footer-buttons']}>
-            <button
-              disabled={disabled}
-              type="submit"
-              className={
-                disabled
-                  ? classes['login-footer-buttons__signin__disabled']
-                  : classes['login-footer-buttons__signin']
-              }
-            >
-              Увійти
-            </button>
-          </div>
-        </div>
-        <ReCAPTCHA
-          ref={reCaptchaRef}
-          sitekey={process.env.REACT_APP_RECAPTCHA_V2_SITE_KEY}
-          size="invisible"
-        />
-      </form>
+      </div>
     </div>
   );
 };
