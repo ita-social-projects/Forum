@@ -1,13 +1,15 @@
 .footer-main {
-    width: auto;
+    display: flex;
+    width: 100%;
     background: var(--footer-backround);
     background-size: cover;
+    justify-content: start;
 }
 
 .footer-content {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 20px;
     box-sizing: border-box;
     width: 343px;
 }
@@ -19,14 +21,24 @@
         padding: 10px;
         width: 720px;
     }
+
+    .footer-main {
+        display: flex;
+        justify-content: start;
+    }
 }
 
 @media (min-width: 768px) {
     .footer-content {
         display: flex;
         flex-direction: row;
-        padding: 24px 104px;
+        padding-top: 24px;
+        width: 1100px;
         gap: 2%;
-        width: 1305px;
+    }
+
+    .footer-main {
+        display: flex;
+        justify-content: center;
     }
 }

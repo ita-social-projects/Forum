@@ -37,6 +37,7 @@
     white-space: nowrap;
 }
 .policy-content__copyright {
+    color: var(--footer-font-color);
     text-align: center; 
 }
 
