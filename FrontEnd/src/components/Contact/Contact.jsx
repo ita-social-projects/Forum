@@ -1,27 +1,29 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';
-import contactText from './text';
-import useScrollToTop from '../../hooks/useScrollToTop';
+import { Spin, Select, Space } from 'antd';
+
 import {
     EMAIL_PATTERN,
     MESSAGE_PATTERN
 } from '../../constants/constants';
-import PropTypes from 'prop-types';
-import DropDownMenu from '../MiniComponents/DropDownMenu/DropDownMenu.jsx';
+
+import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';
+
 import styles from './Contact.module.css';
-import { Spin } from 'antd';
+
+const CATEGORY_OPTIONS = [
+    { value: 'Технічне питання', label: 'Технічне питання' },
+    { value: 'Рекомендації', label: 'Рекомендації' },
+    { value: 'Питання', label: 'Питання' },
+    { value: 'Інше', label: 'Інше' },
+];
 
 const Contact = () => {
-    useScrollToTop();
-
     const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('Привіт, хочу повідомити...');
-    const [category, setCategory] = useState(null);
-    const [emailError, setEmailError] = useState('');
-    const [messageError, setMessageError] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [showErrorModal, setShowErrorModal] = useState(false);
     const [percent, setPercent] = useState(-50);
     const timerRef = useRef();
 
@@ -35,83 +37,51 @@ const Contact = () => {
         return () => clearTimeout(timerRef.current);
     }, [percent]);
 
-    const categoryOptions = [
-        { id: 1, name: 'Технічне питання' },
-        { id: 2, name: 'Рекомендації' },
-        { id: 3, name: 'Питання' },
-        { id: 4, name: 'Інше' },
-    ];
+    const {
+        register,
+        handleSubmit,
+        reset,
+        control,
+        formState: { errors },
+      } = useForm({
+        mode: 'all',
+        defaultValues: {
+            'message': 'Привіт, хочу повідомити...',
+            'email': '',
+            },
+      });
 
-    const handleEmailChange = (e) => {
-        const { value } = e.target;
-        setEmail(value);
-
-        if (!EMAIL_PATTERN.test(value)) {
-            setEmailError('Електронна пошта не відповідає вимогам');
-        } else {
-            setEmailError('');
-        }
-    };
-
-    const handleMessageChange = (e) => {
-        const { value } = e.target;
-        setMessage(value);
-
-        if (!MESSAGE_PATTERN.test(value)) {
-            setMessageError('Повідомлення не може бути коротшим за 10 символів');
-        } else {
-            setMessageError('');
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!EMAIL_PATTERN.test(email)) {
-            setEmailError('Електронна пошта не відповідає вимогам');
-            return;
-        }
-
-        if (!MESSAGE_PATTERN.test(message)) {
-            setMessageError('Повідомлення не може бути коротшим за 10 символів');
-            return;
-        }
-
+    const onSubmit = async (value) => {
         setLoading(true);
         try {
+            value.message * 2;
             const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/admin/feedback/`, {
-                email: email,
-                message: message,
-                category: category
+                email: value.email,
+                message: value.message,
+                category: value.category,
             });
 
             if (response.status === 200) {
                 setShowModal(true);
-                setEmail('');
-                setMessage('Привіт, хочу повідомити...');
-                setCategory(null);
+                reset();
             }
         } catch (error) {
-            setShowModal(true);
+            setShowErrorModal(true);
         } finally {
             setLoading(false);
         }
     };
 
     const handleCancel = () => {
-        setEmail('');
-        setMessage('Привіт, хочу повідомити...');
-        setCategory(null);
-        setEmailError('');
-        setMessageError('');
-    };
-
-    const handleRedirect = () => {
-        window.location.href = '/';
+        reset();
     };
 
     const closeModal = () => {
         setShowModal(false);
+    };
+
+  const closeErrorModal = () => {
+        setShowErrorModal(false);
     };
 
     return (
@@ -125,40 +95,74 @@ const Contact = () => {
                 />
             </div>
             <div className={styles['contact__text_container']}>
-                <h2 className={styles['contact__title']}>{contactText.title}</h2>
-                <form onSubmit={handleSubmit} className={styles['contact__form']}>
-                    <label className={styles['contact__label']} htmlFor="email">Email:</label>
-                    <input
-                        id="email"
-                        type="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        className={styles['contact__input']}
-                        placeholder="Ваша пошта"
-                        required
-                    />
-                    {emailError && <p className={styles['contact__error']}>{emailError}</p>}
-                    <DropDownMenu
-                        value={category ? [category] : []}
-                        onChange={(value) => setCategory(value[0] || null)}
-                        options={categoryOptions}
-                        updateHandler={(value) => setCategory(value[0] || null)}
-                        className={styles['contact__select']}
-                        placeholder="Оберіть категорію"
-                        name="category"
-                        label="Категорія:"
-                    />
-                    <label className={styles['contact__label']} htmlFor="message">Повідомлення:</label>
-                    <textarea
-                        id="message"
-                        value={message}
-                        onChange={handleMessageChange}
-                        className={styles['contact__textarea']}
-                        placeholder="Ваше повідомлення"
-                        required
-                        spellCheck={false}
+                <h2 className={styles['contact__title']}>Зворотній зв&apos;язок</h2>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles['contact__form']} noValidate>
+                    <div className={styles['contact__field']}>
+                        <label className={styles['contact__label']} htmlFor="email">Email:</label>
+                        <input className={styles['contact__input']}
+                            id="email"
+                            type="email"
+                            placeholder="Ваша пошта"
+                            {...register('email', {
+                                required: 'Обов’язкове поле',
+                                pattern: {
+                                    value: EMAIL_PATTERN,
+                                    message: 'Електронна пошта не відповідає вимогам',
+                                }
+                            })}
                         />
-                    {messageError && <p className={styles['contact__error']}>{messageError}</p>}
+                        {errors.email && <p className={styles['contact__error']}>{errors.email.message}</p>}
+                    </div>
+                    <div className={styles['contact__field']}>
+                        <label className={styles['contact__label']} htmlFor="message">Категорія:</label>
+                        <Controller
+                            name="category"
+                            control={control}
+                            rules={{
+                                required: 'Будь ласка, оберіть тип повідомлення',
+                            }}
+                            render={({ field, fieldState: { error } }) =>
+                                <Space direction="vertical" style={{ width: '100%', gap: '0px', }}>
+                                    <Select
+                                        placeholder="Оберіть категорію"
+                                        {...field}
+                                        style={{
+                                        width: 400,
+                                        padding: '0px',
+                                        }}
+                                        dropdownStyle={{
+                                            width: '257px',
+                                            paddingLeft: '0px',
+                                            paddingRight: '0px',
+                                            borderRadius: '2px',
+                                          }}
+                                        variant="borderless"
+                                        className={styles['contact__select']}
+                                        options={CATEGORY_OPTIONS}
+                                        onChange={(value) => field.onChange(value)}
+                                    />
+                                    {error && <p className={styles['contact__error']}>{error.message}</p>}
+                                </Space>
+                            }
+                        />
+                    </div>
+                    <div className={`${styles['contact__field']} ${styles['contact__field_message']}`}>
+                        <label className={styles['contact__label']} htmlFor="message">Повідомлення:</label>
+                        <textarea
+                            id="message"
+                            className={styles['contact__textarea']}
+                            placeholder="Ваше повідомлення"
+                            {...register('message', {
+                                required: 'Обов’язкове поле',
+                                pattern: {
+                                    value: MESSAGE_PATTERN,
+                                    message: 'Повідомлення не може бути коротшим за 10 символів',
+                                }
+                            })}
+                            spellCheck={false}
+                            />
+                        {errors.message && <p className={styles['contact__error']}>{errors.message.message}</p>}
+                    </div>
                     <div className={styles['contact__button_container']}>
                       <button type="submit" className={styles['contact__button_send']}>
                         {loading ? <Spin percent={percent}/> : 'Надіслати'}
@@ -181,10 +185,37 @@ const Contact = () => {
                   </button>
                         <h2>Повідомлення успішно надіслано!</h2>
                        <div className={styles['contact__button_modal_container']}>
-                        <button type="button" onClick={handleRedirect} className={styles['contact__button_send']}>
-                            На головну
-                        </button>
+                        <Link to="/">
+                            <button type="button" className={styles['contact__button_send']}>
+                                На головну
+                            </button>
+                        </Link>
                         <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
+                            Закрити
+                        </button>
+                       </div>
+                    </div>
+                </div>
+            )}
+
+            {showErrorModal && (
+                <div className={styles['modal_feedback']}>
+                    <div className={styles['modal_feedback_content']}>
+                  <button
+                    className={styles['modal_feedback_close']}
+                    onClick={closeErrorModal}
+                    aria-label="Закрити модальне вікно"
+                  >
+                    <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} alt="Close button" />
+                  </button>
+                        <h2>Щось пішло не так! Спробуйте будь ласка ще раз.</h2>
+                       <div className={styles['contact__button_modal_container']}>
+                        <Link to="/">
+                            <button type="button" className={styles['contact__button_send']}>
+                                На головну
+                            </button>
+                        </Link>
+                        <button type="button" onClick={closeErrorModal} className={styles['contact__button_cancel']}>
                             Закрити
                         </button>
                        </div>
@@ -196,7 +227,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
-Contact.propTypes = {
-    currentFormNameHandler: PropTypes.func,
-};
