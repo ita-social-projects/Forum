@@ -17,7 +17,7 @@ function Header(props) {
         {/*  {hideMenu ? null : (*/}
         {/*    <HeaderMenu />*/}
         {/*  )}*/}
-        {/*<div className={css['header-divider']}></div>*/}
+        <div className={css['header-divider']}></div>
       </div>
     </header>
   );

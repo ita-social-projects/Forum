@@ -1,7 +1,12 @@
+.navbar-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
 .navbar-content {
   display: flex;
-  width: 100%;
-  padding: 16px 104px;
+  min-width: 1452px;
+  padding: 16px 30px;
   align-items: center;
   justify-content: space-between;
   height: var(--navbar-content-height);

@@ -24,7 +24,7 @@
 
 :root {
 
-  --main-block-size: 1512px;
+  --main-block-size: 100vw;
 
   /* background color*/
   --main-header-color: #1F9A7C;
