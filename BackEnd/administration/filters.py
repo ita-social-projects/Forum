@@ -32,7 +32,6 @@ class UsersFilter(FilterSet):
 
     ordering = filters.OrderingFilter(
         fields=(
-            ("id", "id"),
             ("name", "name"),
             ("surname", "surname"),
             ("email", "email"),
