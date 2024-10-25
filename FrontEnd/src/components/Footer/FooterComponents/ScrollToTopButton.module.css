@@ -1,7 +1,7 @@
 .scroll-to-top-button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  left: 90%;
   width: 40px;
   height: 40px;
   background-color: var(--main-button-color);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import './ScrollToTopButton.css';
+import css from './ScrollToTopButton.module.css';
+
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -29,7 +30,7 @@ const ScrollToTopButton = () => {
 
   return (
     <div
-      className={`scroll-to-top-button ${isVisible ? 'visible' : ''}`}
+      className={`${css['scroll-to-top-button']} ${isVisible ? css.visible : ''}`}
       onClick={scrollToTop}
     >
       &#8679;

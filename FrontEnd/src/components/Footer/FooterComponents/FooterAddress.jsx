@@ -49,7 +49,7 @@ function FooterAddress() {
                                     alt="Footer craft merge logo"
                                     title="CraftMerge">
                                 </img>
-                                <p className={css['footer-address__text']}>{contacts.email}</p>
+                                <a className={css['footer-address__text']} href={`mailto:${contacts.email}`}>{contacts.email}</a>
                             </div>
                             <div className={css['footer-address__contacts-phone']}>
                                 <img
