@@ -6,7 +6,7 @@ import { SWRConfig } from 'swr';
 import 'react-toastify/dist/ReactToastify.css';
 import customTheme from '../pages/CustomThemes/customTheme.js';
 
-import AuthorizationPage from '../pages/Authorization/AuthorizationPage';
+import LoginPage from '../pages/Authorization/LoginPage';
 import CookiesPolicyComponent from '../pages/CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
@@ -68,7 +68,7 @@ function ClientRouter() {
         {isAuth ? (
           <Route path="/login" element={<Navigate to="/profile/user-info" />} />
         ) : (
-          <Route path="/login" element={<AuthorizationPage />} />
+          <Route path="/login" element={<LoginPage />} />
         )}
         {isAuth ? (
           <Route
