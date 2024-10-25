@@ -19,7 +19,7 @@ function UserTable() {
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users?` +
         `page=${currentPage}&page_size=${pageSize}` +
         (sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '') +
-        statusFilters.map((filter) => `&${filter}=true`).join('');
+        (statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '');
 
     async function fetcher(url) {
         const response = await axios.get(url);
@@ -53,10 +53,8 @@ function UserTable() {
             }
         }
 
-        if (filters.status) {
-            setStatusFilters(filters.status);
-            setCurrentPage(1);
-        }
+        setStatusFilters(filters.status);
+        setCurrentPage(1);
     };
 
     const getSortIcon = (sortOrder) => {
