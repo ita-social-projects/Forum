@@ -75,7 +75,7 @@ class TestAdminProfilesAPITests(APITestCase):
             }
         ]
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(data, response.json())
+        self.assertEqual(data, response.data["results"])
 
     def test_get_profile_id_authenticated(self):
         self.client.force_authenticate(self.user)
