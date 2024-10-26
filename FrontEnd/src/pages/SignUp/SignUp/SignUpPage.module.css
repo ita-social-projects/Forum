@@ -1,7 +1,7 @@
 .sign-up {
   width: var(--main-block-size);
   border-radius: 8px;
-  background: var(--background);
+  background: var(--light-seashell-background);
   padding: 40px 0px;
 }
 
