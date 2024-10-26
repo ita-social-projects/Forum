@@ -27,6 +27,7 @@
     align-items: flex-start;
     gap: 10px;
 }
+
 .footer-address__contacts {
     padding-left: 10px;
 }
@@ -76,10 +77,17 @@
         align-items: flex-start;
         flex-direction: column;
         gap: 20px;
-        width: 241px;
+        max-width: 260px;
     }
+
     .footer-address__text {
         display: flex;
         flex-direction: column;
     }
+
+    .footer-address__contacts {
+        padding-top: 10px;
+        padding-left: 0px;
+    }
+    
 }

@@ -79,6 +79,7 @@
   --footer-font-color: #FFF;
   --footer-links-font-color: #FFF;
   --footer-bottom-backround: #333;
+  --footer-policy-links-font-color: #959595;
 
   /* main pages About block*/
   --about-text-font-color: #292E32;
@@ -113,6 +114,8 @@
   --primary-green-80: #1f9a7c;
   --character-title-85: rgba(0, 0, 0, 0.85);
 
+  /*Login Page*/
+  --min-height-login-page: calc(100vh - 565px) ;
   --wf-base-white: #FFF;
 
   --profile-min-height-block: calc(100vh - 565px);
