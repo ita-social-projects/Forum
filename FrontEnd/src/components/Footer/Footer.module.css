@@ -11,7 +11,8 @@
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
-    width: 343px;
+    width: auto;
+    gap: 35px;
 }
 
 @media (min-width: 375px) {
