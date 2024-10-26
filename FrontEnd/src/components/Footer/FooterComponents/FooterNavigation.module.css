@@ -10,6 +10,7 @@
     align-items: flex-start;
     gap: 24px;
 }
+
 .navigation-content__section {
     padding-left: 80px;
 }
@@ -27,7 +28,7 @@
     letter-spacing: -1%;
 }
 
-.navigation-content-section__text-block, 
+.navigation-content-section__text-block,
 .navigation-content-company__text-block {
     display: flex;
     flex-direction: column;
@@ -67,7 +68,8 @@
         align-items: flex-start;
         gap: 6px;
     }
-    .navigation-content-section__text-block, 
+
+    .navigation-content-section__text-block,
     .navigation-content-company__text-block {
         display: flex;
         flex-direction: column;
@@ -92,12 +94,13 @@
         align-items: flex-start;
         gap: 6px;
     }
+
     .navigation-content__section {
         padding-top: 20px;
         padding-left: 0;
     }
 
-    .navigation-content-section__text-block, 
+    .navigation-content-section__text-block,
     .navigation-content-company__text-block {
         display: flex;
         flex-direction: row;
