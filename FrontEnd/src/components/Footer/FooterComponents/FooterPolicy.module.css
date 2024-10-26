@@ -55,8 +55,8 @@
     }
 
     .policy-content-links {
-        display: flex;
-        flex-direction: row;
+        padding-top: 20px;
+        padding-bottom: 10px;
         gap: 12px;
     }
 
@@ -67,7 +67,9 @@
     }
 
     .policy-content__copyright {
-        padding-left: 10px;
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 10px;
     }
 }
 

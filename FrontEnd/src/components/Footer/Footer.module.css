@@ -17,16 +17,16 @@
 }
 
 @media only screen and (min-width: 768px)  {
+    .footer-main {
+        display: flex;
+        justify-content: space-around;
+    }
+
     .footer-content {
         display: flex;
         flex-direction: column;
-        padding: 10px;
-        width: 720px;
-    }
-
-    .footer-main {
-        display: flex;
-        justify-content: start;
+        min-width: 580px;
+        max-width: 720px;
     }
 }
 
