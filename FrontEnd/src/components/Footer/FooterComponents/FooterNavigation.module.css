@@ -52,7 +52,7 @@
     white-space: nowrap;
 }
 
-@media (min-width: 375px) {
+@media only screen and (min-width: 768px) {
     .navigation-content {
         display: flex;
         align-items: flex-start;
@@ -75,7 +75,7 @@
     }
 }
 
-@media (min-width: 768px) {
+@media only screen and (min-width: 1512px) {
     .navigation-content {
         display: flex;
         align-items: flex-start;

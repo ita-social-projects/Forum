@@ -42,7 +42,7 @@
     white-space: nowrap;
 }
 
-@media (min-width: 375px) {
+@media only screen and (min-width: 768px) {
     .policy-content {
         display: flex;
         flex-direction: column;
@@ -71,7 +71,7 @@
     }
 }
 
-@media (min-width: 768px) {
+@media only screen and (min-width: 1512px) {
     .policy-content {
         display: flex;
         flex-direction: column;

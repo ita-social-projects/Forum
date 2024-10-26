@@ -1,9 +1,9 @@
 .footer-main {
     display: flex;
-    width: 100%;
+    width: 100vw;
     background: var(--footer-backround);
     background-size: cover;
-    justify-content: start;
+    justify-content: space-around;
 }
 
 .footer-content {
@@ -11,11 +11,12 @@
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
-    width: auto;
+    min-width: 343px;
+    max-width: 572px;
     gap: 35px;
 }
 
-@media (min-width: 375px) {
+@media only screen and (min-width: 768px)  {
     .footer-content {
         display: flex;
         flex-direction: column;
@@ -29,7 +30,7 @@
     }
 }
 
-@media (min-width: 768px) {
+@media only screen and (min-width: 1512px) {
     .footer-content {
         display: flex;
         flex-direction: row;
