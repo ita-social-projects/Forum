@@ -5,11 +5,24 @@
     margin-left: 25px;
 }
 
-.main-page-section h1 {
-    font-size: 20px;
-    margin-bottom: 50px;
+.main-page-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-.main-page-section p {
+.intro-text {
     font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.text-section {
+    margin-top: 20px;
+}
+
+.text-item {
+    margin-bottom: 20px;
+}
+
+.text-item p {
+    font-size: 18px;
 }

@@ -5,22 +5,22 @@ import css from './Menu.module.css';
 const MENU = [
     {
         id: 'am1',
-        title: 'Користувачі',
+        title: 'Керування користувачами',
         link: '/customadmin/users/'
     },
     {
         id: 'am2',
-        title: 'Компанії',
+        title: 'Керування компаніями',
         link: '/customadmin/profiles/'
     },
     {
         id: 'am3',
-        title: 'Контакти',
+        title: 'Керування контактами',
         link: '/customadmin/contacts/'
     },
     {
         id: 'am4',
-        title: 'Зміна часу автомодерації',
+        title: 'Налаштування часу автоапруву',
         link: '/customadmin/automoderation/'
     },
 ];
