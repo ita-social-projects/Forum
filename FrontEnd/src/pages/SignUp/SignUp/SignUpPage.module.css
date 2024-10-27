@@ -1,5 +1,5 @@
 .sign-up {
-  width: var(--main-block-size);
+  width: 100vw;
   border-radius: 8px;
   background: var(--light-seashell-background);
   padding: 40px 0px;
@@ -31,8 +31,6 @@
 .sign-in-line__text {
   color: #000;
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Regular */
   font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
@@ -44,8 +42,6 @@
 .sign-in-line__link {
   color: var(--link-text-color);
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Regular */
   font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
