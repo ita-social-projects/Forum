@@ -115,7 +115,7 @@
   --character-title-85: rgba(0, 0, 0, 0.85);
 
   /*Login Page*/
-  --min-height-login-page: calc(100vh - 572px) ;
+  --min-height-login-page: calc(100vh - 528px) ;
   --wf-base-white: #FFF;
 
   --profile-min-height-block: calc(100vh - 565px);
