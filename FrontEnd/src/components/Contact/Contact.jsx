@@ -23,7 +23,6 @@ const CATEGORY_OPTIONS = [
 const Contact = () => {
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [showErrorModal, setShowErrorModal] = useState(false);
     const [percent, setPercent] = useState(-50);
     const timerRef = useRef();
 
@@ -54,7 +53,6 @@ const Contact = () => {
     const onSubmit = async (value) => {
         setLoading(true);
         try {
-            value.message * 2;
             const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/admin/feedback/`, {
                 email: value.email,
                 message: value.message,
@@ -66,7 +64,7 @@ const Contact = () => {
                 reset();
             }
         } catch (error) {
-            setShowErrorModal(true);
+            setShowModal(true);
         } finally {
             setLoading(false);
         }
@@ -78,10 +76,6 @@ const Contact = () => {
 
     const closeModal = () => {
         setShowModal(false);
-    };
-
-  const closeErrorModal = () => {
-        setShowErrorModal(false);
     };
 
     return (
@@ -165,7 +159,7 @@ const Contact = () => {
                     </div>
                     <div className={styles['contact__button_container']}>
                       <button type="submit" className={styles['contact__button_send']}>
-                        {loading ? <Spin percent={percent}/> : 'Надіслати'}
+                        {loading ? <Spin style={{ color: '#ffffff' }} percent={percent}/> : 'Надіслати'}
                       </button>
                       <button type="button" onClick={handleCancel} className={styles['contact__button_cancel']}>
                         Відмінити
@@ -191,31 +185,6 @@ const Contact = () => {
                             </button>
                         </Link>
                         <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
-                            Закрити
-                        </button>
-                       </div>
-                    </div>
-                </div>
-            )}
-
-            {showErrorModal && (
-                <div className={styles['modal_feedback']}>
-                    <div className={styles['modal_feedback_content']}>
-                  <button
-                    className={styles['modal_feedback_close']}
-                    onClick={closeErrorModal}
-                    aria-label="Закрити модальне вікно"
-                  >
-                    <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} alt="Close button" />
-                  </button>
-                        <h2>Щось пішло не так! Спробуйте будь ласка ще раз.</h2>
-                       <div className={styles['contact__button_modal_container']}>
-                        <Link to="/">
-                            <button type="button" className={styles['contact__button_send']}>
-                                На головну
-                            </button>
-                        </Link>
-                        <button type="button" onClick={closeErrorModal} className={styles['contact__button_cancel']}>
                             Закрити
                         </button>
                        </div>
