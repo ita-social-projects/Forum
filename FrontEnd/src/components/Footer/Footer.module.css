@@ -17,11 +17,6 @@
 }
 
 @media only screen and (min-width: 768px) {
-    .footer-main {
-        display: flex;
-        justify-content: space-around;
-    }
-
     .footer-content {
         display: flex;
         flex-direction: column;
@@ -34,12 +29,6 @@
     .footer-content {
         display: flex;
         flex-direction: row;
-        padding-top: 24px;
         max-width: 1300px;
-    }
-
-    .footer-main {
-        display: flex;
-        justify-content: space-around;
     }
 }

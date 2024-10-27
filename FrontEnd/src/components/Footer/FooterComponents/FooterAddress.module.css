@@ -1,14 +1,13 @@
 .footer-address__block {
     display: flex;
-    align-items: flex-start;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .footer-logo {
     width: 208px;
     height: 30px;
-    padding-top: 25px;
-    padding-bottom: 35px;
+    padding-bottom: 20px;
 }
 
 .footer-address__error {
@@ -60,21 +59,17 @@
 }
 
 @media only screen and (min-width: 768px) {
-
     .footer-address__block {
         display: flex;
-        align-items: flex-start;
         flex-direction: column;
         gap: 10px;
-        width: 560px;
+        max-width: 560px;
     }
 }
 
 @media only screen and (min-width: 1512px) {
-
     .footer-address__block {
         display: flex;
-        align-items: flex-start;
         flex-direction: column;
         gap: 20px;
         max-width: 260px;
