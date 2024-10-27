@@ -29,6 +29,7 @@ const customTheme = {
       },
       Select: {
         colorPrimary: '#1f9a7c',
+        colorTextPlaceholder: '#adb3b9',
         borderRadiusSM: '2px',
         optionPadding: '5px 12px',
         optionFontSize: 14,
