@@ -1,0 +1,77 @@
+.login-banner-group {
+    display: flex;
+    background: var(--banner-main-color);
+    width: 100vw;
+    justify-content: center;
+
+}
+
+.login-banner-group__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 365px;
+    height: 208px;
+    gap: 24px;
+}
+
+
+.login-banner-group__text {
+    color: var(--banner-main-font-color, black);
+    font-feature-settings: 'calt' off;
+    font-family: var(--font-main);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px;
+    letter-spacing: 1%;
+    text-align: center;
+
+}
+
+.login-banner-group__button {
+    display: flex;
+    justify-content: center;
+}
+
+.login-banner-group__button-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--banner-main-batton-text-color, white);
+    font-feature-settings: 'calt' off;
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -1%;
+    text-decoration: none;
+    text-align: center;
+    width: 170px;
+    height: 46px;
+    background: var(--banner-main-batton-color, black);
+    border-radius: 4px;
+}
+
+@media only screen and (min-width: 768px) {
+    .login-banner-group__content {
+        width: 694px;
+        height: 262px;
+    }
+
+    .login-banner-group__text {
+        font-size: 40px;
+    }
+}
+
+@media only screen and (min-width: 1512px) {
+    .login-banner-group__content {
+        width: 694px;
+        height: 326px;
+    }
+
+    .login-banner-group__text {
+        font-size: 40px;
+    }
+}
