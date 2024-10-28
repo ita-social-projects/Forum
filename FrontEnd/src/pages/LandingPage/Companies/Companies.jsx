@@ -4,6 +4,7 @@ import styles from './Companies.module.css';
 import CompanyCard from '../../../components/CompanyCard/CompanyCard';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
+import { Col, Row } from 'antd';
 
 const MainCompanies = ({ isAuthorized }) => {
   const baseUrl = process.env.REACT_APP_BASE_API_URL;
@@ -17,7 +18,7 @@ const MainCompanies = ({ isAuthorized }) => {
   };
 
   const { data: companylist } = useSWR(
-    `${baseUrl}/api/profiles/?ordering=-completeness,-created_at`,
+    `${baseUrl}/api/profiles/?ordering=-completeness,-created_at&page_size=4`,
     fetcher
   );
 
@@ -46,17 +47,17 @@ const MainCompanies = ({ isAuthorized }) => {
         </h2>
       </div>
       <div className={styles['new-companies-block']}>
-        <div className={styles['row']}>
+      <Row gutter={[16, 16]}>
           {companyDataList.map((result, resultIndex) => (
-            <div key={resultIndex} className={styles['col-md-4']}>
+            <Col key={resultIndex} xs={24} sm={12} lg={6}>
               <CompanyCard
                 profile={result}
                 isAuthorized={isAuthorized}
                 changeCompanies={changeCompanies}
               />
-            </div>
+            </Col>
           ))}
-        </div>
+        </Row>
       </div>
     </div>
   );

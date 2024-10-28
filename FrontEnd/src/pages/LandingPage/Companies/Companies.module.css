@@ -36,16 +36,3 @@
   align-items: center;
   gap: 36px;
 }
-
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 40px;
-  row-gap: 18px;
-}
-
-.col-md-4 {
-  flex-basis: calc(33, 3% - 80px);
-  margin: 10px;
-}
-

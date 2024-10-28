@@ -30,30 +30,30 @@ export default function CompanyCard({
       .map((activity) => activity.name)
       .join(' ');
 
-      const handleSave = async () => {
-        changeCompanies(profile.id, true);
-        try {
-          await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,{ company_pk: profile.id });
-        } catch (error) {
-          console.error(error);
-        }
-      };
+  const handleSave = async () => {
+    changeCompanies(profile.id, true);
+    try {
+      await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`, { company_pk: profile.id });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-      const handleDeleteSaved = async () => {
-        changeCompanies(profile.id, false);
-        try {
-          await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}`);
-        } catch (error) {
-          console.error(error);
-        }
-      };
+  const handleDeleteSaved = async () => {
+    changeCompanies(profile.id, false);
+    try {
+      await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-      <div className={styles['company-card']}>
-        <Link
-          className={styles['company-card__link']}
-          to={`/profile-detail/${profile.id}`}
-        >
+    <div className={styles['company-card']}>
+      <Link
+        className={styles['company-card__link']}
+        to={`/profile-detail/${profile.id}`}
+      >
         <div className={styles['company-card__block']}>
           <div className={styles['company-card__image-frame']}>
             {profile.banner?.path ? (
@@ -134,17 +134,17 @@ export default function CompanyCard({
               />
             )}
           </div>
-          </div>
-          </Link>
-            <div className={styles['company-card__star']}>
-              <StarForLike
-                isSaved={profile.is_saved}
-                isAuthorized={isAuthorized}
-                ownProfile={ownProfile}
-                handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
-                  />
-            </div>
+        </div>
+      </Link>
+      <div className={styles['company-card__star']}>
+        <StarForLike
+          isSaved={profile.is_saved}
+          isAuthorized={isAuthorized}
+          ownProfile={ownProfile}
+          handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
+        />
       </div>
+    </div>
   );
 }
 
