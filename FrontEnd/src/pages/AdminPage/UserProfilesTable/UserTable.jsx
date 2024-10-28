@@ -13,7 +13,7 @@ const DEFAULT_PAGE_SIZE = 15;
 function UserTable() {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-    const [sortInfo, setSortInfo] = useState({ field: 'registration_date', order: 'ascend' });
+    const [sortInfo, setSortInfo] = useState({ field: null, order: null });
     const [statusFilters, setStatusFilters] = useState([]);
 
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users?` +
@@ -162,7 +162,15 @@ function UserTable() {
     ];
 
     return (
-        <ConfigProvider theme={customTheme}>
+        <ConfigProvider
+            theme={customTheme}
+            locale={{
+                Table: {
+                    filterReset: 'Скинути',
+                    filterConfirm: 'Застосувати',
+                },
+            }}
+        >
             <div className={css['table-container']}>
                 <ul className={css['log-section']}>
                     {loading && <li className={css['log']}>Завантаження ...</li>}
