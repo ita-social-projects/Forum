@@ -8,7 +8,7 @@ import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 
 const LENGTH_EMAIL = 14;
-const DEFAULT_PAGE_SIZE = 3;
+const DEFAULT_PAGE_SIZE = 15;
 
 function UserTable() {
     const [currentPage, setCurrentPage] = useState(1);

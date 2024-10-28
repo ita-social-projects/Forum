@@ -41,6 +41,9 @@ const customTheme = {
       Checkbox: {
         colorPrimary: '#1f9a7c',
         colorPrimaryHover: '#1f9a7c',
+      },
+      Table: {
+        lineWidth: 3
       }
     },
   };
