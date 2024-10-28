@@ -11,9 +11,9 @@ function Footer() {
     return (
         <footer className={css['footer-main']}>
             <div className={css['footer-content']}>
-                <FooterAddress></FooterAddress>
-                <FooterNavigation></FooterNavigation>
-                <FooterPolicy></FooterPolicy>
+                <FooterAddress/>
+                <FooterNavigation/>
+                <FooterPolicy/>
             </div>
             <ScrollToTopButton />
         </footer>
