@@ -35,6 +35,7 @@
   --about-as-main-background: #0B6C61;
   --star-background: #FFD800;
   --hint-background: #25292C;
+  --light-seashell-background: #F9F5EC;
 
   /* text color*/
   --main-text-color: #292E32;
@@ -44,14 +45,16 @@
   --delete-text-color: #F15831;
   --notification-text-color: #F34444;
   --footer-dark-text-color: #A0ABC0;
+  --link-text-color: #000000;
+  --error-text-color: #F15831;
 
   /* button color*/
   --main-button-color: #1F9A7C;
-  --button-color-hover: #0b6c61 ;
+  --button-color-hover: #0b6c61;
   --light-button-color: #FFFFFF;
 
   /* fonts */
-  --font-main: 'Inter', sans-serif;
+  --font-main: 'Geologica', sans-serif;
   --font-messages: 'Roboto', sans-serif;
   --font-error: 'Roboto', sans-serif;
   --font-logo: 'Geologica', sans-serif;
@@ -112,7 +115,7 @@
   --character-title-85: rgba(0, 0, 0, 0.85);
 
   --wf-base-white: #FFF;
-  
+
   --profile-min-height-block: calc(100vh - 565px);
   --min-height-block-main: calc(100vh - 305px);
   --company-card-color: #FFF;
