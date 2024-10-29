@@ -155,7 +155,7 @@ export function SignUpFormContentComponent(props) {
       data: dataToSend,
     })
       .then(() => {
-        navigate('/sign-up/modal');
+        navigate('/sign-up/completion');
       })
       .catch((error) => {
         if (error.response.data.email) {
