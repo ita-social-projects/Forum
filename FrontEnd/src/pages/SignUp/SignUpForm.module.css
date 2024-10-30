@@ -66,12 +66,6 @@
   color: #A3AAB0;
 }
 
-.sign-up__button:hover {
-  border: 1px solid var(--primary-green-80, #1f9a7c);
-  background: var(--main-white, #fff);
-  color: var(--primary-green-80, #1f9a7c);
-}
-
 @media only screen and (min-width: 768px) {
   .form__container {
     width: 572px;
