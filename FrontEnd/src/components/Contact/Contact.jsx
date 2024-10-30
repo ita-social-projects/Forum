@@ -23,7 +23,7 @@ const CATEGORY_OPTIONS = [
 const Contact = () => {
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [showErrorModal, setShowErrorModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
     const [percent, setPercent] = useState(-50);
     const timerRef = useRef();
 
@@ -61,12 +61,13 @@ const Contact = () => {
             });
 
             if (response.status === 200 || response.status === 201) {
-                setShowModal(true);
+                setModalMessage('Повідомлення успішно надіслано!');
                 reset();
             }
         } catch (error) {
-            setShowErrorModal(true);
+            setModalMessage('Щось пішло не так! Будь ласка, спробуйте ще раз');
         } finally {
+            setShowModal(true);
             setLoading(false);
         }
     };
@@ -79,9 +80,6 @@ const Contact = () => {
         setShowModal(false);
     };
 
-   const closeErrorModal = () => {
-        setShowErrorModal(false);
-   };
 
     return (
         <div className={styles['contact_container']}>
@@ -182,7 +180,7 @@ const Contact = () => {
                   >
                     <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} alt="Close button" />
                   </button>
-                        <h2>Повідомлення успішно надіслано!</h2>
+                        <h2>{modalMessage}</h2>
                        <div className={styles['contact__button_modal_container']}>
                         <Link to="/">
                             <button type="button" className={styles['contact__button_send']}>
@@ -190,31 +188,6 @@ const Contact = () => {
                             </button>
                         </Link>
                         <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
-                            Закрити
-                        </button>
-                       </div>
-                    </div>
-                </div>
-            )}
-
-            {showErrorModal && (
-                <div className={styles['modal_feedback']}>
-                    <div className={styles['modal_feedback_content']}>
-                  <button
-                    className={styles['modal_feedback_close']}
-                    onClick={closeErrorModal}
-                    aria-label="Закрити модальне вікно"
-                  >
-                    <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} alt="Close button" />
-                  </button>
-                        <h2>Щось пішло не так! Будь ласка, спробуйте ще раз</h2>
-                       <div className={styles['contact__button_modal_container']}>
-                        <Link to="/">
-                            <button type="button" className={styles['contact__button_send']}>
-                                На головну
-                            </button>
-                        </Link>
-                        <button type="button" onClick={closeErrorModal} className={styles['contact__button_cancel']}>
                             Закрити
                         </button>
                        </div>
