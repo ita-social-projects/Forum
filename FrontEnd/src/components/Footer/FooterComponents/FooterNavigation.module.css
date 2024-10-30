@@ -50,6 +50,9 @@
     .navigation-content__section {
         padding-left: 220px;
     }
+    .navigation-content {
+       padding-top: 25px;
+    }
 }
 
 @media only screen and (min-width: 1512px) {
@@ -68,7 +71,7 @@
     }
 
     .navigation-content__section {
-        padding: 20px 0 0;
+        padding: 35px 0 5px;
     }
 
     .navigation-content-section__text-block,

@@ -69,13 +69,17 @@
         gap: 10px;
         max-width: 560px;
     }
+
+    .footer-address__contacts {
+        padding-left: 32px;
+    }
 }
 
 @media only screen and (min-width: 1512px) {
     .footer-address__block {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 35px;
         max-width: 260px;
     }
 
@@ -85,7 +89,7 @@
     }
 
     .footer-address__contacts {
-        padding-top: 10px;
+        padding-top: 25px;
         padding-left: 0px;
     }
 }
