@@ -7,6 +7,7 @@ from utils.images.send_email import set_admin_email
 EMAIL_CONTENT_SUBTYPE = "html"
 PROTOCOL = "http"
 
+
 def send_email_feedback(user_email, message, category):
     """Function for sending feedback letters to the administrator and the user."""
     context = {
