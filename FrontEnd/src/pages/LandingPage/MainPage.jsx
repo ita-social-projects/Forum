@@ -14,7 +14,6 @@ const MainPage = ({ isAuthorized }) => {
   };
   const [modalActive, setModalActive] = useState(true);
   return (
-    <div className={css['main-app']}>
       <div className={css['main-app-header']}>
         <MainBanner isAuthorized={isAuthorized} />
         <div className={css['main-app-body']}>
@@ -30,7 +29,6 @@ const MainPage = ({ isAuthorized }) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

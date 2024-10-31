@@ -59,7 +59,7 @@
     .navigation-content {
         display: flex;
         flex-direction: column;
-        justify-content: end;
+        justify-content: flex-end;
         min-width: 569px;
     }
 

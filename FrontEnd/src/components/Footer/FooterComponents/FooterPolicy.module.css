@@ -14,18 +14,18 @@
 .policy-content__main {
     display: flex;
     flex-direction: column;
+    gap: 24px;
 }
 
 .policy-content-links {
     display: flex;
-    flex-direction: row;
-    padding-top: 10px;
-    justify-content: space-between;
+    flex-direction: column;
+    padding-top: 24px;
+    gap: 24px;
 }
 
 .policy-content__copyright {
     color: var(--footer-font-color);
-    padding-top: 25px;
 }
 
 .policy-content-links__text,
@@ -46,26 +46,25 @@
     .policy-content-links {
         padding-top: 10px;
         gap: 12px;
+        flex-direction: row;
     }
 
     .policy-content__main {
-        display: flex;
         flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+        align-content: space-around;
     }
 
     .policy-content__copyright {
         padding-left: 20px;
         padding-top: 10px;
+        align-items: start;
     }
 }
 
 @media only screen and (min-width: 1512px) {
     .policy-content__main {
-        display: flex;
         flex-direction: column;
-        align-items: start;
+        align-items: flex-start;
         padding-top: 45px;
     }
 
@@ -74,7 +73,6 @@
     }
 
     .policy-content-links {
-        display: flex;
         flex-direction: column;
         gap: 12px;
     }
