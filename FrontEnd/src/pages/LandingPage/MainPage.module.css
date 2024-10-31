@@ -1,13 +1,3 @@
 .main-app {
-  width: 100vw;
-}
-
-.main-app-body {
-  display: flex;
-  flex-direction: column;
-}
-
-.main-app-header {
-  display: flex;
   flex-direction: column;
 }

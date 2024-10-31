@@ -1,11 +1,11 @@
-.login-banner-group {
+.join-us {
     display: flex;
-    background: var(--banner-main-color);
+    background: var(--join-us-main-color);
     width: 100vw;
     justify-content: center;
 }
 
-.login-banner-group__content {
+.join-us__content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,8 +15,8 @@
 }
 
 
-.login-banner-group__text {
-    color: var(--banner-main-font-color, black);
+.join-us__text {
+    color: var(--join-us-font-color, black);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 24px;
@@ -27,16 +27,16 @@
     text-align: center;
 }
 
-.login-banner-group__button {
+.join-us__button {
     display: flex;
     justify-content: center;
 }
 
-.login-banner-group__button-text {
+.join-us__button-text {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--banner-main-batton-text-color, white);
+    color: var(--join-us-batton-text-color, white);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 16px;
@@ -48,24 +48,24 @@
     text-align: center;
     width: 170px;
     height: 46px;
-    background: var(--banner-main-batton-color, black);
+    background: var(--join-us-batton-color, black);
     border-radius: 4px;
 }
 
 @media only screen and (min-width: 768px) {
-    .login-banner-group__content {
+    .join-us__content {
         width: 694px;
         height: 262px;
     }
 
-    .login-banner-group__text {
+    .join-us__text {
         font-size: 40px;
         line-height: 48px;
     }
 }
 
 @media only screen and (min-width: 1512px) {
-    .login-banner-group__content {
+    .join-us__content {
         height: 326px;
     }
 }
