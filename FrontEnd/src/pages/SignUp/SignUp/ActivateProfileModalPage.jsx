@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import LoginPage from '../../../pages/Authorization/LoginPage';
-import styles from './ActivateProfileModal.module.css';
+import styles from './ActivateProfileModalPage.module.css';
 
-export function ActivationProfilePage() {
+export function ActivateProfileModalPage() {
   const { uid, token } = useParams();
   const [activationStatus, setActivationStatus] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -40,25 +40,17 @@ export function ActivationProfilePage() {
       <LoginPage />
       {modalVisible && (
         <div className={styles['modal']}>
-          <div className={styles['modal__overlay']} onClick={closeModal}></div>
-          <div className={styles['modal__body']}>
-            <div className={styles['container-modal']}>
               <div className={styles['modal__header']}>
                 {activationStatus === 'Помилка активації'
                   ? 'Помилка активації'
                   : 'Реєстрація завершена!'}
               </div>
               <div className={styles['modal__content']}>
-                {activationStatus === 'Помилка активації' ? (
-                  <p>
-                    Під час активації сталася помилка.
-                    Спробуйте ще раз або зв`яжіться з підтримкою.
-                  </p>
-                ) : (
-                    <a>
-                      Ви успішно підтвердили вказану електронну адресу.
-                    </a>
-                )}
+                <p className={styles['modal__content--text']}>
+                  {activationStatus === 'Помилка активації'
+                    ? 'Під час активації сталася помилка. Спробуйте ще раз або зв\'яжіться з підтримкою.'
+                    : 'Ви успішно підтвердили вказану електронну адресу.'}
+                </p>
               </div>
               <div className={styles['modal__footer']}>
                 <div className={styles['button-container']}>
@@ -70,8 +62,6 @@ export function ActivationProfilePage() {
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
         </div>
       )}
       {modalVisible && <div className={styles['blur-background']}></div>}

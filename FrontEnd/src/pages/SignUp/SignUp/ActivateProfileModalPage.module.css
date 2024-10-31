@@ -1,12 +1,11 @@
 .modal {
   position: absolute;
   top: 50%;
-  left: 52%;
+  left: 50.5%;
+  float: left;
   transform: translate(-50%, -50%);
-  width: 610px;
-  max-width: 90%;
+  width: 375px;
   border-radius: 8px;
-  background: var(--wf-base-white, #fff);
   z-index: 999;
 }
 
@@ -27,11 +26,8 @@
   gap: 36px;
   align-self: stretch;
   background: var(--main-white, #fff);
-
-  box-shadow: 0px -1px 0px 0px #f0f0f0 inset;
   color: var(--character-title-85, rgba(0, 0, 0, 0.85));
   font-feature-settings: "calt" off;
-
   font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
@@ -51,10 +47,19 @@
   box-shadow: 0px 1px 0px 0px #f0f0f0 inset;
 }
 
+.modal__content--text {
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: var(--main-text-color);
+}
+
 .modal__footer {
   display: flex;
   padding: 16px 24px;
-  justify-content: flex-end;
   align-items: center;
   gap: 8px;
   align-self: stretch;
@@ -69,32 +74,28 @@
 }
 
 .signup-page__button {
-  display: flex;
-  padding: 5px 15px;
+  padding: 9px 16px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
   border-radius: 4px;
-  border: 1px solid var(--primary-green-80, #1f9a7c);
-  background: var(--main-white, #fff);
-  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+  background: #000000;
 
-  color: var(--primary-green-80, #1f9a7c);
+  color: var(--light-button-text-color);
   text-align: center;
   font-feature-settings: "calt" off;
 
   font-family: var(--font-main);
   font-size: 16px;
-  font-style: normal;
   font-weight: 600;
   line-height: 20px;
   letter-spacing: -0.16px;
-  text-decoration: none;
+
   cursor: pointer;
 }
 
-.signup-page__button:hover {
-  border: 1px solid var(--primary-green-80, #1f9a7c);
-  background: var(--primary-green-80, #1f9a7c);
-  color: var(--main-white, #fff);
+@media only screen and (min-width: 768px) {
+  .modal {
+    width: 572px;
+  }
 }
