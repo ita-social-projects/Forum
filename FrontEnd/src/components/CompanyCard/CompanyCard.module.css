@@ -190,18 +190,9 @@
 }
 
 @media only screen and (min-width: 1200px) {
-  .company-card {
-    width: 302px;
-  }
-  
-  .company-card__image-frame {
-    width: 302px;
-  }
-
-  .company-card__image {
-    width: 302px;
-  }
-
+  .company-card,
+  .company-card__image-frame,
+  .company-card__image,
   .company-card__text-block {
     width: 302px;
   }
