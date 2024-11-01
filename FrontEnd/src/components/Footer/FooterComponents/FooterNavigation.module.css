@@ -1,5 +1,6 @@
 .navigation-content {
     display: flex;
+    padding-top: 7px;
 }
 
 .navigation-content__company,
@@ -48,10 +49,7 @@
 
 @media only screen and (min-width: 768px) {
     .navigation-content__section {
-        padding-left: 220px;
-    }
-    .navigation-content {
-       padding-top: 25px;
+        padding-left: 250px;
     }
 }
 
@@ -65,13 +63,11 @@
 
     .navigation-content__company,
     .navigation-content__section {
-        display: flex;
-        flex-direction: column;
         gap: 0;
     }
 
     .navigation-content__section {
-        padding: 35px 0 5px;
+        padding: 35px 0 0;
     }
 
     .navigation-content-section__text-block,

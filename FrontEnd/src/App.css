@@ -1,6 +1,5 @@
 .App {
   /*for footer correct work*/
-  /* width: var(--main-block-size); TODO */
   display: flex;
   min-height: 100vh;
   flex-direction: column;
