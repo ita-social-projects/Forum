@@ -85,18 +85,19 @@
   /* main pages About block*/
   --about-text-font-color: #292E32;
   --about-text-background-color: #FFF;
-
   --about-as-font-color: #FFF;
   --about-as-background-color: #0B6C61;
-
   --about-cards-font-color: #292E32;
   --about-cards-background-color: #F0F1F3;
   --about-cards-background-content-color: #FFF;
-
   /* main pages Banner block*/
   --banner-main-font-color: #000;
   --banner-main-dark-color: #1F9A7C;
-
+  /* main pages JoinUs block*/
+  --join-us-batton-color: black;
+  --join-us-main-color: #B4D27A;
+  --join-us-font-color: black;
+  --join-us-batton-text-color: white;
   /* CompanyCard */
   --companies-card-text-color: #292e32;
   --companies-card-box-shadow: rgba(65, 64, 69, 0.2);

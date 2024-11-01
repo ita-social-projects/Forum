@@ -1,9 +1,4 @@
-.main-app-body {
-  display: flex;
-  flex-direction: column;
-}
-
-.main-app-header {
+.main-app {
   display: flex;
   flex-direction: column;
 }
