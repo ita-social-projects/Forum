@@ -4,29 +4,41 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
   background: #f1fff7;
 }
 
 .new-companies-main__header {
-  width: var(--main-block-size);
+  position: relative;
+  width: 100%;
   display: flex;
+  margin-top: 50px;
 }
 
 .new-companies-main__title {
-  width: 444px;
-  height: 24px;
-  gap: 800px;
-  color: #292e32;
-  text-transform: uppercase;
-  font-family: var(--font-main);
-  font-size: 20px;
+  color: #232424;
+  font-family: var(--font-logo);
+  font-size: 40px;
   font-style: normal;
   font-weight: 700;
-  line-height: 120%;
-  margin-left: 104px;
-  margin-top: 80px;
+  padding-left: 125px;
 }
+ .new-companies-link-to-all {
+  position: absolute;
+  right: 0px;
+  top: 29px
+ }
+
+ .new-companies-link-to-all a {
+  font-family: var(--font-logo);
+  color: #232424;
+  font-weight: 600;
+  font-size: 16px;
+ }
+
+ .new-companies-link-to-all svg {
+  position: absolute;
+  top: 4px;
+ }
 
 .new-companies-block {
   display: flex;
