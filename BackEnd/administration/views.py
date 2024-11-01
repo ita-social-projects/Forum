@@ -55,9 +55,7 @@ class UsersListView(ListAPIView):
     serializer_class = AdminUserListSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = UsersFilter
-
-    def get_queryset(self):
-        return CustomUser.objects.select_related("profile")
+    queryset = CustomUser.objects.select_related("profile").order_by("id")
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
