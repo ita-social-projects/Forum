@@ -1,6 +1,5 @@
 .new-companies-main {
   width: var(--main-block-size);
-  min-height: 1106px;
   display: flex;
   flex-direction: column;
   align-items: center;
