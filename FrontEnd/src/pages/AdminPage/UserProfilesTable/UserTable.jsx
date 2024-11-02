@@ -37,11 +37,14 @@ function UserTable() {
     const handleTableChange = (pagination, filters, sorter) => {
         if (sorter.field && (sorter.field !== sortInfo.field || sorter.order !== sortInfo.order)) {
             if (sorter.field === sortInfo.field) {
-                const newOrder = sortInfo.order === 'ascend'
-                    ? 'descend'
-                    : sortInfo.order === 'descend'
-                    ? null
-                    : 'ascend';
+                let newOrder;
+                if (sortInfo.order === 'ascend') {
+                    newOrder = 'descend';
+                } else if (sortInfo.order === 'descend') {
+                    newOrder = null;
+                } else {
+                    newOrder = 'ascend';
+                }
 
                 setSortInfo({
                     field: newOrder ? sorter.field : null,
