@@ -8,7 +8,7 @@ import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 
 const LENGTH_EMAIL = 14;
-const DEFAULT_PAGE_SIZE = 15;
+const DEFAULT_PAGE_SIZE = 20;
 
 function UserTable() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,10 +16,9 @@ function UserTable() {
     const [sortInfo, setSortInfo] = useState({ field: null, order: null });
     const [statusFilters, setStatusFilters] = useState([]);
 
-    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users?` +
-        `page=${currentPage}&page_size=${pageSize}` +
-        (sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '') +
-        (statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '');
+    const ordering = sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '';
+    const filtering = statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '';
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/users?page=${currentPage}&page_size=${pageSize}${ordering}${filtering}`;
 
     async function fetcher(url) {
         const response = await axios.get(url);
