@@ -16,14 +16,14 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-radius: 50%; /* Ensure circular shape */
+  border-radius: 50%;
   border: 1px solid var(--main-black-20, #E2E5EB);
   background: var(--conditional-pop-over, #FFF);
-  overflow: hidden; /* Make sure the image doesn't overflow */
+  overflow: hidden;
 }
 
 .header-profile__avatar img {
-  width: 23px;  /* Adjust this percentage to control the size */
-  height: 19px; /* Maintains aspect ratio */
-  object-fit: cover; /* Ensures the image covers the avatar area */
+  width: 23px;
+  height: 19px;
+  object-fit: cover;
 }

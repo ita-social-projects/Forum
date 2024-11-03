@@ -1,6 +1,5 @@
 .header-buttons-section {
     display: flex;
-    /*align-items: flex-start;*/
     gap: 12px;
 }
 
