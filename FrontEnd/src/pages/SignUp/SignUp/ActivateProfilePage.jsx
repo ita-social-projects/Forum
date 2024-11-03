@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
 import styles from './ActivateProfilePage.module.css';
 
 export function ActivateProfilePage() {

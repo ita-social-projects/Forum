@@ -1,6 +1,6 @@
-import styles from './SignUpForm.module.css';
-import { SignUpFormContentComponent } from './SignupForm/SignUpFormContent';
 import { useState } from 'react';
+import { SignUpFormContentComponent } from './SignupForm/SignUpFormContent';
+import styles from './SignUpForm.module.css';
 
 export function SignUpFormComponent() {
   const [isValid, setIsValid] = useState(false);

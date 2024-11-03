@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import styles from './ResendActivationFormContent.module.css';
 import { EMAIL_PATTERN } from '../../../constants/constants';
+import styles from './ResendActivationFormContent.module.css';
 
 export function ResendActivationFormContent({ setIsValid }) {
   const navigate = useNavigate();
