@@ -4,6 +4,7 @@
     background: var(--light-seashell-background);
     padding: 80px 0;
     display: flex;
+    flex-grow: 1;
     justify-content: center;
 }
 

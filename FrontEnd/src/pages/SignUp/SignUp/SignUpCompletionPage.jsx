@@ -27,7 +27,7 @@ export function SignUpCompletionPage() {
             </div>
           </div>
         </div>
-        </div>
+      </div>
     </div>
   );
 }

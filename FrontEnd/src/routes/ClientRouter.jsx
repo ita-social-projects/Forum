@@ -19,7 +19,7 @@ import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import { SignUpPage } from '../pages/SignUp/SignUp/SignUpPage';
 import { SignUpCompletionPage } from '../pages/SignUp/SignUp/SignUpCompletionPage';
 import { ResendActivationPage } from '../pages/SignUp/SignUp/ResendActivationPage';
-import { ActivateProfileModalPage } from '../pages/SignUp/SignUp/ActivateProfileModalPage';
+import { ActivateProfilePage } from '../pages/SignUp/SignUp/ActivateProfilePage';
 import { SendEmailRestorePasswordPage } from '../pages/RestorePassword/Pages/SendEmailRestorePasswordPage';
 import { RestorePasswordPage } from '../pages/RestorePassword/Pages/RestorePasswordPage';
 import { RestorePasswordModalPage } from '../pages/RestorePassword/Pages/RestorePasswordModalPage';
@@ -85,7 +85,7 @@ function ClientRouter() {
         />
         <Route
           path="/activate/:uid/:token"
-          element={<ActivateProfileModalPage />}
+          element={<ActivateProfilePage />}
         />
         <Route
           path="/reset-password"

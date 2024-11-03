@@ -4,6 +4,7 @@
   background: var(--light-seashell-background);
   padding: 80px 0;
   display: flex;
+  flex-grow: 1;
   justify-content: center;
 }
 
@@ -128,7 +129,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .completion-page__body {
+  .completion-page {
     padding: 104px 0;
   }
 
@@ -138,7 +139,7 @@
 }
 
 @media only screen and (min-width: 1512px) {
-  .completion-page__body {
+  .completion-page {
     padding: 120px 0;
   }
 }

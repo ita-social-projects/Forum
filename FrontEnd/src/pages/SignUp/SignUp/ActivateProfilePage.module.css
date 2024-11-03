@@ -1,31 +1,39 @@
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50.5%;
-  float: left;
-  transform: translate(-50%, -50%);
-  width: 375px;
+.activation-page {
+  width: 100vw;
   border-radius: 8px;
-  z-index: 999;
-}
-
-.blur-background {
-  backdrop-filter: blur(3px);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 997;
-}
-
-.modal__header {
+  background: var(--light-seashell-background);
+  padding: 80px 0;
   display: flex;
-  padding: 18px 24px;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+
+.activation-page__body {
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  align-items: center;
+  max-width: 572px;
+  min-width: 345px;
+  gap: 24px;
+
+}
+
+.activation-page__container {
+  display: flex;
+  width: 375px;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 36px;
-  align-self: stretch;
+  border-radius: 6px;
   background: var(--main-white, #fff);
+}
+
+.activation-page__header {
+  display: flex;
+  align-self: stretch;
+  padding: 16px 24px;
+  box-shadow: 0px -1px 0px 0px #f0f0f0 inset;
   color: var(--character-title-85, rgba(0, 0, 0, 0.85));
   font-feature-settings: "calt" off;
   font-family: var(--font-main);
@@ -36,18 +44,27 @@
   letter-spacing: -0.16px;
 }
 
-.modal__content {
+.activation-page__footer {
   display: flex;
   padding: 16px 24px;
-  justify-content: flex-start;
   align-items: center;
   gap: 8px;
   align-self: stretch;
-  background: var(--main-white, #fff);
   box-shadow: 0px 1px 0px 0px #f0f0f0 inset;
 }
 
-.modal__content--text {
+.activation-page__content {
+  align-self: stretch;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 10px;
+  padding: 24px;
+}
+
+.activation-page__text {
   font-family: var(--font-main);
   font-size: 14px;
   font-weight: 400;
@@ -55,16 +72,6 @@
   letter-spacing: -0.01em;
   text-align: left;
   color: var(--main-text-color);
-}
-
-.modal__footer {
-  display: flex;
-  padding: 16px 24px;
-  align-items: center;
-  gap: 8px;
-  align-self: stretch;
-  background: var(--main-white, #fff);
-  box-shadow: 0px 1px 0px 0px #f0f0f0 inset;
 }
 
 .button-container {
@@ -93,7 +100,17 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .modal {
+  .activation-page {
+    padding: 104px 0;
+  }
+
+  .activation-page__container {
     width: 572px;
+  }
+}
+
+@media only screen and (min-width: 1512px) {
+  .activation-page {
+    padding: 120px 0;
   }
 }
