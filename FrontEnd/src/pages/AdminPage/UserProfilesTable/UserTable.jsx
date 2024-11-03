@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import customTheme from '../../CustomThemes/customTheme';
 import css from './UserTable.module.css';
 import axios from 'axios';
 import useSWR from 'swr';
-import { Table, ConfigProvider, Tag, Tooltip, Pagination } from 'antd';
+import { Table, Tag, Tooltip, Pagination } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 
@@ -25,7 +24,7 @@ function UserTable() {
         return response.data;
     }
 
-    const { data, error, isValidating: loading } = useSWR(url, fetcher);
+    const { data, isValidating: loading } = useSWR(url, fetcher);
     const users = data ? data.results : [];
     const totalItems = data ? data.total_items : 0;
 
@@ -164,44 +163,30 @@ function UserTable() {
     ];
 
     return (
-        <ConfigProvider
-            theme={customTheme}
-            locale={{
-                Table: {
-                    filterReset: 'Скинути',
-                    filterConfirm: 'Застосувати',
-                },
-            }}
-        >
-            <div className={css['table-container']}>
-                <ul className={css['log-section']}>
-                    {loading && <li className={css['log']}>Завантаження ...</li>}
-                    {error && <li className={css['log']}>Виникла помилка: {error.message}</li>}
-                </ul>
-                <Pagination
-                    current={currentPage}
-                    pageSize={pageSize}
-                    total={totalItems}
-                    onChange={handlePageChange}
-                    onShowSizeChange={handlePageChange}
-                    showTitle={false}
-                    style={{ marginTop: '16px', textAlign: 'center', marginBottom: '16px' }}
-                />
-                <Table
-                    columns={columns}
-                    dataSource={users}
-                    onChange={handleTableChange}
-                    pagination={false}
-                    loading={loading}
-                    tableLayout="fixed"
-                    locale={{
-                        triggerDesc: 'Сортувати в порядку спадання',
-                        triggerAsc: 'Сортувати в порядку зростання',
-                        cancelSort: 'Відмінити сортування',
-                    }}
-                />
-            </div>
-        </ConfigProvider>
+        <div className={css['table-container']}>
+            <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={totalItems}
+                onChange={handlePageChange}
+                onShowSizeChange={handlePageChange}
+                showTitle={false}
+                style={{ marginTop: '16px', textAlign: 'center', marginBottom: '16px' }}
+            />
+            <Table
+                columns={columns}
+                dataSource={users}
+                onChange={handleTableChange}
+                pagination={false}
+                loading={loading}
+                tableLayout="fixed"
+                locale={{
+                    triggerDesc: 'Сортувати в порядку спадання',
+                    triggerAsc: 'Сортувати в порядку зростання',
+                    cancelSort: 'Відмінити сортування',
+                }}
+            />
+        </div>
     );
 }
 
