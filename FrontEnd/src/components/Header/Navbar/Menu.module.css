@@ -1,6 +1,5 @@
 .header-menu-section {
     display: flex;
-    /*padding: 0px 64px;*/
     justify-content: flex-end;
     align-items: center;
     gap: 24px;
@@ -41,4 +40,13 @@
 
 .header-menu-element__text:hover::after {
     width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .header-menu-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+  }
 }

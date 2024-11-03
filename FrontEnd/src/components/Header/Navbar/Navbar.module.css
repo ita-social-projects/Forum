@@ -1,11 +1,12 @@
 .navbar-wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .navbar-content {
   display: flex;
-  min-width: 1452px;
+  max-width: calc(1512px - 60px);
+  width: 100%;
   padding: 16px 30px;
   align-items: center;
   justify-content: space-between;
@@ -34,3 +35,39 @@
   gap: 24px;
   height: 40px;
 }
+
+.navbar-utility-bar {
+  display: flex;
+  gap: 24px;
+  height: 40px;
+}
+
+.burger-menu-wrapper {
+  display: none;
+}
+
+.menu-search-wrapper{
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 1200px) {
+  .menu-search-wrapper {
+    display: none;
+  }
+
+  .burger-menu-wrapper {
+    display: block;
+  }
+}
+
+@media (max-width: 630px) {
+  .navbar-main-logo{
+    width: 30px;
+  }
+
+  .navbar-main-logo span {
+    display: none;
+  }
+}
+
