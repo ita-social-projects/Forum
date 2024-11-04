@@ -30,6 +30,8 @@ export default function CompanyCard({
       .map((activity) => activity.name)
       .join(', ');
 
+  const regions = profile.regions_ukr_display.replace(/область/g, 'обл.');
+
   const handleSave = async () => {
     changeCompanies(profile.id, true);
     try {
@@ -95,10 +97,10 @@ export default function CompanyCard({
               pointAtCenter={true}
             >
               <p className={styles['company-card__region-text']}>
-                {profile.regions_ukr_display
-                  ? profile.regions_ukr_display.length < lengthOfRegion
-                    ? profile.regions_ukr_display
-                    : `${profile.regions_ukr_display.substring(0, 35)}...`
+                {regions
+                  ? regions.length < lengthOfRegion
+                    ? regions
+                    : `${regions.substring(0, 35)}...`
                   : ''}
               </p>
             </Tooltip>
