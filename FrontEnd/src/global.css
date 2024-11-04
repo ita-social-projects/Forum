@@ -96,10 +96,10 @@
   --join-us-font-color: black;
   --join-us-batton-text-color: white;
   /* CompanyCard */
-  --companies-card-text-color: #292e32;
+  --companies-card-text-color: #232424;
   --companies-card-box-shadow: rgba(65, 64, 69, 0.2);
-  --companies-card-lover-text: #767f86;
-  --companies-card-address: #59636a;
+  --companies-card-regions-text: #707070;
+  --companies-card-address: #000000;
   --companies-card-button: green;
 
   --search-new-companies-main: #f1fff7;

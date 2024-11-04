@@ -67,7 +67,7 @@
 }
 
 .company-card__category-text {
-  color: var(--companies-card-lover-text);
+  color: var(--companies-card-regions-text);
   text-align: center;
   font-family: var(--font-logo);
   font-size: 16px;
