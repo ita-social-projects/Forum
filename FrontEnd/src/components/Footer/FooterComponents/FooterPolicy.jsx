@@ -1,5 +1,7 @@
-import css from './FooterPolicy.module.css';
 import { Link } from 'react-router-dom';
+
+import css from './FooterPolicy.module.css';
+
 
 const POLICY_LINKS = [
     {
@@ -17,7 +19,7 @@ const POLICY_LINKS = [
 function FooterPolicy() {
     return (
         <div className={css['policy-content']}>
-            <div className={css['policy-divider']}/>
+            <div className={css['policy-divider']} />
             <div className={css['policy-content__main']}>
                 <div className={css['policy-content-links']}>
                     {POLICY_LINKS.map((element) => (

@@ -1,9 +1,11 @@
-import css from './Footer.module.css';
-import FooterPolicy from './FooterComponents/FooterPolicy';
-import FooterNavigation from './FooterComponents/FooterNavigation';
 import FooterAddress from './FooterComponents/FooterAddress';
-import useScrollToTop from '../../hooks/useScrollToTop';
+import FooterNavigation from './FooterComponents/FooterNavigation';
+import FooterPolicy from './FooterComponents/FooterPolicy';
 import ScrollToTopButton from './FooterComponents/ScrollToTopButton';
+
+import useScrollToTop from '../../hooks/useScrollToTop';
+
+import css from './Footer.module.css';
 
 
 function Footer() {
