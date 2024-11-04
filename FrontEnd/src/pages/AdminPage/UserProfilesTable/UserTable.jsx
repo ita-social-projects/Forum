@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import css from './UserTable.module.css';
 import axios from 'axios';
 import useSWR from 'swr';
-import { Table, Tag, Tooltip, Pagination } from 'antd';
-import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
+import {Table, Tag, Tooltip, Pagination, Input, Button, Space} from 'antd';
+import Highlighter from 'react-highlight-words';
+import {CaretUpOutlined, CaretDownOutlined, SearchOutlined} from '@ant-design/icons';
 
 
 const LENGTH_EMAIL = 14;
@@ -14,6 +15,9 @@ function UserTable() {
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
     const [sortInfo, setSortInfo] = useState({ field: null, order: null });
     const [statusFilters, setStatusFilters] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
+    const searchInput = useRef(null);
 
     const ordering = sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '';
     const filtering = statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '';
@@ -23,7 +27,6 @@ function UserTable() {
         const response = await axios.get(url);
         return response.data;
     }
-
     const { data, isValidating: loading } = useSWR(url, fetcher);
     const users = data ? data.results : [];
     const totalItems = data ? data.total_items : 0;
@@ -36,14 +39,11 @@ function UserTable() {
     const handleTableChange = (pagination, filters, sorter) => {
         if (sorter.field && (sorter.field !== sortInfo.field || sorter.order !== sortInfo.order)) {
             if (sorter.field === sortInfo.field) {
-                let newOrder;
-                if (sortInfo.order === 'ascend') {
-                    newOrder = 'descend';
-                } else if (sortInfo.order === 'descend') {
-                    newOrder = null;
-                } else {
-                    newOrder = 'ascend';
-                }
+                const newOrder = sortInfo.order === 'ascend'
+                    ? 'descend'
+                    : sortInfo.order === 'descend'
+                    ? null
+                    : 'ascend';
 
                 setSortInfo({
                     field: newOrder ? sorter.field : null,
@@ -66,7 +66,68 @@ function UserTable() {
             <CaretDownOutlined className={css['icon']} />
         );
     };
-
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+  };
+    const handleReset = (clearFilters) => {
+        clearFilters();
+        setSearchText('');
+    };
+    const getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+            <div style={{padding: 8}}>
+                <Input
+                    ref={searchInput}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value]: [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{
+                        marginBottom: 8,
+                        display: 'block',
+                    }}
+                ></Input>
+                <Space>
+              <Button
+                type="primary"
+                onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                icon={<SearchOutlined />}
+                size="small"
+                style={{
+                  width: 90,
+                }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => clearFilters && handleReset(clearFilters)}
+                size="small"
+                style={{
+                  width: 90,
+                }}
+              >
+                Reset
+              </Button>
+            </Space>
+          </div>
+            ),
+        filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />,
+        onFilter: (value, record) =>
+            record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
+        render: (text) =>
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            ),
+    });
     const renderStatusTags = (status) => {
         const tags = [];
 
@@ -95,6 +156,7 @@ function UserTable() {
             sortOrder: sortInfo.field === 'surname' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
             render: (_, record) => `${record.surname} ${record.name}`,
+            ...getColumnSearchProps('surname'),
         },
         {
             title: 'Email',
@@ -114,6 +176,7 @@ function UserTable() {
                     )}
                 </p>
             ),
+            ...getColumnSearchProps('email'),
         },
         {
             title: 'Компанія',
@@ -133,6 +196,7 @@ function UserTable() {
                     )}
                 </p>
             ),
+            ...getColumnSearchProps('company_name'),
         },
         {
             title: 'Статус',
@@ -154,6 +218,7 @@ function UserTable() {
             sorter: true,
             sortOrder: sortInfo.field === 'registration_date' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            ...getColumnSearchProps('registration_date'),
         },
         {
             title: 'Дії',
@@ -170,7 +235,6 @@ function UserTable() {
                 total={totalItems}
                 onChange={handlePageChange}
                 onShowSizeChange={handlePageChange}
-                showSizeChanger={false}
                 showTitle={false}
                 style={{ marginTop: '16px', textAlign: 'center', marginBottom: '16px' }}
             />
