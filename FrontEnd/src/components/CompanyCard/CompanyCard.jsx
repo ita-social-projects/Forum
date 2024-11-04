@@ -30,7 +30,7 @@ export default function CompanyCard({
       .map((activity) => activity.name)
       .join(', ');
 
-  const regions = profile.regions_ukr_display.replace(/область/g, 'обл.');
+  const regions = profile.regions_ukr_display?.replace(/область/g, 'обл.');
 
   const handleSave = async () => {
     changeCompanies(profile.id, true);
