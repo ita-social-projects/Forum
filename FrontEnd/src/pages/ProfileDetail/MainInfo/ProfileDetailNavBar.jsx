@@ -1,10 +1,12 @@
+import { useState, useEffect, useContext } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+
 import { PropTypes } from 'prop-types';
-import { useContext } from 'react';
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
+
 import classes from './ProfileDetailNavBar.module.css';
+
 
 const MENU_LINKS = {
     registeredAndStartup: {

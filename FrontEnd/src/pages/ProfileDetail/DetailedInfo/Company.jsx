@@ -1,11 +1,13 @@
 import { PropTypes } from 'prop-types';
-import { useEffect } from 'react';
-import classes from './Company.module.css';
+import { useEffect, useContext } from 'react';
+
 import ReadMore from './ReadMore';
-import { useContext } from 'react';
+
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 
-function Company ({ data }) {
+import classes from './Company.module.css';
+
+function Company({ data }) {
     const { setActiveLinks } = useContext(ActiveLinksContext);
 
     // TODO: implement logic for getting data from db when it's added on server side
@@ -19,9 +21,9 @@ function Company ({ data }) {
             setActiveLinks(prevData => [
                 ...prevData,
                 'about-company',
-               ]);
-            }
-        }, [setActiveLinks, companyData]);
+            ]);
+        }
+    }, [setActiveLinks, companyData]);
 
     return (
         companyData ? (
@@ -66,6 +68,6 @@ export default Company;
 
 Company.propTypes = {
     data: PropTypes.shape({
-      common_info: PropTypes.string,
+        common_info: PropTypes.string,
     }),
-  };
+};

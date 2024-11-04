@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
-import { useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
-import classes from './Logistics.module.css';
+
 import ReadMore from './ReadMore';
+
+import classes from './Logistics.module.css';
+
 
 function Logistics () {
     const { setActiveLinks } = useContext(ActiveLinksContext);

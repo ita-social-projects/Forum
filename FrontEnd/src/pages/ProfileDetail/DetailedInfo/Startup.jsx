@@ -1,10 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useContext  } from 'react';
 import { PropTypes } from 'prop-types';
-import { useEffect } from 'react';
-import { useContext } from 'react';
+
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
-import classes from './Startup.module.css';
+
 import ReadMore from './ReadMore';
+import classes from './Startup.module.css';
+
 
 function Startup ({ data }) {
     const { setActiveLinks } = useContext(ActiveLinksContext);

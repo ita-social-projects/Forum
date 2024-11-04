@@ -1,8 +1,11 @@
 import { useMemo, useEffect, useContext} from 'react';
 import { PropTypes } from 'prop-types';
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
-import classes from './ProductsServices.module.css';
+
 import ReadMore from './ReadMore';
+
+import classes from './ProductsServices.module.css';
+
 
 function ProductsServices ({ data }) {
     const { setActiveLinks } = useContext(ActiveLinksContext);

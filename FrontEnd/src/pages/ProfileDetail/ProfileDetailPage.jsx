@@ -10,8 +10,11 @@ import MainInfoSection from './MainInfo/MainInfoSection';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 import BannerImage from './BannerImage';
 import { ActiveLinksContext } from '../../context/ActiveLinksContext';
-import classes from './ProfileDetailPage.module.css';
+
 import PendingStatus from '../../components/MiniComponents/PendingModerationIcon/PendingStatus';
+
+import classes from './ProfileDetailPage.module.css';
+
 
 function ProfileDetailPage({ isAuthorized }) {
   const [activeLinks, setActiveLinks] = useState([]);
@@ -20,7 +23,7 @@ function ProfileDetailPage({ isAuthorized }) {
 
   async function fetcher(url) {
     return axios.get(url)
-    .then(res => res.data);
+      .then(res => res.data);
   }
 
   const {
@@ -43,7 +46,7 @@ function ProfileDetailPage({ isAuthorized }) {
   return (error && error.status !== 401) ? (
     <ErrorPage404 />
   ) : (
-    <div className={isLoading ? classes['profile-detail__loader-content'] : classes['profile-detail__main'] }>
+    <div className={isLoading ? classes['profile-detail__loader-content'] : classes['profile-detail__main']}>
       {isLoading ? (
         <Loader />
       ) : (
@@ -61,6 +64,7 @@ function ProfileDetailPage({ isAuthorized }) {
             <div className={classes['profile-detail__logo-tooltip']}>
               <PendingStatus profile={fetchedProfile} elementType="logo" />
             </div>
+            <h3 className={classes['profile-detail__tags']}>Про Компанію</h3>
             <DetailedInfoSection
               containsNotRequiredData={containsNotRequiredData}
               isAuthorized={isAuthorized}

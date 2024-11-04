@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+
 import PhoneEmail from './PhoneEmail';
+
 import classes from './DataContacts.module.css';
+
 
 function DataContacts ({ data, isAuthorized }) {
 

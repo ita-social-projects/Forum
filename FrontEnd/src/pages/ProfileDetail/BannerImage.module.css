@@ -1,15 +1,12 @@
 .banner-image__block {
-    width: var(--main-block-size);
+    width: 100vw;
     height: 200px;
-    flex-shrink: 0;
 }
 
 .default-banner {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--main-block-size);
     height: 200px;
-    flex-shrink: 0;
     background: var(--main-grey-20, #DEE1E8);
 }

@@ -15,15 +15,9 @@
   align-items: center;
   border-radius: 32px;
   box-shadow: 0px 0px 2px 0px rgba(65, 64, 69, 0.2);
-}
-
-.title-block__logo {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 26px;
   object-fit: cover;
 }
+
 
 .title-block__about {
   display: flex;

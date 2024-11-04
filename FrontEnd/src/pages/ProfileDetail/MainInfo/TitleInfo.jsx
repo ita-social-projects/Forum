@@ -3,11 +3,15 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import classNames from 'classnames';
-import { useAuth } from '../../../hooks';
+
 import DefaultLogo from './DefaultLogo';
-import classes from './TitleInfo.module.css';
+
 import CategoryBadges from '../../../components/MiniComponents/CategoryBadges';
 import StarForLike from '../../../components/MiniComponents/StarForLike';
+import { useAuth } from '../../../hooks';
+
+import classes from './TitleInfo.module.css';
+
 
 function TitleInfo({ isAuthorized, data }) {
   const { user } = useAuth();

@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { useState } from 'react';
-import useSWR from 'swr';
-import { useAuth } from '../../../hooks';
-import { PropTypes } from 'prop-types';
-import classes from './PhoneEmail.module.css';
-import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
+import useSWR from 'swr';
+
+import { PropTypes } from 'prop-types';
+import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
+import { useAuth } from '../../../hooks';
+
+import classes from './PhoneEmail.module.css';
+
 
 const LENGTH_EMAIL = 14;
 
@@ -74,27 +77,27 @@ function PhoneEmail({ isAuthorized, profileId, personId }) {
             <div className={classes['data-block__field--contacts']}>
               <p className={classes['contact-container']}>
                 <span>{profileData.phone}</span>
-               {
-                profileData.phone ? <span onClick={() => copyContent('phone')}>
-                  {renderIcons(isPhoneCopied)}
-                </span>
-                : null
-               }
+                {
+                  profileData.phone ? <span onClick={() => copyContent('phone')}>
+                    {renderIcons(isPhoneCopied)}
+                  </span>
+                    : null
+                }
               </p>
               <p className={classes['contact-container']}>
-               {profileData.email.length > LENGTH_EMAIL ? (
+                {profileData.email.length > LENGTH_EMAIL ? (
                   <Tooltip title={profileData.email} placement="bottom">
                     <span>{`${profileData.email.slice(0, LENGTH_EMAIL)}...`}</span>
                   </Tooltip>
                 ) : (
                   <span>{profileData.email}</span>
                 )}
-               {
-                profileData.email ? <span onClick={() => copyContent('email')}>
-                  {renderIcons(isEmailCopied)}
-                </span>
-                : null
-               }
+                {
+                  profileData.email ? <span onClick={() => copyContent('email')}>
+                    {renderIcons(isEmailCopied)}
+                  </span>
+                    : null
+                }
               </p>
             </div>
           ) : (
