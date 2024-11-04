@@ -143,33 +143,26 @@
 }
 
 .company-card__logo {
-  width: 64px;
-  height: 64px;
+  width: 50px;
+  height: 50px;
   position: absolute;
-  right: 16px;
-  bottom: 143.5px;
+  right: 20px;
+  bottom: 152px;
 }
 
 .company-card__logo-ellipse {
-  width: 64px;
-  height: 64px;
-  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
   background: var(--company-card-color);
-  left: 0;
-  top: 0;
   border-radius: 9999px;
-  box-shadow: 0 0 2px rgba(65, 64, 69, 0.2);
+  border: 2px solid #232424;
 }
 
 .company-card__logo-image {
-  width: 54px;
-  height: 54px;
-  flex-shrink: 0;
-  border-radius: 26px;
+  width: 50px;
+  height: 50px;
+  border-radius: 9999px;
   background: var(--company-card-color);
-  left: 5px;
-  top: 5px;
-  position: absolute;
   object-fit: cover;
 }
 
