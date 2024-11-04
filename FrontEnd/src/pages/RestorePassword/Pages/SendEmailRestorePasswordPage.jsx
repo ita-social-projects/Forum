@@ -1,28 +1,51 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import styles from './SendEmailRestorePassword.module.css';
-import { SendEmailRestorePasswordFormComponent } from '../Components/RestorePassword/SendEmailForm';
+import { SendEmailRestorePasswordFormContentComponent } from '../Components/RestorePassword/RestorePasswordForm/EmailFormContent';
 
 export function SendEmailRestorePasswordPage() {
+  const [isValid, setIsValid] = useState(false);
+
   return (
-    <div className={styles['reset-password']}>
+    <div className={styles['reset-password__page']}>
       <div className={styles['reset-password__body']}>
-        <img className={styles['sign-up-img-right']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
-          alt="dots_7x6.png" />
-        <div className={styles.container}>
-          <SendEmailRestorePasswordFormComponent />
-          <div className={styles['sign-in-line']}>
-            <div className={styles['sign-in-line__text']}>
-              Вже були на нашому сайті?
+        <div className={styles['reset-password__container']}>
+          <div className={styles['form__header']}>
+            Забули пароль
+          </div>
+          <div className={styles['form__content']}>
+            <p className={styles['form__text']}>
+              Введіть електронну адресу вказану при реєстрації для відновлення паролю. <br />
+              На зазначену Вами електронну пошту буде відправлено листа з посиланням
+              для відновлення паролю. <br />
+            </p>
+            <SendEmailRestorePasswordFormContentComponent setIsValid={setIsValid} />
+          </div>
+          <div className={styles['form__footer']}>
+            <div className={styles['button-container']}>
+              <button
+                disabled={!isValid}
+                form="signUpForm"
+                className={
+                  isValid
+                    ? styles['send-email__button']
+                    : styles['send-email__button__disabled']
+                }
+                type="submit"
+              >
+                Відновити пароль
+              </button>
             </div>
-            <Link to="/login" className={styles['sign-in-line__link']}>
-              Увійти
-            </Link>
           </div>
         </div>
-        <img className={styles['sign-up-img-left']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
-          alt="dots_7x6.png" />
+        <div className={styles['sign-in-line']}>
+          <div className={styles['sign-in-line__text']}>
+            Я згадав свій пароль.
+          </div>
+          <Link to="/login" className={styles['sign-in-line__link']}>
+            Повернутися до входу
+          </Link>
+        </div>
       </div>
     </div>
   );

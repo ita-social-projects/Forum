@@ -22,7 +22,7 @@ import { ResendActivationPage } from '../pages/SignUp/SignUp/ResendActivationPag
 import { ActivationProfilePage } from '../pages/SignUp/SignUp/ActivateProfilePage';
 import { SendEmailRestorePasswordPage } from '../pages/RestorePassword/Pages/SendEmailRestorePasswordPage';
 import { RestorePasswordPage } from '../pages/RestorePassword/Pages/RestorePasswordPage';
-import { RestorePasswordModalPage } from '../pages/RestorePassword/Pages/RestorePasswordModalPage';
+import { RestorePasswordCompletionPage } from '../pages/RestorePassword/Pages/RestorePasswordCompletionPage';
 import { RestorePasswordSuccessPage } from '../pages/RestorePassword/Pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../pages/RestorePassword/Pages/RestorePasswordFailedPage';
 import { ModerationModal } from '../components/Moderation/ModerationModal';
@@ -93,7 +93,7 @@ function ClientRouter() {
         />
         <Route
           path="/reset-password/modal"
-          element={<RestorePasswordModalPage />}
+          element={<RestorePasswordCompletionPage />}
         />
         <Route
           path="/password/reset/confirm/:uid/:token"
