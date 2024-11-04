@@ -75,10 +75,13 @@
   --navbar-content-height: 32px;
 
   /* Footer */
-  --footer-backround: #3C4044;
+  --footer-backround: #232424;
   --footer-font-color: #FFF;
-  --footer-links-font-color: #A0ABC0;
+  --footer-links-font-color: #FFF;
   --footer-bottom-backround: #333;
+  --footer-policy-links-font-color: #959595;
+  --footer-scroll-button: #B4D27A;
+
   /* main pages About block*/
   --about-text-font-color: #292E32;
   --about-text-background-color: #FFF;
@@ -113,6 +116,8 @@
   --primary-green-80: #1f9a7c;
   --character-title-85: rgba(0, 0, 0, 0.85);
 
+  /*Login Page*/
+  --min-height-login-page: calc(100vh - 528px);
   --wf-base-white: #FFF;
 
   --profile-min-height-block: calc(100vh - 565px);
