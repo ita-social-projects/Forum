@@ -76,6 +76,7 @@
   line-height: 120%;
   text-align: left;
   padding-left: 16px;
+  max-width: 300px;
 }
 
 .company-card__name-text {
@@ -192,5 +193,8 @@
 
   .company-card__star {
     left: 256px;
+  }
+  .company-card__category-text {
+    max-width: 250px;
   }
 }

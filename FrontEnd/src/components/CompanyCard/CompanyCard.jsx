@@ -28,7 +28,7 @@ export default function CompanyCard({
     profile.activities
       .slice(0, lengthOfCategoryActivityArray)
       .map((activity) => activity.name)
-      .join(' ');
+      .join(', ');
 
   const handleSave = async () => {
     changeCompanies(profile.id, true);
