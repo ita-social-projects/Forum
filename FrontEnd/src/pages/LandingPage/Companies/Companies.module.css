@@ -1,9 +1,10 @@
 .new-companies-main {
   width: 375px;
+  height: 1689px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #f1fff7;
+  background: var(--new-companies-background-color);
   margin: auto;
 }
 
@@ -53,6 +54,7 @@
   .new-companies-main,
   .new-companies-block {
     width: 768px;
+    height: 930px;
   }
   
   .new-companies-main__title {
@@ -67,6 +69,7 @@
   .new-companies-main,
   .new-companies-block {
     width: 1512px;
+    height: 597px;
   }
 
   .new-companies-main__title {
