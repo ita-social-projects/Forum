@@ -26,7 +26,6 @@ import { RestorePasswordModalPage } from '../pages/RestorePassword/Pages/Restore
 import { RestorePasswordSuccessPage } from '../pages/RestorePassword/Pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../pages/RestorePassword/Pages/RestorePasswordFailedPage';
 import { ModerationModal } from '../components/Moderation/ModerationModal';
-import ScrollToTopButton from '../components/ScrollToTopButton/ScrollToTopButton';
 import TermsAndConditions from '../components/TermsAndConditionsApp/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../hooks';
 import { Search } from '../pages/SearchPage/Search';
@@ -120,7 +119,6 @@ function ClientRouter() {
         <Route path="*" element={< ErrorPage404 />} />
       </Routes>)}
       <Footer />
-      <ScrollToTopButton />
       <ToastContainer
         position="top-right"
         autoClose={3000}

@@ -1,5 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 
 import { useAuth } from '../hooks';
 
@@ -17,6 +18,7 @@ import Contacts from '../pages/AdminPage/DetailView/Contacts';
 import AdminProfilePage from '../pages/AdminPage/AdminProfile/AdminProfilePage';
 import AdminRegistration from '../pages/AdminPage/AdminRegistration/AdminRegistration';
 
+import customAdminTheme from '../pages/CustomThemes/customAdminTheme.js';
 import '../pages/AdminPage/AdminGlobal.css';
 import css from '../pages/AdminPage/AdminPage.module.css';
 
@@ -48,23 +50,33 @@ function AdminRouter() {
     );
 
     return (
-        <div className={css['admin_block']}>
-            <Header isAuthorized={isAuth} user={user} className={css['header_content']} />
-            {isLoading ? <Loader /> :
-                <div className={css['content']}>
-                    {renderMenu}
-                    <Routes className={css['content-block']}>
-                        {authRoutes}
-                    </Routes>
-                </div>
-            }
-            <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                theme="colored"
-                icon={false}
-            />
-        </div>
+        <ConfigProvider
+            theme={customAdminTheme}
+            locale={{
+                Table: {
+                    filterReset: 'Скинути',
+                    filterConfirm: 'Застосувати',
+                },
+            }}
+        >
+            <div className={css['admin_block']}>
+                <Header isAuthorized={isAuth} user={user} className={css['header_content']} />
+                {isLoading ? <Loader /> :
+                    <div className={css['content']}>
+                        {renderMenu}
+                        <Routes className={css['content-block']}>
+                            {authRoutes}
+                        </Routes>
+                    </div>
+                }
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    theme="colored"
+                    icon={false}
+                />
+            </div>
+        </ConfigProvider>
     );
 }
 
