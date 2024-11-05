@@ -46,7 +46,7 @@ export function ResendActivationFormContent({ setIsValid }) {
         navigate('/login');
       })
       .catch(() => {
-        toast.error('Activation failed. Please try again.');
+        toast.error('Виникла помилка. Спробуйте ще раз або зв\'яжіться з підтримкою.');
       });
   };
 
