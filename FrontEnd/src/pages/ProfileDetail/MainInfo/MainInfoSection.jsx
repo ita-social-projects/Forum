@@ -1,5 +1,5 @@
 import { PropTypes } from 'prop-types';
-import TitleInfo from './TitleInfo';
+import TitleInfo from '../TitelInfo/TitleInfo';
 import ProfileDetailNavBar from './ProfileDetailNavBar';
 import classes from './MainInfoSection.module.css';
 
