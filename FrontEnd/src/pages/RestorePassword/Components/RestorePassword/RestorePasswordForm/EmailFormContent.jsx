@@ -45,7 +45,7 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
     })
       .then(() => {
         setIsValid(true);
-        navigate('/reset-password/modal');
+        navigate('/reset-password/completion');
       })
       .catch(() => {
         setError ('email', {

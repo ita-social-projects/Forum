@@ -20,9 +20,9 @@ import { SignUpPage } from '../pages/SignUp/SignUp/SignUpPage';
 import { SignUpCompletionPage } from '../pages/SignUp/SignUp/SignUpCompletionPage';
 import { ResendActivationPage } from '../pages/SignUp/SignUp/ResendActivationPage';
 import { ActivateProfilePage } from '../pages/SignUp/SignUp/ActivateProfilePage';
-import { SendEmailRestorePasswordPage } from '../pages/RestorePassword/Pages/SendEmailRestorePasswordPage';
+import { SendEmailForgotPasswordPage } from '../pages/RestorePassword/Pages/SendEmailForgotPasswordPage';
 import { RestorePasswordPage } from '../pages/RestorePassword/Pages/RestorePasswordPage';
-import { RestorePasswordCompletionPage } from '../pages/RestorePassword/Pages/RestorePasswordCompletionPage';
+import { ForgotPasswordCompletionPage } from '../pages/RestorePassword/Pages/ForgotPasswordCompletionPage';
 import { RestorePasswordSuccessPage } from '../pages/RestorePassword/Pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../pages/RestorePassword/Pages/RestorePasswordFailedPage';
 import { ModerationModal } from '../components/Moderation/ModerationModal';
@@ -88,11 +88,11 @@ function ClientRouter() {
         />
         <Route
           path="/reset-password"
-          element={<SendEmailRestorePasswordPage />}
+          element={<SendEmailForgotPasswordPage />}
         />
         <Route
-          path="/reset-password/modal"
-          element={<RestorePasswordCompletionPage />}
+          path="/reset-password/completion"
+          element={<ForgotPasswordCompletionPage />}
         />
         <Route
           path="/password/reset/confirm/:uid/:token"
