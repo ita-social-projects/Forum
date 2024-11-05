@@ -1,0 +1,56 @@
+.form__text {
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    color: var(--main-text-color);
+}
+
+.cancel__button {
+    display: flex;
+    padding: 9px 16px;
+    border-radius: 4px;
+    border: 1px solid #232424;
+    background: var(--main-white, #fff);
+    color: #232424;
+    text-align: center;
+    font-feature-settings: "calt" off;
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.resend-activation__button,
+.resend-activation__button__disabled {
+    padding: 9px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    background: #000000;
+
+    color: var(--light-button-text-color);
+    text-align: center;
+    font-feature-settings: "calt" off;
+
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+
+    cursor: pointer;
+}
+
+.resend-activation__button__disabled {
+    border: 1px solid #BFC6CF;
+    background: #EEEFF1;
+    color: #A3AAB0;
+}
