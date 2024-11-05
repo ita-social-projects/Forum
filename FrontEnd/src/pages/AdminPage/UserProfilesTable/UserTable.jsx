@@ -238,6 +238,7 @@ function UserTable() {
                 total={totalItems}
                 onChange={handlePageChange}
                 onShowSizeChange={handlePageChange}
+                showSizeChanger={false}
                 showTitle={false}
                 style={{ marginTop: '16px', textAlign: 'center', marginBottom: '16px' }}
             />
