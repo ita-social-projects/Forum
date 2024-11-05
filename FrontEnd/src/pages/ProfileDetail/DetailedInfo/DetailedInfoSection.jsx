@@ -2,7 +2,7 @@ import { PropTypes } from 'prop-types';
 
 import CompanyDescription from './CompanyDescription';
 import DataContacts from './DataContacts';
-import EmptyData from '../EmptyData';
+import EmptyData from '../ProfileDetailComponents/EmptyData';
 
 import classes from './DetailedInfoSection.module.css';
 

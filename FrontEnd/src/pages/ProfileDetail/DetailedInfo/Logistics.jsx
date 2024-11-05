@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 
-import ReadMore from './ReadMore';
+import ReadMore from '../ProfileDetailComponents/ReadMore';
 
 import classes from './Logistics.module.css';
 

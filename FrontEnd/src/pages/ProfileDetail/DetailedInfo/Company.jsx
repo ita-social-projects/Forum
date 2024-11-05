@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
 import { useEffect, useContext } from 'react';
 
-import ReadMore from './ReadMore';
+import ReadMore from '../ProfileDetailComponents/ReadMore';
 
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 

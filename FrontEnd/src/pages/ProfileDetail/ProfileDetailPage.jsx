@@ -8,7 +8,7 @@ import Loader from '../../components/Loader/Loader';
 import ErrorPage404 from '../../pages/ErrorPages/ErrorPage404';
 import MainInfoSection from './MainInfo/MainInfoSection';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
-import BannerImage from './BannerImage';
+import BannerImage from './ProfileDetailComponents/BannerImage';
 import { ActiveLinksContext } from '../../context/ActiveLinksContext';
 
 import PendingStatus from '../../components/MiniComponents/PendingModerationIcon/PendingStatus';

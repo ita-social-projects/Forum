@@ -2,7 +2,7 @@ import { useMemo, useEffect, useContext} from 'react';
 import { PropTypes } from 'prop-types';
 import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
 
-import ReadMore from './ReadMore';
+import ReadMore from '../ProfileDetailComponents/ReadMore';
 
 import classes from './ProductsServices.module.css';
 
