@@ -42,16 +42,17 @@
   
   /* Стиль для іконки */
   .about-us-text-section__icon {
-    width: 24px;
-    height: 24px;
-    margin-left: 12px;
+    width: 36px;
+    height: 36px;
+    margin-left: 18px;
   }
   
   /* Стиль для тексту в картці */
   .about-us-text-section__card p {
+    font-family: Geologica;
     font-size: 16px;
     font-weight: 600;
-    color: #333;
+    color:#232424;
     margin: 0;
   }
   

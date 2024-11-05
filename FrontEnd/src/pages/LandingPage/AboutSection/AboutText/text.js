@@ -5,42 +5,42 @@ const AboutText = {
   content: [
     {
       id: 2,
-      icon: 'craft.png',  // Add icon filename here
+      icon: 'baget.svg',
       text: 'Виробники крафтової продукції'
     },
     {
       id: 3,
-      icon: 'sommelier.png',
+      icon: 'wine.svg',
       text: 'Сомельє та ресторатори'
     },
     {
       id: 4,
-      icon: 'hotel.png',
+      icon: 'hotel.svg',
       text: 'Представники готельно-ресторанного бізнесу'
     },
     {
       id: 5,
-      icon: 'retail.png',
+      icon: 'shop.svg',
       text: 'Представники роздрібних та гуртових торгових мереж'
     },
     {
       id: 6,
-      icon: 'packaging.png',
+      icon: 'post.svg',
       text: 'Представники пакувальної індустрії'
     },
     {
       id: 7,
-      icon: 'logistics.png',
+      icon: 'car.svg',
       text: 'Представники логістичних компаній та служб доставки'
     },
     {
       id: 8,
-      icon: 'startup.png',
+      icon: 'rocket.svg',
       text: 'Стартапери'
     },
     {
       id: 9,
-      icon: 'specialists.png',
+      icon: 'people.svg',
       text: 'Інші фахівці галузі'
     },
   ],

@@ -9,7 +9,7 @@ const AboutSectionText = () => {
         {AboutText.content.map((item) => (
           <div key={item.id} className="about-us-text-section__card">
             <img
-              src={`${process.env.REACT_APP_PUBLIC_URL}/icons/${item.icon}`}
+              src={`${process.env.PUBLIC_URL}/svg/${item.icon}`}
               alt={item.text}
               className="about-us-text-section__icon"
             />
