@@ -339,7 +339,7 @@ input:-webkit-autofill {
   }
 }
 
-@media only screen and (min-width: 1512px) {
+@media only screen and (min-width: 1200px) {
   .login-page {
     padding: 120px 0;
   }
