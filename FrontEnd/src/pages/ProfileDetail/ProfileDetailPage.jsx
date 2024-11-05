@@ -6,9 +6,11 @@ import { PropTypes } from 'prop-types';
 
 import Loader from '../../components/Loader/Loader';
 import ErrorPage404 from '../../pages/ErrorPages/ErrorPage404';
-import MainInfoSection from './MainInfo/MainInfoSection';
-import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
+
 import BannerImage from './ProfileDetailComponents/BannerImage';
+import TitleInfo from './TitelInfo/TitleInfo';
+import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
+
 import { ActiveLinksContext } from '../../context/ActiveLinksContext';
 
 import PendingStatus from '../../components/MiniComponents/PendingModerationIcon/PendingStatus';
@@ -55,27 +57,23 @@ function ProfileDetailPage({ isAuthorized }) {
             <PendingStatus profile={fetchedProfile} elementType="banner" />
           </div>
           <BannerImage data={fetchedProfile} />
-          <div className={classes['profile-detail__page']}>
-            <MainInfoSection
-              containsNotRequiredData={containsNotRequiredData}
-              isAuthorized={isAuthorized}
-              data={fetchedProfile}
-            />
-            <div className={classes['profile-detail__logo-tooltip']}>
-              <PendingStatus profile={fetchedProfile} elementType="logo" />
-            </div>
-            <h3 className={classes['profile-detail__tags']}>Про Компанію</h3>
-            <DetailedInfoSection
-              containsNotRequiredData={containsNotRequiredData}
-              isAuthorized={isAuthorized}
-              data={fetchedProfile}
-            />
+          <div className={classes['profile-detail__logo-tooltip']}>
+            <PendingStatus profile={fetchedProfile} elementType="logo" />
           </div>
+          <TitleInfo
+            containsNotRequiredData={containsNotRequiredData}
+            isAuthorized={isAuthorized}
+            data={fetchedProfile}
+          />
+          <DetailedInfoSection
+            containsNotRequiredData={containsNotRequiredData}
+            isAuthorized={isAuthorized}
+            data={fetchedProfile}
+          />
         </ActiveLinksContext.Provider>
       )}
     </div>
   );
-
 }
 
 export default ProfileDetailPage;

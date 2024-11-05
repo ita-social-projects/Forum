@@ -7,26 +7,6 @@
     display: flex;
 }
 
-.profile-detail__page {
-    display: flex;
-    flex-direction: column;
-}
-
-.profile-detail__tags {
-    display: flex;
-    align-items: flex-start;
-    color: black;
-    font-feature-settings: 'calt' off;
-    text-decoration: none;
-    font-family: var(--font-main);
-    font-size: 34px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 40.8px;
-    letter-spacing: -0.34px;
-    white-space: nowrap;
-}
-
 .profile-detail__banner-tooltip {
     display: flex;
     position: absolute;
