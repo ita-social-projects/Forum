@@ -83,7 +83,7 @@ function UserTable() {
             <div style={{padding: 8}}>
                 <Input
                     ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
+                    placeholder={'Пошук'}
                     value={selectedKeys[0]}
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value]: [])}
                     onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -102,7 +102,7 @@ function UserTable() {
                   width: 90,
                 }}
               >
-                Search
+                Пошук
               </Button>
               <Button
                 onClick={() => clearFilters && handleReset(clearFilters)}
@@ -111,12 +111,12 @@ function UserTable() {
                   width: 90,
                 }}
               >
-                Reset
+                Скинути
               </Button>
             </Space>
           </div>
             ),
-        filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />,
+        filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1F9A7C' : undefined }} />,
         onFilter: (value, record) =>
             record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
         render: (text) =>
@@ -158,8 +158,8 @@ function UserTable() {
             sorter: true,
             sortOrder: sortInfo.field === 'surname' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
-            render: (_, record) => `${record.surname} ${record.name}`,
             ...getColumnSearchProps('surname'),
+            render: (_, record) => `${record.surname} ${record.name}`,
         },
         {
             title: 'Email',
