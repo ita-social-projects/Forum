@@ -36,12 +36,6 @@
   height: 40px;
 }
 
-.navbar-utility-bar {
-  display: flex;
-  gap: 24px;
-  height: 40px;
-}
-
 .burger-menu-wrapper {
   display: none;
 }
