@@ -28,13 +28,6 @@ function Company({ data }) {
     return (
         companyData ? (
             <div id="about-company" className={classes['about-company']}>
-                <div className={classes['about-company__title']}>
-                    <div className={classes['about-company__title--block']}>
-                        <p className={classes['about-company__title--text']}>Про компанію</p>
-                    </div>
-                    <div className={classes['about-company__title--divider']}></div>
-                </div>
-                <div className={classes['about-company__content']}>
                     {data.common_info ? (
                         <div className={classes['about-company__content--common']}>
                             <ReadMore >
@@ -45,7 +38,7 @@ function Company({ data }) {
                     {competitiveEdge ? (
                         <div className={classes['about-company__content--advantage']}>
                             <p className={classes['about-company__content--advantage--title']}>Конкурентна перевага</p>
-                            <div className={classes['about-company__content--advantage--description']}>
+                            <div className={classes['about-company__content--advantage--text']}>
                                 <ReadMore>
                                     {competitiveEdge}
                                 </ReadMore>
@@ -59,7 +52,6 @@ function Company({ data }) {
                         </div>
                     ) : null}
                 </div>
-            </div>
         ) : null
     );
 }
