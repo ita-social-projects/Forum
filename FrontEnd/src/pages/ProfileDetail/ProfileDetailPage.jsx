@@ -48,7 +48,11 @@ function ProfileDetailPage({ isAuthorized }) {
   return (error && error.status !== 401) ? (
     <ErrorPage404 />
   ) : (
-    <div className={isLoading ? classes['profile-detail__loader-content'] : classes['profile-detail__main']}>
+    <div className={
+      isLoading ?
+        classes['profile-detail__loader-content'] :
+        classes['profile-detail__main']}
+    >
       {isLoading ? (
         <Loader />
       ) : (

@@ -38,7 +38,7 @@ function TitleInfo({ isAuthorized, data }) {
   const handleSave = async () => {
     setIsSaved(true);
     try {
-      await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,{ company_pk: profile.id });
+      await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`, { company_pk: profile.id });
     } catch (error) {
       console.error(error);
     }
@@ -59,36 +59,38 @@ function TitleInfo({ isAuthorized, data }) {
 
   return (
     <div className={classes['title-block']}>
-      <div className={classes['title-block__logo']}>
-        {!profile.logo?.path ? (
-          <DefaultLogo />
-        ) : (
-          <img
-            className={classes['title-block__logo']}
-            src={profile.logo?.path}
-            alt="Company logo"
-            title="Company logo"
-          />
-        )}
-      </div>
-      <div className={classes['title-block__about']}>
-        <p className={classes['title-block__activity']}>
-          {profile.activities}
-        </p>
-        <div className={classes['title-block__company']}>
-          <h2 className={classes['title-block__company_name']}>
-            {profile.name}
-          </h2>
-          <div className={classes['title-block__company_category']}>
-            <CategoryBadges categories={profile.categories} />
+      <div className={classes['title-block__content']}>
+        <div className={classes['title-block__logo-block']}>
+          {!profile.logo?.path ? (
+            <DefaultLogo />
+          ) : (
+            <img
+              className={classes['title-block__logo-img']}
+              src={profile.logo?.path}
+              alt="Company logo"
+              title="Company logo"
+            />
+          )}
+        </div>
+        <div className={classes['title-block__about']}>
+          <p className={classes['title-block__activity']}>
+            {profile.activities}
+          </p>
+          <div className={classes['title-block__company']}>
+            <h2 className={classes['title-block__company_name']}>
+              {profile.name}
+            </h2>
+            <p className={classes['title-block__company_region']}>
+              {profile.regions}
+            </p>
+            <div className={classes['title-block__company_category']}>
+              <CategoryBadges categories={profile.categories} />
+            </div>
           </div>
         </div>
-        <p className={classes['title-block__company_region']}>
-          {profile.regions}
-        </p>
       </div>
       {isAuthorized ? (
-        <>
+        <div className={classes['title-block__button-block']}>
           {!ownProfile && (
             <button
               onClick={isSaved ? handleDeleteSaved : handleSave}
@@ -122,7 +124,7 @@ function TitleInfo({ isAuthorized, data }) {
               </span>
             </a>
           )}
-        </>
+        </div>
       ) : null}
     </div>
   );
