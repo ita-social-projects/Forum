@@ -1,8 +1,8 @@
 import { useMemo, useEffect, useContext} from 'react';
 import { PropTypes } from 'prop-types';
-import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
+import { ActiveLinksContext } from '../../../../context/ActiveLinksContext';
 
-import ReadMore from '../ProfileDetailComponents/ReadMore';
+import ReadMore from '../../ProfileDetailComponents/ReadMore';
 
 import classes from './ProductsServices.module.css';
 
@@ -31,7 +31,6 @@ function ProductsServices ({ data }) {
                     <div className={classes['products-services__title--block']}>
                         <h3 className={classes['products-services__title--text']}>Товари / послуги</h3>
                     </div>
-                    <div className={classes['products-services__title--divider']}></div>
                 </div>
                 <div className={classes['products-services__content']}>
                     {profile.products &&

@@ -6,9 +6,9 @@ import useSWR from 'swr';
 import { PropTypes } from 'prop-types';
 import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
-import { useAuth } from '../../../hooks';
+import { useAuth } from '../../../../hooks';
 
-import classes from './PhoneEmail.module.css';
+import classes from './DataContactsPhoneEmail';
 
 
 const LENGTH_EMAIL = 14;

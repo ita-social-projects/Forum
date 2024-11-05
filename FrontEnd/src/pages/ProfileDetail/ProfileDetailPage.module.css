@@ -20,20 +20,3 @@
     padding-top: 5px;
     padding-left: 3px;
 }
-
-@media only screen and (min-width: 768px) {
-    .profile-detail__page  {
-        flex-direction: column;
-    }
-
-}
-
-@media only screen and (min-width: 1512px) {
-    .profile-detail__page  {
-        flex-direction: column;
-    }
-        
-    .profile-detail__page {
-        align-items: center;
-     }
-}

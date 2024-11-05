@@ -1,9 +1,9 @@
 import { useMemo, useEffect, useContext  } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
+import { ActiveLinksContext } from '../../../../context/ActiveLinksContext';
 
-import ReadMore from '../ProfileDetailComponents/ReadMore';
+import ReadMore from '../../ProfileDetailComponents/ReadMore';
 import classes from './Startup.module.css';
 
 
@@ -59,7 +59,6 @@ function Startup ({ data }) {
                         <div className={classes['startup__title--block']}>
                             <h2 className={classes['startup__title--text']}>Стартап</h2>
                         </div>
-                        <div className={classes['startup__title--divider']}></div>
                     </div>
                     <div className={classes['startup__content']}>
                         {renderedSections}

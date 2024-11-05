@@ -1,22 +1,22 @@
 import { useEffect, useContext } from 'react';
-import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
+import { ActiveLinksContext } from '../../../../context/ActiveLinksContext';
 
-import ReadMore from '../ProfileDetailComponents/ReadMore';
+import ReadMore from '../../ProfileDetailComponents/ReadMore';
 
 import classes from './Cooperation.module.css';
 
 
-function Cooperation () {
+function Cooperation() {
     const { setActiveLinks } = useContext(ActiveLinksContext);
     const cooperationData = '';
 
     useEffect(() => {
         if (cooperationData) {
             setActiveLinks(prevData => [
-              ...prevData,
-              'cooperation']);
-          }
-        }, [cooperationData, setActiveLinks]);
+                ...prevData,
+                'cooperation']);
+        }
+    }, [cooperationData, setActiveLinks]);
 
     // TODO: implement logic for getting data from db when it's added on server side
 
@@ -28,14 +28,13 @@ function Cooperation () {
                         <div className={classes['cooperation__title--block']}>
                             <p className={classes['cooperation__title--text']}>Формат співпраці</p>
                         </div>
-                        <div className={classes['cooperation__title--divider']}></div>
                     </div>
                     <div className={classes['cooperation__content--block']}>
-                            <div className={classes['cooperation__content--description']}>
-                                <ReadMore>
-                                    {cooperationData}
-                                </ReadMore>
-                            </div>
+                        <div className={classes['cooperation__content--description']}>
+                            <ReadMore>
+                                {cooperationData}
+                            </ReadMore>
+                        </div>
                     </div>
                 </div>
             </div>

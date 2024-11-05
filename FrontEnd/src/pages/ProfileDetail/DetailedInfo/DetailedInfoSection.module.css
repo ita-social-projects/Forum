@@ -1,6 +1,7 @@
 .detail-info-page {
     display: flex;
     flex-direction: column;
+    width: 343px;
 }
 
 .profile-detail__tags {
@@ -17,15 +18,3 @@
     letter-spacing: -0.34px;
     white-space: nowrap;
 }
-/* 
-@media only screen and (min-width: 768px) {
-    .detail-info-page {
-        flex-direction: column;
-    }
-}
-
-@media only screen and (min-width: 1512px) {
-    .detail-info-page {
-        flex-direction: row-reverse;
-    }
-} */

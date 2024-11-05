@@ -1,9 +1,9 @@
 import { PropTypes } from 'prop-types';
 import { useEffect, useContext } from 'react';
 
-import ReadMore from '../ProfileDetailComponents/ReadMore';
+import ReadMore from '../../ProfileDetailComponents/ReadMore';
 
-import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
+import { ActiveLinksContext } from '../../../../context/ActiveLinksContext';
 
 import classes from './Company.module.css';
 

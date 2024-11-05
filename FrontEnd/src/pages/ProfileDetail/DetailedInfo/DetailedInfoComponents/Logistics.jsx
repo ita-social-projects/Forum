@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
-import { ActiveLinksContext } from '../../../context/ActiveLinksContext';
+import { ActiveLinksContext } from '../../../../context/ActiveLinksContext';
 
-import ReadMore from '../ProfileDetailComponents/ReadMore';
+import ReadMore from '../../ProfileDetailComponents/ReadMore';
 
 import classes from './Logistics.module.css';
 
@@ -28,7 +28,6 @@ function Logistics () {
                         <div className={classes['logistics__title--block']}>
                             <p className={classes['logistics__title--text']}>Логістика товарів / послуг</p>
                         </div>
-                        <div className={classes['logistics__title--divider']}></div>
                     </div>
                     <div className={classes['logistics__content--block']}>
                         <div className={classes['logistics__content--description']}>
