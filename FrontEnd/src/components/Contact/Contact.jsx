@@ -22,7 +22,6 @@ const CATEGORY_OPTIONS = [
 
 const Contact = () => {
     const [loading, setLoading] = useState(false);
-    const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [percent, setPercent] = useState(-50);
     const timerRef = useRef();
@@ -67,7 +66,6 @@ const Contact = () => {
         } catch (error) {
             setModalMessage('Щось пішло не так! Будь ласка, спробуйте ще раз');
         } finally {
-            setShowModal(true);
             setLoading(false);
         }
     };
@@ -77,9 +75,8 @@ const Contact = () => {
     };
 
     const closeModal = () => {
-        setShowModal(false);
+        setModalMessage('');
     };
-
 
     return (
         <div className={styles['contact_container']}>
@@ -88,7 +85,7 @@ const Contact = () => {
                 <img
                     className={styles['contact__img1']}
                     src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_12x10.png`}
-                    alt="dots_12x10.png"
+                    alt="decorative dot pattern"
                 />
             </div>
             <div className={styles['contact__text_container']}>
@@ -120,24 +117,24 @@ const Contact = () => {
                             }}
                             render={({ field, fieldState: { error } }) =>
                                 <Space direction="vertical" style={{ width: '100%', gap: '0px', }}>
-                                    <Select
-                                        placeholder="Оберіть категорію"
-                                        {...field}
-                                        style={{
-                                        width: 400,
-                                        padding: '0px',
-                                        }}
-                                        dropdownStyle={{
-                                            width: '257px',
-                                            paddingLeft: '0px',
-                                            paddingRight: '0px',
-                                            borderRadius: '2px',
-                                          }}
-                                        variant="borderless"
-                                        className={styles['contact__select']}
-                                        options={CATEGORY_OPTIONS}
-                                        onChange={(value) => field.onChange(value)}
-                                    />
+                                  <Select
+                                      placeholder="Оберіть категорію"
+                                      {...field}
+                                      style={{
+                                          width: 400,
+                                          padding: 0,
+                                      }}
+                                      dropdownStyle={{
+                                          width: 257,
+                                          paddingLeft: 0,
+                                          paddingRight: 0,
+                                          borderRadius: '2px',
+                                      }}
+                                      variant="borderless"
+                                      className={styles['contact__select']}
+                                      options={CATEGORY_OPTIONS}
+                                      onChange={(value) => field.onChange(value)}
+                                  />
                                     {error && <p className={styles['contact__error']}>{error.message}</p>}
                                 </Space>
                             }
@@ -170,7 +167,7 @@ const Contact = () => {
                     </div>
                 </form>
             </div>
-            {showModal && (
+            {modalMessage && (
                 <div className={styles['modal_feedback']}>
                     <div className={styles['modal_feedback_content']}>
                   <button
