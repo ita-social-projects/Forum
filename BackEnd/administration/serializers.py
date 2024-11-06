@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
 from profiles.models import (
     Profile,
@@ -192,3 +193,23 @@ class ModerationEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModerationEmail
         fields = ["email_moderation"]
+
+
+class FeedbackSerializer(serializers.Serializer):
+    email = serializers.EmailField(
+        required=True,
+        error_messages={"required": "Please provide a valid email address."},
+    )
+    message = serializers.CharField(
+        min_length=10,
+        required=True,
+        error_messages={
+            "required": "Message cannot be empty.",
+            "min_length": "Message must be at least 10 characters long.",
+        },
+    )
+    category = serializers.ChoiceField(
+        choices=FeedbackCategory.choices(),
+        required=True,
+        error_messages={"required": "Please select a category."},
+    )
