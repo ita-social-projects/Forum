@@ -1,8 +1,10 @@
 import { PropTypes } from 'prop-types';
 
-import CompanyDescription from './DetailedInfoComponents/CompanyDescription';
 import DataContacts from './DataContacts/DataContacts';
 import EmptyData from '../ProfileDetailComponents/EmptyData';
+import Company from './DetailedInfoComponents/Company';
+import Startup from './DetailedInfoComponents/Startup';
+import ProductsServices from './DetailedInfoComponents/ProductsServices';
 
 import classes from './DetailedInfoSection.module.css';
 
@@ -13,7 +15,14 @@ function DetailedInfoSection({ isAuthorized, data, containsNotRequiredData }) {
       <div className={classes['detail-info-page']}>
         <h3 className={classes['profile-detail__tags']}>Про Компанію</h3>
         <DataContacts isAuthorized={isAuthorized} data={data} />
-        {containsNotRequiredData ? <CompanyDescription isAuthorized={isAuthorized} data={data} /> : <EmptyData />}
+        {containsNotRequiredData ?
+          <div className={classes['company-description-block']}>
+            <h3 className={classes['company-description-block--title']}>Про Компанію</h3>
+            <Company data={data} />
+            {data.is_startup && <Startup data={data} />}
+            {data.is_registered && <ProductsServices data={data} />}
+          </div>
+          : <EmptyData />}
       </div>
     </div>
   );
