@@ -13,6 +13,7 @@ import classes from './CompanyDescription.module.css';
 function CompanyDescription({ data }) {
     return (
         <div className={classes['company-description-block']}>
+            <h3 className={classes['company-description-block--title']}>Про Компанію</h3>
             <Company data={data} />
             {data.is_startup && <Startup data={data} />}
             {data.is_registered && <ProductsServices data={data} />}
