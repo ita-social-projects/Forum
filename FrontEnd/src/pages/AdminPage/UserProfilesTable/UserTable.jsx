@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import css from './UserTable.module.css';
+import css from './UserTable.module.scss';
 import axios from 'axios';
 import useSWR from 'swr';
 import {Table, Tag, Tooltip, Pagination, Input, Button, Space} from 'antd';
@@ -79,16 +79,13 @@ function UserTable() {
     };
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
-            <div style={{padding: 8}}>
+            <div className={css['dropdownMenu']}>
                 <Input
                     placeholder={'Пошук'}
                     value={selectedKeys[0]}
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value]: [])}
                     onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                    style={{
-                        marginBottom: 8,
-                        display: 'block',
-                    }}
+                    className = {css['ant-input']}
                 ></Input>
                 <Space>
               <Button
@@ -96,29 +93,21 @@ function UserTable() {
                 onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
                 icon={<SearchOutlined />}
                 size="small"
-                style={{
-                  width: 90,
-                }}
+                className={css['ant-btn']}
               >
                 Пошук
               </Button>
               <Button
                 onClick={() => clearFilters && handleReset(clearFilters)}
                 size="small"
-                style={{
-                  width: 90,
-                }}
+                className={css['ant-btn']}
               >
                 Скинути
               </Button>
             </Space>
           </div>
             ),
-       filterIcon: (filtered) => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-            <SearchOutlined style={{ color: filtered ? '#1F9A7C' : undefined }} />
-        </div>
-    ),
+        filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1F9A7C' : undefined }} />,
         onFilter: (value, record) =>
             record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
         render: (text) =>
@@ -253,7 +242,7 @@ function UserTable() {
                 onShowSizeChange={handlePageChange}
                 showSizeChanger={false}
                 showTitle={false}
-                style={{ marginTop: '16px', textAlign: 'center', marginBottom: '16px' }}
+                className={css['pagination']}
             />
             <Table
                 columns={columns}
