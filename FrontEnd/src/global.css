@@ -38,6 +38,7 @@
   --about-as-main-background: #0B6C61;
   --star-background: #FFD800;
   --hint-background: #25292C;
+  --light-seashell-background: #F9F5EC;
 
   /* text color*/
   --main-text-color: #292E32;
@@ -47,14 +48,16 @@
   --delete-text-color: #F15831;
   --notification-text-color: #F34444;
   --footer-dark-text-color: #A0ABC0;
+  --link-text-color: #000000;
+  --error-text-color: #F15831;
 
   /* button color*/
   --main-button-color: #1F9A7C;
-  --button-color-hover: #0b6c61 ;
+  --button-color-hover: #0b6c61;
   --light-button-color: #FFFFFF;
 
   /* fonts */
-  --font-main: 'Inter', sans-serif;
+  --font-main: 'Geologica', sans-serif;
   --font-messages: 'Roboto', sans-serif;
   --font-error: 'Roboto', sans-serif;
   --font-logo: 'Geologica', sans-serif;
@@ -75,26 +78,29 @@
   --navbar-content-height: 32px;
 
   /* Footer */
-  --footer-backround: #3C4044;
+  --footer-backround: #232424;
   --footer-font-color: #FFF;
-  --footer-links-font-color: #A0ABC0;
+  --footer-links-font-color: #FFF;
   --footer-bottom-backround: #333;
+  --footer-policy-links-font-color: #959595;
+  --footer-scroll-button: #B4D27A;
 
   /* main pages About block*/
   --about-text-font-color: #292E32;
   --about-text-background-color: #FFF;
-
   --about-as-font-color: #FFF;
   --about-as-background-color: #0B6C61;
-
   --about-cards-font-color: #292E32;
   --about-cards-background-color: #F0F1F3;
   --about-cards-background-content-color: #FFF;
-
   /* main pages Banner block*/
   --banner-main-font-color: #000;
   --banner-main-dark-color: #1F9A7C;
-
+  /* main pages JoinUs block*/
+  --join-us-batton-color: black;
+  --join-us-main-color: #B4D27A;
+  --join-us-font-color: black;
+  --join-us-batton-text-color: white;
   /* CompanyCard */
   --companies-card-text-color: #292e32;
   --companies-card-box-shadow: rgba(65, 64, 69, 0.2);
@@ -113,8 +119,10 @@
   --primary-green-80: #1f9a7c;
   --character-title-85: rgba(0, 0, 0, 0.85);
 
+  /*Login Page*/
+  --min-height-login-page: calc(100vh - 528px);
   --wf-base-white: #FFF;
-  
+
   --profile-min-height-block: calc(100vh - 565px);
   --min-height-block-main: calc(100vh - 305px);
   --company-card-color: #FFF;

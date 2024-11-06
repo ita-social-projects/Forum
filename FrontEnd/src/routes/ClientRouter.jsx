@@ -6,7 +6,7 @@ import { SWRConfig } from 'swr';
 import 'react-toastify/dist/ReactToastify.css';
 import customTheme from '../pages/CustomThemes/customTheme.js';
 
-import AuthorizationPage from '../pages/Authorization/AuthorizationPage';
+import LoginPage from '../pages/Authorization/LoginPage';
 import CookiesPolicyComponent from '../pages/CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
@@ -26,7 +26,6 @@ import { RestorePasswordModalPage } from '../pages/RestorePassword/Pages/Restore
 import { RestorePasswordSuccessPage } from '../pages/RestorePassword/Pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../pages/RestorePassword/Pages/RestorePasswordFailedPage';
 import { ModerationModal } from '../components/Moderation/ModerationModal';
-import ScrollToTopButton from '../components/ScrollToTopButton/ScrollToTopButton';
 import TermsAndConditions from '../components/TermsAndConditionsApp/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../hooks';
 import { Search } from '../pages/SearchPage/Search';
@@ -68,7 +67,7 @@ function ClientRouter() {
         {isAuth ? (
           <Route path="/login" element={<Navigate to="/profile/user-info" />} />
         ) : (
-          <Route path="/login" element={<AuthorizationPage />} />
+          <Route path="/login" element={<LoginPage />} />
         )}
         {isAuth ? (
           <Route
@@ -120,7 +119,6 @@ function ClientRouter() {
         <Route path="*" element={< ErrorPage404 />} />
       </Routes>)}
       <Footer />
-      <ScrollToTopButton />
       <ToastContainer
         position="top-right"
         autoClose={3000}
