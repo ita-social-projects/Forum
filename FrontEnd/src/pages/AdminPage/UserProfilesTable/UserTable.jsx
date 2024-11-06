@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useState} from 'react';
 import css from './UserTable.module.css';
 import axios from 'axios';
 import useSWR from 'swr';
@@ -17,7 +17,6 @@ function UserTable() {
     const [statusFilters, setStatusFilters] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
-    const searchInput = useRef(null);
 
     const ordering = sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '';
     const filtering = statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '';
@@ -82,7 +81,6 @@ function UserTable() {
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
             <div style={{padding: 8}}>
                 <Input
-                    ref={searchInput}
                     placeholder={'Пошук'}
                     value={selectedKeys[0]}
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value]: [])}
@@ -116,7 +114,11 @@ function UserTable() {
             </Space>
           </div>
             ),
-        filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1F9A7C' : undefined }} />,
+       filterIcon: (filtered) => (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <SearchOutlined style={{ color: filtered ? '#1F9A7C' : undefined }} />
+        </div>
+    ),
         onFilter: (value, record) =>
             record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
         render: (text) =>
