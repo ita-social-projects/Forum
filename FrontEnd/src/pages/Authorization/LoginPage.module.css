@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   width: 100vw;
-  min-height: var(--min-height-login-page);
+  flex-grow: 1;
   flex-shrink: 0;
   background: var(--light-seashell-background);
   padding: 80px 0;
@@ -339,7 +339,7 @@ input:-webkit-autofill {
   }
 }
 
-@media only screen and (min-width: 1512px) {
+@media only screen and (min-width: 1200px) {
   .login-page {
     padding: 120px 0;
   }

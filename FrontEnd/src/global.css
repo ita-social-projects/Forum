@@ -26,6 +26,9 @@
 
   --main-block-size: 1512px;
 
+  /*border color*/
+  --border-color: #EEEFF1;
+
   /* background color*/
   --main-header-color: #1F9A7C;
   --main-footer-background: #3C4044;
@@ -47,6 +50,10 @@
   --footer-dark-text-color: #A0ABC0;
   --link-text-color: #000000;
   --error-text-color: #F15831;
+  --hint-text-color: #25292C;
+  --placeholder-text-color: #ADB3B9;
+
+
 
   /* button color*/
   --main-button-color: #1F9A7C;
@@ -120,7 +127,8 @@
   --min-height-login-page: calc(100vh - 528px);
   --wf-base-white: #FFF;
 
+
   --profile-min-height-block: calc(100vh - 565px);
-  --min-height-block-main: calc(100vh - 305px);
+  --min-height-block-main: 100vh;
   --company-card-color: #FFF;
 }
