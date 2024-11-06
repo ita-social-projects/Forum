@@ -23,9 +23,129 @@ class TestAdminUsersAPITestsNotStaff(APITestCase):
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
 
+class TestAdminUsersOrderingFilterAPITests(APITestCase):
+    def setUp(self):
+        self.users = AdminUserFactory.create_batch(2)
+        AdminUserFactory.reset_sequence(1)
+        self.user = self.users[0]
+
+    def test_get_users_ordering_default(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/admin/users/")
+        data = [
+            {
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
+                "status": {
+                    "is_active": True,
+                    "is_staff": True,
+                    "is_superuser": False,
+                    "is_deleted": False,
+                },
+                "company_name": None,
+                "registration_date": None,
+            },
+            {
+                "id": 3,
+                "email": "test3@test.com",
+                "name": "Test person 3",
+                "surname": "Test person 3 surname",
+                "status": {
+                    "is_active": True,
+                    "is_staff": True,
+                    "is_superuser": False,
+                    "is_deleted": False,
+                },
+                "company_name": None,
+                "registration_date": None,
+            },
+        ]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(data, response.data["results"])
+
+    def test_get_users_filter_id_surname(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/admin/users/?id=5&surname=5")
+        data = [
+            {
+                "id": 5,
+                "email": "test5@test.com",
+                "name": "Test person 5",
+                "surname": "Test person 5 surname",
+                "status": {
+                    "is_active": True,
+                    "is_staff": True,
+                    "is_superuser": False,
+                    "is_deleted": False,
+                },
+                "company_name": None,
+                "registration_date": None,
+            },
+        ]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(data, response.data["results"])
+
+
+class TestAdminUsersStatusAPITests(APITestCase):
+    def setUp(self):
+        self.users = AdminUserFactory.create_batch(2)
+        AdminUserFactory.reset_sequence(1)
+        self.user = self.users[0]
+
+    def test_get_users_filter_status_active_staff(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/api/admin/users/?is_active=True&is_staff=True"
+        )
+        data = [
+            {
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
+                "status": {
+                    "is_active": True,
+                    "is_staff": True,
+                    "is_superuser": False,
+                    "is_deleted": False,
+                },
+                "company_name": None,
+                "registration_date": None,
+            },
+            {
+                "id": 3,
+                "email": "test3@test.com",
+                "name": "Test person 3",
+                "surname": "Test person 3 surname",
+                "status": {
+                    "is_active": True,
+                    "is_staff": True,
+                    "is_superuser": False,
+                    "is_deleted": False,
+                },
+                "company_name": None,
+                "registration_date": None,
+            },
+        ]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(data, response.data["results"])
+
+    def test_get_users_filter_status_superuser_staff_active(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/api/admin/users/?is_superuser=True&is_deleted=True&is_active=False"
+        )
+        data = []
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(data, response.data["results"])
+
+
 class TestAdminUsersAPITests(APITestCase):
     def setUp(self):
         self.user = AdminUserFactory()
+        AdminUserFactory.reset_sequence(1)
 
     def test_get_users_not_authorized(self):
         response = self.client.get(path="/api/admin/users/?page=1&page_size=1")
@@ -40,23 +160,54 @@ class TestAdminUsersAPITests(APITestCase):
         response = self.client.get(path="/api/admin/users/")
         data = [
             {
-                "id": 39,
-                "email": "test39@test.com",
-                "name": "Test person 39",
-                "surname": "Test person 39 surname",
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
+                "status": {
+                    "is_active": True,
+                    "is_staff": True,
+                    "is_superuser": False,
+                    "is_deleted": False,
+                },
+                "company_name": None,
+                "registration_date": None,
             }
         ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(data, response.json())
+        self.assertEqual(data, response.data["results"])
+
+    def test_get_users(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get(path="/api/admin/users/")
+        data = [
+            {
+                "id": 2,
+                "email": "test2@test.com",
+                "name": "Test person 2",
+                "surname": "Test person 2 surname",
+                "status": {
+                    "is_active": True,
+                    "is_staff": True,
+                    "is_superuser": False,
+                    "is_deleted": False,
+                },
+                "company_name": None,
+                "registration_date": None,
+            }
+        ]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(data, response.data["results"])
 
     def test_get_user_id_authenticated(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path=f"/api/admin/users/{self.user.id}/")
+        AdminUserFactory.reset_sequence(1)
 
         data = {
-            "name": "Test person 37",
-            "surname": "Test person 37 surname",
-            "email": "test37@test.com",
+            "name": f"Test person {self.user.id}",
+            "surname": f"Test person {self.user.id} surname",
+            "email": f"test{self.user.id}@test.com",
             "is_active": True,
             "is_staff": True,
             "is_superuser": False,

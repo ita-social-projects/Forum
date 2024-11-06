@@ -1,0 +1,39 @@
+.admin-profile__container {
+    margin-top: 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.admin-profile__content {
+    display: flex;
+    flex-direction: row;
+}
+
+.admin-profile__links {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10%;
+    align-items: flex-start;
+    width: var(--menu-size__admin-panel);
+    gap: 12px;
+}
+
+.infolink {
+    color: var(--font-color__admin-panel);
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    text-decoration: none;
+}
+
+.infolink__active {
+    font-family: var(--font-main);
+    font-weight: 600;
+    color: #000000;
+    text-decoration: none;
+}

@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
   const [isLoading, setLoading] = useState(true);
   const [authToken, setAuthToken] = useState(localStorage.getItem('Token'));
   const [isStaff, setIsStaff] = useState(false);
+  const [isSuperUser, setIsSuperUser] = useState(false);
   const { data, error, mutate } = useSWR(
     authToken
       ? [`${process.env.REACT_APP_BASE_API_URL}/api/auth/users/me/`, authToken]
@@ -70,6 +71,7 @@ export function AuthProvider({ children }) {
     if (data) {
       setUser(data);
       setIsStaff(data.is_staff);
+      setIsSuperUser(data.is_superuser);
     }
     if (error) {
       setUser(null);
@@ -93,7 +95,7 @@ export function AuthProvider({ children }) {
     });
   });
 
-  const value = { login, logout, isAuth, authToken, isLoading, isStaff, user, error, mutate };
+  const value = { login, logout, isAuth, authToken, isLoading, isStaff, isSuperUser, user, error, mutate };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

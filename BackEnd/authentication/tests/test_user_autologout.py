@@ -1,4 +1,5 @@
 from datetime import timedelta
+from unittest.mock import patch
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -12,6 +13,12 @@ from utils.unittest_helper import AnyInt
 
 class UserLogoutAPITests(APITestCase):
     def setUp(self):
+        patcher = patch(
+            "authentication.serializers.verify_recaptcha", return_value=True
+        )
+        self.mock_verify_recaptcha = patcher.start()
+        self.addCleanup(patcher.stop)
+
         self.user = UserFactory(
             email="test@test.com", name="Test", surname="Test"
         )
@@ -29,6 +36,7 @@ class UserLogoutAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         ).data["auth_token"]
         token = Token.objects.get(key=self.test_user_token)
@@ -53,6 +61,7 @@ class UserLogoutAPITests(APITestCase):
             data={
                 "email": "test@test.com",
                 "password": "Test1234",
+                "captcha": "dummy_captcha",
             },
         ).data["auth_token"]
         token = Token.objects.get(key=self.test_user_token)
@@ -71,6 +80,7 @@ class UserLogoutAPITests(APITestCase):
                 "surname": "Test",
                 "profile_id": AnyInt(),
                 "is_staff": False,
+                "is_superuser": False,
             },
             response.json(),
         )

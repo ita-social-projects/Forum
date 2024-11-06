@@ -1,19 +1,20 @@
+from django.http import JsonResponse
+from django.views import View
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
     OpenApiResponse,
 )
 
-from rest_framework.permissions import (
-    BasePermission,
-)
 from rest_framework.generics import (
     ListAPIView,
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
+    CreateAPIView,
 )
 
+from administration.serializers import AdminRegistrationSerializer
+from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
@@ -28,16 +29,33 @@ from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import UsersFilter
+
 
 class UsersListView(ListAPIView):
     """
-    List of users.
+    View to list users with optional filtering and ordering.
+
+    ### Query Parameters:
+    -  **id** / **surname** / **email** /  **is_active** /  **is_staff** / **is_superuser** / **is_deleted**
+    - **company_name** /  **registration_date**
+
+    ### Ordering:
+    - Use the `ordering` parameter to sort the results.
+    - Example: `/users/?ordering=id` (ascending by ID) or `/users/?ordering=-id` (descending by ID).
+
+    ### Filters:
+    - Filters are applied using `DjangoFilterBackend`. All the above query parameters are supported for filtering.
+    **Without is_deleted**
     """
 
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
-    queryset = CustomUser.objects.all().order_by("id")
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = UsersFilter
+    queryset = CustomUser.objects.select_related("profile").order_by("id")
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
@@ -136,3 +154,23 @@ class ModerationEmailView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return ModerationEmail.objects.first()
+
+
+class ContactsView(View):
+    """
+    View for retrieving contact information.
+    """
+
+    def get(self, request):
+        return JsonResponse(CONTACTS_INFO)
+
+
+class CreateAdminUserView(CreateAPIView):
+    """
+    View for creating an admin user.
+    """
+
+    permission_classes = [
+        IsSuperUser,
+    ]
+    serializer_class = AdminRegistrationSerializer

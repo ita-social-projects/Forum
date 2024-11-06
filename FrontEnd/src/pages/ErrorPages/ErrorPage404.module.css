@@ -1,0 +1,61 @@
+.ErrorPage404__page {
+  min-height: var(--min-height-block-main);
+  display: flex;
+  justify-content: center;
+  background: var(--primary-green-80, #1f9a7c);
+  
+}
+
+.ErrorPage404__container {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  font-family: var(--font-main);
+  color: var(--primary-green-20, #effff6);
+  font-feature-settings: "calt" off;
+  font-style: normal;
+}
+
+.ErrorPage404__text404 {
+  display: flex;
+  height: 178px;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 200px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: -2px;
+}
+
+.ErrorPage404__block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 36px;
+}
+
+.ErrorPage404__explanation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.ErrorPage404__main-text {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 120%;
+  letter-spacing: 0.48px;
+}
+
+.ErrorPage404__details {
+  width: 548px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.16px;
+}
+
+.ErrorPage404__button-text {
+  font-family: var(--font-main);
+}

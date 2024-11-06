@@ -12,6 +12,7 @@ env
 __pycache__/
 /FrontEnd/node_modules
 django.log
+BackEnd/celerybeat-schedule.*
 
 BackEnd/public/*
 !BackEnd/public/media/.gitkeep

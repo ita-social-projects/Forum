@@ -32,7 +32,9 @@ services:
       - ALLOWED_ENV_HOST=${ALLOWED_ENV_HOST}
       - CELERY_BROKER_URL=${REDIS_URL}
       - CELERY_RESULT_BACKEND=${REDIS_URL}
-      - REDIS_URL=${REDIS_URL}      
+      - REDIS_URL=${REDIS_URL}
+      - RECAPTCHA_V2_PRIVATE_KEY=${RECAPTCHA_V2_PRIVATE_KEY}
+      - RECAPTCHA_URL=${RECAPTCHA_URL}
     networks:
       - forum_network
   frontend:
@@ -42,11 +44,14 @@ services:
     environment:
       - REACT_APP_BASE_API_URL=${REACT_APP_BASE_API_URL}
       - REACT_APP_PUBLIC_URL=${REACT_APP_PUBLIC_URL}
+      - REACT_APP_RECAPTCHA_V2_SITE_KEY=${REACT_APP_RECAPTCHA_V2_SITE_KEY}
     ports:
       - 3000:80
     build:
       context: ./FrontEnd
       target: production
+      args:
+        - REACT_APP_RECAPTCHA_V2_SITE_KEY=${REACT_APP_RECAPTCHA_V2_SITE_KEY}
     networks:
       - forum_network
   celery:
@@ -77,8 +82,42 @@ services:
       - CELERY_BROKER_URL=${REDIS_URL}
       - CELERY_RESULT_BACKEND=${REDIS_URL}
       - REDIS_URL=${REDIS_URL}
+      - RECAPTCHA_V2_PRIVATE_KEY=${RECAPTCHA_V2_PRIVATE_KEY}
+      - RECAPTCHA_URL=${RECAPTCHA_URL}
     networks:
-      - forum_network      
+      - forum_network
+  celery_beat:
+    build: ./BackEnd
+    container_name: celery_beat
+    command: celery -A forum beat -l info
+    volumes:
+      - static:/home/forum/app/public/static
+      - media:/home/forum/app/public/media
+    environment:
+      - CORS_ORIGIN_WHITELIST=${CORS_ORIGIN_WHITELIST}
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - ENGINE=${ENGINE}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - PG_DB=${PG_DB}
+      - PG_USER=${PG_USER}
+      - PG_PASSWORD=${PG_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - EMAIL_BACKEND=${EMAIL_BACKEND}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - ALLOWED_ENV_HOST=${ALLOWED_ENV_HOST}
+      - CELERY_BROKER_URL=${REDIS_URL}
+      - CELERY_RESULT_BACKEND=${REDIS_URL}
+      - REDIS_URL=${REDIS_URL}
+      - RECAPTCHA_V2_PRIVATE_KEY=${RECAPTCHA_V2_PRIVATE_KEY}
+      - RECAPTCHA_URL=${RECAPTCHA_URL}
+    networks:
+      - forum_network
   redis:
     image: redis:7
     container_name: redis

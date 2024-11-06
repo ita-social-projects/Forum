@@ -1,0 +1,25 @@
+.new-companies-block {
+  display: flex;
+  margin-top: 3%;
+  padding: 16px 8px;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-between;
+  margin: 20px; 
+  position: relative;
+  z-index: 100;
+}
+
+.col-md-4 {
+  flex-basis: calc(33.3% - 80px);
+  margin: 20px;
+  z-index: 1000;
+  position: relative;
+  z-index: 100;
+}

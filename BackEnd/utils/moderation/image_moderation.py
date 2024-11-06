@@ -5,8 +5,10 @@ from celery.result import AsyncResult
 from kombu.exceptions import OperationalError
 from redis.exceptions import ConnectionError
 
+from images.models import ProfileImage
 from administration.models import AutoapproveTask, AutoModeration
 from profiles.tasks import celery_autoapprove
+from utils.completeness_counter import completeness_count
 
 
 logger = logging.getLogger(__name__)
@@ -18,6 +20,14 @@ class ModerationManager:
         self.moderation_is_needed = False
         self.images = {"banner": None, "logo": None}
         self.content_deleted = False
+
+    def handle_both_approved(self):
+        if self.profile.banner.is_approved and self.profile.logo.is_approved:
+            if self.profile.status == self.profile.PENDING:
+                self.content_deleted = True
+            self.profile.status = self.profile.APPROVED
+            self.profile.status_updated_at = now()
+            self.profile.save()
 
     def handle_approved_status(self, secondary_image):
         if (
@@ -40,29 +50,46 @@ class ModerationManager:
             self.profile.status_updated_at = now()
         self.profile.save()
 
-    def update_pending_status(self):
-        self.profile.status = self.profile.PENDING
-        self.profile.status_updated_at = now()
-        self.profile.save()
-        self.moderation_is_needed = True
+    def update_pending_status(self, image_type, image):
+        existing_image = ProfileImage.objects.filter(
+            hash_md5=image.hash_md5, is_approved=True
+        ).first()
+        if existing_image:
+            image.is_approved = True
+            image.save()
+            if self.profile.status != self.profile.PENDING:
+                self.profile.status = self.profile.APPROVED
+                self.profile.status_updated_at = now()
+            setattr(self.profile, f"{image_type}_approved", image)
+            self.profile.save()
+            completeness_count(self.profile)
+        else:
+            updated_image = getattr(self.profile, image_type)
+            self.profile.status = self.profile.PENDING
+            self.profile.status_updated_at = now()
+            self.images[image_type] = updated_image
+            self.profile.save()
+            self.moderation_is_needed = True
 
     def needs_moderation(self, image):
         return image and not image.is_approved
 
     def check_for_moderation(self):
         if self.needs_moderation(self.profile.banner):
-            self.update_pending_status()
-            self.images["banner"] = self.profile.banner
+            self.update_pending_status("banner", self.profile.banner)
         elif not self.profile.banner and self.profile.logo:
             self.handle_approved_status(self.profile.logo)
 
         if self.needs_moderation(self.profile.logo):
-            self.update_pending_status()
-            self.images["logo"] = self.profile.logo
+            self.update_pending_status("logo", self.profile.logo)
         elif not self.profile.logo and self.profile.banner:
             self.handle_approved_status(self.profile.banner)
 
         self.handle_undefined_status()
+        if self.profile.banner and self.profile.logo:
+            self.handle_both_approved()
+        if not self.profile.banner and self.profile.logo:
+            self.handle_approved_status(self.profile.logo)
         return self.moderation_is_needed
 
     def schedule_autoapprove(self):
