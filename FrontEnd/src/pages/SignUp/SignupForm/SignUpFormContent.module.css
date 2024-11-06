@@ -283,7 +283,7 @@
 .representative__content {
   display: flex;
   flex-direction: column;
-  padding: 0px 24px;
+  padding-left: 24px;
   align-items: flex-start;
   gap: 8px;
 }

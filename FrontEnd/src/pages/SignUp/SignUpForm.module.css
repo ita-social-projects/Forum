@@ -3,8 +3,8 @@
   width: 375px;
   flex-direction: column;
   align-items: flex-start;
-
-  border-radius: 2px;
+  overflow: hidden;
+  border-radius: 8px;
   background: var(--conditional-pop-over, #fff);
 }
 
