@@ -64,7 +64,7 @@ const Contact = () => {
                 reset();
             }
         } catch (error) {
-            setModalMessage('Щось пішло не так! Будь ласка, спробуйте ще раз');
+            setModalMessage('Щось пішло не так! Будь ласка, спробуйте ще раз!');
         } finally {
             setLoading(false);
         }
