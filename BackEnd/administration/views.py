@@ -29,9 +29,6 @@ from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 from .serializers import FeedbackSerializer
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.views import APIView
 from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
