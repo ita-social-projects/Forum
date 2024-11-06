@@ -1,6 +1,5 @@
 import styles from './Banner.module.css';
 import { Link } from 'react-router-dom';
-//import { PropTypes } from 'prop-types';
 
 const MainBanner = () => {
   return (
