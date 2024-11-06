@@ -1,3 +1,9 @@
+.detail-info-page_block {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+}
+
 .detail-info-page {
     display: flex;
     flex-direction: column;
@@ -18,3 +24,29 @@
     letter-spacing: -0.34px;
     white-space: nowrap;
 }
+
+
+
+@media only screen and (min-width: 768px) {
+    .detail-info-page {
+        display: flex;
+        flex-direction: column;
+        width: 720px;
+    }
+
+}
+
+@media only screen and (min-width: 1512px) {
+    .detail-info-page {
+        display: flex;
+        flex-direction: row-reverse;
+        width: 1304px;
+    }
+
+    .profile-detail__tags {
+        display: none;
+    }
+
+
+} 
+

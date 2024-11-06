@@ -1,20 +1,22 @@
 .title-block {
   display: flex;
   background: #F9F5EC;
-  flex-direction: column;
   width: 100vw;
-  max-height: 410px;
   justify-content: center;
 }
 
 .title-block__content {
   display: flex;
   padding: 24px 16px;
+  max-width: 343px;
   align-items: flex-start;
   flex-direction: column;
   gap: 24px;
 }
-
+.title-block__content-info {
+  display: flex;
+  flex-direction: column;
+}
 .title-block__logo-block {
   width: 64px;
   height: 64px;
@@ -131,7 +133,13 @@
     max-width: 720px;
     padding: 40px 24px;
     align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .title-block__content-info {
+    display: flex;
     flex-direction: row;
+    gap: 24px;
   }
 
   .title-block__button-block {
@@ -157,6 +165,13 @@
   .title-block__content {
     max-width: 1304px;
     padding: 40px 104px;
+    flex-direction: row;
+  }
+
+  .title-block__content-info {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
   }
 
   .title-block__button-block {

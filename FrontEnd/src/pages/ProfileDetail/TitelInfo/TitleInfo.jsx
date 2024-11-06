@@ -60,6 +60,7 @@ function TitleInfo({ isAuthorized, data }) {
   return (
     <div className={classes['title-block']}>
       <div className={classes['title-block__content']}>
+        <div className={classes['title-block__content-info']}>
         <div className={classes['title-block__logo-block']}>
           {!profile.logo?.path ? (
             <DefaultLogo />
@@ -88,44 +89,45 @@ function TitleInfo({ isAuthorized, data }) {
             </div>
           </div>
         </div>
-      </div>
-      {isAuthorized ? (
-        <div className={classes['title-block__button-block']}>
-          {!ownProfile && (
-            <button
-              onClick={isSaved ? handleDeleteSaved : handleSave}
-              type="button"
-              className={classNames(classes['title-block__button'], {
-                [classes['added_to_saved__button']]: isSaved,
-              })}
-            >
-              <span
-                className={classNames(classes['title-block__button--text'], {
-                  [classes['added_to_saved__button--text']]: isSaved,
+        </div>
+        {isAuthorized ? (
+          <div className={classes['title-block__button-block']}>
+            {!ownProfile && (
+              <button
+                onClick={isSaved ? handleDeleteSaved : handleSave}
+                type="button"
+                className={classNames(classes['title-block__button'], {
+                  [classes['added_to_saved__button']]: isSaved,
                 })}
               >
-                {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
-              </span>
-              <StarForLike
-                isSaved={isSaved}
-                isAuthorized={isAuthorized}
-                ownProfile={ownProfile}
-              ></StarForLike>
-            </button>
-          )}
-          {ownProfile && (
-            <a
-              role="link"
-              className={`${classes['title-block__button']} ${classes['title-block__link']}`}
-              onClick={navigateToEditProfile}
-            >
-              <span className={`${classes['title-block__button--text']}`}>
-                Редагувати профіль
-              </span>
-            </a>
-          )}
-        </div>
-      ) : null}
+                <span
+                  className={classNames(classes['title-block__button--text'], {
+                    [classes['added_to_saved__button--text']]: isSaved,
+                  })}
+                >
+                  {!isSaved ? 'Додати в збережені' : 'Додано в збережені'}
+                </span>
+                <StarForLike
+                  isSaved={isSaved}
+                  isAuthorized={isAuthorized}
+                  ownProfile={ownProfile}
+                ></StarForLike>
+              </button>
+            )}
+            {ownProfile && (
+              <a
+                role="link"
+                className={`${classes['title-block__button']} ${classes['title-block__link']}`}
+                onClick={navigateToEditProfile}
+              >
+                <span className={`${classes['title-block__button--text']}`}>
+                  Редагувати профіль
+                </span>
+              </a>
+            )}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

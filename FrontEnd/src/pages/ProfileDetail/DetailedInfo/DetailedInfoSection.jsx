@@ -9,10 +9,12 @@ import classes from './DetailedInfoSection.module.css';
 
 function DetailedInfoSection({ isAuthorized, data, containsNotRequiredData }) {
   return (
-    <div className={classes['detail-info-page']}>
-      <h3 className={classes['profile-detail__tags']}>Про Компанію</h3>
-      <DataContacts isAuthorized={isAuthorized} data={data} />
-      {containsNotRequiredData ? <CompanyDescription isAuthorized={isAuthorized} data={data} /> : <EmptyData />}
+    <div className={classes['detail-info-page_block']}>
+      <div className={classes['detail-info-page']}>
+        <h3 className={classes['profile-detail__tags']}>Про Компанію</h3>
+        <DataContacts isAuthorized={isAuthorized} data={data} />
+        {containsNotRequiredData ? <CompanyDescription isAuthorized={isAuthorized} data={data} /> : <EmptyData />}
+      </div>
     </div>
   );
 }
