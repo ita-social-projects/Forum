@@ -107,7 +107,7 @@ function UserTable() {
             </Space>
           </div>
             ),
-        filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1F9A7C' : undefined }} />,
+        filterIcon: (filtered) => <SearchOutlined className={ filtered ? css['filtered-icon'] : css['icon']}/>,
         onFilter: (value, record) =>
             record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
         render: (text) =>
