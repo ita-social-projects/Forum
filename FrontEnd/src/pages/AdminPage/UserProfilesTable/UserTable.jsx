@@ -8,25 +8,22 @@ import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 
 const LENGTH_EMAIL = 14;
-const DEFAULT_PAGE_SIZE = 3;
+const DEFAULT_PAGE_SIZE = 20;
 
 function UserTable() {
     const location = useLocation();
     const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
     const pageNumber = Number(queryParams.get('page')) || 1;
-    const initialPageSize = Number(queryParams.get('page_size')) || DEFAULT_PAGE_SIZE;
     const [currentPage, setCurrentPage] = useState(pageNumber);
-    const [pageSize, setPageSize] = useState(initialPageSize);
+    const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
     const [sortInfo, setSortInfo] = useState({ field: null, order: null });
     const [statusFilters, setStatusFilters] = useState([]);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const updatedPageNumber = Number(queryParams.get('page')) || 1;
-        const updatedPageSize = Number(queryParams.get('page_size')) || DEFAULT_PAGE_SIZE;
         setCurrentPage(updatedPageNumber);
-        setPageSize(updatedPageSize);
     }, [location.search]);
 
     const ordering = sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '';
@@ -42,16 +39,15 @@ function UserTable() {
     const users = data ? data.results : [];
     const totalItems = data ? data.total_items : 0;
 
-    const updateQueryParams = (newPage, newPageSize) => {
+    const updateQueryParams = (newPage) => {
         queryParams.set('page', newPage);
-        queryParams.set('page_size', newPageSize);
         navigate(`?${queryParams.toString()}`);
     };
 
     const handlePageChange = (page, size) => {
         setCurrentPage(page);
         setPageSize(size);
-        updateQueryParams(page, size);
+        updateQueryParams(page);
     };
 
     const handleTableChange = (pagination, filters, sorter) => {
@@ -77,7 +73,7 @@ function UserTable() {
 
         setStatusFilters(filters.status);
         setCurrentPage(1);
-        updateQueryParams(1, pageSize);
+        updateQueryParams(1);
     };
 
     const getSortIcon = (sortOrder) => {
