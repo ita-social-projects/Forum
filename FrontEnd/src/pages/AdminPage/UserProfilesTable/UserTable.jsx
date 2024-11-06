@@ -131,6 +131,7 @@ function UserTable() {
                 text
             ),
     });
+
     const renderStatusTags = (status) => {
         const tags = [];
 
@@ -152,14 +153,24 @@ function UserTable() {
 
     const columns = [
         {
-            title: 'Прізвище та ім\'я',
+            title: 'Прізвище',
             dataIndex: 'surname',
             key: 'surname',
             sorter: true,
             sortOrder: sortInfo.field === 'surname' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            render: (_, record) => `${record.surname}`,
             ...getColumnSearchProps('surname'),
-            render: (_, record) => `${record.surname} ${record.name}`,
+        },
+        {
+            title: 'Ім\'я',
+            dataIndex: 'name',
+            key: 'name',
+            sorter: true,
+            sortOrder: sortInfo.field === 'name' ? sortInfo.order : null,
+            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            render: (_, record) => `${record.name}`,
+            ...getColumnSearchProps('name'),
         },
         {
             title: 'Email',
