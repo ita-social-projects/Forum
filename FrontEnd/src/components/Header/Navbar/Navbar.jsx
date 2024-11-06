@@ -6,6 +6,7 @@ import Profile from './Profile';
 import Buttons from './Buttons';
 import BurgerMenu from './BurgerMenu';
 import css from './Navbar.module.css';
+import {PropTypes} from 'prop-types';
 
 function Navbar(props) {
   const { isStaff } = useAuth();
@@ -38,5 +39,10 @@ function Navbar(props) {
     </div>
   );
 }
+
+Navbar.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  page: PropTypes.string.isRequired,
+};
 
 export default Navbar;

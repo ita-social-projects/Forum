@@ -12,10 +12,10 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 
     border-radius: 4px;
-    background: #FFF;
+    background: var(--light-button-color);
 
     /* Button Text */
-    color: #000000;
+    color: var(--main-button-color);
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
@@ -36,10 +36,10 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 
     border-radius: 4px;
-    background: #000000;
+    background: var(--main-button-color);
 
     /* Button Text */
-    color: #FFF;
+    color: var(--light-button-color);
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
@@ -52,11 +52,11 @@
 }
 
 .header-login__button:hover {
-    background: #000000;
-    color: #FFF;
+    background: var(--main-button-color);
+    color: var(--light-button-color);
 }
 
 .header-register__button:hover {
-    background: #FFF;
-    color: #000000;
+    background: var(--light-button-color);
+    color: var(--main-button-color);
 }

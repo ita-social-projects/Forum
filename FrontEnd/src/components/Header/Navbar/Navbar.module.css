@@ -1,7 +1,7 @@
 .navbar-wrapper {
   display: flex;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
 }
 
 .navbar-content {
@@ -24,7 +24,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  color: #000000;
+  color: var(--header-bunner-text-color);
   width: 208px;
   height: 30px;
   font-size: 24px;
