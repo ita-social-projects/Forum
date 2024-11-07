@@ -17,16 +17,15 @@ import ProfileDetailPage from '../pages/ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../pages/ProfileList/ProfileListPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import { SignUpPage } from '../pages/SignUp/SignUp/SignUpPage';
-import { SignUpModalPage } from '../pages/SignUp/SignUp/SignUpModalPage';
+import { SignUpCompletionPage } from '../pages/SignUp/SignUp/SignUpCompletionPage';
 import { ResendActivationPage } from '../pages/SignUp/SignUp/ResendActivationPage';
-import { ActivationProfilePage } from '../pages/SignUp/SignUp/ActivateProfilePage';
+import { ActivateProfilePage } from '../pages/SignUp/SignUp/ActivateProfilePage';
 import { SendEmailRestorePasswordPage } from '../pages/RestorePassword/Pages/SendEmailRestorePasswordPage';
 import { RestorePasswordPage } from '../pages/RestorePassword/Pages/RestorePasswordPage';
 import { RestorePasswordModalPage } from '../pages/RestorePassword/Pages/RestorePasswordModalPage';
 import { RestorePasswordSuccessPage } from '../pages/RestorePassword/Pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../pages/RestorePassword/Pages/RestorePasswordFailedPage';
 import { ModerationModal } from '../components/Moderation/ModerationModal';
-import ScrollToTopButton from '../components/ScrollToTopButton/ScrollToTopButton';
 import TermsAndConditions from '../components/TermsAndConditionsApp/terms_conditions/TermsAndConditionsComponent';
 import { useAuth } from '../hooks';
 import { Search } from '../pages/SearchPage/Search';
@@ -78,14 +77,14 @@ function ClientRouter() {
         ) : (
           <Route path="/sign-up" element={<SignUpPage />} />
         )}
-        <Route path="/sign-up/modal" element={<SignUpModalPage />} />
+        <Route path="/sign-up/completion" element={<SignUpCompletionPage />} />
         <Route
           path="/sign-up/resend-activation"
           element={<ResendActivationPage />}
         />
         <Route
           path="/activate/:uid/:token"
-          element={<ActivationProfilePage />}
+          element={<ActivateProfilePage />}
         />
         <Route
           path="/reset-password"
@@ -120,7 +119,6 @@ function ClientRouter() {
         <Route path="*" element={< ErrorPage404 />} />
       </Routes>)}
       <Footer />
-      <ScrollToTopButton />
       <ToastContainer
         position="top-right"
         autoClose={3000}

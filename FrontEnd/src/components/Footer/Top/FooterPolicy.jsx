@@ -15,7 +15,7 @@ const POLICY_LINKS = [
     {
         id: 'i3',
         title: 'Contact',
-        link: 'Contact/'
+        link: 'contact/'
     }
 ];
 
