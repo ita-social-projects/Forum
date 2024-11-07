@@ -24,6 +24,25 @@
   height: 188px;
 }
 
+.company-card__badge-is-updated {
+  width: 73px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--companies-card-badge-is-updated);
+  text-transform: uppercase;
+  border-radius: 4px;
+  position: absolute;
+  top: 13px;
+  left: 12px;
+  font-family: var(--font-main);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--companies-card-badge-text-color);
+  line-height: 16px;
+}
+
 .company-card__empty-image {
   width: 103px;
   height: 80px;

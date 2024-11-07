@@ -50,13 +50,28 @@ export default function CompanyCard({
     }
   };
 
+  const handleProfileViewed = async () => {
+    if (profile.is_saved && profile.saved_is_updated) {
+      try {
+        await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}/`, {
+          is_updated: false
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <div className={styles['company-card']}>
       <Link
         className={styles['company-card__link']}
         to={`/profile-detail/${profile.id}`}
+        onClick={handleProfileViewed}
       >
         <div className={styles['company-card__block']}>
+          {profile.saved_is_updated &&
+            <div className={styles['company-card__badge-is-updated']}>Оновлено</div>}
           <div className={styles['company-card__image-frame']}>
             {profile.banner?.path ? (
               <img
