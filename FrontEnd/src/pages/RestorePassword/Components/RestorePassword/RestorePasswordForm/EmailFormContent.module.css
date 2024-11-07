@@ -1,6 +1,5 @@
 .send-email-form {
     display: flex;
-    padding: 24px;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
@@ -11,38 +10,42 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    align-self: stretch;
     gap: 8px;
-}
-
-.send-email-form__row {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
+    width: 100%;
 }
 
 .send-email-form__column {
     display: flex;
-    height: 84px;
     padding-bottom: 0px;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
 }
 
 .send-email-form__label {
     display: flex;
     gap: 4px;
     align-self: stretch;
-
-    color: var(--main-black-90, #292e32);
+    color: var(--main-text-color);
     font-feature-settings: "calt" off;
-
     font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 22px;
     letter-spacing: -0.14px;
     text-align: left;
+}
+
+.send-email-form__label--required {
+    color: var(--dust-red-5, #ff4d4f);
+    text-align: right;
+    font-family: var(--font-messages);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22.001px;
 }
 
 .send-email-form__label--text {
@@ -54,7 +57,6 @@
 
 .send-email-form__field {
     display: flex;
-    width: 520px;
     align-items: center;
     align-self: stretch;
     border-radius: 2px;
@@ -64,7 +66,7 @@
 .send-email-form__input {
     display: flex;
     height: 22px;
-    padding: 5px 12px;
+    padding: 9px 12px;
     align-items: center;
     gap: 4px;
     flex: 1 0 0;
@@ -73,11 +75,15 @@
     background: var(--main-white, #fff);
     color: var(--character-title-85, rgba(0, 0, 0, 0.85));
 
-    font-family: var(--font-messages);
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 22px;
+}
+
+.send-email-form__input::placeholder {
+    color: var(--placeholder-text-color);
 }
 
 .send-email-form__input:focus {
@@ -90,10 +96,10 @@
     align-items: flex-start;
     gap: 10px;
     align-self: stretch;
-    color: var(--red-red-100, #f34444);
-    font-family: var(--font-error);
-    font-size: 14px;
+    color: var(--error-text-color);
+    font-family: var(--font-main);
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 16px;
 }
