@@ -8,15 +8,18 @@
 .title-block__content {
   display: flex;
   padding: 24px 16px;
-  max-width: 343px;
+  width: 345px;
   align-items: flex-start;
   flex-direction: column;
+  justify-content: space-between;
   gap: 24px;
 }
+
 .title-block__content-info {
   display: flex;
   flex-direction: column;
 }
+
 .title-block__logo-block {
   width: 64px;
   height: 64px;
@@ -34,11 +37,12 @@
   object-fit: scale-down;
 }
 
-
 .title-block__about {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-top: 10px;
+  gap: 4px;
 }
 
 .title-block__activity {
@@ -54,8 +58,9 @@
 
 .title-block__company {
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .title-block__company_name {
@@ -94,8 +99,7 @@
 
 .title-block__button-block {
   display: flex;
-  padding: 24px 16px;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .title-block__button {
@@ -128,57 +132,40 @@
   color: var(--main-white, #fff);
 }
 
- @media only screen and (min-width: 768px) {
+@media only screen and (min-width: 768px) {
   .title-block__content {
-    max-width: 720px;
+    width: 765px;
     padding: 40px 24px;
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .title-block__content-info {
-    display: flex;
     flex-direction: row;
     gap: 24px;
   }
 
   .title-block__button-block {
-    padding-left: 104px;
+    padding-left: 84px;
   }
 
   .title-block__button {
     width: 353px;
-  }
-
-  .title-block__company {
-    align-items: flex-start;
-    flex-direction: column;
   }
 }
 
 @media only screen and (min-width: 1512px) {
   .title-block {
     flex-direction: row;
-    max-height: 410px;
+    height: 220px;
   }
 
   .title-block__content {
-    max-width: 1304px;
+    width: 1304px;
     padding: 40px 104px;
     flex-direction: row;
+    justify-content: space-between;
   }
 
-  .title-block__content-info {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-  }
-
-  .title-block__button-block {
-    padding-left: 294px;
-  }
-  
-    .title-block__button {
+  .title-block__button {
     width: 221px;
   }
-} 
+}
