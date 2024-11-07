@@ -7,7 +7,7 @@ import { PropTypes } from 'prop-types';
 import Loader from '../../components/Loader/Loader';
 import ErrorPage404 from '../../pages/ErrorPages/ErrorPage404';
 
-import BannerImage from './ProfileDetailComponents/BannerImage';
+import BannerImage from './ProfileDetailBaner/BannerImage';
 import TitleInfo from './TitelInfo/TitleInfo';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 
