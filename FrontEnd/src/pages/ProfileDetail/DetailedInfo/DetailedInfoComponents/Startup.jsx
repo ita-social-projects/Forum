@@ -18,7 +18,7 @@ function Startup({ data }) {
   // TODO: implement logic for getting data from db when it's added on server side
 
   const startupData = {
-    'Ідея стартапу': profile.startup_idea,
+    'Ідея стартапу: ': profile.startup_idea,
     'Розмір інвестицій': '',
     'Ціль співпраці': '',
     'Кінцевий результат': '',
@@ -31,11 +31,11 @@ function Startup({ data }) {
     if (value) {
       return (
         <div key={key} className={classes['startup__content--block']}>
-          <p className={classes['startup__content--title']}>{key}</p>
-          <div className={classes['startup__content--description']}>
-            <ReadMore>{value}</ReadMore>
+            <ReadMore>
+              <span className={classes['startup__content--title']}>{key}</span>
+              {value}
+            </ReadMore>
           </div>
-        </div>
       );
     }
     return null;

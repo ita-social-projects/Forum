@@ -28,24 +28,21 @@ function ProductsServices({ data }) {
         (profile.products || profile.services) ? (
             <div id="products-services" className={classes['products-services']}>
                 <h3 className={classes['products-services__title--text']}>Інформація про товари/послуги</h3>
-                <div className={classes['products-services__content']}>
+                <div className={classes['products-services__content--block']}>
                     {profile.products &&
-                        <div className={classes['products-services__content--block']}>
-                            <h4 className={classes['products-services__content--title']}>Товари</h4>
-                            <div className={classes['products-services__content--description']}>
-                                <ReadMore>
-                                    {profile.products}
-                                </ReadMore>
-                            </div>
+                        <div className={classes['products-services__content--text']}>
+                            <ReadMore>
+                                <span className={classes['products-services__content--title']}>Товари: </span>
+                                {profile.products}
+                            </ReadMore>
+
                         </div>}
                     {profile.services &&
-                        <div className={classes['products-services__content--block']}>
-                            <h4 className={classes['products-services__content--title']}>Послуги</h4>
-                            <div className={classes['products-services__content--description']}>
-                                <ReadMore>
-                                    {profile.services}
-                                </ReadMore>
-                            </div>
+                        <div className={classes['products-services__content--text']}>
+                            <ReadMore>
+                                <span className={classes['products-services__content--title']}>Послуги: </span>
+                                {profile.services}
+                            </ReadMore>
                         </div>}
                 </div>
             </div>
