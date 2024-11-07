@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { PASSWORD_PATTERN } from '../../../../../constants/constants';
-import SignUpPasswordField from '../../../../SignUp/SignupForm/SignUpPasswordField';
+import { PASSWORD_PATTERN } from '../../../constants/constants';
+import SignUpPasswordField from '../../SignUp/SignupForm/SignUpPasswordField';
 
 import styles from './RestorePasswordFormContent.module.css';
 

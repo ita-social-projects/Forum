@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SignUpComponentsPageLayout from '../../SignUp/SignUp/SignUpComponentsPageLayout';
-import { RestorePasswordFormContentComponent } from '../Components/RestorePassword/RestorePasswordForm/RestorePasswordFormContent';
+import { RestorePasswordFormContentComponent } from '../Components/RestorePasswordFormContent';
 import styles from './RestorePasswordPage.module.css';
 
 export function RestorePasswordPage() {
