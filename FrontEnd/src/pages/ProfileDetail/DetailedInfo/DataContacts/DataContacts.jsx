@@ -51,9 +51,7 @@ function DataContacts ({ data, isAuthorized }) {
       return (
         <div key={key} className={className}>
           <p className={classes['data-block__field--title']}>{key}</p>
-          <p className={classes['data-block__field--value']}>
-            {value}
-          </p>
+          <p className={classes['data-block__field--value']}>{value}</p>
         </div>
           );
         }
@@ -107,15 +105,15 @@ function DataContacts ({ data, isAuthorized }) {
     const hasContactSections = renderedContactSections.some((section) => section !== null);
 
     return (
-        <div className={classes['data-wrapper']}>
-            <div className={classes['data']}>
+        <div className={classes['data-block']}>
+            <div className={classes['data-content']}>
                 {hasDataSections ? (
-                    <div className={classes['data-block']}>
+                    <div className={classes['data-content_render-data']}>
                         {renderedDataSections}
                     </div>
                 ) : null}
                 {hasContactSections ? (
-                    <div className={classes['data-block']}>
+                    <div className={classes['data-block_render-contact']}>
                         {renderedContactSections}
                     </div>
                 ) : null}

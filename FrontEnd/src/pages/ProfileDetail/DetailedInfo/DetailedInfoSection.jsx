@@ -39,6 +39,8 @@ DetailedInfoSection.propTypes = {
     product_info: PropTypes.string,
     service_info: PropTypes.string,
     address: PropTypes.string,
+    is_startup: PropTypes.bool,
+    is_registered: PropTypes.bool,
   }),
   containsNotRequiredData: PropTypes.bool.isRequired,
 };

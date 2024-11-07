@@ -8,7 +8,7 @@ import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
 import { useAuth } from '../../../../hooks';
 
-import classes from './DataContactsPhoneEmail';
+import classes from './DataContactsPhoneEmail.module.css';
 
 
 const LENGTH_EMAIL = 14;
@@ -120,4 +120,5 @@ export default PhoneEmail;
 PhoneEmail.propTypes = {
   profileId: PropTypes.number.isRequired,
   personId: PropTypes.number,
+  isAuthorized: PropTypes.bool,
 };
