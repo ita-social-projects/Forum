@@ -1,58 +1,76 @@
+/* Основний контейнер */
 .about-us-text-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 80px 0;
-    background-color: #f9f4ea; /* Бежевий фон */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 375px;
+  /* padding: 40px 16px; */
+  margin: auto;
+  background-color: #f9f4ea;
+}
+
+/* Заголовок */
+.about-us-text-section__header-text {
+  font-family: Geologica;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Стиль для карток */
+.about-us-text-section__card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #fff;
+  width: 100%;
+  max-width: 302px;
+  height: 102px;
+  border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+/* Іконка */
+.about-us-text-section__icon {
+  width: 36px;
+  height: 36px;
+  margin-left: 18px;
+}
+
+/* Текст */
+.about-us-text-section__card p {
+  font-family: Geologica;
+  font-size: 16px;
+  font-weight: 600;
+  color: #232424;
+  margin: 0;
+}
+
+/* Адаптивність для планшетів */
+@media only screen and (min-width: 768px) {
+  .about-us-text-section {
+    max-width: 768px;
   }
-  
+
   .about-us-text-section__header-text {
-    font-family: Geologica;
-    font-size: 40px;
-    font-weight: 700;
-    line-height: 48px;
-    letter-spacing: 0.01em;
-    text-align: center;
-    color: #333;
-    margin-bottom: 40px;
+    font-size: 32px;
+    line-height: 36px;
   }
-  
-  /* Контейнер для карток */
-  .about-us-text-section__grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 колонки */
-    gap: 32px; /* Відступ 32px між картками з усіх сторін */
-    max-width: 1304px; /* Максимальна ширина для контейнера */
-    width: 100%;
-  }
-  
-  /* Стиль для кожної картки */
+
   .about-us-text-section__card {
-    display: flex;
-    align-items: center; /* Вирівнює іконку та текст по вертикалі */
-    gap: 12px; /* Відстань між іконкою та текстом */
-    background-color: #fff;
-    width: 100%; /* Ширина картки залежить від колонки */
-    max-width: 302px; /* Максимальна ширина картки */
-    height: 102px; /* Фіксована висота картки */
-    border-radius: 6px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: left; /* Текст вирівняний ліворуч */
+    max-width: 364px;
+    height: 128px;
   }
-  
-  /* Стиль для іконки */
-  .about-us-text-section__icon {
-    width: 36px;
-    height: 36px;
-    margin-left: 18px;
+}
+
+/* Адаптивність для десктопів */
+@media only screen and (min-width: 1200px) {
+  .about-us-text-section {
+    max-width: 1304px;
   }
-  
-  /* Стиль для тексту в картці */
-  .about-us-text-section__card p {
-    font-family: Geologica;
-    font-size: 16px;
-    font-weight: 600;
-    color:#232424;
-    margin: 0;
-  }
-  
+}
