@@ -13,11 +13,11 @@ function DetailedInfoSection({ isAuthorized, data, containsNotRequiredData }) {
   return (
     <div className={classes['detail-info-page_block']}>
       <div className={classes['detail-info-page']}>
-        <h3 className={classes['profile-detail__tags']}>Про Компанію</h3>
+        <h3 className={classes['profile-detail__tags-mobile']}>Про Компанію</h3>
         <DataContacts isAuthorized={isAuthorized} data={data} />
         {containsNotRequiredData ?
           <div className={classes['company-description-block']}>
-            <h3 className={classes['company-description-block--title']}>Про Компанію</h3>
+            <h3 className={classes['profile-detail__tags-desktop']}>Про Компанію</h3>
             <Company data={data} />
             {data.is_startup && <Startup data={data} />}
             {data.is_registered && <ProductsServices data={data} />}
