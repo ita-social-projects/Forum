@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import css from './UserTable.module.css';
 import axios from 'axios';
 import useSWR from 'swr';
 import { Table, Tag, Tooltip, Pagination } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
+import css from './UserTable.module.css';
 
 
 const LENGTH_EMAIL = 14;
