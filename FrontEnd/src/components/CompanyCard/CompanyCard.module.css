@@ -4,13 +4,13 @@
   display: block;
   align-items: center;
   border-radius: 11px;
-  transition: transform 0.2s ease;
   position: relative;
   margin: auto;
+  background: var(--company-card-color);
 }
 
 .company-card:hover {
-  transform: scale(1.04);
+  background: var(--company-card-color-hover);
 }
 
 .company-card__block {
@@ -55,7 +55,6 @@
   align-items: flex-start;
   justify-content: space-around;
   border-radius: 0 0 12px 12px;
-  background: var(--company-card-color);
 }
 
 .company-card__text-block__header {
