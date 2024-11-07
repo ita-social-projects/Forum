@@ -68,8 +68,8 @@ export default function CompanyCard({
               />
             ) : (
               <img
-                className={styles['company-card__empty-image']}
-                src={`${process.env.REACT_APP_PUBLIC_URL}/svg/profile-view-image-empty.svg`}
+                className={styles['company-card__image']}
+                src={`${process.env.REACT_APP_PUBLIC_URL}/svg/image-for-empty-banner.svg`}
                 alt={profile.name}
                 title={profile.name}
                 loading="lazy"
