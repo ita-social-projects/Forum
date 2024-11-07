@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
+import { useNavigate, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 import { PASSWORD_PATTERN } from '../../../../../constants/constants';
-import EyeInvisible from '../../../../Authorization/EyeInvisible';
-import EyeVisible from '../../../../Authorization/EyeVisible';
+import SignUpPasswordField from '../../../../SignUp/SignupForm/SignUpPasswordField';
+
 import styles from './RestorePasswordFormContent.module.css';
 
 export function RestorePasswordFormContentComponent({ setIsValid }) {
@@ -23,18 +24,32 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const errorMessageTemplates = {
-    required: 'Обов’язкове поле',
-    password: 'Пароль не відповідає вимогам',
-    confirmPassword: 'Паролі не співпадають',
-  };
-
   const {
     register,
     handleSubmit,
-    getValues,
+    watch,
+    trigger,
     formState: { errors, isValid },
-  } = useForm({ mode: 'all' });
+  } = useForm({
+    mode: 'all',
+    criteriaMode: 'all',
+   });
+
+  const errorMessageTemplates = {
+    password: 'Пароль не відповідає вимогам',
+    confirmPassword: 'Паролі не співпадають. Будь ласка, введіть однакові паролі в обидва поля',
+    maxLength: 'Кількість символів перевищує максимально допустиму (50 символів)',
+  };
+
+  const handleValidation = async () => {
+    await trigger(['password', 'confirmPassword']);
+  };
+
+  useEffect(() => {
+    if (watch('password') && watch('confirmPassword')) {
+      handleValidation();
+    }
+  }, [watch('confirmPassword'), watch('password')]);
 
   useEffect(() => {
     const formIsValid = isValid;
@@ -45,22 +60,31 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
     const dataToSend = {
       uid: uid,
       token: token,
-      new_password: formData.new_password,
+      new_password: formData.password,
       re_new_password: formData.confirmPassword,
     };
 
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/reset_password_confirm/`,
-        dataToSend
-      )
-      .then(() => {
-        setIsValid(true);
-        navigate('/reset-password/successfully');
-      })
-      .catch(() => {
-        navigate('/reset-password/failed');
-      });
+  axios
+    .post(
+      `${process.env.REACT_APP_BASE_API_URL}/api/auth/users/reset_password_confirm/`,
+      dataToSend
+    )
+    .then(() => {
+      setIsValid(true);
+      navigate('/reset-password/successfully');
+    })
+    .catch((error) => {
+      if (error.response && error.response.data && error.response.data['new_password']) {
+        const newPasswordError = error.response.data['new_password'][0];
+        if (newPasswordError === 'This password is too common.') {
+        toast.error('Пароль занадто поширений. Створіть інший пароль.');
+      } else if (newPasswordError.startsWith('The password is too similar to the')) {
+        toast.error('Пароль подібний на іншу персональну інформацію облікового запису. Створіть інший пароль.');
+      }
+    } else {
+      navigate('/reset-password/failed');
+    }
+    });
   };
 
   return (
@@ -73,84 +97,54 @@ export function RestorePasswordFormContentComponent({ setIsValid }) {
           autoComplete="off"
           noValidate
         >
-          <div className={styles['reset-password-form__row']}>
-            <div className={styles['reset-password-form__column']}>
-              <div className={styles['reset-password-form__label']}>
-                <label
-                  className={styles['reset-password-form__label--required']}
-                >
-                  *
-                </label>
-                <div className={styles['reset-password-form__label--password']}>
-                  <label>Новий пароль</label>
-                  <label className={styles['reset-password-form__label--hint']}>
-                    (Повинен містити A-Z, a-z, 0-9)
-                  </label>
-                </div>
-              </div>
-              <div className={styles['reset-password-form__field__password']}>
-                <input
-                  className={styles['reset-password-form__input__password']}
-                  placeholder="Новий пароль"
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('new_password', {
-                    required: errorMessageTemplates.required,
-                    pattern: {
-                      value: PASSWORD_PATTERN,
-                      message: errorMessageTemplates.password,
-                    },
-                  })}
-                />
-                <span
-                  className={styles['password-visibility']}
-                  onClick={togglePassword}
-                >
-                  {!showPassword ? <EyeInvisible /> : <EyeVisible />}
-                </span>
-              </div>
-              <div className={styles['reset-password-form__error']}>
-                {errors.new_password && errors.new_password.message}
-              </div>
-            </div>
-          </div>
-          <div className={styles['reset-password-form__row']}>
-            <div className={styles['reset-password-form__column']}>
-              <div className={styles['reset-password-form__label']}>
-                <label
-                  className={styles['reset-password-form__label--required']}
-                >
-                  *
-                </label>
-                <div className={styles['reset-password-form__label--password']}>
-                  <label className={styles['reset-password-form__label--text']}>
-                    Повторіть новий пароль
-                  </label>
-                </div>
-              </div>
-              <div className={styles['reset-password-form__field__password']}>
-                <input
-                  className={styles['reset-password-form__input__password']}
-                  placeholder="Повторіть пароль"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  {...register('confirmPassword', {
-                    required: errorMessageTemplates.required,
-                    validate: (value) =>
-                      value === getValues('new_password') ||
-                      errorMessageTemplates.confirmPassword,
-                  })}
-                />
-                <span
-                  className={styles['password-visibility']}
-                  onClick={toggleConfirmPassword}
-                >
-                  {!showConfirmPassword ? <EyeInvisible /> : <EyeVisible />}
-                </span>
-              </div>
-              <div className={styles['reset-password-form__error']}>
-                {errors.confirmPassword && errors.confirmPassword.message}
-              </div>
-            </div>
-          </div>
+         <SignUpPasswordField
+          name="password"
+          label="Новий пароль"
+          register={register}
+          validation={{
+            required: 'Не ввели новий пароль',
+            pattern: {
+              value: PASSWORD_PATTERN,
+              message: errorMessageTemplates.password,
+            },
+            maxLength: {
+              value: 50,
+              message: errorMessageTemplates.maxLength
+            },
+            validate: (value) =>
+              watch('confirmPassword') !== value
+                ? errorMessageTemplates.confirmPassword
+                : null,
+          }}
+          errors={errors}
+          togglePassword={togglePassword}
+          showPassword={showPassword}
+          onBlur={() => {
+            trigger('password');
+          }}
+        />
+        <SignUpPasswordField
+          name="confirmPassword"
+          label="Повторіть новий пароль"
+          register={register}
+          validation={{
+            required: 'Не ввели новий пароль ще раз',
+            maxLength: {
+              value: 50,
+              message: errorMessageTemplates.maxLength
+            },
+            validate: (value) =>
+              watch('password') !== value
+                ? errorMessageTemplates.confirmPassword
+                : null,
+          }}
+          errors={errors}
+          togglePassword={toggleConfirmPassword}
+          showPassword={showConfirmPassword}
+          onBlur={() => {
+            trigger('confirmPassword');
+          }}
+        />
         </form>
       </div>
     </div>

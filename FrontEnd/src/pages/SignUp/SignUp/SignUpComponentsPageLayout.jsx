@@ -4,6 +4,7 @@ const SignUpComponentsPageLayout = ({
   header,
   content,
   footer,
+  signinLine,
 }) => {
   return (
     <div className={styles['page-layout']}>
@@ -21,6 +22,7 @@ const SignUpComponentsPageLayout = ({
             </div>
           </div>
         </div>
+        {signinLine}
       </div>
     </div>
   );
