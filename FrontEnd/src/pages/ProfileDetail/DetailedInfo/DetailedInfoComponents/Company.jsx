@@ -24,7 +24,7 @@ function Company({ data }) {
         companyData ? (
             <div id="about-company" className={classes['about-company']}>
                     {data.common_info ? (
-                        <div className={classes['about-company__content--common']}>
+                        <div className={classes['about-company__content']}>
                             <ReadMore >
                                 {data.common_info}
                             </ReadMore>

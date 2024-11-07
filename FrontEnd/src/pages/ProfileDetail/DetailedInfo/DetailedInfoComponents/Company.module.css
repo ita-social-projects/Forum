@@ -1,19 +1,12 @@
 .about-company {
+    padding-top: 24px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.about-company__content--advantage,
-.about-company__content--slogan {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.about-company__content--advantage--text,
-.about-company__content--common {
-    color: var(--main-grey-90, #25292C);
+.about-company__content {
+    color: #25292C;
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 14px;
@@ -21,17 +14,4 @@
     font-weight: 400;
     line-height: 22px;
     letter-spacing: -0.14px;
-}
-
-.about-company__content--slogan--title,
-.about-company__content--slogan--text,
-.about-company__content--advantage--title {
-    color: var(--main-grey-90, #25292C);
-    font-feature-settings: 'calt' off;
-    font-family: var(--font-main);
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: -0.16px;
 }

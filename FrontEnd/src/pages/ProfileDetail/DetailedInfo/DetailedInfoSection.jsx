@@ -19,8 +19,8 @@ function DetailedInfoSection({ isAuthorized, data, containsNotRequiredData }) {
           <div className={classes['company-description-block']}>
             <h3 className={classes['profile-detail__tags-desktop']}>Про Компанію</h3>
             <Company data={data} />
-            {data.is_startup && <Startup data={data} />}
             {data.is_registered && <ProductsServices data={data} />}
+            {data.is_startup && <Startup data={data} />}
           </div>
           : <EmptyData />}
       </div>
