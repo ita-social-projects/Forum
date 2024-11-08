@@ -49,6 +49,7 @@
     .detail-info-page {
         display: flex;
         flex-direction: row-reverse;
+        justify-content: space-between;
         width: 1304px;
     }
 
