@@ -68,8 +68,8 @@ function TitleInfo({ isAuthorized, data }) {
             <img
               className={classes['title-block__logo-img']}
               src={profile.logo?.path}
-              alt="Company logo"
-              title="Company logo"
+              alt="Логотип компанії"
+              title="Логотип компанії"
             />
           )}
         </div>
@@ -111,6 +111,8 @@ function TitleInfo({ isAuthorized, data }) {
                   isSaved={isSaved}
                   isAuthorized={isAuthorized}
                   ownProfile={ownProfile}
+                  styleFilled={{ color: '#FFF', fontSize: '24px' }}
+                  styleOutlined={{ color: '#000', fontSize: '24px' }}
                 ></StarForLike>
               </button>
             )}
