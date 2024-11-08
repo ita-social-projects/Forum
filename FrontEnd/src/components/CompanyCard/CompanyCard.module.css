@@ -43,20 +43,6 @@
   line-height: 16px;
 }
 
-.company-card__empty-image {
-  width: 103px;
-  height: 80px;
-  flex-shrink: 0;
-  margin-top: 80px;
-  margin-left: 125px;
-  object-fit: cover;
-}
-
-.company-card__tooltip {
-  display: flex;
-  flex-direction: column;
-}
-
 .company-card__image {
   width: 345px;
   height: 188px;
@@ -109,15 +95,6 @@
   text-align: left;
   padding-left: 16px;
   overflow: hidden;
-}
-
-.company-card__name-text_link {
-  text-decoration: none;
-  color: var(--companies-card-text-color);
-}
-
-.company-card__name-text_link:visited {
-  color: var(--companies-card-text-color);
 }
 
 .company-card__region-text {
@@ -184,16 +161,6 @@
   border-radius: 9999px;
   background: var(--company-card-color);
   object-fit: cover;
-}
-
-.company-card__buttons {
-  color: var(--companies-card-button);
-  border: none;
-  background-color: var(--company-card-color);
-}
-
-.company-card__buttons:hover {
-  cursor: pointer;
 }
 
 .company-card__star {
