@@ -1,14 +1,18 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import useWindowWidth from '../../../hooks/useWindowWidth';
+import { Link } from 'react-router-dom';
 import styles from './Companies.module.css';
 import CompanyCard from '../../../components/CompanyCard/CompanyCard';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
+import { Col, Row } from 'antd';
 
 const MainCompanies = ({ isAuthorized }) => {
   const baseUrl = process.env.REACT_APP_BASE_API_URL;
   const [searchResults, setSearchResults] = useState([]);
   const [newMembers, setNewMembers] = useState(true);
+  const windowWidth = useWindowWidth();
 
   const fetcher = async (url) => {
     const data = await axios.get(url);
@@ -17,7 +21,7 @@ const MainCompanies = ({ isAuthorized }) => {
   };
 
   const { data: companylist } = useSWR(
-    `${baseUrl}/api/profiles/?ordering=-completeness,-created_at`,
+    `${baseUrl}/api/profiles/?ordering=-completeness,-created_at&page_size=4`,
     fetcher
   );
 
@@ -37,6 +41,7 @@ const MainCompanies = ({ isAuthorized }) => {
     }
   }, [newMembers, companylist, searchResults]);
   const companyDataList = searchResults;
+  const linkText = windowWidth >= 768 ? 'Всі підприємства' : 'Всі';
 
   return (
     <div className={styles['new-companies-main']}>
@@ -44,19 +49,27 @@ const MainCompanies = ({ isAuthorized }) => {
         <h2 className={styles['new-companies-main__title']}>
           Нові учасники
         </h2>
+        <div className={styles['new-companies-link-to-all']}>
+          <Link to="profiles/companies">
+            <p>{linkText}
+              <img src="svg/arrow.svg" alt="Arrow icon for all companies link" />
+
+            </p>
+          </Link>
+        </div>
       </div>
       <div className={styles['new-companies-block']}>
-        <div className={styles['row']}>
+        <Row justify={'start'} gutter={[32, 24]}>
           {companyDataList.map((result, resultIndex) => (
-            <div key={resultIndex} className={styles['col-md-4']}>
+            <Col key={resultIndex} xs={24} md={12} xl={6}>
               <CompanyCard
                 profile={result}
                 isAuthorized={isAuthorized}
                 changeCompanies={changeCompanies}
               />
-            </div>
+            </Col>
           ))}
-        </div>
+        </Row>
       </div>
     </div>
   );
