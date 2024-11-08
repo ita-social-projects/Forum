@@ -1,0 +1,17 @@
+.burgerMenuContainer {
+    position: relative;
+    top: -4px;
+}
+
+.menu {
+    position: absolute;
+    top: 61px;
+    left: calc(-100vw + 80px);
+    width: calc(100vw - 40px);
+    background-color: white;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 1000;
+}

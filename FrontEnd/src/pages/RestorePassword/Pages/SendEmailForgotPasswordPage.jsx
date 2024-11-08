@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SignUpComponentsPageLayout from '../../SignUp/SignUp/SignUpComponentsPageLayout';
-import { SendEmailRestorePasswordFormContentComponent } from '../Components/RestorePassword/RestorePasswordForm/EmailFormContent';
+import { SendEmailRestorePasswordFormContentComponent } from '../Components/EmailFormContent';
 import styles from './SendEmailForgotPasswordPage.module.css';
 
 export function SendEmailForgotPasswordPage() {

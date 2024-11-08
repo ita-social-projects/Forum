@@ -17,14 +17,14 @@
 @font-face {
   font-family: 'Geologica';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   src: local('Geologica-VariableFont'), local('Geologica-VariableFont'),
     url('/public/fonts/Geologica-VariableFont.ttf') format('truetype');
 }
 
 :root {
 
-  --main-block-size: 1512px;
+  --main-block-size: 100vw;
 
   /*border color*/
   --border-color: #EEEFF1;
@@ -56,7 +56,7 @@
 
 
   /* button color*/
-  --main-button-color: #1F9A7C;
+  --main-button-color: #000000;
   --button-color-hover: #0b6c61;
   --light-button-color: #FFFFFF;
 
@@ -79,7 +79,7 @@
   --toastify-custom-close-button: rgba(0, 0, 0, 0.85);
 
   /* Header */
-  --navbar-content-height: 32px;
+  --navbar-content-height: 40px;
 
   /* Footer */
   --footer-backround: #232424;
