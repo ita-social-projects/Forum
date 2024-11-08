@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нове повідомлення</title>
+    <style>
+        body {
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        p, h2, b {
+            color: black;
+        }
+        .email-container {
+            padding: 10px;
+        }
+        .email-footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <img src="{{protocol}}://178.212.110.52/craftMerge-logo.png" alt="CRAFTMERGE" />
+
+        <p>Нове повідомлення від {{ user_email }}<p>
+
+        <p><b>Категорія:</b> {{ category }}</p>
+        <p><b>Повідомлення:</b></p>
+        <p>{{ message }}</p>
+
+        <div class="email-footer">
+            <p>З повагою,</p>
+            <p>Команда CraftMerge</p>
+        </div>
+    </div>
+</body>
+</html>

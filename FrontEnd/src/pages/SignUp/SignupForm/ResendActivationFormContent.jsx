@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import styles from './ResendActivationFormContent.module.css';
 import { EMAIL_PATTERN } from '../../../constants/constants';
+import styles from './ResendActivationFormContent.module.css';
 
-export function ResendActivationFormContentComponent({ setIsValid }) {
+export function ResendActivationFormContent({ setIsValid }) {
   const navigate = useNavigate();
 
   const errorMessageTemplates = {
@@ -46,7 +46,7 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
         navigate('/login');
       })
       .catch(() => {
-        toast.error('Activation failed. Please try again.');
+        toast.error('Виникла помилка. Спробуйте ще раз або зв\'яжіться з підтримкою.');
       });
   };
 
@@ -59,35 +59,33 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
         autoComplete="off"
         noValidate
       >
-        <div className={styles['resend-activation-form__row']}>
-          <div className={styles['resend-activation-form__column']}>
-            <div className={styles['resend-activation-form__label']}>
-              <label
-                className={styles['resend-activation-form__label--required']}
-              >
-                *
-              </label>
-              <label className={styles['resend-activation-form__label--text']}>
-                Електронна пошта
-              </label>
-            </div>
-            <div className={styles['resend-activation-form__field']}>
-              <input
-                className={styles['resend-activation-form__input']}
-                placeholder="Електронна пошта"
-                type="email"
-                {...register('email', {
-                  required: errorMessageTemplates.required,
-                  pattern: {
-                    value: EMAIL_PATTERN,
-                    message: errorMessageTemplates.email,
-                  },
-                })}
-              />
-            </div>
-            <div className={styles['resend-activation-form__error']}>
-              {errors.email && errors.email.message}
-            </div>
+        <div className={styles['resend-activation-form__column']}>
+          <div className={styles['resend-activation-form__label']}>
+            <label
+              className={styles['resend-activation-form__label--required']}
+            >
+              *
+            </label>
+            <label className={styles['resend-activation-form__label--text']}>
+              Електронна пошта
+            </label>
+          </div>
+          <div className={styles['resend-activation-form__field']}>
+            <input
+              className={styles['resend-activation-form__input']}
+              placeholder="Електронна пошта"
+              type="email"
+              {...register('email', {
+                required: errorMessageTemplates.required,
+                pattern: {
+                  value: EMAIL_PATTERN,
+                  message: errorMessageTemplates.email,
+                },
+              })}
+            />
+          </div>
+          <div className={styles['resend-activation-form__error']}>
+            {errors.email && errors.email.message}
           </div>
         </div>
       </form>
@@ -95,6 +93,6 @@ export function ResendActivationFormContentComponent({ setIsValid }) {
   );
 }
 
-ResendActivationFormContentComponent.propTypes = {
+ResendActivationFormContent.propTypes = {
   setIsValid: PropTypes.func.isRequired,
 };

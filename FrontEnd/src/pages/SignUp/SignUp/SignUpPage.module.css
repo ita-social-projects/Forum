@@ -1,23 +1,23 @@
 .sign-up {
-  width: var(--main-block-size);
-  border-radius: 8px;
-  background: var(--wf-base-white, #fff);
+  width: 100vw;
+  background: var(--light-seashell-background);
+  padding: 40px 0px;
 }
 
 .sign-up__body {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  height: 725px;
-  background: var(--primary-green-20, #f1fff7);
+  justify-content: center;
+  min-height: 725px;
 }
 
 .container {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
+  min-width: 345px;
+  max-width: 572px;
   gap: 24px;
-  position: absolute;
   z-index: 2;
 }
 
@@ -30,48 +30,23 @@
 .sign-in-line__text {
   color: #000;
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Regular */
   font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 22px;
   letter-spacing: -0.14px;
 }
 
 .sign-in-line__link {
-  color: var(--accent-accelerate-1500, #00a3cf);
+  color: var(--link-text-color);
   font-feature-settings: "calt" off;
-
-  /* Text/Body/14-Regular */
   font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 20px;
+  font-weight: 600;
+  line-height: 22px;
   letter-spacing: -0.14px;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1%;
 }
-
-.sign-up-img-right{
-  width: 179px;
-  height: 150px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  margin: 102px 354px 473px 979px;
-  position: absolute;
-}
-
-.sign-up-img-left{
-  width: 179px;
-  height: 150px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  margin: 422px 979px 153px 354px;
-  position: absolute;
-}
-
