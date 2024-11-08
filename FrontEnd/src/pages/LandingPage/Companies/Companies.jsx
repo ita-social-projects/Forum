@@ -41,7 +41,7 @@ const MainCompanies = ({ isAuthorized }) => {
     }
   }, [newMembers, companylist, searchResults]);
   const companyDataList = searchResults;
-  const linkText = windowWidth > 768 ? 'Всі підприємства' : 'Всі';
+  const linkText = windowWidth >= 768 ? 'Всі підприємства' : 'Всі';
 
   return (
     <div className={styles['new-companies-main']}>
