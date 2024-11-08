@@ -1,6 +1,5 @@
 .header-buttons-section {
     display: flex;
-    align-items: flex-start;
     gap: 12px;
 }
 
@@ -10,22 +9,20 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
-    background: #1F9A7C;
-
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+    background: var(--light-button-color);
 
     /* Button Text */
-    color: #FFF;
+    color: var(--main-button-color);
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
     font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 20px;
     letter-spacing: -0.16px;
 }
@@ -36,32 +33,30 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
-    background: #FFF;
-
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+    background: var(--main-button-color);
 
     /* Button Text */
-    color: #1F9A7C;
+    color: var(--light-button-color);
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
     font-family: var(--font-main);
     font-size: 16px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 20px;
     letter-spacing: -0.16px;
 }
 
 .header-login__button:hover {
-    background: #FFF;
-    color: #1F9A7C;
+    background: var(--main-button-color);
+    color: var(--light-button-color);
 }
 
 .header-register__button:hover {
-    background: #1F9A7C;
-    color: #FFF;
+    background: var(--light-button-color);
+    color: var(--main-button-color);
 }
