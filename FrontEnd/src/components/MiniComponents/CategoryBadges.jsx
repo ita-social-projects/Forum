@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 export default function CategoryBadges({ categories }) {
   const style = {
-    backgroundColor: '#1F9A7C',
+    backgroundColor: '#000000',
     fontWeight: 600,
-    fontFamily: 'Inter',
+    fontFamily: 'Geologica',
     fontSize: 10,
     margin: 5,
   };

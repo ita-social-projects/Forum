@@ -1,0 +1,105 @@
+.send-email-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.send-email-form__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    gap: 8px;
+    width: 100%;
+}
+
+.send-email-form__column {
+    display: flex;
+    padding-bottom: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.send-email-form__label {
+    display: flex;
+    gap: 4px;
+    align-self: stretch;
+    color: var(--main-text-color);
+    font-feature-settings: "calt" off;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.14px;
+    text-align: left;
+}
+
+.send-email-form__label--required {
+    color: var(--dust-red-5, #ff4d4f);
+    text-align: right;
+    font-family: var(--font-messages);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22.001px;
+}
+
+.send-email-form__label--text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 0 0;
+}
+
+.send-email-form__field {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 2px;
+    background: var(--main-white, #fff);
+}
+
+.send-email-form__input {
+    display: flex;
+    height: 22px;
+    padding: 9px 12px;
+    align-items: center;
+    gap: 4px;
+    flex: 1 0 0;
+    border-radius: 2px;
+    border: 1px solid var(--neutral-5, #d9d9d9);
+    background: var(--main-white, #fff);
+    color: var(--character-title-85, rgba(0, 0, 0, 0.85));
+
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.send-email-form__input::placeholder {
+    color: var(--placeholder-text-color);
+}
+
+.send-email-form__input:focus {
+    outline: none;
+}
+
+.send-email-form__error {
+    display: flex;
+    padding: 1px 0px;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    color: var(--error-text-color);
+    font-family: var(--font-main);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+}

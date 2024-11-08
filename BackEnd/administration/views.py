@@ -28,6 +28,8 @@ from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
+from .serializers import FeedbackSerializer
+from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UsersFilter
@@ -55,9 +57,7 @@ class UsersListView(ListAPIView):
     serializer_class = AdminUserListSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = UsersFilter
-
-    def get_queryset(self):
-        return CustomUser.objects.select_related("profile")
+    queryset = CustomUser.objects.select_related("profile").order_by("id")
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
@@ -176,3 +176,26 @@ class CreateAdminUserView(CreateAPIView):
         IsSuperUser,
     ]
     serializer_class = AdminRegistrationSerializer
+
+
+class FeedbackView(CreateAPIView):
+    serializer_class = FeedbackSerializer
+
+    def perform_create(self, serializer):
+        """
+        Performs the creation of a new feedback record and sends an email notification.
+
+        Parameters:
+        - serializer (FeedbackSerializer): The serializer instance containing validated data.
+
+        Returns:
+        None
+
+        This method extracts the email, message, and category from the validated data in the serializer.
+        It then calls the `send_email_feedback` function to send an email notification with the provided feedback details.
+        """
+        email = serializer.validated_data["email"]
+        message = serializer.validated_data["message"]
+        category = serializer.validated_data["category"]
+
+        send_email_feedback(email, message, category)
