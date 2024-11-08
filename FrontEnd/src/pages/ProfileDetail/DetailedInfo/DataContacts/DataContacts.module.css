@@ -4,7 +4,6 @@
     align-items: flex-start;
     padding-top: 16px;
     padding-bottom: 16px;
-    gap: 16px;
 }
 
 .data-content {
@@ -63,12 +62,12 @@
 }
 
 .data-block__field--value {
-    width: 200px;
+    width: 170px;
     color: #292E32;
 }
 
 .data-block__field--site {
-    width: 200px;
+    width: 170px;
     color: #4A73E2;
 }
 
@@ -77,4 +76,17 @@
     display: flex;
     align-items: flex-start;
     gap: 8px;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .data-block__field--value {
+        width: 589px;
+    }
+}
+
+@media only screen and (min-width: 1512px) {
+    .data-block__field--value{
+        width: 200px;
+    }
 }

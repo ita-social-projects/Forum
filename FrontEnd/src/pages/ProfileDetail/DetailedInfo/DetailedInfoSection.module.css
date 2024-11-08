@@ -8,7 +8,11 @@
     display: flex;
     flex-direction: column;
     width: 375px;
-    padding: 40px 16px;
+    padding: 24px 16px;
+}
+
+.company-description-block {
+    width: 375px;
 }
 
 .profile-detail__tags-mobile {
@@ -35,9 +39,10 @@
         display: flex;
         flex-direction: column;
         width: 768px;
-        padding: 48px 24px;
     }
-
+    .company-description-block{
+        width: 768px;
+    }
     .profile-detail__tags-mobile {
         font-size: 34px;
         line-height: 40.8px;
@@ -51,6 +56,9 @@
         flex-direction: row-reverse;
         justify-content: space-between;
         width: 1304px;
+    }
+    .company-description-block {
+        width: 860px;
     }
 
     .profile-detail__tags-mobile {

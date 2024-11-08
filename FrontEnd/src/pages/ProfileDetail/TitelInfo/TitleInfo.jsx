@@ -123,7 +123,7 @@ function TitleInfo({ isAuthorized, data }) {
                 onClick={navigateToEditProfile}
               >
                 <span className={`${classes['title-block__button--text']}`}>
-                  Редагувати профіль
+                  Редагувати
                 </span>
               </a>
             )}

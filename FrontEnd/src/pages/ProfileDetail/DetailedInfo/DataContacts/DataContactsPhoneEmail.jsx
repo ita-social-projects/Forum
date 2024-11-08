@@ -21,7 +21,8 @@ function PhoneEmail({ isAuthorized, profileId, personId }) {
 
   const copyContent = (key) => {
     try {
-      navigator.clipboard.writeText(profileData[key]);
+      const contentToCopy = key === 'phone' ? `+${profileData.phone}` : profileData.email;
+      navigator.clipboard.writeText(contentToCopy);
       if (key === 'phone') {
         setIsPhoneCopied(true);
         setTimeout(() => setIsPhoneCopied(false), 4000);
@@ -76,7 +77,7 @@ function PhoneEmail({ isAuthorized, profileId, personId }) {
           {isContactsShown || (user && user.id === personId) ? (
             <div className={classes['data-block__field--contacts']}>
               <p className={classes['contact-container']}>
-                <span>{profileData.phone}</span>
+                <span>+{profileData.phone}</span>
                 {
                   profileData.phone ? <span onClick={() => copyContent('phone')}>
                     {renderIcons(isPhoneCopied)}

@@ -41,7 +41,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 10px;
   gap: 4px;
 }
 
@@ -126,6 +125,7 @@
   font-weight: 600;
   line-height: 20px;
   letter-spacing: -0.16px;
+  padding-right: 4px;
 }
 
 .added_to_saved__button--text {
@@ -148,14 +148,13 @@
   }
 
   .title-block__button {
-    width: 353px;
+    width: 253px;
   }
 }
 
 @media only screen and (min-width: 1512px) {
   .title-block {
     flex-direction: row;
-    height: 220px;
   }
 
   .title-block__content {
@@ -166,6 +165,7 @@
   }
 
   .title-block__button {
-    width: 221px;
+    width: 100%;
+    min-width: 124px;
   }
 }
