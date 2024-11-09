@@ -1,7 +1,7 @@
 .title-block {
   display: flex;
-  background: #F9F5EC;
-  width: 100vw;
+  background: var(--profile-detail-title-background);
+  width: var(--profile-detail-width);
   justify-content: center;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .title-block__activity {
-  color: #707070;
+  color: var(--profile-detail-title-color-activity);
   font-feature-settings: 'calt' off;
   font-family: var(--font-main);
   font-size: 14px;
@@ -63,7 +63,7 @@
 }
 
 .title-block__company_name {
-  color: #232424;
+  color: var(--profile-detail-title-color-company-name);
   font-family: var(--font-main);
   font-size: 24px;
   font-style: normal;
@@ -78,7 +78,7 @@
 }
 
 .title-block__company_region {
-  color: #000000;
+  color: var(--profile-detail-title-color-company-region);
   font-feature-settings: 'calt' off;
   font-family: var(--font-main);
   font-size: 14px;
@@ -93,7 +93,7 @@
 }
 
 .added_to_saved__button {
-  background: #232424;
+  background: var(--profile-detail-title-color-company-button);
 }
 
 .title-block__button-block {
@@ -110,13 +110,13 @@
   align-items: center;
   gap: 4px;
   border-radius: 4px;
-  border: 1px solid #232424;
+  border: 1px solid var(--profile-detail-title-color-company-button);
   cursor: pointer;
 }
 
 .title-block__button--text {
   display: flex;
-  color: #232424;
+  color: var(--profile-detail-title-color-company-button);
   text-align: center;
   font-feature-settings: 'calt' off;
   font-family: var(--font-main);
@@ -129,7 +129,7 @@
 }
 
 .added_to_saved__button--text {
-  color: var(--main-white, #fff);
+  color: var(--profile-detail-title-color-company-button-saved);
 }
 
 @media only screen and (min-width: 768px) {

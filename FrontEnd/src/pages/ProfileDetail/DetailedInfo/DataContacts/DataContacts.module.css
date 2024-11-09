@@ -15,7 +15,7 @@
     gap: 32px;
     border-radius: 6px;
     border: 1px solid none;
-    background: #F9F5EC;
+    background: var(--profile-detail-data-contacts-backround);
 }
 
 .data-block_render-contact,
@@ -36,7 +36,7 @@
 
 .data-block__field--title {
     width: 130px;
-    color: #292E32;
+    color: var(--profile-detail-data-contacts-color-text);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 14px;
@@ -63,7 +63,7 @@
 
 .data-block__field--value {
     width: 170px;
-    color: #292E32;
+    color: var(--profile-detail-data-contacts-color-text);
 }
 
 .data-block__field--site {
@@ -86,7 +86,7 @@
 }
 
 @media only screen and (min-width: 1512px) {
-    .data-block__field--value{
+    .data-block__field--value {
         width: 200px;
     }
 }

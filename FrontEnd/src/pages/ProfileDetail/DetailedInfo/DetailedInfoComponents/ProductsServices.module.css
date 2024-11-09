@@ -6,7 +6,7 @@
 }
 
 .products-services__title--text {
-    color: #25292C;
+    color: var(--profile-detail-info-color-title);
     font-family: var(--font-main);
     font-size: 18px;
     font-style: normal;
@@ -23,7 +23,7 @@
 }
 
 .products-services__content--title {
-    color: #000000;
+    color: var(--profile-detail-info-color-text);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 16px;
@@ -34,7 +34,7 @@
 }
 
 .products-services__content--text {
-    color:  #000000;
+    color: var(--profile-detail-info-color-text);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 16px;

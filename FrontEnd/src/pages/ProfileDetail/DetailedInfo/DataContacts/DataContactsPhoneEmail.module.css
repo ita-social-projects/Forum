@@ -6,7 +6,7 @@
 
 .data-block__field--title {
     width: 130px;
-    color: #292E32;
+    color: var(--profile-detail-data-contacts-color-text);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 14px;
@@ -24,7 +24,7 @@
     align-items: center;
     gap: 4px;
     border-radius: 4px;
-    border: 1px solid #232424;
+    border: 1px solid var(--profile-detail-data-contacts-color-text);
     cursor: pointer;
 }
 
@@ -45,12 +45,12 @@
     flex-direction: column;
     height: auto;
     align-items: flex-start;
-    color: #232424;
+    color: var(--profile-detail-data-contacts-color-text);
 }
 
 .data-block__field--show--contacts {
     flex: 1 0 0;
-    color: #232424;
+    color: var(--profile-detail-data-contacts-color-text);
 }
 
 .contact-container {

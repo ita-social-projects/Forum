@@ -77,7 +77,7 @@ function PhoneEmail({ isAuthorized, profileId, personId }) {
           {isContactsShown || (user && user.id === personId) ? (
             <div className={classes['data-block__field--contacts']}>
               <p className={classes['contact-container']}>
-                <span>+{profileData.phone}</span>
+                <span>{(profileData.phone) ? ('+' + profileData.phone) : ''}</span>
                 {
                   profileData.phone ? <span onClick={() => copyContent('phone')}>
                     {renderIcons(isPhoneCopied)}

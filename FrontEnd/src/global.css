@@ -112,12 +112,24 @@
   --companies-card-address: #000000;
   --companies-card-button: green;
   --companies-card-badge-is-updated: #B4D27A;
-  --companies-card-badge-text-color:#231C09;
+  --companies-card-badge-text-color: #231C09;
   --search-new-companies-main: #f1fff7;
   --search-text-color: #292e32;
   --search-pagination-style-color: #1f9a7c;
 
   /* Profile Detail */
+  --profile-detail-width: 100vw;
+  --profile-detail-title-background: #F9F5EC;
+  --profile-detail-title-color-activity: #707070;
+  --profile-detail-title-color-company-name: #232424;
+  --profile-detail-title-color-company-region: #000000;
+  --profile-detail-title-color-company-button: #232424;
+  --profile-detail-title-color-company-button-saved: #fff;
+  --profile-detail-data-contacts-backround: #F9F5EC;
+  --profile-detail-data-contacts-color-text: #292E32;
+  --profile-detail-info-color-text: #000;
+  --profile-detail-info-color-title: #232424;
+
   --main-grey-90: #25292c;
   --main-white: #FFF;
   --main-black-90: #292e32;

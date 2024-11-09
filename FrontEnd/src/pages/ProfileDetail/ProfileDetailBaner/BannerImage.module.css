@@ -1,4 +1,4 @@
 .banner-image__block {
-    width: 100vw;
+    width: var(--profile-detail-width);
     height: 200px;
 }
