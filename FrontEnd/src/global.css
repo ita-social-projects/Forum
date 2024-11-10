@@ -17,14 +17,14 @@
 @font-face {
   font-family: 'Geologica';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   src: local('Geologica-VariableFont'), local('Geologica-VariableFont'),
     url('/public/fonts/Geologica-VariableFont.ttf') format('truetype');
 }
 
 :root {
 
-  --main-block-size: 1512px;
+  --main-block-size: 100vw;
 
   /*border color*/
   --border-color: #EEEFF1;
@@ -50,9 +50,13 @@
   --footer-dark-text-color: #A0ABC0;
   --link-text-color: #000000;
   --error-text-color: #F15831;
+  --hint-text-color: #25292C;
+  --placeholder-text-color: #ADB3B9;
+
+
 
   /* button color*/
-  --main-button-color: #1F9A7C;
+  --main-button-color: #000000;
   --button-color-hover: #0b6c61;
   --light-button-color: #FFFFFF;
 
@@ -75,7 +79,7 @@
   --toastify-custom-close-button: rgba(0, 0, 0, 0.85);
 
   /* Header */
-  --navbar-content-height: 32px;
+  --navbar-content-height: 40px;
 
   /* Footer */
   --footer-backround: #232424;
@@ -102,12 +106,13 @@
   --join-us-font-color: black;
   --join-us-batton-text-color: white;
   /* CompanyCard */
-  --companies-card-text-color: #292e32;
+  --companies-card-text-color: #232424;
   --companies-card-box-shadow: rgba(65, 64, 69, 0.2);
-  --companies-card-lover-text: #767f86;
-  --companies-card-address: #59636a;
+  --companies-card-regions-text: #707070;
+  --companies-card-address: #000000;
   --companies-card-button: green;
-
+  --companies-card-badge-is-updated: #B4D27A;
+  --companies-card-badge-text-color:#231C09;
   --search-new-companies-main: #f1fff7;
   --search-text-color: #292e32;
   --search-pagination-style-color: #1f9a7c;
@@ -124,6 +129,8 @@
   --wf-base-white: #FFF;
 
   --profile-min-height-block: calc(100vh - 565px);
-  --min-height-block-main: calc(100vh - 305px);
-  --company-card-color: #FFF;
+  --company-card-color: #F9F5EC;
+  --company-card-color-hover: #EDE0C5;
+  --new-companies-background-color: #FFFFFF;
+  --min-height-block-main: 100vh;
 }

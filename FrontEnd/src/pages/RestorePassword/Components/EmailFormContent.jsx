@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import styles from './EmailFormContent.module.css';
-import { EMAIL_PATTERN } from '../../../../../constants/constants';
+import { EMAIL_PATTERN } from '../../../constants/constants';
 
 export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
   const navigate = useNavigate();
@@ -14,12 +14,14 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
   const errorMessageTemplates = {
     required: 'Обов’язкове поле',
     email: 'Формат електронної адреси некоректний',
+    wrongEmail: 'Зазначена електронна адреса не зареєстрована',
   };
 
   const {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors, isValid },
   } = useForm({
     mode: 'all',
@@ -43,10 +45,14 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
     })
       .then(() => {
         setIsValid(true);
-        navigate('/reset-password/modal');
+        navigate('/reset-password/completion');
       })
       .catch(() => {
-        toast.error('Зазначена електронна адреса не зареєстрована');
+        setError ('email', {
+          type: 'manual',
+          message: errorMessageTemplates.wrongEmail,
+        });
+        toast.error(errorMessageTemplates.wrongEmail);
       });
   };
 
@@ -59,9 +65,13 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
         autoComplete="off"
         noValidate
       >
-        <div className={styles['send-email-form__row']}>
           <div className={styles['send-email-form__column']}>
             <div className={styles['send-email-form__label']}>
+            <label
+              className={styles['send-email-form__label--required']}
+            >
+              *
+            </label>
               <label className={styles['send-email-form__label--text']}>
                 Електронна пошта
               </label>
@@ -69,7 +79,7 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
             <div className={styles['send-email-form__field']}>
               <input
                 className={styles['send-email-form__input']}
-                placeholder="Електронна пошта"
+                placeholder="Введіть свою електронну пошту"
                 type="email"
                 {...register('email', {
                   required: errorMessageTemplates.required,
@@ -84,7 +94,6 @@ export function SendEmailRestorePasswordFormContentComponent({ setIsValid }) {
               {errors.email && errors.email.message}
             </div>
           </div>
-        </div>
       </form>
     </div>
   );

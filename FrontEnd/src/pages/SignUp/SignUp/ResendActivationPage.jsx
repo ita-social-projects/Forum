@@ -1,29 +1,49 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './SignUpPage.module.css';
-import { ResendActivationFormComponent } from '../ResendActivationForm';
+import { ResendActivationFormContent } from '../SignupForm/ResendActivationFormContent.jsx';
+import SignUpComponentsPageLayout from './SignUpComponentsPageLayout';
+import styles from './ResendActivationPage.module.css';
 
 export function ResendActivationPage() {
+  const [isValid, setIsValid] = useState(false);
+
+  const updateIsValid = (value) => {
+    setIsValid(value);
+  };
+
   return (
-    <div className={styles['sign-up']}>
-      <div className={styles['sign-up__body']}>
-      <img className={styles['sign-up-img-right']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
-          alt="dots_7x6.png" />
-        <div className={styles.container}>
-          <ResendActivationFormComponent />
-          <div className={styles['sign-in-line']}>
-            <div className={styles['sign-in-line__text']}>
-              Вже були на нашому сайті?
-            </div>
-            <Link to="/login" className={styles['sign-in-line__link']}>
-              Увійти
-            </Link>
-          </div>
-        </div>
-        <img className={styles['sign-up-img-left']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
-          alt="dots_7x6.png" />
-      </div>
-    </div>
+    <SignUpComponentsPageLayout
+      header={'Надіслати лист для активації ще раз'}
+      content={
+        <>
+          <p className={styles['form__text']}>
+            Введіть електронну адресу вказану при реєстрації для повторного
+            надіслення листа. <br />
+            На зазначену Вами електронну пошту буде відправлено листа з посиланням
+            для активації. <br />
+          </p>
+          <ResendActivationFormContent setIsValid={updateIsValid} />
+        </>
+      }
+      footer={
+        <>
+          <button
+            disabled={!isValid}
+            form="signUpForm"
+            className={
+              isValid
+                ? styles['resend-activation__button']
+                : styles['resend-activation__button__disabled']
+            }
+            type="submit"
+          >
+            Надіслати
+          </button>
+          <Link className={styles['cancel__button']} to="/sign-up">
+            Скасувати
+          </Link>
+        </>
+      }
+    />
   );
 }

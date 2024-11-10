@@ -4,3 +4,7 @@
   min-height: 100vh;
   flex-direction: column;
 }
+
+body {
+  width: 100vw;
+}
