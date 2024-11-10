@@ -81,11 +81,11 @@ function UserTable() {
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
             <div className={css['dropdownMenu']}>
                 <Input
-                    placeholder={'Пошук'}
+                    placeholder="Пошук"
                     value={selectedKeys[0]}
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value]: [])}
                     onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                    className = {css['ant-input']}
+                    className={css['antInput']}
                 ></Input>
                 <Space>
               <Button
@@ -93,7 +93,7 @@ function UserTable() {
                 onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
                 icon={<SearchOutlined />}
                 size="small"
-                className={css['ant-btn']}
+                className={css['antBtn']}
               >
                 Пошук
               </Button>
@@ -107,7 +107,7 @@ function UserTable() {
             </Space>
           </div>
             ),
-        filterIcon: (filtered) => <SearchOutlined className={ filtered ? css['filtered-icon'] : css['icon']}/>,
+        filterIcon: (filtered) => <SearchOutlined className={ filtered ? css['filteredIcon'] : css['icon']}/>,
         onFilter: (value, record) =>
             record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
         render: (text) =>
