@@ -1,29 +1,41 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import SignUpComponentsPageLayout from '../../SignUp/SignUp/SignUpComponentsPageLayout';
+import { RestorePasswordFormContentComponent } from '../Components/RestorePasswordFormContent';
 import styles from './RestorePasswordPage.module.css';
-import { RestorePasswordFormComponent } from '../Components/RestorePassword/RestorePasswordForm';
 
 export function RestorePasswordPage() {
+
+  const [isValid, setIsValid] = useState(false);
+  const updateIsValid = (value) => {
+    setIsValid(value);
+  };
+
   return (
-    <div className={styles['reset-password']}>
-      <div className={styles['reset-password__body']}>
-        <img className={styles['sign-up-img-right']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
-          alt="dots_7x6.png" />
-        <div className={styles.container}>
-          <RestorePasswordFormComponent />
+    <SignUpComponentsPageLayout
+      header={'Відновлення паролю'}
+      content={
+        <RestorePasswordFormContentComponent setIsValid={updateIsValid}/>
+      }
+      footer={
+        <button
+          disabled={!isValid}
+          form="resetPasswordForm"
+          className={isValid ? styles['save-password__button'] : styles['save-password__button__disabled']}
+          type="submit"
+        >
+          Зберегти пароль
+        </button>
+      }
+      signinLine={
+        <>
           <div className={styles['sign-in-line']}>
-            <div className={styles['sign-in-line__text']}>
-              Вже були на нашому сайті?
-            </div>
             <Link to="/login" className={styles['sign-in-line__link']}>
-              Увійти
+              Повернутися до входу
             </Link>
           </div>
-        </div>
-        <img className={styles['sign-up-img-left']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
-          alt="dots_7x6.png" />
-      </div>
-    </div>
+        </>
+      }
+    />
   );
 }

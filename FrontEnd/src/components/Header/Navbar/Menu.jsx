@@ -4,21 +4,12 @@ import { HashLink } from 'react-router-hash-link';
 
 const MENU_LINKS = [
   {
-    id: 'm0',
-    title: 'Головна',
-    link: '/',
-  },
-  {
-    title: 'Компанії',
-    link: '/profiles/companies',
-  },
-  {
-    title: 'Стартапи',
-    link: '/profiles/startups',
-  },
-  {
     title: 'Про нас',
     link: '/about-us',
+  },
+  {
+    title: 'Підприємства та сектори',
+    link: '/profiles/companies',  // SHOULD BE CHANGED FOR COMPANY LIST (Підприємства та сектори)
   },
 ];
 

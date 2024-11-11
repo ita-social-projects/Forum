@@ -28,33 +28,50 @@ export default function CompanyCard({
     profile.activities
       .slice(0, lengthOfCategoryActivityArray)
       .map((activity) => activity.name)
-      .join(' ');
+      .join(', ');
 
-      const handleSave = async () => {
-        changeCompanies(profile.id, true);
-        try {
-          await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`,{ company_pk: profile.id });
-        } catch (error) {
-          console.error(error);
-        }
-      };
+  const regions = profile.regions_ukr_display?.replace(/область/g, 'обл.');
 
-      const handleDeleteSaved = async () => {
-        changeCompanies(profile.id, false);
-        try {
-          await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}`);
-        } catch (error) {
-          console.error(error);
-        }
-      };
+  const handleSave = async () => {
+    changeCompanies(profile.id, true);
+    try {
+      await axios.post(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/`, { company_pk: profile.id });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteSaved = async () => {
+    changeCompanies(profile.id, false);
+    try {
+      await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleProfileViewed = async () => {
+    if (profile.is_saved && profile.saved_is_updated) {
+      try {
+        await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}/`, {
+          is_updated: false
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
   return (
-      <div className={styles['company-card']}>
-        <Link
-          className={styles['company-card__link']}
-          to={`/profile-detail/${profile.id}`}
-        >
+    <div className={styles['company-card']}>
+      <Link
+        className={styles['company-card__link']}
+        to={`/profile-detail/${profile.id}`}
+        onClick={handleProfileViewed}
+      >
         <div className={styles['company-card__block']}>
+          {profile.saved_is_updated &&
+            <div className={styles['company-card__badge-is-updated']}>Оновлено</div>}
           <div className={styles['company-card__image-frame']}>
             {profile.banner?.path ? (
               <img
@@ -66,8 +83,8 @@ export default function CompanyCard({
               />
             ) : (
               <img
-                className={styles['company-card__empty-image']}
-                src={`${process.env.REACT_APP_PUBLIC_URL}/svg/profile-view-image-empty.svg`}
+                className={styles['company-card__image']}
+                src={`${process.env.REACT_APP_PUBLIC_URL}/svg/image-for-empty-banner.svg`}
                 alt={profile.name}
                 title={profile.name}
                 loading="lazy"
@@ -95,10 +112,10 @@ export default function CompanyCard({
               pointAtCenter={true}
             >
               <p className={styles['company-card__region-text']}>
-                {profile.regions_ukr_display
-                  ? profile.regions_ukr_display.length < lengthOfRegion
-                    ? profile.regions_ukr_display
-                    : `${profile.regions_ukr_display.substring(0, 35)}...`
+                {regions
+                  ? regions.length < lengthOfRegion
+                    ? regions
+                    : `${regions.substring(0, 35)}...`
                   : ''}
               </p>
             </Tooltip>
@@ -134,17 +151,17 @@ export default function CompanyCard({
               />
             )}
           </div>
-          </div>
-          </Link>
-            <div className={styles['company-card__star']}>
-              <StarForLike
-                isSaved={profile.is_saved}
-                isAuthorized={isAuthorized}
-                ownProfile={ownProfile}
-                handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
-                  />
-            </div>
+        </div>
+      </Link>
+      <div className={styles['company-card__star']}>
+        <StarForLike
+          isSaved={profile.is_saved}
+          isAuthorized={isAuthorized}
+          ownProfile={ownProfile}
+          handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
+        />
       </div>
+    </div>
   );
 }
 
