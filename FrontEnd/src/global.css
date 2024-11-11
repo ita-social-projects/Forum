@@ -25,8 +25,9 @@
 :root {
 
   --main-block-size: 1512px;
-
-  /* background color*/
+  
+  /* background */
+  --main-background-light-green: #F9F5EC;
   --main-header-color: #1F9A7C;
   --main-footer-background: #3C4044;
   --new-members-section-background: #F1FFF7;

@@ -18,7 +18,7 @@ const MENU_LINKS = [
   },
   {
     title: 'Про нас',
-    link: '/#about-us',
+    link: '/about-us',
   },
 ];
 
