@@ -63,7 +63,7 @@
     height: auto;
 }
 
-@media (max-width: 768px) { 
+@media (min-width: 768px) and (max-width: 1511px) { 
     .main-container{
         display:flex;
         justify-content: center;
@@ -84,7 +84,6 @@
         line-height: 57.6px;
         letter-spacing: 0.01em;
         text-align: left;
-        margin-right: 0;
     }
     .main-baner-text__explanation{
         display: flex;
@@ -99,14 +98,24 @@
     }
 }
 
-@media (max-width: 375px) { 
+@media (max-width: 767px) {
+    .main-baner__container{
+        display:flex;
+        justify-content:space-around;
+        align-items: center;
+        padding: 0px;
+    
+    }
     .main-container{
         display:flex;
         justify-content: center;
         flex-direction:column-reverse;
         background-color: #B4D27A;
-        padding: 32px;
         max-width: 375px;
+        padding: 16px 32px 16px 32px;
+    }
+    .main-baner-text__logo{
+        font-size: 34px;
     }
     .main-baner-text{
         display: flex;
@@ -114,13 +123,8 @@
         align-items: center;
         max-width: 343px;
         padding-top: 5vh;
-        font-family: Geologica;
-        font-size: 25px;
-        font-family: Geologica;
-        font-weight: 700;
-        line-height: 48px;
-        letter-spacing: 0.01em;
         text-align: center;
+        margin: 0px;
     }
     .main-baner-text__explanation{
         display: flex;
