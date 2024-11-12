@@ -57,7 +57,6 @@ const PasswordField = (props) => {
             onKeyDown={preventEnterSubmit}
             id={inputId}
             type={showPassword ? 'text' : 'password'}
-            // placeholder={label}
             {...register(name, {
               required: errorMessages.requiredField,
               pattern: checkValid && {

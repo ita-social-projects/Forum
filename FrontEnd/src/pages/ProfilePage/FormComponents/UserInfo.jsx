@@ -143,18 +143,18 @@ const UserInfo = (props) => {
     }
   };
 
-  // const onBlurHandler = (e) => {
-  //   const { value: rawFieldValue, name: fieldName } = e.target;
-  //   const fieldValue = rawFieldValue.replace(/\s{2,}/g, ' ').trim();
-  //   if (fieldName === 'person_position') {
-  //     setUpdateProfile((prevState) => ({
-  //       ...prevState,
-  //       [fieldName]: fieldValue,
-  //     }));
-  //   } else {
-  //     setUpdateUser((prevState) => ({ ...prevState, [fieldName]: fieldValue }));
-  //   }
-  // };
+  const onBlurHandler = (e) => {
+    const { value: rawFieldValue, name: fieldName } = e.target;
+    const fieldValue = rawFieldValue.replace(/\s{2,}/g, ' ').trim();
+    if (fieldName === 'person_position') {
+      setUpdateProfile((prevState) => ({
+        ...prevState,
+        [fieldName]: fieldValue,
+      }));
+    } else {
+      setUpdateUser((prevState) => ({ ...prevState, [fieldName]: fieldValue }));
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -215,7 +215,7 @@ const UserInfo = (props) => {
                 name="surname"
                 label={LABELS.surname}
                 updateHandler={onUpdateField}
-                // onBlur={onBlurHandler}
+                onBlur={onBlurHandler}
                 error={
                   formStateErr['surname']['error']
                     ? formStateErr['surname']['message']
@@ -230,7 +230,7 @@ const UserInfo = (props) => {
                 name="name"
                 label={LABELS.name}
                 updateHandler={onUpdateField}
-                // onBlur={onBlurHandler}
+                onBlur={onBlurHandler}
                 error={
                   formStateErr['name']['error']
                     ? formStateErr['name']['message']
@@ -247,7 +247,7 @@ const UserInfo = (props) => {
                 name="person_position"
                 label={LABELS.person_position}
                 updateHandler={onUpdateField}
-                // onBlur={onBlurHandler}
+                onBlur={onBlurHandler}
                 error={
                   formStateErr['person_position']?.['error']
                     ? formStateErr['person_position']['message']

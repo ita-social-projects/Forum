@@ -1,17 +1,6 @@
 import { PropTypes } from 'prop-types';
 import css from './Description.module.css';
 
-// const DESCRIPTIONS = {
-//   UserInfo: 'Інформація про користувача платформи',
-//   GeneralInfo: 'Інформація про компанію',
-//   ContactsInfo: 'Інформація про компанію',
-//   ProductServiceInfo: 'Інформація про компанію',
-//   AdditionalInfo: 'Інформація про компанію',
-//   StartupInfo: 'Інформація про стартап',
-//   Delete: 'Видалення профілю',
-//   ChangePassword: 'Зміна паролю користувача',
-// };
-
 const Description = (props) => {
   return (
     <div className={css['description__section']}>
