@@ -1,7 +1,8 @@
 .fields__column {
     display: flex;
-    width: 530px;
+    width: 311px;
     padding-bottom: 5px;
+    padding-left: 7px;
     flex-direction: column;
 }
 
@@ -51,7 +52,6 @@
 
 .fields__field--textarea {
     display: flex;
-    height: 22px;
     padding: 5px 12px;
     align-items: center;
     gap: 4px;

@@ -11,7 +11,6 @@ import css from './FormComponents.module.css';
 
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import CheckBoxField from './FormFields/CheckBoxField';
-import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
@@ -436,7 +435,7 @@ const GeneralInfo = (props) => {
                 maxLength={100}
               />
             </div>
-            <FullField
+            <HalfFormField
               name="official_name"
               label={LABELS.official_name}
               updateHandler={onUpdateField}

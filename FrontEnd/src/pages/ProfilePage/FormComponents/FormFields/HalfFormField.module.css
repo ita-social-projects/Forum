@@ -1,10 +1,11 @@
 .fields__column {
     display: flex;
-    width: 257px;
+    width: 311px;
     height: 84px;
     padding-bottom: 10px;
     flex-direction: column;
     align-items: flex-start;
+    padding-left: 7px;
 }
 
 .fields__label {
@@ -53,14 +54,17 @@
 
 .fields__field--input {
     display: flex;
-    height: 22px;
-    padding: 4px 12px;
+    height: 40px;
+    padding: 0px 10px;
     align-items: center;
     gap: 4px;
-    flex: 1 0 0;
+    flex: 1 0;
     border-radius: 2px;
     border: none;
     background: var(--main-white, #FFF);
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .fields__field--input::Placeholder {

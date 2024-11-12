@@ -6,7 +6,6 @@ import { useAuth, useProfile } from '../../../hooks';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import defineChanges from '../../../utils/defineChanges';
 import { formatPhoneNumber } from '../../../utils/formatPhoneNumber';
-import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../../components/Loader/Loader';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
@@ -138,7 +137,7 @@ const ContactsInfo = (props) => {
                 error={phoneNumberError}
               />
             </div>
-            <FullField
+            <HalfFormField
               name="address"
               label={LABELS.address}
               updateHandler={onUpdateField}

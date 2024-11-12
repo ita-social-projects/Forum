@@ -1,5 +1,5 @@
 .accordion-content {
-    max-height: 1100px;
+    max-height: 1400px;
     transition: max-height 1s ease-in-out;
     overflow: hidden;
     border-radius: 6px;

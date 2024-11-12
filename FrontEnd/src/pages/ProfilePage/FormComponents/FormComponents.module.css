@@ -10,6 +10,7 @@
 
 .fields-groups {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     gap: 16px;
 }
@@ -23,5 +24,5 @@
 
 .form__container {
     word-wrap: break-word;
-    width: 530px;
+    padding-left: 8px;
 }
