@@ -1,7 +1,7 @@
 .about-us-section {
     /* width: var(--main-block-size); */
     padding-top: 5%;
-    min-width: 100vh;
+    min-width: 100vw;
     min-height: 472px;
     background: var(--about-us-background-color);
     
