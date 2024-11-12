@@ -1,4 +1,10 @@
 .banner-image__block {
     width: var(--profile-detail-width);
-    height: 200px;
+    height: 195px;
+}
+
+@media only screen and (min-width: 768px) {
+    .banner-image__block {
+        height: 368px;
+    }
 }
