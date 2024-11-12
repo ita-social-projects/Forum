@@ -33,8 +33,8 @@ const AdditionalInfo = (props) => {
   }, [mainProfile, profile]);
 
   useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
+    setProfile(props.profile);
+  }, [props.profile]);
 
   const onUpdateFoundationYearField = (e) => {
     const currentYear = new Date().getFullYear();

@@ -20,6 +20,7 @@ import Loader from '../../../components/Loader/Loader';
 import validateEdrpou from '../../../utils/validateEdrpou';
 import validateRnokpp from '../../../utils/validateRnokpp';
 import BanerModeration from './BanerModeration';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
 const LABELS = {
   name: 'Назва компанії',
@@ -62,8 +63,8 @@ const GeneralInfo = (props) => {
   const { profile: mainProfile, mutate: profileMutate } = useProfile();
   const [profile, setProfile] = useState(props.profile);
   const [formStateErr, setFormStateErr] = useState(ERRORS);
-  const [bannerImage, setBannerImage] = useState(props.profile.banner?.path);
-  const [logoImage, setLogoImage] = useState(props.profile.logo?.path);
+  const [bannerImage, setBannerImage] = useState(props.profile?.banner?.path);
+  const [logoImage, setLogoImage] = useState(props.profile?.logo?.path);
   const [bannerImageError, setBannerImageError] = useState(null);
   const [logoImageError, setLogoImageError] = useState(null);
   const [edrpouFieldError, setEdrpouFieldError] = useState(null);
@@ -106,8 +107,8 @@ const GeneralInfo = (props) => {
   }, [mainProfile, profile]);
 
   useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
+    setProfile(props.profile);
+  }, [props.profile]);
 
   const checkRequiredFields = () => {
     let isValid = true;
@@ -290,10 +291,12 @@ const GeneralInfo = (props) => {
       try {
         const response = await axios.post(url, formData);
         setProfile((prevState) => {
-          return { ...prevState, [imageKey]: {
-            ...prevState[imageKey],
-            uuid: response.data.uuid
-          }};
+          return {
+            ...prevState, [imageKey]: {
+              ...prevState[imageKey],
+              uuid: response.data.uuid
+            }
+          };
         });
       } catch (error) {
         console.error(
@@ -327,12 +330,12 @@ const GeneralInfo = (props) => {
     e.target.value = '';
     const imageUrl =
       e.target.name === 'banner'
-      ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/`
-      : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/`;
+        ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/`
+        : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/`;
     const setImage =
       e.target.name === 'banner'
-      ? setBannerImage
-      : setLogoImage;
+        ? setBannerImage
+        : setLogoImage;
     if (file && checkMaxImageSize(e.target.name, file)) {
       setImage(URL.createObjectURL(file));
       await uploadImage(imageUrl, e.target.name, file);
@@ -342,8 +345,8 @@ const GeneralInfo = (props) => {
   const deleteImageHandler = async (name) => {
     const imageUrl =
       name === 'banner'
-      ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
-      : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
+        ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
+        : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
     try {
       await axios.delete(imageUrl);
       if (name === 'banner') setBannerImage(null);
@@ -352,12 +355,12 @@ const GeneralInfo = (props) => {
       setProfile((prevState) => {
         const newState = { ...prevState, [name]: null };
         return newState;
-    });
-  } catch (error) {
-    console.error('Error deleting image:',
-      error.response ? error.response.data : error.message);
-    toast.error('Не вдалося видалити банер/лого, сталася помилка');
-  }
+      });
+    } catch (error) {
+      console.error('Error deleting image:',
+        error.response ? error.response.data : error.message);
+      toast.error('Не вдалося видалити банер/лого, сталася помилка');
+    }
   };
 
   const errorMessages = {
@@ -396,7 +399,7 @@ const GeneralInfo = (props) => {
       try {
         const response = await axios.patch(
           `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
-            data.profileChanges
+          data.profileChanges
         );
         profileMutate(response.data);
         toast.success('Зміни успішно збережено');
@@ -558,6 +561,7 @@ const GeneralInfo = (props) => {
               requiredField={true}
             />
           </div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />
@@ -590,6 +594,5 @@ GeneralInfo.propTypes = {
       path: PropTypes.string,
     }),
   }).isRequired,
-  currentFormNameHandler: PropTypes.func,
   curForm: PropTypes.string,
 };

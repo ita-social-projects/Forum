@@ -11,7 +11,6 @@ import css from './ChangePassword.module.css';
 
 export default function ChangePassword(props) {
   const { setFormIsDirty } = useContext(DirtyFormContext);
-  const { currentFormNameHandler, curForm } = props;
   const {
     register,
     handleSubmit,
@@ -28,9 +27,6 @@ export default function ChangePassword(props) {
     },
   });
 
-  useEffect(() => {
-    currentFormNameHandler(curForm);
-  }, [currentFormNameHandler, curForm]);
 
   useEffect(() => {
     setFormIsDirty(isDirty);
@@ -121,6 +117,4 @@ ChangePassword.propTypes = {
     profile_id: PropTypes.number.isRequired,
     is_staff: PropTypes.bool.isRequired,
   }).isRequired,
-  currentFormNameHandler: PropTypes.func.isRequired,
-  curForm: PropTypes.string.isRequired,
 };

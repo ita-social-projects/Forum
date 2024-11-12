@@ -1,41 +1,64 @@
 import css from './ProfilePage.module.css';
 import Description from './ProfilePageComponents/Description';
 import ProfileContent from './ProfilePageComponents/ProfileContent';
-import { useState } from 'react';
-import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
+import { useState, useEffect } from 'react';
+import { DirtyFormContext } from '../../context/DirtyFormContext';
 import Loader from '../../components/Loader/Loader';
 import { useAuth, useProfile } from '../../hooks';
+import useWindowWidth from '../../hooks/useWindowWidth';
+import EditProfileMobile from './Mobile/EditProfileMobile';
 
 const ProfilePage = () => {
+  const [formIsDirty, setFormIsDirty] = useState(false);
   const { user } = useAuth();
   const { profile } = useProfile();
-  const [formName, setFormName] = useState('');
+  const windowWidth = useWindowWidth();
 
-  const currentFormNameHandler = (currentName) => {
-    setFormName(currentName);
-  };
+  useEffect(() => {
+    const onBeforeUnload = (e) => {
+      if (formIsDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    };
+  }, [formIsDirty]);
+
+
+  if (windowWidth < 768) {
+    return (
+      <>
+      <DirtyFormContext.Provider value={{ formIsDirty, setFormIsDirty }}>
+        <EditProfileMobile
+          user={user}
+          profile={profile} />
+      </DirtyFormContext.Provider>
+      </>
+    );
+  }
 
   return (
     <div className={css['container']}>
-      <BreadCrumbs currentPage="Профіль" />
-      {!profile ? (
-        <Loader />
-      ) : (
-        <>
-          <Description
-            companyName={profile.name}
-            companyLogo={profile?.logo?.path}
-            formName={formName}
-          />
-          <ProfileContent
-            user={user}
-            profile={profile}
-            currentFormNameHandler={currentFormNameHandler}
-            formName={formName}
-          />
-        </>
-      )}
-    </div>
+      <DirtyFormContext.Provider value={{ formIsDirty, setFormIsDirty }}>
+        {!profile ? (
+          <Loader />
+        ) : (
+          <>
+            <Description
+              companyName={profile.name}
+              companyLogo={profile?.logo?.path}
+            />
+            <ProfileContent
+              user={user}
+              profile={profile}
+            />
+          </>
+        )}
+      </DirtyFormContext.Provider>
+    </div >
   );
 };
 

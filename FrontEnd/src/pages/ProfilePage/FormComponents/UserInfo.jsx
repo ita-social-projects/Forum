@@ -8,6 +8,7 @@ import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import defineChanges from '../../../utils/defineChanges';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './FormComponents.module.css';
 
 const LABELS = {
@@ -47,13 +48,18 @@ const UserInfo = (props) => {
   };
 
   useEffect(() => {
+    setUpdateUser(props.user);
+  }, [props.user]);
+
+  useEffect(() => {
+    setUpdateProfile(props.profile);
+  }, [props.profile]);
+
+  useEffect(() => {
     const isDirty = checkFormIsDirty(fields, updateUser, updateProfile);
     setFormIsDirty(isDirty);
   }, [user, profile, updateUser, updateProfile]);
 
-  useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
 
   const errorMessageTemplates = {
     requiredField: 'Обов’язкове поле',
@@ -137,18 +143,18 @@ const UserInfo = (props) => {
     }
   };
 
-  const onBlurHandler = (e) => {
-    const { value: rawFieldValue, name: fieldName } = e.target;
-    const fieldValue = rawFieldValue.replace(/\s{2,}/g, ' ').trim();
-    if (fieldName === 'person_position') {
-      setUpdateProfile((prevState) => ({
-        ...prevState,
-        [fieldName]: fieldValue,
-      }));
-    } else {
-      setUpdateUser((prevState) => ({ ...prevState, [fieldName]: fieldValue }));
-    }
-  };
+  // const onBlurHandler = (e) => {
+  //   const { value: rawFieldValue, name: fieldName } = e.target;
+  //   const fieldValue = rawFieldValue.replace(/\s{2,}/g, ' ').trim();
+  //   if (fieldName === 'person_position') {
+  //     setUpdateProfile((prevState) => ({
+  //       ...prevState,
+  //       [fieldName]: fieldValue,
+  //     }));
+  //   } else {
+  //     setUpdateUser((prevState) => ({ ...prevState, [fieldName]: fieldValue }));
+  //   }
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -200,9 +206,8 @@ const UserInfo = (props) => {
           noValidate
         >
           <div
-            className={`${css['fields']} ${
-              errorsInNameSurname ? css['user_form_fields'] : ''
-            }`}
+            className={`${css['fields']} ${errorsInNameSurname ? css['user_form_fields'] : ''
+              }`}
           >
             <div className={css['fields-groups']}>
               <HalfFormField
@@ -210,7 +215,7 @@ const UserInfo = (props) => {
                 name="surname"
                 label={LABELS.surname}
                 updateHandler={onUpdateField}
-                onBlur={onBlurHandler}
+                // onBlur={onBlurHandler}
                 error={
                   formStateErr['surname']['error']
                     ? formStateErr['surname']['message']
@@ -225,7 +230,7 @@ const UserInfo = (props) => {
                 name="name"
                 label={LABELS.name}
                 updateHandler={onUpdateField}
-                onBlur={onBlurHandler}
+                // onBlur={onBlurHandler}
                 error={
                   formStateErr['name']['error']
                     ? formStateErr['name']['message']
@@ -242,7 +247,7 @@ const UserInfo = (props) => {
                 name="person_position"
                 label={LABELS.person_position}
                 updateHandler={onUpdateField}
-                onBlur={onBlurHandler}
+                // onBlur={onBlurHandler}
                 error={
                   formStateErr['person_position']?.['error']
                     ? formStateErr['person_position']['message']
@@ -261,6 +266,7 @@ const UserInfo = (props) => {
               />
             </div>
           </div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

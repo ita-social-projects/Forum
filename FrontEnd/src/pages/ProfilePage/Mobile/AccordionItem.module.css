@@ -1,0 +1,39 @@
+.accordion-content {
+    max-height: 1100px;
+    transition: max-height 1s ease-in-out;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.accordion-content.close {
+    max-height: 0;
+}
+
+.accordion-button {
+    display: flex;
+    background-color: var(--main-white);
+    font-family: var(--font-main);
+    font-size: 16px;
+    width: 335px;
+    margin-left: 3px;
+    text-align: left;
+    padding: 4px 6px;
+    position: relative;
+    border-radius: 10px;
+    padding-top: 13px;
+    height: 49px;
+    cursor: pointer;
+}
+
+.accordion-button img {
+    top: 20px;
+    position: absolute;
+    right: 5px;
+}
+
+.accordion-item {
+    border-radius: 6px;
+    width: 342px;
+    background-color: var(--main-white);
+    margin: 6px;
+}

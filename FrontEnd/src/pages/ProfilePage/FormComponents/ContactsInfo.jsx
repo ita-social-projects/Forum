@@ -9,6 +9,7 @@ import { formatPhoneNumber } from '../../../utils/formatPhoneNumber';
 import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './FormComponents.module.css';
 import { useMask } from '@react-input/mask';
 
@@ -38,8 +39,8 @@ const ContactsInfo = (props) => {
   const inputRef = useMask({ mask: '+380XX XXX XX XX', replacement: { X: /\d/ } });
 
   useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
+    setProfile(props.profile);
+  }, [props.profile]);
 
   useEffect(() => {
     if (mainProfile?.phone) {
@@ -145,6 +146,7 @@ const ContactsInfo = (props) => {
               value={profile.address ?? ''}
             />
           </div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

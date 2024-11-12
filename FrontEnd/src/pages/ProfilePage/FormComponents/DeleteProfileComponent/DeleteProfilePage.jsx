@@ -1,14 +1,10 @@
 import css from './DeleteProfilePage.module.css';
 import DeleteProfileModal from './DeleteProfileModal';
 import MyModal from '../../UI/MyModal/MyModal';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-const DeleteProfilePage = (props) => {
+const DeleteProfilePage = () => {
   const [modal, setModal] = useState(false);
-
-  useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
 
   const cancelHandler = () => {
     setModal(false);

@@ -8,6 +8,7 @@ import defineChanges from '../../../utils/defineChanges';
 import { useAuth, useProfile } from '../../../hooks';
 import TextField from './FormFields/TextField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './FormComponents.module.css';
 
 const LABELS = {
@@ -34,8 +35,8 @@ const ProductServiceInfo = (props) => {
   }, [mainProfile, profile]);
 
   useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
+    setProfile(props.profile);
+  }, [props.profile]);
 
   const onUpdateTextAreaField = (e) => {
     if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
@@ -94,6 +95,7 @@ const ProductServiceInfo = (props) => {
               maxLength={TEXT_AREA_MAX_LENGTH}
             />
           </div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

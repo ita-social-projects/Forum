@@ -4,10 +4,9 @@ const ProfileFormButton = (props) => {
   return (
     <div className={css['sign-up-footer__buttons']}>
       <button
-        form={props.formName}
         className={css['sign-up__button']}
         type="submit"
-        disabled={props.formState === false}
+        disabled={props.formIsDirty === false}
       >
         Зберегти зміни
       </button>
