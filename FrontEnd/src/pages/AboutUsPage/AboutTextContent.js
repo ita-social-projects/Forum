@@ -1,7 +1,7 @@
 
 const AboutTextContent = {
         id: 1,
-        header: 'ХТО МИ',
+        header: 'Хто ми',
         contents: [
             {
                 id: 3,

@@ -1,4 +1,4 @@
-import './AboutUs.module.css';
+import css from './AboutUs.module.css';
 import React from 'react';
 import AboutTextContent from './AboutTextContent';
 
@@ -13,19 +13,23 @@ const AboutUs = () => {
 
 
   return (
-    <div className="about-us-section">
-      <div className="about-us-section-content" >
-        <div id={'about-us'} className="about-us-rectangle" >
-          <div className="about-us-section-content__text" >
-            <h2 className="about-us-section-content__header-text">{AboutTextContent.header}</h2>
-            {AboutTextContent.contents.map(({ id, text }) => (
-              <p className="about-us-section-content__smart-text" key={id}>
-                {TextStrong(text, 'CraftMerge')}
+    <div className={css['about-us-section']}>
+      <div className={css['about-us-section-content__header']}>
+        <h2>{AboutTextContent.header}</h2>
+        </div>
+      <div className={css['about-us-section-content']} >
+        <div id={'about-us'} className={css['about-us-rectangle']} >
+          <div className={css['about-us-section-content__text']} >
+            {AboutTextContent.contents.map(({ id, text }, i) => (
+              <p className={css['about-us-section-content__smart-text']} key={id}>
+                {i === 0 ?
+                TextStrong(text, 'CraftMerge')
+                : text}
               </p>
             ))}
           </div>
           <img
-            className="about-us-section-content__image"
+            className={css['about-us-section-content__image']}
             src={`${process.env.REACT_APP_PUBLIC_URL}/img/about.jpeg`}
             alt="about img"
             loading="lazy"
