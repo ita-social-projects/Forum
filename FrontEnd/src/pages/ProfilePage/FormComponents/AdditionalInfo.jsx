@@ -8,6 +8,7 @@ import defineChanges from '../../../utils/defineChanges';
 import { useAuth, useProfile } from '../../../hooks';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './FormComponents.module.css';
 
 const LABELS = {
@@ -112,6 +113,7 @@ const AdditionalInfo = (props) => {
               />
             </div>
           </div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

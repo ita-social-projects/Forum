@@ -2,13 +2,13 @@ import css from './ProfileFormButton.module.css';
 
 const ProfileFormButton = (props) => {
   return (
-    <div className={css['sign-up-footer__buttons']}>
+    <div className={css['submit-button__conteiner']}>
       <button
-        className={css['sign-up__button']}
+        className={css['submit-button']}
         type="submit"
         disabled={props.formIsDirty === false}
       >
-        Зберегти зміни
+        Зберегти
       </button>
     </div>
   );
