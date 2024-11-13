@@ -15,8 +15,8 @@ export default function ErrorPage404() {
               або тимчасово недоступна.
             </p>
           </div>
-          <Button>
-            <Link className={css['ErrorPage404__button-text']} to="/">Повернутися на Головну</Link>
+          <Button className={css['ErrorPage404__button']}>
+            <Link className={css['ErrorPage404__button-text']} to="/">Повернутися на головну</Link>
           </Button>
         </div>
       </div>

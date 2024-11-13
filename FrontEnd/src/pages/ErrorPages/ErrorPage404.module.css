@@ -1,19 +1,23 @@
-.ErrorPage404__page {
-  min-height: var(--min-height-block-main);
+/* .ErrorPage404__page {
+  height: 463px;
+  min-width: 375px;
   display: flex;
   justify-content: center;
-  background: var(--primary-green-80, #1f9a7c);
-  
+  background: var(--join-us-main-color, #B4D27A);
 }
 
 .ErrorPage404__container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 80px;
   font-family: var(--font-main);
-  color: var(--primary-green-20, #effff6);
+  color: var(--main-grey-90, #25292c);
   font-feature-settings: "calt" off;
   font-style: normal;
+  height: 303px;
+  width: 100%;
+  padding-top: 100px;
 }
 
 .ErrorPage404__text404 {
@@ -56,6 +60,204 @@
   letter-spacing: -0.16px;
 }
 
+.ErrorPage404__button {
+  background: #000000;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+}
+
 .ErrorPage404__button-text {
   font-family: var(--font-main);
+}
+
+
+
+@media only screen and (min-width: 768px) {
+  .ErrorPage404__page {
+    height: 598px;
+    width: 768px;
+  }
+  .ErrorPage404__container {
+    padding-top: 100px;
+    height: 390px;
+    width: 558px;
+  }
+}
+
+
+@media only screen and (min-width: 1200px) {
+  .ErrorPage404__page {
+    height: 418px;
+    width: 1512px;
+  }
+  .ErrorPage404__container {
+    flex-direction: row;
+    padding-top: 100px;
+    height: 178px;
+    width: 1036px;
+  }
+} */
+
+
+.ErrorPage404__page {
+  background: var(--join-us-main-color, #B4D27A);
+  width: 100%;
+  height: 463px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.ErrorPage404__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  font-family: var(--font-main);
+  max-width: 343px;
+}
+
+
+.ErrorPage404__text404 {
+  font-size: 96px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--main-grey-90, #25292c);
+  margin: 0;
+}
+
+
+.ErrorPage404__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.ErrorPage404__explanation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+
+.ErrorPage404__main-text {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--main-grey-90, #25292c);
+  margin: 0;
+  line-height: 1.2;
+}
+
+
+.ErrorPage404__details {
+  font-size: 14px;
+  color: var(--main-grey-90, #25292c);
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
+.ErrorPage404__button {
+  background-color: #000000;
+  color: #FFFFFF;
+  padding: 20px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  max-width: 206px;
+}
+
+.ErrorPage404__button-text {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+@media only screen and (min-width: 768px) {
+  .ErrorPage404__page {
+    height: 598px;
+  }
+
+  .ErrorPage404__container {
+    max-width: 558px;
+    gap: 20px;
+    padding-bottom: 40px;
+    text-align: start;
+  }
+
+  .ErrorPage404__text404 {
+    font-size: 200px;
+  }
+
+  .ErrorPage404__main-text {
+    font-size: 48px;
+  }
+
+  .ErrorPage404__details {
+    font-size: 16px;
+  }
+
+  .ErrorPage404__button {
+    max-width: 231px;
+    padding: 10px 24px;
+  }
+}
+
+
+@media only screen and (min-width: 1200px) {
+  .ErrorPage404__container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1512px;
+    padding: 0 40px;
+    gap: 50px;
+  }
+
+  .ErrorPage404__text404 {
+    font-size: 200px;
+    line-height: 1;
+    margin-right: 40px;
+  }
+
+  .ErrorPage404__block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 500px;
+  }
+
+  .ErrorPage404__explanation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .ErrorPage404__main-text {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+
+  .ErrorPage404__details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 18px;
+  }
+
+  .ErrorPage404__button {
+    max-width: 250px;
+    padding: 20px 40px;
+  }
 }
