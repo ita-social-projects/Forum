@@ -7,12 +7,12 @@
 .detail-info-page {
     display: flex;
     flex-direction: column;
-    width: 375px;
-    padding: 24px 16px;
+    min-width: 344px;
+    padding: 24px 10px;
 }
 
 .company-description-block {
-    width: 375px;
+    width: 100%;
 }
 
 .profile-detail__tags-mobile {

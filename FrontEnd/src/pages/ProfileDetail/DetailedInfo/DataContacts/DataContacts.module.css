@@ -9,7 +9,7 @@
 .data-content {
     display: flex;
     padding: 16px;
-    width: 100%;
+    min-width: calc(100vw - 48px);
     flex-direction: column;
     align-items: flex-start;
     gap: 32px;
@@ -78,15 +78,24 @@
     gap: 8px;
 }
 
-
 @media only screen and (min-width: 768px) {
     .data-block__field--value {
-        width: 589px;
+        min-width: 589px;
+    }
+
+    .data-content {
+        min-width: 700px;
+        ;
     }
 }
 
 @media only screen and (min-width: 1512px) {
     .data-block__field--value {
-        width: 200px;
+        min-width: 200px;
+    }
+
+    .data-content {
+        width: 344px;
+        min-width: 344px;
     }
 }
