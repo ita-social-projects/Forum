@@ -2,7 +2,6 @@ import { useState } from 'react';
 import MainBanner from './Banner/Banner';
 import MainCompanies from './Companies/Companies';
 import JoinUs from './JoinUs/JoinUs';
-import MainAboutSection from './AboutSection/About';
 import CookieMod from '../../components/CookieAcception/CookieMod';
 import css from './MainPage.module.css';
 import PropTypes from 'prop-types';
@@ -17,7 +16,6 @@ const MainPage = ({ isAuthorized }) => {
       <MainBanner isAuthorized={isAuthorized} />
       <MainCompanies isAuthorized={isAuthorized} />
       {!isAuthorized ? <JoinUs /> : null}
-      <MainAboutSection />
       <CookieMod
         active={modalActive}
         setActive={setModalActive}
