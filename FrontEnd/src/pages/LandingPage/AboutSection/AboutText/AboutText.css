@@ -1,61 +1,109 @@
-/* Основний контейнер */
 .about-us-text-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;;
-  padding: 40px 16px;
+  width: 100%;
+  padding: 20px 16px;
   margin: auto;
   background-color: #f9f4ea;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
-/* Заголовок */
 .about-us-text-section__header-text {
-  font-family: Geologica;
-  font-size: 24px;
+  font-family: var(--font-logo);
+  font-size: 20px;
   font-weight: 700;
-  line-height: 48px;
-  letter-spacing: 0.01em;
+  line-height: 28px;
   text-align: center;
   color: #232424;
-  margin-bottom: 40px;
-  margin-top: 80px;
+  margin-bottom: 20px;
 }
 
-/* Стиль для карток */
+.about-us-text-section__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 340px;
+  box-sizing: border-box;
+}
+
 .about-us-text-section__card {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   background-color: #fff;
   width: 100%;
-  max-width: 302px;
-  height: 102px;
+  height: auto;
+  padding: 12px;
   border-radius: 6px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: left;
+  transition: box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
-/* Іконка */
+.about-us-text-section__card:hover {
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+
 .about-us-text-section__icon {
-  width: 36px;
-  height: 36px;
-  margin-left: 18px;
+  width: 28px;
+  height: 28px;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
-/* Текст */
 .about-us-text-section__card p {
-  font-family: Geologica;
-  font-size: 16px;
+  font-family: var(--font-logo);
+  font-size: 14px;
   font-weight: 600;
   color: #232424;
   margin: 0;
+  word-wrap: break-word;
 }
 
-/* Адаптивність для планшетів */
+@media only screen and (max-width: 767px) {
+  .about-us-text-section__card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-us-text-section__icon {
+    margin: 0;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .about-us-text-section {
     max-width: 768px;
+    max-height: 672px;
+  }
+
+  .about-us-text-section__header-text {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .about-us-text-section__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .about-us-text-section__card {
+    max-width: 344px;
+    height: 102px;
+  }
+  .about-us-text-section__card p {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .about-us-text-section {
+    max-width: 1304px;
   }
 
   .about-us-text-section__header-text {
@@ -63,15 +111,16 @@
     line-height: 36px;
   }
 
-  .about-us-text-section__card {
-    max-width: 364px;
-    height: 128px;
+  .about-us-text-section__grid {
+    gap: 32px;
   }
-}
 
-/* Адаптивність для десктопів */
-@media only screen and (min-width: 1200px) {
-  .about-us-text-section {
-    max-width: 1304px;
+  .about-us-text-section__card {
+    max-width: 345px;
+    height: 102px;
+  }
+
+  .about-us-text-section__card p {
+    font-size: 16px;
   }
 }

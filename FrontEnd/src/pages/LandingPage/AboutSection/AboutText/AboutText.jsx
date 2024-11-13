@@ -11,9 +11,9 @@ const AboutSectionText = () => {
         {AboutText.content.map((item) => (
           <Col
             key={item.id}
-            xs={12}   // Одна колонка на мобільних (<=576px)
-            md={6}   // Дві колонки на планшетах (>=768px)
-            xl={6}    // Чотири колонки на десктопах (>=1200px)
+            xs={12}
+            md={6}
+            xl={6}
           >
             <div className="about-us-text-section__card">
               <img
