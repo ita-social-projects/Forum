@@ -11,16 +11,6 @@ const AboutSectionCards = () => {
           ${index === 0 ? 'about-us-cards-section__first-card' : 'about-us-cards-section__next-card'}`}
           >
             <div className="about-us-cards-section__cards-content">
-              <div className="about-us-cards-section__cards-logo">
-                <img className="about-us-cards-section__cards-logo__intersect"
-                  src={`${process.env.REACT_APP_PUBLIC_URL}/svg/intersect.svg`}
-                  alt="About us cards"
-                />
-                <img className="about-us-cards-section__cards-logo__expert"
-                  src={`${process.env.REACT_APP_PUBLIC_URL}/svg/${card.logo}`}
-                  alt="Logo"
-                />
-              </div>
               <h3 className="about-us-cards-section__cards-content__text-header">{card.title}</h3>
               <p className="about-us-cards-section__cards-content__text">{card.text}</p>
             </div>

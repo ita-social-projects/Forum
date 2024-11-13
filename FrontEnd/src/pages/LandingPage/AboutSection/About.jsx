@@ -1,7 +1,7 @@
 import './About.css';
 import React from 'react';
 import AboutSectionCards from './Cards/AboutCards';
-import AboutSectionText from './AboutText/AboutText';
+
 import AboutTextContent from './AboutMainText.js';
 
 const MainAboutSection = () => {
@@ -16,7 +16,7 @@ const MainAboutSection = () => {
 
   return (
     <div className="about-us-section">
-      <AboutSectionText />
+
       <AboutSectionCards />
       <div className="about-us-section-content" >
         <div id={'about-us'} className="about-us-rectangle" >
