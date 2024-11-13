@@ -9,7 +9,6 @@
     display:flex;
     justify-content: center;
     flex-direction:row;
-    background-color: #B4D27A;
     padding: 32px 104px 32px 104px;
 }
 
@@ -50,7 +49,7 @@
 
 .main-banner-link{
     font-family: Geologica;
-    font-size:15px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 20px;
     letter-spacing: -0.01em;
@@ -64,10 +63,8 @@
 
 @media (min-width: 768px) and (max-width: 1511px) { 
     .main-container{
-        display:flex;
-        justify-content: center;
         flex-direction:column-reverse;
-        background-color: #B4D27A;
+
     }
     .main-baner-text{
         display: flex;
@@ -86,7 +83,6 @@
     }
     .main-banner__img{
         max-width: 100%;
-        height: auto;
     }
 }
 
@@ -132,6 +128,5 @@
     }
     .main-banner__img{
         max-width: 344px;
-        height: auto;
     }
 }
