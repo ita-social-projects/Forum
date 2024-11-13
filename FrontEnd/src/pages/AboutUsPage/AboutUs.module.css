@@ -6,6 +6,9 @@
 }
 .about-us-section-main {
     padding: 0 15px;  
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 .about-us-section-content__header {
     color: var(--about-us-header-color);
