@@ -14,8 +14,8 @@ const AboutSectionCards = () => {
             className={`about-us-cards-section__card 
           ${
             index === 0
-              ? "about-us-cards-section__first-card"
-              : "about-us-cards-section__next-card"
+              ? 'about-us-cards-section__first-card'
+              : 'about-us-cards-section__next-card'
           }`}
           >
             <div className="about-us-cards-section__cards-content">
