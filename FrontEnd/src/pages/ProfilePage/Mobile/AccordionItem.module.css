@@ -43,3 +43,7 @@
     height: 1px;
     background-color: var(--light-seashell-background);
 }
+
+.danger {
+    color: var(--delete-text-color);
+}
