@@ -10,13 +10,17 @@ const DeleteProfilePage = () => {
     setModal(false);
   };
   return (
-    <div className={css['button__delete-main']}>
-      <button className={css['button__delete']} onClick={() => setModal(true)}>
-        Видалити профіль
-      </button>
-      <MyModal visible={modal}>
-        <DeleteProfileModal onCancel={cancelHandler} />
-      </MyModal>
+    <div className={css['button__delete-container']}>
+      <h3 className={css['button__delete-head']}>Видалити профіль</h3>
+      <div className={css['divider']}></div>
+      <div className={css['button__delete-main']}>
+        <button className={css['button__delete']} onClick={() => setModal(true)}>
+          Видалити профіль
+        </button>
+        <MyModal visible={modal}>
+          <DeleteProfileModal onCancel={cancelHandler} />
+        </MyModal>
+      </div>
     </div>
   );
 };

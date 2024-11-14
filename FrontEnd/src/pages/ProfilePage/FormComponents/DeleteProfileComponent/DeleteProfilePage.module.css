@@ -13,3 +13,37 @@
     line-height: 20px;
     cursor: pointer;
 }
+
+.button__delete-head {
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .button__delete-container {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--main-white);
+        width: 474px;
+        height: 112px;
+        border-radius: 6px;
+    }
+    .button__delete-head {
+        font-family: var(--font-main);
+        font-size: 16px;
+        font-weight: 600;
+        height: 52px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 24px;
+    }
+    
+    .divider {
+        width: 100%;
+        height: 1px;
+        background-color: var(--light-seashell-background);
+    }
+    .button__delete {
+        margin-left: 14px;
+    }
+}
