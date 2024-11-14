@@ -1,26 +1,8 @@
 import { useState, useEffect } from 'react';
 import { List } from 'antd';
-import ProfileCard from './ProfileCard';
-import css from './ProfileList.module.css';
+import CompanyCard from '../../components/CompanyCard/CompanyCard';
 
-const PAGE_SIZE = 6;
-
-const getCompanyWord = (number) => {
-  if (number === 1 || (number > 20 && number % 10 === 1)) {
-    return 'компанія';
-  } else if ((number >= 2 && number <= 4) || (number > 20 && number % 10 >= 2 && number % 10 <= 4)) {
-    return 'компанії';
-  } else {
-    return 'компаній';
-  }
-};
-
-const ListHeader = ({ number }) => (
-  <div className={css['results-header']}>
-    <p className={css['results-header__number']}>{number}</p>
-    <p className={css['results-header__text']}>{getCompanyWord(number)}</p>
-  </div>
-);
+const PAGE_SIZE = 16;
 
 export default function ProfileList({
   isAuthorized,
@@ -47,6 +29,14 @@ export default function ProfileList({
 
   return (
     <List
+      grid={{
+        justify: 'center',
+        align: 'stretch',
+        gutter: [32, 8],
+        xs: 1,
+        md: 2,
+        xl: 4,
+      }}
       pagination={{
         onChange: (page) => {
           paginationFunc(page);
@@ -58,14 +48,13 @@ export default function ProfileList({
         hideOnSinglePage: true,
         current: current,
       }}
-      header={<ListHeader number={data.total_items} />}
       dataSource={data.results}
       split={false}
       renderItem={(item) => (
         <List.Item key={item.id}>
-          <ProfileCard
+          <CompanyCard
               isAuthorized={isAuthorized}
-              data={item}
+              profile={item}
               savedIsUpdated={savedIsUpdatedMap[item.id]}
               onClearUpdate={(isUpdated) => handleClearUpdate(item.id, isUpdated)}
           />
