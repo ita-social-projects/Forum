@@ -68,23 +68,25 @@ const DeleteProfileModal = (props) => {
       <form onSubmit={submitHandler}>
         <div className={css['form__body']}>
           <div className={css['fields__label--text']}>
-            <label>Електронна пошта</label>
+            <label htmlFor="email_for_delete">Електронна пошта</label>
           </div>
           <div className={css['fields__field']}>
             <input
+              id="email_for_delete"
               type="text"
               className={css['fields__field--input']}
               name="email"
               placeholder="Електронна пошта"
               onChange={emailChangeHandler}
               onKeyDown={preventEnterSubmit}
+              autoComplete="off"
             />
           </div>
           {!isCorrectEmail && (
             <div className={css['error-message']}>Некоректна пошта</div>
           )}
           <div className={css['fields__label--text']}>
-            <label>Пароль</label>
+            <label htmlFor="companyPassword">Пароль</label>
           </div>
           <div className={css['fields__field']}>
             <input
@@ -95,6 +97,7 @@ const DeleteProfileModal = (props) => {
               placeholder="Пароль"
               onChange={passwordChangeHandler}
               onKeyDown={preventEnterSubmit}
+              autoComplete="off"
             />
             <span onClick={passwordVisisbilityHandler}>
               <img

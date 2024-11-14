@@ -7,9 +7,10 @@ const TextField = (props) => {
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>
         {props.requiredField && (
-          <label className={css['fields__label--required']}>*</label>
+          <span className={css['fields__label--required']}>*</span>
         )}
         <label
+          htmlFor={props.name}
           className={`${css['fields__label--text']} ${
             !props.requiredField && css['fields__field--notrequired']
           }`}
@@ -21,6 +22,7 @@ const TextField = (props) => {
         <textarea
           className={css['fields__field--textarea']}
           name={props.name}
+          id={props.name}
           value={props.value}
           placeholder={
             props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'

@@ -587,5 +587,4 @@ GeneralInfo.propTypes = {
       path: PropTypes.string,
     }),
   }).isRequired,
-  curForm: PropTypes.string,
 };

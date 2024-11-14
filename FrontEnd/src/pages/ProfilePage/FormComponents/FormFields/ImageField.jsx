@@ -66,6 +66,7 @@ const ImageField = ({
     >
       <div className={css['fields__label']}>
         <label
+          htmlFor={name}
           className={classNames(
             css['fields__label--text'],
             css['fields__field--notrequired']
