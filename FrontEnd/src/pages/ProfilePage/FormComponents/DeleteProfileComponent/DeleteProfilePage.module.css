@@ -47,3 +47,10 @@
         margin-left: 14px;
     }
 }
+
+@media only screen and (min-width: 1200px) {
+    .button__delete-container {
+        width: 636px;
+        margin-left: 180px;
+    }
+}
