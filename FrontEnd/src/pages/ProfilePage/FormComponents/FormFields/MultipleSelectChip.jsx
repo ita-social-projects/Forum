@@ -23,7 +23,7 @@ export default function MultipleSelectChip(props) {
           mode="multiple"
           name={props.name}
           value={props.value}
-          placeholder="Оберіть"
+          placeholder={props.placeholder || 'Оберіть'}
           variant="borderless"
           className={css['select-container']}
           dropdownStyle={{
@@ -54,4 +54,5 @@ MultipleSelectChip.propTypes = {
   options: PropTypes.array,
   updateHandler: PropTypes.func.isRequired,
   error: PropTypes.string,
+  placeholder: PropTypes.string,
 };

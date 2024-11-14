@@ -1,6 +1,5 @@
 .header-menu-section {
     display: flex;
-    padding: 0px 64px;
     justify-content: flex-end;
     align-items: center;
     gap: 24px;
@@ -15,6 +14,7 @@
 }
 
 .header-menu-element__text {
+    position: relative;
     color: #292E32;
     font-feature-settings: 'calt' off;
     text-decoration: none;
@@ -22,7 +22,31 @@
     font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 20px;
     letter-spacing: -0.14px;
+}
+
+.header-menu-element__text::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    left: 0;
+    bottom: -5px;
+    background-color: #292E32;
+    transition: width 0.3s ease;
+}
+
+.header-menu-element__text:hover::after {
+    width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .header-menu-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+  }
 }
