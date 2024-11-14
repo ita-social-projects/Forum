@@ -38,10 +38,6 @@ const ContactsInfo = (props) => {
   const inputRef = useMask({ mask: '+380XX XXX XX XX', replacement: { X: /\d/ } });
 
   useEffect(() => {
-    setProfile(props.profile);
-  }, [props.profile]);
-
-  useEffect(() => {
     if (mainProfile?.phone) {
       setProfile((prevState) => ({
         ...prevState,

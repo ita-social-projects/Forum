@@ -105,10 +105,6 @@ const GeneralInfo = (props) => {
     setFormIsDirty(isDirty);
   }, [mainProfile, profile]);
 
-  useEffect(() => {
-    setProfile(props.profile);
-  }, [props.profile]);
-
   const checkRequiredFields = () => {
     let isValid = true;
     const newFormState = {};

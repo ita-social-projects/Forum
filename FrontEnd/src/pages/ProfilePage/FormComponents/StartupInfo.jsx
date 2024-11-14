@@ -28,10 +28,6 @@ const StartupInfo = (props) => {
   };
 
   useEffect(() => {
-    setProfile(props.profile);
-  }, [props.profile]);
-
-  useEffect(() => {
     const isDirty = checkFormIsDirty(fields, null, profile);
     setFormIsDirty(isDirty);
   }, [mainProfile, profile]);

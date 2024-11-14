@@ -121,7 +121,6 @@ const ImageField = ({
             <PendingStatus profile={profile} elementType="logo" />
             <div className={css['upload-file__wrapper--logo']}>
               <div className={css['upload-file__logo']} style={backgroundImage} />
-              {renderInput()}
               {renderUpdateImageLabel('змінити')}
               {renderDeleteButton('видалити')}
             </div>

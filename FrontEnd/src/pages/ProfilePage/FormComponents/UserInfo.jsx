@@ -48,14 +48,6 @@ const UserInfo = (props) => {
   };
 
   useEffect(() => {
-    setUpdateUser(props.user);
-  }, [props.user]);
-
-  useEffect(() => {
-    setUpdateProfile(props.profile);
-  }, [props.profile]);
-
-  useEffect(() => {
     const isDirty = checkFormIsDirty(fields, updateUser, updateProfile);
     setFormIsDirty(isDirty);
   }, [user, profile, updateUser, updateProfile]);
