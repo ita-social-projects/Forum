@@ -5,7 +5,7 @@ import AboutSectionText from './AboutText/AboutText.jsx';
 
 const MainAboutSection = () => {
   return (
-    <div className='about-us-section'>
+    <div className="about-us-section">
       <AboutSectionText />
       <AboutSectionCards />
     </div>
