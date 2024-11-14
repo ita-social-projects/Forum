@@ -64,6 +64,7 @@
     border-radius: 2px;
     border: 1px solid #D9D9D9;
     background: #FFF;
+    padding-top: 4px;
 }
 
 .select-container:focus-within {
