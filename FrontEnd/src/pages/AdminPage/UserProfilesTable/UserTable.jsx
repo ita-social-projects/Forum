@@ -9,7 +9,7 @@ import css from './UserTable.module.scss';
 
 
 const LENGTH_EMAIL = 14;
-const DEFAULT_PAGE_SIZE = 3;
+const DEFAULT_PAGE_SIZE = 20;
 
 function UserTable() {
     const location = useLocation();
