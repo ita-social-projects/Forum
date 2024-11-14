@@ -111,3 +111,9 @@
     background: linear-gradient(0deg, #F5F5F5, #F5F5F5),
         linear-gradient(0deg, #D9D9D9, #D9D9D9);
 }
+
+@media only screen and (min-width: 768px) {
+    .fields__column {
+        width: 426px;
+    }
+}

@@ -13,6 +13,7 @@ const AccordionItem = (props) => {
             <button className={css['accordion-button']} onClick={() => toggle()}>
                 <p>{props.title}</p><img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/arrow-${isOpen ? 'up' : 'down'}.svg`}></img>
             </button>
+            <div className={css['divider']}></div>
             <div className={`${css['accordion-content']} ${isOpen ? '' : css['close']}`}>
                 {props.content}
             </div>

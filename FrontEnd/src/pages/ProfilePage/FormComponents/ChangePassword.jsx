@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import PasswordField from './FormFields/PasswordField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './ChangePassword.module.css';
 
 export default function ChangePassword(props) {
@@ -100,6 +101,7 @@ export default function ChangePassword(props) {
               checkWith: 'newPassword',
             }}
           />
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

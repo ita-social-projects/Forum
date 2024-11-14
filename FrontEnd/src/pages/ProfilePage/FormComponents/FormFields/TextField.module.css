@@ -108,3 +108,9 @@
     letter-spacing: -0.01em;
     color: #A3AAB0;
 }
+
+@media only screen and (min-width: 768px) {
+    .fields__column {
+        width: 426px;
+    }
+}

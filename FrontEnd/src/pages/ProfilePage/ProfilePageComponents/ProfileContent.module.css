@@ -9,7 +9,7 @@
     min-height: var(--profile-min-height-block);
     display: flex;
     padding-bottom: 45px;
-    padding-left: 192px;
+    padding-left: 26px;
     gap: 16px;
 }
 
@@ -17,8 +17,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 222px;
-    gap: 12px;
+    width: 223px;
+    gap: 10px;
 }
 
 .profile__infolink {
@@ -30,6 +30,7 @@
     letter-spacing: -0.01em;
     text-align: left;
     text-decoration: none;
+    padding: 5px 10px;
 }
 
 .profile__infolink-active {
@@ -37,6 +38,7 @@
     font-weight: 600;
     color: #000000;
     text-decoration: none;
+    background-color: var(--main-white);
 }
 
 .profile__infolink-disabled {

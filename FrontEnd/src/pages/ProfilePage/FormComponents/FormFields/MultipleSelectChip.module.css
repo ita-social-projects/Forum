@@ -1,6 +1,6 @@
 .fields__column {
     display: flex;
-    padding: 0px 0px 15px 0px;
+    padding: 0px 0px 15px 7px;
     flex-direction: column;
 }
 
@@ -59,7 +59,8 @@
 }
 
 .select-container {
-    width: 257px;
+    width: 311px;
+    min-height: 40px;
     border-radius: 2px;
     border: 1px solid #D9D9D9;
     background: #FFF;
@@ -67,4 +68,10 @@
 
 .select-container:focus-within {
     border: 1px solid var(--main-button-color);
+}
+
+@media only screen and (min-width: 768px) {
+    .select-container {
+        width: 426px;
+    }
 }
