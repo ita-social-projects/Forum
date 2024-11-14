@@ -1,5 +1,5 @@
 .accordion-content {
-    max-height: 1500px;
+    max-height: 2500px;
     transition: max-height 1s ease-in-out;
     overflow: hidden;
     border-radius: 6px;
@@ -23,6 +23,7 @@
     padding-top: 13px;
     height: 49px;
     cursor: pointer;
+    color: var(--link-text-color);
 }
 
 .accordion-button img {
