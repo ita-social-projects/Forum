@@ -70,6 +70,8 @@ const ProductServiceInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Інформація про товари/послуги</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="ProductServiceInfo"
@@ -95,6 +97,7 @@ const ProductServiceInfo = (props) => {
               maxLength={TEXT_AREA_MAX_LENGTH}
             />
           </div>
+          <div className={css['bottom-divider']}></div>
           <ProfileFormButton />
         </form>
       ) : (

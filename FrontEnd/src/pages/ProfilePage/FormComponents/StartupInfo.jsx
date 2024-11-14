@@ -64,6 +64,8 @@ const StartupInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Стартап</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="StartupInfo"
@@ -81,6 +83,7 @@ const StartupInfo = (props) => {
               maxLength={TEXT_AREA_MAX_LENGTH}
             />
           </div>
+          <div className={css['bottom-divider']}></div>
           <ProfileFormButton />
         </form>
       ) : (

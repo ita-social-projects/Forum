@@ -286,10 +286,12 @@ const GeneralInfo = (props) => {
       try {
         const response = await axios.post(url, formData);
         setProfile((prevState) => {
-          return { ...prevState, [imageKey]: {
-            ...prevState[imageKey],
-            uuid: response.data.uuid
-          }};
+          return {
+            ...prevState, [imageKey]: {
+              ...prevState[imageKey],
+              uuid: response.data.uuid
+            }
+          };
         });
       } catch (error) {
         console.error(
@@ -323,12 +325,12 @@ const GeneralInfo = (props) => {
     e.target.value = '';
     const imageUrl =
       e.target.name === 'banner'
-      ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/`
-      : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/`;
+        ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/`
+        : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/`;
     const setImage =
       e.target.name === 'banner'
-      ? setBannerImage
-      : setLogoImage;
+        ? setBannerImage
+        : setLogoImage;
     if (file && checkMaxImageSize(e.target.name, file)) {
       setImage(URL.createObjectURL(file));
       await uploadImage(imageUrl, e.target.name, file);
@@ -338,8 +340,8 @@ const GeneralInfo = (props) => {
   const deleteImageHandler = async (name) => {
     const imageUrl =
       name === 'banner'
-      ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
-      : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
+        ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
+        : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
     try {
       await axios.delete(imageUrl);
       if (name === 'banner') setBannerImage(null);
@@ -405,6 +407,8 @@ const GeneralInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Загальна інформація</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="GeneralInfo"
@@ -428,20 +432,20 @@ const GeneralInfo = (props) => {
                 value={profile.name}
                 maxLength={100}
               />
+              <HalfFormField
+                name="official_name"
+                label={LABELS.official_name}
+                updateHandler={onUpdateField}
+                onBlur={onBlurHandler}
+                value={profile.official_name ?? ''}
+                error={
+                  formStateErr['official_name']?.['error']
+                    ? formStateErr['official_name']['message']
+                    : null
+                }
+                maxLength={200}
+              />
             </div>
-            <HalfFormField
-              name="official_name"
-              label={LABELS.official_name}
-              updateHandler={onUpdateField}
-              onBlur={onBlurHandler}
-              value={profile.official_name ?? ''}
-              error={
-                formStateErr['official_name']?.['error']
-                  ? formStateErr['official_name']['message']
-                  : null
-              }
-              maxLength={200}
-            />
             <div className={css['fields-groups']}>
               {mainProfile?.is_fop ? (
                 <HalfFormField
@@ -554,6 +558,7 @@ const GeneralInfo = (props) => {
               requiredField={true}
             />
           </div>
+          <div className={css['bottom-divider']}></div>
           <ProfileFormButton />
         </form>
       ) : (

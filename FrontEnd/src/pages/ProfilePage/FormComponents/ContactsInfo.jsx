@@ -26,7 +26,7 @@ const ContactsInfo = (props) => {
   const { setFormIsDirty } = useContext(DirtyFormContext);
 
   const fields = {
-    phone: { defaultValue: mainProfile?.phone ?? null, type: 'phone'},
+    phone: { defaultValue: mainProfile?.phone ?? null, type: 'phone' },
     address: { defaultValue: mainProfile?.address ?? null },
   };
 
@@ -112,6 +112,8 @@ const ContactsInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Контакти</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="ContactsInfo"
@@ -132,15 +134,16 @@ const ContactsInfo = (props) => {
                 value={phone ?? ''}
                 error={phoneNumberError}
               />
+              <HalfFormField
+                name="address"
+                label={LABELS.address}
+                updateHandler={onUpdateField}
+                requiredField={false}
+                value={profile.address ?? ''}
+              />
             </div>
-            <HalfFormField
-              name="address"
-              label={LABELS.address}
-              updateHandler={onUpdateField}
-              requiredField={false}
-              value={profile.address ?? ''}
-            />
           </div>
+          <div className={css['bottom-divider']}></div>
           <ProfileFormButton />
         </form>
       ) : (

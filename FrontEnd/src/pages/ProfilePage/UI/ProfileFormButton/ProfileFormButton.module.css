@@ -1,7 +1,7 @@
 .submit-button__conteiner {
     display: flex;
     align-items: flex-start;
-    padding: 11px 7px;
+    padding: 11px 17px;
     background-color: var(--main-white);
 }
 
@@ -15,4 +15,10 @@
     font-weight: 600;
     line-height: 20px;
     cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) {
+    .submit-button__conteiner {
+        padding: 11px 24px;
+    }
 }

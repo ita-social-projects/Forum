@@ -60,6 +60,8 @@ export default function ChangePassword(props) {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Змінити пароль</h3>
+      <div className={css['divider']}></div>
       {props.user ? (
         <form id="ChangePassword" onSubmit={handleSubmit(handleFormSubmit)}>
           <PasswordField
@@ -101,6 +103,7 @@ export default function ChangePassword(props) {
               checkWith: 'newPassword',
             }}
           />
+          <div className={css['bottom-divider']}></div>
           <ProfileFormButton />
         </form>
       ) : (

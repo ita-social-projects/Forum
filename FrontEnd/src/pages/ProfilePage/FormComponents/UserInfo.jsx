@@ -190,6 +190,8 @@ const UserInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Інформація про користувача</h3>
+      <div className={css['divider']}></div>
       {updateUser && user && profile && updateProfile ? (
         <form
           id="UserInfo"
@@ -258,6 +260,7 @@ const UserInfo = (props) => {
               />
             </div>
           </div>
+          <div className={css['bottom-divider']}></div>
           <ProfileFormButton />
         </form>
       ) : (

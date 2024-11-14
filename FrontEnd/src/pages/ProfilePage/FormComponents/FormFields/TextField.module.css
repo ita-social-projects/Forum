@@ -2,7 +2,7 @@
     display: flex;
     width: 311px;
     padding-bottom: 5px;
-    padding-left: 7px;
+    padding-left: 16px;
     flex-direction: column;
 }
 
@@ -112,5 +112,6 @@
 @media only screen and (min-width: 768px) {
     .fields__column {
         width: 426px;
+        padding-left: 24px;
     }
 }

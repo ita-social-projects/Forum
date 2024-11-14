@@ -89,6 +89,8 @@ const AdditionalInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Додаткова інформація</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="AdditionalInfo"
@@ -109,6 +111,7 @@ const AdditionalInfo = (props) => {
               />
             </div>
           </div>
+          <div className={css['bottom-divider']}></div>
           <ProfileFormButton />
         </form>
       ) : (
