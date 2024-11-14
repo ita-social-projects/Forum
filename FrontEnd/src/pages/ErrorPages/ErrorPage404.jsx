@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import css from './ErrorPage404.module.css';
-import { Button } from 'antd';
 
 export default function ErrorPage404() {
   return (
@@ -15,9 +14,9 @@ export default function ErrorPage404() {
               або тимчасово недоступна.
             </p>
           </div>
-          <Button className={css['ErrorPage404__button']}>
+          <button className={css['ErrorPage404__button']}>
             <Link className={css['ErrorPage404__button-text']} to="/">Повернутися на головну</Link>
-          </Button>
+          </button>
         </div>
       </div>
     </div>
