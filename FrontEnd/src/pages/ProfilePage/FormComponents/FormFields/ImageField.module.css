@@ -58,11 +58,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #1F9A7C;
+    border: 1px solid var(--dark-border-button);
     border-radius: 4px;
     cursor: pointer;
-    width: 139px;
-    height: 30px;
+    width: 144px;
+    height: 40px;
 }
 
 .upload-file__text {
@@ -72,7 +72,7 @@
     line-height: 20px;
     letter-spacing: -0.01em;
     text-align: center;
-    color: #1F9A7C;
+    color: var(--main-button-color);
 }
 
 .upload-file__icon {
@@ -175,4 +175,10 @@ button {
 
 .fields__field--notrequired {
     padding-top: 2px;
+}
+
+@media only screen and (min-width: 768px) {
+    .fields__column {
+        padding-left: 23px;
+    }
 }
