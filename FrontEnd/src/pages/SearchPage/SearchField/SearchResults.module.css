@@ -9,7 +9,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-content: space-between;
   margin: 20px; 
   position: relative;
@@ -22,4 +22,29 @@
   z-index: 1000;
   position: relative;
   z-index: 100;
+}
+
+
+@media (max-width: 768px){
+    .row {
+      grid-template-columns: 1fr 1fr;
+       gap: 16px;
+      margin: 10px;
+    }
+    .col-md-4 {
+      flex-basis: calc(50% - 16px);
+      margin: 10px;
+    }
+}
+
+@media (max-width: 375px){
+    .row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 8px;
+    }
+    .col-md-4 {
+      flex-basis: 100%;
+      margin: 8px 0;
+    }
 }
