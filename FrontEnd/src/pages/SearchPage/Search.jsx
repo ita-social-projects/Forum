@@ -5,7 +5,7 @@ import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import SearchResults from './SearchField/SearchResults';
 import link_to_left from './img/link_to_left.svg';
 import link_to_right from './img/link_to_right.svg';
-import styles from './search.module.css';
+import styles from './search.module.scss';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
