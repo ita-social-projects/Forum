@@ -47,12 +47,12 @@ export default function ChangePassword(props) {
         if (error.response && error.response.data && error.response.data['new_password']) {
           const newPasswordError = error.response.data['new_password'][0];
           if (newPasswordError === 'This password is too common.') {
-            toast.error('Пароль занадто поширений. Створіть інший пароль.');
-          } else if (newPasswordError.startsWith('The password is too similar to the')) {
-            toast.error('Пароль подібний на іншу персональну інформацію облікового запису. Створіть інший пароль.');
-          }
-        } else
-          toast.error('Виникла помилка. Можливо, вказано невірний поточний пароль');
+          toast.error('Пароль занадто поширений. Створіть інший пароль.');
+        } else if (newPasswordError.startsWith('The password is too similar to the')) {
+          toast.error('Пароль подібний на іншу персональну інформацію облікового запису. Створіть інший пароль.');
+        }
+      } else
+        toast.error('Виникла помилка. Можливо, вказано невірний поточний пароль');
       });
     reset();
   };

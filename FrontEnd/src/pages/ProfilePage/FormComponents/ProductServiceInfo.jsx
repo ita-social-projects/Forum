@@ -34,10 +34,6 @@ const ProductServiceInfo = (props) => {
     setFormIsDirty(isDirty);
   }, [mainProfile, profile]);
 
-  useEffect(() => {
-    setProfile(props.profile);
-  }, [props.profile]);
-
   const onUpdateTextAreaField = (e) => {
     if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
       setProfile((prevState) => {

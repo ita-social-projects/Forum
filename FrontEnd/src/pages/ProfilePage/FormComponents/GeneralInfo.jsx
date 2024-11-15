@@ -286,12 +286,10 @@ const GeneralInfo = (props) => {
       try {
         const response = await axios.post(url, formData);
         setProfile((prevState) => {
-          return {
-            ...prevState, [imageKey]: {
-              ...prevState[imageKey],
-              uuid: response.data.uuid
-            }
-          };
+          return { ...prevState, [imageKey]: {
+            ...prevState[imageKey],
+            uuid: response.data.uuid
+          }};
         });
       } catch (error) {
         console.error(
@@ -325,12 +323,12 @@ const GeneralInfo = (props) => {
     e.target.value = '';
     const imageUrl =
       e.target.name === 'banner'
-        ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/`
-        : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/`;
+      ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/`
+      : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/`;
     const setImage =
       e.target.name === 'banner'
-        ? setBannerImage
-        : setLogoImage;
+      ? setBannerImage
+      : setLogoImage;
     if (file && checkMaxImageSize(e.target.name, file)) {
       setImage(URL.createObjectURL(file));
       await uploadImage(imageUrl, e.target.name, file);
@@ -340,8 +338,8 @@ const GeneralInfo = (props) => {
   const deleteImageHandler = async (name) => {
     const imageUrl =
       name === 'banner'
-        ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
-        : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
+      ? `${process.env.REACT_APP_BASE_API_URL}/api/image/banner/${profile.banner?.uuid}`
+      : `${process.env.REACT_APP_BASE_API_URL}/api/image/logo/${profile.logo?.uuid}`;
     try {
       await axios.delete(imageUrl);
       if (name === 'banner') setBannerImage(null);
@@ -350,12 +348,12 @@ const GeneralInfo = (props) => {
       setProfile((prevState) => {
         const newState = { ...prevState, [name]: null };
         return newState;
-      });
-    } catch (error) {
-      console.error('Error deleting image:',
-        error.response ? error.response.data : error.message);
-      toast.error('Не вдалося видалити банер/лого, сталася помилка');
-    }
+    });
+  } catch (error) {
+    console.error('Error deleting image:',
+      error.response ? error.response.data : error.message);
+    toast.error('Не вдалося видалити банер/лого, сталася помилка');
+  }
   };
 
   const errorMessages = {
@@ -394,7 +392,7 @@ const GeneralInfo = (props) => {
       try {
         const response = await axios.patch(
           `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
-          data.profileChanges
+        data.profileChanges
         );
         profileMutate(response.data);
         toast.success('Зміни успішно збережено');
