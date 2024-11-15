@@ -62,12 +62,12 @@
 }
 
 .data-block__field--value {
-    width: 170px;
+    min-width: 170px;
     color: var(--profile-detail-data-contacts-color-text);
 }
 
 .data-block__field--site {
-    width: 170px;
+    min-width: 170px;
     color: #4A73E2;
 }
 
@@ -84,8 +84,7 @@
     }
 
     .data-content {
-        min-width: 700px;
-        ;
+        min-width: calc(100vw - 80px);
     }
 }
 

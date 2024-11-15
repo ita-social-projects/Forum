@@ -2,22 +2,21 @@
   display: flex;
   background: var(--profile-detail-title-background);
   width: var(--profile-detail-width);
-  justify-content: center;
 }
 
 .title-block__content {
   display: flex;
   padding: 24px 16px;
-  width: 345px;
+  min-width: 345px;
   align-items: flex-start;
   flex-direction: column;
-  justify-content: space-between;
   gap: 24px;
 }
 
 .title-block__content-info {
   display: flex;
   flex-direction: column;
+  padding-left: 10px;
 }
 
 .title-block__logo-block {
@@ -133,7 +132,7 @@
 
 @media only screen and (min-width: 768px) {
   .title-block__content {
-    width: 765px;
+    min-width: 765px;
     padding: 40px 24px;
   }
 
@@ -154,6 +153,7 @@
 @media only screen and (min-width: 1512px) {
   .title-block {
     flex-direction: row;
+    justify-content: center;
   }
 
   .title-block__content {

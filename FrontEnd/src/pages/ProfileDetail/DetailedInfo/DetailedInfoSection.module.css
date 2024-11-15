@@ -1,7 +1,6 @@
 .detail-info-page_block {
     display: flex;
     width: var(--profile-detail-width);
-    justify-content: center;
 }
 
 .detail-info-page {
@@ -38,11 +37,12 @@
     .detail-info-page {
         display: flex;
         flex-direction: column;
-        width: 768px;
+        min-width: 768px;
+        padding-left: 24px;
     }
 
     .company-description-block {
-        width: 768px;
+        min-width: 768px;
     }
 
     .profile-detail__tags-mobile {
@@ -53,6 +53,9 @@
 }
 
 @media only screen and (min-width: 1512px) {
+    .detail-info-page_block  {
+        justify-content: center;
+    }
     .detail-info-page {
         display: flex;
         flex-direction: row-reverse;

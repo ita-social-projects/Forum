@@ -55,14 +55,14 @@
 
 .contact-container {
     display: flex;
-    width: 130px;
+    min-width: 130px;
     justify-content: space-between;
     gap: 36px;
 }
 
 @media only screen and (min-width: 768px) {
     .contact-container {
-        width: 589px;
+        min-width: 200px;
     }
 }
 
