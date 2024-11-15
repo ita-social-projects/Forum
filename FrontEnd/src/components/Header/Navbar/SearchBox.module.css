@@ -65,3 +65,9 @@ textarea:focus,
   outline: none;
   box-shadow: none;
 }
+
+@media (max-width: 1200px) {
+  .header-search-box {
+    width: 100%;
+  }
+}

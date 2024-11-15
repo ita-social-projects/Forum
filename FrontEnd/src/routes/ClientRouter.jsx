@@ -17,12 +17,12 @@ import ProfileDetailPage from '../pages/ProfileDetail/ProfileDetailPage';
 import ProfileListPage from '../pages/ProfileList/ProfileListPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import { SignUpPage } from '../pages/SignUp/SignUp/SignUpPage';
-import { SignUpModalPage } from '../pages/SignUp/SignUp/SignUpModalPage';
+import { SignUpCompletionPage } from '../pages/SignUp/SignUp/SignUpCompletionPage';
 import { ResendActivationPage } from '../pages/SignUp/SignUp/ResendActivationPage';
-import { ActivationProfilePage } from '../pages/SignUp/SignUp/ActivateProfilePage';
-import { SendEmailRestorePasswordPage } from '../pages/RestorePassword/Pages/SendEmailRestorePasswordPage';
+import { ActivateProfilePage } from '../pages/SignUp/SignUp/ActivateProfilePage';
+import { SendEmailForgotPasswordPage } from '../pages/RestorePassword/Pages/SendEmailForgotPasswordPage';
 import { RestorePasswordPage } from '../pages/RestorePassword/Pages/RestorePasswordPage';
-import { RestorePasswordModalPage } from '../pages/RestorePassword/Pages/RestorePasswordModalPage';
+import { ForgotPasswordCompletionPage } from '../pages/RestorePassword/Pages/ForgotPasswordCompletionPage';
 import { RestorePasswordSuccessPage } from '../pages/RestorePassword/Pages/RestorePasswordSuccessPage';
 import { RestorePasswordFailedPage } from '../pages/RestorePassword/Pages/RestorePasswordFailedPage';
 import { ModerationModal } from '../components/Moderation/ModerationModal';
@@ -77,22 +77,22 @@ function ClientRouter() {
         ) : (
           <Route path="/sign-up" element={<SignUpPage />} />
         )}
-        <Route path="/sign-up/modal" element={<SignUpModalPage />} />
+        <Route path="/sign-up/completion" element={<SignUpCompletionPage />} />
         <Route
           path="/sign-up/resend-activation"
           element={<ResendActivationPage />}
         />
         <Route
           path="/activate/:uid/:token"
-          element={<ActivationProfilePage />}
+          element={<ActivateProfilePage />}
         />
         <Route
           path="/reset-password"
-          element={<SendEmailRestorePasswordPage />}
+          element={<SendEmailForgotPasswordPage />}
         />
         <Route
-          path="/reset-password/modal"
-          element={<RestorePasswordModalPage />}
+          path="/reset-password/completion"
+          element={<ForgotPasswordCompletionPage />}
         />
         <Route
           path="/password/reset/confirm/:uid/:token"

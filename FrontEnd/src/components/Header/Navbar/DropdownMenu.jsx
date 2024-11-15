@@ -30,9 +30,9 @@ function DropdownMenu({ children, toggleText }) {
       {isOpen && (
         <div onClick={handleOpen} className={css['dropdown-menu']}>
           {React.Children.map(children, (child) => {
-            return React.cloneElement(child, {
+            return child ? React.cloneElement(child, {
               className: css['dropdown-menu__text'],
-            });
+            }): null;
           })}
         </div>
       )}
