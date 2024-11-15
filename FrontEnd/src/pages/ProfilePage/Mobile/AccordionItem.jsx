@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import css from './AccordionItem.module.css';
+import { DirtyFormContext } from '../../../context/DirtyFormContext';
 
 const AccordionItem = (props) => {
     const [isOpen, setIsOpen] = useState(false);
+    const { formIsDirty } = useContext(DirtyFormContext);
 
     const toggle = () => {
-        setIsOpen(!isOpen);
+        formIsDirty ? props.warningHandler() : setIsOpen(!isOpen);
     };
 
     return (
