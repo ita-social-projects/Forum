@@ -80,11 +80,12 @@
 
 @media only screen and (min-width: 768px) {
     .data-block__field--value {
-        min-width: 589px;
+        min-width: 506px;
     }
 
     .data-content {
-        min-width: calc(100vw - 80px);
+        width: 600px;
+        min-width: 688px;
     }
 }
 
@@ -94,7 +95,10 @@
     }
 
     .data-content {
-        width: 344px;
-        min-width: 344px;
+        width: 411px;
+        min-width: 411px;
+    }
+    .data-block {
+        padding-left: 40px;
     }
 }

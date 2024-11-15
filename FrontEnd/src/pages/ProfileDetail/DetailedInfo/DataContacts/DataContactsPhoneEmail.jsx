@@ -37,9 +37,9 @@ function PhoneEmail({ isAuthorized, profileId, personId }) {
 
   const renderIcons = (state) => {
     return state ? (
-      <CheckOutlined style={{ color: '#46a310' }} />
+      <CheckOutlined style={{ fontSize: '22px', color: '#46a310' }} />
     ) : (
-      <CopyOutlined style={{ cursor: 'pointer' }} />
+      <CopyOutlined style={{ fontSize: '22px', cursor: 'pointer' }} />
     );
   };
 
