@@ -65,7 +65,7 @@
 .modal-footer {
     display: flex;
     padding: 10px 16px;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     gap: 8px;
     align-self: stretch;
@@ -106,7 +106,7 @@
 }
 
 .modal-footer--button-continue {
-    border: 1px solid var(--Primary-Green-80, #1F9A7C);
-    background: var(--Primary-Green-80, #1F9A7C);
+    border: 1px solid var(--main-button-color, #000000);
+    background: var(--main-button-color, #000000);
     color: var(--main-white, #FFF);
 }
