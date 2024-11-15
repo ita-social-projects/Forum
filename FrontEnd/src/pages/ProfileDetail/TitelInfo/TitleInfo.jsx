@@ -156,7 +156,7 @@ TitleInfo.propTypes = {
         name: PropTypes.string,
       })
     ),
-    is_saved: PropTypes.bool.isRequired,
+    is_saved: PropTypes.bool,
     logo: PropTypes.shape({
       path: PropTypes.string,
       uuid: PropTypes.string,

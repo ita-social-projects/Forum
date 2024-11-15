@@ -11,51 +11,29 @@ function Startup({ data }) {
   const { setActiveLinks } = useContext(ActiveLinksContext);
   const profile = useMemo(() => {
     return {
-      startup_idea: data.startup_idea,
+      idea: data.startup_idea,
     };
   }, [data]);
 
-  // TODO: implement logic for getting data from db when it's added on server side
-
-  const startupData = {
-    'Ідея стартапу: ': profile.startup_idea,
-    'Розмір інвестицій': '',
-    'Ціль співпраці': '',
-    'Кінцевий результат': '',
-    'Конкурентна перевага ідеї': '',
-    'Ризики': '',
-    'Пошук партнерів': '',
-  };
-
-  const renderedSections = Object.entries(startupData).map(([key, value]) => {
-    if (value) {
-      return (
-        <div key={key} className={classes['startup__content--block']}>
-            <ReadMore>
-              <span className={classes['startup__content--title']}>{key}</span>
-              {value}
-            </ReadMore>
-          </div>
-      );
-    }
-    return null;
-  });
-
-  const hasSections = renderedSections.some((section) => section !== null);
 
   useEffect(() => {
-    if (hasSections) {
+    if (profile.idea) {
       setActiveLinks(prevData => [
         ...prevData,
         'startup']);
     }
-  }, [hasSections, setActiveLinks]);
+  }, [profile.idea, setActiveLinks]);
 
   return (
-    hasSections ? (
+    profile.idea ? (
       <div id="startup" className={classes['startup-wrapper']}>
-        <h2 className={classes['startup__title--text']}>Стартап</h2>
-        {renderedSections}
+        <h3 className={classes['startup__title--text']}>Стартап</h3>
+        <div className={classes['startup__content--block']}>
+          <ReadMore>
+            <span className={classes['startup__content--title']}>Ідея стартапу: </span>
+            {profile.idea}
+          </ReadMore>
+        </div>
       </div>
     ) : null
   );
@@ -67,4 +45,8 @@ Startup.propTypes = {
   data: PropTypes.shape({
     startup_idea: PropTypes.string,
   }),
+};
+
+ReadMore.propTypes = {
+  children: PropTypes.node,
 };
