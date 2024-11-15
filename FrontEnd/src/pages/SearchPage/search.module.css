@@ -26,15 +26,17 @@
 }
 
 .search_field_entered_value {
-  color: #0b6c61;
-  font: normal normal normal 20px/2 var(--font-main);
-  font-weight: 600;
-  font-style: italic;
+  color: #707070;
+  font: var(--font-main);
+  font-weight: 300;
+  font-size: 34px ;
 }
 
 .search_results_text {
   font: var(--font-main);
+  font-size: 34px;
   font-weight: 700;
+  color: #232424;
 }
 
 .search_result_error {

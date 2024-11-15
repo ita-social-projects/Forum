@@ -79,9 +79,9 @@ export function Search({ isAuthorized }) {
           {searchResults && (
             <div>
               <h3 className={styles['search_results_text']}>
-                РЕЗУЛЬТАТІВ ЗА ПОШУКОМ
+                Результати пошуку
                 <span className={styles['search_field_entered_value']}>
-                  {` ${searchTerm} `}
+                  {` “${searchTerm}” `}
                 </span>
                 : {searchResults.length > 0 ? searchResults.length : 0}
               </h3>
