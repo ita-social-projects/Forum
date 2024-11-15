@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Button, Input} from 'antd';
 import {CloseOutlined, SearchOutlined} from '@ant-design/icons';
-import css from './SearchBox.module.css';
+import css from './SearchBox.module.scss';
 
 function SearchBox() {
   const navigate = useNavigate();
@@ -21,28 +21,25 @@ function SearchBox() {
     setSearchTerm('');
   };
   return (
-      <div className={css['header-search-box']}>
-          <div className={css['header-search-form']}>
+      <div className={css['headerSearchBox']}>
+          <div className={css['headerSearchForm']}>
             <Input
-                className={css['header-search-form__input']}
+                className={css['headerSearchFormInput']}
                 placeholder="Пошук"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
             {searchTerm && (
                <Button
-                id={'closeButton'}
                 icon={<CloseOutlined/>}
                 onClick={handleClear}
-                className={css['header-search-form__addon']}
-                style={{ color: '#000' }}
+                className={css['headerSearchFormAddon']}
             />
             )}
             <Button
                 icon={<SearchOutlined/>}
                 onClick={handleSearch}
-                className={css['header-search-form__addon']}
-                style={{ color: '#000' }}
+                className={css['headerSearchFormAddon']}
             />
           </div>
       </div>

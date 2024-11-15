@@ -1,4 +1,4 @@
-.header-search-box {
+.headerSearchBox {
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -9,7 +9,7 @@
   background: #fff;
 }
 
-.header-search-form {
+.headerSearchForm {
   display: flex;
   padding: 4px 8px;
   align-items: center;
@@ -18,27 +18,25 @@
   position: relative;
 }
 
-
-.header-search-form__input {
+.headerSearchFormInput {
   font-size: 16px;
   flex: 1;
   outline: none;
   border: none;
 }
 
-.header-search-form__addon {
+.headerSearchFormAddon {
   padding: 0;
-  color: black;
+  color: #000;
   cursor: pointer;
   border: none;
 }
-.header-search-form__addon:hover {
-  color: black;
+
+.headerSearchFormAddon:hover {
+  color: #000 !important;
 }
 
-
-
-.header-search-form__addon:last-child::before {
+.headerSearchFormAddon:last-child::before {
   content: "";
   position: absolute;
   right: 40px;
@@ -48,10 +46,9 @@
   background-color: rgba(0, 0, 0, 0.25);
 }
 
-.header-search-form__input::placeholder {
+.headerSearchFormInput::placeholder {
   color: rgba(0, 0, 0, 0.25);
   font-feature-settings: 'calt' off;
-  font-family: var(--font-main);
   font-size: 14px;
   font-style: normal;
   font-weight: 300;
@@ -61,13 +58,13 @@
 }
 
 textarea:focus,
-.header-search-form__input:focus {
+.headerSearchFormInput:focus {
   outline: none;
   box-shadow: none;
 }
 
 @media (max-width: 1200px) {
-  .header-search-box {
+  .headerSearchBox {
     width: 100%;
   }
 }
