@@ -48,3 +48,7 @@
 .danger {
     color: var(--delete-text-color);
 }
+
+.disabled {
+    color: var(--disabled-link);
+}

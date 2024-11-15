@@ -25,6 +25,7 @@ const Accordion = ({ sections }) => {
             key={index}
             title={section.title}
             content={section.content}
+            disabled={section.disabled}
             warningHandler={() => setShowWarningModal(true)} />
         ))}
       </div>
