@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-
 import useSWR from 'swr';
-
 import useWindowWidth from '../../hooks/useWindowWidth';
 
 import ErrorPage404 from '../ErrorPages/ErrorPage404';
@@ -31,17 +29,21 @@ const ACTIVITY_TYPE = [
 export default function ProfileListPage({ isAuthorized }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageNumber = Number(searchParams.get('page')) || 1;
-  const [currentPage, setCurrentPage] = useState(pageNumber);
   const companyType = searchParams.get('companyType') || '';
   const activity = searchParams.get('activity') || '';
   const [filters, setFilters] = useState([]);
-  const [url, setUrl] = useState(`${process.env.REACT_APP_BASE_API_URL}/api/profiles/?ordering=name&page=${currentPage}`);
-
-  const [activeTab, setActiveTab] = useState('all');
-  const [activeBtn, setActiveBtn] = useState('all');
+  const [currentPage, setCurrentPage] = useState(pageNumber);
+  const [activeTab, setActiveTab] = useState(searchParams.get('companyType') || 'all');
+  const [activeBtn, setActiveBtn] = useState(searchParams.get('activity') || 'all');
 
   const windowWidth = useWindowWidth();
   const linkText = windowWidth >= 768 ? 'Усі підприємства' : 'Усі';
+  const pageSize = windowWidth >= 768 ? 16 : 4;
+
+  const [url, setUrl] = useState(
+    `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?ordering=name&page_size=${pageSize}&page=${currentPage}`
+  );
+
 
   const companyTypeMap = {
     '': '',
@@ -59,7 +61,6 @@ export default function ProfileListPage({ isAuthorized }) {
   };
 
   useEffect(() => {
-
     const companyTypeFilter = companyTypeMap[companyType] || '';
     const activityTypeFilter = activityTypeMap[activity] || '';
 
@@ -69,20 +70,29 @@ export default function ProfileListPage({ isAuthorized }) {
 
   useEffect(() => {
     const baseUrl = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/`;
-    let queryString = `?ordering=name&page=${currentPage}`;
+    let queryString = `?ordering=name&page_size=${pageSize}&page=${currentPage}`;
+
     if (filters.length === 2) {
-      queryString = `?${filters.join('&')}&ordering=name&page=${currentPage}`;
+      queryString = `?${filters.join('&')}&ordering=name&page_size=${pageSize}&page=${currentPage}`;
     } else if (filters.length === 1) {
-      queryString = `?${filters[0]}&ordering=name&page=${currentPage}`;
+      queryString = `?${filters[0]}&ordering=name&page_size=${pageSize}&page=${currentPage}`;
     }
-    const newUrl = `${baseUrl}${queryString}`;
-    setUrl(newUrl);
-  }, [filters]);
+
+    setUrl(`${baseUrl}${queryString}`);
+    setCurrentPage(pageNumber);
+  }, [filters, pageNumber, pageSize]);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(fetchedProfiles?.total_items / pageSize);
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+      updateQueryParams(totalPages);
+    }
+  }, [pageSize, currentPage]);
 
   const handleFilters = (companyType, activity) => {
     if (companyType) {
       searchParams.set('companyType', companyType);
-
     } else {
       searchParams.delete('companyType');
     }
@@ -95,13 +105,6 @@ export default function ProfileListPage({ isAuthorized }) {
 
     setSearchParams(searchParams);
   };
-  const handleActiveTab = (activeTab) => {
-    setActiveTab(activeTab);
-  };
-
-  const handleActiveBtn = (activeBtn) => {
-    setActiveBtn(activeBtn);
-  };
 
   const updateQueryParams = (newPage) => {
     searchParams.set('page', newPage);
@@ -111,6 +114,14 @@ export default function ProfileListPage({ isAuthorized }) {
   const handlePageChange = (page) => {
     setCurrentPage(page);
     updateQueryParams(page);
+  };
+
+  const handleActiveTab = (activeTab) => {
+    setActiveTab(activeTab);
+  };
+
+  const handleActiveBtn = (activeBtn) => {
+    setActiveBtn(activeBtn);
   };
 
   async function fetcher(url) {
@@ -182,6 +193,7 @@ export default function ProfileListPage({ isAuthorized }) {
                   data={fetchedProfiles}
                   paginationFunc={handlePageChange}
                   current={currentPage}
+                  pageSize={pageSize}
                 />
               </div>
             )}

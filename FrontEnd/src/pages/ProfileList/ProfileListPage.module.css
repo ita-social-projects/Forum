@@ -114,7 +114,6 @@
 
 .company-list__content--items {
   display: flex;
-  align-items: center;
   flex-direction: column;
 }
 

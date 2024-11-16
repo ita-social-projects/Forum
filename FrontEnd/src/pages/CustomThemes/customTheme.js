@@ -24,8 +24,10 @@ const customTheme = {
         algorithm: true, // Enable algorithm
       },
       Pagination: {
-        colorPrimary: '#1F9A7C',
-        colorPrimaryHover: '#0b6c61',
+        colorPrimary: '#25292C',
+        colorPrimaryHover: '#25292C',
+        fontFamily: 'Geologica',
+        borderRadius: '2px',
       },
       Select: {
         colorPrimary: '#1f9a7c',
@@ -46,6 +48,9 @@ const customTheme = {
       Spin: {
         colorPrimary: '#ffffff',
       },
+      List: {
+        fontFamily: 'Geologica',
+      }
     },
   };
 

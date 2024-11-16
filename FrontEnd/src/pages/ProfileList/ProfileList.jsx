@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import { List } from 'antd';
 import CompanyCard from '../../components/CompanyCard/CompanyCard';
 
-const PAGE_SIZE = 16;
-
 export default function ProfileList({
   isAuthorized,
   current,
   data,
   paginationFunc,
+  pageSize,
 }) {
   const [savedIsUpdatedMap, setSavedIsUpdatedMap] = useState({});
 
@@ -43,13 +42,14 @@ export default function ProfileList({
         },
         position: 'bottom',
         align: 'center',
-        pageSize: PAGE_SIZE,
+        pageSize: pageSize,
         total: data.total_items,
         hideOnSinglePage: true,
         current: current,
       }}
       dataSource={data.results}
       split={false}
+      locale={{emptyText: 'Жодна компанія не відповідає обраному фільтру.'}}
       renderItem={(item) => (
         <List.Item key={item.id}>
           <CompanyCard
