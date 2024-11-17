@@ -1,6 +1,4 @@
-* {
-    box-sizing: border-box;
-}
+
 .about-us-section {
     min-width: 100vw;
     background: var(--about-us-background-color);
@@ -8,6 +6,7 @@
     align-items: center;
 }
 .about-us-section-main {
+    box-sizing: border-box;
     padding: 40px 0;  
     align-items: center;
     display: flex;
@@ -27,6 +26,7 @@
     width: 100%;
 }
 .about-us-section-content {
+    box-sizing: border-box;
     min-width: 345px;
     width: 375px;
     padding: 0 15px;
