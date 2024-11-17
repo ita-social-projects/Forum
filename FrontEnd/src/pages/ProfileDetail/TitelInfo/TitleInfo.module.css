@@ -98,7 +98,7 @@
 .title-block__button-block {
   display: flex;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 0px 16px 24px 16px;
 }
 
 .title-block__button {
@@ -148,7 +148,7 @@
   }
 
   .title-block__button-block {
-    padding-left: 84px;
+    padding-left: 104px;
   }
 
   .title-block__button {
@@ -164,7 +164,7 @@
 
   .title-block__content {
     width: 1304px;
-    padding: 40px 104px;
+    padding: 0px 104px;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -172,5 +172,11 @@
   .title-block__button {
     width: 100%;
     min-width: 124px;
+  }
+
+  .title-block__button-block {
+    display: flex;
+    justify-content: center;
+    padding: 24px 16px;
   }
 }
