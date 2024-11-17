@@ -1,19 +1,33 @@
-import { useState } from 'react';
-import css from './UserTable.module.css';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Highlighter from 'react-highlight-words';
 import axios from 'axios';
 import useSWR from 'swr';
-import { Table, Tag, Tooltip, Pagination } from 'antd';
-import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
+import { Table, Tag, Tooltip, Pagination, Input, Button, Space } from 'antd';
+import { CaretUpOutlined, CaretDownOutlined, SearchOutlined } from '@ant-design/icons';
+import css from './UserTable.module.scss';
 
 
 const LENGTH_EMAIL = 14;
 const DEFAULT_PAGE_SIZE = 20;
 
 function UserTable() {
-    const [currentPage, setCurrentPage] = useState(1);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const queryParams = new URLSearchParams(location.search);
+    const pageNumber = Number(queryParams.get('page')) || 1;
+    const [currentPage, setCurrentPage] = useState(pageNumber);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
     const [sortInfo, setSortInfo] = useState({ field: null, order: null });
     const [statusFilters, setStatusFilters] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const updatedPageNumber = Number(queryParams.get('page')) || 1;
+        setCurrentPage(updatedPageNumber);
+    }, [location.search]);
 
     const ordering = sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '';
     const filtering = statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '';
@@ -23,39 +37,36 @@ function UserTable() {
         const response = await axios.get(url);
         return response.data;
     }
-
     const { data, isValidating: loading } = useSWR(url, fetcher);
     const users = data ? data.results : [];
     const totalItems = data ? data.total_items : 0;
 
+    const updateQueryParams = (newPage) => {
+        queryParams.set('page', newPage);
+        navigate(`?${queryParams.toString()}`);
+    };
+
     const handlePageChange = (page, size) => {
         setCurrentPage(page);
         setPageSize(size);
+        updateQueryParams(page);
     };
 
     const handleTableChange = (pagination, filters, sorter) => {
-        if (sorter.field && (sorter.field !== sortInfo.field || sorter.order !== sortInfo.order)) {
-            if (sorter.field === sortInfo.field) {
-                let newOrder;
-                if (sortInfo.order === 'ascend') {
-                    newOrder = 'descend';
-                } else if (sortInfo.order === 'descend') {
-                    newOrder = null;
-                } else {
-                    newOrder = 'ascend';
-                }
+        if (sorter.field) {
+            const newSortInfo =
+                sorter.order === null || sorter.order === undefined
+                    ? { field: null, order: null }
+                    : { field: sorter.field, order: sorter.order };
 
-                setSortInfo({
-                    field: newOrder ? sorter.field : null,
-                    order: newOrder,
-                });
-            } else {
-                setSortInfo({ field: sorter.field, order: 'ascend' });
-            }
+            setSortInfo(newSortInfo);
+        } else {
+            setSortInfo({ field: null, order: null });
         }
 
         setStatusFilters(filters.status);
         setCurrentPage(1);
+        updateQueryParams(1);
     };
 
     const getSortIcon = (sortOrder) => {
@@ -66,6 +77,60 @@ function UserTable() {
             <CaretDownOutlined className={css['icon']} />
         );
     };
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+  };
+    const handleReset = (clearFilters) => {
+        clearFilters();
+        setSearchText('');
+    };
+    const getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+            <div className={css['dropdownMenu']}>
+                <Input
+                    placeholder="Пошук"
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value]: [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    className={css['antInput']}
+                ></Input>
+                <Space>
+              <Button
+                type="primary"
+                onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                icon={<SearchOutlined />}
+                size="small"
+                className={css['antBtn']}
+              >
+                Пошук
+              </Button>
+              <Button
+                onClick={() => clearFilters && handleReset(clearFilters)}
+                size="small"
+                className={css['ant-btn']}
+              >
+                Скинути
+              </Button>
+            </Space>
+          </div>
+            ),
+        filterIcon: (filtered) => <SearchOutlined className={ filtered ? css['filteredIcon'] : css['icon']}/>,
+        onFilter: (value, record) =>
+            record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
+        render: (text) =>
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            ),
+    });
 
     const renderStatusTags = (status) => {
         const tags = [];
@@ -88,13 +153,24 @@ function UserTable() {
 
     const columns = [
         {
-            title: 'Прізвище та ім\'я',
+            title: 'Прізвище',
             dataIndex: 'surname',
             key: 'surname',
             sorter: true,
             sortOrder: sortInfo.field === 'surname' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
-            render: (_, record) => `${record.surname} ${record.name}`,
+            render: (_, record) => `${record.surname}`,
+            ...getColumnSearchProps('surname'),
+        },
+        {
+            title: 'Ім\'я',
+            dataIndex: 'name',
+            key: 'name',
+            sorter: true,
+            sortOrder: sortInfo.field === 'name' ? sortInfo.order : null,
+            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            render: (_, record) => `${record.name}`,
+            ...getColumnSearchProps('name'),
         },
         {
             title: 'Email',
@@ -114,6 +190,7 @@ function UserTable() {
                     )}
                 </p>
             ),
+            ...getColumnSearchProps('email'),
         },
         {
             title: 'Компанія',
@@ -133,6 +210,7 @@ function UserTable() {
                     )}
                 </p>
             ),
+            ...getColumnSearchProps('company_name'),
         },
         {
             title: 'Статус',
@@ -154,6 +232,7 @@ function UserTable() {
             sorter: true,
             sortOrder: sortInfo.field === 'registration_date' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            ...getColumnSearchProps('registration_date'),
         },
         {
             title: 'Дії',
@@ -172,7 +251,7 @@ function UserTable() {
                 onShowSizeChange={handlePageChange}
                 showSizeChanger={false}
                 showTitle={false}
-                style={{ marginTop: '16px', textAlign: 'center', marginBottom: '16px' }}
+                className={css['pagination']}
             />
             <Table
                 columns={columns}
