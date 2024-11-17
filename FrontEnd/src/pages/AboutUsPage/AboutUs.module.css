@@ -1,7 +1,6 @@
 
 .about-us-section {
     min-width: 100vw;
-    height: calc(100vh - 342px);
     background: var(--about-us-background-color);
     justify-content: center; 
     align-items: center;
@@ -119,7 +118,7 @@
     .about-us-section-content {
         padding: 40px 104px 48px;
     }
-    
+
     .about-us-section-content__header {
         margin-top: 80px;
     }
