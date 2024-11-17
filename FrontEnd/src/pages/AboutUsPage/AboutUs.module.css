@@ -1,6 +1,7 @@
 
 .about-us-section {
     min-width: 100vw;
+    height: calc(100vh - 342px);
     background: var(--about-us-background-color);
     justify-content: center; 
     align-items: center;
@@ -45,7 +46,7 @@
     font-style: normal;
     font-weight: normal;
     line-height: 1.5;
-    letter-spacing: -0.16;
+    letter-spacing: -0.16px;
 }
 .about-us-section-content__smart-text {
     padding-bottom: 32px;
