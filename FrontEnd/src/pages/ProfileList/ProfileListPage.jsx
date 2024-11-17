@@ -82,13 +82,30 @@ export default function ProfileListPage({ isAuthorized }) {
     setCurrentPage(pageNumber);
   }, [filters, pageNumber, pageSize]);
 
+  async function fetcher(url) {
+    return axios.get(url)
+    .then(res => res.data);
+  }
+
+  const {
+    data: fetchedProfiles,
+    error,
+    isLoading,
+  } = useSWR(url, fetcher);
+
   useEffect(() => {
-    const totalPages = Math.ceil(fetchedProfiles?.total_items / pageSize);
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
-      updateQueryParams(totalPages);
+    if (fetchedProfiles?.total_items === 0) {
+      setCurrentPage(1);
+      searchParams.delete('page');
+      setSearchParams(searchParams);
+    } else {
+      const totalPages = Math.ceil(fetchedProfiles?.total_items / pageSize);
+      if (currentPage > totalPages) {
+        setCurrentPage(totalPages);
+        updateQueryParams(totalPages);
+      }
     }
-  }, [pageSize, currentPage]);
+  }, [fetchedProfiles, pageSize, currentPage]);
 
   const handleFilters = (companyType, activity) => {
     if (companyType) {
@@ -123,17 +140,6 @@ export default function ProfileListPage({ isAuthorized }) {
   const handleActiveBtn = (activeBtn) => {
     setActiveBtn(activeBtn);
   };
-
-  async function fetcher(url) {
-    return axios.get(url)
-    .then(res => res.data);
-  }
-
-  const {
-    data: fetchedProfiles,
-    error,
-    isLoading,
-  } = useSWR(url, fetcher);
 
   return (
     <div className={css.page}>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { List } from 'antd';
 import CompanyCard from '../../components/CompanyCard/CompanyCard';
 
@@ -63,3 +64,19 @@ export default function ProfileList({
     />
   );
 }
+
+ProfileList.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  current: PropTypes.number.isRequired,
+  data: PropTypes.shape({
+    results: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        saved_is_updated: PropTypes.bool,
+      })
+    ).isRequired,
+    total_items: PropTypes.number,
+  }).isRequired,
+  paginationFunc: PropTypes.func.isRequired,
+  pageSize: PropTypes.number.isRequired,
+};

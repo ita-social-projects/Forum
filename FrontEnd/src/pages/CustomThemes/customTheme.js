@@ -52,6 +52,10 @@ const customTheme = {
         fontFamily: 'Geologica',
       }
     },
+    token: {
+      screenXLMin: 1512, // for grid (row/col)
+      screenXL: 1512, // for List
+    }
   };
 
 export default customTheme;
