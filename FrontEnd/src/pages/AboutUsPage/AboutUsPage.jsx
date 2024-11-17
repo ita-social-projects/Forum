@@ -17,8 +17,7 @@ const AboutUs = () => {
         <div className={css['about-us-section-content__header']}>
           <h2>{AboutTextContent.header}</h2>
         </div>
-        <div className={css['about-us-section-content']}>
-          <div id={'about-us'} className={css['about-us-rectangle']}>
+        <div id={'about-us'} className={css['about-us-section-content']}>
             <div className={css['about-us-section-content__text']}>
               {AboutTextContent.contents.map(({ id, text }, i) => (
                 <p
@@ -38,7 +37,6 @@ const AboutUs = () => {
                 title="About CarftMerge"
               />
             </div>
-          </div>
         </div>
       </div>
     </div>
