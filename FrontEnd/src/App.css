@@ -8,3 +8,7 @@
 body {
   width: 100vw;
 }
+
+#page-content {
+  transition: margin-top 0.3s ease;
+}

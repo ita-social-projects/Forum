@@ -1,17 +1,25 @@
 .burgerMenuContainer {
     position: relative;
     top: -4px;
-}
-
-.menu {
+  }
+  
+  .menu {
     position: absolute;
     top: 61px;
     left: calc(-100vw + 80px);
     width: calc(100vw - 40px);
     background-color: white;
-    padding: 30px 20px;
+    overflow: hidden;
+    max-height: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
     z-index: 1000;
-}
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  
+  .menu.open {
+    max-height: 180px;
+    padding: 30px 20px;
+  }
