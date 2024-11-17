@@ -22,9 +22,10 @@
 
 
 .ErrorPage404__text404 {
-  font-size: 96px;
+  font-size: 84px;
   font-weight: 600;
   line-height: 1.2;
+  letter-spacing: -0.84px;
   color: var(--main-grey-90, #25292c);
   margin: 0;
 }
