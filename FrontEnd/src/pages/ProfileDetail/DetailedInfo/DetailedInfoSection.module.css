@@ -1,13 +1,16 @@
 .detail-info-page_block {
     display: flex;
     width: var(--profile-detail-width);
+    align-items: center;
+    justify-content: center;
 }
 
 .detail-info-page {
     display: flex;
     flex-direction: column;
-    min-width: 344px;
-    padding: 24px 10px;
+    justify-content: center;
+    width: 344px;
+    padding: 24px 16px;
 }
 
 .company-description-block {
@@ -37,13 +40,12 @@
     .detail-info-page {
         display: flex;
         flex-direction: column;
-        min-width: 768px;
-        max-width: 1200px;
-        padding-left: 24px;
+        width: 768px;
+        padding: 24px;
     }
 
     .company-description-block {
-        min-width: 720px;
+        width: 720px;
     }
 
     .profile-detail__tags-mobile {
@@ -62,7 +64,7 @@
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
-        min-width: 1304px;
+        width: 1304px;
     }
 
     .company-description-block {
