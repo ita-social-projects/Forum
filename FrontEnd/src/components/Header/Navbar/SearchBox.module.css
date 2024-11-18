@@ -72,6 +72,6 @@ textarea:focus,
 
 @media (max-width: 1200px) {
   .header-search-box {
-    width: 95%;
+    width: 90%;
   }
 }
