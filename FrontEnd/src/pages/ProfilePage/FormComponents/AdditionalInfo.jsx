@@ -103,6 +103,7 @@ const AdditionalInfo = (props) => {
               <HalfFormField
                 inputType="number"
                 name="founded"
+                fieldPlaceholder="Введіть рік заснування"
                 label={LABELS.founded}
                 updateHandler={onUpdateFoundationYearField}
                 requiredField={false}

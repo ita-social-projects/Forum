@@ -207,6 +207,7 @@ const UserInfo = (props) => {
               <HalfFormField
                 inputType="text"
                 name="surname"
+                fieldPlaceholder="Введіть ваше прізвище"
                 label={LABELS.surname}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
@@ -222,6 +223,7 @@ const UserInfo = (props) => {
               <HalfFormField
                 inputType="text"
                 name="name"
+                fieldPlaceholder="Введіть ваше ім'я"
                 label={LABELS.name}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
@@ -239,6 +241,7 @@ const UserInfo = (props) => {
               <HalfFormField
                 inputType="text"
                 name="person_position"
+                fieldPlaceholder="Введіть вашу посаду"
                 label={LABELS.person_position}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}

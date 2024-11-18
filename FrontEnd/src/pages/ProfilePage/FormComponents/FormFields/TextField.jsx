@@ -24,9 +24,6 @@ const TextField = (props) => {
           name={props.name}
           id={props.name}
           value={props.value}
-          placeholder={
-            props.fieldPlaceholder ? props.fieldPlaceholder : 'Введіть текст'
-          }
           onChange={props.updateHandler}
           onKeyDown={preventEnterSubmit}
           required={props.requiredField ? 'required' : ''}
@@ -51,7 +48,6 @@ TextField.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
-  fieldPlaceholder: PropTypes.string,
   maxLength: PropTypes.number,
   updateHandler: PropTypes.func,
   error: PropTypes.string,

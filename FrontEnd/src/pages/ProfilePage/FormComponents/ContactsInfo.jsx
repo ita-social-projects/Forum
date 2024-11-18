@@ -136,6 +136,7 @@ const ContactsInfo = (props) => {
               />
               <HalfFormField
                 name="address"
+                fieldPlaceholder="Введіть поштову адресу"
                 label={LABELS.address}
                 updateHandler={onUpdateField}
                 requiredField={false}

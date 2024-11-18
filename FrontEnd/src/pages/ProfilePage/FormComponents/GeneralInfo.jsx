@@ -418,6 +418,7 @@ const GeneralInfo = (props) => {
             <div className={css['fields-groups']}>
               <HalfFormField
                 name="name"
+                fieldPlaceholder="Введіть назву компанії"
                 label={LABELS.name}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
@@ -432,6 +433,7 @@ const GeneralInfo = (props) => {
               />
               <HalfFormField
                 name="official_name"
+                fieldPlaceholder="Введіть юридичну назву компанії"
                 label={LABELS.official_name}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
@@ -449,6 +451,7 @@ const GeneralInfo = (props) => {
                 <HalfFormField
                   inputType="text"
                   name="rnokpp"
+                  fieldPlaceholder="Введіть РНОКПП"
                   label={LABELS.rnokpp}
                   updateHandler={onUpdateIdentifierField}
                   value={profile.rnokpp ?? ''}
@@ -459,6 +462,7 @@ const GeneralInfo = (props) => {
                 <HalfFormField
                   inputType="text"
                   name="edrpou"
+                  fieldPlaceholder="Введіть ЄДРПОУ"
                   label={LABELS.edrpou}
                   updateHandler={onUpdateIdentifierField}
                   value={profile.edrpou ?? ''}

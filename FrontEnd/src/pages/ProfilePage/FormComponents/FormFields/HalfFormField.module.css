@@ -2,7 +2,6 @@
     display: flex;
     width: 311px;
     height: 84px;
-    padding-bottom: 10px;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 7px;
@@ -52,6 +51,10 @@
     border: 1px solid #D9D9D9;
 }
 
+.fields__field:focus {
+    border: 1px solid #1f9a7c;
+}
+
 .fields__field--input {
     display: flex;
     height: 40px;
@@ -75,12 +78,11 @@
     line-height: 22px;
     letter-spacing: -0.01em;
     text-align: left;
-    color: var(--main-text-color);
+    color: var(--placeholder-text-color);
 }
 
 .fields__field--input:focus {
     border-radius: 2px;
-    border: 1px solid #1f9a7c;
     background: #fff;
     outline: none;
 }
