@@ -29,7 +29,7 @@ const Contacts = () => {
 
     return (
         <div className={css['contacts-container']}>
-            <h1>Контактна інформація</h1>
+            <h3>Контактна інформація</h3>
             {contacts ? (
                 <div className={css['contacts-info']}>
                     <p>Email: {contacts.email}</p>

@@ -1,32 +1,14 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { List } from 'antd';
-import ProfileCard from './ProfileCard';
-import css from './ProfileList.module.css';
-
-const PAGE_SIZE = 6;
-
-const getCompanyWord = (number) => {
-  if (number === 1 || (number > 20 && number % 10 === 1)) {
-    return 'компанія';
-  } else if ((number >= 2 && number <= 4) || (number > 20 && number % 10 >= 2 && number % 10 <= 4)) {
-    return 'компанії';
-  } else {
-    return 'компаній';
-  }
-};
-
-const ListHeader = ({ number }) => (
-  <div className={css['results-header']}>
-    <p className={css['results-header__number']}>{number}</p>
-    <p className={css['results-header__text']}>{getCompanyWord(number)}</p>
-  </div>
-);
+import CompanyCard from '../../components/CompanyCard/CompanyCard';
 
 export default function ProfileList({
   isAuthorized,
   current,
   data,
   paginationFunc,
+  pageSize,
 }) {
   const [savedIsUpdatedMap, setSavedIsUpdatedMap] = useState({});
 
@@ -47,25 +29,33 @@ export default function ProfileList({
 
   return (
     <List
+      grid={{
+        justify: 'center',
+        align: 'stretch',
+        gutter: [32, 8],
+        xs: 1,
+        md: 2,
+        xl: 4,
+      }}
       pagination={{
         onChange: (page) => {
           paginationFunc(page);
         },
         position: 'bottom',
         align: 'center',
-        pageSize: PAGE_SIZE,
+        pageSize: pageSize,
         total: data.total_items,
         hideOnSinglePage: true,
         current: current,
       }}
-      header={<ListHeader number={data.total_items} />}
       dataSource={data.results}
       split={false}
+      locale={{emptyText: 'Жодна компанія не відповідає обраному фільтру.'}}
       renderItem={(item) => (
         <List.Item key={item.id}>
-          <ProfileCard
+          <CompanyCard
               isAuthorized={isAuthorized}
-              data={item}
+              profile={item}
               savedIsUpdated={savedIsUpdatedMap[item.id]}
               onClearUpdate={(isUpdated) => handleClearUpdate(item.id, isUpdated)}
           />
@@ -74,3 +64,19 @@ export default function ProfileList({
     />
   );
 }
+
+ProfileList.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  current: PropTypes.number.isRequired,
+  data: PropTypes.shape({
+    results: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        saved_is_updated: PropTypes.bool,
+      })
+    ).isRequired,
+    total_items: PropTypes.number,
+  }).isRequired,
+  paginationFunc: PropTypes.func.isRequired,
+  pageSize: PropTypes.number.isRequired,
+};

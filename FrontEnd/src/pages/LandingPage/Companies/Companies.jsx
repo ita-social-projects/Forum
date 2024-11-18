@@ -50,7 +50,7 @@ const MainCompanies = ({ isAuthorized }) => {
           Нові учасники
         </h2>
         <div className={styles['new-companies-link-to-all']}>
-          <Link to="profiles/companies">
+          <Link to="profiles">
             <p>{linkText}
               <img src="svg/arrow.svg" alt="Arrow icon for all companies link" />
 
