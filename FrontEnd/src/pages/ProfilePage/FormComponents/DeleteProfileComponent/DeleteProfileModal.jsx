@@ -51,68 +51,66 @@ const DeleteProfileModal = (props) => {
   return (
     <div>
       <div className={css['delete-header']}>
-        Ви впевнені, що хочете видалити профіль?
-        <img
-          src={`${process.env.REACT_APP_PUBLIC_URL}/profilepage/Vectorcancel.png`}
-          className={css['delete__cancelButton']}
-          alt=""
-          onClick={props.onCancel}
-        />
+        <h4>Ви впевнені, що хочете видалити профіль?</h4>
       </div>
-      <div>
-        <div className={css['delete__description']}>
-          Цей профіль буде видалено. Для того, щоб підтвердити видалення,
-          будь-ласка, введіть вашу почту та пароль
-        </div>
+      <div className={css['delete__description']}>
+        <p>Це призведе до остаточного видалення всіх ваших даних про компанію чи стартап й також включно з списком сподобаних профілів.</p>
+        <p>Для видалення вашого профілю введіть вашу електронну пошту та пароль.</p>
+        <strong>Ця дія не може бути відміненою!</strong>
       </div>
       <form onSubmit={submitHandler}>
         <div className={css['form__body']}>
-          <div className={css['fields__label--text']}>
-            <label htmlFor="email_for_delete">Електронна пошта</label>
-          </div>
-          <div className={css['fields__field']}>
-            <input
-              id="email_for_delete"
-              type="text"
-              className={css['fields__field--input']}
-              name="email"
-              placeholder="Електронна пошта"
-              onChange={emailChangeHandler}
-              onKeyDown={preventEnterSubmit}
-              autoComplete="off"
-            />
-          </div>
-          {!isCorrectEmail && (
-            <div className={css['error-message']}>Некоректна пошта</div>
-          )}
-          <div className={css['fields__label--text']}>
-            <label htmlFor="companyPassword">Пароль</label>
-          </div>
-          <div className={css['fields__field']}>
-            <input
-              id="companyPassword"
-              type={typePassword}
-              className={css['fields__field--input']}
-              name="password"
-              placeholder="Пароль"
-              onChange={passwordChangeHandler}
-              onKeyDown={preventEnterSubmit}
-              autoComplete="off"
-            />
-            <span onClick={passwordVisisbilityHandler}>
-              <img
-                src={
-                  typePassword === 'password'
-                    ? `${process.env.REACT_APP_PUBLIC_URL}/profilepage/hidden_eye_icon.png`
-                    : `${process.env.REACT_APP_PUBLIC_URL}/profilepage/eye_icon.png`
-                }
-                alt=""
-                className={css['password__eye']}
+          <div>
+            <div className={css['fields__label--text']}>
+              <label htmlFor="email_for_delete">Електронна пошта</label>
+            </div>
+            <div className={css['fields__field']}>
+              <input
+                id="email_for_delete"
+                type="text"
+                className={css['fields__field--input']}
+                name="email"
+                onChange={emailChangeHandler}
+                onKeyDown={preventEnterSubmit}
+                autoComplete="off"
               />
-            </span>
+            </div>
+            {!isCorrectEmail && (
+              <div className={css['error-message']}>Некоректна пошта</div>
+            )}
+          </div>
+          <div>
+            <div className={css['fields__label--text']}>
+              <label htmlFor="companyPassword">Пароль</label>
+            </div>
+            <div className={css['fields__field']}>
+              <input
+                id="companyPassword"
+                type={typePassword}
+                className={css['fields__field--input']}
+                name="password"
+                onChange={passwordChangeHandler}
+                onKeyDown={preventEnterSubmit}
+                autoComplete="off"
+              />
+              <span onClick={passwordVisisbilityHandler}>
+                <img
+                  src={
+                    typePassword === 'password'
+                      ? `${process.env.REACT_APP_PUBLIC_URL}/profilepage/hidden_eye_icon.png`
+                      : `${process.env.REACT_APP_PUBLIC_URL}/profilepage/eye_icon.png`
+                  }
+                  alt=""
+                  className={css['password__eye']}
+                />
+              </span>
+            </div>
           </div>
         </div>
         <div className={css['buttons__section']}>
+          <button type="submit" className={css['button__delete']}>
+            Видалити профіль
+          </button>
           <button
             type="button"
             className={css['button__cancel']}
@@ -120,12 +118,9 @@ const DeleteProfileModal = (props) => {
           >
             Скасувати
           </button>
-          <button type="submit" className={css['button__delete']}>
-            Видалити
-          </button>
         </div>
       </form>
-    </div>
+    </div >
   );
 };
 

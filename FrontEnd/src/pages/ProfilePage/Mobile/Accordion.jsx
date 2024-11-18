@@ -20,9 +20,9 @@ const Accordion = ({ sections }) => {
   return (
     <>
       <div className="accordion">
-        {sections.map((section, index) => (
+        {sections.map((section) => (
           <AccordionItem
-            key={index}
+            key={section.title}
             title={section.title}
             content={section.content}
             disabled={section.disabled}

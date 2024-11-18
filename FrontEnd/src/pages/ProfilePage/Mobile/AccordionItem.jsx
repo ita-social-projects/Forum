@@ -13,9 +13,9 @@ const AccordionItem = (props) => {
     };
 
     return (
-        <div className={css['accordion-item']} key={props.index} >
+        <div className={css['accordion-item']}>
             <button className={`${css['accordion-button']} ${props.disabled ? css['disabled'] : ''}`}
-                    onClick={() => toggle()}>
+                    onClick={toggle}>
                 <p className={props.title === 'Видалити профіль' ? css['danger'] : ''}>
                     {props.title}
                 </p>

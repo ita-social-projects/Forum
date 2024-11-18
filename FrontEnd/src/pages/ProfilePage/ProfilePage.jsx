@@ -30,13 +30,9 @@ const ProfilePage = () => {
 
   if (windowWidth < 768) {
     return (
-      <>
       <DirtyFormContext.Provider value={{ formIsDirty, setFormIsDirty }}>
-        <EditProfileMobile
-          user={user}
-          profile={profile} />
+        <EditProfileMobile/>
       </DirtyFormContext.Provider>
-      </>
     );
   }
 
