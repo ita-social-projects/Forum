@@ -76,7 +76,6 @@ const ImageField = ({
         </label>
         {name === 'banner' && value && (
           <>
-            {renderInput()}
             {renderUpdateImageLabel('змінити')}
             {renderDeleteButton('видалити')}
           </>
