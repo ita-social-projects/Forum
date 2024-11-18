@@ -51,7 +51,7 @@ const ERRORS = {
   },
 };
 
-const TEXT_AREA_MAX_LENGTH = 2000;
+const TEXT_AREA_MAX_LENGTH = 1000;
 const BANNER_IMAGE_SIZE = 5 * 1024 * 1024;
 const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
 

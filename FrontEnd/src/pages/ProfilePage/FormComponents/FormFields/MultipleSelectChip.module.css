@@ -68,7 +68,7 @@
 }
 
 .select-container:focus-within {
-    border: 1px solid var(--main-button-color);
+    border: 1px solid var(--primary-green-80);
 }
 
 @media only screen and (min-width: 768px) {

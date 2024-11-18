@@ -53,6 +53,7 @@
   --hint-text-color: #25292C;
   --placeholder-text-color: #ADB3B9;
   --edit-page-head-color: #000000D9;
+  --input-text-color: #000000D9;
 
 
 
@@ -66,7 +67,7 @@
   /* fonts */
   --font-main: 'Geologica', sans-serif;
   --font-messages: 'Roboto', sans-serif;
-  --font-error: 'Roboto', sans-serif;
+  --font-error: 'Geologica', sans-serif;
   --font-logo: 'Geologica', sans-serif;
 
   --toastify-color-error: #FFF1F0;
