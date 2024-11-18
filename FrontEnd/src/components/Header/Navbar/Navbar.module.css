@@ -6,9 +6,9 @@
 
 .navbar-content {
   display: flex;
-  max-width: calc(1512px - 60px);
+  max-width: calc(1512px - 208px);
   width: 100%;
-  padding: 16px 30px;
+  padding: 16px 104px;
   align-items: center;
   justify-content: space-between;
   height: var(--navbar-content-height);
@@ -41,7 +41,7 @@
   display: none;
 }
 
-.menu-search-wrapper{
+.menu-search-wrapper {
   display: flex;
   gap: 24px;
 }
@@ -57,7 +57,7 @@
 }
 
 @media (max-width: 630px) {
-  .navbar-main-logo{
+  .navbar-main-logo {
     width: 30px;
   }
 
@@ -65,4 +65,3 @@
     display: none;
   }
 }
-
