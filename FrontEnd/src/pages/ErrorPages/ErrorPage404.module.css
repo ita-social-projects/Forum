@@ -1,7 +1,7 @@
 .ErrorPage404__page {
   background: var(--join-us-main-color, #B4D27A);
   width: 100vw;
-  height: 463px;
+  min-height: 62.4vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +20,6 @@
   max-width: 343px;
 }
 
-
 .ErrorPage404__text404 {
   font-size: 84px;
   font-weight: 600;
@@ -29,7 +28,6 @@
   color: var(--main-grey-90, #25292c);
   margin: 0;
 }
-
 
 .ErrorPage404__block {
   display: flex;
@@ -45,7 +43,6 @@
   gap: 16px;
 }
 
-
 .ErrorPage404__main-text {
   font-size: 32px;
   font-weight: 700;
@@ -54,7 +51,6 @@
   line-height: 1.2;
 }
 
-
 .ErrorPage404__details {
   font-size: 14px;
   color: var(--main-grey-90, #25292c);
@@ -62,7 +58,6 @@
   font-weight: 400;
   line-height: 1.5;
 }
-
 
 .ErrorPage404__button {
   display: flex;
@@ -92,8 +87,7 @@
 
   .ErrorPage404__container {
     max-width: 558px;
-    gap: 20px;
-    padding-bottom: 40px;
+    gap: 20px;;
   }
 
   .ErrorPage404__text404 {
@@ -113,7 +107,6 @@
     padding: 10px 24px;
   }
 }
-
 
 @media only screen and (min-width: 1200px) {
   .ErrorPage404__page {
