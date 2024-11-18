@@ -156,17 +156,22 @@
   }
 }
 
-@media only screen and (min-width: 1512px) {
+@media only screen and (min-width: 1200px) {
   .title-block {
     flex-direction: row;
     justify-content: center;
   }
 
   .title-block__content {
-    width: 1304px;
-    padding: 0px 104px;
+    width: 1100px;
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .title-block__content-info {
+    flex-direction: row;
+    width: 800px;
+    gap: 24px;
   }
 
   .title-block__button {
@@ -178,5 +183,11 @@
     display: flex;
     justify-content: center;
     padding: 24px 16px;
+  }
+}
+
+@media only screen and (min-width: 1512px) {
+  .title-block__content {
+    width: 1304px;
   }
 }

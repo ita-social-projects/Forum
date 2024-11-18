@@ -55,7 +55,7 @@
     }
 }
 
-@media only screen and (min-width: 1512px) {
+@media only screen and (min-width: 1200px) {
     .detail-info-page_block {
         justify-content: center;
     }
@@ -64,7 +64,7 @@
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
-        width: 1304px;
+        width: 1100px;
     }
 
     .company-description-block {
@@ -88,5 +88,15 @@
         line-height: 40.8px;
         letter-spacing: -0.34px;
         white-space: nowrap;
+    }
+}
+
+@media only screen and (min-width: 1512px) {
+    .detail-info-page {
+        width: 1304px;
+    }
+
+    .company-description-block {
+        width: 860px;
     }
 }
