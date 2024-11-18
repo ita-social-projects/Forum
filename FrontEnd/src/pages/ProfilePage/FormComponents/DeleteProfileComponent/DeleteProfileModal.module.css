@@ -144,15 +144,24 @@
     outline: none;
 }
 
+.password-visible-field {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 2px;
+    background: var(--main-white, #FFF);
+    border: 1px solid #B4D27A;
+}
+
+.password-visibility-button {
+    width: 25px;
+    cursor: pointer;
+}
+
 .fields__field--input:focus-visible {
     outline: none;
 }
 
-.password__eye {
-    width: 23px;
-    padding: 5px 3px 2px 3px;
-    cursor: pointer;
-}
 
 .delete__cancelButton {
     cursor: pointer;

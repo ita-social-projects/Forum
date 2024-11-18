@@ -3,10 +3,13 @@ import css from './DeleteProfileModal.module.css';
 import { useAuth } from '../../../../hooks';
 import { useState } from 'react';
 import preventEnterSubmit from '../../../../utils/preventEnterSubmit';
+import classNames from 'classnames';
+import EyeVisible from '../../../Authorization/EyeVisible';
+import EyeInvisible from '../../../Authorization/EyeInvisible';
 
 const DeleteProfileModal = (props) => {
   const { logout, user } = useAuth();
-  const [typePassword, setTypePassword] = useState('password');
+  const [passwordIsVisible, setPasswordIsVisible] = useState(false);
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [isCorrectEmail, setIsCorrectEmail] = useState(true);
@@ -43,9 +46,7 @@ const DeleteProfileModal = (props) => {
   };
 
   const passwordVisisbilityHandler = () => {
-    if (typePassword === 'password') {
-      setTypePassword('text');
-    } else setTypePassword('password');
+    setPasswordIsVisible(!passwordIsVisible);
   };
 
   return (
@@ -83,26 +84,21 @@ const DeleteProfileModal = (props) => {
             <div className={css['fields__label--text']}>
               <label htmlFor="companyPassword">Пароль</label>
             </div>
-            <div className={css['fields__field']}>
+            <div className={classNames(
+                    {[css['fields__field']]: !passwordIsVisible},
+                    {[css['password-visible-field']]: passwordIsVisible})}>
               <input
                 id="companyPassword"
-                type={typePassword}
+                type={passwordIsVisible ? 'text' : 'password'}
                 className={css['fields__field--input']}
                 name="password"
                 onChange={passwordChangeHandler}
                 onKeyDown={preventEnterSubmit}
                 autoComplete="off"
               />
-              <span onClick={passwordVisisbilityHandler}>
-                <img
-                  src={
-                    typePassword === 'password'
-                      ? `${process.env.REACT_APP_PUBLIC_URL}/profilepage/hidden_eye_icon.png`
-                      : `${process.env.REACT_APP_PUBLIC_URL}/profilepage/eye_icon.png`
-                  }
-                  alt=""
-                  className={css['password__eye']}
-                />
+              <span className={css['password-visibility-button']}
+                    onClick={passwordVisisbilityHandler}>
+                {!passwordIsVisible ? <EyeInvisible /> : <EyeVisible />}
               </span>
             </div>
           </div>
