@@ -137,10 +137,14 @@
     background: var(--main-white, #FFF);
 }
 
-.fields__field--input:focus {
+.fields__field:focus-within {
     border-radius: 2px;
     border: 1px solid #1f9a7c;
     background: #fff;
+    outline: none;
+}
+
+.fields__field--input:focus-visible {
     outline: none;
 }
 
