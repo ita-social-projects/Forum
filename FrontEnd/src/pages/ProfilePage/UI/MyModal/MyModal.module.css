@@ -13,7 +13,6 @@
     background-color: var(--main-white);
     width: 345px;
     border-radius: 6px;
-    margin-left: 11px;
 }
 
 .myModal.active {
