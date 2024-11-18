@@ -1,126 +1,127 @@
+.about-us-section-background {
+    display: flex;
+    justify-content: center;
+    background-color: #f9f4ea;
+    width: 100vw;
+    height: auto;
+  }
+
 .about-us-text-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding: 20px 16px;
-  margin: auto;
-  background-color: #f9f4ea;
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-.about-us-text-section__header-text {
-  font-family: var(--font-logo);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 28px;
-  text-align: center;
-  color: #232424;
-  margin-bottom: 20px;
-}
-
-.about-us-text-section__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  width: 100%;
-  max-width: 340px;
-  box-sizing: border-box;
-}
-
-.about-us-text-section__card {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #fff;
-  width: 100%;
-  height: auto;
-  padding: 12px;
-  border-radius: 6px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-  box-sizing: border-box;
-}
-
-.about-us-text-section__card:hover {
-  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-
-.about-us-text-section__icon {
-  width: 28px;
-  height: 28px;
-  margin-left: 8px;
-  margin-right: 8px;
-}
-
-.about-us-text-section__card p {
-  font-family: var(--font-logo);
-  font-size: 14px;
-  font-weight: 600;
-  color: #232424;
-  margin: 0;
-  word-wrap: break-word;
-}
-
-@media only screen and (max-width: 767px) {
-  .about-us-text-section__card {
+    display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100vw;
+    padding: 20px 16px;
+    margin: auto;
+    background-color: #f9f4ea;
+  }
+  
+  .about-us-text-section__header-text {
+    font-family: var(--font-logo);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
     text-align: center;
+    color: #232424;
+    margin-bottom: 40px;
+    margin-top: 40px;
   }
-
+  
+  .about-us-text-section__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 340px;
+    box-sizing: border-box;
+  }
+  
+  .about-us-text-section__card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #fff;
+    width: 100%;
+    height: auto;
+    padding: 12px;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  
   .about-us-text-section__icon {
+    width: 28px;
+    height: 28px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  
+  .about-us-text-section__card p {
+    font-family: var(--font-logo);
+    font-size: 14px;
+    font-weight: 600;
+    color: #232424;
     margin: 0;
+    word-wrap: break-word;
   }
-}
-
-@media only screen and (min-width: 768px) {
-  .about-us-text-section {
-    max-width: 768px;
-    max-height: 672px;
+  
+  @media only screen and (max-width: 767px) {
+    .about-us-text-section__card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .about-us-text-section__icon {
+      margin: 0;
+    }
   }
-
-  .about-us-text-section__header-text {
-    font-size: 24px;
-    line-height: 32px;
+  
+  @media only screen and (min-width: 768px) {
+    .about-us-text-section {
+      max-width: 768px;
+      max-height: 672px;
+    }
+  
+    .about-us-text-section__header-text {
+      font-size: 24px;
+      line-height: 32px;
+    }
+  
+    .about-us-text-section__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+  
+    .about-us-text-section__card {
+      max-width: 344px;
+      height: 102px;
+    }
+    
+    .about-us-text-section__card p {
+      font-size: 12px;
+    }
   }
-
-  .about-us-text-section__grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+  
+  @media only screen and (min-width: 1200px) {
+    .about-us-text-section {
+      max-width: 1304px;
+    }
+  
+    .about-us-text-section__header-text {
+      font-size: 32px;
+      line-height: 36px;
+    }
+  
+    .about-us-text-section__grid {
+      gap: 32px;
+    }
+  
+    .about-us-text-section__card {
+      max-width: 345px;
+      height: 102px;
+    }
+  
+    .about-us-text-section__card p {
+      font-size: 16px;
+    }
   }
-
-  .about-us-text-section__card {
-    max-width: 344px;
-    height: 102px;
-  }
-  .about-us-text-section__card p {
-    font-size: 12px;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .about-us-text-section {
-    max-width: 1304px;
-  }
-
-  .about-us-text-section__header-text {
-    font-size: 32px;
-    line-height: 36px;
-  }
-
-  .about-us-text-section__grid {
-    gap: 32px;
-  }
-
-  .about-us-text-section__card {
-    max-width: 345px;
-    height: 102px;
-  }
-
-  .about-us-text-section__card p {
-    font-size: 16px;
-  }
-}
