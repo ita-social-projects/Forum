@@ -1,13 +1,14 @@
 .scroll-to-top-button {
   position: fixed;
   bottom: 30px;
-  left: 90%;
+  left: 80%;
   width: 40px;
   height: 40px;
   background-color: var(--footer-scroll-button);
   color: white;
   border: none;
   border-radius: 50%;
+  border: 1px solid gray;
   font-size: 20px;
   display: flex;
   justify-content: center;
@@ -23,4 +24,10 @@
 
 .scroll-to-top-button:hover {
   background-color: var(--footer-scroll-button);
+}
+
+@media only screen and (min-width: 1512px) {
+  .scroll-to-top-button  {
+    left: 95%;
+  }
 }

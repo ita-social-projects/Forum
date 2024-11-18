@@ -6,7 +6,7 @@
 
 .data-block__field--title {
     width: 130px;
-    color: var(--main-black-90, #292E32);
+    color: var(--profile-detail-data-contacts-color-text);
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 14px;
@@ -18,26 +18,19 @@
 
 .data-block__field button {
     display: flex;
-    width: 200px;
     height: 32px;
-    max-width: 200px;
     padding: 5px 15px;
     justify-content: center;
     align-items: center;
     gap: 4px;
     border-radius: 4px;
-    border: 1px solid var(--primary-green-80, #1F9A7C);
-    background: var(--neutral-1, #FFF);
+    border: 1px solid var(--profile-detail-data-contacts-color-text);
     cursor: pointer;
 }
 
+.data-block__field--show--contacts,
 .data-block__field--contacts {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: auto;
-    align-items: flex-start;
-    color: var(--main-black-90, #292E32);
+    text-align: center;
     font-feature-settings: 'calt' off;
     font-family: var(--font-main);
     font-size: 14px;
@@ -47,22 +40,35 @@
     letter-spacing: -0.14px;
 }
 
-.data-block__field--show--contacts {
-    flex: 1 0 0;
-    color: var(--primary-green-80, #1F9A7C);
-    text-align: center;
-    font-feature-settings: 'calt' off;
-    font-family: var(--font-main);
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: -0.16px;
+.data-block__field--contacts {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    align-items: flex-start;
+    color: var(--profile-detail-data-contacts-color-text);
 }
 
-.contact-container{
+.data-block__field--show--contacts {
+    flex: 1 0 0;
+    color: var(--profile-detail-data-contacts-color-text);
+}
+
+.contact-container {
     display: flex;
+    min-width: 164px;
     justify-content: space-between;
-    align-items: center;
-    min-width: 100%;
+    padding-bottom: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+    .contact-container {
+        min-width: 535px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .contact-container {
+        width: 240px;
+        min-width: 140px;
+    }
 }
