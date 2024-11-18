@@ -36,6 +36,23 @@
     display: none;
 }
 
+.empty-data-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-data {
+    color: #A3AAB0;
+    font-feature-settings: 'calt' off;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.14px;
+}
+
 @media only screen and (min-width: 768px) {
     .detail-info-page {
         display: flex;
@@ -88,6 +105,9 @@
         line-height: 40.8px;
         letter-spacing: -0.34px;
         white-space: nowrap;
+    }
+    .empty-data {
+        padding-left: 100px;
     }
 }
 

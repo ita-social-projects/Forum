@@ -1,7 +1,6 @@
 import { PropTypes } from 'prop-types';
 
 import DataContacts from './DataContacts/DataContacts';
-import EmptyData from '../ProfileDetailComponents/EmptyData';
 import Company from './DetailedInfoComponents/Company';
 import Startup from './DetailedInfoComponents/Startup';
 import ProductsServices from './DetailedInfoComponents/ProductsServices';
@@ -13,10 +12,10 @@ function DetailedInfoSection({ isAuthorized, data, containsNotRequiredData }) {
   return (
     <div className={classes['detail-info-page_block']}>
       <div className={classes['detail-info-page']}>
-      {containsNotRequiredData
-      ?  <h3 className={classes['profile-detail__tags-mobile']}>Про Компанію</h3>
-      : ''
-      }
+        {containsNotRequiredData
+          ? <h3 className={classes['profile-detail__tags-mobile']}>Про Компанію</h3>
+          : ''
+        }
         <DataContacts isAuthorized={isAuthorized} data={data} />
         {containsNotRequiredData ?
           <div className={classes['company-description-block']}>
@@ -25,7 +24,12 @@ function DetailedInfoSection({ isAuthorized, data, containsNotRequiredData }) {
             {data.is_registered && <ProductsServices data={data} />}
             {data.is_startup && <Startup data={data} />}
           </div>
-          : <EmptyData />}
+          :
+          <div className={classes['empty-data-wrapper']}>
+            <p className={classes['empty-data']}>
+              Інформація не заповнена
+            </p>
+          </div>}
       </div>
     </div>
   );
