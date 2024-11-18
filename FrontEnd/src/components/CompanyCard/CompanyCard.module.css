@@ -169,7 +169,8 @@
   bottom: 13px;
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1512px) {
+
   .company-card,
   .company-card__image-frame,
   .company-card__image,
@@ -180,6 +181,7 @@
   .company-card__star {
     left: 256px;
   }
+
   .company-card__category-text {
     max-width: 250px;
   }

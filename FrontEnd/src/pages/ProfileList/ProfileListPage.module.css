@@ -1,20 +1,157 @@
 .page {
+  display: flex;
+  flex-direction: column;
   min-height: 470px;
-  border-radius: 8px;
-  background: var(--wf-base-white, #fff);
   flex-grow: 1;
 }
 
 .page-content {
+  width: 100vw;
   display: flex;
   flex-direction: column;
-  width: 1305px;
-  gap: 16px;
-  margin: 17px 100px;
+
 }
 
-.group {
+.company-list__header--wrapper {
+  width: 100%;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  background: var(--light-seashell-background);
+}
+
+.company-list__header {
+  width: 375px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 32px;
+  padding: 40px 16px 0px 30px;
+}
+
+.company-list__title {
+  font-family: Geologica;
+  font-weight: 700;
+  line-height: 28.8px;
+  letter-spacing: 0.01em;
+
+}
+
+.company-list__tabs {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  height: 33px;
+}
+
+.company-list__tabs--wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.company-list__tabs--element,
+.company-list__tabs--element--active {
+  font-family: var(--font-main);
+  font-weight: 400;
+  line-height: 19.2px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.divider {
+  height: 2px;
+  width: 100%;
+  background: var(--link-text-color);
+}
+
+.company-list__tabs--element--active {
+  font-weight: 700;
+}
+
+.company-list__content {
+  box-sizing: border-box;
+  width: 375px;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  padding: 24px 16px 40px;
+  gap: 20px;
+}
+
+.company-list__content--btns-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.company-list__content--btns {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.company-list__btns--element,
+.company-list__btns--element--active {
+  border-radius: 4px;
+  padding: 8px;
+  border: 1px solid #231C09;
+
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.company-list__btns--element--active {
+  color: var(--light-button-text-color);
+  background: #231C09;
+}
+
+.company-list__content--items {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 768px) {
+
+  .company-list__header,
+  .company-list__content {
+    width: 768px;
+  }
+
+  @media only screen and (min-width: 1512px) {
+
+    .company-list__header,
+    .company-list__content {
+      width: 1512px;
+    }
+
+    .company-list__content {
+      padding: 24px 104px 40px;
+      gap: 32px;
+    }
+
+    .company-list__header {
+      padding: 40px 104px 0px;
+    }
+
+    .company-list__content--btns {
+      display: flex;
+      justify-content: flex-start;
+      flex-flow: row nowrap;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .company-list__content--btns-wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+  }
 }

@@ -49,7 +49,6 @@ function ClientRouter() {
         }}
       >
         <Header isAuthorized={isAuth} />
-
         {isLoading ? (
           <Loader />
         ) : (

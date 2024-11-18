@@ -22,46 +22,49 @@
   font-weight: 700;
   padding-left: 14px;
 }
- .new-companies-link-to-all {
+
+.new-companies-link-to-all {
   position: absolute;
   right: 35px;
   top: 8px
- }
+}
 
- .new-companies-link-to-all a {
+.new-companies-link-to-all a {
   font-family: var(--font-logo);
   color: #232424;
   font-weight: 600;
   font-size: 16px;
- }
+}
 
- .new-companies-link-to-all img {
+.new-companies-link-to-all img {
   position: absolute;
   top: 3px;
   right: -25px;
- }
+}
 
 .new-companies-block {
   width: 375px;
   padding: 18px 8px 38px 8px;
- }
+}
 
 
 @media only screen and (min-width: 768px) {
+
   .new-companies-main,
   .new-companies-block {
     width: 768px;
   }
-  
+
   .new-companies-main__title {
     font-size: 40px;
   }
+
   .new-companies-link-to-all {
     top: 23px
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1512px) {
   .new-companies-main {
     width: 1512px;
     height: 597px;
@@ -80,5 +83,5 @@
     top: 38px;
     right: 126px;
   }
-  
+
 }
