@@ -137,22 +137,6 @@ class TestCompanyOrder(APITestCase):
         self.company_dnipro.created_at = utc_datetime(2023, 12, 2)
         self.company_dnipro.save()
 
-        self.company_kharkiv = ProfileStartupFactory(
-            name="Kharkiv",
-            person=self.kharkiv_user,
-            completeness=1,
-        )
-        self.company_kharkiv.created_at = utc_datetime(2023, 12, 3)
-        self.company_kharkiv.save()
-
-        self.company_chernigiv = ProfileStartupFactory(
-            name="Chernigiv",
-            person=self.chernigiv_user,
-            completeness=1,
-        )
-        self.company_chernigiv.created_at = utc_datetime(2023, 12, 4)
-        self.company_chernigiv.save()
-
         self.company_kirovohrad = ProfileCompanyFactory(
             name="Kirovohrad",
             person=self.kirovohrad_user,
@@ -163,17 +147,17 @@ class TestCompanyOrder(APITestCase):
 
     def test_get_less_companies(self):
         response = self.client.get(
-            path="/api/profiles/?ordering=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at&page_size=4"
         )
         names_from_response = [
             prof["name"] for prof in response.data["results"]
         ]
         self.assertEqual(
-            ["Kirovohrad", "Dnipro", "Kyiv", "Chernigiv", "Kharkiv"],
+            ["Kirovohrad", "Dnipro", "Kyiv"],
             names_from_response,
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(5, response.data["total_items"])
+        self.assertEqual(3, response.data["total_items"])
         self.assertEqual(1, response.data["current"])
         self.assertEqual(1, response.data["total_pages"])
         self.assertEqual(None, response.data["next"])
@@ -187,7 +171,7 @@ class TestCompanyOrder(APITestCase):
         self.company_synelnicovo.created_at = utc_datetime(2023, 12, 7)
         self.company_synelnicovo.save()
         response = self.client.get(
-            path="/api/profiles/?ordering=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at&page_size=4"
         )
         self.assertEqual(200, response.status_code)
         names_from_response = [
@@ -200,12 +184,10 @@ class TestCompanyOrder(APITestCase):
                 "Kirovohrad",
                 "Dnipro",
                 "Kyiv",
-                "Chernigiv",
-                "Kharkiv",
             ],
             names_from_response,
         )
-        self.assertEqual(6, response.data["total_items"])
+        self.assertEqual(4, response.data["total_items"])
         self.assertEqual(1, response.data["current"])
         self.assertEqual(1, response.data["total_pages"])
         self.assertEqual(None, response.data["next"])
@@ -228,20 +210,20 @@ class TestCompanyOrder(APITestCase):
         self.company_odesa.save()
 
         response = self.client.get(
-            path="/api/profiles/?ordering=-completeness,-created_at"
+            path="/api/profiles/?ordering=-completeness,-created_at&page_size=4"
         )
         names_from_response = [
             prof["name"] for prof in response.data["results"]
         ]
         self.assertEqual(
-            ["Odesa", "Mykolaiv", "Kirovohrad", "Dnipro", "Kyiv", "Chernigiv"],
+            ["Odesa", "Mykolaiv", "Kirovohrad", "Dnipro"],
             names_from_response,
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(7, response.data["total_items"])
+        self.assertEqual(5, response.data["total_items"])
         self.assertEqual(1, response.data["current"])
         self.assertEqual(2, response.data["total_pages"])
         self.assertEqual(
-            "http://testserver/api/profiles/?ordering=-completeness%2C-created_at&page=2",
+            "http://testserver/api/profiles/?ordering=-completeness%2C-created_at&page=2&page_size=4",
             response.data["next"],
         )

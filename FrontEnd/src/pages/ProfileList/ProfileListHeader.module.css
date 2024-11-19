@@ -1,0 +1,17 @@
+.results-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.results-header__text {
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16.8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #767676;
+}
