@@ -1,27 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Hamburger from 'hamburger-react';
 import Menu from './Menu';
 import SearchBox from './SearchBox';
+import { useBurgerMenu } from '../../../context/BurgerMenuContext';
 import css from './BurgerMenu.module.css';
 
 const BurgerMenu = () => {
-  const [isOpen, setOpen] = useState(false);
-
-  useEffect(() => {
-    const pageContent = document.getElementById('page-content');
-    if (pageContent) {
-      pageContent.style.marginTop = isOpen ? '180px' : '0';
-    }
-  }, [isOpen]);
+  const { isOpen, toggleMenu } = useBurgerMenu();
 
   return (
     <div className={css.burgerMenuContainer}>
-      <Hamburger
-        toggled={isOpen}
-        toggle={setOpen}
-        size={30}
-        className={css.hamburgerIcon}
-      />
+      <Hamburger toggled={isOpen} toggle={toggleMenu} size={30} className={css.hamburgerIcon} />
       <div className={`${css.menu} ${isOpen ? css.open : ''}`}>
         {isOpen && (
           <>

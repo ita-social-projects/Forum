@@ -33,6 +33,9 @@ import '../pages/CustomThemes/customToastStyles.css';
 import Contact from '../components/Contact/Contact';
 import ErrorPage404 from '../pages/ErrorPages/ErrorPage404';
 
+import { BurgerMenuProvider } from '../context/BurgerMenuContext';
+import PageWrapper from '../components/PageWrapper/PageWrapper';
+
 function ClientRouter() {
   const { isAuth, user, logout, isLoading } = useAuth();
 
@@ -48,101 +51,105 @@ function ClientRouter() {
           },
         }}
       >
-        <Header isAuthorized={isAuth} />
-
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div id="page-content" className="main-content">
-            <Routes>
-              <Route path="/" element={<MainPage isAuthorized={isAuth} />} />
-              {isAuth ? (
-                <Route path="/profile/*" element={<ProfilePage />} />
-              ) : (
-                <Route path="/profile/*" element={<Navigate to="/" />} />
-              )}
-              <Route
-                path="/profile-detail/:id"
-                element={<ProfileDetailPage isAuthorized={isAuth} />}
-              />
-              <Route
-                path="/profiles/:filter"
-                element={<ProfileListPage isAuthorized={isAuth} />}
-              />
-              {isAuth ? (
+        <BurgerMenuProvider>
+          <Header isAuthorized={isAuth} />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <PageWrapper>
+              <Routes>
+                <Route path="/" element={<MainPage isAuthorized={isAuth} />} />
+                {isAuth ? (
+                  <Route path="/profile/*" element={<ProfilePage />} />
+                ) : (
+                  <Route path="/profile/*" element={<Navigate to="/" />} />
+                )}
                 <Route
-                  path="/login"
-                  element={<Navigate to="/profile/user-info" />}
+                  path="/profile-detail/:id"
+                  element={<ProfileDetailPage isAuthorized={isAuth} />}
                 />
-              ) : (
-                <Route path="/login" element={<LoginPage />} />
-              )}
-              {isAuth ? (
                 <Route
-                  path="/sign-up"
-                  element={<Navigate to="/profile/user-info" />}
+                  path="/profiles/:filter"
+                  element={<ProfileListPage isAuthorized={isAuth} />}
                 />
-              ) : (
-                <Route path="/sign-up" element={<SignUpPage />} />
-              )}
-              <Route
-                path="/sign-up/completion"
-                element={<SignUpCompletionPage />}
-              />
-              <Route
-                path="/sign-up/resend-activation"
-                element={<ResendActivationPage />}
-              />
-              <Route
-                path="/activate/:uid/:token"
-                element={<ActivateProfilePage />}
-              />
-              <Route
-                path="/reset-password"
-                element={<SendEmailForgotPasswordPage />}
-              />
-              <Route
-                path="/reset-password/completion"
-                element={<ForgotPasswordCompletionPage />}
-              />
-              <Route
-                path="/password/reset/confirm/:uid/:token"
-                element={<RestorePasswordPage />}
-              />
-              <Route
-                path="/reset-password/successfully"
-                element={<RestorePasswordSuccessPage />}
-              />
-              <Route
-                path="/reset-password/failed"
-                element={<RestorePasswordFailedPage />}
-              />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route
-                path="/terms-and-conditions"
-                element={<TermsAndConditions />}
-              />
-              <Route path="/cookies-policy" element={<CookiesPolicyComponent />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route
-                path="/search"
-                element={<Search isAuthorized={isAuth} userData={user} />}
-              />
-              <Route
-                path="/moderation/:id/:action"
-                element={<ModerationModal />}
-              />
-              <Route path="*" element={<ErrorPage404 />} />
-            </Routes>
-          </div>
-        )}
-        <Footer />
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          theme="colored"
-          icon={false}
-        />
+                {isAuth ? (
+                  <Route
+                    path="/login"
+                    element={<Navigate to="/profile/user-info" />}
+                  />
+                ) : (
+                  <Route path="/login" element={<LoginPage />} />
+                )}
+                {isAuth ? (
+                  <Route
+                    path="/sign-up"
+                    element={<Navigate to="/profile/user-info" />}
+                  />
+                ) : (
+                  <Route path="/sign-up" element={<SignUpPage />} />
+                )}
+                <Route
+                  path="/sign-up/completion"
+                  element={<SignUpCompletionPage />}
+                />
+                <Route
+                  path="/sign-up/resend-activation"
+                  element={<ResendActivationPage />}
+                />
+                <Route
+                  path="/activate/:uid/:token"
+                  element={<ActivateProfilePage />}
+                />
+                <Route
+                  path="/reset-password"
+                  element={<SendEmailForgotPasswordPage />}
+                />
+                <Route
+                  path="/reset-password/completion"
+                  element={<ForgotPasswordCompletionPage />}
+                />
+                <Route
+                  path="/password/reset/confirm/:uid/:token"
+                  element={<RestorePasswordPage />}
+                />
+                <Route
+                  path="/reset-password/successfully"
+                  element={<RestorePasswordSuccessPage />}
+                />
+                <Route
+                  path="/reset-password/failed"
+                  element={<RestorePasswordFailedPage />}
+                />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route
+                  path="/terms-and-conditions"
+                  element={<TermsAndConditions />}
+                />
+                <Route
+                  path="/cookies-policy"
+                  element={<CookiesPolicyComponent />}
+                />
+                <Route path="/contact" element={<Contact />} />
+                <Route
+                  path="/search"
+                  element={<Search isAuthorized={isAuth} userData={user} />}
+                />
+                <Route
+                  path="/moderation/:id/:action"
+                  element={<ModerationModal />}
+                />
+                <Route path="*" element={<ErrorPage404 />} />
+              </Routes>
+            </PageWrapper>
+          )}
+          <Footer />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            theme="colored"
+            icon={false}
+          />
+        </BurgerMenuProvider>
       </SWRConfig>
     </ConfigProvider>
   );
