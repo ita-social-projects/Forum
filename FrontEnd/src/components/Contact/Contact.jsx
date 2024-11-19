@@ -9,7 +9,6 @@ import {
     MESSAGE_PATTERN
 } from '../../constants/constants';
 
-import LinkContainer from '../../pages/CookiesPolicyPage/LinkContainer.jsx';
 
 import styles from './Contact.module.css';
 
@@ -45,7 +44,7 @@ const Contact = () => {
       } = useForm({
         mode: 'all',
         defaultValues: {
-            'message': 'Привіт, хочу повідомити...',
+            'message': '',
             'email': '',
             },
       });
@@ -69,34 +68,22 @@ const Contact = () => {
             setLoading(false);
         }
     };
-
-    const handleCancel = () => {
-        reset();
-    };
-
     const closeModal = () => {
         setModalMessage('');
     };
 
     return (
         <div className={styles['contact_container']}>
-            <div className={styles['contact__link_container']}>
-                <LinkContainer />
-                <img
-                    className={styles['contact__img1']}
-                    src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_12x10.png`}
-                    alt="decorative dot pattern"
-                />
-            </div>
             <div className={styles['contact__text_container']}>
                 <h2 className={styles['contact__title']}>Зворотній зв&apos;язок</h2>
+                <h4 className={styles['contact__info']}><a className={styles['contact__red__star']}>*</a> Обов&apos;язкові поля позначені зірочкою</h4>
                 <form onSubmit={handleSubmit(onSubmit)} className={styles['contact__form']} noValidate>
                     <div className={styles['contact__field']}>
-                        <label className={styles['contact__label']} htmlFor="email">Email:</label>
+                        <label className={styles['contact__label']} htmlFor="email"><a className={styles['contact__red__star']}>*</a>   Електронна пошта:</label>
                         <input className={styles['contact__input']}
                             id="email"
                             type="email"
-                            placeholder="Ваша пошта"
+                            placeholder="Введіть свою електронну пошту"
                             {...register('email', {
                                 required: 'Обов’язкове поле',
                                 pattern: {
@@ -108,7 +95,7 @@ const Contact = () => {
                         {errors.email && <p className={styles['contact__error']}>{errors.email.message}</p>}
                     </div>
                     <div className={styles['contact__field']}>
-                        <label className={styles['contact__label']} htmlFor="message">Категорія:</label>
+                        <label className={styles['contact__label']} htmlFor="message"><a className={styles['contact__red__star']}>*</a> Категорія:</label>
                         <Controller
                             name="category"
                             control={control}
@@ -118,10 +105,10 @@ const Contact = () => {
                             render={({ field, fieldState: { error } }) =>
                                 <Space direction="vertical" style={{ width: '100%', gap: '0px', }}>
                                   <Select
-                                      placeholder="Оберіть категорію"
+                                      placeholder="Оберіть"
                                       {...field}
                                       style={{
-                                          width: 400,
+                                          width: '100%',
                                           padding: 0,
                                       }}
                                       dropdownStyle={{
@@ -140,12 +127,12 @@ const Contact = () => {
                             }
                         />
                     </div>
-                    <div className={`${styles['contact__field']} ${styles['contact__field_message']}`}>
-                        <label className={styles['contact__label']} htmlFor="message">Повідомлення:</label>
+                    <div className={`${styles['contact__field']}`}>
+                        <label className={styles['contact__label']} htmlFor="message"><a className={styles['contact__red__star']}>*</a> Повідомлення:</label>
                         <textarea
                             id="message"
                             className={styles['contact__textarea']}
-                            placeholder="Ваше повідомлення"
+                            placeholder="Введіть ваше повідомлення"
                             {...register('message', {
                                 required: 'Обов’язкове поле',
                                 pattern: {
@@ -161,9 +148,6 @@ const Contact = () => {
                       <button type="submit" className={styles['contact__button_send']}>
                         {loading ? <Spin percent={percent}/> : 'Надіслати'}
                       </button>
-                      <button type="button" onClick={handleCancel} className={styles['contact__button_cancel']}>
-                        Відмінити
-                      </button>
                     </div>
                 </form>
             </div>
@@ -177,16 +161,15 @@ const Contact = () => {
                   >
                     <img src={`${process.env.REACT_APP_PUBLIC_URL}/svg/cross-btn.svg`} alt="Close button" />
                   </button>
-                        <h2>{modalMessage}</h2>
+
+                        <h2 className={styles['modal_feedback__title']}>{modalMessage}</h2>
+                        <h2 className={styles['modal_feedback__info']}>Ваше повідомлення буде опрацьовано</h2>
                        <div className={styles['contact__button_modal_container']}>
                         <Link to="/">
                             <button type="button" className={styles['contact__button_send']}>
                                 На головну
                             </button>
                         </Link>
-                        <button type="button" onClick={closeModal} className={styles['contact__button_cancel']}>
-                            Закрити
-                        </button>
                        </div>
                     </div>
                 </div>
