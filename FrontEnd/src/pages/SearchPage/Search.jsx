@@ -72,9 +72,6 @@ export function Search({ isAuthorized }) {
 
       <BreadCrumbs currentPage="Пошук" />
       <div className={styles['main_block']}>
-        <img className={styles['dot-img-right']}
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_7x6.png`}
-          alt="dots_7x6.png" />
         <div className={styles['new-companies-search_count']}>
           {searchResults && (
             <div>
