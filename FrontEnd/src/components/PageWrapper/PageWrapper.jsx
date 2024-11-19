@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'; // Імпорт PropTypes
+import PropTypes from 'prop-types';
 import { useBurgerMenu } from '../../context/BurgerMenuContext';
 import css from './PageWrapper.module.css';
 
