@@ -3,9 +3,9 @@ from rest_framework.response import Response
 
 
 class ForumPagination(PageNumberPagination):
-    page_size = 6
+    page_size = 16
     page_size_query_param = "page_size"
-    max_page_size = 18
+    max_page_size = 64
 
     def get_paginated_response(self, data):
         return Response(
