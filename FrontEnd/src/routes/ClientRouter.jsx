@@ -62,7 +62,11 @@ function ClientRouter() {
         />
         <Route
           path="/profiles"
-          element={<ProfileListPage isAuthorized={isAuth} />}
+          element={<ProfileListPage isAuthorized={isAuth} isSaved={false}/>}
+        />
+        <Route
+          path="/profiles/saved"
+          element={<ProfileListPage isAuthorized={isAuth} isSaved={true}/>}
         />
         {isAuth ? (
           <Route path="/login" element={<Navigate to="/profile/user-info" />} />

@@ -26,11 +26,12 @@ const ACTIVITY_TYPE = [
   { title: 'Інші послуги', key: 'other-services', value: 'other-services' },
 ];
 
-export default function ProfileListPage({ isAuthorized }) {
+export default function ProfileListPage({ isAuthorized, isSaved }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageNumber = Number(searchParams.get('page')) || 1;
   const companyType = searchParams.get('companyType') || '';
   const activity = searchParams.get('activity') || '';
+  const [profiles, setProfiles] = useState([]);
   const [filters, setFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState(pageNumber);
   const [activeTab, setActiveTab] = useState(searchParams.get('companyType') || 'all');
@@ -70,17 +71,23 @@ export default function ProfileListPage({ isAuthorized }) {
 
   useEffect(() => {
     const baseUrl = `${process.env.REACT_APP_BASE_API_URL}/api/profiles/`;
-    let queryString = `?ordering=name&page_size=${pageSize}&page=${currentPage}`;
+    let queryString = !isSaved
+      ? `?ordering=name&page_size=${pageSize}&page=${currentPage}`
+      : `?is_saved=True&ordering=name&page_size=${pageSize}&page=${currentPage}`;
 
     if (filters.length === 2) {
-      queryString = `?${filters.join('&')}&ordering=name&page_size=${pageSize}&page=${currentPage}`;
+      queryString = !isSaved
+        ? `?${filters.join('&')}&ordering=name&page_size=${pageSize}&page=${currentPage}`
+        : `?is_saved=True&${filters.join('&')}&ordering=name&page_size=${pageSize}&page=${currentPage}`;
     } else if (filters.length === 1) {
-      queryString = `?${filters[0]}&ordering=name&page_size=${pageSize}&page=${currentPage}`;
+      queryString = !isSaved
+        ? `?${filters[0]}&ordering=name&page_size=${pageSize}&page=${currentPage}`
+        : `?is_saved=True&${filters[0]}&ordering=name&page_size=${pageSize}&page=${currentPage}`;
     }
 
     setUrl(`${baseUrl}${queryString}`);
     setCurrentPage(pageNumber);
-  }, [filters, pageNumber, pageSize]);
+  }, [filters, pageNumber, pageSize, currentPage, isSaved]);
 
   async function fetcher(url) {
     return axios.get(url)
@@ -91,7 +98,7 @@ export default function ProfileListPage({ isAuthorized }) {
     data: fetchedProfiles,
     error,
     isLoading,
-  } = useSWR(url, fetcher);
+  } = useSWR(url, fetcher, {onSuccess: (data) => setProfiles(data.results)});
 
   useEffect(() => {
     if (fetchedProfiles?.total_items === 0) {
@@ -105,7 +112,21 @@ export default function ProfileListPage({ isAuthorized }) {
         updateQueryParams(totalPages);
       }
     }
-  }, [fetchedProfiles, pageSize, currentPage]);
+  }, [fetchedProfiles, pageSize, currentPage, isSaved]);
+
+  const changeCompanies = (companyId, saved) => {
+    setProfiles((prevProfiles) =>
+        prevProfiles.map((profile) =>
+            profile.id === companyId ? { ...profile, is_saved: saved } : profile
+        )
+    );
+
+    if (isSaved) {
+      setProfiles((prevProfiles) =>
+        prevProfiles.filter((profile) => profile.is_saved === true)
+      );
+    }
+  };
 
   const handleFilters = (companyType, activity) => {
     if (companyType) {
@@ -150,7 +171,7 @@ export default function ProfileListPage({ isAuthorized }) {
           <div className={css['company-list__header--wrapper']}>
             <div className={css['company-list__header']}>
                   <h2 className={css['company-list__title']}>
-                      Підприємства та сектори
+                      {!isSaved ? 'Підприємства та сектори' : 'Мої збережені'}
                   </h2>
                   <div className={css['company-list__tabs']}>
                     {COMPANY_TYPE.map((item) => (
@@ -196,10 +217,12 @@ export default function ProfileListPage({ isAuthorized }) {
                 <ProfileList
                   isAuthorized={isAuthorized}
                   isLoading={isLoading}
-                  data={fetchedProfiles}
+                  profiles={profiles}
+                  items={fetchedProfiles.total_items}
                   paginationFunc={handlePageChange}
                   current={currentPage}
                   pageSize={pageSize}
+                  changeCompanies={changeCompanies}
                 />
               </div>
             )}
