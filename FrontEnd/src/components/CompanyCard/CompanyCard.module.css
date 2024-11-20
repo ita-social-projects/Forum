@@ -2,11 +2,11 @@
   width: 345px;
   height: 365px;
   display: block;
-  align-items: center;
   border-radius: 11px;
   position: relative;
   margin: auto;
   background: var(--company-card-color);
+  box-shadow: 0px 0px 2px 0px #41404533;
 }
 
 .company-card:hover {
@@ -81,6 +81,7 @@
   padding-left: 16px;
   padding-top: 6px;
   max-width: 300px;
+  height: 35px;
 }
 
 .company-card__name-text {
@@ -152,7 +153,7 @@
   height: 50px;
   background: var(--company-card-color);
   border-radius: 9999px;
-  border: 2px solid #232424;
+  border: 1px solid var(--grey-border-color);
 }
 
 .company-card__logo-image {
@@ -183,6 +184,6 @@
   }
 
   .company-card__category-text {
-    max-width: 250px;
+    max-width: 244px;
   }
 }
