@@ -80,7 +80,7 @@
   text-align: left;
   padding-left: 16px;
   padding-top: 6px;
-  max-width: 300px;
+  max-width: 262px;
   height: 35px;
 }
 
@@ -184,6 +184,6 @@
   }
 
   .company-card__category-text {
-    max-width: 244px;
+    max-width: 220px;
   }
 }
