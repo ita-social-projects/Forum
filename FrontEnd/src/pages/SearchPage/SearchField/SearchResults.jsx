@@ -17,11 +17,11 @@ const SearchResults = ({
   }
 
   return (
-    <div className={styles['container']}>
+    <div className={styles['new-companies-block']}>
       {!error && (
-          <Row gutter={32}>
+          <Row className={styles['row']} gutter={[32, 32]}>
             {displayedResults.map((result, resultIndex) => (
-              <Col key={resultIndex} xs={24} sm={12} lg={6}>
+              <Col className={styles['col']} key={resultIndex} xs={24} sm={24} md={12} lg={6}>
                 <CompanyCard
                   profile={result}
                   isAuthorized={isAuthorized}
