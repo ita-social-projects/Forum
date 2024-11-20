@@ -1,9 +1,9 @@
 .company-card {
-  width: 345px;
+  width: 302px;
   height: 365px;
   display: block;
   align-items: center;
-  border-radius: 11px;
+  border-radius: 6px;
   position: relative;
   margin: auto;
   background: var(--company-card-color);
@@ -20,7 +20,7 @@
 }
 
 .company-card__image-frame {
-  width: 345px;
+  width: 302px;
   height: 188px;
 }
 
@@ -44,16 +44,16 @@
 }
 
 .company-card__image {
-  width: 345px;
+  width: 302px;
   height: 188px;
-  border-top-left-radius: 11px;
-  border-top-right-radius: 11px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   flex-shrink: 0;
   object-fit: cover;
 }
 
 .company-card__text-block {
-  width: 345px;
+  width: 302px;
   height: 177px;
   display: flex;
   flex-direction: column;
@@ -140,24 +140,24 @@
 }
 
 .company-card__logo {
-  width: 50px;
-  height: 50px;
+  width: 42.2px;
+  height: 42.2px;
   position: absolute;
-  right: 20px;
-  bottom: 152px;
+  right: 16px;
+  bottom: 153.9px;
 }
 
 .company-card__logo-ellipse {
-  width: 50px;
-  height: 50px;
+  width: 42.2px;
+  height: 42.2px;
   background: var(--company-card-color);
   border-radius: 9999px;
-  border: 2px solid #232424;
+  border: 1px solid #232424;
 }
 
 .company-card__logo-image {
-  width: 50px;
-  height: 50px;
+  width: 42.2px;
+  height: 42.2px;
   border-radius: 9999px;
   background: var(--company-card-color);
   object-fit: cover;
@@ -165,7 +165,7 @@
 
 .company-card__star {
   position: absolute;
-  left: 296px;
+  left: 272px;
   bottom: 13px;
 }
 
