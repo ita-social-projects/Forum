@@ -42,8 +42,8 @@ const customTheme = {
         multipleItemBg: '#F8F8F8',
       },
       Checkbox: {
-        colorPrimary: '#1f9a7c',
-        colorPrimaryHover: '#1f9a7c',
+        colorPrimary: '#000000',
+        colorPrimaryHover: '#000000',
       },
       Spin: {
         colorPrimary: '#ffffff',

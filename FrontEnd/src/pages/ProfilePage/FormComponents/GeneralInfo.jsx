@@ -11,7 +11,6 @@ import css from './FormComponents.module.css';
 
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import CheckBoxField from './FormFields/CheckBoxField';
-import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import ImageField from './FormFields/ImageField';
 import MultipleSelectChip from './FormFields/MultipleSelectChip';
@@ -20,6 +19,7 @@ import Loader from '../../../components/Loader/Loader';
 import validateEdrpou from '../../../utils/validateEdrpou';
 import validateRnokpp from '../../../utils/validateRnokpp';
 import BanerModeration from './BanerModeration';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
 const LABELS = {
   name: 'Назва компанії',
@@ -51,7 +51,7 @@ const ERRORS = {
   },
 };
 
-const TEXT_AREA_MAX_LENGTH = 2000;
+const TEXT_AREA_MAX_LENGTH = 1000;
 const BANNER_IMAGE_SIZE = 5 * 1024 * 1024;
 const LOGO_IMAGE_SIZE = 1 * 1024 * 1024;
 
@@ -62,8 +62,8 @@ const GeneralInfo = (props) => {
   const { profile: mainProfile, mutate: profileMutate } = useProfile();
   const [profile, setProfile] = useState(props.profile);
   const [formStateErr, setFormStateErr] = useState(ERRORS);
-  const [bannerImage, setBannerImage] = useState(props.profile.banner?.path);
-  const [logoImage, setLogoImage] = useState(props.profile.logo?.path);
+  const [bannerImage, setBannerImage] = useState(props.profile?.banner?.path);
+  const [logoImage, setLogoImage] = useState(props.profile?.logo?.path);
   const [bannerImageError, setBannerImageError] = useState(null);
   const [logoImageError, setLogoImageError] = useState(null);
   const [edrpouFieldError, setEdrpouFieldError] = useState(null);
@@ -104,10 +104,6 @@ const GeneralInfo = (props) => {
     const isDirty = checkFormIsDirty(fields, null, profile);
     setFormIsDirty(isDirty);
   }, [mainProfile, profile]);
-
-  useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
 
   const checkRequiredFields = () => {
     let isValid = true;
@@ -396,7 +392,7 @@ const GeneralInfo = (props) => {
       try {
         const response = await axios.patch(
           `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
-            data.profileChanges
+        data.profileChanges
         );
         profileMutate(response.data);
         toast.success('Зміни успішно збережено');
@@ -409,6 +405,8 @@ const GeneralInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Загальна інформація</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="GeneralInfo"
@@ -420,6 +418,7 @@ const GeneralInfo = (props) => {
             <div className={css['fields-groups']}>
               <HalfFormField
                 name="name"
+                fieldPlaceholder="Введіть назву компанії"
                 label={LABELS.name}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
@@ -432,25 +431,27 @@ const GeneralInfo = (props) => {
                 value={profile.name}
                 maxLength={100}
               />
+              <HalfFormField
+                name="official_name"
+                fieldPlaceholder="Введіть юридичну назву компанії"
+                label={LABELS.official_name}
+                updateHandler={onUpdateField}
+                onBlur={onBlurHandler}
+                value={profile.official_name ?? ''}
+                error={
+                  formStateErr['official_name']?.['error']
+                    ? formStateErr['official_name']['message']
+                    : null
+                }
+                maxLength={200}
+              />
             </div>
-            <FullField
-              name="official_name"
-              label={LABELS.official_name}
-              updateHandler={onUpdateField}
-              onBlur={onBlurHandler}
-              value={profile.official_name ?? ''}
-              error={
-                formStateErr['official_name']?.['error']
-                  ? formStateErr['official_name']['message']
-                  : null
-              }
-              maxLength={200}
-            />
             <div className={css['fields-groups']}>
               {mainProfile?.is_fop ? (
                 <HalfFormField
                   inputType="text"
                   name="rnokpp"
+                  fieldPlaceholder="Введіть РНОКПП"
                   label={LABELS.rnokpp}
                   updateHandler={onUpdateIdentifierField}
                   value={profile.rnokpp ?? ''}
@@ -461,6 +462,7 @@ const GeneralInfo = (props) => {
                 <HalfFormField
                   inputType="text"
                   name="edrpou"
+                  fieldPlaceholder="Введіть ЄДРПОУ"
                   label={LABELS.edrpou}
                   updateHandler={onUpdateIdentifierField}
                   value={profile.edrpou ?? ''}
@@ -558,6 +560,8 @@ const GeneralInfo = (props) => {
               requiredField={true}
             />
           </div>
+          <div className={css['bottom-divider']}></div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />
@@ -590,6 +594,4 @@ GeneralInfo.propTypes = {
       path: PropTypes.string,
     }),
   }).isRequired,
-  currentFormNameHandler: PropTypes.func,
-  curForm: PropTypes.string,
 };
