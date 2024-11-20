@@ -24,12 +24,12 @@
   color: #707070;
   font: var(--font-main);
   font-weight: 300;
-  font-size: 34px ;
+  font-size: 18px ;
 }
 
 .search_results_text {
   font: var(--font-main);
-  font-size: 41px;
+  font-size: 18px;
   font-weight: 700;
   color: #232424;
 }
@@ -80,3 +80,22 @@
 }
 
 
+
+@media only screen and (min-width: 768px){
+    .search_results_text {
+      font-size: 41px;
+    }
+    .search_field_entered_value {
+      font-size: 41px;
+    }
+}
+
+@media only screen and (min-width: 375px){
+    .search_results_text {
+      font-size: 34px;
+    }
+    .search_field_entered_value {
+      font-size: 34px;
+    }
+
+}
