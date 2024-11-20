@@ -1,13 +1,16 @@
 .main_block_outer {
   padding-top: 10px;
-  min-height: var(--min-height-block-main);
 }
 
 .new-companies-main__error {
+  background-color: rgba(249, 245, 236, 1);
   display: flex;
-  min-height: 539px;
+  justify-content: center;
+  align-items: center;
+  min-height: 288px;
   margin-top: 3%;
-  align-content: center;
+  text-align: center;
+
 }
 
 .main_block {
@@ -35,23 +38,11 @@
 }
 
 .search_result_error {
-  margin-left: 140px;
-  margin-top: 15%;
-  width: 80%;
-  flex-direction: row;
-  font-weight: 600;
+  width: 100%;
+  max-width: 80%;
   color: var(--search-text-color);
-  font: normal normal bold 20px/2 var(--font-main);
-}
-
-.search_result_error_color {
-  color: #0b6c61;
-  font: normal normal normal 20px/2 var(--font-main);
-  font-weight: 600;
-}
-
-.new-companies-result_pages {
-  padding: 40px;
+  font: normal normal bold 29px/2 var(--font-main);
+  text-align: center;
 }
 
 .pagination {
@@ -88,6 +79,10 @@
     .search_field_entered_value {
       font-size: 41px;
     }
+
+    .search_result_error {
+      font: normal normal bold 48px/2 var(--font-main);
+    }
 }
 
 @media only screen and (min-width: 768px){
@@ -97,5 +92,7 @@
     .search_field_entered_value {
       font-size: 34px;
     }
-
+    .search_result_error {
+          font: normal normal bold 48px/2 var(--font-main);
+        }
 }

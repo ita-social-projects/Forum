@@ -96,11 +96,7 @@ export function Search({ isAuthorized }) {
           ) : (
             <div className={styles['new-companies-main__error']}>
               <p className={styles['search_result_error']}>
-                Пошук не дав результатів: компанії з іменем
-                <span className={styles['search_result_error_color']}>
-                  {` ${searchTerm} `}
-                </span>
-                не було виявлено на даний момент
+               Пошук не дав результатів
               </p>
             </div>
           )}
