@@ -1,35 +1,24 @@
-.new-companies-block {
-  display: flex;
-  padding-left: 10%;
-  flex-direction: row;
-  align-items: center;
-    margin-top: 16px;
+.container {
+  margin-left: 9%;
+  margin-top: 32px;
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 1fr;
-  justify-content: space-between;
-  position: relative;
-  z-index: 100;
-    gap: 32px;
-}
 
-.col-md-4 {
-  z-index: 1000;
+.col {
+  padding: 16px;
 }
 
 
 
 
-@media only screen and (min-width: 768px){
-    .row {
-      grid-template-columns: 1fr 1fr;
-    }
+/*@media only screen and (min-width: 768px){*/
+/*    .row {*/
+/*      grid-template-columns: 1fr 1fr;*/
+/*    }*/
 
-}
-@media only screen and (min-width: 1512px){
-    .row {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-}
+/*}*/
+/*@media only screen and (min-width: 1512px){*/
+/*    .row {*/
+/*      grid-template-columns: 1fr 1fr 1fr 1fr;*/
+/*    }*/
+/*}*/
