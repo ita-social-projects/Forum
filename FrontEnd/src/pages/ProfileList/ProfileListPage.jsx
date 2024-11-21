@@ -120,12 +120,6 @@ export default function ProfileListPage({ isAuthorized, isSaved }) {
             profile.id === companyId ? { ...profile, is_saved: saved } : profile
         )
     );
-
-    if (isSaved) {
-      setProfiles((prevProfiles) =>
-        prevProfiles.filter((profile) => profile.is_saved === true)
-      );
-    }
   };
 
   const handleFilters = (companyType, activity) => {
@@ -218,7 +212,7 @@ export default function ProfileListPage({ isAuthorized, isSaved }) {
                   isAuthorized={isAuthorized}
                   isLoading={isLoading}
                   profiles={profiles}
-                  items={fetchedProfiles.total_items}
+                  items={fetchedProfiles?.total_items}
                   paginationFunc={handlePageChange}
                   current={currentPage}
                   pageSize={pageSize}
