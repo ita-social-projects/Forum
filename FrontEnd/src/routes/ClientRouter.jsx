@@ -69,7 +69,7 @@ function ClientRouter() {
                   element={<ProfileDetailPage isAuthorized={isAuth} />}
                 />
                 <Route
-                  path="/profiles/:filter"
+                  path="/profiles"
                   element={<ProfileListPage isAuthorized={isAuth} />}
                 />
                 {isAuth ? (
