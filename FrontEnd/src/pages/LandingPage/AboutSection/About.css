@@ -4,7 +4,7 @@
 }
 
 .about-us-section-content {
-    height: auto;
+    height: 542px;
 }
 
 .about-us-section-content__field {
@@ -14,7 +14,7 @@
     align-items: flex-start;
     gap: 24px;
     flex-shrink: 0;
- 
+    position: absolute;
 }
 
 .about-us-rectangle {
@@ -22,7 +22,7 @@
     height: 542px;
     flex-shrink: 0;
     background: var(--about-as-background-color);
-  
+    position: absolute;
 }
 
 .about-us-section-content__text {
