@@ -1,6 +1,6 @@
 const AboutUsText = {
     id: 1,
-    title: 'ЧОМУ ВАРТО',
+    title: 'Чому варто',
     level: 2,
     content: [
         {
