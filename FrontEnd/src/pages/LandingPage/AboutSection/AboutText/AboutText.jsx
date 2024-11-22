@@ -22,7 +22,7 @@ const AboutSectionText = () => {
                   alt={item.text}
                   className="about-us-text-section__icon"
                 />
-                <p>{item.text}</p>
+                <p className="about-us-text-section__card" >{item.text}</p>
               </div>
             </Col>
           ))}

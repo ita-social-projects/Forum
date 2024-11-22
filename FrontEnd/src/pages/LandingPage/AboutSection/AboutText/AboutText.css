@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    padding: 20px 16px;
+    padding: 20px 16px 50px 16px;
     margin: auto;
     background-color: #f9f4ea;
   }
@@ -23,26 +23,17 @@
     line-height: 28px;
     text-align: center;
     color: #232424;
-    margin-bottom: 40px;
-    margin-top: 40px;
+    margin-bottom: 30px;
+    margin-top: 30px;
   }
-  
-  .about-us-text-section__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    width: 100%;
-    max-width: 340px;
-    box-sizing: border-box;
-  }
-  
+    
   .about-us-text-section__card {
     display: flex;
     align-items: center;
     gap: 8px;
     background-color: #fff;
     width: 100%;
-    height: auto;
+    height: 155px;
     padding: 12px;
     border-radius: 6px;
     box-sizing: border-box;
@@ -95,6 +86,7 @@
     .about-us-text-section__card {
       max-width: 344px;
       height: 102px;
+      justify-content: flex-start;
     }
     
     .about-us-text-section__card p {
@@ -104,7 +96,7 @@
   
   @media only screen and (min-width: 1200px) {
     .about-us-text-section {
-      max-width: 1304px;
+      max-width: 1200px;
     }
   
     .about-us-text-section__header-text {
@@ -116,10 +108,10 @@
       gap: 32px;
     }
   
-    .about-us-text-section__card {
+    /* .about-us-text-section__card {
       max-width: 345px;
       height: 102px;
-    }
+    } */
   
     .about-us-text-section__card p {
       font-size: 16px;
