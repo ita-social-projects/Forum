@@ -134,7 +134,7 @@
 
 @media only screen and (min-width: 768px) {
   .title-block__content {
-    width: 768px;
+    width: 760px;
   }
 
   .title-block {
@@ -143,7 +143,7 @@
 
   .title-block__content-info {
     flex-direction: row;
-    width: 768px;
+    width: 728px;
     gap: 24px;
   }
 
