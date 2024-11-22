@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 import classNames from 'classnames';
 
 import DefaultLogo from './DefaultLogo';
-
+import PendingStatus from '../../../components/MiniComponents/PendingModerationIcon/PendingStatus';
 import CategoryBadges from '../../../components/MiniComponents/CategoryBadges';
 import StarForLike from '../../../components/MiniComponents/StarForLike';
 import { useAuth } from '../../../hooks';
@@ -61,34 +61,37 @@ function TitleInfo({ isAuthorized, data }) {
     <div className={classes['title-block']}>
       <div className={classes['title-block__content']}>
         <div className={classes['title-block__content-info']}>
-        <div className={classes['title-block__logo-block']}>
-          {!profile.logo?.path ? (
-            <DefaultLogo />
-          ) : (
-            <img
-              className={classes['title-block__logo-img']}
-              src={profile.logo?.path}
-              alt="Логотип компанії"
-              title="Логотип компанії"
-            />
-          )}
-        </div>
-        <div className={classes['title-block__about']}>
-          <p className={classes['title-block__activity']}>
-            {profile.activities}
-          </p>
-          <div className={classes['title-block__company']}>
-            <h2 className={classes['title-block__company_name']}>
-              {profile.name}
-            </h2>
-            <p className={classes['title-block__company_region']}>
-              {profile.regions}
+          <div className={classes['title-block__logo-block']}>
+            <div className={classes['title-block__logo-tooltip']}>
+              <PendingStatus profile={data} elementType="logo" />
+            </div>
+            {!profile.logo?.path ? (
+              <DefaultLogo />
+            ) : (
+              <img
+                className={classes['title-block__logo-img']}
+                src={profile.logo?.path}
+                alt="Логотип компанії"
+                title="Логотип компанії"
+              />
+            )}
+          </div>
+          <div className={classes['title-block__about']}>
+            <p className={classes['title-block__activity']}>
+              {profile.activities}
             </p>
-            <div className={classes['title-block__company_category']}>
-              <CategoryBadges categories={profile.categories} />
+            <div className={classes['title-block__company']}>
+              <h2 className={classes['title-block__company_name']}>
+                {profile.name}
+              </h2>
+              <p className={classes['title-block__company_region']}>
+                {profile.regions}
+              </p>
+              <div className={classes['title-block__company_category']}>
+                <CategoryBadges categories={profile.categories} />
+              </div>
             </div>
           </div>
-        </div>
         </div>
         {isAuthorized ? (
           <div className={classes['title-block__button-block']}>

@@ -7,17 +7,3 @@
 .profile-detail__loader-content {
     display: flex;
 }
-
-.profile-detail__banner-tooltip {
-    display: flex;
-    position: absolute;
-    padding-top: 12px;
-    padding-left: 112px;
-}
-
-.profile-detail__logo-tooltip {
-    display: flex;
-    position: absolute;
-    padding-top: 5px;
-    padding-left: 3px;
-}

@@ -13,8 +13,6 @@ import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
 
 import { ActiveLinksContext } from '../../context/ActiveLinksContext';
 
-import PendingStatus from '../../components/MiniComponents/PendingModerationIcon/PendingStatus';
-
 import classes from './ProfileDetailPage.module.css';
 
 
@@ -57,13 +55,7 @@ function ProfileDetailPage({ isAuthorized }) {
         <Loader />
       ) : (
         <ActiveLinksContext.Provider value={{ activeLinks, setActiveLinks }}>
-          <div className={classes['profile-detail__banner-tooltip']}>
-            <PendingStatus profile={fetchedProfile} elementType="banner" />
-          </div>
           <BannerImage data={fetchedProfile} />
-          <div className={classes['profile-detail__logo-tooltip']}>
-            <PendingStatus profile={fetchedProfile} elementType="logo" />
-          </div>
           <TitleInfo
             containsNotRequiredData={containsNotRequiredData}
             isAuthorized={isAuthorized}

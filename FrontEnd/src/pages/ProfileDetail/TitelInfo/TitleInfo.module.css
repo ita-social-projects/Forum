@@ -27,6 +27,11 @@
   align-items: center;
 }
 
+.title-block__logo-tooltip {
+  display: flex;
+  padding-bottom: 64px;
+}
+
 .title-block__logo-img {
   width: 64px;
   height: 64px;
