@@ -18,9 +18,10 @@ const HalfFormField = forwardRef(function HalfFormField(props, ref) {
     <div className={css['fields__column']}>
       <div className={css['fields__label']}>
         {props.requiredField && (
-          <label className={css['fields__label--required']}>*</label>
+          <span className={css['fields__label--required']}>*</span>
         )}
         <label
+          htmlFor={props.label ? props.label : props.name}
           className={`${css['fields__label--text']} ${
             !props.requiredField && css['fields__field--notrequired']
           }`}
@@ -39,6 +40,7 @@ const HalfFormField = forwardRef(function HalfFormField(props, ref) {
               props.name === 'email' && css['disabled__field']
             }`}
             name={props.name}
+            id={props.label ? props.label : props.name}
             value={fieldValue}
             placeholder={props.fieldPlaceholder || 'Введіть текст'}
             onBlur={props.onBlur}
@@ -48,6 +50,7 @@ const HalfFormField = forwardRef(function HalfFormField(props, ref) {
             required={props.requiredField ? 'required' : ''}
             disabled={props.name === 'email' ? 'disabled' : ''}
             maxLength={props.maxLength}
+            autoComplete="off"
           />
         </Tooltip>
       </div>

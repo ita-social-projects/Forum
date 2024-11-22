@@ -19,11 +19,11 @@ const WarnUnsavedDataModal = ({ onCancel, onConfirm }) => {
             </div>
             <div className={classes['modal-footer']}>
                 <div className={classes['modal-footer--buttons-wrapper']}>
-                    <button onClick={onCancel} className={`${classes['modal-footer--button']} ${classes['modal-footer--button-cancel']}`}>
-                        Скасувати
-                    </button>
                     <button onClick={onConfirm} className={`${classes['modal-footer--button']} ${classes['modal-footer--button-continue']}`}>
                         Продовжити
+                    </button>
+                    <button onClick={onCancel} className={`${classes['modal-footer--button']} ${classes['modal-footer--button-cancel']}`}>
+                        Скасувати
                     </button>
                 </div>
             </div>
