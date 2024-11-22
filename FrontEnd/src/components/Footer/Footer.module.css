@@ -1,6 +1,6 @@
 .footer-main {
     display: flex;
-    width: 100vw;
+    width: 100%;
     background: var(--footer-backround);
     justify-content: center;
 }
@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 32px 24px;
+    padding: 32px 0px;
     width: 327px;
     height: 679px;
     gap: 32px;
@@ -22,11 +22,19 @@
     }
 }
 
-@media only screen and (min-width: 1512px) {
+@media only screen and (min-width: 1200px) {
     .footer-content {
         flex-direction: row;
-        width: 1304px;
+        width: 1100px;
         height: 205px;
-        padding: 32px 104px;
+        padding: 32px 0px;
+        gap: 0px;
+    }
+}
+
+@media only screen and (min-width: 1512px) {
+    .footer-content {
+        width: 1304px;
+        gap: 32px;
     }
 }
