@@ -6,9 +6,9 @@ import { useAuth, useProfile } from '../../../hooks';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import defineChanges from '../../../utils/defineChanges';
 import { formatPhoneNumber } from '../../../utils/formatPhoneNumber';
-import FullField from './FormFields/FullField';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './FormComponents.module.css';
 import { useMask } from '@react-input/mask';
 
@@ -26,7 +26,7 @@ const ContactsInfo = (props) => {
   const { setFormIsDirty } = useContext(DirtyFormContext);
 
   const fields = {
-    phone: { defaultValue: mainProfile?.phone ?? null, type: 'phone'},
+    phone: { defaultValue: mainProfile?.phone ?? null, type: 'phone' },
     address: { defaultValue: mainProfile?.address ?? null },
   };
 
@@ -36,10 +36,6 @@ const ContactsInfo = (props) => {
   }, [mainProfile, profile]);
 
   const inputRef = useMask({ mask: '+380XX XXX XX XX', replacement: { X: /\d/ } });
-
-  useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
 
   useEffect(() => {
     if (mainProfile?.phone) {
@@ -116,6 +112,8 @@ const ContactsInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Контакти</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="ContactsInfo"
@@ -136,15 +134,18 @@ const ContactsInfo = (props) => {
                 value={phone ?? ''}
                 error={phoneNumberError}
               />
+              <HalfFormField
+                name="address"
+                fieldPlaceholder="Введіть поштову адресу"
+                label={LABELS.address}
+                updateHandler={onUpdateField}
+                requiredField={false}
+                value={profile.address ?? ''}
+              />
             </div>
-            <FullField
-              name="address"
-              label={LABELS.address}
-              updateHandler={onUpdateField}
-              requiredField={false}
-              value={profile.address ?? ''}
-            />
           </div>
+          <div className={css['bottom-divider']}></div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

@@ -8,6 +8,7 @@ import defineChanges from '../../../utils/defineChanges';
 import { useAuth, useProfile } from '../../../hooks';
 import TextField from './FormFields/TextField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './FormComponents.module.css';
 
 const LABELS = {
@@ -30,10 +31,6 @@ const StartupInfo = (props) => {
     const isDirty = checkFormIsDirty(fields, null, profile);
     setFormIsDirty(isDirty);
   }, [mainProfile, profile]);
-
-  useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
 
   const onUpdateTextAreaField = (e) => {
     if (e.target.value.length <= TEXT_AREA_MAX_LENGTH)
@@ -67,6 +64,8 @@ const StartupInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Стартап</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="StartupInfo"
@@ -80,10 +79,12 @@ const StartupInfo = (props) => {
               label={LABELS.startup_idea}
               updateHandler={onUpdateTextAreaField}
               requiredField={false}
-              value={profile.startup_idea ?? ''}
+              value={profile?.startup_idea ?? ''}
               maxLength={TEXT_AREA_MAX_LENGTH}
             />
           </div>
+          <div className={css['bottom-divider']}></div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

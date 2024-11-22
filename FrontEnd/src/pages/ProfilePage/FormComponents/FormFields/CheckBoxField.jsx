@@ -8,9 +8,10 @@ const CheckBoxField = (props) => {
     <div className={css['representative']}>
       <div className={css['representative__label']}>
         {props.requiredField && (
-          <label className={css['representative__label--required']}>*</label>
+          <span className={css['representative__label--required']}>*</span>
         )}
         <label
+          htmlFor={props.nameRegister}
           className={`${css['representative__label--text']} ${
             !props.requiredField && css['fields__field--notrequired']
           }`}
@@ -22,6 +23,7 @@ const CheckBoxField = (props) => {
         <div className={css['representative__checkboxes--company-type']}>
           <label className={css['form-control']}>
             <Checkbox
+              id={props.nameRegister}
               name={props.nameRegister}
               onChange={props.updateHandler}
               onKeyDown={preventEnterSubmit}
