@@ -17,6 +17,12 @@ function SearchBox() {
     }
   };
 
+  const keyDownFunction = (e) => {
+      if (e.key === 'Enter' ) {
+        handleSearch();
+      }
+  };
+
   const handleClear = () => {
     setSearchTerm('');
   };
@@ -28,6 +34,7 @@ function SearchBox() {
                 placeholder="Пошук"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={keyDownFunction}
             />
             {searchTerm && (
                <Button
