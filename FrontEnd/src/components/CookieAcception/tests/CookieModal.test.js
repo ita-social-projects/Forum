@@ -6,44 +6,54 @@ import CookieMod from '../CookieMod';
 afterEach(cleanup);
 
 describe('CookieMod component unit tests', () => {
-  test('renders agree button', () => {
+  test('renders "Allow All" button', () => {
     render(
       <MemoryRouter>
         <CookieMod active={true} />
       </MemoryRouter>
     );
-    const buttonElement = screen.getByText(/Погоджуюсь/i);
+    const buttonElement = screen.getByText(/Дозволити всі/i);
     expect(buttonElement).toBeInTheDocument();
   });
 
-  test('renders deny button', () => {
+  test('renders "Settings" button', () => {
     render(
       <MemoryRouter>
         <CookieMod active={true} />
       </MemoryRouter>
     );
-    const buttonElement = screen.getByText(/Відмовляюсь/i);
+    const buttonElement = screen.getByText(/Налаштувати/i);
     expect(buttonElement).toBeInTheDocument();
   });
 
-  test('renders cookiepolicy link', async () => {
+  test('renders link to cookie policy', async () => {
     render(
       <MemoryRouter>
         <CookieMod active={true} />
       </MemoryRouter>
     );
 
-    const linkElement = screen.getByText(/про кукі-файли/i);
+    const linkElement = screen.getByText(/про файли cookie/i);
     expect(linkElement).toBeInTheDocument();
   });
 
-  test('renders hidden cookie modal window', () => {
+  test('does not render cookie modal when inactive', () => {
     render(
       <MemoryRouter>
         <CookieMod active={false} />
       </MemoryRouter>
     );
-    const cookieElement = screen.queryByTestId('cookiemodal', { hidden: true });
+    const cookieElement = screen.queryByTestId('cookiemodal');
+    expect(cookieElement).not.toBeInTheDocument();
+  });
+
+  test('renders cookie modal when active', () => {
+    render(
+      <MemoryRouter>
+        <CookieMod active={true} />
+      </MemoryRouter>
+    );
+    const cookieElement = screen.getByTestId('cookiemodal');
     expect(cookieElement).toBeInTheDocument();
   });
 });

@@ -23,7 +23,7 @@ const CookieMod = ({ active, setActive }) => {
   };
 
   return active ? (
-    <div className={styles['cookie-banner']}>
+    <div className={styles['cookie-banner']} data-testid="cookiemodal">
       {!detailsVisible ? (
         <div className={styles['cookie-content']}>
           <div className={styles['cookie-header']}>
