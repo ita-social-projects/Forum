@@ -150,4 +150,12 @@
   --company-card-color-hover: #EDE0C5;
   --new-companies-background-color: #FFFFFF;
   --min-height-block-main: 100vh;
+
+  /* Cookies */
+  --cookie-black-color: #000000;
+  --cookie-light-color: #FFFFFF;
+  --cookie-dark-color: #10182F;
+  --cookie-border-color: #e9e9e9;
+  --cookie-overlay-color: rgba(0, 0, 0, 0.5);
+  --cookie-shadow-color: rgba(0, 0, 0, 0.15);
 }

@@ -3,8 +3,8 @@
   bottom: 20px;
   right: 20px;
   width: 600px;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: var(--cookie-light-color);
+  box-shadow: 0 4px 12px var(--cookie-shadow-color);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -36,9 +36,7 @@
   font-weight: 600;
   line-height: 30px;
   text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-  color: #10182F;
+  color: var(--cookie-dark-color);
   padding: 10px 5px;
   border-radius: 4px;
 }
@@ -49,16 +47,14 @@
   font-weight: 600;
   line-height: 20px;
   text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-  color: #10182F;
+  color: var(--cookie-dark-color);
 }
 
 .cookie-link {
   font-size: 14px;
   line-height: 1.5;
   margin-left: 4px;
-  color: #000000;
+  color: var(--cookie-black-color);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -71,15 +67,13 @@
 }
 
 .allow-all-btn {
-  background: #000000;
-  color: #ffffff;
+  background: var(--cookie-black-color);
+  color: var(--cookie-light-color);
   width: 144px;
   height: 40px;
   padding: 10px 16px;
-  gap: 4px;
   border-radius: 4px 0px 0px 0px;
   border: none;
-  opacity: 1;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -88,20 +82,18 @@
 
 .allow-all-btn:hover {
   background: transparent;
-  color: #000000;
-  border: 1px solid #000000;
+  color: var(--cookie-black-color);
+  border: 1px solid var(--cookie-black-color);
 }
 
 .settings-btn {
-  background: #ffffff;
-  color: #000000;
+  background: var(--cookie-light-color);
+  color: var(--cookie-black-color);
   width: 144px;
   height: 40px;
   padding: 10px 16px;
-  gap: 4px;
   border-radius: 0px;
-  border: 1px solid #000000;
-  opacity: 1;
+  border: 1px solid var(--cookie-black-color);
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -109,8 +101,8 @@
 }
 
 .settings-btn:hover {
-  background: #000000;
-  color: #ffffff;
+  background: var(--cookie-black-color);
+  color: var(--cookie-light-color);
 }
 
 .cookie-modal {
@@ -119,25 +111,27 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--cookie-overlay-color);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1001;
+  padding-bottom: 20px;
 }
 
 .modal-content {
-  background: #FFFFFF;
-  width: 640px;
+  background: var(--cookie-light-color);
+  width: 600px;
   max-width: 90%;
   height: auto;
-  max-height: 90vh;
+  max-height: 85vh;
   padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
-  border: 1px solid #DADADA;
+  border: 1px solid var(--cookie-border-color);
+  box-shadow: 0 4px 10px var(--cookie-shadow-color);
 }
 
 .modal-header {
@@ -147,7 +141,7 @@
 }
 
 .modal-header img {
-  width: 40px; 
+  width: 40px;
   height: 40px;
 }
 
@@ -155,9 +149,8 @@
   font-family: 'Geologica', sans-serif;
   font-size: 20px;
   font-weight: 600;
-  color: #10182F;
+  color: var(--cookie-dark-color);
   text-align: left;
-  gap:30px;
 }
 
 .modal-text-container {
@@ -165,11 +158,10 @@
   font-size: 14px;
   line-height: 20px;
   padding: 0px 0px 0px 73px;
-  color: #10182F;
-  gap: 6px;
+  color: var(--cookie-dark-color);
 }
 
-.modal-text-domains{
+.modal-text-domains {
   padding: 20px 0px 0px 0px;
 }
 
@@ -177,8 +169,8 @@
   list-style-type: disc;
   margin-left: 20px;
   font-size: 14px;
-  color: #10182F;
-  margin-bottom:20px;
+  color: var(--cookie-dark-color);
+  margin-bottom: 20px;
 }
 
 .modal-item {
@@ -186,9 +178,9 @@
   flex-direction: column;
   align-items: stretch;
   padding: 15px;
-  border: 1px solid #e9e9e9;
-  background: #ffffff;
-  margin-bottom: -1px;
+  border: 1px solid var(--cookie-border-color);
+  background: var(--cookie-light-color);
+  margin-bottom: 0px;
   border-radius: 5px;
 }
 
@@ -203,7 +195,7 @@
 .item-title {
   font-size: 16px;
   font-weight: bold;
-  color: #10182f;
+  color: var(--cookie-dark-color);
   margin: 0;
 }
 
@@ -211,21 +203,22 @@
   appearance: auto;
   width: 20px;
   height: 20px;
-  border: 1px solid #000;
+  border: 1px solid var(--cookie-black-color);
   cursor: pointer;
-  accent-color: #000;
+  accent-color: var(--cookie-black-color);
 }
+
 .cookie-modal input[type="checkbox"]::before {
   content: none;
 }
-
 
 .item-description {
   font-family: 'Geologica', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #10182F;
+  color: var(--cookie-dark-color);
   line-height: 20px;
+  padding: 0px 90px 0px 0px;
 }
 
 .modal-buttons {
@@ -236,8 +229,8 @@
 }
 
 .cancel-btn {
-  background: #ffffff;
-  color: #10182f;
+  background: var(--cookie-light-color);
+  color: var(--cookie-dark-color);
   padding: 10px 20px;
   font-size: 14px;
   cursor: pointer;
@@ -245,13 +238,13 @@
 }
 
 .cancel-btn:hover {
-  background: #000000;
-  color: #ffffff;
+  background: var(--cookie-black-color);
+  color: var(--cookie-light-color);
 }
 
 .save-btn {
-  background: #10182f;
-  color: #ffffff;
+  background: var(--cookie-dark-color);
+  color: var(--cookie-light-color);
   border: none;
   padding: 10px 20px;
   font-size: 14px;
@@ -261,8 +254,7 @@
 
 .save-btn:hover {
   background: transparent;
-  color: #000000;
-
+  color: var(--cookie-black-color);
 }
 
 @media (max-width: 768px) {
@@ -282,9 +274,38 @@
     bottom: 0;
     right: 0;
   }
-}
 
-.cookie-content {
-  padding: 5px 40px;
-  text-align: center;
+  .cookie-content {
+    padding: 5px 40px;
+    text-align: center;
+  }
+
+  .modal-content {
+    width: 90%;
+    max-height: 95vh;
+    padding: 20px;
+  }
+
+  .cookie-modal .cookie-logo {
+    margin: 0 auto 15px;
+    order: -1;
+  }
+
+  .modal-title {
+    margin: 0;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-text-container {
+    text-align: left;
+    padding: 0 10px;
+  }
 }
