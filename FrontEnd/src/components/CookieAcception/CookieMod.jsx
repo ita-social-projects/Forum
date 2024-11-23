@@ -40,7 +40,7 @@ const CookieMod = ({ active, setActive }) => {
           <p className={styles['cookie-text']}>
             Дізнатися більше
             <Link to="/cookie-policy" className={styles['cookie-link']}>
-                про файли cookie.
+              про файли cookie.
             </Link>
           </p>
           <div className={styles['cookie-buttons']}>
@@ -55,70 +55,98 @@ const CookieMod = ({ active, setActive }) => {
       ) : (
         <div className={styles['cookie-modal']}>
           <div className={styles['modal-content']}>
-            <h3 className={styles['modal-title']}>
-              Використання файлів &quot;Cookies&quot;
-            </h3>
-            <p className={styles['modal-text']}>
-              Файли &quot;cookies&quot; є невеликими текстовими файлами, які можуть бути розміщені на пристрої
-              користувача під час відвідування Сайту. Вони дозволяють збирати та зберігати певну інформацію
-              про відвідувачів, таку як налаштування мови, історія перегляду, дані автентифікації та інші
-              деталі. Використання файлів &quot;cookies&quot; на Сайті сприяє поліпшенню зручності та
-              персоналізації досвіду користувачів, дозволяючи зберігати інформацію про їхній вибір та
-              взаємодію з різними елементами Сайту.
-            </p>
-            <p className={styles['modal-text']}>
-              Ваші налаштування застосовуються до наступних доменів:
-            </p>
-            <ul className={styles['modal-domains']}>
-              <li>cookieinfo.net</li>
-              <li>intranet.cookieinfo.net</li>
-            </ul>
-            <p className={styles['modal-category-title']}>Категорії файлів cookie:</p>
+            <div className={styles['modal-header']}>
+              <img
+                src={`${process.env.REACT_APP_PUBLIC_URL}/img/cookies.png`}
+                alt="cookies"
+                className={styles['cookie-logo']}
+              />
+              <h3 className={styles['modal-title']}>
+                Використання файлів &quot;Cookies&quot;
+              </h3>
+            </div>
+            <div className={styles['modal-text-container']}>
+              <p className={styles['modal-text']}>
+                Файли &quot;cookies&quot; є невеликими текстовими файлами, які можуть бути розміщені на
+                пристрої користувача під час відвідування Сайту. Вони дозволяють збирати та зберігати певну
+                інформацію про відвідувачів, таку як налаштування мови, історія перегляду, дані
+                автентифікації та інші деталі. Використання файлів &quot;cookies&quot; на Сайті сприяє
+                поліпшенню зручності та персоналізації досвіду користувачів, дозволяючи зберігати інформацію
+                про їхній вибір та взаємодію з різними елементами Сайту.
+              </p>
+              <p className={styles['modal-text-domains']}>
+                Your permission applies to the following domains:
+              </p>
+              <ul className={styles['modal-domains']}>
+                <li>cookieinfo.net</li>
+                <li>intranet.cookieinfo.net</li>
+              </ul>
+            </div>
             <ul className={styles['modal-list']}>
-              <li>
-                <label>
-                  <input type="checkbox" checked disabled /> Необхідні
-                </label>
-                <p className={styles['modal-description']}>
-                  Необхідні файли cookie допомагають зробити веб-сайт придатним для використання,
-                  увімкнувши базові функції, такі як навігація на сторінках і доступ до захищених розділів
-                  сайту.
+              <li className={styles['modal-item']}>
+                <div className={styles['item-header']}>
+                  <h4 className={styles['item-title']}>Necessary</h4>
+                  <input type="checkbox" checked disabled className={styles['modal-checkbox']} />
+                </div>
+                <p className={styles['item-description']}>
+                  Necessary cookies help make a website usable by enabling basic functions like page
+                  navigation and access to secure areas of the website. The website cannot function properly
+                  without these cookies.
                 </p>
               </li>
-              <li>
-                <label>
-                  <input type="checkbox" defaultChecked={cookies.statistics} /> Статистичні
-                </label>
-                <p className={styles['modal-description']}>
-                  Статистичні файли cookie допомагають власникам веб-сайтів зрозуміти, як відвідувачі
-                  взаємодіють із сайтом, збираючи анонімну інформацію.
+              <li className={styles['modal-item']}>
+                <div className={styles['item-header']}>
+                  <h4 className={styles['item-title']}>Statistic</h4>
+                  <input
+                    type="checkbox"
+                    defaultChecked={cookies.statistics}
+                    className={styles['modal-checkbox']}
+                  />
+                </div>
+                <p className={styles['item-description']}>
+                  Statistic cookies help website owners understand how visitors interact with websites by
+                  collecting and reporting information anonymously.
                 </p>
               </li>
-              <li>
-                <label>
-                  <input type="checkbox" defaultChecked={cookies.preferences} /> Переваги
-                </label>
-                <p className={styles['modal-description']}>
-                  Файли cookie &quot;Переваги&quot; дозволяють веб-сайту запам&#39;ятовувати інформацію, яка
-                  змінює зовнішній вигляд або поведінку сайту, наприклад вашу мову або регіон.
+              <li className={styles['modal-item']}>
+                <div className={styles['item-header']}>
+                  <h4 className={styles['item-title']}>Preferences</h4>
+                  <input
+                    type="checkbox"
+                    defaultChecked={cookies.preferences}
+                    className={styles['modal-checkbox']}
+                  />
+                </div>
+                <p className={styles['item-description']}>
+                  Preference cookies enable a website to remember information that changes the way the
+                  website behaves or looks, like your preferred language or the region that you are in.
                 </p>
               </li>
-              <li>
-                <label>
-                  <input type="checkbox" defaultChecked={cookies.marketing} /> Маркетингові
-                </label>
-                <p className={styles['modal-description']}>
-                  Маркетингові файли cookie використовуються для відстеження відвідувачів на веб-сайтах.
-                  Мета полягає в тому, щоб показувати рекламу, яка є актуальною та цікавою для користувача.
+              <li className={styles['modal-item']}>
+                <div className={styles['item-header']}>
+                  <h4 className={styles['item-title']}>Marketing</h4>
+                  <input
+                    type="checkbox"
+                    defaultChecked={cookies.marketing}
+                    className={styles['modal-checkbox']}
+                  />
+                </div>
+                <p className={styles['item-description']}>
+                  Marketing cookies are used to track visitors across websites. The intention is to display
+                  ads that are relevant and engaging for the individual user and thereby more valuable for
+                  publishers and third-party advertisers.
                 </p>
               </li>
             </ul>
             <div className={styles['modal-buttons']}>
-              <button className={styles['cancel-btn']} onClick={() => setDetailsVisible(false)}>
-                Назад
-              </button>
               <button className={styles['save-btn']} onClick={accessCookie}>
                 Дозволити обрані
+              </button>
+              <button
+                className={styles['cancel-btn']}
+                onClick={() => setDetailsVisible(false)}
+              >
+                Назад
               </button>
             </div>
           </div>
