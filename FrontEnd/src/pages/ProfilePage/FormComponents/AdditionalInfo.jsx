@@ -8,6 +8,7 @@ import defineChanges from '../../../utils/defineChanges';
 import { useAuth, useProfile } from '../../../hooks';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './FormComponents.module.css';
 
 const LABELS = {
@@ -31,10 +32,6 @@ const AdditionalInfo = (props) => {
     const isDirty = checkFormIsDirty(fields, null, profile);
     setFormIsDirty(isDirty);
   }, [mainProfile, profile]);
-
-  useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
 
   const onUpdateFoundationYearField = (e) => {
     const currentYear = new Date().getFullYear();
@@ -92,6 +89,8 @@ const AdditionalInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Додаткова інформація</h3>
+      <div className={css['divider']}></div>
       {user && profile && mainProfile ? (
         <form
           id="AdditionalInfo"
@@ -104,6 +103,7 @@ const AdditionalInfo = (props) => {
               <HalfFormField
                 inputType="number"
                 name="founded"
+                fieldPlaceholder="Введіть рік заснування"
                 label={LABELS.founded}
                 updateHandler={onUpdateFoundationYearField}
                 requiredField={false}
@@ -112,6 +112,8 @@ const AdditionalInfo = (props) => {
               />
             </div>
           </div>
+          <div className={css['bottom-divider']}></div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

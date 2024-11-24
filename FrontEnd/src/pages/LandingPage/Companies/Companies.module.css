@@ -25,8 +25,8 @@
 
 .new-companies-link-to-all {
   position: absolute;
-  right: 35px;
-  top: 8px
+  right: 41px;
+  top: 6px
 }
 
 .new-companies-link-to-all a {
@@ -44,7 +44,7 @@
 
 .new-companies-block {
   width: 375px;
-  padding: 18px 8px 38px 8px;
+  padding: 18px 0px 38px 0px;
 }
 
 
@@ -57,10 +57,12 @@
 
   .new-companies-main__title {
     font-size: 40px;
+    padding-left: 18px;
   }
 
   .new-companies-link-to-all {
-    top: 23px
+    top: 23px;
+    right: 46px;
   }
 }
 
@@ -76,12 +78,12 @@
   }
 
   .new-companies-main__title {
-    padding-left: 103px;
+    padding-left: 113px;
   }
 
   .new-companies-link-to-all {
-    top: 38px;
-    right: 126px;
+    top: 26px;
+    right: 142px;
   }
 
 }

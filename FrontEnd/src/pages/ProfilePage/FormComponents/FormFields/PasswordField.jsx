@@ -45,9 +45,9 @@ const PasswordField = (props) => {
         >
           {label}
         </label>
-        {label !== 'Поточний пароль' &&
+        {label === 'Новий пароль' &&
           <label className={css['password-field__label--hint']} htmlFor={inputId}>
-              (Повинен містити від 8 символів, A-Z, a-z, 0-9)
+              Пароль повинен мати 8+ символів, містити принаймні велику, малу літеру (A..Z, a..z) та цифру (0..9).
           </label>
         }
       </div>
@@ -57,7 +57,6 @@ const PasswordField = (props) => {
             onKeyDown={preventEnterSubmit}
             id={inputId}
             type={showPassword ? 'text' : 'password'}
-            placeholder={label}
             {...register(name, {
               required: errorMessages.requiredField,
               pattern: checkValid && {
