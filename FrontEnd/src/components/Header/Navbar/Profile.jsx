@@ -35,7 +35,7 @@ function Profile() {
         />
       </div>
       <div className={css['dropdown-section']}>
-        <DropdownMenu toggleText={isStaff ? 'Адміністратор' : 'Профіль'}>
+        <DropdownMenu toggleText={isStaff ? 'Адміністратор' : 'Мій профіль'}>
           <Link to={isStaff ? '/customadmin/admin-profile/admin-info' : '/profile/user-info'}>Мій профіль</Link>
           {!isStaff && <Link to="/profiles/companies">Мої збережені</Link>}
           <button onClick={performLogout}>Вихід</button>

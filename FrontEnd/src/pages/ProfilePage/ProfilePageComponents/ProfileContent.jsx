@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
 import { Link, NavLink, Route, Routes, useBlocker } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import { DirtyFormContext } from '../../../context/DirtyFormContext';
 import AdditionalInfo from '../FormComponents/AdditionalInfo';
 import ContactsInfo from '../FormComponents/ContactsInfo';
@@ -10,19 +10,17 @@ import GeneralInfo from '../FormComponents/GeneralInfo';
 import ProductServiceInfo from '../FormComponents/ProductServiceInfo';
 import StartupInfo from '../FormComponents/StartupInfo';
 import UserInfo from '../FormComponents/UserInfo';
-import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import MyModal from '../UI/MyModal/MyModal';
 import WarnUnsavedDataModal from '../FormComponents/WarnUnsavedDataModal';
 import ChangePassword from '../FormComponents/ChangePassword';
 import css from './ProfileContent.module.css';
 import tooltipInnerContentStyles from '../../CustomThemes/customProfileTooltipThemes';
 import INFOLINKS from './TextInfoLinks';
-import FORM_NAMES from './TextFormNames';
 
 
 const ProfileContent = (props) => {
     const [modal, setModal] = useState(false);
-    const [formIsDirty, setFormIsDirty] = useState(false);
+    const { formIsDirty, setFormIsDirty } = useContext(DirtyFormContext);
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) =>
             formIsDirty &&
@@ -48,18 +46,7 @@ const ProfileContent = (props) => {
         setModal(false);
     };
 
-    useEffect(() => {
-        const onBeforeUnload = (e) => {
-            if (formIsDirty) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        };
-        window.addEventListener('beforeunload', onBeforeUnload);
-        return () => {
-            window.removeEventListener('beforeunload', onBeforeUnload);
-        };
-    }, [formIsDirty]);
+
 
     return (
         <div className={css['profile__main']}>
@@ -109,59 +96,41 @@ const ProfileContent = (props) => {
                         Видалити профіль
                     </Link>
                 </div>
-                <DirtyFormContext.Provider value={{ formIsDirty, setFormIsDirty }}>
+
                     <Routes>
                         <Route
                             path="/user-info"
                             element={<UserInfo user={props.user}
-                                profile={props.profile}
-                                currentFormNameHandler={props.currentFormNameHandler}
-                                curForm={FORM_NAMES[0]} />} />
+                                profile={props.profile} />} />
                         <Route
                             path="/general-info"
                             element={<GeneralInfo
-                                profile={props.profile}
-                                currentFormNameHandler={props.currentFormNameHandler}
-                                curForm={FORM_NAMES[1]} />} />
+                                profile={props.profile} />} />
                         <Route path="/contacts"
                             element={<ContactsInfo
-                                profile={props.profile}
-                                currentFormNameHandler={props.currentFormNameHandler}
-                                curForm={FORM_NAMES[2]} />} />
+                                profile={props.profile} />} />
                         <Route
                             path="/products-service-info"
                             element={<ProductServiceInfo
-                                profile={props.profile}
-                                currentFormNameHandler={props.currentFormNameHandler}
-                                curForm={FORM_NAMES[3]} />} />
+                                profile={props.profile} />} />
                         <Route
                             path="/additional-info"
                             element={<AdditionalInfo
-                                profile={props.profile}
-                                currentFormNameHandler={props.currentFormNameHandler}
-                                curForm={FORM_NAMES[4]} />} />
+                                profile={props.profile} />} />
                         <Route
                             path="/startup"
                             element={<StartupInfo
-                                profile={props.profile}
-                                currentFormNameHandler={props.currentFormNameHandler}
-                                curForm={FORM_NAMES[5]} />} />
+                                profile={props.profile} />} />
                         <Route
                             path="/delete"
-                            element={<DeleteProfilePage
-                                currentFormNameHandler={props.currentFormNameHandler}
-                                curForm={FORM_NAMES[6]} />} />
+                            element={<DeleteProfilePage />} />
                         <Route
                             path="/change-password"
                             element={<ChangePassword
-                                user={props.user}
-                                currentFormNameHandler={props.currentFormNameHandler}
-                                curForm={FORM_NAMES[7]} />} />
+                                user={props.user} />} />
                     </Routes>
-                </DirtyFormContext.Provider>
-            </div>
-                {props.formName !== 'Delete' && <ProfileFormButton formName={props.formName} formState={formIsDirty} />}
 
+            </div>
                 {blocker.state === 'blocked' &&
                     (
                         <MyModal visible={modal}>
@@ -198,6 +167,4 @@ ProfileContent.propTypes = {
         categories: PropTypes.array,
         activities: PropTypes.array,
     }).isRequired,
-    currentFormNameHandler: PropTypes.func,
-    formName: PropTypes.string,
 };

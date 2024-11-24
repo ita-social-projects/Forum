@@ -2,11 +2,11 @@
   width: 345px;
   height: 365px;
   display: block;
-  align-items: center;
-  border-radius: 6px;
+  border-radius: 11px;
   position: relative;
   margin: auto;
   background: var(--company-card-color);
+  box-shadow: 0px 0px 2px 0px #41404533;
 }
 
 .company-card:hover {
@@ -46,8 +46,8 @@
 .company-card__image {
   width: 345px;
   height: 188px;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
   flex-shrink: 0;
   object-fit: cover;
 }
@@ -80,7 +80,8 @@
   text-align: left;
   padding-left: 16px;
   padding-top: 6px;
-  max-width: 300px;
+  max-width: 262px;
+  height: 35px;
 }
 
 .company-card__name-text {
@@ -115,7 +116,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 345px;
+  width: 302px;
   padding-left: 13px;
   padding-bottom: 2px;
 }
@@ -140,24 +141,24 @@
 }
 
 .company-card__logo {
-  width: 42.2px;
-  height: 42.2px;
+  width: 50px;
+  height: 50px;
   position: absolute;
-  right: 16px;
-  bottom: 153.9px;
+  right: 20px;
+  bottom: 152px;
 }
 
 .company-card__logo-ellipse {
-  width: 42.2px;
-  height: 42.2px;
+  width: 50px;
+  height: 50px;
   background: var(--company-card-color);
   border-radius: 9999px;
-  border: 1px solid #232424;
+  border: 1px solid var(--grey-border-color);
 }
 
 .company-card__logo-image {
-  width: 42.2px;
-  height: 42.2px;
+  width: 50px;
+  height: 50px;
   border-radius: 9999px;
   background: var(--company-card-color);
   object-fit: cover;
@@ -165,29 +166,9 @@
 
 .company-card__star {
   position: absolute;
-  left: 292px;
+  left: 296px;
   bottom: 13px;
 }
-
-@media only screen and (min-width: 768px) {
-
-  .company-card,
-  .company-card__image-frame,
-  .company-card__image,
-  .company-card__text-block {
-    width: 344px;
-  }
-
-  .company-card__star {
-    left: 296px;
-  }
-
-  .company-card__category-text {
-    max-width: 250px;
-  }
-
-}
-
 
 @media only screen and (min-width: 1512px) {
 
@@ -203,6 +184,6 @@
   }
 
   .company-card__category-text {
-    max-width: 250px;
+    max-width: 220px;
   }
 }

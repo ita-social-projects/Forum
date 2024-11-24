@@ -8,6 +8,7 @@ export default function CategoryBadges({ categories }) {
     fontFamily: 'Geologica',
     fontSize: 10,
     margin: 5,
+    boxShadow: 'none',
   };
   return (
     <div>

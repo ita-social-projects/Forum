@@ -11,7 +11,6 @@ import css from './ChangePassword.module.css';
 
 export default function ChangePassword(props) {
   const { setFormIsDirty } = useContext(DirtyFormContext);
-  const { currentFormNameHandler, curForm } = props;
   const {
     register,
     handleSubmit,
@@ -28,9 +27,6 @@ export default function ChangePassword(props) {
     },
   });
 
-  useEffect(() => {
-    currentFormNameHandler(curForm);
-  }, [currentFormNameHandler, curForm]);
 
   useEffect(() => {
     setFormIsDirty(isDirty);
@@ -63,6 +59,8 @@ export default function ChangePassword(props) {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Змінити пароль</h3>
+      <div className={css['divider']}></div>
       {props.user ? (
         <form id="ChangePassword" onSubmit={handleSubmit(handleFormSubmit)}>
           <PasswordField
@@ -104,6 +102,15 @@ export default function ChangePassword(props) {
               checkWith: 'newPassword',
             }}
           />
+          <div className={css['bottom-divider']}></div>
+          <div className={css['submit-button__conteiner']}>
+            <button
+              className={css['submit-button']}
+              type="submit"
+            >
+              Зберегти новий пароль
+            </button>
+          </div>
         </form>
       ) : (
         <Loader />
@@ -121,6 +128,4 @@ ChangePassword.propTypes = {
     profile_id: PropTypes.number.isRequired,
     is_staff: PropTypes.bool.isRequired,
   }).isRequired,
-  currentFormNameHandler: PropTypes.func.isRequired,
-  curForm: PropTypes.string.isRequired,
 };
