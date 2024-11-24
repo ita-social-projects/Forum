@@ -77,7 +77,8 @@ const Contact = () => {
             <div className={styles['contact__text_container']}>
                 <h2 className={styles['contact__title']}>Зворотній зв&apos;язок</h2>
                 <h4 className={styles['contact__info']}><a className={styles['contact__red__star']}>*</a> Обов&apos;язкові поля позначені зірочкою</h4>
-                <form onSubmit={handleSubmit(onSubmit)} className={styles['contact__form']} noValidate>
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                  <div className={styles['contact__form']}>
                     <div className={styles['contact__field']}>
                         <label className={styles['contact__label']} htmlFor="email"><a className={styles['contact__red__star']}>*</a>   Електронна пошта:</label>
                         <input className={styles['contact__input']}
@@ -127,7 +128,7 @@ const Contact = () => {
                             }
                         />
                     </div>
-                    <div className={`${styles['contact__field']}`}>
+                    <div className={`${styles['contact__field_textarea']}`}>
                         <label className={styles['contact__label']} htmlFor="message"><a className={styles['contact__red__star']}>*</a> Повідомлення:</label>
                         <textarea
                             id="message"
@@ -144,12 +145,14 @@ const Contact = () => {
                             />
                         {errors.message && <p className={styles['contact__error']}>{errors.message.message}</p>}
                     </div>
+                    </div>
                     <div className={styles['contact__button_container']}>
                       <button type="submit" className={styles['contact__button_send']}>
                         {loading ? <Spin percent={percent}/> : 'Надіслати'}
                       </button>
-                    </div>
+                </div>
                 </form>
+
             </div>
             {modalMessage && (
                 <div className={styles['modal_feedback']}>
