@@ -28,6 +28,7 @@
 
   /*border color*/
   --border-color: #EEEFF1;
+  --grey-border-color: #AAAAAA;
 
   /* background color*/
   --main-header-color: #1F9A7C;
@@ -52,6 +53,8 @@
   --error-text-color: #F15831;
   --hint-text-color: #25292C;
   --placeholder-text-color: #ADB3B9;
+  --edit-page-head-color: #000000D9;
+  --input-text-color: #000000D9;
 
 
 
@@ -59,11 +62,13 @@
   --main-button-color: #000000;
   --button-color-hover: #0b6c61;
   --light-button-color: #FFFFFF;
+  --dark-border-button: #232424;
+  --disabled-link: #8D959C;
 
   /* fonts */
   --font-main: 'Geologica', sans-serif;
   --font-messages: 'Roboto', sans-serif;
-  --font-error: 'Roboto', sans-serif;
+  --font-error: 'Geologica', sans-serif;
   --font-logo: 'Geologica', sans-serif;
 
   --toastify-color-error: #FFF1F0;

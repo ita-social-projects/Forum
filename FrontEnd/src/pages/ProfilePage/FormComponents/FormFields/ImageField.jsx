@@ -66,6 +66,7 @@ const ImageField = ({
     >
       <div className={css['fields__label']}>
         <label
+          htmlFor={name}
           className={classNames(
             css['fields__label--text'],
             css['fields__field--notrequired']
@@ -75,7 +76,6 @@ const ImageField = ({
         </label>
         {name === 'banner' && value && (
           <>
-            {renderInput()}
             {renderUpdateImageLabel('змінити')}
             {renderDeleteButton('видалити')}
           </>
@@ -121,7 +121,6 @@ const ImageField = ({
             <PendingStatus profile={profile} elementType="logo" />
             <div className={css['upload-file__wrapper--logo']}>
               <div className={css['upload-file__logo']} style={backgroundImage} />
-              {renderInput()}
               {renderUpdateImageLabel('змінити')}
               {renderDeleteButton('видалити')}
             </div>

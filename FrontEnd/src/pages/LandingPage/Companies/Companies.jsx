@@ -59,7 +59,7 @@ const MainCompanies = ({ isAuthorized }) => {
         </div>
       </div>
       <div className={styles['new-companies-block']}>
-        <Row justify={'start'} gutter={[32, 24]}>
+        <Row justify={'start'} gutter={[0, 24]}>
           {companyDataList.map((result, resultIndex) => (
             <Col key={resultIndex} xs={24} md={12} xl={6}>
               <CompanyCard
