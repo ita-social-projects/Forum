@@ -27,11 +27,11 @@ function Profile() {
 
   return (
     <div className={css['header-profile-section']}>
-      <div className={css['header-profile__avatar']}>
+      <div className={css['header-profile__avatar']}
+           onClick={!isStaff ? navigateToProfile : null}>
         <img
           src={`${process.env.REACT_APP_PUBLIC_URL}/img/Avatar.png`}
           alt="Avatar"
-          onClick={!isStaff ? navigateToProfile : null}
         />
       </div>
       <div className={css['dropdown-section']}>
