@@ -169,7 +169,7 @@ const Contact = () => {
                         <h2 className={styles['modal_feedback__info']}>Ваше повідомлення буде опрацьовано</h2>
                        <div className={styles['contact__button_modal_container']}>
                         <Link to="/">
-                            <button type="button" className={styles['contact__button_send']}>
+                            <button type="button" className={styles['contact__button_modal_send']}>
                                 На головну
                             </button>
                         </Link>
