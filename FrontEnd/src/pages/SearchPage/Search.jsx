@@ -8,7 +8,7 @@ import styles from './search.module.scss';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 16;
 
 export function Search({ isAuthorized }) {
   const [searchResults, setSearchResults] = useState([]);

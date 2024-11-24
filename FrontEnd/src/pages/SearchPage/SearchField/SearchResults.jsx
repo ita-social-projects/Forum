@@ -19,9 +19,9 @@ const SearchResults = ({
   return (
     <div className={styles['new-companies-block']}>
       {!error && (
-          <Row className={styles['row']} gutter={[32, 32]}>
+          <Row justify={'start'} gutter={[0, 24]}>
             {displayedResults.map((result, resultIndex) => (
-              <Col className={styles['col']} key={resultIndex} xs={24} sm={24} md={12} lg={6}>
+              <Col key={resultIndex} xs={24} md={12} xl={6}>
                 <CompanyCard
                   profile={result}
                   isAuthorized={isAuthorized}

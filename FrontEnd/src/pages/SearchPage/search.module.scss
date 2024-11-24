@@ -1,5 +1,14 @@
 .main_block_outer {
-  padding-top: 10px;
+  width: 375px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--new-companies-background-color);
+  margin: auto;
+  min-height: 1200px;
+}
+.new-companies-result_pages {
+  padding: 40px;
 }
 
 .new-companies-main__error {
@@ -20,7 +29,6 @@
 .new-companies-search_count {
   display: flex;
   margin: auto;
-  padding-left: 10%;
 }
 
 .search_field_entered_value {
@@ -72,18 +80,6 @@
 
 
 
-@media only screen and (min-width: 1512px){
-    .search_results_text {
-      font-size: 41px;
-    }
-    .search_field_entered_value {
-      font-size: 41px;
-    }
-
-    .search_result_error {
-      font: normal normal bold 48px/2 var(--font-main);
-    }
-}
 
 @media only screen and (min-width: 768px){
     .search_results_text {
@@ -95,4 +91,26 @@
     .search_result_error {
           font: normal normal bold 48px/2 var(--font-main);
         }
+
+    .main_block_outer {
+      width: 768px;
+    }
+}
+
+@media only screen and (min-width: 1512px){
+    .search_results_text {
+      font-size: 41px;
+    }
+    .search_field_entered_value {
+      font-size: 41px;
+    }
+
+    .search_result_error {
+      font: normal normal bold 48px/2 var(--font-main);
+    }
+
+    .main_block_outer {
+      width: 1512px;
+       height: 597px;
+    }
 }
