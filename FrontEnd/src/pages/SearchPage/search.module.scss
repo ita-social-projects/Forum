@@ -55,6 +55,7 @@
   color: var(--search-text-color);
   font: normal normal bold 24px/2 var(--font-main);
   text-align: center;
+  white-space: nowrap;
 }
 
 .pagination {
