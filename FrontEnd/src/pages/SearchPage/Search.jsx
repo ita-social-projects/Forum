@@ -68,10 +68,9 @@ export function Search({ isAuthorized }) {
 
   return (
       <div className={styles['main_block_outer']}>
-        <div className={styles['main_block']}>
           <div className={styles['new-companies-main']}>
             <div className={styles['new-companies-search_count']}>
-              {searchResults && (
+              {searchResults?.length > 0 && (
                   <div className={styles['search-results']}>
                     <h3 className={styles['search_results_text']}>
                       Результати пошуку
@@ -153,7 +152,6 @@ export function Search({ isAuthorized }) {
                 </div>
             )}
           </div>
-        </div>
       </div>
   );
 }

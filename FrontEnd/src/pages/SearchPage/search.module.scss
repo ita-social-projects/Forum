@@ -5,7 +5,6 @@
   min-height: var(--min-height-block-main);
 }
 
-
 .new-companies-result_pages {
   padding: 40px;
 }
@@ -17,11 +16,11 @@
   justify-content: center;
   align-items: center;
   min-height: 288px;
-  text-align: center;
 }
 
 .new-companies-main {
   display: flex;
+  align-self: center;
   align-items: center;
   flex-direction: column;
   background: var(--new-companies-background-color);
@@ -31,7 +30,7 @@
   width: 375px;
   display: flex;
   flex-direction: row;
-  padding-left: 15%;
+
 }
 
 .search_field_entered_value {
@@ -91,21 +90,18 @@
     .search_result_error {
       font: normal normal bold 40px/2 var(--font-main);
       }
-    .main-block {
-      width: 768px;
-    }
+
 
   .new-companies-search_count {
     width: 768px;
   }
+
 }
 
 @media only screen and (min-width: 1512px){
-    .main-block {
-      width: 1512px;
-    }
+
   .new-companies-search_count {
-    width: 1512px;
+    width: 1304px;
   }
 
 }
