@@ -38,7 +38,7 @@
 }
 
 .search_results_text {
-  font: normal normal bold 20px/2 var(--font-main);
+  font: normal normal bold 18px/2 var(--font-main);
   font-size: 18px;
   font-weight: 700;
   color: #232424;
@@ -48,7 +48,7 @@
   width: 100%;
   max-width: 80%;
   color: var(--search-text-color);
-  font: normal normal bold 29px/2 var(--font-main);
+  font: normal normal bold 24px/2 var(--font-main);
   text-align: center;
 }
 
@@ -61,7 +61,6 @@
 
 .pagination button {
   all: unset;
-  /* border: none; */
   font-size: 16px;
   font-weight: 500;
   padding: 8px 16px;
@@ -81,30 +80,22 @@
 
 
 @media only screen and (min-width: 768px){
-    .search_results_text {
-      font-size: 34px;
-    }
-    .search_field_entered_value {
+    .search_results_text,
+    .search_field_entered_value{
       font-size: 34px;
     }
     .search_result_error {
-          font: normal normal bold 48px/2 var(--font-main);
-        }
+      font: normal normal bold 40px/2 var(--font-main);
+      }
 
-    .main_block_outer {
+    .main_block_outer{
       width: 768px;
     }
 }
 
 @media only screen and (min-width: 1512px){
-    .search_results_text {
-      font-size: 41px;
-    }
-    .search_field_entered_value {
-      font-size: 41px;
-    }
 
-    .main_block_outer {
+    .main_block_outer{
       width: 1512px;
     }
 }
