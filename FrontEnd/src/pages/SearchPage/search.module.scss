@@ -1,14 +1,14 @@
 .main_block_outer {
   width: 100vw;
   position: relative;
-  margin: auto;
-  min-height: 1200px;
+  min-height: var(--min-height-block-main);
 }
 .new-companies-result_pages {
   padding: 40px;
 }
 
 .new-companies-main__error {
+  width: 100%;
   background-color: rgba(249, 245, 236, 1);
   display: flex;
   justify-content: center;
@@ -17,14 +17,17 @@
   text-align: center;
 }
 
-.main_block {
-
+.new-companies-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: var(--new-companies-background-color);
 }
 
 .new-companies-search_count {
   display: flex;
   margin: auto;
+  padding-left: 7%;
 }
 
 .search_field_entered_value {
