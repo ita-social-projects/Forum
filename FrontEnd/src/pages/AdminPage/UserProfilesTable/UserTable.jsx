@@ -1,22 +1,33 @@
-import {useState} from 'react';
-import css from './UserTable.module.scss';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Highlighter from 'react-highlight-words';
 import axios from 'axios';
 import useSWR from 'swr';
-import {Table, Tag, Tooltip, Pagination, Input, Button, Space} from 'antd';
-import Highlighter from 'react-highlight-words';
-import {CaretUpOutlined, CaretDownOutlined, SearchOutlined} from '@ant-design/icons';
+import { Table, Tag, Tooltip, Pagination, Input, Button, Space } from 'antd';
+import { CaretUpOutlined, CaretDownOutlined, SearchOutlined } from '@ant-design/icons';
+import css from './UserTable.module.scss';
 
 
 const LENGTH_EMAIL = 14;
 const DEFAULT_PAGE_SIZE = 20;
 
 function UserTable() {
-    const [currentPage, setCurrentPage] = useState(1);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const queryParams = new URLSearchParams(location.search);
+    const pageNumber = Number(queryParams.get('page')) || 1;
+    const [currentPage, setCurrentPage] = useState(pageNumber);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
     const [sortInfo, setSortInfo] = useState({ field: null, order: null });
     const [statusFilters, setStatusFilters] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const updatedPageNumber = Number(queryParams.get('page')) || 1;
+        setCurrentPage(updatedPageNumber);
+    }, [location.search]);
 
     const ordering = sortInfo.field ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}` : '';
     const filtering = statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '';
@@ -30,34 +41,32 @@ function UserTable() {
     const users = data ? data.results : [];
     const totalItems = data ? data.total_items : 0;
 
+    const updateQueryParams = (newPage) => {
+        queryParams.set('page', newPage);
+        navigate(`?${queryParams.toString()}`);
+    };
+
     const handlePageChange = (page, size) => {
         setCurrentPage(page);
         setPageSize(size);
+        updateQueryParams(page);
     };
 
     const handleTableChange = (pagination, filters, sorter) => {
-        if (sorter.field && (sorter.field !== sortInfo.field || sorter.order !== sortInfo.order)) {
-            if (sorter.field === sortInfo.field) {
-                let newOrder;
-                if (sortInfo.order === 'ascend') {
-                    newOrder = 'descend';
-                } else if (sortInfo.order === 'descend') {
-                    newOrder = null;
-                } else {
-                    newOrder = 'ascend';
-                }
+        if (sorter.field) {
+            const newSortInfo =
+                sorter.order === null || sorter.order === undefined
+                    ? { field: null, order: null }
+                    : { field: sorter.field, order: sorter.order };
 
-                setSortInfo({
-                    field: newOrder ? sorter.field : null,
-                    order: newOrder,
-                });
-            } else {
-                setSortInfo({ field: sorter.field, order: 'ascend' });
-            }
+            setSortInfo(newSortInfo);
+        } else {
+            setSortInfo({ field: null, order: null });
         }
 
         setStatusFilters(filters.status);
         setCurrentPage(1);
+        updateQueryParams(1);
     };
 
     const getSortIcon = (sortOrder) => {

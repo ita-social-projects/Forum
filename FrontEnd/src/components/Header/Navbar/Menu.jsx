@@ -9,7 +9,7 @@ const MENU_LINKS = [
   },
   {
     title: 'Підприємства та сектори',
-    link: '/profiles/companies',  // SHOULD BE CHANGED FOR COMPANY LIST (Підприємства та сектори)
+    link: '/profiles',
   },
 ];
 

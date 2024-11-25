@@ -1,7 +1,7 @@
 .fields__column {
     display: flex;
-    width: 530px;
     padding-top: 10px;
+    padding-left: 16px;
     flex-direction: column;
     align-items: flex-start;
 }
@@ -58,11 +58,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #1F9A7C;
+    border: 1px solid var(--dark-border-button);
     border-radius: 4px;
     cursor: pointer;
-    width: 139px;
-    height: 30px;
+    width: 144px;
+    height: 40px;
 }
 
 .upload-file__text {
@@ -72,7 +72,7 @@
     line-height: 20px;
     letter-spacing: -0.01em;
     text-align: center;
-    color: #1F9A7C;
+    color: var(--main-button-color);
 }
 
 .upload-file__icon {
@@ -82,7 +82,6 @@
 
 .upload-file__wrapper--banner-page {
     display: flex;
-    width: 530px;
     padding-bottom: 24px;
     flex-direction: column;
     align-items: flex-start;
@@ -114,7 +113,7 @@
 }
 
 .upload-file__banner-image--page {
-    width: 420px;
+    width: 300px;
     height: 55.556px;
     border: 1px solid #C3C3C3;
 }
@@ -165,6 +164,7 @@ button {
 }
 
 .update-file__text {
+    font-family: var(--font-main);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -175,4 +175,10 @@ button {
 
 .fields__field--notrequired {
     padding-top: 2px;
+}
+
+@media only screen and (min-width: 768px) {
+    .fields__column {
+        padding-left: 23px;
+    }
 }

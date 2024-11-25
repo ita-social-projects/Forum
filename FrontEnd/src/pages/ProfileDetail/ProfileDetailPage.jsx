@@ -6,12 +6,17 @@ import { PropTypes } from 'prop-types';
 
 import Loader from '../../components/Loader/Loader';
 import ErrorPage404 from '../../pages/ErrorPages/ErrorPage404';
-import MainInfoSection from './MainInfo/MainInfoSection';
+
+import BannerImage from './ProfileDetailBaner/BannerImage';
+import TitleInfo from './TitelInfo/TitleInfo';
 import DetailedInfoSection from './DetailedInfo/DetailedInfoSection';
-import BannerImage from './BannerImage';
+
 import { ActiveLinksContext } from '../../context/ActiveLinksContext';
-import classes from './ProfileDetailPage.module.css';
+
 import PendingStatus from '../../components/MiniComponents/PendingModerationIcon/PendingStatus';
+
+import classes from './ProfileDetailPage.module.css';
+
 
 function ProfileDetailPage({ isAuthorized }) {
   const [activeLinks, setActiveLinks] = useState([]);
@@ -20,7 +25,7 @@ function ProfileDetailPage({ isAuthorized }) {
 
   async function fetcher(url) {
     return axios.get(url)
-    .then(res => res.data);
+      .then(res => res.data);
   }
 
   const {
@@ -43,7 +48,11 @@ function ProfileDetailPage({ isAuthorized }) {
   return (error && error.status !== 401) ? (
     <ErrorPage404 />
   ) : (
-    <div className={isLoading ? classes['profile-detail__loader-content'] : classes['profile-detail__main'] }>
+    <div className={
+      isLoading ?
+        classes['profile-detail__loader-content'] :
+        classes['profile-detail__main']}
+    >
       {isLoading ? (
         <Loader />
       ) : (
@@ -52,26 +61,23 @@ function ProfileDetailPage({ isAuthorized }) {
             <PendingStatus profile={fetchedProfile} elementType="banner" />
           </div>
           <BannerImage data={fetchedProfile} />
-          <div className={classes['profile-detail__page']}>
-            <MainInfoSection
-              containsNotRequiredData={containsNotRequiredData}
-              isAuthorized={isAuthorized}
-              data={fetchedProfile}
-            />
-            <div className={classes['profile-detail__logo-tooltip']}>
-              <PendingStatus profile={fetchedProfile} elementType="logo" />
-            </div>
-            <DetailedInfoSection
-              containsNotRequiredData={containsNotRequiredData}
-              isAuthorized={isAuthorized}
-              data={fetchedProfile}
-            />
+          <div className={classes['profile-detail__logo-tooltip']}>
+            <PendingStatus profile={fetchedProfile} elementType="logo" />
           </div>
+          <TitleInfo
+            containsNotRequiredData={containsNotRequiredData}
+            isAuthorized={isAuthorized}
+            data={fetchedProfile}
+          />
+          <DetailedInfoSection
+            containsNotRequiredData={containsNotRequiredData}
+            isAuthorized={isAuthorized}
+            data={fetchedProfile}
+          />
         </ActiveLinksContext.Provider>
       )}
     </div>
   );
-
 }
 
 export default ProfileDetailPage;

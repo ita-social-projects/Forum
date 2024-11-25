@@ -50,7 +50,7 @@ const MainCompanies = ({ isAuthorized }) => {
           Нові учасники
         </h2>
         <div className={styles['new-companies-link-to-all']}>
-          <Link to="profiles/companies">
+          <Link to="profiles">
             <p>{linkText}
               <img src="svg/arrow.svg" alt="Arrow icon for all companies link" />
 
@@ -59,7 +59,7 @@ const MainCompanies = ({ isAuthorized }) => {
         </div>
       </div>
       <div className={styles['new-companies-block']}>
-        <Row justify={'start'} gutter={[32, 24]}>
+        <Row justify={'start'} gutter={[0, 24]}>
           {companyDataList.map((result, resultIndex) => (
             <Col key={resultIndex} xs={24} md={12} xl={6}>
               <CompanyCard

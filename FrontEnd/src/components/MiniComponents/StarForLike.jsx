@@ -8,19 +8,23 @@ export default function StarForLike({
   isAuthorized,
   ownProfile,
   handleClick,
+  styleFilled,
+  styleOutlined,
 }) {
   const filledStar = (
     <StarFilled
-      className={styles['star']}
+      className={styles['star-filled']}
       onClick={handleClick}
       data-testid="star"
+      style={styleFilled}
     />
   );
   const outlinedStar = (
     <StarOutlined
-      className={styles['star']}
+      className={styles['star-outlined']}
       onClick={handleClick}
       data-testid="emptystar"
+      style={styleOutlined}
     />
   );
   return isAuthorized && !ownProfile
@@ -35,4 +39,6 @@ StarForLike.propTypes = {
   isAuthorized: PropTypes.bool,
   ownProfile: PropTypes.bool,
   handleClick: PropTypes.func,
+  styleFilled: PropTypes.object,
+  styleOutlined: PropTypes.object,
 };

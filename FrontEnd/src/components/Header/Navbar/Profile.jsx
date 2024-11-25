@@ -27,17 +27,17 @@ function Profile() {
 
   return (
     <div className={css['header-profile-section']}>
-      <div className={css['header-profile__avatar']}>
+      <div className={css['header-profile__avatar']}
+           onClick={!isStaff ? navigateToProfile : null}>
         <img
           src={`${process.env.REACT_APP_PUBLIC_URL}/img/Avatar.png`}
           alt="Avatar"
-          onClick={!isStaff ? navigateToProfile : null}
         />
       </div>
       <div className={css['dropdown-section']}>
-        <DropdownMenu toggleText={isStaff ? 'Адміністратор' : 'Профіль'}>
+        <DropdownMenu toggleText={isStaff ? 'Адміністратор' : 'Мій профіль'}>
           <Link to={isStaff ? '/customadmin/admin-profile/admin-info' : '/profile/user-info'}>Мій профіль</Link>
-          {!isStaff && <Link to="/profiles/companies">Мої збережені</Link>}
+          {!isStaff && <Link to="/profiles/saved">Мої збережені</Link>}
           <button onClick={performLogout}>Вихід</button>
         </DropdownMenu>
       </div>

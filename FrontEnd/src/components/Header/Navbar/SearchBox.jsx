@@ -14,6 +14,11 @@ function SearchBox() {
       setSearchTerm('');
     }
   };
+
+  const handleClear = () => {
+    setSearchTerm('');
+  };
+
   return (
     <div className={css['header-search-box']}>
       <div className={css['header-search-form']}>
@@ -30,6 +35,14 @@ function SearchBox() {
             }
           }}
         />
+        {searchTerm && (
+          <button
+            className={css['clear-button']}
+            onClick={handleClear}
+          >
+            &times;
+          </button>
+        )}
       </div>
       <button
         onClick={() => handleSearch(searchTerm, searchPage)}

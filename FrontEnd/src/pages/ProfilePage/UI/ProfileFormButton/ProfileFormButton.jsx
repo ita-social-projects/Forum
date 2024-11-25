@@ -1,15 +1,18 @@
+import { useContext } from 'react';
+import { DirtyFormContext } from '../../../../context/DirtyFormContext';
+
 import css from './ProfileFormButton.module.css';
 
-const ProfileFormButton = (props) => {
+const ProfileFormButton = () => {
+  const { formIsDirty } = useContext(DirtyFormContext);
   return (
-    <div className={css['sign-up-footer__buttons']}>
+    <div className={css['submit-button__conteiner']}>
       <button
-        form={props.formName}
-        className={css['sign-up__button']}
+        className={css['submit-button']}
         type="submit"
-        disabled={props.formState === false}
+        disabled={!formIsDirty}
       >
-        Зберегти зміни
+        Зберегти
       </button>
     </div>
   );

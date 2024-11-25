@@ -1,42 +1,26 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { List } from 'antd';
-import ProfileCard from './ProfileCard';
-import css from './ProfileList.module.css';
-
-const PAGE_SIZE = 6;
-
-const getCompanyWord = (number) => {
-  if (number === 1 || (number > 20 && number % 10 === 1)) {
-    return 'компанія';
-  } else if ((number >= 2 && number <= 4) || (number > 20 && number % 10 >= 2 && number % 10 <= 4)) {
-    return 'компанії';
-  } else {
-    return 'компаній';
-  }
-};
-
-const ListHeader = ({ number }) => (
-  <div className={css['results-header']}>
-    <p className={css['results-header__number']}>{number}</p>
-    <p className={css['results-header__text']}>{getCompanyWord(number)}</p>
-  </div>
-);
+import CompanyCard from '../../components/CompanyCard/CompanyCard';
 
 export default function ProfileList({
   isAuthorized,
   current,
-  data,
+  items,
+  profiles,
   paginationFunc,
+  pageSize,
+  changeCompanies,
 }) {
   const [savedIsUpdatedMap, setSavedIsUpdatedMap] = useState({});
 
   useEffect(() => {
-    const initialMap = data.results.reduce((acc, item) => {
+    const initialMap = profiles.reduce((acc, item) => {
       acc[item.id] = item.saved_is_updated;
       return acc;
     }, {});
     setSavedIsUpdatedMap(initialMap);
-  }, [data]);
+  }, [profiles]);
 
   const handleClearUpdate = (profileId, isUpdated) => {
     setSavedIsUpdatedMap((prev) => ({
@@ -47,30 +31,53 @@ export default function ProfileList({
 
   return (
     <List
+      grid={{
+        justify: 'center',
+        align: 'stretch',
+        gutter: [32, 8],
+        xs: 1,
+        md: 2,
+        xl: 4,
+      }}
       pagination={{
         onChange: (page) => {
           paginationFunc(page);
         },
         position: 'bottom',
         align: 'center',
-        pageSize: PAGE_SIZE,
-        total: data.total_items,
+        pageSize: pageSize,
+        total: items,
         hideOnSinglePage: true,
         current: current,
       }}
-      header={<ListHeader number={data.total_items} />}
-      dataSource={data.results}
+      dataSource={profiles}
       split={false}
+      locale={{emptyText: 'Жодна компанія не відповідає обраному фільтру.'}}
       renderItem={(item) => (
         <List.Item key={item.id}>
-          <ProfileCard
+          <CompanyCard
               isAuthorized={isAuthorized}
-              data={item}
+              profile={item}
               savedIsUpdated={savedIsUpdatedMap[item.id]}
               onClearUpdate={(isUpdated) => handleClearUpdate(item.id, isUpdated)}
+              changeCompanies={changeCompanies}
           />
         </List.Item>
       )}
     />
   );
 }
+
+ProfileList.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  current: PropTypes.number.isRequired,
+  profiles: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        saved_is_updated: PropTypes.bool,
+      })
+    ).isRequired,
+  items: PropTypes.number,
+  paginationFunc: PropTypes.func.isRequired,
+  pageSize: PropTypes.number.isRequired,
+};

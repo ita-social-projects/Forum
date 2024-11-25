@@ -24,8 +24,10 @@ const customTheme = {
         algorithm: true, // Enable algorithm
       },
       Pagination: {
-        colorPrimary: '#1F9A7C',
-        colorPrimaryHover: '#0b6c61',
+        colorPrimary: '#25292C',
+        colorPrimaryHover: '#25292C',
+        fontFamily: 'Geologica',
+        borderRadius: '2px',
       },
       Select: {
         colorPrimary: '#1f9a7c',
@@ -40,13 +42,20 @@ const customTheme = {
         multipleItemBg: '#F8F8F8',
       },
       Checkbox: {
-        colorPrimary: '#1f9a7c',
-        colorPrimaryHover: '#1f9a7c',
+        colorPrimary: '#000000',
+        colorPrimaryHover: '#000000',
       },
       Spin: {
         colorPrimary: '#ffffff',
       },
+      List: {
+        fontFamily: 'Geologica',
+      }
     },
+    token: {
+      screenXLMin: 1512, // for grid (row/col)
+      screenXL: 1512, // for List
+    }
   };
 
 export default customTheme;
