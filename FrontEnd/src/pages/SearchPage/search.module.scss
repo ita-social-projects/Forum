@@ -28,9 +28,10 @@
 }
 
 .new-companies-search_count {
+  width: 375px;
   display: flex;
-  margin: auto;
-  padding-left: 7%;
+  flex-direction: row;
+  padding-left: 15%;
 }
 
 .search_field_entered_value {
@@ -94,11 +95,17 @@
       width: 768px;
     }
 
+  .new-companies-search_count {
+    width: 768px;
+  }
 }
 
 @media only screen and (min-width: 1512px){
     .main-block {
       width: 1512px;
     }
+  .new-companies-search_count {
+    width: 1512px;
+  }
 
 }

@@ -69,20 +69,20 @@ export function Search({ isAuthorized }) {
   return (
       <div className={styles['main_block_outer']}>
         <div className={styles['main_block']}>
-          <div className={styles['new-companies-search_count']}>
-            {searchResults && (
-                <div className={styles['search-results']}>
-                  <h3 className={styles['search_results_text']}>
-                    Результати пошуку
-                    <span className={styles['search_field_entered_value']}>
+          <div className={styles['new-companies-main']}>
+            <div className={styles['new-companies-search_count']}>
+              {searchResults && (
+                  <div className={styles['search-results']}>
+                    <h3 className={styles['search_results_text']}>
+                      Результати пошуку
+                      <span className={styles['search_field_entered_value']}>
                   {` “${searchTerm}” `}
                 </span>
-                    : {searchResults.length > 0 ? searchResults.length : 0}
-                  </h3>
-                </div>
-            )}
-          </div>
-          <div className={styles['new-companies-main']}>
+                      : {searchResults.length > 0 ? searchResults.length : 0}
+                    </h3>
+                  </div>
+              )}
+            </div>
             {!error && searchResults.length > 0 ? (
                 <>
                   <SearchResults
