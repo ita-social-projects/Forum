@@ -86,9 +86,9 @@
 
 @media only screen and (min-width: 768px){
     .search_results_text {
-    font-size: 34px;
-    line-height: 41px;
-  }
+      font-size: 34px;
+      line-height: 41px;
+    }
 
     .search_field_entered_value{
       font-size: 34px;
@@ -97,15 +97,19 @@
       font: normal normal bold 40px/2 var(--font-main);
       }
 
-
-  .new-companies-search_count {
-    padding-left: 20px;
-  }
-
+    .new-companies-search_count {
+      padding-left: 20px;
+    }
+    .new-companies-main {
+      min-width: 768px;
+    }
 }
 
 @media only screen and (min-width: 1512px){
-  .new-companies-search_count {
-    padding-left: 12px;
-  }
+    .new-companies-search_count {
+      padding-left: 12px;
+    }
+    .new-companies-main {
+      min-width: 1512px;
+    }
 }
