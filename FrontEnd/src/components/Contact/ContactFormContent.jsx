@@ -122,7 +122,7 @@ export function ContactFormContent ({ onLoading }) {
                         name="category"
                         control={control}
                         rules={{
-                            required: 'Будь ласка, оберіть тип повідомлення',
+                            required: 'Будь ласка, оберіть категорію повідомлення',
                         }}
                         render={({ field, fieldState: { error } }) =>
                             <Space direction="vertical" style={{ width: '100%', gap: '0px', }}>
