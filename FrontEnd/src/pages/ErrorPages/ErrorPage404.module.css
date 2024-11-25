@@ -7,6 +7,7 @@
   width: 100vw;
   min-height: calc(100vh - 342px );
   background: var(--join-us-main-color, #B4D27A);
+  flex-grow: 1;
 }
 
 .ErrorPage404__container {
