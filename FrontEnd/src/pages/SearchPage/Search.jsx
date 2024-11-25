@@ -70,7 +70,7 @@ export function Search({ isAuthorized }) {
       <div className={styles['main_block_outer']}>
           <div className={styles['new-companies-main']}>
             <div className={styles['new-companies-search_count']}>
-              {searchResults?.length > 0 && (
+              {searchResults && (
                   <div className={styles['search-results']}>
                     <h3 className={styles['search_results_text']}>
                       Результати пошуку

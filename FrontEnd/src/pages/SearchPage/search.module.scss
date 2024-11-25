@@ -21,16 +21,17 @@
 .new-companies-main {
   display: flex;
   align-self: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   background: var(--new-companies-background-color);
+  min-width: 375px;
 }
 
 .new-companies-search_count {
-  width: 375px;
   display: flex;
   flex-direction: row;
-
+  padding-top: 40px;
+  padding-left: 15px;
 }
 
 .search_field_entered_value {
@@ -45,6 +46,7 @@
   font-size: 18px;
   font-weight: 700;
   color: #232424;
+  line-height: 22px;
 }
 
 .search_result_error {
@@ -83,7 +85,11 @@
 
 
 @media only screen and (min-width: 768px){
-    .search_results_text,
+    .search_results_text {
+    font-size: 34px;
+    line-height: 41px;
+  }
+
     .search_field_entered_value{
       font-size: 34px;
     }
@@ -93,15 +99,13 @@
 
 
   .new-companies-search_count {
-    width: 768px;
+    padding-left: 20px;
   }
 
 }
 
 @media only screen and (min-width: 1512px){
-
   .new-companies-search_count {
-    width: 1304px;
+    padding-left: 12px;
   }
-
 }
