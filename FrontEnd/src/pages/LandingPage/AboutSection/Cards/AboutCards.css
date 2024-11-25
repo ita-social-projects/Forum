@@ -32,7 +32,7 @@
   align-items: flex-start;
   gap: 10px;
   flex-shrink: 0;
-  box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.2);
+  box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.20);
   border-radius: 9999px;
   transition: transform 0.2s ease;
 }
@@ -55,7 +55,7 @@
   width: 54px;
   height: 50px;
   flex-shrink: 0;
-  fill: #f1fff7;
+  fill: #F1FFF7;
   position: relative;
   right: -360px;
   top: -36.2px;
@@ -71,7 +71,7 @@
 .about-us-cards-section__cards-content__text-header {
   align-self: stretch;
   color: var(--about-cards-font-color);
-  font-feature-settings: "calt" off;
+  font-feature-settings: 'calt' off;
   font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
@@ -86,7 +86,7 @@
   width: 398px;
   height: 40px;
   color: var(--about-cards-font-color);
-  font-feature-settings: "calt" off;
+  font-feature-settings: 'calt' off;
   font-family: var(--font-main);
   font-size: 16px;
   font-style: normal;
@@ -102,10 +102,9 @@
   align-items: flex-start;
   gap: 10px;
   border-radius: 9999px;
-  box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.2);
+  box-shadow: 0 0 2px 0 rgba(65, 64, 69, 0.20);
   transition: transform 0.2s ease;
 }
-.about-us-cards-section__next-card:hover,
-.about-us-cards-section__first-card:hover {
+.about-us-cards-section__next-card:hover, .about-us-cards-section__first-card:hover {
   transform: scale(1.1);
 }

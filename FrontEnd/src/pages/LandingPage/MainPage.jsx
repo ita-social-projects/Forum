@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import MainBanner from './Banner/Banner';
 import MainCompanies from './Companies/Companies';
-import MainAboutSection from './AboutSection/About';
 import JoinUs from './JoinUs/JoinUs';
+import MainAboutSection from './AboutSection/About';
 import CookieMod from '../../components/CookieAcception/CookieMod';
 import css from './MainPage.module.css';
 import PropTypes from 'prop-types';

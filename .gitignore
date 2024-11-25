@@ -4,9 +4,8 @@
 /.idea
 /venv
 /.venv
-.venv
 /.env
-.env
+env
 /.vscode
 /*/.env
 /.DS_Store
