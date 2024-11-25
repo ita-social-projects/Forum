@@ -1,8 +1,11 @@
 .main_block_outer {
-  width: 100vw;
+  display: flex;
+  flex-direction: column;
   position: relative;
   min-height: var(--min-height-block-main);
 }
+
+
 .new-companies-result_pages {
   padding: 40px;
 }
@@ -19,8 +22,8 @@
 
 .new-companies-main {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   background: var(--new-companies-background-color);
 }
 
@@ -70,8 +73,8 @@
 
 .pagination button.active {
   background-color: transparent;
-  color: var(--search-pagination-style-color);
-  border: 1px solid var(--search-pagination-style-color);
+  color: var(--search-text-color);
+  border: 1px solid var(--search-text-color);
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
 }
@@ -87,11 +90,15 @@
     .search_result_error {
       font: normal normal bold 40px/2 var(--font-main);
       }
-
+    .main-block {
+      width: 768px;
+    }
 
 }
 
 @media only screen and (min-width: 1512px){
-
+    .main-block {
+      width: 1512px;
+    }
 
 }
