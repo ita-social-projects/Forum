@@ -17,7 +17,7 @@ const POLICY_LINKS = [
     {
         id: 'i2',
         title: 'Зворотній зв\'язок',
-        link: 'contacts/'
+        link: 'contact/'
     },
 ];
 
