@@ -10,6 +10,7 @@
   flex-direction: column;
   gap: 20px;
   transition: max-height 0.3s ease, left 0.3s ease, padding 0.3s ease;
+  box-sizing: border-box;
 }
 
 .menu.open {
@@ -17,7 +18,3 @@
   max-height: 180px;
   padding: 20px;
 }
-
-
-
-
