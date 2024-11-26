@@ -5,7 +5,7 @@ import { HashLink } from 'react-router-hash-link';
 const MENU_LINKS = [
   {
     title: 'Про нас',
-    link: '/#about-us',
+    link: '/about-us',
   },
   {
     title: 'Підприємства та сектори',
