@@ -28,7 +28,7 @@
 .about-us-cards-section__cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 32px;
 
 }
 
@@ -120,8 +120,7 @@
     }
     .about-us-cards-section__cards {
         grid-template-columns: 1fr;
-        gap: 32px;
-
+        
     }
     .about-us-cards-section {
         padding: 24px 16px;
