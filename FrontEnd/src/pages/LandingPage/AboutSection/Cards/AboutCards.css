@@ -85,13 +85,13 @@
         align-items:flex-start;
         gap: 16px;
         width: 296px;
-        height: 104px;
-        padding: 22px 23px 28px 23px;
+        height: 100px;
+        padding: 32px 24px;
         
     }
     .about-us-cards-section__card {
         width: 344px;
-        height: 164px;
+        margin-bottom: 16px;
 
     }
 
@@ -106,18 +106,18 @@
     }
     .about-us-cards-section__card {
         width: 344px;
-        height: 164px;
         margin-bottom: 16px;
 
     }
     .about-us-cards-section__cards-content {
         width: 296px;
-        height: 80px;
-        padding: 16px 23px 26px 23px;
+        height: 100px;
+        padding: 16px 24px;
 
     }
     .about-us-cards-section__header-text {
         font-size: 24px;
+        margin-bottom: 24px;
         
     }
     .about-us-cards-section__cards {
