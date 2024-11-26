@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap :24px;
   width: 375px;
   padding: 40px 16px;
   box-sizing: border-box;
@@ -23,8 +24,6 @@
   line-height: 28px;
   text-align: center;
   color: #232424;
-  margin-bottom: 30px;
-  margin-top: 30px;
 }
 
 .about-us-text-section__card {
@@ -89,6 +88,7 @@
   .about-us-text-section {
     width: 1512px;
     padding: 80px 104px;
+    gap: 40px;
   }
 
   .about-us-text-section__header-text {
