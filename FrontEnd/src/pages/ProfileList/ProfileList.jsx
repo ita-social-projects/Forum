@@ -6,19 +6,21 @@ import CompanyCard from '../../components/CompanyCard/CompanyCard';
 export default function ProfileList({
   isAuthorized,
   current,
-  data,
+  items,
+  profiles,
   paginationFunc,
   pageSize,
+  changeCompanies,
 }) {
   const [savedIsUpdatedMap, setSavedIsUpdatedMap] = useState({});
 
   useEffect(() => {
-    const initialMap = data.results.reduce((acc, item) => {
+    const initialMap = profiles.reduce((acc, item) => {
       acc[item.id] = item.saved_is_updated;
       return acc;
     }, {});
     setSavedIsUpdatedMap(initialMap);
-  }, [data]);
+  }, [profiles]);
 
   const handleClearUpdate = (profileId, isUpdated) => {
     setSavedIsUpdatedMap((prev) => ({
@@ -44,11 +46,11 @@ export default function ProfileList({
         position: 'bottom',
         align: 'center',
         pageSize: pageSize,
-        total: data.total_items,
+        total: items,
         hideOnSinglePage: true,
         current: current,
       }}
-      dataSource={data.results}
+      dataSource={profiles}
       split={false}
       locale={{emptyText: 'Жодна компанія не відповідає обраному фільтру.'}}
       renderItem={(item) => (
@@ -58,6 +60,7 @@ export default function ProfileList({
               profile={item}
               savedIsUpdated={savedIsUpdatedMap[item.id]}
               onClearUpdate={(isUpdated) => handleClearUpdate(item.id, isUpdated)}
+              changeCompanies={changeCompanies}
           />
         </List.Item>
       )}
@@ -68,15 +71,13 @@ export default function ProfileList({
 ProfileList.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   current: PropTypes.number.isRequired,
-  data: PropTypes.shape({
-    results: PropTypes.arrayOf(
+  profiles: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         saved_is_updated: PropTypes.bool,
       })
     ).isRequired,
-    total_items: PropTypes.number,
-  }).isRequired,
+  items: PropTypes.number,
   paginationFunc: PropTypes.func.isRequired,
   pageSize: PropTypes.number.isRequired,
 };

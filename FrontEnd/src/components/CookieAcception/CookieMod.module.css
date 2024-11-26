@@ -1,68 +1,311 @@
-.modal-window {
-  height: 100vh;
-  width: var(--main-block-size);
-  background-color: rgba(0, 0, 0, 0.4);
+.cookie-banner {
   position: fixed;
-  top: 0;
-  left: 0;
+  bottom: 20px;
+  right: 20px;
+  width: 600px;
+  background: var(--cookie-light-color);
+  box-shadow: 0 4px 12px var(--cookie-shadow-color);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.cookie-content {
+  text-align: left;
+  padding: 5px 5px;
+}
+
+.cookie-logo {
+  width: 42.96px;
+  height: 40px;
+  gap: 0px;
+  opacity: 1;
+  margin-right: 8px;
+}
+
+.cookie-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  visibility: hidden;
+  margin-bottom: 16px;
 }
 
-.modal-window.active {
-  visibility: visible;
-}
-
-.modal-content {
-  padding: 20px;
-  border-radius: 12px;
-  background-color: white;
-  width: 400px;
-}
-
-.green-btn {
-  color: #ffffff;
-  background: #20aa87;
-  border-color: #1f9a7c;
-  border-style: solid;
-  font-size: 15px;
+.cookie-title {
+  font-family: 'Geologica', sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: left;
+  color: var(--cookie-dark-color);
+  padding: 10px 5px;
   border-radius: 4px;
-  margin: 14px;
-  margin-right: 50px;
-  padding: 4px;
-  margin-left: 64px;
-  cursor: pointer;
-}
-
-.red-btn {
-  color: #ffffff;
-  background: #fa7979;
-  border-color: #fa7979;
-  border-style: solid;
-  font-size: 15px;
-  border-radius: 4px;
-  margin: 10px;
-  margin-left: 20px;
-  padding: 4px;
-  cursor: pointer;
-}
-
-.cookie-image {
-  margin-left: 150px;
-  margin-right: 50px;
-  width: 100px;
-  height: 70px;
 }
 
 .cookie-text {
-  text-align: justify;
-  color: #187860;
+  font-family: 'Geologica', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  color: var(--cookie-dark-color);
 }
 
-.cookie-details {
-  text-align: justify;
-  color: #187860;
-  padding-top: 8px;
+.cookie-link {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-left: 4px;
+  color: var(--cookie-black-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cookie-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 11px;
+  margin-top: 20px;
+}
+
+.allow-all-btn {
+  background: var(--cookie-black-color);
+  color: var(--cookie-light-color);
+  width: 144px;
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 4px 0px 0px 0px;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.allow-all-btn:hover {
+  background: transparent;
+  color: var(--cookie-black-color);
+  border: 1px solid var(--cookie-black-color);
+}
+
+.settings-btn {
+  background: var(--cookie-light-color);
+  color: var(--cookie-black-color);
+  width: 144px;
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 0px;
+  border: 1px solid var(--cookie-black-color);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settings-btn:hover {
+  background: var(--cookie-black-color);
+  color: var(--cookie-light-color);
+}
+
+.cookie-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--cookie-overlay-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  padding-bottom: 20px;
+}
+
+.modal-content {
+  background: var(--cookie-light-color);
+  width: 600px;
+  max-width: 90%;
+  height: auto;
+  max-height: 85vh;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  border: 1px solid var(--cookie-border-color);
+  box-shadow: 0 4px 10px var(--cookie-shadow-color);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.modal-header img {
+  width: 40px;
+  height: 40px;
+}
+
+.modal-title {
+  font-family: 'Geologica', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--cookie-dark-color);
+  text-align: left;
+}
+
+.modal-text-container {
+  font-family: 'Geologica', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 0px 0px 0px 73px;
+  color: var(--cookie-dark-color);
+}
+
+.modal-text-domains {
+  padding: 20px 0px 0px 0px;
+}
+
+.modal-domains {
+  list-style-type: disc;
+  margin-left: 20px;
+  font-size: 14px;
+  color: var(--cookie-dark-color);
+  margin-bottom: 20px;
+}
+
+.modal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 15px;
+  border: 1px solid var(--cookie-border-color);
+  background: var(--cookie-light-color);
+  margin-bottom: 0px;
+  border-radius: 5px;
+}
+
+.item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.item-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--cookie-dark-color);
+  margin: 0;
+}
+
+.cookie-modal input[type="checkbox"] {
+  appearance: auto;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--cookie-black-color);
+  cursor: pointer;
+  accent-color: var(--cookie-black-color);
+}
+
+.cookie-modal input[type="checkbox"]::before {
+  content: none;
+}
+
+.item-description {
+  font-family: 'Geologica', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cookie-dark-color);
+  line-height: 20px;
+  padding: 0px 90px 0px 0px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background: var(--cookie-light-color);
+  color: var(--cookie-dark-color);
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background: var(--cookie-black-color);
+  color: var(--cookie-light-color);
+}
+
+.save-btn {
+  background: var(--cookie-dark-color);
+  color: var(--cookie-light-color);
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+  background: transparent;
+  color: var(--cookie-black-color);
+}
+
+@media (max-width: 768px) {
+  .cookie-banner {
+    bottom: 15px;
+    right: 10px;
+    padding: 15px 15px;
+    width: 90%;
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 375px) {
+  .cookie-banner {
+    width: 100%;
+    max-width: 375px;
+    bottom: 0;
+    right: 0;
+  }
+
+  .cookie-content {
+    padding: 5px 40px;
+    text-align: center;
+  }
+
+  .modal-content {
+    width: 90%;
+    max-height: 95vh;
+    padding: 20px;
+  }
+
+  .cookie-modal .cookie-logo {
+    margin: 0 auto 15px;
+    order: -1;
+  }
+
+  .modal-title {
+    margin: 0;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-text-container {
+    text-align: left;
+    padding: 0 10px;
+  }
 }
