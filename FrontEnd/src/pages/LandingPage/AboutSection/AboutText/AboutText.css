@@ -1,119 +1,102 @@
 .about-us-section-background {
-    display: flex;
-    justify-content: center;
-    background-color: #f9f4ea;
-    width: 100vw;
-    height: auto;
-  }
+  display: flex;
+  justify-content: center;
+  background-color: #f9f4ea;
+  width: 100vw;
+  height: auto;
+}
 
 .about-us-text-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100vw;
-    padding-bottom: 48px;
-    margin: auto;
-    background-color: #f9f4ea;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 375px;
+  padding: 40px 16px;
+  box-sizing: border-box;
+  background-color: #f9f4ea;
+}
+
+.about-us-text-section__header-text {
+  font-family: var(--font-logo);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: center;
+  color: #232424;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.about-us-text-section__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  width: 155px;
+  height: 155px;
+  border-radius: 6px;
+  gap: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.about-us-text-section__icon {
+  width: 36px;
+  height: 36px;
+}
+
+.about-us-text-section__card-text {
+  font-family: var(--font-logo);
+  font-size: 14px;
+  font-weight: 600;
+  color: #232424;
+  line-height: 19.6px;
+  letter-spacing: -0.14px;
+  text-align: center;
+}
+
+@media only screen and (min-width: 768px) {
+  .about-us-text-section {
+    width: 768px;
+    padding: 48px 24px;
   }
-  
+
   .about-us-text-section__header-text {
-    font-family: var(--font-logo);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 28px;
-    text-align: center;
-    color: #232424;
-    margin-bottom: 30px;
-    margin-top: 30px;
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: 0.4px;
   }
-    
+
   .about-us-text-section__card {
-    display: flex;
-    flex-direction: column; /* Розташування елементів вертикально */
-    align-items: center; /* Центрування іконки і тексту */
-    justify-content: center;
-    background-color: #fff;
-    width: 155px;
-    height: 155px; /* Фіксована висота для мобільної версії */
-    border-radius: 6px;
-    gap: 12px;
-    box-sizing: border-box;
-    text-align: center;
+    flex-direction: row;
+    height: 102px;
+    width: 345px;
+    gap: 18px;
+    padding: 18px;
+    justify-content: flex-start;
   }
-  
-  .about-us-text-section__icon {
-    width: 36px;
-    height: 36px;
-    margin-left: 8px;
-    margin-right: 8px;
+
+  .about-us-text-section__card-text {
+    font-size: 16px;
+    letter-spacing: -0.16px;
+    line-height: 22.4px;
+    text-align: start;
   }
-  
-  .about-us-text-section__card p {
-    font-family: var(--font-logo);
-    font-size: 14px;
-    font-weight: 600;
-    color: #232424;
-    margin: 0;
-    text-align: center; /* Текст по центру */
-    line-height: 20px; /* Для кращої читабельності */
+}
+
+@media only screen and (min-width: 1512px) {
+  .about-us-text-section {
+    width: 1512px;
+    padding: 80px 104px;
   }
-  
-  @media only screen and (max-width: 767px) {
-    .about-us-text-section__card {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-  
-    .about-us-text-section__icon {
-      margin-top: 15px;
-    }
+
+  .about-us-text-section__header-text {
+    font-size: 32px;
+    line-height: 36px;
   }
-  
-  @media only screen and (min-width: 768px) {
-    .about-us-text-section {
-      max-width: 768px;
-      max-height: 672px;
-    }
-  
-    .about-us-text-section__header-text {
-      font-size: 24px;
-      line-height: 32px;
-    }
-  
-    .about-us-text-section__grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-  
-    .about-us-text-section__card {
-      flex-direction: row; /* Елементи горизонтально */
-      align-items: center;
-      width: 302px;
-      height: 102px;
-      justify-content: flex-start;
-    }
-    
-    .about-us-text-section__card p {
-      font-size: 16px;
-    }
+
+  .about-us-text-section__card {
+    width: 302px;
   }
-  
-  @media only screen and (min-width: 1200px) {
-    .about-us-text-section {
-      max-width: 1200px;
-    }
-  
-    .about-us-text-section__header-text {
-      font-size: 32px;
-      line-height: 36px;
-    }
-  
-    .about-us-text-section__grid {
-      gap: 32px;
-    }
-  
-    .about-us-text-section__card p {
-      font-size: 16px;
-    }
-  }
+}

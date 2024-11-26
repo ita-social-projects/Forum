@@ -8,7 +8,7 @@ const AboutSectionText = () => {
     <div className="about-us-section-background">
       <div className="about-us-text-section">
         <h2 className="about-us-text-section__header-text">{AboutText.title}</h2>
-        <Row justify="start" gutter={[32, 24]}>
+        <Row justify="start" gutter={[32, 32]}>
           {AboutText.content.map((item) => (
             <Col
               key={item.id}
@@ -22,7 +22,7 @@ const AboutSectionText = () => {
                   alt={item.text}
                   className="about-us-text-section__icon"
                 />
-                <p className="about-us-text-section__card" >{item.text}</p>
+                <p className="about-us-text-section__card-text" >{item.text}</p>
               </div>
             </Col>
           ))}
