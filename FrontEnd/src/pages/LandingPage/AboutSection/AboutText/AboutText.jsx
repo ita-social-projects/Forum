@@ -31,4 +31,3 @@ const AboutSectionText = () => {
 };
 
 export default AboutSectionText;
-

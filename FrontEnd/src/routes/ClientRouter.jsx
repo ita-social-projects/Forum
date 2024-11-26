@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import customTheme from '../pages/CustomThemes/customTheme.js';
 
 import LoginPage from '../pages/Authorization/LoginPage';
+import AboutUsPage from '../pages/AboutUsPage/AboutUsPage.jsx';
 import CookiesPolicyComponent from '../pages/CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
@@ -59,6 +60,7 @@ function ClientRouter() {
             <PageWrapper>
               <Routes>
                 <Route path="/" element={<MainPage isAuthorized={isAuth} />} />
+                <Route path="/about-us" element={<AboutUsPage />} />
                 {isAuth ? (
                   <Route path="/profile/*" element={<ProfilePage />} />
                 ) : (
