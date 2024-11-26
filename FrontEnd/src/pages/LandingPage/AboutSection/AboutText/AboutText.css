@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    padding: 20px 16px 50px 16px;
+    padding-bottom: 48px;
     margin: auto;
     background-color: #f9f4ea;
   }
@@ -29,19 +29,21 @@
     
   .about-us-text-section__card {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column; /* Розташування елементів вертикально */
+    align-items: center; /* Центрування іконки і тексту */
+    justify-content: center;
     background-color: #fff;
-    width: 100%;
-    height: 155px;
-    padding: 12px;
+    width: 155px;
+    height: 155px; /* Фіксована висота для мобільної версії */
     border-radius: 6px;
+    gap: 12px;
     box-sizing: border-box;
+    text-align: center;
   }
   
   .about-us-text-section__icon {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     margin-left: 8px;
     margin-right: 8px;
   }
@@ -52,7 +54,8 @@
     font-weight: 600;
     color: #232424;
     margin: 0;
-    word-wrap: break-word;
+    text-align: center; /* Текст по центру */
+    line-height: 20px; /* Для кращої читабельності */
   }
   
   @media only screen and (max-width: 767px) {
@@ -63,7 +66,7 @@
     }
   
     .about-us-text-section__icon {
-      margin: 0;
+      margin-top: 15px;
     }
   }
   
@@ -84,13 +87,15 @@
     }
   
     .about-us-text-section__card {
-      max-width: 344px;
+      flex-direction: row; /* Елементи горизонтально */
+      align-items: center;
+      width: 302px;
       height: 102px;
       justify-content: flex-start;
     }
     
     .about-us-text-section__card p {
-      font-size: 12px;
+      font-size: 16px;
     }
   }
   
@@ -107,11 +112,6 @@
     .about-us-text-section__grid {
       gap: 32px;
     }
-  
-    /* .about-us-text-section__card {
-      max-width: 345px;
-      height: 102px;
-    } */
   
     .about-us-text-section__card p {
       font-size: 16px;
