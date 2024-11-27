@@ -12,7 +12,7 @@
     font-size: 18px;
     font-weight: 700;
     text-align: left;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
 }
 
 .TermsAndConditions__text_container {
@@ -38,18 +38,6 @@
 
 .text_content__heading{
     margin-top: 24px;
-}
-
-.custom-list {
-    margin:0px;
-    padding-left: 16px; 
-}
-
-.custom-list__item{
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
 }
 
 @media only screen and (min-width: 768px) {
