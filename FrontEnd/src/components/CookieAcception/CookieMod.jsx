@@ -43,7 +43,7 @@ const CookieMod = ({ active, setActive }) => {
         </p>
         <p className={styles['cookie-text']}>
           Дізнатися більше
-          <Link to="#" className={styles['cookie-link']}>
+          <Link to="privacy-policy/" className={styles['cookie-link']}>
             про файли cookie.
           </Link>
         </p>
