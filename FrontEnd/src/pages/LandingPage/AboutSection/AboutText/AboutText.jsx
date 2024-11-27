@@ -1,31 +1,33 @@
+import React from 'react';
+import { Row, Col } from 'antd';
 import './AboutText.css';
 import AboutText from './text.js';
 
 const AboutSectionText = () => {
-  const renderParagraphs = (paragraphNumber) => {
-    return AboutText.content
-      .filter(item => item.paragraph === paragraphNumber)
-      .map((item, index) => (
-        <li key={index}>{item.text}</li>
-      ));
-  };
-
   return (
-    <div className="about-us-text-section">
-      <div className="about-us-text-section__text-field">
-        <div className="about-us-text-section__header-text">{AboutText.title}</div>
-        <div className="about-us-text-section__paragraphs">
-          <ul className="about-us-text-section__paragraph-one">
-            {renderParagraphs(1)}
-          </ul>
-          <ul className="about-us-text-section__paragraph-two">
-            {renderParagraphs(2)}
-          </ul>
-        </div>
+    <div className="about-us-section-background">
+      <div className="about-us-text-section">
+        <h2 className="about-us-text-section__header-text">{AboutText.title}</h2>
+        <Row justify="start" gutter={[32, 32]}>
+          {AboutText.content.map((item) => (
+            <Col
+              key={item.id}
+              xs={12}
+              md={12}
+              xl={6}
+            >
+              <div className="about-us-text-section__card">
+                <img
+                  src={`${process.env.REACT_APP_PUBLIC_URL}/svg/${item.icon}`}
+                  alt={item.text}
+                  className="about-us-text-section__icon"
+                />
+                <p className="about-us-text-section__card-text" >{item.text}</p>
+              </div>
+            </Col>
+          ))}
+        </Row>
       </div>
-      <img className="about-us-text-section__dots"
-        src={`${process.env.REACT_APP_PUBLIC_URL}/img/dots_12x10.png`}
-        alt="dots_12x10.png" />
     </div>
   );
 };
