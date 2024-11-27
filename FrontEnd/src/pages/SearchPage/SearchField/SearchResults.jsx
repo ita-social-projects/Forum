@@ -1,3 +1,5 @@
+import React from 'react';
+import { Row, Col} from 'antd';
 import CompanyCard from '../../../components/CompanyCard/CompanyCard';
 import styles from './SearchResults.module.css';
 import PropTypes from 'prop-types';
@@ -15,21 +17,19 @@ const SearchResults = ({
   }
 
   return (
-    <div>
+    <div className={styles['new-companies-block']}>
       {!error && (
-        <div className={styles['new-companies-block']}>
-          <div className={styles['row']}>
+          <Row justify={'start'} gutter={[0, 24]}>
             {displayedResults.map((result, resultIndex) => (
-              <div key={resultIndex} className={styles['col-md-4']}>
+              <Col key={resultIndex} xs={24} md={12} xl={6}>
                 <CompanyCard
                   profile={result}
                   isAuthorized={isAuthorized}
                   changeCompanies={changeCompanies}
                 />
-              </div>
+              </Col>
             ))}
-          </div>
-        </div>
+          </Row>
       )}
     </div>
   );
