@@ -1,68 +1,19 @@
 .privacy_policy {
     display: flex;
-    margin: 80px 100px 80px 100px;
-    width: 100%;
-    max-height: auto;
+    padding: 40px 16px;
     background-color: var(--light-text-color);
     scroll-behavior: smooth;
     color: var(--main-text-color);
 }
   
-.privacy_policy__title{
+.privacy_policy__title {
     font-family: var(--font-main);
-    font-size: 32px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 38px;
     letter-spacing: 0em;
     text-align: left;
-}
-
-.privacy_policy__link_container {
-    margin-right: 100px;
-    max-width: 234px;
-    max-height: 1400px;
-}
-
-.link {
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-main);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: left;
-}
-
-.link_text {
-    color: var(--main-footer-background);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-}
-
-.link_text__active{
-    width: 234px;
-    color: var(--main-header-color);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-}
-
-.link_text:hover {
-    color: var(--main-header-color);
-}
-
-.privacy_policy__img1{
-    width: auto;
-    height: 266px;
-    margin-left: -100px;
-    margin-top: 100px;
-}
-
-.privacy_policy__img2{
-    height: 266px;
-    margin-top: 335px;
-    width: auto;
-    margin-left: -100px;    
+    padding-bottom: 5px;
 }
 
 .privacy_policy__text_container{
@@ -71,34 +22,18 @@
     max-width: 971px;
 }
 
-.text_content {
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
+@media only screen and (min-width: 768px) {
+    .privacy_policy {
+        padding: 48px 24px;
+    }
+
+    .privacy_policy__title {
+        font-size: 34px;
+    }
 }
 
-.text_content__margin_bottom{
-    margin-bottom: 24px;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-}
-
-.text_content__heading{
-    margin-top: 24px;
-
-}
-
-.custom-list {
-    margin:0px;
-    padding-left: 16px; 
-}
-
-.custom-list__item{
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
+@media only screen and (min-width: 1200px) {
+    .privacy_policy {
+        padding: 80px 214px;
+    }
 }
