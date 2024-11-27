@@ -15,7 +15,7 @@
 .title-block__content-info {
   display: flex;
   flex-direction: column;
-  width: 345px;
+  width: 343px;
   padding: 24px 16px;
 }
 
@@ -104,7 +104,7 @@
 .title-block__button {
   display: flex;
   height: 46px;
-  width: 345px;
+  width: 343px;
   justify-content: center;
   align-items: center;
   gap: 4px;
@@ -112,6 +112,7 @@
   border: 1px solid var(--profile-detail-title-color-company-button);
   cursor: pointer;
   padding: 7px 16px;
+  box-sizing: border-box;
 }
 
 .title-block__button--text {

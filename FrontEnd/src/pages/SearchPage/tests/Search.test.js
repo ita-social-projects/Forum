@@ -18,7 +18,7 @@ describe('Search component unit tests', () => {
         <Search isAuthorized={true} />
       </MemoryRouter>
     );
-    const counterElement = screen.getByText(/РЕЗУЛЬТАТІВ ЗА ПОШУКОМ/i, {
+    const counterElement = screen.getByText(/Результати пошуку/i, {
       exact: false,
     });
     expect(counterElement).toBeInTheDocument();

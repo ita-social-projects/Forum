@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import customTheme from '../pages/CustomThemes/customTheme.js';
 
 import LoginPage from '../pages/Authorization/LoginPage';
+import AboutUsPage from '../pages/AboutUsPage/AboutUsPage.jsx';
 import CookiesPolicyComponent from '../pages/CookiesPolicyPage/CookiesPolicyComponent';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
@@ -30,7 +31,7 @@ import TermsAndConditions from '../components/TermsAndConditionsApp/terms_condit
 import { useAuth } from '../hooks';
 import { Search } from '../pages/SearchPage/Search';
 import '../pages/CustomThemes/customToastStyles.css';
-import Contact from '../components/Contact/Contact';
+import Contact from '../pages/Contact/Contact.jsx';
 import ErrorPage404 from '../pages/ErrorPages/ErrorPage404';
 
 import { BurgerMenuProvider } from '../context/BurgerMenuContext';
@@ -59,6 +60,7 @@ function ClientRouter() {
             <PageWrapper>
               <Routes>
                 <Route path="/" element={<MainPage isAuthorized={isAuth} />} />
+                <Route path="/about-us" element={<AboutUsPage />} />
                 {isAuth ? (
                   <Route path="/profile/*" element={<ProfilePage />} />
                 ) : (

@@ -1,7 +1,7 @@
 const customTheme = {
     components: {
       Carousel: {
-        colorBgContainer: '#40af85',
+        colorBgContainer: '#B4D27A',
         dotActiveWidth: 32,
         dotWidth: 32,
         dotHeight: 6,
@@ -53,6 +53,7 @@ const customTheme = {
       }
     },
     token: {
+      fontFamily: 'Geologica',
       screenXLMin: 1512, // for grid (row/col)
       screenXL: 1512, // for List
     }

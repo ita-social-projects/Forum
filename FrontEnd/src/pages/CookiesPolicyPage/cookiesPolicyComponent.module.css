@@ -1,8 +1,6 @@
 .cookies_policy {
     display: flex;
-    margin: 80px 100px 80px 100px;
-    width: 100%;
-    max-height: auto;
+    padding: 40px 16px;
     background-color: var(--light-text-color);
     scroll-behavior: smooth;
     color: var(--main-text-color);
@@ -16,56 +14,6 @@
     letter-spacing: 0em;
     text-align: left;
     margin-bottom: 12px;
-}
-
-.cookies_policy__link_container {
-    margin-right: 100px;
-    max-width: 234px;
-    max-height: 1400px;
-}
-
-.link {
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-main);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: left;
-}
-
-.link_text {
-    color: var(--main-footer-background);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    whiter-space: nowrap;
-}
-
-.link_text__active{
-    width: 234px;
-    color: var(--main-header-color);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    whiter-space: nowrap;
-}
-
-.link_text:hover {
-    color: var(--main-header-color);
-}
-
-.cookies_policy__img1{
-    width: auto;
-    height: 266px;
-    margin-left: -100px;
-    margin-top: 332px;
-}
-
-.cookies_policy__img2{
-    height: 266px;
-    margin-top: 735px;
-    width: auto;
-    margin-left: -100px;    
 }
 
 .cookies_policy__text_container{
@@ -91,7 +39,7 @@
 }
 
 .text_content__heading{
-    margin-top: 24px;
+    padding: 24px 0;
 }
 
 .custom-list {
@@ -104,4 +52,20 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
+}
+
+@media only screen and (min-width: 768px) {
+    .cookies_policy  {
+        padding: 48px 24px;
+    }
+
+    .cookies_policy __title {
+        font-size: 34px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .cookies_policy  {
+        padding: 80px 214px;
+    }
 }
