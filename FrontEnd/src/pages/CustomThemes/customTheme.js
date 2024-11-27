@@ -1,7 +1,7 @@
 const customTheme = {
     components: {
       Carousel: {
-        colorBgContainer: '#40af85',
+        colorBgContainer: '#B4D27A',
         dotActiveWidth: 32,
         dotWidth: 32,
         dotHeight: 6,
