@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import styles from './CookieMod.module.css';
 
 const CookieMod = ({ active, setActive }) => {
-  const [, setCookie] = useCookies(['cookies']);
+  const [cookies, setCookie] = useCookies(['cookies']);
+
+  useEffect(() => {
+    if (cookies.cookies !== undefined) {
+      setActive(false);
+    }
+  }, [cookies, setActive]);
 
   const allowCookies = () => {
     const expirationDate = new Date();
@@ -15,6 +21,9 @@ const CookieMod = ({ active, setActive }) => {
   };
 
   const declineCookies = () => {
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+    setCookie('cookies', false, { expires: expirationDate, sameSite: 'lax' });
     setActive(false);
   };
 
@@ -34,11 +43,11 @@ const CookieMod = ({ active, setActive }) => {
         </p>
         <p className={styles['cookie-text']}>
           Дізнатися більше
-          <Link to="/cookie-policy" className={styles['cookie-link']}>
+          <Link to="#" className={styles['cookie-link']}>
             про файли cookie.
           </Link>
         </p>
-        <div className={styles['cookie-buttons']}>
+        <div className={styles['cookie-buttons']} >
           <button className={styles['allow-all-btn']} onClick={allowCookies}>
             Дозволити
           </button>
