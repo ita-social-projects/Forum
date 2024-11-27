@@ -45,7 +45,7 @@
 .about-us-cards-section__cards-content {
     display: flex;
     flex-direction: column;
-    align-items:flex-start;
+    align-items: flex-start;
     gap: 16px;
     width: 367px;
     height: 80px;
@@ -70,27 +70,30 @@
 @media (min-width: 768px) and (max-width: 1511px) {
     .about-us-cards-section__cards {
         grid-template-columns: repeat(2, 1fr);
-        justify-content:center;
+        justify-content: center;
         box-sizing: border-box;
 
     }
+
     .about-us-cards-section {
-        width: 680px;
         height: auto;
+        padding: 48px 24px;
 
     }
+
     .about-us-cards-section__cards-content {
         display: flex;
         flex-direction: column;
-        align-items:flex-start;
+        align-items: flex-start;
         gap: 16px;
         width: 296px;
         height: 100px;
         padding: 32px 24px;
-        
+
     }
+
     .about-us-cards-section__card {
-        width: 344px;
+        width: 343px;
 
     }
 
@@ -103,27 +106,27 @@
         padding: 24px 16px;
 
     }
+
     .about-us-cards-section__card {
-        width: 344px;
+        width: 343px;
 
     }
+
     .about-us-cards-section__cards-content {
         width: 296px;
         height: 100px;
         padding: 16px 24px;
 
     }
+
     .about-us-cards-section__header-text {
         font-size: 24px;
         margin-bottom: 24px;
-        
+
     }
+
     .about-us-cards-section__cards {
         grid-template-columns: 1fr;
-        
-    }
-    .about-us-cards-section {
-        padding: 24px 16px;
-    
+
     }
 }
