@@ -125,6 +125,9 @@
   }
 
   @media only screen and (min-width: 1512px) {
+    .page {
+      min-height: 730px;
+    }
 
     .company-list__header,
     .company-list__content {
