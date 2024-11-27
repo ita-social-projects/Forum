@@ -31,7 +31,7 @@ import TermsAndConditions from '../components/TermsAndConditionsApp/terms_condit
 import { useAuth } from '../hooks';
 import { Search } from '../pages/SearchPage/Search';
 import '../pages/CustomThemes/customToastStyles.css';
-import Contact from '../components/Contact/Contact';
+import Contact from '../pages/Contact/Contact.jsx';
 import ErrorPage404 from '../pages/ErrorPages/ErrorPage404';
 
 import { BurgerMenuProvider } from '../context/BurgerMenuContext';
