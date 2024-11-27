@@ -67,92 +67,92 @@ export function Search({ isAuthorized }) {
   };
 
   return (
-      <div className={styles['main_block_outer']}>
-          <div className={styles['new-companies-main']}>
-            <div className={styles['new-companies-search_count']}>
-              {searchResults && (
-                  <div className={styles['search-results']}>
-                    <h3 className={styles['search_results_text']}>
-                      Результати пошуку
-                      <span className={styles['search_field_entered_value']}>
+    <div className={styles['main_block_outer']}>
+      <div className={styles['new-companies-main']}>
+        <div className={styles['new-companies-search_count']}>
+          {searchResults && (
+            <div className={styles['search-results']}>
+              <h3 className={styles['search_results_text']}>
+                Результати пошуку
+                <span className={styles['search_field_entered_value']}>
                   {` “${searchTerm}” `}
                 </span>
-                      : {searchResults.length > 0 ? searchResults.length : 0}
-                    </h3>
-                  </div>
+                : {searchResults.length > 0 ? searchResults.length : 0}
+              </h3>
+            </div>
+          )}
+        </div>
+        {!error && searchResults.length > 0 && (
+          <>
+            <SearchResults
+              results={searchResults}
+              searchPerformed={searchPerformed}
+              displayedResults={displayedResults}
+              isAuthorized={isAuthorized}
+              changeCompanies={changeCompanies}
+            />
+            <div className={styles['new-companies-result_pages']}>
+              {totalPages > 1 && (
+                <div className={styles['pagination']}>
+                  {currentPage > 1 && (
+                    <button onClick={() => handlePageChange(currentPage - 1)}>
+                      <img src={link_to_left} alt="Link to Left" />
+                    </button>
+                  )}
+                  {currentPage > 1 && (
+                    <>
+                      <button onClick={() => handlePageChange(1)}>1</button>
+                      {currentPage > 2 && (
+                        <span className={styles['ellipsis']}>...</span>
+                      )}
+                    </>
+                  )}
+                  {Array.from({ length: totalPages }, (_, i) => {
+                    if (
+                      i === 2 ||
+                      i === totalPages ||
+                      (i >= currentPage - 1 && i <= currentPage)
+                    ) {
+                      return (
+                        <button
+                          key={i}
+                          onClick={() => handlePageChange(i + 1)}
+                          className={currentPage === i + 1 ? styles['active'] : ''}
+                        >
+                          {i + 1}
+                        </button>
+                      );
+                    }
+                    return null;
+                  })}
+                  {currentPage < totalPages - 1 && (
+                    <>
+                      {currentPage < totalPages - 1 && (
+                        <span className={styles['ellipsis']}>...</span>
+                      )}
+                      <button onClick={() => handlePageChange(totalPages)}>
+                        {totalPages}
+                      </button>
+                    </>
+                  )}
+                  {currentPage < totalPages && (
+                    <button onClick={() => handlePageChange(currentPage + 1)}>
+                      <img src={link_to_right} alt="Link to Right" />
+                    </button>
+                  )}
+                </div>
               )}
             </div>
-            {!error && searchResults.length > 0 ? (
-                <>
-                  <SearchResults
-                      results={searchResults}
-                      searchPerformed={searchPerformed}
-                      displayedResults={displayedResults}
-                      isAuthorized={isAuthorized}
-                      changeCompanies={changeCompanies}
-                  />
-                  <div className={styles['new-companies-result_pages']}>
-                    {totalPages > 1 && (
-                        <div className={styles['pagination']}>
-                          {currentPage > 1 && (
-                              <button onClick={() => handlePageChange(currentPage - 1)}>
-                                <img src={link_to_left} alt="Link to Left"/>
-                              </button>
-                          )}
-                          {currentPage > 1 && (
-                              <>
-                                <button onClick={() => handlePageChange(1)}>1</button>
-                                {currentPage > 2 && (
-                                    <span className={styles['ellipsis']}>...</span>
-                                )}
-                              </>
-                          )}
-                          {Array.from({length: totalPages}, (_, i) => {
-                            if (
-                                i === 2 ||
-                                i === totalPages ||
-                                (i >= currentPage - 1 && i <= currentPage)
-                            ) {
-                              return (
-                                  <button
-                                      key={i}
-                                      onClick={() => handlePageChange(i + 1)}
-                                      className={currentPage === i + 1 ? styles['active'] : ''}
-                                  >
-                                    {i + 1}
-                                  </button>
-                              );
-                            }
-                            return null;
-                          })}
-                          {currentPage < totalPages - 1 && (
-                              <>
-                                {currentPage < totalPages - 1 && (
-                                    <span className={styles['ellipsis']}>...</span>
-                                )}
-                                <button onClick={() => handlePageChange(totalPages)}>
-                                  {totalPages}
-                                </button>
-                              </>
-                          )}
-                          {currentPage < totalPages && (
-                              <button onClick={() => handlePageChange(currentPage + 1)}>
-                                <img src={link_to_right} alt="Link to Right"/>
-                              </button>
-                          )}
-                        </div>
-                    )}
-                  </div>
-                </>
-            ) : (
-                <div className={styles['new-companies-main__error']}>
-                  <p className={styles['search_result_error']}>
-                    Пошук не дав результатів
-                  </p>
-                </div>
-            )}
-          </div>
+          </>
+        )}
       </div>
+      {searchResults.length === 0 &&
+        <div className={styles['new-companies-main__error']}>
+          <p className={styles['search_result_error']}>
+            Пошук не дав результатів
+          </p>
+        </div>}
+    </div>
   );
 }
 
