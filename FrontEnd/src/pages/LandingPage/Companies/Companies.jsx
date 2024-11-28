@@ -41,7 +41,7 @@ const MainCompanies = ({ isAuthorized }) => {
     }
   }, [newMembers, companylist, searchResults]);
 
-  const companyDataList = windowWidth >= 1200 && windowWidth <= 1512
+  const companyDataList = windowWidth >= 1200 && windowWidth < 1512
     ? searchResults.slice(0, 3)
     : searchResults;
 
