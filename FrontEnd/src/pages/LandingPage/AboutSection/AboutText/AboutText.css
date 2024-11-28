@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap :24px;
+  gap: 24px;
   width: 375px;
   padding: 40px 16px;
   box-sizing: border-box;
@@ -84,16 +84,26 @@
   }
 }
 
+@media only screen and (min-width: 1200px) {
+  .about-us-text-section {
+    width: 1200px;
+    padding: 64px 32px;
+  }
+
+  .about-us-text-section__content {
+    width: 1136px;
+  }
+
+  .about-us-text-section__card {
+    width: 357.33px;
+  }
+}
+
 @media only screen and (min-width: 1512px) {
   .about-us-text-section {
     width: 1512px;
     padding: 80px 104px;
     gap: 40px;
-  }
-
-  .about-us-text-section__header-text {
-    font-size: 32px;
-    line-height: 36px;
   }
 
   .about-us-text-section__card {
