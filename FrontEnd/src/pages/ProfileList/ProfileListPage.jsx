@@ -34,12 +34,24 @@ export default function ProfileListPage({ isAuthorized, isSaved }) {
   const [profiles, setProfiles] = useState([]);
   const [filters, setFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState(pageNumber);
+  const [pageSize, setPageSize] = useState(16);
   const [activeTab, setActiveTab] = useState(searchParams.get('companyType') || 'all');
   const [activeBtn, setActiveBtn] = useState(searchParams.get('activity') || 'all');
 
   const windowWidth = useWindowWidth();
   const linkText = windowWidth >= 768 ? 'Усі підприємства' : 'Усі';
-  const pageSize = windowWidth >= 768 ? 16 : 4;
+
+  useEffect(() => {
+    if (windowWidth < 768) {
+      setPageSize(4);
+    } else if (windowWidth >= 768 && windowWidth < 1200) {
+      setPageSize(16);
+    } else if (windowWidth >= 1200 && windowWidth < 1512) {
+      setPageSize(12);
+    } else if (windowWidth >= 1512) {
+      setPageSize(16);
+    }
+  }, [windowWidth]);
 
   const [url, setUrl] = useState(
     `${process.env.REACT_APP_BASE_API_URL}/api/profiles/?ordering=name&page_size=${pageSize}&page=${currentPage}`
