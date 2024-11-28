@@ -142,21 +142,19 @@ export default function CompanyCard({
           </div>
         </div>
         <div className={styles['company-card__logo']}>
-          <div className={styles['company-card__logo-ellipse']}>
-            {profile.logo?.path ? (
-              <img
-                src={profile.logo?.path}
-                alt="Logo"
-                className={styles['company-card__logo-image']}
-              />
-            ) : (
-              <img
-                className={styles['company-card__logo-image']}
-                src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
-                alt=""
-              />
-            )}
-          </div>
+          {profile.logo?.path ? (
+            <img
+              src={profile.logo?.path}
+              alt="Logo"
+              className={styles['company-card__logo-image']}
+            />
+          ) : (
+            <img
+              className={styles['company-card__logo-image']}
+              src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
+              alt=""
+            />
+          )}
         </div>
       </Link>
       <div className={styles['company-card__star']}>

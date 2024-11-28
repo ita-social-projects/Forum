@@ -143,17 +143,12 @@
 .company-card__logo {
   width: 50px;
   height: 50px;
-  position: absolute;
-  right: 20px;
-  bottom: 152px;
-}
-
-.company-card__logo-ellipse {
-  width: 50px;
-  height: 50px;
   background: var(--company-card-color);
   border-radius: 9999px;
   border: 1px solid var(--grey-border-color);
+  position: absolute;
+  right: 20px;
+  bottom: 152px;
 }
 
 .company-card__logo-image {
