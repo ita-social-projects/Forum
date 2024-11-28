@@ -1,16 +1,18 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 const BurgerMenuContext = createContext();
 
 export const BurgerMenuProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { pathname } = useLocation();
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 1200 && isOpen) {
+      if (window.innerWidth > 1200) {
         setIsOpen(false);
       }
     };
@@ -20,7 +22,11 @@ export const BurgerMenuProvider = ({ children }) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [isOpen]);
+  }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <BurgerMenuContext.Provider value={{ isOpen, toggleMenu }}>
