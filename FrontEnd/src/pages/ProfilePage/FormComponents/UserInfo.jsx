@@ -8,6 +8,7 @@ import checkFormIsDirty from '../../../utils/checkFormIsDirty';
 import defineChanges from '../../../utils/defineChanges';
 import HalfFormField from './FormFields/HalfFormField';
 import Loader from '../../../components/Loader/Loader';
+import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 import css from './FormComponents.module.css';
 
 const LABELS = {
@@ -51,9 +52,6 @@ const UserInfo = (props) => {
     setFormIsDirty(isDirty);
   }, [user, profile, updateUser, updateProfile]);
 
-  useEffect(() => {
-    props.currentFormNameHandler(props.curForm);
-  }, []);
 
   const errorMessageTemplates = {
     requiredField: 'Обов’язкове поле',
@@ -192,6 +190,8 @@ const UserInfo = (props) => {
 
   return (
     <div className={css['form__container']}>
+      <h3 className={css['form__head']}>Інформація про користувача</h3>
+      <div className={css['divider']}></div>
       {updateUser && user && profile && updateProfile ? (
         <form
           id="UserInfo"
@@ -200,14 +200,14 @@ const UserInfo = (props) => {
           noValidate
         >
           <div
-            className={`${css['fields']} ${
-              errorsInNameSurname ? css['user_form_fields'] : ''
-            }`}
+            className={`${css['fields']} ${errorsInNameSurname ? css['user_form_fields'] : ''
+              }`}
           >
             <div className={css['fields-groups']}>
               <HalfFormField
                 inputType="text"
                 name="surname"
+                fieldPlaceholder="Введіть ваше прізвище"
                 label={LABELS.surname}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
@@ -223,6 +223,7 @@ const UserInfo = (props) => {
               <HalfFormField
                 inputType="text"
                 name="name"
+                fieldPlaceholder="Введіть ваше ім'я"
                 label={LABELS.name}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
@@ -240,6 +241,7 @@ const UserInfo = (props) => {
               <HalfFormField
                 inputType="text"
                 name="person_position"
+                fieldPlaceholder="Введіть вашу посаду"
                 label={LABELS.person_position}
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
@@ -261,6 +263,8 @@ const UserInfo = (props) => {
               />
             </div>
           </div>
+          <div className={css['bottom-divider']}></div>
+          <ProfileFormButton />
         </form>
       ) : (
         <Loader />

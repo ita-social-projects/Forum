@@ -1,0 +1,71 @@
+.headerSearchBox {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 40px;
+  width: 225px;
+  border-radius: 4px;
+  border: solid 1px #aaa;
+  background: #fff;
+}
+
+.headerSearchForm {
+  display: flex;
+  padding: 4px 8px;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  position: relative;
+}
+
+.headerSearchFormInput {
+  font-size: 16px;
+  flex: 1;
+  outline: none;
+  border: none;
+  font: var(--font-main);
+}
+
+.headerSearchFormAddon {
+  padding: 0;
+  color: #000;
+  cursor: pointer;
+  border: none;
+}
+
+.headerSearchFormAddon:hover {
+  color: #000 !important;
+}
+
+.headerSearchFormAddon:last-child::before {
+  content: "";
+  position: absolute;
+  right: 40px;
+  top: -4px;
+  bottom: -4px;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.headerSearchFormInput::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+  font-feature-settings: 'calt' off;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.16px;
+
+}
+
+textarea:focus,
+.headerSearchFormInput:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@media (max-width: 1200px) {
+  .headerSearchBox {
+    width: 100%;
+  }
+}

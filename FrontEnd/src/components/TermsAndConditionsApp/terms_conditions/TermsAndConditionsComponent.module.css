@@ -1,73 +1,21 @@
-.TermsAndConditions{
+.TermsAndConditions {
     display: flex;
-    margin: 80px 100px 80px 100px;
-    width: 100%;
-    max-height: auto;
+    padding: 40px 16px;
     background-color: var(--light-text-color);
     color: var(--main-text-color);
     scroll-behavior: smooth;
 
 }
   
-.TermsAndConditions__title{
+.TermsAndConditions__title {
     font-family: var(--font-main);
-    font-size: 32px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 38px;
-    letter-spacing: 0em;
     text-align: left;
-    margin-bottom: 12px;
-}
-
-.TermsAndConditions__link_container {
-    margin-right: 100px;
-    max-width: 234px;
-    max-height: 1400px;
-}
-
-.link {
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-main);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: left;
-}
-
-.link_text {
-    color: var(--main-footer-background);
-    text-transform: uppercase;
     margin-bottom: 24px;
 }
 
-.link_text__active{
-    width: 234px;
-    color: var(--main-header-color);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-}
-
-.link_text:hover {
-    color: var(--main-header-color);
-}
-
-.TermsAndConditions__img1{
-    width: auto;
-    height: 266px;
-    margin-left: -100px;
-    margin-top: 332px;
-}
-
-.TermsAndConditions__img2{
-    height: 266px;
-    margin-top: 700px;
-    width: auto;
-    margin-left: -100px;    
-}
-
-.TermsAndConditions__text_container{
+.TermsAndConditions__text_container {
     display: flex;
     flex-direction: column;
     max-width: 971px;
@@ -92,14 +40,18 @@
     margin-top: 24px;
 }
 
-.custom-list {
-    margin:0px;
-    padding-left: 16px; 
+@media only screen and (min-width: 768px) {
+    .TermsAndConditions {
+        padding: 48px 24px;
+    }
+
+    .TermsAndConditions__title {
+        font-size: 34px;
+    }
 }
 
-.custom-list__item{
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
+@media only screen and (min-width: 1200px) {
+    .TermsAndConditions {
+        padding: 80px 214px;
+    }
 }

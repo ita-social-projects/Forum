@@ -1,7 +1,8 @@
 .fields__column {
     display: flex;
-    width: 530px;
+    width: 311px;
     padding-bottom: 5px;
+    padding-left: 16px;
     flex-direction: column;
 }
 
@@ -51,7 +52,6 @@
 
 .fields__field--textarea {
     display: flex;
-    height: 22px;
     padding: 5px 12px;
     align-items: center;
     gap: 4px;
@@ -61,6 +61,10 @@
     width: 530px;
     height: 98px;
     border: none;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--input-text-color);
 }
 
 .fields__field--textarea::placeholder {
@@ -107,4 +111,18 @@
     line-height: 22px;
     letter-spacing: -0.01em;
     color: #A3AAB0;
+}
+
+@media only screen and (min-width: 768px) {
+    .fields__column {
+        width: 426px;
+        padding-left: 24px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .fields__column {
+        width: 588px;
+        padding-left: 24px;
+    }
 }

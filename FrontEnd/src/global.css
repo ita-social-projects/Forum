@@ -28,6 +28,7 @@
 
   /*border color*/
   --border-color: #EEEFF1;
+  --grey-border-color: #AAAAAA;
 
   /* background color*/
   --main-header-color: #1F9A7C;
@@ -35,7 +36,7 @@
   --new-members-section-background: #F1FFF7;
   --why-should-section-background: #F0F1F3;
   --copyright-info-background: #333333;
-  --about-as-main-background: #0B6C61;
+  --about-us-main-background: #F9F5EC;
   --star-background: #FFD800;
   --hint-background: #25292C;
   --light-seashell-background: #F9F5EC;
@@ -52,6 +53,8 @@
   --error-text-color: #F15831;
   --hint-text-color: #25292C;
   --placeholder-text-color: #ADB3B9;
+  --edit-page-head-color: #000000D9;
+  --input-text-color: #000000D9;
 
 
 
@@ -59,11 +62,13 @@
   --main-button-color: #000000;
   --button-color-hover: #0b6c61;
   --light-button-color: #FFFFFF;
+  --dark-border-button: #232424;
+  --disabled-link: #8D959C;
 
   /* fonts */
   --font-main: 'Geologica', sans-serif;
   --font-messages: 'Roboto', sans-serif;
-  --font-error: 'Roboto', sans-serif;
+  --font-error: 'Geologica', sans-serif;
   --font-logo: 'Geologica', sans-serif;
 
   --toastify-color-error: #FFF1F0;
@@ -92,8 +97,9 @@
   /* main pages About block*/
   --about-text-font-color: #292E32;
   --about-text-background-color: #FFF;
-  --about-as-font-color: #FFF;
-  --about-as-background-color: #0B6C61;
+  --about-us-font-color: #25292C;
+  --about-us-header-color: #232424;
+  --about-us-background-color: #F9F5EC;
   --about-cards-font-color: #292E32;
   --about-cards-background-color: #F0F1F3;
   --about-cards-background-content-color: #FFF;
@@ -145,4 +151,12 @@
   --company-card-color-hover: #EDE0C5;
   --new-companies-background-color: #FFFFFF;
   --min-height-block-main: 100vh;
+
+  /* Cookies */
+  --cookie-black-color: #000000;
+  --cookie-light-color: #FFFFFF;
+  --cookie-dark-color: #10182F;
+  --cookie-border-color: #e9e9e9;
+  --cookie-overlay-color: rgba(0, 0, 0, 0.5);
+  --cookie-shadow-color: rgba(0, 0, 0, 0.15);
 }

@@ -1,68 +1,134 @@
-.modal-window {
-  height: 100vh;
-  width: var(--main-block-size);
-  background-color: rgba(0, 0, 0, 0.4);
+.cookie-banner {
   position: fixed;
-  top: 0;
-  left: 0;
+  bottom: 20px;
+  right: 20px;
+  width: 600px;
+  background: var(--cookie-light-color);
+  box-shadow: 0 4px 12px var(--cookie-shadow-color);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 2000;
+}
+
+.cookie-content {
+  text-align: left;
+  padding: 5px 5px;
+}
+
+.cookie-logo {
+  width: 42.96px;
+  height: 40px;
+  gap: 0px;
+  opacity: 1;
+  margin-right: 8px;
+}
+
+.cookie-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  visibility: hidden;
+  margin-bottom: 16px;
 }
 
-.modal-window.active {
-  visibility: visible;
-}
-
-.modal-content {
-  padding: 20px;
-  border-radius: 12px;
-  background-color: white;
-  width: 400px;
-}
-
-.green-btn {
-  color: #ffffff;
-  background: #20aa87;
-  border-color: #1f9a7c;
-  border-style: solid;
-  font-size: 15px;
+.cookie-title {
+  font-family: 'Geologica', sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: left;
+  color: var(--cookie-dark-color);
+  padding: 10px 5px;
   border-radius: 4px;
-  margin: 14px;
-  margin-right: 50px;
-  padding: 4px;
-  margin-left: 64px;
-  cursor: pointer;
-}
-
-.red-btn {
-  color: #ffffff;
-  background: #fa7979;
-  border-color: #fa7979;
-  border-style: solid;
-  font-size: 15px;
-  border-radius: 4px;
-  margin: 10px;
-  margin-left: 20px;
-  padding: 4px;
-  cursor: pointer;
-}
-
-.cookie-image {
-  margin-left: 150px;
-  margin-right: 50px;
-  width: 100px;
-  height: 70px;
 }
 
 .cookie-text {
-  text-align: justify;
-  color: #187860;
+  font-family: 'Geologica', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  color: var(--cookie-dark-color);
 }
 
-.cookie-details {
-  text-align: justify;
-  color: #187860;
-  padding-top: 8px;
+.cookie-link {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-left: 4px;
+  color: var(--cookie-black-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cookie-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 11px;
+  margin-top: 20px;
+}
+
+.allow-all-btn {
+  font-family: 'Geologica', sans-serif;
+  line-height: 20px;
+  background: var(--cookie-black-color);
+  color: var(--cookie-light-color);
+  width: 144px;
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.allow-all-btn:hover {
+  background: transparent;
+  color: var(--cookie-black-color);
+  border: 1px solid var(--cookie-black-color);
+}
+
+.deny-btn {
+  font-family: 'Geologica', sans-serif;
+  line-height: 20px;
+  background: var(--cookie-light-color);
+  color: var(--cookie-black-color);
+  width: 144px;
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: 1px solid var(--cookie-black-color);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.deny-btn:hover {
+  background: var(--cookie-black-color);
+  color: var(--cookie-light-color);
+}
+
+@media (max-width: 768px) {
+  .cookie-banner {
+    bottom: 15px;
+    right: 10px;
+    padding: 15px 15px;
+    width: 90%;
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 380px) {
+  .cookie-banner {
+    width: 100%;
+    max-width: 375px;
+    bottom: 0;
+    right: 0;
+    box-sizing: border-box;
+  }
+
+  .cookie-content {
+    padding: 5px;
+    text-align: center;
+  }
 }

@@ -1,7 +1,7 @@
 const customTheme = {
     components: {
       Carousel: {
-        colorBgContainer: '#40af85',
+        colorBgContainer: '#B4D27A',
         dotActiveWidth: 32,
         dotWidth: 32,
         dotHeight: 6,
@@ -42,8 +42,8 @@ const customTheme = {
         multipleItemBg: '#F8F8F8',
       },
       Checkbox: {
-        colorPrimary: '#1f9a7c',
-        colorPrimaryHover: '#1f9a7c',
+        colorPrimary: '#000000',
+        colorPrimaryHover: '#000000',
       },
       Spin: {
         colorPrimary: '#ffffff',
@@ -53,6 +53,7 @@ const customTheme = {
       }
     },
     token: {
+      fontFamily: 'Geologica',
       screenXLMin: 1512, // for grid (row/col)
       screenXL: 1512, // for List
     }

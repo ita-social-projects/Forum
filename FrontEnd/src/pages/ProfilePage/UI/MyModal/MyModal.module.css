@@ -10,11 +10,9 @@
 }
 
 .myModal__content {
-    background-color: white;
-    width: 572px;
-    top: 160px;
-    left: 470px;
-    border-radius: 2px;
+    background-color: var(--main-white);
+    width: 345px;
+    border-radius: 6px;
 }
 
 .myModal.active {
@@ -22,4 +20,10 @@
     justify-content: center;
     align-items: center;
     z-index: 2;
+}
+
+@media only screen and (min-width: 768px) {
+    .myModal__content {
+        width: 572px;
+    }
 }

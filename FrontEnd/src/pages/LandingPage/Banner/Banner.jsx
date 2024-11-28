@@ -11,7 +11,7 @@ const MainBanner = () => {
           <div className={styles['main-banner-link__container']}>
           <Link
                   className={styles['main-banner-link']}
-                  to="/#"
+                  to="/about-us"
                 >
                   Детальніше про нас
           </Link>

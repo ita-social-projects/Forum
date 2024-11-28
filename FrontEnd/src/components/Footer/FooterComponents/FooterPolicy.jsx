@@ -14,6 +14,11 @@ const POLICY_LINKS = [
         title: 'Умови користування',
         link: 'terms-and-conditions/'
     },
+    {
+        id: 'i2',
+        title: 'Зворотній зв\'язок',
+        link: 'contact/'
+    },
 ];
 
 function FooterPolicy() {

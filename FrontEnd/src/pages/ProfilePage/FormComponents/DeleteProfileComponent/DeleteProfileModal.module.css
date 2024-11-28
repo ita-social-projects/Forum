@@ -6,18 +6,21 @@
     font-weight: 400;
     line-height: 20px;
     letter-spacing: -0.01em;
-    margin: 24px 24px 8px 24px;
+    margin: 14px 24px 0px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
 }
 
 .buttons__section {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 12px;
     border-top: 1px #E2E5EB solid;
     padding-bottom: 10px;
     padding-top: 10px;
-    padding-right: 16px;
+    padding-left: 25px;
 }
 
 .button__cancel {
@@ -82,7 +85,6 @@
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
-    background: var(--main-white, #FFF);
     box-shadow: 0px -1px 0px 0px #F0F0F0 inset;
     color: var(--character-title-85, rgba(0, 0, 0, 0.85));
     font-feature-settings: 'calt' off;
@@ -95,14 +97,16 @@
 }
 
 .form__body {
-    margin: 8px 24px 24px 24px;
+    margin: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .fields__label--text {
     display: flex;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
     align-items: center;
-    gap: 4px;
     font-family: var(--font-main);
     font-size: 14px;
     font-weight: 400;
@@ -123,28 +127,41 @@
 
 .fields__field--input {
     display: flex;
-    height: 22px;
+    height: 30px;
     padding: 5px 12px;
     align-items: center;
     gap: 4px;
     flex: 1 0 0;
     border-radius: 2px;
-    border: 1px solid var(--neutral-5, #D9D9D9);
+    border: none;
     background: var(--main-white, #FFF);
 }
 
-.fields__field--input:focus {
+.fields__field:focus-within {
     border-radius: 2px;
     border: 1px solid #1f9a7c;
     background: #fff;
     outline: none;
 }
 
-.password__eye {
-    width: 23px;
-    padding: 5px 3px 2px 3px;
+.password-visible-field {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 2px;
+    background: var(--main-white, #FFF);
+    border: 1px solid #B4D27A;
+}
+
+.password-visibility-button {
+    width: 25px;
     cursor: pointer;
 }
+
+.fields__field--input:focus-visible {
+    outline: none;
+}
+
 
 .delete__cancelButton {
     cursor: pointer;

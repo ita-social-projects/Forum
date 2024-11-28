@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Hamburger from 'hamburger-react';
 import Menu from './Menu';
 import SearchBox from './SearchBox';
+import { useBurgerMenu } from '../../../context/BurgerMenuContext';
 import css from './BurgerMenu.module.css';
 
 const BurgerMenu = () => {
-  const [isOpen, setOpen] = useState(false);
+  const { isOpen, toggleMenu } = useBurgerMenu();
 
   return (
     <div className={css.burgerMenuContainer}>
-      <Hamburger
-          toggled={isOpen}
-          toggle={setOpen}
-          size={30}
-          className={css.hamburgerIcon}
-      />
-      {isOpen && (
-        <div className={css.menu}>
-          <SearchBox className={css.searchBar} />
-          <Menu />
-        </div>
-      )}
+      <Hamburger toggled={isOpen} toggle={toggleMenu} size={30} className={css.hamburgerIcon} />
+      <div className={`${css.menu} ${isOpen ? css.open : ''}`}>
+        {isOpen && (
+          <>
+            <SearchBox className={css.searchBar} />
+            <Menu />
+          </>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,112 @@
+
+.about-us-section {
+    min-width: 100vw;
+    background: var(--about-us-background-color);
+}
+
+.about-us-section-main {
+    box-sizing: border-box;
+    padding: 40px 0;  
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.about-us-section-content__header {
+    color: var(--about-us-header-color);
+    font-family: var(--font-main);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.24px;
+    text-align: center;
+    width: 100%;
+}
+
+.about-us-section-content {
+    box-sizing: border-box;
+    min-width: 345px;
+    width: 375px;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-us-section-content__text {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--hint-text-color);
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    letter-spacing: -0.16px;
+}
+
+.about-us-section-content__smart-text {
+    padding-bottom: 32px;
+}
+
+.about-us-section-content__image-container{
+    width: 345px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+.about-us-section-content__image { 
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: 80%;
+    width: 100%;
+    min-height: 340px;
+}
+
+#about-us {
+    scroll-margin-top: 320px;
+}
+
+@media only screen and (min-width: 768px) {
+    .about-us-section-main {
+        padding: 48px 24px;
+    }
+
+    .about-us-section-content__image-container{
+        width: 520px; 
+    }
+
+    .about-us-section-content {
+        width: 520px;
+        padding: 0;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .about-us-section-main {
+        padding: 80px 104px;
+        gap: 40px;
+    }
+
+    .about-us-section-content {
+        width: 100%;
+        max-width: 1304px;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .about-us-section-content__image-container {
+        width: 50%; 
+        padding: 0 16px;
+    }
+
+    .about-us-section-content__text {
+        width: 50%;
+        padding: 0 16px;
+    }
+}
+

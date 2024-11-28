@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { mutate } from 'swr';
 import styles from './CompanyCard.module.css';
 import { useAuth } from '../../hooks';
 import PropTypes from 'prop-types';
@@ -45,6 +46,11 @@ export default function CompanyCard({
     changeCompanies(profile.id, false);
     try {
       await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/api/saved-list/${profile.id}`);
+      await mutate(
+        (key) => typeof key === 'string' && key.includes('/api/profiles/?is_saved=True'),
+        undefined,
+        {revalidate: true}
+      );
     } catch (error) {
       console.error(error);
     }

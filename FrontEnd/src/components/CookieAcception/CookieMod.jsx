@@ -1,81 +1,68 @@
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 import styles from './CookieMod.module.css';
-import { useState } from 'react';
 
 const CookieMod = ({ active, setActive }) => {
-  const [cookies, setCookie] = useCookies();
-  const [detailsVisible, setDetailsVisible] = useState(false);
+  const [cookies, setCookie] = useCookies(['cookies']);
 
-  const accessCookie = () => {
-    const d = new Date();
-    const cookieLifeTime = 30 * 24 * 60 * 60 * 1000;
-    d.setTime(d.getTime() + cookieLifeTime);
-    setCookie('first', true, { expires: d, sameSite: 'lax' });
+  useEffect(() => {
+    if (cookies.cookies !== undefined) {
+      setActive(false);
+    }
+  }, [cookies, setActive]);
+
+  const allowCookies = () => {
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+    setCookie('cookies', true, { expires: expirationDate, sameSite: 'lax' });
     setActive(false);
   };
 
-  const denyCookie = () => {
-    const d = new Date();
-    const cookieLifeTime = 30 * 24 * 60 * 60 * 1000;
-    d.setTime(d.getTime() + cookieLifeTime);
-    setCookie('first', false, { expires: d, sameSite: 'lax' });
+  const declineCookies = () => {
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+    setCookie('cookies', false, { expires: expirationDate, sameSite: 'lax' });
     setActive(false);
   };
 
-  const toggleDetails = (event) => {
-    event.preventDefault();
-    setDetailsVisible(!detailsVisible);
-  };
-
-  return cookies.first ? null : (
-    <div
-      className={`${styles['modal-window']} ${active && styles['active']}`}
-    >
-      <div className={styles['modal-content']} data-testid="cookiemodal" onClick={(e) => e.stopPropagation()}>
+  return active ? (
+    <div className={styles['cookie-banner']} data-testid="cookiemodal">
+      <div className={styles['cookie-content']}>
+        <div className={styles['cookie-header']}>
+          <img
+            src={`${process.env.REACT_APP_PUBLIC_URL}/img/cookies.png`}
+            alt="cookies"
+            className={styles['cookie-logo']}
+          />
+          <h3 className={styles['cookie-title']}>Cookies</h3>
+        </div>
         <p className={styles['cookie-text']}>
-          Наш веб-сайт використовує файли cookie, щоб покращити ваш досвід. Ви
-          можете відмовитися, якщо хочете. Дізнатися більше{' '}
-          {
-            <Link className={styles['cookie-link']} onClick={toggleDetails}>
-              про кукі-файли
-            </Link>
-          }
-
+          Наш веб-сайт використовує файли cookie, щоб покращити ваш досвід.
         </p>
-        {detailsVisible && (
-          <div className={styles['cookie-details']}>
-            <p><b>Використання файлів &quot;cookies&quot;</b></p>
-            <p>
-              1. Файли &quot;cookies&quot; є невеликими текстовими файлами, які можуть бути розміщені на пристрої
-              користувача під час відвідування Сайту. Вони дозволяють збирати та зберігати певну інформацію про
-              відвідувачів, таку як налаштування мови, історія перегляду, дані автентифікації та інші деталі.
-              Використання файлів &quot;cookies&quot; на Сайті сприяє поліпшенню зручності та персоналізації досвіду
-              користувачів, дозволяючи зберігати інформацію про їхній вибір та взаємодію з різними елементами Сайту.
-            </p>
-            <p>
-              2. Користувач має можливість керувати використанням файлів &quot;cookies&quot; у налаштуваннях свого
-              веб-браузера. Відключення файлів &quot;cookies&quot; може бути здійснено користувачем у будь-який
-              момент. Проте важливо зауважити, що відключення &quot;cookies&quot; може призвести до обмеження
-              функціональності Сайту, а також до втрати певних персоналізованих налаштувань та зручностей, які вони
-              забезпечують.
-            </p>
-          </div>
-        )}
-        <img
-          src={`${process.env.REACT_APP_PUBLIC_URL}/img/homecookies.png`}
-          alt="cookies"
-          className={styles['cookie-image']}
-        />
-        <button className={styles['green-btn']} onClick={accessCookie}>
-          Погоджуюсь
-        </button>
-        <button className={styles['red-btn']} onClick={denyCookie}>
-          Відмовляюсь
-        </button>
+        <p className={styles['cookie-text']}>
+          Дізнатися більше
+          <Link to="privacy-policy/" className={styles['cookie-link']}>
+            про файли cookie.
+          </Link>
+        </p>
+        <div className={styles['cookie-buttons']} >
+          <button className={styles['allow-all-btn']} onClick={allowCookies}>
+            Дозволити
+          </button>
+          <button className={styles['deny-btn']} onClick={declineCookies}>
+            Відмовитись
+          </button>
+        </div>
       </div>
     </div>
-  );
+  ) : null;
+};
+
+CookieMod.propTypes = {
+  active: PropTypes.bool.isRequired,
+  setActive: PropTypes.func.isRequired,
 };
 
 export default CookieMod;

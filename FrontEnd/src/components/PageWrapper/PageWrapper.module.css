@@ -1,0 +1,8 @@
+.pageContent {
+  transition: margin-top 0.3s ease;
+  margin-top: 0;
+}
+
+.pageContent.menuOpen {
+  margin-top: 180px;
+}

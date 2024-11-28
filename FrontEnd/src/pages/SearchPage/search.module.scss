@@ -1,0 +1,119 @@
+.main_block_outer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.new-companies-result_pages {
+  padding: 40px;
+}
+
+.new-companies-main__error {
+  width: 100%;
+  background-color: rgba(249, 245, 236, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 288px;
+  flex-grow: 1;
+}
+
+.new-companies-main {
+  display: flex;
+  align-self: center;
+  align-items: flex-start;
+  flex-direction: column;
+  background: var(--new-companies-background-color);
+  min-width: 375px;
+}
+
+.new-companies-search_count {
+  display: flex;
+  flex-direction: row;
+  padding: 40px 16px;
+}
+
+.search_field_entered_value {
+  color: #707070;
+  font: var(--font-main);
+  font-weight: 300;
+  font-size: 18px ;
+}
+
+.search_results_text {
+  font: normal normal bold 18px/2 var(--font-main);
+  font-size: 18px;
+  font-weight: 700;
+  color: #232424;
+  line-height: 22px;
+}
+
+.search_result_error {
+  width: 100%;
+  color: var(--search-text-color);
+  font: normal normal bold 24px/2 var(--font-main);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  all: unset;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: transparent;
+  color: var(--search-text-color);
+  border: 1px solid var(--search-text-color);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+
+@media only screen and (min-width: 768px){
+    .search_results_text {
+      font-size: 34px;
+      line-height: 41px;
+    }
+
+    .search_field_entered_value{
+      font-size: 34px;
+    }
+
+    .search_result_error {
+      font: normal normal bold 40px/2 var(--font-main);
+      }
+
+    .new-companies-search_count {
+      padding: 40px 24px;
+    }
+
+    .new-companies-main {
+      width: 768px;
+    }
+
+}
+
+@media only screen and (min-width: 1512px){
+    .new-companies-search_count {
+      padding: 40px 14px;
+    }
+
+    .new-companies-main {
+        width: 1304px;
+    }
+
+}

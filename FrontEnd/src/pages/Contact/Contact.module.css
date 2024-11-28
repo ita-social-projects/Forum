@@ -1,0 +1,18 @@
+.contact__button_send {
+    min-width: 114px;
+    padding: 9px 16px;
+    border-radius: 4px;
+    background: #000000;
+
+    color: var(--light-button-text-color);
+    text-align: center;
+    font-feature-settings: "calt" off;
+
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+
+    cursor: pointer;
+}

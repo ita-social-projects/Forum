@@ -1,3 +1,4 @@
+import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
@@ -21,6 +22,7 @@ import AdminRegistration from '../pages/AdminPage/AdminRegistration/AdminRegistr
 import customAdminTheme from '../pages/CustomThemes/customAdminTheme.js';
 import '../pages/AdminPage/AdminGlobal.css';
 import css from '../pages/AdminPage/AdminPage.module.css';
+import { BurgerMenuProvider } from '../context/BurgerMenuContext';
 
 function AdminRouter() {
     const { isLoading, isAuth, isStaff, isSuperUser, user } = useAuth();
@@ -59,23 +61,27 @@ function AdminRouter() {
                 },
             }}
         >
-            <div className={css['admin_block']}>
-                <Header isAuthorized={isAuth} user={user} className={css['header_content']} />
-                {isLoading ? <Loader /> :
-                    <div className={css['content']}>
-                        {renderMenu}
-                        <Routes className={css['content-block']}>
-                            {authRoutes}
-                        </Routes>
-                    </div>
-                }
-                <ToastContainer
-                    position="top-right"
-                    autoClose={3000}
-                    theme="colored"
-                    icon={false}
-                />
-            </div>
+            <BurgerMenuProvider>
+                <div className={css['admin_block']}>
+                    <Header isAuthorized={isAuth} user={user} className={css['header_content']} />
+                    {isLoading ? (
+                        <Loader />
+                    ) : (
+                        <div className={css['content']}>
+                            {renderMenu}
+                            <Routes className={css['content-block']}>
+                                {authRoutes}
+                            </Routes>
+                        </div>
+                    )}
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={3000}
+                        theme="colored"
+                        icon={false}
+                    />
+                </div>
+            </BurgerMenuProvider>
         </ConfigProvider>
     );
 }
