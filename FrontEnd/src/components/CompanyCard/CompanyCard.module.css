@@ -170,6 +170,24 @@
   bottom: 13px;
 }
 
+@media only screen and (min-width: 1200px) {
+
+  .company-card,
+  .company-card__image-frame,
+  .company-card__image,
+  .company-card__text-block {
+    width: 357.33px;
+  }
+
+  .company-card__star {
+    left: 311px;
+  }
+
+  .company-card__category-text {
+    max-width: 275px;
+  }
+}
+
 @media only screen and (min-width: 1512px) {
 
   .company-card,
