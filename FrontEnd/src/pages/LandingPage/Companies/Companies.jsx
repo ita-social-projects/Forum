@@ -40,7 +40,11 @@ const MainCompanies = ({ isAuthorized }) => {
       setNewMembers(false);
     }
   }, [newMembers, companylist, searchResults]);
-  const companyDataList = searchResults;
+
+  const companyDataList = windowWidth >= 1200 && windowWidth <= 1512
+    ? searchResults.slice(0, 3)
+    : searchResults;
+
   const linkText = windowWidth >= 768 ? 'Всі підприємства' : 'Всі';
 
   return (
@@ -61,7 +65,7 @@ const MainCompanies = ({ isAuthorized }) => {
       <div className={styles['new-companies-block']}>
         <Row justify={'start'} gutter={[0, 24]}>
           {companyDataList.map((result, resultIndex) => (
-            <Col key={resultIndex} xs={24} md={12} xl={6}>
+            <Col key={resultIndex} xs={24} md={12} xl={8} xxl={6}>
               <CompanyCard
                 profile={result}
                 isAuthorized={isAuthorized}
