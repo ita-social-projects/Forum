@@ -21,7 +21,7 @@
 .data-block_render-contact,
 .data-content_render-data {
     display: flex;
-    width: 343px;
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
