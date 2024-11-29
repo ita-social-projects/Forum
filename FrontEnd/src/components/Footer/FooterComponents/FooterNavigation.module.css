@@ -71,7 +71,6 @@
     .navigation-content-section__text-block,
     .navigation-content-company__text-block {
         flex-direction: row;
-        gap: 15px;
         padding-top: 15px;
     }
 }
