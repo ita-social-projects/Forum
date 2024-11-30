@@ -34,10 +34,11 @@ export default function ProfileList({
       grid={{
         justify: 'center',
         align: 'stretch',
-        gutter: [32, 8],
+        gutter: [32, 24],
         xs: 1,
         md: 2,
-        xl: 4,
+        xl: 3,
+        xxl: 4,
       }}
       pagination={{
         onChange: (page) => {

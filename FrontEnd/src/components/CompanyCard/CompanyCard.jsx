@@ -98,33 +98,34 @@ export default function CompanyCard({
             )}
           </div>
           <div className={styles['company-card__text-block']}>
-            <Tooltip
-              title={activitiesString}
-              placement="bottom"
-              pointAtCenter={true}
-            >
-              <p className={styles['company-card__category-text']}>
-                {activitiesSliceString}
-              </p>
-            </Tooltip>
             <div className={styles['company-card__text-block__header']}>
+              <Tooltip
+                title={activitiesString}
+                placement="bottom"
+                pointAtCenter={true}
+              >
+                <p className={styles['company-card__category-text']}>
+                  {activitiesSliceString}
+                </p>
+              </Tooltip>
+
               <h3 className={styles['company-card__name-text']}>
                 {profile.name}
               </h3>
+              <Tooltip
+                title={profile.regions_ukr_display}
+                placement="bottom"
+                pointAtCenter={true}
+              >
+                <p className={styles['company-card__region-text']}>
+                  {regions
+                    ? regions.length < lengthOfRegion
+                      ? regions
+                      : `${regions.substring(0, 35)}...`
+                    : ''}
+                </p>
+              </Tooltip>
             </div>
-            <Tooltip
-              title={profile.regions_ukr_display}
-              placement="bottom"
-              pointAtCenter={true}
-            >
-              <p className={styles['company-card__region-text']}>
-                {regions
-                  ? regions.length < lengthOfRegion
-                    ? regions
-                    : `${regions.substring(0, 35)}...`
-                  : ''}
-              </p>
-            </Tooltip>
             <div className={styles['company-card__footer_content']}>
               <Tooltip
                 title={
@@ -138,35 +139,31 @@ export default function CompanyCard({
                   <CategoryBadges categories={profile.categories.slice(0, 3)} />
                 </div>
               </Tooltip>
+                <StarForLike
+                  isSaved={profile.is_saved}
+                  isAuthorized={isAuthorized}
+                  ownProfile={ownProfile}
+                  handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
+                />
             </div>
           </div>
         </div>
         <div className={styles['company-card__logo']}>
-          <div className={styles['company-card__logo-ellipse']}>
-            {profile.logo?.path ? (
-              <img
-                src={profile.logo?.path}
-                alt="Logo"
-                className={styles['company-card__logo-image']}
-              />
-            ) : (
-              <img
-                className={styles['company-card__logo-image']}
-                src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
-                alt=""
-              />
-            )}
-          </div>
+          {profile.logo?.path ? (
+            <img
+              src={profile.logo?.path}
+              alt="Logo"
+              className={styles['company-card__logo-image']}
+            />
+          ) : (
+            <img
+              className={styles['company-card__logo-image']}
+              src={`${process.env.REACT_APP_PUBLIC_URL}/companies-logos/default_logo.png`}
+              alt=""
+            />
+          )}
         </div>
       </Link>
-      <div className={styles['company-card__star']}>
-        <StarForLike
-          isSaved={profile.is_saved}
-          isAuthorized={isAuthorized}
-          ownProfile={ownProfile}
-          handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
-        />
-      </div>
     </div>
   );
 }

@@ -54,8 +54,9 @@ const customTheme = {
     },
     token: {
       fontFamily: 'Geologica',
-      screenXLMin: 1512, // for grid (row/col)
-      screenXL: 1512, // for List
+      screenXLMax: 1511,
+      screenXXLMin: 1512, // for grid (row/col)
+      screenXXL: 1512, // for List
     }
   };
 

@@ -14,7 +14,8 @@ const AboutSectionText = () => {
               key={item.id}
               xs={12}
               md={12}
-              xl={6}
+              xl={8}
+              xxl={6}
             >
               <div className="about-us-text-section__card">
                 <img

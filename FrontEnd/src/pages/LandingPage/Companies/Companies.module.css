@@ -66,6 +66,28 @@
   }
 }
 
+@media only screen and (min-width: 1200px) {
+  .new-companies-main {
+    width: 1200px;
+    height: 597px;
+  }
+
+  .new-companies-block {
+    width: 1140px;
+    height: 365px;
+  }
+
+  .new-companies-main__title {
+    padding-left: 40px;
+  }
+
+  .new-companies-link-to-all {
+    top: 26px;
+    right: 70px;
+  }
+
+}
+
 @media only screen and (min-width: 1512px) {
   .new-companies-main {
     width: 1512px;
