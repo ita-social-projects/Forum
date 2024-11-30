@@ -54,11 +54,13 @@
 
 .company-card__text-block {
   width: 345px;
-  height: 177px;
+  height: 181px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-around;
+  box-sizing: border-box;
+  gap: 16px;
+  padding: 16px;
   border-radius: 0 0 12px 12px;
 }
 
@@ -66,7 +68,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 16px;
 }
 
 .company-card__category-text {
@@ -78,14 +80,11 @@
   font-weight: 700;
   line-height: 120%;
   text-align: left;
-  padding-left: 16px;
-  padding-top: 6px;
   max-width: 262px;
   height: 35px;
 }
 
 .company-card__name-text {
-  height: 44px;
   color: var(--companies-card-text-color);
   font-family: var(--font-logo);
   font-size: 20px;
@@ -94,7 +93,6 @@
   line-height: 120%;
   text-transform: uppercase;
   text-align: left;
-  padding-left: 16px;
   overflow: hidden;
 }
 
@@ -109,22 +107,22 @@
   line-height: 20px;
   letter-spacing: -0.14px;
   text-align: left;
-  padding-left: 16px;
+  margin-top: -8px;
 }
 
 .company-card__footer_content {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-left: 13px;
-  padding-bottom: 2px;
 }
 
 .company-card__badges_block {
-  height: 25px;
+  height: 30px;
   display: inline-block;
   overflow: hidden;
-  padding-bottom: 6px;
+  max-width: 272px;
+  margin-left: -5px;
 }
 
 .company-card__badge-text {
@@ -156,12 +154,6 @@
   border-radius: 50%;
   background: var(--company-card-color);
   object-fit: cover;
-}
-
-.company-card__star {
-  position: absolute;
-  left: 296px;
-  bottom: 13px;
 }
 
 @media only screen and (min-width: 1200px) {
