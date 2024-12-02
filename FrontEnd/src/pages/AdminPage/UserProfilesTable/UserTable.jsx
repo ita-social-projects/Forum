@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import axios from 'axios';
-import useSWR from 'swr';
+import useSWR, { mutate }from 'swr';
 import { Table, Tag, Tooltip, Pagination, Input, Button, Space } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined, SearchOutlined } from '@ant-design/icons';
 import css from './UserTable.module.scss';
+import UserActions from './UserActions';
 
 
 const LENGTH_EMAIL = 14;
@@ -238,6 +239,14 @@ function UserTable() {
             title: 'Дії',
             dataIndex: 'actions',
             key: 'actions',
+            render: (_, user) => (
+                <UserActions
+                    user={user}
+                    onActionComplete={() => {
+                        mutate(url);
+                    }}
+                />
+            ),
         },
     ];
 
