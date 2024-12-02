@@ -160,7 +160,7 @@
 .company-card__star {
   position: absolute;
   left: 296px;
-  bottom: 13px;
+  bottom: 9px;
 }
 
 @media only screen and (min-width: 1200px) {
