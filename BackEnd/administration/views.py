@@ -30,7 +30,8 @@ from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 from .serializers import FeedbackSerializer
-from utils.administration.send_email_feedback import send_email_feedback, send_email_to_user
+from utils.administration.send_email_feedback import send_email_feedback
+from utils.administration.send_email_notification import send_email_to_user
 
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UsersFilter
@@ -234,8 +235,13 @@ class SendMessageView(CreateAPIView):
             the validated data from the request.
         """
         user = get_object_or_404(self.get_queryset(), pk=self.kwargs.get("pk"))
-
+        email = serializer.validated_data["email"] 
         category = serializer.validated_data["category"]
         message_content = serializer.validated_data["message"]
 
-        send_email_to_user(user=user, category=category, message_content=message_content)
+        send_email_to_user(
+            user=user,
+            category=category,
+            message_content=message_content,
+            email=email,
+        ) 
