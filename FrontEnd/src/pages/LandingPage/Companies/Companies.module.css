@@ -26,7 +26,7 @@
 .new-companies-link-to-all {
   position: absolute;
   right: 41px;
-  top: 6px
+  top: 7px
 }
 
 .new-companies-link-to-all a {
@@ -45,6 +45,7 @@
 .new-companies-block {
   width: 375px;
   padding: 18px 0px 38px 0px;
+  overflow: hidden;
 }
 
 
@@ -75,6 +76,8 @@
   .new-companies-block {
     width: 1140px;
     height: 365px;
+    overflow-x: scroll;
+    scrollbar-width: thin;
   }
 
   .new-companies-main__title {
@@ -97,6 +100,7 @@
   .new-companies-block {
     width: 1304px;
     height: 365px;
+    overflow: visible;
   }
 
   .new-companies-main__title {

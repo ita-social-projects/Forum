@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useWindowWidth from '../../../hooks/useWindowWidth';
 import { Link } from 'react-router-dom';
 import styles from './Companies.module.css';
+import Loader from '../../../components/Loader/Loader';
 import CompanyCard from '../../../components/CompanyCard/CompanyCard';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
@@ -10,19 +11,18 @@ import { Col, Row } from 'antd';
 
 const MainCompanies = ({ isAuthorized }) => {
   const baseUrl = process.env.REACT_APP_BASE_API_URL;
-  const [searchResults, setSearchResults] = useState([]);
-  const [newMembers, setNewMembers] = useState(true);
+  const [searchResults, setSearchResults] = useState(null);
   const windowWidth = useWindowWidth();
 
   const fetcher = async (url) => {
     const data = await axios.get(url);
-    setSearchResults(data.data.results);
     return data.data.results;
   };
 
-  const { data: companylist } = useSWR(
+  useSWR(
     `${baseUrl}/api/profiles/?ordering=-completeness,-created_at&page_size=4`,
-    fetcher
+    fetcher,
+    {onSuccess: (data) => setSearchResults(data)}
   );
 
   const changeCompanies = (id, isSaved) => {
@@ -35,17 +35,9 @@ const MainCompanies = ({ isAuthorized }) => {
     setSearchResults(newCompanies);
   };
 
-  useEffect(() => {
-    if (newMembers) {
-      setNewMembers(false);
-    }
-  }, [newMembers, companylist, searchResults]);
-
-  const companyDataList = windowWidth >= 1200 && windowWidth < 1512
-    ? searchResults.slice(0, 3)
-    : searchResults;
-
   const linkText = windowWidth >= 768 ? 'Всі підприємства' : 'Всі';
+  const antdGutter = windowWidth >= 1200 ? [24, 24] : [0, 24];
+  const antdWrap = windowWidth < 1200;
 
   return (
     <div className={styles['new-companies-main']}>
@@ -57,14 +49,14 @@ const MainCompanies = ({ isAuthorized }) => {
           <Link to="profiles">
             <p>{linkText}
               <img src="svg/arrow.svg" alt="Arrow icon for all companies link" />
-
             </p>
           </Link>
         </div>
       </div>
       <div className={styles['new-companies-block']}>
-        <Row justify={'start'} gutter={[0, 24]}>
-          {companyDataList.map((result, resultIndex) => (
+        {searchResults ?
+        <Row justify={'start'} gutter={antdGutter} wrap={antdWrap}>
+          {searchResults?.map((result, resultIndex) => (
             <Col key={resultIndex} xs={24} md={12} xl={8} xxl={6}>
               <CompanyCard
                 profile={result}
@@ -74,6 +66,8 @@ const MainCompanies = ({ isAuthorized }) => {
             </Col>
           ))}
         </Row>
+        :
+        <Loader />}
       </div>
     </div>
   );
