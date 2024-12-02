@@ -57,8 +57,8 @@
     .detail-info-page {
         display: flex;
         flex-direction: column;
-        width: 768px;
-        padding: 24px;
+        width: 760px;
+        padding: 24px 0;
     }
 
     .company-description-block {
@@ -69,6 +69,7 @@
         font-size: 34px;
         line-height: 40.8px;
         letter-spacing: -0.34px;
+        width: 300px;
     }
 }
 

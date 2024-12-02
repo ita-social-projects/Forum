@@ -1,5 +1,6 @@
 import { PropTypes } from 'prop-types';
 import classes from './BannerImage.module.css';
+import PendingStatus from '../../../components/MiniComponents/PendingModerationIcon/PendingStatus';
 
 function BannerImage({ data }) {
     const backgroundImage = data?.banner?.path
@@ -10,7 +11,11 @@ function BannerImage({ data }) {
         <div
             className={classes['banner-image__block']}
             style={{ background: backgroundImage }}
-        />
+        >
+            <div className={classes['banner-image-tooltip']}>
+                <PendingStatus profile={data} elementType="banner" />
+            </div>
+        </div>
     );
 }
 

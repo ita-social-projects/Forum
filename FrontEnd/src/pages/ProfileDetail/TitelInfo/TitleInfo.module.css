@@ -27,6 +27,11 @@
   align-items: center;
 }
 
+.title-block__logo-tooltip {
+  display: flex;
+  padding-bottom: 64px;
+}
+
 .title-block__logo-img {
   width: 64px;
   height: 64px;
@@ -135,7 +140,7 @@
 
 @media only screen and (min-width: 768px) {
   .title-block__content {
-    width: 768px;
+    width: 760px;
   }
 
   .title-block {
@@ -144,7 +149,7 @@
 
   .title-block__content-info {
     flex-direction: row;
-    width: 768px;
+    width: 728px;
     gap: 24px;
   }
 

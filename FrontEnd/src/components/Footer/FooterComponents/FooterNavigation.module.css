@@ -53,11 +53,10 @@
     }
 }
 
-@media only screen and (min-width: 1512px) {
+@media only screen and (min-width: 1200px) {
     .navigation-content {
         flex-direction: column;
         justify-content: flex-end;
-        min-width: 569px;
     }
 
     .navigation-content__company,
@@ -72,7 +71,16 @@
     .navigation-content-section__text-block,
     .navigation-content-company__text-block {
         flex-direction: row;
-        gap: 35px;
         padding-top: 15px;
+    }
+}
+
+@media only screen and (min-width: 1512px) {
+    .navigation-content {
+        min-width: 569px;
+    }
+    .navigation-content-section__text-block,
+    .navigation-content-company__text-block {
+        gap: 35px;
     }
 }

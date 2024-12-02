@@ -1,7 +1,7 @@
 .scroll-to-top-button {
   position: fixed;
   bottom: 30px;
-  left: 80%;
+  left: 85%;
   width: 40px;
   height: 40px;
   background-color: var(--footer-scroll-button);
@@ -26,8 +26,14 @@
   background-color: var(--footer-scroll-button);
 }
 
-@media only screen and (min-width: 1512px) {
-  .scroll-to-top-button  {
+@media only screen and (min-width: 768px) {
+  .scroll-to-top-button {
+    left: 92%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .scroll-to-top-button {
     left: 95%;
   }
 }

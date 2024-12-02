@@ -1,6 +1,14 @@
 .banner-image__block {
+    display: flex;
+    justify-content: flex-start;
     width: var(--profile-detail-width);
     height: 195px;
+}
+
+.banner-image-tooltip {
+    display: flex;
+    padding-top: 12px;
+    padding-left: 10%;
 }
 
 @media only screen and (min-width: 768px) {
