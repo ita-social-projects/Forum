@@ -4,98 +4,15 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styles from './UserActions.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function UserActions({ user, onActionComplete }) {
     const [selectedCategory, setSelectedCategory] = useState('Інше');
-
-    const handleActionClick = (action) => {
-        switch (action) {
-            case 'sendMessage':
-                showSendMessageModal();
-                break;
-            case 'viewProfile':
-                viewProfile();
-                break;
-            case 'blockUser':
-                confirmBlockUser();
-                break;
-            default:
-                console.error('Unknown action:', action);
-        }
-    };
-
-    const showSendMessageModal = () => {
-        let messageContent = '';
-        Modal.confirm({
-            title: `Надіслати листа користувачу ${user.name} ${user.surname}`,
-            content: (
-                <>
-                    <Input
-                        value={user.email}
-                        readOnly
-                        className={styles.userActionsInput}
-                    />
-                    <Select
-                        defaultValue="Інше"
-                        className={styles.userActionsSelect}
-                        onChange={(value) => setSelectedCategory(value)}
-                        options={[
-                            { value: 'Технічне питання', label: 'Технічне питання' },
-                            { value: 'Рекомендації', label: 'Рекомендації' },
-                            { value: 'Питання', label: 'Питання' },
-                            { value: 'Інше', label: 'Інше' },
-                        ]}
-                    />
-                    <Input.TextArea
-                        rows={4}
-                        placeholder="Введіть ваше повідомлення..."
-                        onChange={(e) => (messageContent = e.target.value)}
-                        className={styles.userActionsTextarea}
-                    />
-                </>
-            ),
-            onOk: async () => {
-                try {
-                    await axios.post(
-                        `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/send_message/`,
-                        {
-                            email: user.email,
-                            category: selectedCategory,
-                            message: messageContent,
-                        }
-                    );
-                    message.success('Повідомлення успішно надіслано');
-                    if (onActionComplete) onActionComplete();
-                } catch (error) {
-                    message.error(
-                        error.response?.data?.detail ||
-                        'Не вдалося надіслати повідомлення. Спробуйте ще раз.'
-                    );
-                }
-            },
-        });
-    };
-
-    const viewProfile = () => {
-        window.location.href = `/admin/users/${user.id}`;
-    };
-
-    const confirmBlockUser = () => {
-        Modal.confirm({
-            title: 'Підтвердити блокування користувача',
-            icon: <ExclamationCircleOutlined />,
-            content: `Ви впевнені, що хочете заблокувати користувача ${user.name} ${user.surname}?`,
-            onOk: async () => {
-                try {
-                    console.log(`Blocked user: ${user.id}`);
-                    message.success('Користувач успішно заблокований (імітація)');
-                    if (onActionComplete) onActionComplete();
-                } catch (error) {
-                    message.error('Не вдалося заблокувати користувача. Спробуйте пізніше.');
-                }
-            },
-        });
-    };
+    const [messageContent, setMessageContent] = useState('');
+    const [isSending, setIsSending] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const menuItems = [
         {
@@ -115,10 +32,136 @@ function UserActions({ user, onActionComplete }) {
         },
     ];
 
+    const handleActionClick = (action) => {
+        switch (action) {
+            case 'sendMessage':
+                setIsModalVisible(true);
+                break;
+            case 'viewProfile':
+                viewProfile();
+                break;
+            case 'blockUser':
+                confirmBlockUser();
+                break;
+            default:
+                console.error('Unknown action:', action);
+        }
+    };
+
+    const validateMessage = () => {
+        if (messageContent.trim().length < 10) {
+            setError('Повідомлення має бути не менше 10 символів.');
+            return false;
+        }
+        setError('');
+        return true;
+    };
+
+    const handleSendMessage = async () => {
+        if (!validateMessage()) return;
+
+        try {
+            setIsSending(true);
+            await axios.post(
+                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/send_message/`,
+                {
+                    email: user.email,
+                    category: selectedCategory,
+                    message: messageContent.trim(),
+                }
+            );
+            message.success('Повідомлення успішно надіслано');
+            setMessageContent('');
+            setIsModalVisible(false);
+            if (onActionComplete) onActionComplete();
+        } catch (error) {
+            message.error(
+                error.response?.data?.detail ||
+                'Не вдалося надіслати повідомлення. Спробуйте ще раз.'
+            );
+        } finally {
+            setIsSending(false);
+        }
+    };
+
+    const viewProfile = () => {
+        navigate(`/users/${user.id}`);
+    };
+
+    const confirmBlockUser = () => {
+        Modal.confirm({
+            title: 'Підтвердити блокування користувача',
+            icon: <ExclamationCircleOutlined />,
+            content: `Ви впевнені, що хочете заблокувати користувача ${user.name} ${user.surname}?`,
+            onOk: async () => {
+                try {
+                    console.log(`Blocked user: ${user.id}`);
+                    message.success('Користувач успішно заблокований (імітація)');
+                    if (onActionComplete) onActionComplete();
+                } catch (error) {
+                    message.error('Не вдалося заблокувати користувача. Спробуйте пізніше.');
+                }
+            },
+        });
+    };
+
     return (
-        <Dropdown menu={{ items: menuItems }} trigger={['click']}>
-            <Button>Обрати</Button>
-        </Dropdown>
+        <>
+            <Dropdown menu={{ items: menuItems }} trigger={['click']}>
+                <Button>Обрати</Button>
+            </Dropdown>
+            <Modal
+                title={`Надіслати листа користувачу ${user.name} ${user.surname}`}
+                visible={isModalVisible}
+                onCancel={() => {
+                    setIsModalVisible(false);
+                    setError('');
+                    setMessageContent('');
+                }}
+                footer={[
+                    <Button key="cancel" onClick={() => setIsModalVisible(false)}>
+                        Відмінити
+                    </Button>,
+                    <Button
+                        key="send"
+                        type="primary"
+                        loading={isSending}
+                        onClick={handleSendMessage}
+                    >
+                        Відправити
+                    </Button>,
+                ]}
+                width={600}
+            >
+                <div className={styles.userActionsModalContent}>
+                    <Input
+                        value={user.email}
+                        readOnly
+                        className={styles.userActionsInput}
+                        addonBefore="Email"
+                    />
+                    <Select
+                        defaultValue="Інше"
+                        className={styles.userActionsSelect}
+                        onChange={(value) => setSelectedCategory(value)}
+                        options={[
+                            { value: 'Технічне питання', label: 'Технічне питання' },
+                            { value: 'Рекомендації', label: 'Рекомендації' },
+                            { value: 'Питання', label: 'Питання' },
+                            { value: 'Інше', label: 'Інше' },
+                        ]}
+                    />
+                    <Input.TextArea
+                        rows={6}
+                        placeholder="Введіть ваше повідомлення..."
+                        value={messageContent}
+                        onChange={(e) => setMessageContent(e.target.value)}
+                        className={styles.userActionsTextarea}
+                    />
+                    {error && <p className={styles.userActionsError}>{error}</p>}
+                </div>
+            </Modal>
+        </>
     );
 }
 
