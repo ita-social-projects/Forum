@@ -156,6 +156,12 @@
   object-fit: cover;
 }
 
+.company-card__star {
+  position: absolute;
+  left: 296px;
+  bottom: 13px;
+}
+
 @media only screen and (min-width: 1200px) {
 
   .company-card,

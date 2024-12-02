@@ -139,12 +139,6 @@ export default function CompanyCard({
                   <CategoryBadges categories={profile.categories.slice(0, 3)} />
                 </div>
               </Tooltip>
-                <StarForLike
-                  isSaved={profile.is_saved}
-                  isAuthorized={isAuthorized}
-                  ownProfile={ownProfile}
-                  handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
-                />
             </div>
           </div>
         </div>
@@ -164,6 +158,14 @@ export default function CompanyCard({
           )}
         </div>
       </Link>
+      <div className={styles['company-card__star']}>
+        <StarForLike
+          isSaved={profile.is_saved}
+          isAuthorized={isAuthorized}
+          ownProfile={ownProfile}
+          handleClick={profile.is_saved ? handleDeleteSaved : handleSave}
+        />
+      </div>
     </div>
   );
 }
