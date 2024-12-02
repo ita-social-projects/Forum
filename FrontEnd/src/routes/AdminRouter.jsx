@@ -59,6 +59,9 @@ function AdminRouter() {
                     filterReset: 'Скинути',
                     filterConfirm: 'Застосувати',
                 },
+                Pagination: {
+                    items_per_page: '/ сторінка'
+                }
             }}
         >
             <BurgerMenuProvider>
