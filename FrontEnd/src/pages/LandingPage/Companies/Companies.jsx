@@ -41,11 +41,11 @@ const MainCompanies = ({ isAuthorized }) => {
     }
   }, [newMembers, companylist, searchResults]);
 
-  const companyDataList = windowWidth >= 1200 && windowWidth < 1512
-    ? searchResults.slice(0, 3)
-    : searchResults;
+  const companyDataList = searchResults;
 
   const linkText = windowWidth >= 768 ? 'Всі підприємства' : 'Всі';
+  const antdGutter = windowWidth >= 1200 ? [0, 24] : [0, 24];
+  const antdWrap = windowWidth < 1200;
 
   return (
     <div className={styles['new-companies-main']}>
@@ -63,7 +63,7 @@ const MainCompanies = ({ isAuthorized }) => {
         </div>
       </div>
       <div className={styles['new-companies-block']}>
-        <Row justify={'start'} gutter={[0, 24]}>
+        <Row justify={'start'} gutter={antdGutter} wrap={antdWrap}>
           {companyDataList.map((result, resultIndex) => (
             <Col key={resultIndex} xs={24} md={12} xl={8} xxl={6}>
               <CompanyCard
