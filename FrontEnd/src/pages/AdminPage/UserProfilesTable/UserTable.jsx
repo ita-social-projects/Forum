@@ -10,7 +10,7 @@ import UserActions from './UserActions';
 
 
 const LENGTH_EMAIL = 14;
-const DEFAULT_PAGE_SIZE = 20;
+const DEFAULT_PAGE_SIZE = 10;
 
 function UserTable() {
     const location = useLocation();
@@ -253,12 +253,12 @@ function UserTable() {
     return (
         <div className={css['table-container']}>
             <Pagination
+                showSizeChanger
                 current={currentPage}
                 pageSize={pageSize}
                 total={totalItems}
                 onChange={handlePageChange}
                 onShowSizeChange={handlePageChange}
-                showSizeChanger={false}
                 showTitle={false}
                 className={css['pagination']}
             />
@@ -274,6 +274,16 @@ function UserTable() {
                     triggerAsc: 'Сортувати в порядку зростання',
                     cancelSort: 'Відмінити сортування',
                 }}
+            />
+            <Pagination
+                showSizeChanger
+                current={currentPage}
+                pageSize={pageSize}
+                total={totalItems}
+                onChange={handlePageChange}
+                onShowSizeChange={handlePageChange}
+                showTitle={false}
+                className={css['pagination']}
             />
         </div>
     );
