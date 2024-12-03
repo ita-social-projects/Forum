@@ -5,10 +5,17 @@ from django.conf import settings
 EMAIL_CONTENT_SUBTYPE = "html"
 PROTOCOL = "http"
 
-def send_email_to_user(user, category, message_content, email=None, template_name="administration/admin_message_template.html"):
+
+def send_email_to_user(
+    user,
+    category,
+    message_content,
+    email=None,
+    template_name="administration/admin_message_template.html",
+):
     """
     Sends an email message to the user using the specified template.
-    
+
     :param user: The user object (CustomUser)
     :param category: The email category
     :param message_content: The message content

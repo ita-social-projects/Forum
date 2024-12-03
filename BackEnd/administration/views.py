@@ -203,14 +203,16 @@ class FeedbackView(CreateAPIView):
 
         send_email_feedback(email, message, category)
 
+
 class SendMessageView(CreateAPIView):
     """
     API endpoint for sending a custom email message to a specific user.
 
     This view allows administrators to send a message to a user's registered email.
-    It validates the request payload, retrieves the user based on the provided ID, 
+    It validates the request payload, retrieves the user based on the provided ID,
     and sends the email using the specified category and message content.
     """
+
     permission_classes = [IsStaffUser]
     serializer_class = FeedbackSerializer
 
@@ -218,7 +220,7 @@ class SendMessageView(CreateAPIView):
         """
         Returns the base queryset of users.
 
-        This method is used to fetch the list of users, which is 
+        This method is used to fetch the list of users, which is
         then filtered to find the specific user by their primary key (ID).
         """
         return CustomUser.objects.all()
@@ -227,8 +229,8 @@ class SendMessageView(CreateAPIView):
         """
         Handles the email sending logic after successful validation.
 
-        This method is executed after the request data has been validated 
-        by the serializer. It retrieves the user, validates their existence, 
+        This method is executed after the request data has been validated
+        by the serializer. It retrieves the user, validates their existence,
         and sends the email with the provided category and message content.
 
         Parameters:
@@ -236,7 +238,7 @@ class SendMessageView(CreateAPIView):
             the validated data from the request.
         """
         user = get_object_or_404(self.get_queryset(), pk=self.kwargs.get("pk"))
-        email = serializer.validated_data["email"] 
+        email = serializer.validated_data["email"]
         category = serializer.validated_data["category"]
         message_content = serializer.validated_data["message"]
 
@@ -245,15 +247,17 @@ class SendMessageView(CreateAPIView):
             category=category,
             message_content=message_content,
             email=email,
-        ) 
+        )
+
 
 class BlockUserView(APIView):
     """
     API endpoint to block an active user.
 
-    This API allows administrators to block active users by setting the `is_active` field to `False`. 
+    This API allows administrators to block active users by setting the `is_active` field to `False`.
     Only users with staff privileges can access this endpoint.
     """
+
     permission_classes = [IsStaffUser]
 
     def patch(self, request, pk):

@@ -30,6 +30,10 @@ urlpatterns = [
     path("contacts/", ContactsView.as_view(), name="contacts"),
     path("feedback/", FeedbackView.as_view(), name="feedback"),
     path("admin_create/", CreateAdminUserView.as_view(), name="admin-create"),
-    path("users/<pk>/send_message/", SendMessageView.as_view(), name="send-message"),
-    path('users/<pk>/block/', BlockUserView.as_view(), name='block_user'),
+    path(
+        "users/<pk>/send_message/",
+        SendMessageView.as_view(),
+        name="send-message",
+    ),
+    path("users/<pk>/block/", BlockUserView.as_view(), name="block_user"),
 ]

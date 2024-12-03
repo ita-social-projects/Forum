@@ -23,7 +23,7 @@ class TestBlockUserView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_block_user_not_found(self):
-        url = "/api/admin/users/9999/block/" 
+        url = "/api/admin/users/9999/block/"
         response = self.client.patch(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
