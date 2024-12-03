@@ -5,7 +5,7 @@ from drf_spectacular.utils import (
     OpenApiExample,
     OpenApiResponse,
 )
-
+from rest_framework.views import APIView
 from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -245,3 +245,17 @@ class SendMessageView(CreateAPIView):
             message_content=message_content,
             email=email,
         ) 
+
+class BlockUserView(APIView):
+    """
+    API endpoint to block an active user.
+
+    This API allows administrators to block active users by setting the `is_active` field to `False`. 
+    Only users with staff privileges can access this endpoint.
+    """
+    permission_classes = [IsStaffUser]
+
+    def patch(self, request, pk):
+        user = get_object_or_404(CustomUser.objects.filter(is_active=True), id=pk)
+        user.is_active = False
+        user.save()

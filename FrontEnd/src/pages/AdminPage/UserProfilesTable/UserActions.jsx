@@ -85,7 +85,7 @@ function UserActions({ user, onActionComplete }) {
     };
 
     const viewProfile = () => {
-        navigate(`/users/${user.id}`);
+        navigate(`/customadmin/users/${user.id}`);
     };
 
     const confirmBlockUser = () => {
