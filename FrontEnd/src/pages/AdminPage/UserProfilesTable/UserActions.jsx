@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, Modal, Button, message, Select, Input } from 'antd';
+import { Dropdown, Modal, Button, message, Select, Input, Tooltip } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -14,20 +14,49 @@ function UserActions({ user, onActionComplete }) {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const handleApiRequest = async (apiCall, successMessage, errorMessage) => {
+        try {
+            await apiCall();
+            message.success(successMessage);
+        } catch {
+            message.error(errorMessage);
+        }
+    };
+
+    const viewProfile = () => {
+        try {
+            navigate(`/customadmin/users/${user.id}`);
+        } catch (error) {
+            message.error('Не вдалося переглянути профіль. Спробуйте оновити сторінку.');
+        }
+    };
+
     const menuItems = [
         {
             key: 'sendMessage',
-            label: 'Надіслати листа',
+            label: (
+                <Tooltip title="Відправити повідомлення на email">
+                    Надіслати листа
+                </Tooltip>
+            ),
             onClick: () => handleActionClick('sendMessage'),
         },
         {
             key: 'viewProfile',
-            label: 'Переглянути профіль',
+            label: (
+                <Tooltip title="Переглянути детальний профіль користувача">
+                    Переглянути профіль
+                </Tooltip>
+            ),
             onClick: () => handleActionClick('viewProfile'),
         },
         {
             key: 'blockUser',
-            label: 'Заблокувати користувача',
+            label: (
+                <Tooltip title="Заблокувати користувача та обмежити доступ до платформи">
+                    Заблокувати користувача
+                </Tooltip>
+            ),
             onClick: () => handleActionClick('blockUser'),
         },
     ];
@@ -60,34 +89,31 @@ function UserActions({ user, onActionComplete }) {
     const handleSendMessage = async () => {
         if (!validateMessage()) return;
 
-        try {
-            setIsSending(true);
-            await axios.post(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/send_message/`,
-                {
-                    email: user.email,
-                    category: selectedCategory,
-                    message: messageContent.trim(),
-                }
-            );
-            message.success('Повідомлення успішно надіслано');
-            setMessageContent('');
-            setIsModalVisible(false);
-            if (onActionComplete) onActionComplete();
-        } catch (error) {
-            message.error(
-                error.response?.data?.detail ||
-                'Не вдалося надіслати повідомлення. Спробуйте ще раз.'
-            );
-        } finally {
-            setIsSending(false);
-        }
+        setIsSending(true);
+        await handleApiRequest(
+            () =>
+                axios.post(
+                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/send_message/`,
+                    {
+                        email: user.email,
+                        category: selectedCategory,
+                        message: messageContent.trim(),
+                    }
+                ),
+            'Повідомлення успішно надіслано',
+            'Не вдалося надіслати повідомлення. Спробуйте ще раз.'
+        );
+        setIsSending(false);
+        setMessageContent('');
+        setIsModalVisible(false);
+        if (onActionComplete) onActionComplete();
     };
 
-    const viewProfile = () => {
-        navigate(`/customadmin/users/${user.id}`);
-    };
     const confirmBlockUser = () => {
+        if (!user.is_active) {
+            message.warning('Користувач неактивний. Неможливо заблокувати неактивного користувача.');
+            return;
+        }
         Modal.confirm({
             title: `Підтвердити блокування користувача ${user.name} ${user.surname}`,
             icon: <ExclamationCircleOutlined className={styles.userActionsIcon} />,
@@ -99,24 +125,15 @@ function UserActions({ user, onActionComplete }) {
             okText: 'Так',
             cancelText: 'Відмінити',
             onOk: async () => {
-                try {
-                    const response = await axios.patch(
-                        `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/block/`
-                    );
-                    if (response.status === 204) {
-                        message.success('Користувача успішно заблоковано.');
-                        if (onActionComplete) onActionComplete();
-                    }
-                } catch (error) {
-                    const status = error.response?.status;
-                    if (status === 400) {
-                        message.error('Користувач вже неактивний. Неможливо заблокувати неактивного користувача.');
-                    } else if (status === 404) {
-                        message.error('Користувача не знайдено.');
-                    } else {
-                        message.error('Сталася помилка. Спробуйте пізніше.');
-                    }
-                }
+                await handleApiRequest(
+                    () =>
+                        axios.patch(
+                            `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/block/`
+                        ),
+                    'Користувача успішно заблоковано.',
+                    'Сталася помилка. Спробуйте пізніше.'
+                );
+                if (onActionComplete) onActionComplete();
             },
         });
     };
