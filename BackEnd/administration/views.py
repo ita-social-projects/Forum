@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from django.views import View
 from drf_spectacular.utils import (
     extend_schema,
@@ -256,6 +257,12 @@ class BlockUserView(APIView):
     permission_classes = [IsStaffUser]
 
     def patch(self, request, pk):
-        user = get_object_or_404(CustomUser.objects.filter(is_active=True), id=pk)
-        user.is_active = False
-        user.save()
+        try:
+            user = CustomUser.objects.get(id=pk)
+            if not user.is_active:
+                return HttpResponse(status=400)
+            user.is_active = False
+            user.save()
+            return HttpResponse(status=204)
+        except ObjectDoesNotExist:
+            return HttpResponse(status=404)

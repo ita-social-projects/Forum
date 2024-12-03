@@ -87,19 +87,35 @@ function UserActions({ user, onActionComplete }) {
     const viewProfile = () => {
         navigate(`/customadmin/users/${user.id}`);
     };
-
     const confirmBlockUser = () => {
         Modal.confirm({
-            title: 'Підтвердити блокування користувача',
-            icon: <ExclamationCircleOutlined />,
-            content: `Ви впевнені, що хочете заблокувати користувача ${user.name} ${user.surname}?`,
+            title: `Підтвердити блокування користувача ${user.name} ${user.surname}`,
+            icon: <ExclamationCircleOutlined className={styles.userActionsIcon} />,
+            content: (
+                <p className={styles.userActionsModalText}>
+                    Ви впевнені, що хочете заблокувати цього користувача? Ця дія зробить обліковий запис неактивним.
+                </p>
+            ),
+            okText: 'Так',
+            cancelText: 'Відмінити',
             onOk: async () => {
                 try {
-                    console.log(`Blocked user: ${user.id}`);
-                    message.success('Користувач успішно заблокований (імітація)');
-                    if (onActionComplete) onActionComplete();
+                    const response = await axios.patch(
+                        `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/block/`
+                    );
+                    if (response.status === 204) {
+                        message.success('Користувача успішно заблоковано.');
+                        if (onActionComplete) onActionComplete();
+                    }
                 } catch (error) {
-                    message.error('Не вдалося заблокувати користувача. Спробуйте пізніше.');
+                    const status = error.response?.status;
+                    if (status === 400) {
+                        message.error('Користувач вже неактивний. Неможливо заблокувати неактивного користувача.');
+                    } else if (status === 404) {
+                        message.error('Користувача не знайдено.');
+                    } else {
+                        message.error('Сталася помилка. Спробуйте пізніше.');
+                    }
                 }
             },
         });
@@ -112,7 +128,7 @@ function UserActions({ user, onActionComplete }) {
             </Dropdown>
             <Modal
                 title={`Надіслати листа користувачу ${user.name} ${user.surname}`}
-                visible={isModalVisible}
+                open={isModalVisible}
                 onCancel={() => {
                     setIsModalVisible(false);
                     setError('');
