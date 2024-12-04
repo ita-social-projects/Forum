@@ -2,14 +2,19 @@ from rest_framework.generics import ListAPIView
 import django_filters
 from rest_framework import filters
 
+from forum.pagination import ForumPagination
 from profiles.models import Profile, SavedCompany
 from .serializers import CompanySerializers, CompanyAdvancedSerializers
 from search.filters import CompanyFilter
 
 
 class SearchCompanyView(ListAPIView):
-    queryset = Profile.objects.active_only().prefetch_related(
+    queryset = (
+        Profile.objects.active_only()
+        .prefetch_related(
         "regions", "categories", "activities"
+        )
+        .order_by("id")
     )
     serializer_class = CompanySerializers
     filter_backends = [
@@ -17,6 +22,7 @@ class SearchCompanyView(ListAPIView):
         filters.OrderingFilter,
     ]
     filterset_class = CompanyFilter
+    pagination_class = ForumPagination
     ordering_fields = ["name"]
 
     def get_serializer_context(self):
@@ -32,10 +38,15 @@ class SearchCompanyView(ListAPIView):
 
 
 class AdvancedSearchView(ListAPIView):
-    queryset = Profile.objects.active_only().prefetch_related(
-        "regions", "categories", "activities"
+    queryset = (
+        Profile.objects.active_only()
+        .prefetch_related(
+            "regions", "categories", "activities"
+        )
+        .order_by("id")
     )
     serializer_class = CompanyAdvancedSerializers
+    pagination_class = ForumPagination
     filter_backends = [
         filters.SearchFilter,
         filters.OrderingFilter,

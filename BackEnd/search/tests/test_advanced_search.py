@@ -57,7 +57,7 @@ class TestCompanyFilter(APITestCase):
 
     def test_get_search_in_all_companies_official_order_by_name(self):
         response = self.client.get(path="/api/search/advanced?search=official")
-        names_from_response = [prof["name"] for prof in response.data]
+        names_from_response = [prof["name"] for prof in response.data["results"]]
         self.assertEqual(200, response.status_code)
         self.assertEqual(
             names_from_response,
@@ -74,24 +74,24 @@ class TestCompanyFilter(APITestCase):
     def test_get_search_name_service_info_lower_case(self):
         response = self.client.get(path="/api/search/advanced?search=kyiv")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(2, len(response.data))
+        self.assertEqual(2, response.data["total_items"])
 
     def test_get_search_name_service_info_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/advanced?search=kyiv")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(2, len(response.data))
+        self.assertEqual(2, response.data["total_items"])
 
     def test_get_search_name_service_info_upper_case(self):
         response = self.client.get(path="/api/search/advanced?search=KYIV")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(2, len(response.data))
+        self.assertEqual(2, response.data["total_items"])
 
     def test_get_search_parcial_item(self):
         response = self.client.get(path="/api/search/advanced?search=ch")
-        names_from_response = [prof["name"] for prof in response.data]
+        names_from_response = [prof["name"] for prof in response.data["results"]]
         self.assertEqual(200, response.status_code)
-        self.assertEqual(3, len(response.data))
+        self.assertEqual(3, response.data["total_items"])
         self.assertEqual(
             names_from_response, ["Charkiv", "Chernigiv", "Dnipro"]
         )
@@ -99,27 +99,27 @@ class TestCompanyFilter(APITestCase):
     def test_get_search_not_exist(self):
         response = self.client.get(path="/api/search/advanced?search=QQQ")
         self.assertEqual(200, response.status_code)
-        self.assertEqual([], response.json())
+        self.assertEqual([], response.data["results"])
 
     def test_get_search_name_product_info(self):
         response = self.client.get(path="/api/search/advanced?search=dnipro")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(2, len(response.data))
+        self.assertEqual(2, response.data["total_items"])
 
     def test_get_search_name_service_product_common_info(self):
         response = self.client.get(path="/api/search/advanced?search=KYIV")
-        names_from_response = [prof["name"] for prof in response.data]
+        names_from_response = [prof["name"] for prof in response.data["results"]]
         self.assertEqual(200, response.status_code)
-        self.assertEqual(2, len(response.data))
+        self.assertEqual(2, response.data["total_items"])
         self.assertEqual(names_from_response, ["Kryvyi Rig", "Kyiv"])
 
     def test_get_search_devide_item(self):
         response = self.client.get(
             path="/api/search/advanced?search=product info"
         )
-        names_from_response = [prof["name"] for prof in response.data]
+        names_from_response = [prof["name"] for prof in response.data["results"]]
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(names_from_response, ["Kryvyi Rig"])
 
     def test_advanced_search_serializer_fields(self):
@@ -144,4 +144,4 @@ class TestCompanyFilter(APITestCase):
                 "person": self.company_kyiv.person_id,
             }
         ]
-        self.assertEqual(expected_result, response.json())
+        self.assertEqual(expected_result, response.data["results"])
