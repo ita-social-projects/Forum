@@ -1,12 +1,10 @@
-from django.http import JsonResponse, HttpResponse
-from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 from django.views import View
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
     OpenApiResponse,
 )
-from rest_framework.views import APIView
 from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -29,7 +27,7 @@ from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
-from .serializers import FeedbackSerializer, BlockUserSerializer
+from .serializers import FeedbackSerializer
 from utils.administration.send_email_feedback import send_email_feedback
 from utils.administration.send_email_notification import send_email_to_user
 
@@ -239,16 +237,3 @@ class SendMessageView(CreateAPIView):
             message_content=message_content,
             email=email,
         )
-
-
-class BlockUserView(RetrieveUpdateAPIView):
-    """
-    API endpoint to block an active user.
-
-    This API allows administrators to block active users by setting the `is_active` field to `False`.
-    Only users with staff privileges can access this endpoint.
-    """
-
-    queryset = CustomUser.objects.all()
-    serializer_class = BlockUserSerializer
-    permission_classes = [IsStaffUser]

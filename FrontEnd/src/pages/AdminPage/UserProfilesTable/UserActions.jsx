@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Dropdown, Modal, Button, message, Select, Input, Tooltip } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styles from './UserActions.module.css';
@@ -50,15 +49,6 @@ function UserActions({ user, onActionComplete }) {
             ),
             onClick: () => handleActionClick('viewProfile'),
         },
-        {
-            key: 'blockUser',
-            label: (
-                <Tooltip title="Заблокувати користувача та обмежити доступ до платформи">
-                    Заблокувати користувача
-                </Tooltip>
-            ),
-            onClick: () => handleActionClick('blockUser'),
-        },
     ];
 
     const handleActionClick = (action) => {
@@ -68,9 +58,6 @@ function UserActions({ user, onActionComplete }) {
                 break;
             case 'viewProfile':
                 viewProfile();
-                break;
-            case 'blockUser':
-                confirmBlockUser();
                 break;
             default:
                 console.error('Unknown action:', action);
@@ -107,42 +94,6 @@ function UserActions({ user, onActionComplete }) {
         setMessageContent('');
         setIsModalVisible(false);
         if (onActionComplete) onActionComplete();
-    };
-
-    const confirmBlockUser = async () => {
-        try {
-            const { data } = await axios.get(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/`
-            );
-            if (!data.is_active) {
-                message.warning('Користувач неактивний. Неможливо заблокувати неактивного користувача.');
-                return;
-            }
-            Modal.confirm({
-                title: `Підтвердити блокування користувача ${user.name} ${user.surname}`,
-                icon: <ExclamationCircleOutlined className={styles.userActionsIcon} />,
-                content: (
-                    <p className={styles.userActionsModalText}>
-                        Ви впевнені, що хочете заблокувати цього користувача? Ця дія зробить обліковий запис неактивним.
-                    </p>
-                ),
-                okText: 'Так',
-                cancelText: 'Відмінити',
-                onOk: async () => {
-                    await handleApiRequest(
-                        () =>
-                            axios.patch(
-                                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/block/`
-                            ),
-                        'Користувача успішно заблоковано.',
-                        'Сталася помилка. Спробуйте пізніше.'
-                    );
-                    if (onActionComplete) onActionComplete();
-                },
-            });
-        } catch (error) {
-            message.error('Не вдалося перевірити стан користувача. Спробуйте пізніше.');
-        }
     };
 
     return (

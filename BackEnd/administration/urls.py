@@ -11,7 +11,6 @@ from administration.views import (
     FeedbackView,
     CreateAdminUserView,
     SendMessageView,
-    BlockUserView,
 )
 
 app_name = "administration"
@@ -35,5 +34,4 @@ urlpatterns = [
         SendMessageView.as_view(),
         name="send-message",
     ),
-    path("users/<pk>/block/", BlockUserView.as_view(), name="block_user"),
 ]

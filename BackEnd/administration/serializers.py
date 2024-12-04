@@ -213,27 +213,3 @@ class FeedbackSerializer(serializers.Serializer):
         required=True,
         error_messages={"required": "Please select a category."},
     )
-
-
-class BlockUserSerializer(serializers.ModelSerializer):
-    """
-    Serializer for blocking a user by setting the `is_active` field to `False`.
-    """
-
-    class Meta:
-        model = CustomUser
-        fields = ["id", "is_active", "email", "name", "surname"]
-        read_only_fields = ["id", "email", "name", "surname"]
-
-    def update(self, instance, validated_data):
-        """
-        Custom update method to ensure `is_active` can only be set to `False`.
-        """
-        if not instance.is_active:
-            raise serializers.ValidationError(
-                "User is already inactive. Cannot block an inactive user."
-            )
-
-        instance.is_active = False
-        instance.save()
-        return instance
