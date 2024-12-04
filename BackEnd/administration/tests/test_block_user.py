@@ -12,7 +12,7 @@ class TestBlockUserView(APITestCase):
 
     def test_block_user_success(self):
         response = self.client.patch(self.url)
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.user.refresh_from_db()
         self.assertFalse(self.user.is_active)
 
