@@ -12,7 +12,6 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
     CreateAPIView,
-    get_object_or_404,
 )
 
 from administration.serializers import AdminRegistrationSerializer
@@ -30,7 +29,7 @@ from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
-from .serializers import FeedbackSerializer
+from .serializers import FeedbackSerializer, BlockUserSerializer
 from utils.administration.send_email_feedback import send_email_feedback
 from utils.administration.send_email_notification import send_email_to_user
 
@@ -213,17 +212,9 @@ class SendMessageView(CreateAPIView):
     and sends the email using the specified category and message content.
     """
 
+    queryset = CustomUser.objects.all()
     permission_classes = [IsStaffUser]
     serializer_class = FeedbackSerializer
-
-    def get_queryset(self):
-        """
-        Returns the base queryset of users.
-
-        This method is used to fetch the list of users, which is
-        then filtered to find the specific user by their primary key (ID).
-        """
-        return CustomUser.objects.all()
 
     def perform_create(self, serializer):
         """
@@ -237,7 +228,7 @@ class SendMessageView(CreateAPIView):
             serializer (FeedbackSerializer): The serializer instance containing
             the validated data from the request.
         """
-        user = get_object_or_404(self.get_queryset(), pk=self.kwargs.get("pk"))
+        user = self.get_object()
         email = serializer.validated_data["email"]
         category = serializer.validated_data["category"]
         message_content = serializer.validated_data["message"]
@@ -250,7 +241,7 @@ class SendMessageView(CreateAPIView):
         )
 
 
-class BlockUserView(APIView):
+class BlockUserView(RetrieveUpdateAPIView):
     """
     API endpoint to block an active user.
 
@@ -258,15 +249,6 @@ class BlockUserView(APIView):
     Only users with staff privileges can access this endpoint.
     """
 
+    queryset = CustomUser.objects.all()
+    serializer_class = BlockUserSerializer
     permission_classes = [IsStaffUser]
-
-    def patch(self, request, pk):
-        try:
-            user = CustomUser.objects.get(id=pk)
-            if not user.is_active:
-                return HttpResponse(status=400)
-            user.is_active = False
-            user.save()
-            return HttpResponse(status=204)
-        except ObjectDoesNotExist:
-            return HttpResponse(status=404)
