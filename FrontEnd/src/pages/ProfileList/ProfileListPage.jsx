@@ -222,7 +222,7 @@ export default function ProfileListPage({ isAuthorized, isSaved }) {
               <div className={css['company-list__content--items']}>
                 <ProfileList
                   isAuthorized={isAuthorized}
-                  isLoading={isLoading}
+                  emptyText={'Жодна компанія не відповідає обраному фільтру.'}
                   profiles={profiles}
                   items={fetchedProfiles?.total_items}
                   paginationFunc={handlePageChange}
