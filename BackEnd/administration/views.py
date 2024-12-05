@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.views import View
+from django.db.models import Q
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
@@ -8,6 +9,7 @@ from drf_spectacular.utils import (
 
 from rest_framework.generics import (
     ListAPIView,
+    RetrieveAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
     CreateAPIView,
@@ -22,6 +24,7 @@ from administration.serializers import (
     AdminUserDetailSerializer,
     AutoModerationHoursSerializer,
     ModerationEmailSerializer,
+    StatisticsSerializer,
 )
 from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
@@ -33,6 +36,8 @@ from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UsersFilter
+
+from rest_framework.permissions import AllowAny
 
 
 class UsersListView(ListAPIView):
@@ -102,6 +107,36 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.select_related("person").prefetch_related(
         "regions", "categories", "activities"
     )
+
+
+class ProfileStatisticsView(RetrieveAPIView):
+    """
+    Count of companies
+    """
+    queryset = Profile.objects.all()
+    permission_classes = [AllowAny]
+    serializer_class = StatisticsSerializer
+
+    def get_object(self):
+        return {}
+
+    # def get_serializer_context(self):
+    #     context = super().get_serializer_context()
+    #     context["companies_count"] = (
+    #         self.get_queryset()
+    #         .filter(Q(is_registered=True) | Q(is_startup=True))
+    #         .count()
+    #     )
+    #     context["investors_count"] = (
+    #         self.get_queryset().filter(is_registered=True).count()
+    #     )
+    #     context["startups_count"] = (
+    #         self.get_queryset().filter(is_startup=True).count()
+    #     )
+    #     context["blocked_companies_count"] = (
+    #         self.get_queryset().filter(status='blocked').count()
+    #     )
+    #     return context
 
 
 @extend_schema(

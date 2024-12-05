@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from rest_framework import serializers
 from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
@@ -213,3 +214,24 @@ class FeedbackSerializer(serializers.Serializer):
         required=True,
         error_messages={"required": "Please select a category."},
     )
+
+
+class StatisticsSerializer(serializers.Serializer):
+    companies_count = serializers.SerializerMethodField()
+    investors_count = serializers.SerializerMethodField()
+    startups_count = serializers.SerializerMethodField()
+    blocked_companies_count = serializers.SerializerMethodField()
+
+    def get_companies_count(self, obj) -> int:
+        return Profile.objects.filter(
+            Q(is_registered=True) | Q(is_startup=True)
+        ).count()
+
+    def get_investors_count(self, obj) -> int:
+        return Profile.objects.filter(is_registered=True).count()
+
+    def get_startups_count(self, obj) -> int:
+        return Profile.objects.filter(is_startup=True).count()
+
+    def get_blocked_companies_count(self, obj) -> int:
+        return Profile.objects.filter(status='blocked').count()
