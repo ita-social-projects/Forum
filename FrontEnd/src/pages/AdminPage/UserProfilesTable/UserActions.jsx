@@ -15,17 +15,18 @@ function UserActions({ user, onActionComplete }) {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const validateMessage = () => {
-        if (messageContent.trim().length < 10) {
+    const validateMessage = (message) => {
+        if (message.trim().length >= 10) {
+            setError('');
+            return true;
+        } else {
             setError('Повідомлення має бути не менше 10 символів.');
             return false;
         }
-        setError('');
-        return true;
     };
 
     const handleSendMessage = async () => {
-        if (!validateMessage()) return;
+        if (!validateMessage(messageContent)) return;
 
         setIsSending(true);
         try {
@@ -128,8 +129,9 @@ function UserActions({ user, onActionComplete }) {
                         placeholder="Введіть ваше повідомлення..."
                         value={messageContent}
                         onChange={(e) => {
-                            setMessageContent(e.target.value);
-                            validateMessage();
+                            const input = e.target.value;
+                            setMessageContent(input);
+                            validateMessage(input);
                         }}
                         className={styles.userActionsTextarea}
                     />
