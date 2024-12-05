@@ -31,12 +31,12 @@ urlpatterns = [
     path("feedback/", FeedbackView.as_view(), name="feedback"),
     path("admin_create/", CreateAdminUserView.as_view(), name="admin-create"),
     path(
-        "manage_categories/",
+        "categories/",
         ManageCategoriesView.as_view(),
-        name="manage-categories",
+        name="categories",
     ),
     path(
-        "manage_categories/<pk>/",
+        "categories/<pk>/",
         CategoriesDetailView.as_view(),
         name="categories_detail",
     ),
