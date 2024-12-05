@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Dropdown, Modal, Button, message, Select, Input, Tooltip } from 'antd';
+import { Dropdown, Modal, Button, Select, Input, Tooltip } from 'antd';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styles from './UserActions.module.css';
@@ -12,57 +14,6 @@ function UserActions({ user, onActionComplete }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
-    const handleApiRequest = async (apiCall, successMessage, errorMessage) => {
-        try {
-            await apiCall();
-            message.success(successMessage);
-        } catch {
-            message.error(errorMessage);
-        }
-    };
-
-    const viewProfile = () => {
-        try {
-            navigate(`/customadmin/users/${user.id}`);
-        } catch (error) {
-            message.error('Не вдалося переглянути профіль. Спробуйте оновити сторінку.');
-        }
-    };
-
-    const menuItems = [
-        {
-            key: 'sendMessage',
-            label: (
-                <Tooltip title="Відправити повідомлення на email">
-                    Надіслати листа
-                </Tooltip>
-            ),
-            onClick: () => handleActionClick('sendMessage'),
-        },
-        {
-            key: 'viewProfile',
-            label: (
-                <Tooltip title="Переглянути детальний профіль користувача">
-                    Переглянути профіль
-                </Tooltip>
-            ),
-            onClick: () => handleActionClick('viewProfile'),
-        },
-    ];
-
-    const handleActionClick = (action) => {
-        switch (action) {
-            case 'sendMessage':
-                setIsModalVisible(true);
-                break;
-            case 'viewProfile':
-                viewProfile();
-                break;
-            default:
-                console.error('Unknown action:', action);
-        }
-    };
 
     const validateMessage = () => {
         if (messageContent.trim().length < 10) {
@@ -77,24 +28,54 @@ function UserActions({ user, onActionComplete }) {
         if (!validateMessage()) return;
 
         setIsSending(true);
-        await handleApiRequest(
-            () =>
-                axios.post(
-                    `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/send_message/`,
-                    {
-                        email: user.email,
-                        category: selectedCategory,
-                        message: messageContent.trim(),
-                    }
-                ),
-            'Повідомлення успішно надіслано',
-            'Не вдалося надіслати повідомлення. Спробуйте ще раз.'
-        );
-        setIsSending(false);
-        setMessageContent('');
-        setIsModalVisible(false);
-        if (onActionComplete) onActionComplete();
+        try {
+            await axios.post(
+                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/send_message/`,
+                {
+                    email: user.email,
+                    category: selectedCategory,
+                    message: messageContent.trim(),
+                }
+            );
+            toast.success('Повідомлення успішно надіслано');
+            setMessageContent('');
+            setIsModalVisible(false);
+            if (onActionComplete) onActionComplete();
+        } catch {
+            toast.error('Не вдалося надіслати повідомлення. Спробуйте ще раз.');
+        } finally {
+            setIsSending(false);
+        }
     };
+
+    const viewProfile = () => {
+        try {
+            navigate(`/customadmin/users/${user.id}`);
+        } catch (error) {
+            toast.error('Не вдалося переглянути профіль. Спробуйте оновити сторінку.');
+        }
+    };
+
+    const menuItems = [
+        {
+            key: 'sendMessage',
+            label: (
+                <Tooltip title="Відправити повідомлення на email">
+                    Надіслати листа
+                </Tooltip>
+            ),
+            onClick: () => setIsModalVisible(true),
+        },
+        {
+            key: 'viewProfile',
+            label: (
+                <Tooltip title="Переглянути детальний профіль користувача">
+                    Переглянути профіль
+                </Tooltip>
+            ),
+            onClick: viewProfile,
+        },
+    ];
 
     return (
         <>
@@ -146,7 +127,10 @@ function UserActions({ user, onActionComplete }) {
                         rows={6}
                         placeholder="Введіть ваше повідомлення..."
                         value={messageContent}
-                        onChange={(e) => setMessageContent(e.target.value)}
+                        onChange={(e) => {
+                            setMessageContent(e.target.value);
+                            validateMessage();
+                        }}
                         className={styles.userActionsTextarea}
                     />
                     {error && <p className={styles.userActionsError}>{error}</p>}

@@ -236,4 +236,5 @@ class SendMessageView(CreateAPIView):
             category=category,
             message_content=message_content,
             email=email,
+            sender_name="Адміністратор CraftMerge",
         )

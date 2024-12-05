@@ -11,6 +11,7 @@ def send_email_to_user(
     category,
     message_content,
     email=None,
+    sender_name="Адміністратор CraftMerge",
     template_name="administration/admin_message_template.html",
 ):
     """
@@ -20,20 +21,24 @@ def send_email_to_user(
     :param category: The email category
     :param message_content: The message content
     :param email: (Optional) The recipient's email
+    :param sender_name: Name of the sender
     :param template_name: The path to the HTML template
     """
     context = {
         "user_name": f"{user.name} {user.surname}",
         "message": message_content,
         "category": category,
+        "sender_name": sender_name,
         "logo_url": f"{PROTOCOL}://178.212.110.52/craftMerge-logo.png",
     }
 
     email_body = render_to_string(template_name, context)
     recipient_email = email if email else user.email
 
+    subject = f"{sender_name} - {category}"
+
     email = EmailMultiAlternatives(
-        subject=category,
+        subject=subject,
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
         to=[recipient_email],
