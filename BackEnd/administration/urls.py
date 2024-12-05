@@ -10,6 +10,8 @@ from administration.views import (
     ModerationEmailView,
     FeedbackView,
     CreateAdminUserView,
+    ManageCategoriesView,
+    CategoriesDetailView,
 )
 
 app_name = "administration"
@@ -28,4 +30,14 @@ urlpatterns = [
     path("contacts/", ContactsView.as_view(), name="contacts"),
     path("feedback/", FeedbackView.as_view(), name="feedback"),
     path("admin_create/", CreateAdminUserView.as_view(), name="admin-create"),
+    path(
+        "manage_categories/",
+        ManageCategoriesView.as_view(),
+        name="manage-categories",
+    ),
+    path(
+        "manage_categories/<pk>/",
+        CategoriesDetailView.as_view(),
+        name="categories_detail",
+    ),
 ]

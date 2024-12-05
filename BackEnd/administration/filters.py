@@ -43,3 +43,12 @@ class UsersFilter(FilterSet):
             ("profile__created_at", "registration_date"),
         )
     )
+
+
+class CategoriFilter(FilterSet):
+    """
+    manage categori filter
+    """
+
+    id = filters.CharFilter(lookup_expr="icontains")
+    name = filters.CharFilter(lookup_expr="icontains")

@@ -5,6 +5,7 @@ from authentication.models import CustomUser
 from profiles.models import (
     Profile,
     Region,
+    Category,
 )
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
@@ -213,3 +214,18 @@ class FeedbackSerializer(serializers.Serializer):
         required=True,
         error_messages={"required": "Please select a category."},
     )
+
+
+class ManageCategoriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = (
+            "id",
+            "name",
+        )
+
+
+class CategorieDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ("name",)

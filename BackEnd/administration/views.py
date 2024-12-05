@@ -8,6 +8,7 @@ from drf_spectacular.utils import (
 
 from rest_framework.generics import (
     ListAPIView,
+    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
     CreateAPIView,
@@ -22,17 +23,19 @@ from administration.serializers import (
     AdminUserDetailSerializer,
     AutoModerationHoursSerializer,
     ModerationEmailSerializer,
+    ManageCategoriesSerializer,
+    CategorieDetailSerializer,
 )
 from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
-from profiles.models import Profile
+from profiles.models import Profile, Category
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 from .serializers import FeedbackSerializer
 from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import UsersFilter
+from .filters import UsersFilter, CategoriFilter
 
 
 class UsersListView(ListAPIView):
@@ -199,3 +202,35 @@ class FeedbackView(CreateAPIView):
         category = serializer.validated_data["category"]
 
         send_email_feedback(email, message, category)
+
+
+class ManageCategoriesView(ListCreateAPIView):
+    """
+    Manage categories
+    ### Query Parameters:
+    -  **id** / **name**
+
+    ### Ordering:
+    - Use the `ordering` parameter to sort the results.
+    - Example: `/manage_categori/?ordering=id` (ascending by ID) or `/manage_categori/?ordering=-id` (descending by ID).
+
+    ### Filters:
+    - Filters are applied using `DjangoFilterBackend`. All the above query parameters are supported for filtering.
+    """
+
+    permission_classes = [IsStaffUser]
+    serializer_class = ManageCategoriesSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = CategoriFilter
+    pagination_class = ListPagination
+    queryset = Category.objects.all().order_by("id")
+
+
+class CategoriesDetailView(RetrieveUpdateAPIView):
+    """
+    Modify activity category
+    """
+
+    permission_classes = [IsStaffUser]
+    serializer_class = CategorieDetailSerializer
+    queryset = Category.objects.all()
