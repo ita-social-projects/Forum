@@ -5,9 +5,29 @@
     gap: 10px;
 }
 
+.autoapprove-section__head {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 20px 0;
+}
+
+.autoapprove_label {
+    font-size: 14px;
+    margin:  20px 0;
+}
+
+.autoapprove_label::before {
+    content: "*";
+    color: #FA1B1F;
+    padding: 0 2px;
+}
+
 .autoapprove-input {
     width: 258px;
     height: 32px;
+    box-sizing: border-box;
+    padding-left: 4px;
+    font-size: 16px;
 }
 
 .buttons-group {
