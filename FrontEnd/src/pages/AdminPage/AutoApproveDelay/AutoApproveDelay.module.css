@@ -6,25 +6,28 @@
 }
 
 .autoapprove-input {
-    width: 150px;
-    height: 20px;
+    width: 258px;
+    height: 32px;
 }
-.save-button {
+
+.buttons-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 257px;
+}
+
+.button {
     display: flex;
     padding: 5px 15px;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    width: 150px;
-    
+    width: 124px;
     border-radius: 4px;
-    border: 1px solid #1F9A7C;
-    background: #1F9A7C;
-
+    background: #B4D27A;
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
-
-    /* Button Text */
-    color: #FFF;
+    color: black;
     text-align: center;
     font-feature-settings: 'calt' off;
     text-decoration: none;
@@ -35,6 +38,11 @@
     line-height: 20px;
     letter-spacing: -0.16px;
     cursor: pointer;
+}
+
+.cancel-button {
+   background-color: white;
+   border: 1px solid #B4D27A;
 }
 
 .error-message {

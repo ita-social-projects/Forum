@@ -31,6 +31,11 @@ const AutoApproveDelay = () => {
         }
     };
 
+    const handleCancel = () => {
+        setDelay(data?.auto_moderation_hours);
+        setError(null);
+    };
+
     const handleSubmit = () => {
         !error && axios.put(`${process.env.REACT_APP_BASE_API_URL}/api/admin/automoderation/`, { 'auto_moderation_hours': delay })
             .then(() => { toast.success('Зміни успішно застосовано.'); mutate({ ...data, auto_moderation_hours: delay }); })
@@ -38,6 +43,7 @@ const AutoApproveDelay = () => {
     };
     return (
         <div className={css['autoapprove-section']}>
+            <h3 className={css['autoapprove-section__head']}>Налаштуйте час, після якого зміни будуть автоматично підтверджені у випадку бездіяльності модератора.</h3>
             <Tooltip
                 title={'Введіть значення 1-48'}
                 placement="top"
@@ -46,7 +52,10 @@ const AutoApproveDelay = () => {
             </Tooltip>
             {error &&
                 <p className={css['error-message']}>{error}</p>}
-            <button className={css['save-button']} onClick={handleSubmit}>Змінити</button>
+            <div className={css['buttons-group']}>
+                <button className={`${css['button']} ${css['cancel-button']}`} onClick={handleCancel}>Скасувати</button>
+                <button className={css['button']} onClick={handleSubmit}>Змінити</button>
+            </div>
         </div>
     );
 
