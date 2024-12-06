@@ -533,8 +533,11 @@ class TestProfileDetailAPIView(APITestCase):
             data={"official_name": ""},
             format="json",
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertIsNone(response.data.get("official_name"))
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            response.json(),
+            {"official_name": ["This field may not be null."]},
+        )
 
     def test_partial_update_profile_edrpou_empty_value(self):
         self.client.force_authenticate(self.user)
@@ -563,11 +566,9 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertIsNone(response.data.get("rnokpp"))
 
     # updating fields when another instance with empty fields already exists in db
-    def test_partial_update_profile_fields_with_empty_values(
-        self,
-    ):
+    def test_partial_update_profile_fields_with_empty_values(self):
         ProfileStartupFactory.create(
-            official_name=None,
+            official_name="Valid Company Name",
             edrpou=None,
         )
         self.client.force_authenticate(self.user)
@@ -576,28 +577,36 @@ class TestProfileDetailAPIView(APITestCase):
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
-            data={"official_name": "", "edrpou": ""},
+            data={"official_name": "Updated Company Name", "edrpou": None},
             format="json",
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
+        self.profile.refresh_from_db()
+        self.assertEqual(self.profile.official_name, "Updated Company Name")
+        self.assertIsNone(self.profile.edrpou)
+
         response = self.client.get(path="/api/profiles/")
         self.assertEqual(2, response.data["total_items"])
+
         self.assertTrue(
             all(
                 [
-                    item.get("official_name") is None
+                    item.get("official_name") is not None
                     for item in response.data["results"]
                 ]
-            )
+            ),
+            msg="Official names should not be None.",
         )
+
         self.assertTrue(
             all(
                 [
                     item.get("edrpou") is None
                     for item in response.data["results"]
                 ]
-            )
+            ),
+            msg="EDRPOU should be None for all profiles.",
         )
 
     def test_partial_update_profile_is_fop_with_edrpou(self):
