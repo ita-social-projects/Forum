@@ -1,6 +1,8 @@
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 EMAIL_CONTENT_SUBTYPE = "html"
 PROTOCOL = "http"
@@ -24,6 +26,15 @@ def send_email_to_user(
     :param sender_name: Name of the sender
     :param template_name: The path to the HTML template
     """
+    if not category:
+        raise ValueError("Category is required.")
+    if not message_content.strip():
+        raise ValueError("Message content cannot be empty.")
+    try:
+        validate_email(email or user.email)
+    except ValidationError:
+        raise ValueError("Invalid email address.")
+
     context = {
         "user_name": f"{user.name} {user.surname}",
         "message": message_content,
