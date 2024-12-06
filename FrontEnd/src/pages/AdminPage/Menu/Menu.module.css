@@ -23,13 +23,3 @@
     font-weight: 600;
 }
 
-.description-item-label {
-    max-width: 150px;
-}
-.description-item-content {
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
