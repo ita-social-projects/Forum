@@ -973,6 +973,7 @@ class TestProfileDetailAPIView(APITestCase):
             "categories": [category.id],
             "activities": [activity.id],
             "regions": [region.id],
+            "official_name": "Test Official Name",
         }
         self.client.force_authenticate(user2)
 
@@ -991,9 +992,9 @@ class TestProfileDetailAPIView(APITestCase):
             user2.id, response.data.get("person"), msg="Persons do not match."
         )
         self.assertEqual(
-            new_profile_data.get("name"),
-            response.data.get("name"),
-            msg="Company names do not match",
+            new_profile_data.get("official_name"),
+            response.data.get("official_name"),
+            msg="Official names do not match.",
         )
         self.assertEqual(
             new_profile_data.get("categories"),
