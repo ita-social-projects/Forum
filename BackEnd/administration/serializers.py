@@ -121,6 +121,9 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "phone",
             "edrpou",
             "address",
+            "status",
+            "updated_at",
+            "created_at",
             "is_deleted",
         )
 
