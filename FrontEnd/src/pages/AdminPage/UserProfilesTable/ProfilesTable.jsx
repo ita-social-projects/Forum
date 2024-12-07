@@ -4,7 +4,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
 import { DEFAULT_PAGE_SIZE } from '../constants';
-import {Button, Input, Pagination, Space, Table} from 'antd';
+import {Button, Input, Pagination, Space, Table, Tag} from 'antd';
 import {CaretDownOutlined, CaretUpOutlined, SearchOutlined} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 
@@ -140,18 +140,18 @@ function ProfilesTable() {
             ),
     });
 
-    // const renderStatusTags = (status) => {
-    //     const tags = [];
-    //
-    //     if (status.active) {
-    //         tags.push(<Tag color="green" key="active">Активний</Tag>);
-    //     }
-    //     if (status.is_deleted) {
-    //         tags.push(<Tag color="volcano" key="deleted">Видалений</Tag>);
-    //     }
-    //
-    //     return <>{tags}</>;
-    // };
+    const renderCompanyTypeTags = (type) => {
+        const tags = [];
+
+        if (type === 'ФОП') {
+            tags.push(<Tag color="blue" key="active">ФОП</Tag>);
+        }
+        if (type === 'Стартап') {
+            tags.push(<Tag color="yellow" key="deleted">Стартап</Tag>);
+        }
+
+        return <>{tags}</>;
+    };
     const columns = [
         {
             title: 'Назва компанії',
@@ -161,6 +161,17 @@ function ProfilesTable() {
             sortOrder: sortInfo.field === 'name' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
             ...getColumnSearchProps('name'),
+        },
+        {
+            title: 'Тип компанії',
+            dataIndex: 'company_type',
+            key: 'company_type',
+            render: (company_type) => renderCompanyTypeTags(company_type),
+            filters: [
+                { text: 'ФОП', value: 'ФОП' },
+                { text: 'Стартап', value: 'Стартап' },
+            ],
+            onFilter: (value, record) => record.company_type === value,
         },
         {
             title: 'EDRPOU',
