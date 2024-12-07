@@ -234,4 +234,4 @@ class StatisticsSerializer(serializers.Serializer):
         return Profile.objects.filter(is_startup=True).count()
 
     def get_blocked_companies_count(self, obj) -> int:
-        return Profile.objects.filter(status='blocked').count()
+        return Profile.objects.filter(status="blocked").count()

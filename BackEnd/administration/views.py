@@ -110,6 +110,7 @@ class ProfileStatisticsView(RetrieveAPIView):
     """
     Count of companies
     """
+
     permission_classes = [IsStaffUser]
     serializer_class = StatisticsSerializer
 
