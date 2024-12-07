@@ -20,7 +20,7 @@ class TestFactories(TestCase):
         category = CategoryFactory()
         region = RegionFactory()
         profile = ProfileFactory(
-            activities=(activity,), categories=(category,), regions=(region,)
+            activities=(activity,), categories=(category,), regions=(region,), official_name="Test Official Name",
         )
         self.assertIsNotNone(profile.id)
         self.assertIsNotNone(profile.person)
