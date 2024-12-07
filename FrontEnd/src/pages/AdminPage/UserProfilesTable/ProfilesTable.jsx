@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import css from './ProfilesTable.module.css';
+import css from './ProfilesTable.module.scss';
 import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
@@ -10,11 +10,10 @@ import Highlighter from 'react-highlight-words';
 
 function ProfilesTable() {
 
-    const routeChange = (id) => {
-        const path = `../../customadmin/profile/${id}`;
-        navigate(path);
-    };
-
+    // const routeChange = (id) => {
+    //     const path = `../../customadmin/profile/${id}`;
+    //     navigate(path);
+    // };
     const location = useLocation();
     const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
