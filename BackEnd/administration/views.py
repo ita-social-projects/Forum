@@ -110,7 +110,6 @@ class ProfileStatisticsView(RetrieveAPIView):
     """
     Count of companies
     """
-    queryset = Profile.objects.all()
     permission_classes = [IsStaffUser]
     serializer_class = StatisticsSerializer
 
