@@ -106,6 +106,7 @@ class AdminUserDetailSerializer(serializers.ModelSerializer):
 class AdminCompanyListSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)
     regions = AdminRegionSerializer(many=True, read_only=True)
+    company_type = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -126,7 +127,15 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "updated_at",
             "created_at",
             "is_deleted",
+            "company_type"
         )
+
+    def get_company_type(self, obj):
+        if obj.is_fop:
+            return "ФОП"
+        elif obj.is_startup:
+            return "Стартап"
+        return None
 
 
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
