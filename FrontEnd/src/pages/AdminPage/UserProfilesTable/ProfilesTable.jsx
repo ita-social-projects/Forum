@@ -1,86 +1,217 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import css from './ProfilesTable.module.css';
-import { useNavigate } from 'react-router-dom';
-import PaginationButtons from './PaginationButtons';
+import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
 import { DEFAULT_PAGE_SIZE } from '../constants';
-
-const COLUMN_NAMES = [
-    'ID', 'Person', 'Position', 'Company', 'Region ID', 'Phone', 'EDRPOU', 'Adress', 'IsDeleted', 'IsApproved'
-];
+import {Button, Input, Pagination, Space, Table} from 'antd';
+import {CaretDownOutlined, CaretUpOutlined, SearchOutlined} from '@ant-design/icons';
+import Highlighter from 'react-highlight-words';
 
 function ProfilesTable() {
-    const navigate = useNavigate();
+
     const routeChange = (id) => {
         const path = `../../customadmin/profile/${id}`;
         navigate(path);
     };
-    const [currentPage, setCurrentPage] = useState(1);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const queryParams = new URLSearchParams(location.search);
+    const pageNumber = Number(queryParams.get('page')) || 1;
+
+    const [currentPage, setCurrentPage] = useState(pageNumber);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-    const handlePageSizeChange = (size) => {
-        setPageSize(size);
-        setCurrentPage(1);
-    };
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
+    const [sortInfo, setSortInfo] = useState({ field: null, order: null });
+    const [statusFilters, setStatusFilters] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
 
-    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles/?page=${currentPage}&page_size=${pageSize}`;
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const updatedPageNumber = Number(queryParams.get('page')) || 1;
+        setCurrentPage(updatedPageNumber);
+    }, [location.search]);
 
+    const ordering = sortInfo.field
+        ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}`
+        : '';
+    const filtering = statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '';
+
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles?page=${currentPage}&page_size=${pageSize}${ordering}${filtering}`;
     async function fetcher(url) {
         const response = await axios.get(url);
+        console.log(response.data);
         return response.data;
     }
-    const { data, error, isValidating: loading } = useSWR(url, fetcher);
 
+    const { data, isValidating: loading } = useSWR(url, fetcher);
     const profiles = data ? data.results : [];
+    const totalItems = data ? data.total_items : 0;
 
+    const updateQueryParams = (newPage) => {
+        queryParams.set('page', newPage);
+        navigate(`?${queryParams.toString()}`);
+    };
+
+    const handlePageChange = (page, size) => {
+        setCurrentPage(page);
+        setPageSize(size);
+        updateQueryParams(page);
+    };
+
+    const handleTableChange = (pagination, filters, sorter) => {
+        if (sorter.field) {
+            const newSortInfo =
+                sorter.order === null || sorter.order === undefined
+                    ? { field: null, order: null }
+                    : { field: sorter.field, order: sorter.order };
+
+            setSortInfo(newSortInfo);
+        } else {
+            setSortInfo({ field: null, order: null });
+        }
+
+        setStatusFilters(filters.status);
+        setCurrentPage(1);
+        updateQueryParams(1);
+    };
+    const getSortIcon = (sortOrder) => {
+        if (!sortOrder) return <span className={css['empty-icon']} />;
+        return sortOrder === 'ascend' ? (
+            <CaretUpOutlined className={css['icon']} />
+        ) : (
+            <CaretDownOutlined className={css['icon']} />
+        );
+    };
+
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+  };
+    const handleReset = (clearFilters) => {
+        clearFilters();
+        setSearchText('');
+    };
+
+    const getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+            <div className={css['dropdownMenu']}>
+                <Input
+                    placeholder="Пошук"
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value]: [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    className={css['antInput']}
+                ></Input>
+                <Space>
+              <Button
+                type="primary"
+                onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                icon={<SearchOutlined />}
+                size="small"
+                className={css['antBtn']}
+              >
+                Пошук
+              </Button>
+              <Button
+                onClick={() => clearFilters && handleReset(clearFilters)}
+                size="small"
+                className={css['ant-btn']}
+              >
+                Скинути
+              </Button>
+            </Space>
+          </div>
+            ),
+        filterIcon: (filtered) => <SearchOutlined className={ filtered ? css['filteredIcon'] : css['icon']}/>,
+        onFilter: (value, record) =>
+            record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
+        render: (text) =>
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            ),
+    });
+
+    // const renderStatusTags = (status) => {
+    //     const tags = [];
+    //
+    //     if (status.active) {
+    //         tags.push(<Tag color="green" key="active">Активний</Tag>);
+    //     }
+    //     if (status.is_deleted) {
+    //         tags.push(<Tag color="volcano" key="deleted">Видалений</Tag>);
+    //     }
+    //
+    //     return <>{tags}</>;
+    // };
+    const columns = [
+        {
+            title: 'Назва компанії',
+            dataIndex: 'name',
+            key: 'name',
+            sorter: true,
+            sortOrder: sortInfo.field === 'name' ? sortInfo.order : null,
+            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
+            ...getColumnSearchProps('name'),
+        },
+        {
+            title: 'EDRPOU',
+            dataIndex: 'edrpou',
+            key: 'edrpou',
+            sorter: true,
+            sortOrder: sortInfo.field === 'edrpou' ? sortInfo.order : null,
+            ...getColumnSearchProps('edrpou'),
+        },
+        {
+            title: 'Адреса',
+            dataIndex: 'address',
+            key: 'address',
+            sorter: true,
+            sortOrder: sortInfo.field === 'address' ? sortInfo.order : null,
+        },
+        {
+            title: 'Статус',
+            dataIndex: 'status',
+            key: 'status',
+            sorter: true,
+            sortOrder: sortInfo.field === 'status' ? sortInfo.order : null,
+        },
+    ];
     return (
-        <div className={css['table-profiles']}>
-            <PaginationButtons
-                totalPages={data ? data.total_pages : 1}
-                currentPage={currentPage} onPageChange={handlePageChange}
-                pageSize={pageSize} onPageSizeChange={handlePageSizeChange}
+        <div className={css['table-container']}>
+            <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={totalItems}
+                onChange={handlePageChange}
+                onShowSizeChange={handlePageChange}
+                showSizeChanger={false}
+                showTitle={false}
+                className={css['pagination']}
             />
-            <ul className={css['log-section']}>
-                {loading && <li className={css['log']} >Завантаження ...</li>}
-                {error && <li className={css['log']}>Виникла помилка: {error}</li>}
-            </ul>
-            <table className={css['table-section']}>
-                <thead>
-                    <tr className={css['table-header']}>
-                        {COLUMN_NAMES.map((column) => (
-                            <th key={column} className={css['table-header__text']}>{column}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {profiles.map(profile => (
-                        <tr key={profile.id} className={css['table-element']} onClick={() => routeChange(profile.id)}>
-                            <td className={css['table-element__text']}>{profile.id} </td>
-                            <td className={css['table-element__text']}>
-                                {profile.person.name} - {profile.person.surname}
-                            </td>
-                            <td className={css['table-element__text']}>{profile.person_position} </td>
-                            <td className={css['table-element__text']}>{profile.official_name} </td>
-                            <td className={css['table-element__text']}>
-                                <ul>
-                                    {profile.regions.map(region => (
-                                        <li key={region.id}>{region.name_ukr}</li>
-                                    ))}
-                                </ul>
-                            </td>
-                            <td className={css['table-element__text']}>{profile.phone} </td>
-                            <td className={css['table-element__text']}>{profile.edrpou} </td>
-                            <td className={css['table-element__text']}>{profile.address} </td>
-                            <td className={css['table-element__text']}>{profile.is_deleted ? 'True' : 'False'} </td>
-                            <td className={css['table-element__text']}>{profile.is_registered ? 'True' : 'False'} </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div >
+            <Table
+                columns={columns}
+                dataSource={profiles}
+                onChange={handleTableChange}
+                pagination={false}
+                loading={loading}
+                tableLayout="fixed"
+                locale={{
+                    triggerDesc: 'Сортувати в порядку спадання',
+                    triggerAsc: 'Сортувати в порядку зростання',
+                    cancelSort: 'Відмінити сортування',
+                }}
+            />
+        </div>
     );
 }
 
