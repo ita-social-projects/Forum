@@ -114,8 +114,6 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "is_registered",
-            "is_startup",
-            "is_fop",
             "person",
             "person_position",
             "regions",
