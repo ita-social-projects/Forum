@@ -106,7 +106,7 @@ class AdminUserDetailSerializer(serializers.ModelSerializer):
 class AdminCompanyListSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)
     regions = AdminRegionSerializer(many=True, read_only=True)
-    company_type = serializers.SerializerMethodField()
+    company_type = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Profile
