@@ -30,6 +30,7 @@ class UserRegistrationAPITests(APITestCase):
                 "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
+                    "official_name": "My Official Company Name",
                     "is_registered": True,
                     "is_startup": False,
                     "is_fop": False,
@@ -48,6 +49,9 @@ class UserRegistrationAPITests(APITestCase):
         )
         self.assertEqual(Profile.objects.get().person.email, "jane@test.com")
         self.assertEqual(Profile.objects.get().name, "My Company")
+        self.assertEqual(
+            Profile.objects.get().official_name, "My Official Company Name"
+        )
 
     def test_register_user_fop_successful(self):
         response = self.client.post(
@@ -61,6 +65,7 @@ class UserRegistrationAPITests(APITestCase):
                 "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
+                    "official_name": "My Official Company Name",
                     "is_registered": True,
                     "is_startup": False,
                     "is_fop": True,
@@ -79,6 +84,9 @@ class UserRegistrationAPITests(APITestCase):
         )
         self.assertEqual(Profile.objects.get().person.email, "jane@test.com")
         self.assertEqual(Profile.objects.get().name, "My Company")
+        self.assertEqual(
+            Profile.objects.get().official_name, "My Official Company Name"
+        )
 
     def test_register_user_email_incorrect(self):
         response = self.client.post(
@@ -92,6 +100,7 @@ class UserRegistrationAPITests(APITestCase):
                 "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
+                    "official_name": "My Official Company Name",
                     "is_registered": True,
                     "is_startup": False,
                     "is_fop": False,
@@ -117,6 +126,7 @@ class UserRegistrationAPITests(APITestCase):
                 "captcha": "dummy_captcha",
                 "company": {
                     "name": "Test Company",
+                    "official_name": "My Official Company Name",
                     "is_registered": True,
                     "is_startup": False,
                     "is_fop": False,
@@ -142,6 +152,7 @@ class UserRegistrationAPITests(APITestCase):
                 "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
+                    "official_name": "My Official Company Name",
                     "is_registered": True,
                     "is_startup": False,
                     "is_fop": False,
@@ -173,6 +184,7 @@ class UserRegistrationAPITests(APITestCase):
                 "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
+                    "official_name": "My Official Company Name",
                     "is_registered": False,
                     "is_startup": False,
                     "is_fop": False,
@@ -198,6 +210,7 @@ class UserRegistrationAPITests(APITestCase):
                 "captcha": "dummy_captcha",
                 "company": {
                     "name": "My Company",
+                    "official_name": "My Official Company Name",
                     "is_registered": True,
                     "is_startup": True,
                     "is_fop": False,
@@ -212,4 +225,7 @@ class UserRegistrationAPITests(APITestCase):
                 "surname": "Smith",
             },
             response.json(),
+        )
+        self.assertEqual(
+            Profile.objects.get().official_name, "My Official Company Name"
         )
