@@ -35,7 +35,7 @@ from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UsersFilter
-
+from rest_framework.permissions import AllowAny
 
 class UsersListView(ListAPIView):
     """
@@ -111,7 +111,7 @@ class ProfileStatisticsView(RetrieveAPIView):
     Count of companies
     """
 
-    permission_classes = [IsStaffUser]
+    permission_classes = [AllowAny]
     serializer_class = StatisticsSerializer
 
     def get_object(self):
