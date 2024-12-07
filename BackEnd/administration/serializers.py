@@ -4,7 +4,7 @@ from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
 from profiles.models import (
     Profile,
-    Region,
+    Region, Category,
 )
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
@@ -19,6 +19,14 @@ class AdminRegionSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name_ukr",
+        )
+
+class CategoriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = (
+            "id",
+            "name",
         )
 
 
@@ -107,6 +115,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)
     regions = AdminRegionSerializer(many=True, read_only=True)
     company_type = serializers.SerializerMethodField(read_only=True)
+    categories = CategoriesSerializer(many=True, read_only=True)
 
     class Meta:
         model = Profile
@@ -125,7 +134,8 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "updated_at",
             "created_at",
             "is_deleted",
-            "company_type"
+            "company_type",
+            "categories",
         )
 
     def get_company_type(self, obj):
