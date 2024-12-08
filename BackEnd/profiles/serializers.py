@@ -319,6 +319,7 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
         edrpou = data.get("edrpou", self.instance.edrpou)
         rnokpp = data.get("rnokpp", self.instance.rnokpp)
         is_fop = data.get("is_fop", self.instance.is_fop)
+        name = data.get("name", self.instance.name)
         if rnokpp and not is_fop:
             raise serializers.ValidationError(
                 {
@@ -331,11 +332,16 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
                     "is_fop": "For the EDRPOU field filled out, FOP must be set to False"
                 }
             )
+        if name and len(name) > 45:
+            raise serializers.ValidationError(
+                {"name": "The company name must not exceed 45 characters."}
+            )
+
         return data
 
     # set optional unique fields to None if they are empty
     def to_internal_value(self, data):
-        fields_to_check = ["official_name", "edrpou", "rnokpp"]
+        fields_to_check = ["edrpou", "rnokpp"]
         for field in fields_to_check:
             if data.get(field) == "":
                 data[field] = None

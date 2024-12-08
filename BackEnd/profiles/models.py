@@ -40,7 +40,7 @@ class Profile(models.Model):
 
     id = models.AutoField(primary_key=True)
 
-    name = models.CharField(max_length=100, default=None, null=True)
+    name = models.CharField(max_length=45, default=None, null=True)
     is_registered = models.BooleanField(default=None, null=True)
     is_startup = models.BooleanField(default=None, null=True)
     is_fop = models.BooleanField(default=False)
@@ -51,9 +51,7 @@ class Profile(models.Model):
     person = models.OneToOneField(CustomUser, on_delete=models.PROTECT)
     person_position = models.CharField(max_length=50, blank=True, default="")
 
-    official_name = models.CharField(
-        max_length=255, null=True, blank=True, default=None
-    )
+    official_name = models.CharField(max_length=255, null=True, default=None)
 
     regions = models.ManyToManyField("Region", blank=True)
     common_info = models.TextField(
