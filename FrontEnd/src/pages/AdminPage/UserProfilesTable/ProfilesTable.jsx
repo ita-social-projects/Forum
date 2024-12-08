@@ -268,7 +268,7 @@ function ProfilesTable() {
             sortOrder: sortInfo.field === 'updated_at' ? sortInfo.order : null,
             sortIcon: ({sortOrder}) => getSortIcon(sortOrder),
             ...getColumnSearchProps('updated_at'),
-            width: 170
+            width: 150
         },
         {
             title: 'Статус',
@@ -293,7 +293,7 @@ function ProfilesTable() {
             sorter: true,
             sortOrder: sortInfo.field === 'person' ? sortInfo.order : null,
             ...getColumnSearchProps('person'),
-        },
+            },
         {
             title: 'Адреса',
             dataIndex: 'address',
