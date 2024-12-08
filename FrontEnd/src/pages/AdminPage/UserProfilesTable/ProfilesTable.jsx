@@ -213,7 +213,7 @@ function ProfilesTable() {
             width: 160
             },
         {
-            title: (<div style={{whiteSpace: 'normal', textAlign: 'center'}}>
+            title: (<div className={css['TableSubject']}>
                 Суб&apos;єкт <br/> господарювання
             </div>),
             dataIndex: 'official_name',
