@@ -136,6 +136,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "is_deleted",
             "company_type",
             "categories",
+            "representative"
         )
 
     def get_company_type(self, obj):
@@ -143,6 +144,11 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             return "ФОП"
         elif obj.is_startup:
             return "Стартап"
+        return None
+
+    def get_representative(self, obj):
+        if obj.person:
+            return f'{obj.name} {obj.surname}'
         return None
 
 
