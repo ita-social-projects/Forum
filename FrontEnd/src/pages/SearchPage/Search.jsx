@@ -8,7 +8,7 @@ import useSWR from 'swr';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import Loader from '../../components/Loader/Loader';
 import ProfileList from '../ProfileList/ProfileList';
-import styles from './search.module.scss';
+import styles from './Search.module.scss';
 
 export function Search({ isAuthorized }) {
   const [searchResults, setSearchResults] = useState([]);
