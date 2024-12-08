@@ -319,33 +319,18 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
         edrpou = data.get("edrpou", self.instance.edrpou)
         rnokpp = data.get("rnokpp", self.instance.rnokpp)
         is_fop = data.get("is_fop", self.instance.is_fop)
-        name = data.get("name", self.instance.name)
-        official_name = data.get("official_name", self.instance.official_name)
-
         if rnokpp and not is_fop:
             raise serializers.ValidationError(
                 {
                     "is_fop": "For the RNOKPP field filled out, FOP must be set to True"
                 }
             )
-
         if edrpou and is_fop:
             raise serializers.ValidationError(
                 {
                     "is_fop": "For the EDRPOU field filled out, FOP must be set to False"
                 }
             )
-
-        if name and len(name) > 45:
-            raise serializers.ValidationError(
-                {"name": "The company name must not exceed 45 characters."}
-            )
-
-        if not official_name or not official_name.strip():
-            raise serializers.ValidationError(
-                {"official_name": "The official company name is required."}
-            )
-
         return data
 
     # set optional unique fields to None if they are empty

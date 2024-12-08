@@ -42,7 +42,6 @@ class ProfileFactory(factory.django.DjangoModelFactory):
 
     person = factory.SubFactory("authentication.factories.UserFactory")
     name = "Test Comp name"
-    official_name = "Test Official Name"
     common_info = "test common info"
     phone = "380112909099"
     edrpou = factory.Sequence(lambda n: str(10000000 + n))
