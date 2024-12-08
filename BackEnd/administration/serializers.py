@@ -137,7 +137,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "is_deleted",
             "company_type",
             "categories",
-            "representative"
+            "representative",
         )
 
     def get_company_type(self, obj):
@@ -149,7 +149,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
 
     def get_representative(self, obj):
         if obj.person:
-            return f'{obj.name} {obj.surname}'
+            return f'{obj.person.name} {obj.person.surname}'
         return None
 
 
