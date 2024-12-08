@@ -210,6 +210,7 @@ function ProfilesTable() {
             sortOrder: sortInfo.field === 'name' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
             ...getColumnSearchProps('name'),
+            width: 140,
         },
         {
             title: 'Тип компанії',
@@ -221,6 +222,7 @@ function ProfilesTable() {
                 { text: 'Стартап', value: 'Стартап' },
             ],
             onFilter: (value, record) => record.company_type === value,
+            width: 120
         },
         {
             title: 'Вид діяльності',
@@ -283,7 +285,7 @@ function ProfilesTable() {
                 { text: 'Кейтенинг', value: 'Кейтенинг' },
             ],
             onFilter: (value, record) => record.status === value,
-
+            width: 100
         },
         {
             title: 'Представник',
@@ -292,6 +294,16 @@ function ProfilesTable() {
             sorter: true,
             sortOrder: sortInfo.field === 'representative' ? sortInfo.order : null,
             ...getColumnSearchProps('representative'),
+            width: 170,
+            },
+        {
+            title: 'Контакти',
+            dataIndex: 'phone',
+            key: 'phone',
+            sorter: true,
+            sortOrder: sortInfo.field === 'phone' ? sortInfo.order : null,
+            ...getColumnSearchProps('phone'),
+            width: 130,
             },
         {
             title: 'Адреса',
@@ -299,6 +311,8 @@ function ProfilesTable() {
             key: 'address',
             sorter: true,
             sortOrder: sortInfo.field === 'address' ? sortInfo.order : null,
+            ...getColumnSearchProps('address'),
+            width: 130
         },
     ];
     return (
