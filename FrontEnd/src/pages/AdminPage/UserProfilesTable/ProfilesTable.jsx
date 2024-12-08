@@ -208,7 +208,8 @@ function ProfilesTable() {
             ],
             onFilter: (value, record) =>
                 record.categories && record.categories.some((category) => category.name === value),
-        },
+            width: 160
+            },
         {
             title: (<div style={{whiteSpace: 'normal', textAlign: 'center'}}>
                 Суб&apos;єкт <br/> господарювання
@@ -219,7 +220,7 @@ function ProfilesTable() {
             sortOrder: sortInfo.field === 'official_name' ? sortInfo.order : null,
             sortIcon: ({sortOrder}) => getSortIcon(sortOrder),
             ...getColumnSearchProps('official_name'),
-            width: 170, // обмеження ширини
+            width: 170
         },
         {
             title: 'EDRPOU',
