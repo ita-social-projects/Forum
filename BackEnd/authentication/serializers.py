@@ -32,7 +32,13 @@ class CustomProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ("name", "is_registered", "is_startup", "is_fop", "official_name")
+        fields = (
+            "name",
+            "is_registered",
+            "is_startup",
+            "is_fop",
+            "official_name",
+        )
 
 
 class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
@@ -90,7 +96,10 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
     def create(self, validated_data):
         validated_data.pop("captcha", None)
         company_data = validated_data.pop("company")
-        if "official_name" not in company_data or not company_data["official_name"]:
+        if (
+            "official_name" not in company_data
+            or not company_data["official_name"]
+        ):
             company_data["official_name"] = None
         user = User.objects.create(**validated_data)
         user.set_password(validated_data["password"])
