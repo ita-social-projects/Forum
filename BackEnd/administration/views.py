@@ -35,6 +35,9 @@ from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UsersFilter
+from rest_framework.permissions import AllowAny
+from django.db.models import Count
+from django.db.models import Q
 
 
 class UsersListView(ListAPIView):
@@ -111,11 +114,18 @@ class ProfileStatisticsView(RetrieveAPIView):
     Count of companies
     """
 
-    permission_classes = [IsStaffUser]
+    permission_classes = [AllowAny]
     serializer_class = StatisticsSerializer
 
     def get_object(self):
-        return {}
+        return Profile.objects.aggregate(
+            companies_count=Count(
+                "pk", filter=Q(Q(is_registered=True) | Q(is_startup=True))
+            ),
+            investors_count=Count("pk", filter=Q(is_registered=True)),
+            startups_count=Count("pk", filter=Q(is_startup=True)),
+            blocked_companies_count=Count("pk", filter=Q(status="blocked")),
+        )
 
 
 @extend_schema(
