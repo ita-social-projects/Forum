@@ -480,7 +480,6 @@ class TestProfileModeration(APITestCase):
                 "captcha": "dummy_captcha",
                 "company": {
                     "name": "Test Company",
-                    "official_name": "My Official Company Name",
                     "is_registered": True,
                     "is_startup": False,
                     "is_fop": False,
