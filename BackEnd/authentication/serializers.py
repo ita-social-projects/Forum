@@ -28,17 +28,11 @@ class CustomProfileSerializer(serializers.ModelSerializer):
     is_registered = serializers.BooleanField()
     is_startup = serializers.BooleanField()
     is_fop = serializers.BooleanField()
-    official_name = serializers.CharField(required=True)
+    official_name = serializers.CharField(required=False, allow_null=True)
 
     class Meta:
         model = Profile
-        fields = (
-            "name",
-            "is_registered",
-            "is_startup",
-            "is_fop",
-            "official_name",
-        )
+        fields = ("name", "is_registered", "is_startup", "is_fop", "official_name")
 
 
 class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
@@ -96,19 +90,8 @@ class UserRegistrationSerializer(UserCreatePasswordRetypeSerializer):
     def create(self, validated_data):
         validated_data.pop("captcha", None)
         company_data = validated_data.pop("company")
-
-        if (
-            "official_name" not in company_data
-            or not company_data["official_name"].strip()
-        ):
-            raise serializers.ValidationError(
-                {
-                    "company": {
-                        "official_name": "The official company name is required."
-                    }
-                }
-            )
-
+        if "official_name" not in company_data or not company_data["official_name"]:
+            company_data["official_name"] = None
         user = User.objects.create(**validated_data)
         user.set_password(validated_data["password"])
         user.save()

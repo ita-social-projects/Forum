@@ -536,7 +536,7 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(
             response.json(),
-            {"official_name": ["This field may not be null."]},
+            {"official_name": ["The official company name is required."]},
         )
 
     def test_partial_update_profile_edrpou_empty_value(self):

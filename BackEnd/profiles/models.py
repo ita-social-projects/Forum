@@ -52,7 +52,7 @@ class Profile(models.Model):
     person_position = models.CharField(max_length=50, blank=True, default="")
 
     official_name = models.CharField(
-        max_length=255, null=False, blank=False, default=None
+        max_length=255, null=True, blank=True, default=None
     )
 
     regions = models.ManyToManyField("Region", blank=True)
