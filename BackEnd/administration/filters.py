@@ -45,10 +45,16 @@ class UsersFilter(FilterSet):
     )
 
 
-class CategoriFilter(FilterSet):
+class CategoriesFilter(FilterSet):
     """
     manage categori filter
     """
 
     id = filters.CharFilter(lookup_expr="icontains")
     name = filters.CharFilter(lookup_expr="icontains")
+    ordering = filters.OrderingFilter(
+        fields=(
+            ("id", "id"),
+            ("name", "name"),
+            )
+    )

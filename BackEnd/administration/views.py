@@ -24,7 +24,7 @@ from administration.serializers import (
     AutoModerationHoursSerializer,
     ModerationEmailSerializer,
     ManageCategoriesSerializer,
-    CategorieDetailSerializer,
+    CategoryDetailSerializer,
 )
 from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
@@ -35,7 +35,7 @@ from .serializers import FeedbackSerializer
 from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import UsersFilter, CategoriFilter
+from .filters import UsersFilter, CategoriesFilter
 
 
 class UsersListView(ListAPIView):
@@ -221,16 +221,16 @@ class ManageCategoriesView(ListCreateAPIView):
     permission_classes = [IsStaffUser]
     serializer_class = ManageCategoriesSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_class = CategoriFilter
+    filterset_class = CategoriesFilter
     pagination_class = ListPagination
-    queryset = Category.objects.all().order_by("id")
+    queryset = Category.objects.all().order_by("id").select_related()
 
 
-class CategoriesDetailView(RetrieveUpdateAPIView):
+class CategoryDetailView(RetrieveUpdateAPIView):
     """
     Modify activity category
     """
 
     permission_classes = [IsStaffUser]
-    serializer_class = CategorieDetailSerializer
-    queryset = Category.objects.all()
+    serializer_class = CategoryDetailSerializer
+    queryset = Category.objects.all().select_related()

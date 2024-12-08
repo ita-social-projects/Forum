@@ -11,7 +11,7 @@ from administration.views import (
     FeedbackView,
     CreateAdminUserView,
     ManageCategoriesView,
-    CategoriesDetailView,
+    CategoryDetailView,
 )
 
 app_name = "administration"
@@ -37,7 +37,7 @@ urlpatterns = [
     ),
     path(
         "categories/<pk>/",
-        CategoriesDetailView.as_view(),
-        name="categories_detail",
+        CategoryDetailView.as_view(),
+        name="category_detail",
     ),
 ]
