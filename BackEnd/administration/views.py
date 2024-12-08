@@ -7,6 +7,7 @@ from drf_spectacular.utils import (
 )
 from rest_framework.generics import (
     ListAPIView,
+    RetrieveAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
     CreateAPIView,
@@ -21,6 +22,7 @@ from administration.serializers import (
     AdminUserDetailSerializer,
     AutoModerationHoursSerializer,
     ModerationEmailSerializer,
+    StatisticsSerializer,
 )
 from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
@@ -102,6 +104,18 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.select_related("person").prefetch_related(
         "regions", "categories", "activities"
     )
+
+
+class ProfileStatisticsView(RetrieveAPIView):
+    """
+    Count of companies
+    """
+
+    permission_classes = [IsStaffUser]
+    serializer_class = StatisticsSerializer
+
+    def get_object(self):
+        return {}
 
 
 @extend_schema(
