@@ -219,7 +219,7 @@ function UserTable() {
             key: 'status',
             render: (status) => renderStatusTags(status),
             filters: [
-                { text: 'Aктивні', value: 'is_active' },
+                { text: 'Aктивні', value: 'is_  active' },
                 { text: 'Aдміністратори', value: 'is_staff' },
                 { text: 'Суперюзер', value: 'is_superuser' },
                 { text: 'Видалені', value: 'is_deleted' },

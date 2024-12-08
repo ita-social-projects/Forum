@@ -152,6 +152,27 @@ function ProfilesTable() {
 
         return <>{tags}</>;
     };
+    const renderCategoryTags = (categories) => {
+    const tags = [];
+    categories.forEach((category) => {
+        if (category.name === 'Їжа') {
+            tags.push(<Tag color="gold" key={category.name}>Їжа</Tag>);
+        }
+        if (category.name === 'Напої') {
+            tags.push(<Tag color="green" key={category.name}>Напої</Tag>);
+        }
+        if (category.name === 'Пакування') {
+            tags.push(<Tag color="cyan" key={category.name}>Пакування</Tag>);
+        }
+        if (category.name === 'Перевезення') {
+            tags.push(<Tag color="purple" key={category.name}>Перевезення</Tag>);
+        }
+        if (category.name === 'Кейтеринг') {
+            tags.push(<Tag color="orange" key={category.name}>Кейтеринг</Tag>);
+        }
+    });
+    return <>{tags}</>;
+};
     const columns = [
         {
             title: 'Назва компанії',
@@ -172,6 +193,21 @@ function ProfilesTable() {
                 { text: 'Стартап', value: 'Стартап' },
             ],
             onFilter: (value, record) => record.company_type === value,
+        },
+        {
+            title: 'Вид діяльності',
+            dataIndex: 'categories',
+            key: 'categories',
+            render: (category) => renderCategoryTags(category),
+            filters: [
+                { text: 'Їжа', value: 'Їжа' },
+                { text: 'Напої', value: 'Напої' },
+                { text: 'Пакування', value: 'Пакування' },
+                { text: 'Перевезення', value: 'Перевезення' },
+                { text: 'Кейтенинг', value: 'Кейтенинг' },
+            ],
+            onFilter: (value, record) =>
+                record.categories && record.categories.some((category) => category.name === value),
         },
         {
             title: 'EDRPOU',
