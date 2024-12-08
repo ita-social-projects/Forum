@@ -287,12 +287,11 @@ function ProfilesTable() {
         },
         {
             title: 'Представник',
-            dataIndex: 'person',
-            key: 'person',
-            render: (person) => person.name,
+            dataIndex: 'representative',
+            key: 'representative',
             sorter: true,
-            sortOrder: sortInfo.field === 'person' ? sortInfo.order : null,
-            ...getColumnSearchProps('person'),
+            sortOrder: sortInfo.field === 'representative' ? sortInfo.order : null,
+            ...getColumnSearchProps('representative'),
             },
         {
             title: 'Адреса',
