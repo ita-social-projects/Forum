@@ -154,6 +154,32 @@ function ProfilesTable() {
 
         return <>{tags}</>;
     };
+
+    const renderStatusTags = (status) => {
+        const tags = [];
+
+        if (status === 'undefined') {
+            tags.push(<Tag color="geekblue" key="active">Undefined</Tag>);
+        }
+        if (status === 'pending') {
+            tags.push(<Tag color="yellow" key="deleted">Pending</Tag>);
+        }
+        if (status === 'blocked') {
+            tags.push(<Tag color="red-inverse" key="deleted">Blocked</Tag>);
+        }
+        if (status === 'active') {
+            tags.push(<Tag color="green" key="deleted">Active</Tag>);
+        }
+        if (status === 'approved') {
+            tags.push(<Tag color="green-inverse" key="deleted">Approved</Tag>);
+        }
+        if (status === 'auto_approved') {
+            tags.push(<Tag color="lime" key="deleted">Auto Approved</Tag>);
+        }
+
+        return <>{tags}</>;
+    };
+
     const renderCategoryTags = (categories) => {
     const tags = [];
     categories.forEach((category) => {
@@ -225,12 +251,48 @@ function ProfilesTable() {
             width: 180
         },
         {
-            title: 'EDRPOU',
-            dataIndex: 'edrpou',
-            key: 'edrpou',
+            title: 'Дата реєстрації',
+            dataIndex: 'created_at',
+            key: 'created_at',
             sorter: true,
-            sortOrder: sortInfo.field === 'edrpou' ? sortInfo.order : null,
-            ...getColumnSearchProps('edrpou'),
+            sortOrder: sortInfo.field === 'created_at' ? sortInfo.order : null,
+            sortIcon: ({sortOrder}) => getSortIcon(sortOrder),
+            ...getColumnSearchProps('created_at'),
+            width: 170
+        },
+        {
+            title: 'Дата оновлення',
+            dataIndex: 'updated_at',
+            key: 'updated_at',
+            sorter: true,
+            sortOrder: sortInfo.field === 'updated_at' ? sortInfo.order : null,
+            sortIcon: ({sortOrder}) => getSortIcon(sortOrder),
+            ...getColumnSearchProps('updated_at'),
+            width: 170
+        },
+        {
+            title: 'Статус',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status) => renderStatusTags(status),
+            filters: [
+                { text: 'Їжа', value: 'Їжа' },
+                { text: 'Напої', value: 'Напої' },
+                { text: 'Пакування', value: 'Пакування' },
+                { text: 'Перевезення', value: 'Перевезення' },
+                { text: 'Кейтенинг', value: 'Кейтенинг' },
+            ],
+            onFilter: (value, record) => record.status === value,
+
+        },
+        {
+            title: 'Представник',
+            dataIndex: 'person',
+            key: 'person',
+            render: (person) => person.name,
+            sorter: true,
+            sortOrder: sortInfo.field === 'person' ? sortInfo.order : null,
+            ...getColumnSearchProps('person'),
         },
         {
             title: 'Адреса',
@@ -238,13 +300,6 @@ function ProfilesTable() {
             key: 'address',
             sorter: true,
             sortOrder: sortInfo.field === 'address' ? sortInfo.order : null,
-        },
-        {
-            title: 'Статус',
-            dataIndex: 'status',
-            key: 'status',
-            sorter: true,
-            sortOrder: sortInfo.field === 'status' ? sortInfo.order : null,
         },
     ];
     return (
