@@ -51,9 +51,7 @@ class Profile(models.Model):
     person = models.OneToOneField(CustomUser, on_delete=models.PROTECT)
     person_position = models.CharField(max_length=50, blank=True, default="")
 
-    official_name = models.CharField(
-        max_length=255, null=True, blank=True, default=None
-    )
+    official_name = models.CharField(max_length=255, null=True, default=None)
 
     regions = models.ManyToManyField("Region", blank=True)
     common_info = models.TextField(
