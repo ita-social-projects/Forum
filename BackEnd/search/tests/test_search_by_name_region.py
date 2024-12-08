@@ -40,12 +40,12 @@ class TestCompanyFilter(APITestCase):
     def test_get_profile_filtered_by_name_unauthorized(self):
         response = self.client.get(path="/api/search/?name=Kyivbud")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
 
     def test_get_profile_filtered_by_region_eng_unauthorized(self):
         response = self.client.get(path="/api/search/?regions_eng=Dnipro")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -69,14 +69,14 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_region_eng_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?regions_eng=Dnipro")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -100,14 +100,14 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_region_ukr_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?regions_ukr=Дніпро")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -131,13 +131,13 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_region_ukr_unauthorized(self):
         response = self.client.get(path="/api/search/?regions_ukr=Дніпро")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -161,14 +161,14 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_region_ukr_partial_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?regions_ukr=Дніп")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -192,13 +192,13 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_region_ukr_partial_unauthorized(self):
         response = self.client.get(path="/api/search/?regions_ukr=Дніпро")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -222,14 +222,14 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_region_ukr_lower_case_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?regions_ukr=дніпро")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -253,40 +253,40 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_region_ukr_not_exist_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?regions_ukr=УУ")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_region_eng_not_exist_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?regions_eng=WWWW")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_region_ukr_not_exist_unauthorized(self):
         response = self.client.get(path="/api/search/?regions_ukr=УУ")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_region_eng_not_exist_unauthorized(self):
         response = self.client.get(path="/api/search/?regions_eng=WWWW")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_name_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?name=Kyivbud")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -310,39 +310,39 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profiles_without_filter_unauthorized(self):
         response = self.client.get(path="/api/search/")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(4, len(response.data))
+        self.assertEqual(4, response.data["total_items"])
 
     def test_get_profiles_without_filter_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(4, len(response.data))
+        self.assertEqual(4, response.data["total_items"])
 
     def test_get_profiles_filter_wrong_name_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?name=Chernovcimilk")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profiles_filter_wrong_name_unauthorized(self):
         response = self.client.get(path="/api/search/?name=Chernovcimilk")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_name_and_region_eng_unauthorized(self):
         response = self.client.get(
             path="/api/search/?name=Kyivbud&regions_eng=Kyiv"
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -366,7 +366,7 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_name_and_region_eng_authorized(self):
@@ -375,7 +375,7 @@ class TestCompanyFilter(APITestCase):
             path="/api/search/?name=Kyivbud&region=Kyiv"
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -399,7 +399,7 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_wrong_name_and_region_ukr_authorized(
@@ -410,16 +410,16 @@ class TestCompanyFilter(APITestCase):
             path="/api/search/?name=Pizza&regions_ukr=Київ"
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_wrong_name_and_region_ukr_unauthorized(
         self,
     ):
         response = self.client.get(path="/api/search/?name=Pizza&region=Київ")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_name_and_wrong_region_eng_authorized(
         self,
@@ -429,16 +429,16 @@ class TestCompanyFilter(APITestCase):
             path="/api/search/?name=Kyivbud&regions_eng=Ghernigiv"
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_name_and_wrong_region_unauthorized(self):
         response = self.client.get(
             path="/api/search/?name=Kyivbud&regions_eng=Ghernigiv"
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_wrong_name_and_wrong_region_authorized(
         self,
@@ -448,8 +448,8 @@ class TestCompanyFilter(APITestCase):
             path="/api/search/?name=Pizza&regions_eng=London"
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_wrong_name_and_wrong_region_unauthorized(
         self,
@@ -458,25 +458,25 @@ class TestCompanyFilter(APITestCase):
             path="/api/search/?name=Pizza&regions_ukr=Лондон"
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_filtered_by_region_eng_partially_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?regions_eng=Dnip")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
 
     def test_get_profile_filtered_by_region_eng_partially_unauthorized(self):
         response = self.client.get(path="/api/search/?regions_eng=Dnip")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
 
     def test_get_profile_filtered_by_name_partially_authorized(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/search/?name=Kyiv")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -500,13 +500,13 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_name_partially_unauthorized(self):
         response = self.client.get(path="/api/search/?name=Kyiv")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -530,7 +530,7 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_name_and_region_eng_partialyy_authorized(
@@ -541,7 +541,7 @@ class TestCompanyFilter(APITestCase):
             path="/api/search/?name=Kyiv&regions_eng=Ky"
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.data))
+        self.assertEqual(1, response.data["total_items"])
         self.assertEqual(
             [
                 {
@@ -565,7 +565,7 @@ class TestCompanyFilter(APITestCase):
                     "is_saved": False,
                 }
             ],
-            response.json(),
+            response.data["results"],
         )
 
     def test_get_profile_filtered_by_wrong_name_and_wrong_region_partially_authorized(
@@ -576,8 +576,8 @@ class TestCompanyFilter(APITestCase):
             path="/api/search/?name=Kyivf&regions_eng=Kyif"
         )
         self.assertEqual(200, response.status_code)
-        self.assertEqual(0, len(response.data))
-        self.assertEqual([], response.json())
+        self.assertEqual(0, response.data["total_items"])
+        self.assertEqual([], response.data["results"])
 
     def test_get_profile_ordered_by_name_asc_unauthorized(
         self,
@@ -667,8 +667,8 @@ class TestCompanyFilter(APITestCase):
 
         response = self.client.get(path="/api/search/?ordering=name")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(4, len(response.data))
-        self.assertEqual(ordered_response_data, response.json())
+        self.assertEqual(4, response.data["total_items"])
+        self.assertEqual(ordered_response_data, response.data["results"])
 
     def test_get_profile_ordered_by_name_asc_authorized(
         self,
@@ -759,8 +759,8 @@ class TestCompanyFilter(APITestCase):
 
         response = self.client.get(path="/api/search/?ordering=name")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(4, len(response.data))
-        self.assertEqual(ordered_response_data, response.json())
+        self.assertEqual(4, response.data["total_items"])
+        self.assertEqual(ordered_response_data, response.data["results"])
 
     def test_get_profile_ordered_by_name_dsc_unauthorized(
         self,
@@ -850,8 +850,8 @@ class TestCompanyFilter(APITestCase):
 
         response = self.client.get(path="/api/search/?ordering=-name")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(4, len(response.data))
-        self.assertEqual(ordered_response_data, response.json())
+        self.assertEqual(4, response.data["total_items"])
+        self.assertEqual(ordered_response_data, response.data["results"])
 
     def test_get_profile_ordered_by_name_dsc_authorized(
         self,
@@ -942,5 +942,5 @@ class TestCompanyFilter(APITestCase):
 
         response = self.client.get(path="/api/search/?ordering=-name")
         self.assertEqual(200, response.status_code)
-        self.assertEqual(4, len(response.data))
-        self.assertEqual(ordered_response_data, response.json())
+        self.assertEqual(4, response.data["total_items"])
+        self.assertEqual(ordered_response_data, response.data["results"])
