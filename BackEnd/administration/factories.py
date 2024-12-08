@@ -45,4 +45,4 @@ class AdminCategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Category
 
-    name = factory.Sequence(lambda n: f"category {n + 1}")    
+    name = factory.Sequence(lambda n: f"category {n + 1}")

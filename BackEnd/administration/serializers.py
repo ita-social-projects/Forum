@@ -223,11 +223,14 @@ class ManageCategoriesSerializer(serializers.ModelSerializer):
             "id",
             "name",
         )
-    
+
     def validate_name(self, value):
         if Category.objects.filter(name=value).exists():
-            raise serializers.ValidationError("Category with this name already exists.")
-        return value    
+            raise serializers.ValidationError(
+                "Category with this name already exists."
+            )
+        return value
+
 
 class CategoryDetailSerializer(serializers.ModelSerializer):
     class Meta:

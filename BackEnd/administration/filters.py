@@ -56,5 +56,5 @@ class CategoriesFilter(FilterSet):
         fields=(
             ("id", "id"),
             ("name", "name"),
-            )
+        )
     )
