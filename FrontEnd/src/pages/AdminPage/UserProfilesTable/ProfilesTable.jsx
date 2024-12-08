@@ -210,6 +210,18 @@ function ProfilesTable() {
                 record.categories && record.categories.some((category) => category.name === value),
         },
         {
+            title: (<div style={{whiteSpace: 'normal', textAlign: 'center'}}>
+                Суб&apos;єкт <br/> господарювання
+            </div>),
+            dataIndex: 'official_name',
+            key: 'official_name',
+            sorter: true,
+            sortOrder: sortInfo.field === 'official_name' ? sortInfo.order : null,
+            sortIcon: ({sortOrder}) => getSortIcon(sortOrder),
+            ...getColumnSearchProps('official_name'),
+            width: 170, // обмеження ширини
+        },
+        {
             title: 'EDRPOU',
             dataIndex: 'edrpou',
             key: 'edrpou',
