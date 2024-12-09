@@ -20,9 +20,9 @@ urlpatterns = [
     path("users/<pk>/", UserDetailView.as_view(), name="user-detail"),
     path("profiles/", ProfilesListView.as_view(), name="profile-list"),
     path(
-        "profiles/satistics/",
+        "profiles/statistics/",
         ProfileStatisticsView.as_view(),
-        name="profile-satistics",
+        name="profile-statistics",
     ),
     path("profiles/<pk>/", ProfileDetailView.as_view(), name="profile-detail"),
     path(
