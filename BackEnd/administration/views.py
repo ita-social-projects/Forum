@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.views import View
-from django.db.models import Count
-from django.db.models import Q
+from django.db.models import Count, Q
+from django_filters.rest_framework import DjangoFilterBackend
+
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
@@ -34,8 +35,6 @@ from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 from .serializers import FeedbackSerializer
 from utils.administration.send_email_feedback import send_email_feedback
-
-from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UsersFilter
 
 
