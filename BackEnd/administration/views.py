@@ -1,5 +1,8 @@
 from django.http import JsonResponse
 from django.views import View
+from django.db.models import Count, Q
+from django_filters.rest_framework import DjangoFilterBackend
+
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
@@ -7,6 +10,7 @@ from drf_spectacular.utils import (
 )
 from rest_framework.generics import (
     ListAPIView,
+    RetrieveAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
     CreateAPIView,
@@ -21,6 +25,7 @@ from administration.serializers import (
     AdminUserDetailSerializer,
     AutoModerationHoursSerializer,
     ModerationEmailSerializer,
+    StatisticsSerializer,
 )
 from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
@@ -30,8 +35,6 @@ from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 from .serializers import FeedbackSerializer
 from utils.administration.send_email_feedback import send_email_feedback
 from utils.administration.send_email_notification import send_email_to_user
-
-from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UsersFilter
 
 
@@ -102,6 +105,23 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.select_related("person").prefetch_related(
         "regions", "categories", "activities"
     )
+
+
+class ProfileStatisticsView(RetrieveAPIView):
+    """
+    Count of companies
+    """
+
+    permission_classes = [IsStaffUser]
+    serializer_class = StatisticsSerializer
+
+    def get_object(self):
+        return Profile.objects.aggregate(
+            companies_count=Count("pk"),
+            investors_count=Count("pk", filter=Q(is_registered=True)),
+            startups_count=Count("pk", filter=Q(is_startup=True)),
+            blocked_companies_count=Count("pk", filter=Q(status="blocked")),
+        )
 
 
 @extend_schema(
