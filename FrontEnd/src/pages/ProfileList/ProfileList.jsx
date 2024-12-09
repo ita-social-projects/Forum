@@ -5,6 +5,7 @@ import CompanyCard from '../../components/CompanyCard/CompanyCard';
 
 export default function ProfileList({
   isAuthorized,
+  emptyText,
   current,
   items,
   profiles,
@@ -34,7 +35,7 @@ export default function ProfileList({
       grid={{
         justify: 'center',
         align: 'stretch',
-        gutter: [32, 24],
+        gutter: [24, 24],
         xs: 1,
         md: 2,
         xl: 3,
@@ -53,9 +54,13 @@ export default function ProfileList({
       }}
       dataSource={profiles}
       split={false}
-      locale={{emptyText: 'Жодна компанія не відповідає обраному фільтру.'}}
+      locale={{emptyText: emptyText}}
       renderItem={(item) => (
-        <List.Item key={item.id}>
+        <List.Item key={item.id}
+          style={{
+            marginBlockEnd: '0',
+          }}
+        >
           <CompanyCard
               isAuthorized={isAuthorized}
               profile={item}

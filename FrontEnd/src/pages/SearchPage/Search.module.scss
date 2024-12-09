@@ -1,0 +1,123 @@
+.search-page__outer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.search-page {
+  display: flex;
+  align-self: center;
+  align-items: flex-start;
+  flex-direction: column;
+  background: var(--new-companies-background-color);
+  box-sizing: border-box;
+  width: 375px;
+  padding: 40px 15px;
+  gap: 32px;
+}
+
+.search-page__empty {
+  height: 102px;
+}
+
+.search-list__content--items {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.search-page__results-count {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-field__entered-value {
+  color: #707070;
+  font: var(--font-main);
+  font-weight: 300;
+  font-size: 18px ;
+}
+
+.search-results__text {
+  font: normal normal bold 18px/2 var(--font-main);
+  font-size: 18px;
+  font-weight: 700;
+  color: #232424;
+  line-height: 22px;
+}
+
+.search-page__error {
+  width: 100%;
+  background-color: rgba(249, 245, 236, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 288px;
+  flex-grow: 1;
+}
+
+.search_result__error {
+  width: 100%;
+  color: var(--search-text-color);
+  font: normal normal bold 24px/2 var(--font-main);
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media only screen and (min-width: 768px){
+    .search-results__text {
+      font-size: 34px;
+      line-height: 41px;
+    }
+
+    .search-field__entered-value{
+      font-size: 34px;
+    }
+
+    .search-result__error {
+      font: normal normal bold 40px/2 var(--font-main);
+      }
+
+    .search-page {
+      width: 768px;
+      padding: 40px 27px;
+    }
+
+    .search-page__empty {
+      height: 121px;
+    }
+
+}
+
+@media only screen and (min-width: 1200px){
+  .search-results__text {
+    font-size: 34px;
+    line-height: 41px;
+  }
+
+  .search-field__entered-value{
+    font-size: 34px;
+  }
+
+  .search-result__error {
+    font: normal normal bold 40px/2 var(--font-main);
+    }
+
+  .search-page {
+    width: 1200px;
+    padding: 40px 35px;
+  }
+
+  .search-page__error {
+    min-height: 480px;
+  }
+
+}
+
+@media only screen and (min-width: 1512px){
+    .search-page {
+        width: 1512px;
+        padding: 40px 107px;
+    }
+
+}
