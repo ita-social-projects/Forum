@@ -11,9 +11,7 @@ from search.filters import CompanyFilter
 class SearchCompanyView(ListAPIView):
     queryset = (
         Profile.objects.active_only()
-        .prefetch_related(
-        "regions", "categories", "activities"
-        )
+        .prefetch_related("regions", "categories", "activities")
         .order_by("id")
     )
     serializer_class = CompanySerializers
@@ -40,9 +38,7 @@ class SearchCompanyView(ListAPIView):
 class AdvancedSearchView(ListAPIView):
     queryset = (
         Profile.objects.active_only()
-        .prefetch_related(
-            "regions", "categories", "activities"
-        )
+        .prefetch_related("regions", "categories", "activities")
         .order_by("id")
     )
     serializer_class = CompanyAdvancedSerializers

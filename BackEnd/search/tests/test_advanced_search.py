@@ -57,7 +57,9 @@ class TestCompanyFilter(APITestCase):
 
     def test_get_search_in_all_companies_official_order_by_name(self):
         response = self.client.get(path="/api/search/advanced?search=official")
-        names_from_response = [prof["name"] for prof in response.data["results"]]
+        names_from_response = [
+            prof["name"] for prof in response.data["results"]
+        ]
         self.assertEqual(200, response.status_code)
         self.assertEqual(
             names_from_response,
@@ -89,7 +91,9 @@ class TestCompanyFilter(APITestCase):
 
     def test_get_search_parcial_item(self):
         response = self.client.get(path="/api/search/advanced?search=ch")
-        names_from_response = [prof["name"] for prof in response.data["results"]]
+        names_from_response = [
+            prof["name"] for prof in response.data["results"]
+        ]
         self.assertEqual(200, response.status_code)
         self.assertEqual(3, response.data["total_items"])
         self.assertEqual(
@@ -108,7 +112,9 @@ class TestCompanyFilter(APITestCase):
 
     def test_get_search_name_service_product_common_info(self):
         response = self.client.get(path="/api/search/advanced?search=KYIV")
-        names_from_response = [prof["name"] for prof in response.data["results"]]
+        names_from_response = [
+            prof["name"] for prof in response.data["results"]
+        ]
         self.assertEqual(200, response.status_code)
         self.assertEqual(2, response.data["total_items"])
         self.assertEqual(names_from_response, ["Kryvyi Rig", "Kyiv"])
@@ -117,7 +123,9 @@ class TestCompanyFilter(APITestCase):
         response = self.client.get(
             path="/api/search/advanced?search=product info"
         )
-        names_from_response = [prof["name"] for prof in response.data["results"]]
+        names_from_response = [
+            prof["name"] for prof in response.data["results"]
+        ]
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, response.data["total_items"])
         self.assertEqual(names_from_response, ["Kryvyi Rig"])
