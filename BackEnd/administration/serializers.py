@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Q
 from rest_framework import serializers
 from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
