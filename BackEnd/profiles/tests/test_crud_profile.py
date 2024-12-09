@@ -1149,3 +1149,41 @@ class TestProfileDetailAPIView(APITestCase):
             },
         )
         self.assertEqual(400, response.status_code)
+
+    def test_partial_update_profile_name_exceeds_character_limit(self):
+        self.client.force_authenticate(self.user)
+
+        long_name = "a" * 46
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"name": long_name},
+            format="json",
+        )
+
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+
+        self.assertEqual(
+            response.json(),
+            {"name": ["Ensure this field has no more than 45 characters."]},
+        )
+
+    def test_partial_update_profile_name_within_limit(self):
+        self.client.force_authenticate(self.user)
+
+        valid_name = "Valid Company Name"
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"name": valid_name},
+            format="json",
+        )
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+
+        self.assertEqual(response.data.get("name"), valid_name)
+
+        self.profile.refresh_from_db()
+        self.assertEqual(self.profile.name, valid_name)

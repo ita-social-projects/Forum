@@ -334,7 +334,7 @@ class ProfileOwnerDetailEditSerializer(serializers.ModelSerializer):
             )
         if name and len(name) > 45:
             raise serializers.ValidationError(
-                {"name": "The company name must not exceed 45 characters."}
+                {"name": "Ensure this field has no more than 45 characters."}
             )
 
         return data
