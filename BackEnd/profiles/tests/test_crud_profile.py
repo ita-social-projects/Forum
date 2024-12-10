@@ -533,8 +533,11 @@ class TestProfileDetailAPIView(APITestCase):
             data={"official_name": ""},
             format="json",
         )
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertIsNone(response.data.get("official_name"))
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(
+            response.json(),
+            {"official_name": ["This field may not be blank."]},
+        )
 
     def test_partial_update_profile_edrpou_empty_value(self):
         self.client.force_authenticate(self.user)
@@ -563,11 +566,8 @@ class TestProfileDetailAPIView(APITestCase):
         self.assertIsNone(response.data.get("rnokpp"))
 
     # updating fields when another instance with empty fields already exists in db
-    def test_partial_update_profile_fields_with_empty_values(
-        self,
-    ):
+    def test_partial_update_profile_fields_with_empty_values(self):
         ProfileStartupFactory.create(
-            official_name=None,
             edrpou=None,
         )
         self.client.force_authenticate(self.user)
@@ -576,21 +576,16 @@ class TestProfileDetailAPIView(APITestCase):
             path="/api/profiles/{profile_id}".format(
                 profile_id=self.profile.id
             ),
-            data={"official_name": "", "edrpou": ""},
+            data={"edrpou": ""},
             format="json",
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
+        self.profile.refresh_from_db()
+        self.assertIsNone(self.profile.edrpou)
+
         response = self.client.get(path="/api/profiles/")
         self.assertEqual(2, response.data["total_items"])
-        self.assertTrue(
-            all(
-                [
-                    item.get("official_name") is None
-                    for item in response.data["results"]
-                ]
-            )
-        )
         self.assertTrue(
             all(
                 [
@@ -1154,3 +1149,41 @@ class TestProfileDetailAPIView(APITestCase):
             },
         )
         self.assertEqual(400, response.status_code)
+
+    def test_partial_update_profile_name_exceeds_character_limit(self):
+        self.client.force_authenticate(self.user)
+
+        long_name = "a" * 46
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"name": long_name},
+            format="json",
+        )
+
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+
+        self.assertEqual(
+            response.json(),
+            {"name": ["Ensure this field has no more than 45 characters."]},
+        )
+
+    def test_partial_update_profile_name_within_limit(self):
+        self.client.force_authenticate(self.user)
+
+        valid_name = "Valid Company Name"
+        response = self.client.patch(
+            path="/api/profiles/{profile_id}".format(
+                profile_id=self.profile.id
+            ),
+            data={"name": valid_name},
+            format="json",
+        )
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+
+        self.assertEqual(response.data.get("name"), valid_name)
+
+        self.profile.refresh_from_db()
+        self.assertEqual(self.profile.name, valid_name)
