@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
@@ -22,7 +23,7 @@ import BanerModeration from './BanerModeration';
 import ProfileFormButton from '../UI/ProfileFormButton/ProfileFormButton';
 
 const LABELS = {
-  name: 'Назва компанії',
+  name: 'Коротка назва компанії',
   official_name: 'Юридична назва компанії',
   edrpou: 'ЄДРПОУ',
   rnokpp: 'РНОКПП',
@@ -38,6 +39,10 @@ const LABELS = {
 
 const ERRORS = {
   name: {
+    error: false,
+    message: '',
+  },
+  official_name: {
     error: false,
     message: '',
   },
@@ -85,7 +90,7 @@ const GeneralInfo = (props) => {
 
   const { setFormIsDirty } = useContext(DirtyFormContext);
 
-  const fields = {
+  const fields = useMemo(() => ({
     name: { defaultValue: mainProfile?.name },
     official_name: { defaultValue: mainProfile?.official_name ?? null },
     edrpou: { defaultValue: mainProfile?.edrpou ?? null },
@@ -98,12 +103,12 @@ const GeneralInfo = (props) => {
     common_info: { defaultValue: mainProfile?.common_info ?? null },
     is_registered: { defaultValue: mainProfile?.is_registered ?? null },
     is_startup: { defaultValue: mainProfile?.is_startup ?? null },
-  };
+  }), [mainProfile]);
 
   useEffect(() => {
     const isDirty = checkFormIsDirty(fields, null, profile);
     setFormIsDirty(isDirty);
-  }, [mainProfile, profile]);
+  }, [mainProfile, profile, fields, setFormIsDirty]);
 
   const checkRequiredFields = () => {
     let isValid = true;
@@ -161,31 +166,54 @@ const GeneralInfo = (props) => {
 
   const onUpdateField = (e) => {
     const { value: fieldValue, name: fieldName } = e.target;
-    const symbolCount = fieldValue.replace(/[\s]/g, '')?.length;
-    setFormStateErr({
-      ...formStateErr,
+    const symbolCount = fieldValue.replace(/[\s]/g, '').length;
+    const fieldValidationConfig = {
+      name: {
+        minLength: 2,
+        maxLength: 45,
+        errorMessage: 'Введіть від 2 до 45 символів.',
+      },
+      official_name: {
+        minLength: 2,
+        maxLength: 200,
+        errorMessage: 'Введіть від 2 до 200 символів.',
+      },
+    };
+    setFormStateErr((prev) => ({
+      ...prev,
       [fieldName]: { error: false, message: '' },
-    });
-    if (fieldName === 'name' && symbolCount < 2) {
-      setFormStateErr({
-        ...formStateErr,
-        [fieldName]: { error: true, message: 'Введіть від 2 до 100 символів' },
-      });
-    }
-    if (fieldName === 'official_name' && symbolCount !== 0 && symbolCount < 2) {
-      setFormStateErr({
-        ...formStateErr,
-        [fieldName]: { error: true, message: 'Введіть від 2 до 200 символів' },
-      });
+    }));
+    if (fieldValidationConfig[fieldName]) {
+      const { minLength, errorMessage } = fieldValidationConfig[fieldName];
+      if (symbolCount !== 0 && symbolCount < minLength) {
+        setFormStateErr((prev) => ({
+          ...prev,
+          [fieldName]: {
+            error: true,
+            message: errorMessage,
+          },
+        }));
+      }
     }
     setProfile((prevState) => {
       return { ...prevState, [fieldName]: fieldValue };
     });
   };
 
+
   const onBlurHandler = (e) => {
     const { value: rawFieldValue, name: fieldName } = e.target;
     const fieldValue = rawFieldValue.replace(/\s{2,}/g, ' ').trim();
+    const requiredFields = ['official_name', 'name'];
+    if (requiredFields.includes(fieldName) && !fieldValue) {
+      setFormStateErr((prev) => ({
+        ...prev,
+        [fieldName]: {
+          error: true,
+          message: 'Це поле є обов’язковим для заповнення.',
+        },
+      }));
+    }
     setProfile((prevState) => {
       return { ...prevState, [fieldName]: fieldValue };
     });
@@ -387,19 +415,27 @@ const GeneralInfo = (props) => {
       toast.error(
         'Зміни не можуть бути збережені, перевірте правильність заповнення полів'
       );
-    } else {
-      const data = defineChanges(fields, profile, null);
-      try {
-        const response = await axios.patch(
-          `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
+      return;
+    }
+    if (profile.name?.length > 45) {
+      toast.error('Назва компанії не повинна перевищувати 45 символів.');
+      return;
+    }
+    if (!profile.official_name?.trim()) {
+      toast.error('Юридична назва компанії є обов’язковою.');
+      return;
+    }
+    const data = defineChanges(fields, profile, null);
+    try {
+      const response = await axios.patch(
+        `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
         data.profileChanges
-        );
-        profileMutate(response.data);
-        toast.success('Зміни успішно збережено');
-        setFormIsDirty(false);
-      } catch (error) {
-        handleError(error);
-      }
+      );
+      profileMutate(response.data);
+      toast.success('Зміни успішно збережено');
+      setFormIsDirty(false);
+    } catch (error) {
+      handleError(error);
     }
   };
 
@@ -415,11 +451,22 @@ const GeneralInfo = (props) => {
           noValidate
         >
           <div className={css['fields']}>
-            <div className={css['fields-groups']}>
+          <div className={css['fields-groups']}>
+            <div className={css['field-with-tooltip']}>
               <HalfFormField
                 name="name"
                 fieldPlaceholder="Введіть назву компанії"
-                label={LABELS.name}
+                label={
+                  <span className={css['field-label']}>
+                    {LABELS.name}
+                    <div className={css['tooltip-inline']}>
+                      ?
+                      <span className={css['tooltip-text']}>
+                        Назва буде використовуватися на картці компанії
+                      </span>
+                    </div>
+                  </span>
+                }
                 updateHandler={onUpdateField}
                 onBlur={onBlurHandler}
                 error={
@@ -429,8 +476,9 @@ const GeneralInfo = (props) => {
                 }
                 requiredField={true}
                 value={profile.name}
-                maxLength={100}
+                maxLength={45}
               />
+            </div>
               <HalfFormField
                 name="official_name"
                 fieldPlaceholder="Введіть юридичну назву компанії"
@@ -443,6 +491,7 @@ const GeneralInfo = (props) => {
                     ? formStateErr['official_name']['message']
                     : null
                 }
+                requiredField={true}
                 maxLength={200}
               />
             </div>
