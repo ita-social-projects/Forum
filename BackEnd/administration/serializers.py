@@ -213,3 +213,10 @@ class FeedbackSerializer(serializers.Serializer):
         required=True,
         error_messages={"required": "Please select a category."},
     )
+
+
+class StatisticsSerializer(serializers.Serializer):
+    companies_count = serializers.IntegerField()
+    investors_count = serializers.IntegerField()
+    startups_count = serializers.IntegerField()
+    blocked_companies_count = serializers.IntegerField()
