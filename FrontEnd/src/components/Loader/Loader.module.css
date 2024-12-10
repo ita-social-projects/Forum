@@ -1,4 +1,5 @@
 .loader__container {
   padding-top: 30%;
   min-height: var(--min-height-block-main);
+  width: 100%;
 }

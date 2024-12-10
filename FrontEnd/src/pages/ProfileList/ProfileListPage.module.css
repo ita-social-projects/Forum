@@ -76,7 +76,7 @@
   display: flex;
   align-self: center;
   flex-direction: column;
-  padding: 24px 16px 40px;
+  padding: 24px 27px 40px;
   gap: 20px;
 }
 
@@ -136,7 +136,7 @@
   }
 
   .company-list__content {
-    padding: 24px 32px 32px;
+    padding: 24px 35px 32px;
     gap: 32px;
   }
 
@@ -166,7 +166,7 @@
   }
 
   .company-list__content {
-    padding: 24px 104px 40px;
+    padding: 24px 107px 40px;
     gap: 32px;
   }
 
