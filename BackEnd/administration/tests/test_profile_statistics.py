@@ -18,7 +18,7 @@ class TestProfileStatisticsStaff(APITestCase):
             person_id=self.test_investor_user.id, is_startup=False
         )
         self.blocked_company = AdminProfileFactory(
-            person_id=self.test_blocked_company_user.id, status='blocked'
+            person_id=self.test_blocked_company_user.id, status="blocked"
         )
 
     def test_get_profile_statistics(self):
