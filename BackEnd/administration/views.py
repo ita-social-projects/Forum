@@ -223,7 +223,7 @@ class ManageCategoriesView(ListCreateAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = CategoriesFilter
     pagination_class = ListPagination
-    queryset = Category.objects.all().order_by("id") 
+    queryset = Category.objects.all().order_by("id")
 
 
 class CategoryDetailView(RetrieveUpdateAPIView):
