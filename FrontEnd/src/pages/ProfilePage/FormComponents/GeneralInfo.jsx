@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
+import { Tooltip } from 'antd';
 import useSWR from 'swr';
 import { useAuth, useProfile } from '../../../hooks';
 import checkFormIsDirty from '../../../utils/checkFormIsDirty';
@@ -90,7 +90,7 @@ const GeneralInfo = (props) => {
 
   const { setFormIsDirty } = useContext(DirtyFormContext);
 
-  const fields = useMemo(() => ({
+  const fields = {
     name: { defaultValue: mainProfile?.name },
     official_name: { defaultValue: mainProfile?.official_name ?? null },
     edrpou: { defaultValue: mainProfile?.edrpou ?? null },
@@ -103,12 +103,12 @@ const GeneralInfo = (props) => {
     common_info: { defaultValue: mainProfile?.common_info ?? null },
     is_registered: { defaultValue: mainProfile?.is_registered ?? null },
     is_startup: { defaultValue: mainProfile?.is_startup ?? null },
-  }), [mainProfile]);
+  };
 
   useEffect(() => {
     const isDirty = checkFormIsDirty(fields, null, profile);
     setFormIsDirty(isDirty);
-  }, [mainProfile, profile, fields, setFormIsDirty]);
+  }, [mainProfile, profile]);
 
   const checkRequiredFields = () => {
     let isValid = true;
@@ -453,18 +453,15 @@ const GeneralInfo = (props) => {
           <div className={css['fields']}>
           <div className={css['fields-groups']}>
             <div className={css['field-with-tooltip']}>
-              <HalfFormField
+            <HalfFormField
                 name="name"
                 fieldPlaceholder="Введіть назву компанії"
                 label={
                   <span className={css['field-label']}>
                     {LABELS.name}
-                    <div className={css['tooltip-inline']}>
-                      ?
-                      <span className={css['tooltip-text']}>
-                        Назва буде використовуватися на картці компанії
-                      </span>
-                    </div>
+                    <Tooltip title="Назва буде використовуватися на картці компанії">
+                      <span className={css['tooltip-icon']}>?</span>
+                    </Tooltip>
                   </span>
                 }
                 updateHandler={onUpdateField}

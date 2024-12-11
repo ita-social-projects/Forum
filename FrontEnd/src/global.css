@@ -162,9 +162,6 @@
 
   /* Tooltip profile page */
   --tooltip-bg-color: #f0f0f0;
-  --tooltip-text-bg-color: #000000;
-  --tooltip-text-color: #fff;
   --tooltip-border-radius: 50%;
-  --tooltip-text-radius: 5px;
-  --tooltip-font-color: #000; 
+  --tooltip-font-color: #292E32; 
 }
