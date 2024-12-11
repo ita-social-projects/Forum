@@ -44,5 +44,6 @@ class AdminProfileFactory(factory.django.DjangoModelFactory):
 class AdminCategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Category
+        django_get_or_create = ("name",)
 
     name = factory.Sequence(lambda n: f"category {n + 1}")

@@ -223,7 +223,7 @@ class ManageCategoriesView(ListCreateAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = CategoriesFilter
     pagination_class = ListPagination
-    queryset = Category.objects.all().order_by("id").select_related()
+    queryset = Category.objects.all().order_by("id") 
 
 
 class CategoryDetailView(RetrieveUpdateAPIView):
@@ -233,4 +233,4 @@ class CategoryDetailView(RetrieveUpdateAPIView):
 
     permission_classes = [IsStaffUser]
     serializer_class = CategoryDetailSerializer
-    queryset = Category.objects.all().select_related()
+    queryset = Category.objects.all()
