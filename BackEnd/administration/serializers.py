@@ -8,7 +8,13 @@ from profiles.models import (
 )
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
-from .models import AutoModeration, ModerationEmail
+from .models import AutoModeration, ModerationEmail, ContactInformation
+from BackEnd.validation.validate_phone_number import (
+    validate_phone_number_len,
+    validate_phone_number_is_digit,
+)
+from BackEnd.validation.validate_adress import validate_address
+from BackEnd.validation.validate_company import validate_company_name
 
 User = get_user_model()
 
@@ -220,3 +226,32 @@ class StatisticsSerializer(serializers.Serializer):
     investors_count = serializers.IntegerField()
     startups_count = serializers.IntegerField()
     blocked_companies_count = serializers.IntegerField()
+
+
+class ContactInformationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactInformation
+        fields = ['company_name', 'address', 'email', 'phone', 'updated_at', 'admin_user']
+        read_only_fields = ['updated_at', 'admin_user']
+
+    def validate_phone(self, value):
+        """
+        Validate phone field using imported validators.
+        """
+        validate_phone_number_len(value)
+        validate_phone_number_is_digit(value)
+        return value
+
+    def validate_address(self, value):
+        """
+        Validate address field.
+        """
+        validate_address(value)
+        return value
+
+    def validate_company_name(self, value):
+        """
+        Validate company name field.
+        """
+        validate_company_name(value)
+        return value
