@@ -211,7 +211,9 @@ function ProfilesTable() {
 
     const columns = [
         {
-            title: 'Назва компанії',
+            title: (<div className={css['TableSubject']}>
+                Назва компанії
+            </div>),
             dataIndex: 'name',
             key: 'name',
             sorter: true,
@@ -221,7 +223,9 @@ function ProfilesTable() {
             width: 140,
         },
         {
-            title: 'Тип компанії',
+            title: (<div className={css['TableSubject']}>
+                Тип компанії
+            </div>),
             dataIndex: 'company_type',
             key: 'company_type',
             render: (company_type) => renderCompanyTypeTags(company_type),
@@ -234,7 +238,9 @@ function ProfilesTable() {
             width: 140
         },
         {
-            title: 'Вид діяльності',
+            title: (<div className={css['TableSubject']}>
+                Вид діяльності
+            </div>),
             dataIndex: 'activities',
             key: 'activities',
             render: (activity) => renderActivityTags(activity),
@@ -263,7 +269,9 @@ function ProfilesTable() {
             width: 180
         },
         {
-            title: 'Дата реєстрації',
+            title: (<div className={css['TableSubject']}>
+                Дата реєстрації
+            </div>),
             dataIndex: 'created_at',
             key: 'created_at',
             sorter: true,
@@ -273,7 +281,9 @@ function ProfilesTable() {
             width: 170
         },
         {
-            title: 'Дата оновлення',
+            title: (<div className={css['TableSubject']}>
+                Дата оновлення
+            </div>),
             dataIndex: 'updated_at',
             key: 'updated_at',
             sorter: true,
@@ -283,7 +293,9 @@ function ProfilesTable() {
             width: 150
         },
         {
-            title: 'Статус',
+            title: (<div className={css['TableSubject']}>
+                Статус
+            </div>),
             dataIndex: 'status',
             key: 'status',
             render: (status) => renderStatusTags(status),
@@ -298,7 +310,9 @@ function ProfilesTable() {
             width: 120
         },
         {
-            title: 'Представник',
+            title: (<div className={css['TableSubject']}>
+                Представник
+            </div>),
             dataIndex: 'representative',
             key: 'representative',
             sorter: true,
@@ -307,7 +321,9 @@ function ProfilesTable() {
             width: 170,
             },
         {
-            title: 'Контакти',
+            title: (<div className={css['TableSubject']}>
+                Контакти
+            </div>),
             dataIndex: 'phone',
             key: 'phone',
             sorter: true,
@@ -316,7 +332,9 @@ function ProfilesTable() {
             width: 130,
             },
         {
-            title: 'Адреса',
+            title: (<div className={css['TableSubject']}>
+                Адреса
+            </div>),
             dataIndex: 'address',
             key: 'address',
             sorter: true,
@@ -325,7 +343,9 @@ function ProfilesTable() {
             width: 130
         },
         {
-            title: 'Дії',
+            title: (<div className={css['TableSubject']}>
+                Дії
+            </div>),
             dataIndex: 'actions',
             key: 'actions',
             render: (_, profile) => (
