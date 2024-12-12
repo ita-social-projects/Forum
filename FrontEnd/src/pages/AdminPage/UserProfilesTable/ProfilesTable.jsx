@@ -145,11 +145,14 @@ function ProfilesTable() {
     const renderCompanyTypeTags = (type) => {
         const tags = [];
 
-        if (type === 'ФОП') {
-            tags.push(<Tag color="blue" key="active">ФОП</Tag>);
+        if (type === 'Компанія') {
+            tags.push(<Tag color="blue" key="active">Компанія</Tag>);
         }
         if (type === 'Стартап') {
             tags.push(<Tag color="yellow" key="deleted">Стартап</Tag>);
+        }
+        if (type === 'Компанія і стартап') {
+            tags.push(<Tag color="orange" key="deleted">Компанія і стартап</Tag>);
         }
 
         return <>{tags}</>;
@@ -159,48 +162,57 @@ function ProfilesTable() {
         const tags = [];
 
         if (status === 'undefined') {
-            tags.push(<Tag color="geekblue" key="active">Undefined</Tag>);
+            tags.push(<Tag color="geekblue" key="active">Не визначена</Tag>);
         }
         if (status === 'pending') {
-            tags.push(<Tag color="yellow" key="deleted">Pending</Tag>);
+            tags.push(<Tag color="yellow" key="deleted">На модерації</Tag>);
         }
         if (status === 'blocked') {
-            tags.push(<Tag color="red-inverse" key="deleted">Blocked</Tag>);
+            tags.push(<Tag color="red-inverse" key="deleted">Заблокована</Tag>);
         }
         if (status === 'active') {
-            tags.push(<Tag color="green" key="deleted">Active</Tag>);
+            tags.push(<Tag color="green" key="deleted">Активна</Tag>);
         }
         if (status === 'approved') {
-            tags.push(<Tag color="green-inverse" key="deleted">Approved</Tag>);
+            tags.push(<Tag color="green-inverse" key="deleted">Підтверджена</Tag>);
         }
         if (status === 'auto_approved') {
-            tags.push(<Tag color="lime" key="deleted">Auto Approved</Tag>);
+            tags.push(<Tag color="lime" key="deleted">Підтверджена</Tag>);
         }
 
         return <>{tags}</>;
     };
 
-    const renderCategoryTags = (categories) => {
+    const renderActivityTags = (activities) => {
     const tags = [];
-    categories.forEach((category) => {
-        if (category.name === 'Їжа') {
-            tags.push(<Tag color="gold" key={category.name}>Їжа</Tag>);
+    activities.forEach((activity) => {
+        if (activity.name === 'Виробник') {
+            tags.push(<Tag color="gold" key={activity.name}>Виробник</Tag>);
         }
-        if (category.name === 'Напої') {
-            tags.push(<Tag color="green" key={category.name}>Напої</Tag>);
+        if (activity.name === 'Імпортер') {
+            tags.push(<Tag color="green" key={activity.name}>Імпортер</Tag>);
         }
-        if (category.name === 'Пакування') {
-            tags.push(<Tag color="cyan" key={category.name}>Пакування</Tag>);
+        if (activity.name === 'Роздрібна мережа') {
+            tags.push(<Tag color="cyan" key={activity.name}>Роздрібна мережа</Tag>);
         }
-        if (category.name === 'Перевезення') {
-            tags.push(<Tag color="purple" key={category.name}>Перевезення</Tag>);
-        }
-        if (category.name === 'Кейтеринг') {
-            tags.push(<Tag color="orange" key={category.name}>Кейтеринг</Tag>);
+        if (activity.name === 'Інші послуги') {
+            tags.push(<Tag color="purple" key={activity.name}>Інші послуги</Tag>);
         }
     });
     return <>{tags}</>;
-};
+    };
+    const renderBusinessEntityTags = (business_entity) => {
+        const tags = [];
+        if (business_entity === 'Юридична особа') {
+            tags.push(<Tag color="green" key="active">Юридична особа</Tag>);
+        }
+        if (business_entity === 'ФОП') {
+            tags.push(<Tag color="blue" key="deleted">ФОП</Tag>);
+        }
+
+        return <>{tags}</>;
+    };
+
     const columns = [
         {
             title: 'Назва компанії',
@@ -222,34 +234,30 @@ function ProfilesTable() {
                 { text: 'Стартап', value: 'Стартап' },
             ],
             onFilter: (value, record) => record.company_type === value,
-            width: 120
+            width: 140
         },
         {
             title: 'Вид діяльності',
-            dataIndex: 'categories',
-            key: 'categories',
-            render: (category) => renderCategoryTags(category),
+            dataIndex: 'activities',
+            key: 'activities',
+            render: (activity) => renderActivityTags(activity),
             filters: [
-                { text: 'Їжа', value: 'Їжа' },
-                { text: 'Напої', value: 'Напої' },
-                { text: 'Пакування', value: 'Пакування' },
-                { text: 'Перевезення', value: 'Перевезення' },
-                { text: 'Кейтенинг', value: 'Кейтенинг' },
+                { text: 'Імпортер', value: 'Імпортер' },
+                { text: 'Виробник', value: 'Виробник' },
+                { text: 'Роздрібна мережа', value: 'Роздрібна мережа' },
+                { text: 'Інші послуги', value: 'Інші послуги' },
             ],
             onFilter: (value, record) =>
-                record.categories && record.categories.some((category) => category.name === value),
+                record.activities && record.activities.some((activity) => activity.name === value),
             width: 160
             },
         {
             title: (<div className={css['TableSubject']}>
                 Суб&apos;єкт <br/> господарювання
             </div>),
-            dataIndex: 'official_name',
-            key: 'official_name',
-            sorter: true,
-            sortOrder: sortInfo.field === 'official_name' ? sortInfo.order : null,
-            sortIcon: ({sortOrder}) => getSortIcon(sortOrder),
-            ...getColumnSearchProps('official_name'),
+            dataIndex: 'business_entity',
+            key: 'business_entity',
+            render: (entity) => renderBusinessEntityTags(entity),
             width: 180
         },
         {
