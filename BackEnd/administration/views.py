@@ -235,7 +235,7 @@ class ManageCategoriesView(ListCreateAPIView):
 
     ### Ordering:
     - Use the `ordering` parameter to sort the results.
-    - Example: `/manage_categori/?ordering=id` (ascending by ID) or `/manage_categori/?ordering=-id` (descending by ID).
+    - Example: `/categories/?ordering=id` (ascending by ID) or `/categories/?ordering=-id` (descending by ID).
 
     ### Filters:
     - Filters are applied using `DjangoFilterBackend`. All the above query parameters are supported for filtering.
