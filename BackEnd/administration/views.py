@@ -34,7 +34,7 @@ from utils.administration.send_email_feedback import send_email_feedback
 from utils.administration.send_email_notification import send_email_to_user
 
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import UsersFilter
+from .filters import UsersFilter, ProfilesFilter
 
 
 class UsersListView(ListAPIView):

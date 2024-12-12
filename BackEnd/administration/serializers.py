@@ -141,9 +141,11 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
         )
 
     def get_company_type(self, obj):
-        if obj.is_fop:
-            return "ФОП"
-        elif obj.is_startup:
+        if obj.is_startup and obj.is_registered:
+            return "Компанія і стартап"
+        if obj.is_registered:
+            return "Компанія"
+        if obj.is_startup:
             return "Стартап"
         return None
 
