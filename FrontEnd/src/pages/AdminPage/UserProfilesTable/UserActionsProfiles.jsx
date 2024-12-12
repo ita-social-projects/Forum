@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import styles from './UserActionsProfiles.module.css';
 
 function UserActionsProfiles({ profile }) {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function UserActionsProfiles({ profile }) {
     };
 
     return (
-        <Button onClick={viewProfile}>
+        <Button className={styles['profileButton']} onClick={viewProfile}>
             Переглянути профіль
         </Button>
     );
