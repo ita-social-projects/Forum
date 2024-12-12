@@ -117,6 +117,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
     company_type = serializers.SerializerMethodField(read_only=True)
     activities = ActivitiesSerializer(many=True, read_only=True)
     representative = serializers.SerializerMethodField(read_only=True)
+    business_entity = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Profile
@@ -127,7 +128,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "person",
             "person_position",
             "regions",
-            "official_name",
+            "business_entity",
             "phone",
             "edrpou",
             "address",
@@ -153,6 +154,11 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
         if obj.person:
             return f'{obj.person.name} {obj.person.surname}'
         return None
+
+    def get_business_entity(self, obj):
+        if obj.is_fop:
+            return "ФОП"
+        return "Юридична особа"
 
 
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
