@@ -1,4 +1,4 @@
-import { Dropdown, Button, Tooltip } from 'antd';
+import { Button } from 'antd';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
@@ -14,24 +14,10 @@ function UserActionsProfiles({ profile }) {
         }
     };
 
-    const menuItems = [
-        {
-            key: 'viewProfile',
-            label: (
-                <Tooltip title="Переглянути детальний профіль компанії">
-                    Переглянути профіль
-                </Tooltip>
-            ),
-            onClick: viewProfile,
-        },
-    ];
-
     return (
-        <>
-            <Dropdown menu={{ items: menuItems }} trigger={['click']}>
-                <Button>Обрати</Button>
-            </Dropdown>
-        </>
+        <Button onClick={viewProfile}>
+            Переглянути профіль
+        </Button>
     );
 }
 
