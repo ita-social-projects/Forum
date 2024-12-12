@@ -2,20 +2,16 @@ import {useEffect, useState} from 'react';
 import css from './ProfilesTable.module.scss';
 import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import useSWR from 'swr';
+import useSWR, {mutate} from 'swr';
 import {Button, Input, Pagination, Space, Table, Tag} from 'antd';
 import {CaretDownOutlined, CaretUpOutlined, SearchOutlined} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import UserActionsProfiles from './UserActionsProfiles';
 
 
 const DEFAULT_PAGE_SIZE = 10;
 
 function ProfilesTable() {
-
-    // const routeChange = (id) => {
-    //     const path = `../../customadmin/profile/${id}`;
-    //     navigate(path);
-    // };
     const location = useLocation();
     const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
@@ -293,7 +289,7 @@ function ProfilesTable() {
                 { text: 'Кейтенинг', value: 'Кейтенинг' },
             ],
             onFilter: (value, record) => record.status === value,
-            width: 100
+            width: 120
         },
         {
             title: 'Представник',
@@ -321,6 +317,20 @@ function ProfilesTable() {
             sortOrder: sortInfo.field === 'address' ? sortInfo.order : null,
             ...getColumnSearchProps('address'),
             width: 130
+        },
+        {
+            title: 'Дії',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: (_, profile) => (
+                <UserActionsProfiles
+                    profile={profile}
+                    onActionComplete={() => {
+                        mutate(url);
+                    }}
+                />
+            ),
+            width: 120
         },
     ];
     return (
