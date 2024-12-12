@@ -1,31 +1,19 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import useSWR from 'swr';
 import { Descriptions } from 'antd';
 import css from './ProfilesStatistics.module.css';
 
+async function fetcher(url) {
+  const response = await axios.get(url);
+  return response.data;
+}
+
 function ProfilesStatistics() {
-  const [statistics, setStatistics] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const baseUrl = process.env.REACT_APP_BASE_API_URL;
+  const url = `${baseUrl}/api/admin/profiles/statistics/`;
+  const { data: statistics, error, isLoading } = useSWR(url, fetcher);
 
-  useEffect(() => {
-      const fetchStatistics = async () => {
-          try {
-              const baseUrl = process.env.REACT_APP_BASE_API_URL;
-              const response = await axios.get(`${baseUrl}/api/admin/profiles/statistics/`);
-              setStatistics(response.data);
-          } catch (error) {
-              console.error('Error fetching statistics:', error);
-              setError('Не вдалось отримати статистику компаній');
-          } finally {
-              setLoading(false);
-          }
-      };
-
-      fetchStatistics();
-  }, []);
-
-  if (loading) return <div className={css['loading']}>Loading...</div>;
+  if (isLoading) return <div className={css['loading']}>Loading...</div>;
   if (error) return <div className={css['error']}>{error}</div>;
 
   const items = [
