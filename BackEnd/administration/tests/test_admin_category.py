@@ -6,7 +6,6 @@ from administration.factories import (
     AdminUserFactory,
     AdminProfileFactory,
 )
-from utils.dump_response import dump  # noqa
 from profiles.models import Profile, Category, CustomUser
 
 
@@ -86,3 +85,27 @@ class TestAdminCategoryAPIUserStaff(APITestCase):
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(response.json()["name"], data["name"])
         self.assertIn("id", response.json())
+
+    def test_post_unique_categoryes_users_staff(self):
+        self.client.force_authenticate(self.user)
+        data = {"name": "category 1"}
+        message = "Category with this name already exists."
+        response = self.client.post(path="/api/admin/categories/", data=data)
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(response.json()["name"][0], message)
+
+    def test_put_categoryes_id_users_staff(self):
+        self.client.force_authenticate(self.user)
+        data = {"name": "category 1212"}
+        response = self.client.put(path="/api/admin/categories/14/", data=data)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(response.json()["name"], data["name"])
+
+    def test_patch_categoryes_id_users_staff(self):
+        self.client.force_authenticate(self.user)
+        data = {"name": "category 77"}
+        response = self.client.patch(
+            path="/api/admin/categories/7/", data=data
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(response.json()["name"], data["name"])

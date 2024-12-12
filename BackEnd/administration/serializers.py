@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
 from profiles.models import (
@@ -217,19 +218,18 @@ class FeedbackSerializer(serializers.Serializer):
 
 
 class ManageCategoriesSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(
+        validators=[
+            UniqueValidator(
+                queryset=Category.objects.all(),
+                message="Category with this name already exists.",
+            )
+        ]
+    )
+
     class Meta:
         model = Category
-        fields = (
-            "id",
-            "name",
-        )
-
-    def validate_name(self, value):
-        if Category.objects.filter(name=value).exists():
-            raise serializers.ValidationError(
-                "Category with this name already exists."
-            )
-        return value
+        fields = ("id", "name")
 
 
 class CategoryDetailSerializer(serializers.ModelSerializer):
