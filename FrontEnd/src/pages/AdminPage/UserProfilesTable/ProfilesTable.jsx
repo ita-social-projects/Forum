@@ -226,8 +226,9 @@ function ProfilesTable() {
             key: 'company_type',
             render: (company_type) => renderCompanyTypeTags(company_type),
             filters: [
-                { text: 'ФОП', value: 'ФОП' },
+                { text: 'Компанія', value: 'Компанія' },
                 { text: 'Стартап', value: 'Стартап' },
+                { text: 'Компанія і стартап', value: 'Компанія і стартап' },
             ],
             onFilter: (value, record) => record.company_type === value,
             width: 140
@@ -254,6 +255,11 @@ function ProfilesTable() {
             dataIndex: 'business_entity',
             key: 'business_entity',
             render: (entity) => renderBusinessEntityTags(entity),
+            filters: [
+                { text: 'ФОП', value: 'ФОП' },
+                { text: 'Юридична особа', value: 'Юридична особа' },
+            ],
+            onFilter: (value, record) => record.business_entity === value,
             width: 180
         },
         {
