@@ -356,7 +356,7 @@ function ProfilesTable() {
                     }}
                 />
             ),
-            width: 150
+            width: 125
         },
     ];
     return (
