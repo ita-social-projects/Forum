@@ -37,7 +37,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .filters import UsersFilter, ProfilesFilter
 
 
-
 class UsersListView(ListAPIView):
     """
     View to list users with optional filtering and ordering.

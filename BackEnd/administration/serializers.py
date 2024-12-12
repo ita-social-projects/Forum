@@ -4,7 +4,7 @@ from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
 from profiles.models import (
     Profile,
-    Region, Category,
+    Region, Category, Activity,
 )
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
@@ -21,9 +21,9 @@ class AdminRegionSerializer(serializers.ModelSerializer):
             "name_ukr",
         )
 
-class CategoriesSerializer(serializers.ModelSerializer):
+class ActivitiesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = Activity
         fields = (
             "id",
             "name",
@@ -115,8 +115,9 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)
     regions = AdminRegionSerializer(many=True, read_only=True)
     company_type = serializers.SerializerMethodField(read_only=True)
-    categories = CategoriesSerializer(many=True, read_only=True)
+    activities = ActivitiesSerializer(many=True, read_only=True)
     representative = serializers.SerializerMethodField(read_only=True)
+    business_entity = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Profile
@@ -127,7 +128,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "person",
             "person_position",
             "regions",
-            "official_name",
+            "business_entity",
             "phone",
             "edrpou",
             "address",
@@ -136,14 +137,16 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "created_at",
             "is_deleted",
             "company_type",
-            "categories",
+            "activities",
             "representative",
         )
 
     def get_company_type(self, obj):
-        if obj.is_fop:
-            return "ФОП"
-        elif obj.is_startup:
+        if obj.is_startup and obj.is_registered:
+            return "Компанія і стартап"
+        if obj.is_registered:
+            return "Компанія"
+        if obj.is_startup:
             return "Стартап"
         return None
 
@@ -151,6 +154,11 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
         if obj.person:
             return f'{obj.person.name} {obj.person.surname}'
         return None
+
+    def get_business_entity(self, obj):
+        if obj.is_fop:
+            return "ФОП"
+        return "Юридична особа"
 
 
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
