@@ -236,3 +236,10 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ("name",)
+
+
+class StatisticsSerializer(serializers.Serializer):
+    companies_count = serializers.IntegerField()
+    investors_count = serializers.IntegerField()
+    startups_count = serializers.IntegerField()
+    blocked_companies_count = serializers.IntegerField()

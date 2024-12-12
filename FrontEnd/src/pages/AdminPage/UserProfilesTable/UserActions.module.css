@@ -1,0 +1,24 @@
+.userActionsModalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.userActionsInput {
+    width: 100%;
+}
+
+.userActionsSelect {
+    width: 100%;
+}
+
+.userActionsTextarea {
+    width: 100%;
+}
+
+.userActionsError {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+}

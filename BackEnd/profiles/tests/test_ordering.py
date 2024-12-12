@@ -156,8 +156,8 @@ class TestProfileOrdering(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(
             [
-                "Bakery",
                 "Winery",
+                "Bakery",
                 "Delivery company",
                 "Catering service",
                 "Retail company",
