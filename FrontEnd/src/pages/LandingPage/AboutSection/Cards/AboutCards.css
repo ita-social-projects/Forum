@@ -88,6 +88,7 @@
     .about-us-cards-section {
         width: 1200px;
         padding: 64px 32px;
+
     }
   
     .about-us-cards-section__card {
@@ -105,6 +106,7 @@
     .about-us-cards-section__cards {
         display: flex;
         flex-wrap: wrap;
+        width: 1304px;
         justify-content: space-between;
         gap: 32px;
       }
