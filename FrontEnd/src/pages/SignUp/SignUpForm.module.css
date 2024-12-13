@@ -45,7 +45,7 @@
   align-items: center;
   gap: 4px;
   border-radius: 4px;
-  background: #000000;
+  background: var(--main-button-color);
 
   color: var(--light-button-text-color);
   text-align: center;
@@ -58,6 +58,10 @@
   letter-spacing: -0.16px;
 
   cursor: pointer;
+}
+
+.sign-up__button:active {
+  background: var(--pressed-button-color);
 }
 
 .sign-up__button__disabled {

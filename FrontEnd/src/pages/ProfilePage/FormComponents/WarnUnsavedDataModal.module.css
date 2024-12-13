@@ -102,10 +102,19 @@
 
 }
 
+.modal-footer--button-cancel:active {
+    background: var(--pressed-secondary-button-color);
+}
+
 .modal-footer--button-continue {
     border: 1px solid var(--main-button-color, #000000);
     background: var(--main-button-color, #000000);
     color: var(--main-white, #FFF);
+}
+
+.modal-footer--button-continue:active {
+    background: var(--pressed-button-color);
+    border: 1px solid var(--pressed-button-color);
 }
 
 @media only screen and (min-width: 768px) {

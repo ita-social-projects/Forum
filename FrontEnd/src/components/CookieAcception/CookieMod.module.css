@@ -81,10 +81,8 @@
   transition: all 0.3s ease;
 }
 
-.allow-all-btn:hover {
-  background: transparent;
-  color: var(--cookie-black-color);
-  border: 1px solid var(--cookie-black-color);
+.allow-all-btn:active {
+  background: var(--pressed-button-color);
 }
 
 .deny-btn {
@@ -103,9 +101,8 @@
   transition: all 0.3s ease;
 }
 
-.deny-btn:hover {
-  background: var(--cookie-black-color);
-  color: var(--cookie-light-color);
+.deny-btn:active {
+  background: var(--pressed-secondary-button-color);
 }
 
 @media (max-width: 768px) {

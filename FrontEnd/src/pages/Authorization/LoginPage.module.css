@@ -210,7 +210,7 @@
   align-items: center;
   gap: 4px;
   border-radius: 4px;
-  background: #000000;
+  background: var(--main-button-color);
   cursor: pointer;
 
   color: var(--light-button-text-color);
@@ -230,6 +230,10 @@
   background: #EEEFF1;
   color: #A3AAB0;
   cursor: default;
+}
+
+.login-footer-buttons__signin:active {
+  background: var(--pressed-button-color);
 }
 
 .error-message {

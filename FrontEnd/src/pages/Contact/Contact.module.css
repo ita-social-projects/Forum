@@ -2,7 +2,7 @@
     min-width: 114px;
     padding: 9px 16px;
     border-radius: 4px;
-    background: #000000;
+    background: var(--main-button-color);
 
     color: var(--light-button-text-color);
     text-align: center;
@@ -15,4 +15,8 @@
     letter-spacing: -0.16px;
 
     cursor: pointer;
+}
+
+.contact__button_send:active {
+    background: var(--pressed-button-color);
 }

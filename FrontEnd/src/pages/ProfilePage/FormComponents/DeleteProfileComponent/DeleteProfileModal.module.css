@@ -42,6 +42,10 @@
     color: #25292C;
 }
 
+.button__cancel:active {
+    background: var(--pressed-secondary-button-color);
+}
+
 .button__delete {
     display: flex;
     padding: 5px 15px;

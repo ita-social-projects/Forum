@@ -29,11 +29,10 @@
 
 .header-register__button {
     display: flex;
-    padding: 5px 15px;
+    padding: 10px 16px;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    transition: background-color 0.3s ease, color 0.3s ease;
 
     border-radius: 4px;
     background: var(--main-button-color);
@@ -56,7 +55,6 @@
     color: var(--light-button-color);
 }
 
-.header-register__button:hover {
-    background: var(--light-button-color);
-    color: var(--main-button-color);
+.header-register__button:active {
+    background: var(--pressed-button-color);
 }
