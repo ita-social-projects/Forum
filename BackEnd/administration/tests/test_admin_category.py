@@ -54,7 +54,7 @@ class TestAdminCategoryAPIUserStaff(APITestCase):
         AdminCategoryFactory.reset_sequence(0)
         AdminProfileFactory.reset_sequence(0)
 
-    def test_get_categoryes_users_staff(self):
+    def test_get_categories_users_staff(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/admin/categories/")
         data = [
@@ -71,14 +71,14 @@ class TestAdminCategoryAPIUserStaff(APITestCase):
         self.assertEqual(data, response.json()["results"])
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
-    def test_get_categoryes_id_users_staff(self):
+    def test_get_categories_id_users_staff(self):
         self.client.force_authenticate(self.user)
         response = self.client.get(path="/api/admin/categories/3/")
         data = {"name": "category 1"}
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data, response.json())
 
-    def test_post_new_categoryes_users_staff(self):
+    def test_post_new_categories_users_staff(self):
         self.client.force_authenticate(self.user)
         data = {"name": "category 11"}
         response = self.client.post(path="/api/admin/categories/", data=data)
@@ -86,7 +86,7 @@ class TestAdminCategoryAPIUserStaff(APITestCase):
         self.assertEqual(response.json()["name"], data["name"])
         self.assertIn("id", response.json())
 
-    def test_post_unique_categoryes_users_staff(self):
+    def test_post_unique_categories_users_staff(self):
         self.client.force_authenticate(self.user)
         data = {"name": "category 1"}
         message = "Category with this name already exists."
@@ -94,14 +94,14 @@ class TestAdminCategoryAPIUserStaff(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(response.json()["name"][0], message)
 
-    def test_put_categoryes_id_users_staff(self):
+    def test_put_categories_id_users_staff(self):
         self.client.force_authenticate(self.user)
         data = {"name": "category 1212"}
         response = self.client.put(path="/api/admin/categories/14/", data=data)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(response.json()["name"], data["name"])
 
-    def test_patch_categoryes_id_users_staff(self):
+    def test_patch_categories_id_users_staff(self):
         self.client.force_authenticate(self.user)
         data = {"name": "category 77"}
         response = self.client.patch(

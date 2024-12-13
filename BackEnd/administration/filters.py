@@ -47,7 +47,7 @@ class UsersFilter(FilterSet):
 
 class CategoriesFilter(FilterSet):
     """
-    manage categori filter
+    manage categories filter
     """
 
     id = filters.CharFilter(lookup_expr="icontains")
