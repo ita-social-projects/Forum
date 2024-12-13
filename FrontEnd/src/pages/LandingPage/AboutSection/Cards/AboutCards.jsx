@@ -11,10 +11,10 @@ const AboutSectionCards = () => {
           {AboutUsText.content.map((card, index) => (
             <Col
               key={index}
-              xs={24}  // 1 колонки на мобільних пристроях
-              md={8}  // 2 колонки на планшетах
-              xl={4}   // 3 колонки на ноутбуках
-              xxl={4}  // 4 колонки на великих екранах
+              xs={24}
+              md={8}
+              xl={4}
+              xxl={4}
               className="about-us-cards-section__card"
             >
               <div className="about-us-cards-section__cards-content">
