@@ -440,7 +440,6 @@ const GeneralInfo = (props) => {
       }
     }
   };
-  
   return (
     <div className={css['form__container']}>
       <h3 className={css['form__head']}>Загальна інформація</h3>
