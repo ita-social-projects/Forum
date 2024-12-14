@@ -114,21 +114,31 @@ const GeneralInfo = (props) => {
     let isValid = true;
     const newFormState = {};
     for (const key in profile) {
-      if (
-        key in ERRORS &&
-        (!profile[key] ||
-          (Array.isArray(profile[key]) && profile[key]?.length === 0))
-      ) {
-        isValid = false;
-        newFormState[key] = {
-          error: true,
-          message: 'Обов’язкове поле',
-        };
-      } else {
-        newFormState[key] = {
-          error: false,
-          message: '',
-        };
+      if (key in ERRORS) {
+        if (!profile[key] || (Array.isArray(profile[key]) && profile[key]?.length === 0)) {
+          isValid = false;
+          newFormState[key] = {
+            error: true,
+            message: 'Це поле є обов’язковим для заповнення.',
+          };
+        } else if (key === 'name' && profile[key].length < 2) {
+          isValid = false;
+          newFormState[key] = {
+            error: true,
+            message: 'Введіть від 2 до 45 символів.',
+          };
+        } else if (key === 'official_name' && profile[key].length < 2) {
+          isValid = false;
+          newFormState[key] = {
+            error: true,
+            message: 'Введіть від 2 до 200 символів.',
+          };
+        } else {
+          newFormState[key] = {
+            error: false,
+            message: '',
+          };
+        }
       }
     }
     setFormStateErr({ ...formStateErr, ...newFormState });
