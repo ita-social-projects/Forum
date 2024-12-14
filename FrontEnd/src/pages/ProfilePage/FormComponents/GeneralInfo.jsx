@@ -425,30 +425,22 @@ const GeneralInfo = (props) => {
       toast.error(
         'Зміни не можуть бути збережені, перевірте правильність заповнення полів'
       );
-      return;
-    }
-    if (profile.name?.length > 45) {
-      toast.error('Назва компанії не повинна перевищувати 45 символів.');
-      return;
-    }
-    if (!profile.official_name?.trim()) {
-      toast.error('Юридична назва компанії є обов’язковою.');
-      return;
-    }
-    const data = defineChanges(fields, profile, null);
-    try {
-      const response = await axios.patch(
-        `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
+    } else {
+      const data = defineChanges(fields, profile, null);
+      try {
+        const response = await axios.patch(
+          `${process.env.REACT_APP_BASE_API_URL}/api/profiles/${user.profile_id}`,
         data.profileChanges
-      );
-      profileMutate(response.data);
-      toast.success('Зміни успішно збережено');
-      setFormIsDirty(false);
-    } catch (error) {
-      handleError(error);
+        );
+        profileMutate(response.data);
+        toast.success('Зміни успішно збережено');
+        setFormIsDirty(false);
+      } catch (error) {
+        handleError(error);
+      }
     }
   };
-
+  
   return (
     <div className={css['form__container']}>
       <h3 className={css['form__head']}>Загальна інформація</h3>
