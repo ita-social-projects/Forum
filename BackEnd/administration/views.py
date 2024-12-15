@@ -26,7 +26,7 @@ from administration.serializers import (
     AdminUserDetailSerializer,
     AutoModerationHoursSerializer,
     ModerationEmailSerializer,
-    ManageCategoriesSerializer,
+    CategoriesListSerializer,
     CategoryDetailSerializer,
     StatisticsSerializer,
 )
@@ -227,7 +227,7 @@ class FeedbackView(CreateAPIView):
         send_email_feedback(email, message, category)
 
 
-class ManageCategoriesView(ListCreateAPIView):
+class CategoriesListView(ListCreateAPIView):
     """
     Manage categories
     ### Query Parameters:
@@ -242,7 +242,7 @@ class ManageCategoriesView(ListCreateAPIView):
     """
 
     permission_classes = [IsStaffUser]
-    serializer_class = ManageCategoriesSerializer
+    serializer_class = CategoriesListSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = CategoriesFilter
     pagination_class = ListPagination

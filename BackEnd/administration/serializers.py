@@ -217,7 +217,7 @@ class FeedbackSerializer(serializers.Serializer):
     )
 
 
-class ManageCategoriesSerializer(serializers.ModelSerializer):
+class CategoriesListSerializer(serializers.ModelSerializer):
     name = serializers.CharField(
         validators=[
             UniqueValidator(
