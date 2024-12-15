@@ -13,33 +13,38 @@ function ProfilesStatistics() {
   const url = `${baseUrl}/api/admin/profiles/statistics/`;
   const { data: statistics, error, isLoading } = useSWR(url, fetcher);
 
-  if (isLoading) return <div className={css['loading']}>Loading...</div>;
-  if (error) return <div className={css['error']}>{error}</div>;
+  const items = statistics
+    ? [
+        {
+          key: '1',
+          label: 'Кількість зареєстрованих компаній',
+          children: statistics.companies_count,
+        },
+        {
+          key: '2',
+          label: 'Кількість Інвесторів',
+          children: statistics.investors_count,
+        },
+        {
+          key: '3',
+          label: 'Кількість Cтратапів',
+          children: statistics.startups_count,
+        },
+        {
+          key: '4',
+          label: 'Кількість заблокованих компаній',
+          children: statistics.blocked_companies_count,
+        },
+      ]
+    : [];
 
-  const items = [
-    {
-      key: '1',
-      label: 'Кількість зареєстрованих компаній',
-      children: statistics.companies_count,
-    },
-    {
-      key: '2',
-      label: 'Кількість Інвесторів',
-      children: statistics.investors_count,
-    },
-    {
-      key: '3',
-      label: 'Кількість Cтратапів',
-      children: statistics.startups_count,
-    },
-    {
-      key: '4',
-      label: 'Кількість заблокованих компаній',
-      children: statistics.blocked_companies_count,
-    },
-  ];
-
-  return (
+  return isLoading ? (
+    <div className={css['loader-container']}>
+      Loading...
+    </div>
+  ) : error ? (
+    <div className={css['error']}>Не вдалося отримати статистику компаній</div>
+  ) : (
     <Descriptions
       title="Статистика компаній"
       column={1}
