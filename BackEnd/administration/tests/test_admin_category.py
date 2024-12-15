@@ -11,8 +11,6 @@ from utils.unittest_helper import AnyInt, AnyStr
 
 
 class TestAdminCategoryAPIUserNotStaff(APITestCase):
-    maxDiff = None
-
     def setUp(self):
         self.user = AdminUserFactory(
             is_staff=False,
@@ -32,8 +30,6 @@ class TestAdminCategoryAPIUserNotStaff(APITestCase):
 
 
 class TestAdminCategoryAPIUserStaff(APITestCase):
-    maxDiff = None
-
     def setUp(self):
         self.user = AdminUserFactory(
             is_staff=True,

@@ -1,10 +1,5 @@
 from django_filters import filters
 from django_filters.rest_framework import FilterSet
-from django.db.models import CharField
-from django.db.models.functions import Cast
-from profiles.models import (
-    Category,
-)
 
 
 class UsersFilter(FilterSet):
@@ -16,7 +11,7 @@ class UsersFilter(FilterSet):
     /?ordering=id asc or /?ordering=-id desc
     """
 
-    id = filters.CharFilter(lookup_expr="icontains")
+    id = filters.CharFilter(method="filter_partial_id")
     surname = filters.CharFilter(lookup_expr="icontains")
     email = filters.CharFilter(lookup_expr="icontains")
     is_active = filters.CharFilter(lookup_expr="icontains")
@@ -34,6 +29,9 @@ class UsersFilter(FilterSet):
         if value:
             queryset = queryset.filter(email__startswith="is_deleted_")
         return queryset
+
+    def filter_partial_id(self, queryset, name, value):
+        return queryset.filter(id__icontains=value)
 
     ordering = filters.OrderingFilter(
         fields=(
@@ -53,18 +51,13 @@ class UsersFilter(FilterSet):
 class CategoriesFilter(FilterSet):
     id = filters.CharFilter(method="filter_partial_id")
     name = filters.CharFilter(lookup_expr="icontains")
+
+    def filter_partial_id(self, queryset, name, value):
+        return queryset.filter(id__icontains=value)
+
     ordering = filters.OrderingFilter(
         fields=(
             ("id", "id"),
             ("name", "name"),
         )
     )
-
-    def filter_partial_id(self, queryset, name, value):
-        return queryset.annotate(id_str=Cast("id", CharField())).filter(
-            id_str__icontains=value
-        )
-
-    class Meta:
-        model = Category
-        fields = ["id", "name"]
