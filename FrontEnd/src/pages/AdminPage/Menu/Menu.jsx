@@ -23,6 +23,11 @@ const MENU = [
         title: 'Налаштування часу автоапруву',
         link: '/customadmin/automoderation/'
     },
+    {
+        id: 'am7',
+        title: 'Категорії',
+        link: '/customadmin/categories/'
+    },
 ];
 
 const SUPERUSER_MENU = [
