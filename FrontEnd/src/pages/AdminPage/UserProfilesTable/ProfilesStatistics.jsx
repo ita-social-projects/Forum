@@ -1,6 +1,7 @@
 import axios from 'axios';
 import useSWR from 'swr';
 import { Descriptions } from 'antd';
+import Loader from '../../../components/Loader/Loader';
 import css from './ProfilesStatistics.module.css';
 
 async function fetcher(url) {
@@ -40,7 +41,7 @@ function ProfilesStatistics() {
 
   return isLoading ? (
     <div className={css['loader-container']}>
-      Loading...
+      <Loader />
     </div>
   ) : error ? (
     <div className={css['error']}>Не вдалося отримати статистику компаній</div>

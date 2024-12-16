@@ -21,6 +21,13 @@ const customAdminTheme = {
       Table: {
         lineWidth: 3,
         colorPrimary: '#1f9a7c'
+      },
+      Carousel: {
+        colorBgContainer: '#B4D27A',
+        dotActiveWidth: 32,
+        dotWidth: 32,
+        dotHeight: 6,
+        lineHeight: 1,
       }
     },
   };

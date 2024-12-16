@@ -17,3 +17,8 @@
   border-radius: 4px;
   margin-top: 10px;
 }
+
+.loader-container {
+  width: 200px;
+  height: 300px;
+}
