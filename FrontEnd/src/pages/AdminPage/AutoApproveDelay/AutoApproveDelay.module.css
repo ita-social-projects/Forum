@@ -23,18 +23,23 @@
 }
 
 .autoapprove-input {
-    width: 258px;
+    width: 269px;
     height: 32px;
     box-sizing: border-box;
     padding-left: 4px;
     font-size: 16px;
+    outline-color: var(--grey-border-color);
+}
+
+.autoapprove-input:focus {
+    outline: none;
 }
 
 .buttons-group {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 257px;
+    width: 269px;
     margin-top: 24px;
 }
 
@@ -47,7 +52,6 @@
     width: 124px;
     border-radius: 4px;
     background: #B4D27A;
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
     color: black;
     text-align: center;
     font-feature-settings: 'calt' off;

@@ -23,6 +23,9 @@ const customAdminTheme = {
         colorPrimary: '#1f9a7c'
       }
     },
+    token: {
+      fontFamily: 'Geologica',
+    }
   };
 
 export default customAdminTheme;
