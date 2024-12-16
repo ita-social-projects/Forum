@@ -126,6 +126,11 @@ export default function ProfileListPage({ isAuthorized, isSaved }) {
     }
   }, [fetchedProfiles, pageSize, currentPage, isSaved]);
 
+  useEffect(() => {
+    setActiveTab(searchParams.get('companyType') || 'all');
+    setActiveBtn(searchParams.get('activity') || 'all');
+  }, [searchParams]);
+
   const changeCompanies = (companyId, saved) => {
     setProfiles((prevProfiles) =>
         prevProfiles.map((profile) =>
