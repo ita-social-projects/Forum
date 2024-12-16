@@ -17,7 +17,7 @@ class UsersFilter(FilterSet):
     is_active = filters.BooleanFilter()
     is_staff = filters.BooleanFilter()
     is_superuser = filters.BooleanFilter()
-    is_deleted = filters.BooleanFilter(method="filter_is_deleted")
+    is_deleted = filters.BooleanFilter(method="is_deleted_filter")
     company_name = filters.CharFilter(
         field_name="profile__name", lookup_expr="icontains"
     )
@@ -25,7 +25,7 @@ class UsersFilter(FilterSet):
         field_name="profile__created_at", lookup_expr="icontains"
     )
 
-    def filter_is_deleted(self, queryset, name, value):
+    def is_deleted_filter(self, queryset, name, value):
         if value:
             queryset = queryset.filter(email__startswith="is_deleted_")
         return queryset
