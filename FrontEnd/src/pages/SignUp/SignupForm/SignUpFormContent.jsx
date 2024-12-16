@@ -37,7 +37,7 @@ export function SignUpFormContentComponent(props) {
     password: 'Пароль не відповідає вимогам',
     confirmPassword: 'Паролі не співпадають. Будь ласка, введіть однакові паролі в обидва поля',
     nameSurnameFieldLength: 'Введіть від 2 до 50 символів',
-    companyFieldLength: 'Введіть від 2 до 100 символів',
+    companyFieldLength: 'Введіть від 2 до 45 символів',
     notAllowedSymbols: 'Поле містить недопустимі символи та/або цифри',
     maxLength: 'Кількість символів перевищує максимально допустиму (50 символів)',
   };
@@ -202,8 +202,8 @@ export function SignUpFormContentComponent(props) {
               message: errorMessageTemplates.companyFieldLength,
             },
           }}
-          maxLength={100}
-          tooltip="Назва повинна містити від 2 до 100 символів"
+          maxLength={45}
+          tooltip="Назва повинна містити від 2 до 45 символів"
           tooltipTrigger="focus"
           error={errors.companyName}
           onBlur={() => {
