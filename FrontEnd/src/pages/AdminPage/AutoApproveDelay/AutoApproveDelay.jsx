@@ -50,8 +50,8 @@ const AutoApproveDelay = () => {
             {error &&
                 <p className={css['error-message']}>{error}</p>}
             <div className={css['buttons-group']}>
-                <button className={`${css['button']} ${css['cancel-button']}`} onClick={handleCancel}>Скасувати</button>
                 <button className={css['button']} onClick={handleSubmit}>Змінити</button>
+                <button className={`${css['button']} ${css['cancel-button']}`} onClick={handleCancel}>Скасувати</button>
             </div>
         </div>
     );

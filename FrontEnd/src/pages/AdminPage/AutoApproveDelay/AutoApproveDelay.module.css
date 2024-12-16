@@ -75,4 +75,5 @@
     color: rgb(212, 21, 21);
     font-family: var(--font-main);
     font-size: 14px;
+    max-width: 267px;
 }
