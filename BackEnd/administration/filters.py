@@ -11,7 +11,7 @@ class UsersFilter(FilterSet):
     /?ordering=id asc or /?ordering=-id desc
     """
 
-    id = filters.CharFilter(method="filter_partial_id")
+    id = filters.NumberFilter(lookup_expr="icontains")
     surname = filters.CharFilter(lookup_expr="icontains")
     email = filters.CharFilter(lookup_expr="icontains")
     is_active = filters.CharFilter(lookup_expr="icontains")
@@ -30,9 +30,6 @@ class UsersFilter(FilterSet):
             queryset = queryset.filter(email__startswith="is_deleted_")
         return queryset
 
-    def filter_partial_id(self, queryset, name, value):
-        return queryset.filter(id__icontains=value)
-
     ordering = filters.OrderingFilter(
         fields=(
             ("name", "name"),
@@ -49,12 +46,8 @@ class UsersFilter(FilterSet):
 
 
 class CategoriesFilter(FilterSet):
-    id = filters.CharFilter(method="filter_partial_id")
+    id = filters.NumberFilter(lookup_expr="icontains")
     name = filters.CharFilter(lookup_expr="icontains")
-
-    def filter_partial_id(self, queryset, name, value):
-        return queryset.filter(id__icontains=value)
-
     ordering = filters.OrderingFilter(
         fields=(
             ("id", "id"),
