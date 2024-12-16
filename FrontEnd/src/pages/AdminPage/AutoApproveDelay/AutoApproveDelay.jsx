@@ -38,7 +38,7 @@ const AutoApproveDelay = () => {
     };
     return (
         <div className={css['autoapprove-section']}>
-            <h3 className={css['autoapprove-section__head']}>Налаштуйте час, після якого зміни будуть автоматично підтверджені у разі відсутності дій з боку модератора.</h3>
+            <h3 className={css['autoapprove-section__head']}>Налаштуйте час, після якого зміни будуть автоматично затверджені у разі відсутності дій з боку модератора.</h3>
             <label htmlFor="autoapprove" className={css['autoapprove_label']}>Час до автоматичного затвердження <br />
             (години)</label>
             <Tooltip
