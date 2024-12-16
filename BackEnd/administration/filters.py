@@ -11,12 +11,12 @@ class UsersFilter(FilterSet):
     /?ordering=id asc or /?ordering=-id desc
     """
 
-    id = filters.NumberFilter(lookup_expr="icontains")
+    id = filters.NumberFilter(lookup_expr="contains")
     surname = filters.CharFilter(lookup_expr="icontains")
     email = filters.CharFilter(lookup_expr="icontains")
-    is_active = filters.CharFilter(lookup_expr="icontains")
-    is_staff = filters.CharFilter(lookup_expr="icontains")
-    is_superuser = filters.CharFilter(lookup_expr="icontains")
+    is_active = filters.BooleanFilter()
+    is_staff = filters.BooleanFilter()
+    is_superuser = filters.BooleanFilter()
     is_deleted = filters.BooleanFilter(method="filter_is_deleted")
     company_name = filters.CharFilter(
         field_name="profile__name", lookup_expr="icontains"
@@ -46,7 +46,7 @@ class UsersFilter(FilterSet):
 
 
 class CategoriesFilter(FilterSet):
-    id = filters.NumberFilter(lookup_expr="icontains")
+    id = filters.NumberFilter(lookup_expr="contains")
     name = filters.CharFilter(lookup_expr="icontains")
     ordering = filters.OrderingFilter(
         fields=(
