@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
 from profiles.models import (
     Profile,
     Region,
+    Category,
 )
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
@@ -213,3 +215,31 @@ class FeedbackSerializer(serializers.Serializer):
         required=True,
         error_messages={"required": "Please select a category."},
     )
+
+
+class CategoriesListSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(
+        validators=[
+            UniqueValidator(
+                queryset=Category.objects.all(),
+                message="Category with this name already exists.",
+            )
+        ]
+    )
+
+    class Meta:
+        model = Category
+        fields = ("id", "name")
+
+
+class CategoryDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ("name",)
+
+
+class StatisticsSerializer(serializers.Serializer):
+    companies_count = serializers.IntegerField()
+    investors_count = serializers.IntegerField()
+    startups_count = serializers.IntegerField()
+    blocked_companies_count = serializers.IntegerField()

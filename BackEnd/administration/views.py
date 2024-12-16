@@ -1,13 +1,17 @@
 from django.http import JsonResponse
 from django.views import View
+from django.db.models import Count, Q
+from django_filters.rest_framework import DjangoFilterBackend
+
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiExample,
     OpenApiResponse,
 )
-
 from rest_framework.generics import (
     ListAPIView,
+    ListCreateAPIView,
+    RetrieveAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveUpdateAPIView,
     CreateAPIView,
@@ -22,16 +26,21 @@ from administration.serializers import (
     AdminUserDetailSerializer,
     AutoModerationHoursSerializer,
     ModerationEmailSerializer,
+    CategoriesListSerializer,
+    CategoryDetailSerializer,
+    StatisticsSerializer,
 )
 from administration.pagination import ListPagination
 from administration.models import AutoModeration, ModerationEmail
 from authentication.models import CustomUser
-from profiles.models import Profile
+from profiles.models import Profile, Category
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
 from .serializers import FeedbackSerializer
 from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
+from .filters import UsersFilter, CategoriesFilter
+from utils.administration.send_email_notification import send_email_to_user
 from .filters import UsersFilter
 
 
@@ -102,6 +111,23 @@ class ProfileDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.select_related("person").prefetch_related(
         "regions", "categories", "activities"
     )
+
+
+class ProfileStatisticsView(RetrieveAPIView):
+    """
+    Count of companies
+    """
+
+    permission_classes = [IsStaffUser]
+    serializer_class = StatisticsSerializer
+
+    def get_object(self):
+        return Profile.objects.aggregate(
+            companies_count=Count("pk"),
+            investors_count=Count("pk", filter=Q(is_registered=True)),
+            startups_count=Count("pk", filter=Q(is_startup=True)),
+            blocked_companies_count=Count("pk", filter=Q(status="blocked")),
+        )
 
 
 @extend_schema(
@@ -199,3 +225,74 @@ class FeedbackView(CreateAPIView):
         category = serializer.validated_data["category"]
 
         send_email_feedback(email, message, category)
+
+
+class CategoriesListView(ListCreateAPIView):
+    """
+    Manage categories
+    ### Query Parameters:
+    -  **id** / **name**
+
+    ### Ordering:
+    - Use the `ordering` parameter to sort the results.
+    - Example: `/categories/?ordering=id` (ascending by ID) or `/categories/?ordering=-id` (descending by ID).
+
+    ### Filters:
+    - Filters are applied using `DjangoFilterBackend`. All the above query parameters are supported for filtering.
+    """
+
+    permission_classes = [IsStaffUser]
+    serializer_class = CategoriesListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = CategoriesFilter
+    pagination_class = ListPagination
+    queryset = Category.objects.all().order_by("id")
+
+
+class CategoryDetailView(RetrieveUpdateAPIView):
+    """
+    Modify activity category
+    """
+
+    permission_classes = [IsStaffUser]
+    serializer_class = CategoryDetailSerializer
+    queryset = Category.objects.all()
+
+
+class SendMessageView(CreateAPIView):
+    """
+    API endpoint for sending a custom email message to a specific user.
+
+    This view allows administrators to send a message to a user's registered email.
+    It validates the request payload, retrieves the user based on the provided ID,
+    and sends the email using the specified category and message content.
+    """
+
+    queryset = CustomUser.objects.all()
+    permission_classes = [IsStaffUser]
+    serializer_class = FeedbackSerializer
+
+    def perform_create(self, serializer):
+        """
+        Handles the email sending logic after successful validation.
+
+        This method is executed after the request data has been validated
+        by the serializer. It retrieves the user, validates their existence,
+        and sends the email with the provided category and message content.
+
+        Parameters:
+            serializer (FeedbackSerializer): The serializer instance containing
+            the validated data from the request.
+        """
+        user = self.get_object()
+        email = serializer.validated_data["email"]
+        category = serializer.validated_data["category"]
+        message_content = serializer.validated_data["message"]
+
+        send_email_to_user(
+            user=user,
+            category=category,
+            message_content=message_content,
+            email=email,
+            sender_name="Адміністратор CraftMerge",
+        )
