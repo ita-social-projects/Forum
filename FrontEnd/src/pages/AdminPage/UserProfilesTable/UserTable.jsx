@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef  } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import axios from 'axios';
@@ -22,7 +22,6 @@ function UserTable() {
     const [sortInfo, setSortInfo] = useState({ field: null, order: null });
     const [statusFilters, setStatusFilters] = useState([]);
     const [searchParams, setSearchParams] = useState({});
-    const searchInput = useRef(null);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -108,7 +107,6 @@ function UserTable() {
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
           <div className={css['dropdownMenu']}>
             <Input
-              ref={searchInput}
               placeholder="Пошук"
               value={selectedKeys[0]}
               onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
