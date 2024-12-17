@@ -1,5 +1,6 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
+import ProfilesStatistics from '../UserProfilesTable/ProfilesStatistics';
 import css from './Menu.module.css';
 
 const MENU = [
@@ -25,6 +26,7 @@ const MENU = [
     },
 ];
 
+
 const SUPERUSER_MENU = [
     {
         id: 'am5',
@@ -41,6 +43,7 @@ const SUPERUSER_MENU = [
 
 function Menu() {
     const { isSuperUser } = useAuth();
+    const location = useLocation();
 
     return (
         <div className={css['menu-section']}>
@@ -53,6 +56,7 @@ function Menu() {
                     key={element.id} to={element.link}>{element.title}
                 </NavLink>
             ))}
+            {location.pathname === '/customadmin/profiles/' && <ProfilesStatistics />}
         </div>
     );
 }
