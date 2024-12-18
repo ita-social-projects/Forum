@@ -6,6 +6,8 @@ from profiles.models import (
     Profile,
     Region, Category, Activity,
 )
+from utils.administration.profiles.profiles import get_company_type_as_string, get_representative_as_string, \
+    get_business_entity_as_string
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
 from .models import AutoModeration, ModerationEmail
@@ -141,26 +143,17 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "representative",
         )
 
-    def get_company_type(self, obj):
-        if obj.is_startup and obj.is_registered:
-            return "Компанія і стартап"
-        if obj.is_registered:
-            return "Компанія"
-        if obj.is_startup:
-            return "Стартап"
-        return None
+    @staticmethod
+    def get_company_type(obj) -> str:
+        return get_company_type_as_string(obj)
 
-    def get_representative(self, obj):
-        if obj.person:
-            return f'{obj.person.name} {obj.person.surname}'
-        return None
+    @staticmethod
+    def get_representative(obj):
+        return get_representative_as_string(obj)
 
-    def get_business_entity(self, obj):
-        if obj.is_fop:
-            return "ФОП"
-        return "Юридична особа"
-
-
+    @staticmethod
+    def get_business_entity(obj):
+        return get_business_entity_as_string(obj)
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)
     categories = serializers.SlugRelatedField(
