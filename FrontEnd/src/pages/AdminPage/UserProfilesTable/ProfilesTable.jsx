@@ -38,7 +38,6 @@ function ProfilesTable() {
     const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles?page=${currentPage}&page_size=${pageSize}${ordering}${filtering}`;
     async function fetcher(url) {
         const response = await axios.get(url);
-        console.log(response.data);
         return response.data;
     }
 
