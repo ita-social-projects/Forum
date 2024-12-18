@@ -4,7 +4,7 @@ from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
 from profiles.models import (
     Profile,
-    Region, Category, Activity,
+    Region, Activity,
 )
 from utils.administration.profiles.profiles import get_company_type_as_string, get_representative_as_string, \
     get_business_entity_as_string
@@ -22,6 +22,7 @@ class AdminRegionSerializer(serializers.ModelSerializer):
             "id",
             "name_ukr",
         )
+
 
 class ActivitiesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -154,6 +155,8 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_business_entity(obj):
         return get_business_entity_as_string(obj)
+
+
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)
     categories = serializers.SlugRelatedField(
