@@ -16,7 +16,6 @@ function ProfilesTable() {
     const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
     const pageNumber = Number(queryParams.get('page')) || 1;
-
     const [currentPage, setCurrentPage] = useState(pageNumber);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
     const [sortInfo, setSortInfo] = useState({ field: null, order: null });
