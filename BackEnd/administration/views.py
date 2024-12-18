@@ -17,7 +17,6 @@ from rest_framework.generics import (
 )
 
 from administration.serializers import AdminRegistrationSerializer
-from forum.settings import CONTACTS_INFO
 from administration.serializers import (
     AdminCompanyListSerializer,
     AdminCompanyDetailSerializer,
@@ -26,9 +25,10 @@ from administration.serializers import (
     AutoModerationHoursSerializer,
     ModerationEmailSerializer,
     StatisticsSerializer,
+    ContactInformationSerializer,
 )
 from administration.pagination import ListPagination
-from administration.models import AutoModeration, ModerationEmail
+from administration.models import AutoModeration, ModerationEmail,ContactInformation
 from authentication.models import CustomUser
 from profiles.models import Profile
 from .permissions import IsStaffUser, IsStaffUserOrReadOnly, IsSuperUser
@@ -178,13 +178,43 @@ class ModerationEmailView(RetrieveUpdateAPIView):
         return ModerationEmail.objects.first()
 
 
-class ContactsView(View):
+class ContactsView(RetrieveUpdateAPIView):
     """
-    View for retrieving contact information.
+    API view for retrieving and updating contact information.
     """
 
-    def get(self, request):
-        return JsonResponse(CONTACTS_INFO)
+    serializer_class = ContactInformationSerializer
+
+    def get_object(self):
+        """
+        Always returns the single contact information record.
+        If no record exists, a new one is created.
+        """
+        contact, _ = ContactInformation.objects.get_or_create(pk=1)
+        return contact
+
+    def update(self, request, *args, **kwargs):
+        """
+        Updates contact information and creates a backup.
+        """
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        if serializer.is_valid():
+            try:
+                backup_contact_info()  # Create a backup
+                serializer.save(admin_user=request.user)  # Save the admin user who made changes
+                update_cache()  # Update cache
+                return Response(
+                    {"message": "Contact information successfully updated."},
+                    status=status.HTTP_200_OK,
+                )
+            except Exception:
+                return Response(
+                    {"message": "Failed to save changes. Please check the database connection."},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateAdminUserView(CreateAPIView):

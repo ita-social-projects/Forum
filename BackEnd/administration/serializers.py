@@ -9,12 +9,11 @@ from profiles.models import (
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
 from .models import AutoModeration, ModerationEmail, ContactInformation
-from BackEnd.validation.validate_phone_number import (
+from validation.validate_phone_number import (
     validate_phone_number_len,
     validate_phone_number_is_digit,
 )
-from BackEnd.validation.validate_adress import validate_address
-from BackEnd.validation.validate_company import validate_company_name
+from validation.validate_company import validate_address,validate_company_name
 
 User = get_user_model()
 
