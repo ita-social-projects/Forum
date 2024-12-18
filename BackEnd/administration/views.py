@@ -7,7 +7,6 @@ from drf_spectacular.utils import (
     OpenApiExample,
     OpenApiResponse,
 )
-from rest_framework.filters import SearchFilter
 from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -58,8 +57,7 @@ class UsersListView(ListAPIView):
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminUserListSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter]
-    search_fields = ['name', 'surname', 'email', 'company_name']
+    filter_backends = [DjangoFilterBackend]
     filterset_class = UsersFilter
     queryset = CustomUser.objects.select_related("profile").order_by("id")
 
@@ -88,8 +86,7 @@ class ProfilesListView(ListAPIView):
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminCompanyListSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter]
-    search_fields = ["name", "representative", "updated_at", "created_at", "address", "phone"]
+    filter_backends = [DjangoFilterBackend]
     filterset_class = ProfilesFilter
     queryset = (
         Profile.objects.select_related("person")
@@ -103,7 +100,6 @@ class ProfilesListView(ListAPIView):
                 output_field=CharField(),
             )
         )
-        .order_by("id")
     )
 
 
