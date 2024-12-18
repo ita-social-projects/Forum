@@ -23,6 +23,7 @@ class AdminRegionSerializer(serializers.ModelSerializer):
             "name_ukr",
         )
 
+
 class ActivitiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
@@ -143,17 +144,16 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "representative",
         )
 
-    @staticmethod
-    def get_company_type(obj) -> str:
+    def get_company_type(self, obj) -> str:
         return get_company_type_as_string(obj)
 
-    @staticmethod
-    def get_representative(obj):
+    def get_representative(self, obj):
         return get_representative_as_string(obj)
 
-    @staticmethod
-    def get_business_entity(obj):
+    def get_business_entity(self, obj):
         return get_business_entity_as_string(obj)
+
+
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):
     person = AdminUserDetailSerializer(read_only=True)
     categories = serializers.SlugRelatedField(
