@@ -21,8 +21,7 @@ function ProfilesTable() {
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
     const [sortInfo, setSortInfo] = useState({ field: null, order: null });
     const [statusFilters, setStatusFilters] = useState([]);
-    const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
+    const [searchParams, setSearchParams] = useState({});
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -34,8 +33,9 @@ function ProfilesTable() {
         ? `&ordering=${sortInfo.order === 'ascend' ? sortInfo.field : '-' + sortInfo.field}`
         : '';
     const filtering = statusFilters ? statusFilters.map((filter) => `&${filter}=true`).join('') : '';
+    const query = new URLSearchParams(searchParams).toString();
 
-    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles?page=${currentPage}&page_size=${pageSize}${ordering}${filtering}`;
+    const url = `${process.env.REACT_APP_BASE_API_URL}/api/admin/profiles?page=${currentPage}&page_size=${pageSize}${ordering}${filtering}${query}`;
     async function fetcher(url) {
         const response = await axios.get(url);
         return response.data;
@@ -83,12 +83,25 @@ function ProfilesTable() {
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
-        setSearchText(selectedKeys[0]);
-        setSearchedColumn(dataIndex);
-  };
-    const handleReset = (clearFilters) => {
+
+        if (selectedKeys[0]) {
+          setSearchParams((prev) => ({ ...prev, [dataIndex]: selectedKeys[0] }));
+        } else {
+          setSearchParams((prev) => {
+            const updatedParams = { ...prev };
+            delete updatedParams[dataIndex];
+            return updatedParams;
+          });
+        }
+      };
+    const handleReset = (clearFilters, confirm, dataIndex) => {
         clearFilters();
-        setSearchText('');
+        setSearchParams((prev) => {
+            const updatedParams = { ...prev };
+            delete updatedParams[dataIndex];
+            return updatedParams;
+        });
+        confirm();
     };
 
     const getColumnSearchProps = (dataIndex) => ({
@@ -112,7 +125,7 @@ function ProfilesTable() {
                 Пошук
               </Button>
               <Button
-                onClick={() => clearFilters && handleReset(clearFilters)}
+                onClick={() => handleReset(clearFilters, confirm, dataIndex)}
                 size="small"
                 className={css['ant-btn']}
               >
@@ -124,17 +137,19 @@ function ProfilesTable() {
         filterIcon: (filtered) => <SearchOutlined className={ filtered ? css['filteredIcon'] : css['icon']}/>,
         onFilter: (value, record) =>
             record[dataIndex]?.toString().toLowerCase().includes(value.toLowerCase()),
-        render: (text) =>
-            searchedColumn === dataIndex ? (
+        render: (text) => {
+            const searchValue = searchParams[dataIndex] || '';
+            return searchValue? (
                 <Highlighter
-                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-                    searchWords={[searchText]}
+                    highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
+                    searchWords={[searchValue]}
                     autoEscape
                     textToHighlight={text ? text.toString() : ''}
                 />
             ) : (
                 text
-            ),
+            );
+        }
     });
 
     const renderCompanyTypeTags = (type) => {
