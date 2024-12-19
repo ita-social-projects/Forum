@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import axios from 'axios';
-import useSWR from 'swr';
+import useSWR, {mutate}from 'swr';
 import { Table, Pagination, Input, Button, Space } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined, SearchOutlined } from '@ant-design/icons';
+import CategoriesActions from './CategoriesActions';
 import css from './CategoriesTable.module.scss';
 
 
@@ -134,13 +135,13 @@ function FormatCategories() {
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'surname',
-            key: 'surname',
+            dataIndex: 'id',
+            key: 'id',
             sorter: true,
-            sortOrder: sortInfo.field === 'surname' ? sortInfo.order : null,
+            sortOrder: sortInfo.field === 'id' ? sortInfo.order : null,
             sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
-            render: (_, record) => `${record.surname}`,
-            ...getColumnSearchProps('surname'),
+            render: (_, record) => `${record.id}`,
+            ...getColumnSearchProps('id'),
         },
         {
             title: 'Категорія',
@@ -156,6 +157,14 @@ function FormatCategories() {
             title: 'Дії',
             dataIndex: 'actions',
             key: 'actions',
+            render: (_, user) => (
+                <CategoriesActions
+                    user={user}
+                    onActionComplete={() => {
+                        mutate(url);
+                    }}
+                />
+            ),
         },
     ];
 
@@ -184,9 +193,11 @@ function FormatCategories() {
                     cancelSort: 'Відмінити сортування',
                 }}
             />
-            <div>
-                <button>Створити категорію</button>
-            </div>
+            <Button
+                size="small"
+                className={css['ant-btn']}>
+                Створити категорію
+            </Button>
             <Pagination
                 showSizeChanger
                 current={currentPage}
