@@ -6,7 +6,7 @@ from django_filters.rest_framework import FilterSet
 class UsersFilter(FilterSet):
     """
     Filters
-    /?id= , ,/?name= /?surname=, /?email= , /?is_active= , /?is_staff=,
+    /?name= /?surname=, /?email= , /?is_active= , /?is_staff=,
     /?is_superuser=,  /?is_deleted=True or False,  /?company_name=,
     /?registration_date=,
     Ordering sample
@@ -31,8 +31,7 @@ class UsersFilter(FilterSet):
     def is_inactive_filter(self, queryset, name, value):
         if value:
             queryset = queryset.filter(
-                ~Q(email__startswith="is_deleted_"),
-                is_active=False
+                ~Q(email__startswith="is_deleted_"), is_active=False
             )
         return queryset
 
