@@ -1,14 +1,16 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from utils.administration.feedback_category import FeedbackCategory
 from authentication.models import CustomUser
 from profiles.models import (
     Profile,
-    Region, Activity,
+    Region,
     Category,
+    Activity
 )
-from utils.administration.profiles.profiles import get_company_type_as_string, get_representative_as_string, \
-    get_business_entity_as_string
+from utils.administration.profiles.profiles import format_company_type, format_representative, \
+    format_business_entity
 from utils.administration.create_password import generate_password
 from utils.administration.send_email import send_email_about_admin_registration
 from .models import AutoModeration, ModerationEmail
@@ -145,17 +147,14 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
             "representative",
         )
 
-    @staticmethod
-    def get_company_type(obj) -> str:
-        return get_company_type_as_string(obj)
+    def get_company_type(self, obj) -> str:
+        return format_company_type(obj)
 
-    @staticmethod
-    def get_representative(obj):
-        return get_representative_as_string(obj)
+    def get_representative(self, obj) -> str:
+        return format_representative(obj)
 
-    @staticmethod
-    def get_business_entity(obj):
-        return get_business_entity_as_string(obj)
+    def get_business_entity(self, obj) -> str:
+        return format_business_entity(obj)
 
 
 class AdminCompanyDetailSerializer(serializers.ModelSerializer):

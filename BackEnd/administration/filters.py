@@ -21,8 +21,8 @@ class UsersFilter(FilterSet):
     company_name = filters.CharFilter(
         field_name="profile__name", lookup_expr="icontains"
     )
-    registration_date = filters.CharFilter(
-        field_name="profile__created_at", lookup_expr="icontains"
+    registration_date = filters.DateFilter(
+        field_name="profile__created_at",
     )
 
     def is_deleted_filter(self, queryset, name, value):
@@ -60,8 +60,8 @@ class ProfilesFilter(FilterSet):
     official_name = filters.CharFilter(lookup_expr="icontains")
     phone = filters.CharFilter(lookup_expr="icontains")
     address = filters.CharFilter(lookup_expr="icontains")
-    created_at = filters.DateFilter(lookup_expr="icontains")
-    updated_at = filters.DateFilter(lookup_expr="icontains")
+    created_at = filters.DateFilter()
+    updated_at = filters.DateFilter()
 
     ordering = filters.OrderingFilter(
         fields=(
