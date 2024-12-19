@@ -11,13 +11,13 @@ class UsersFilter(FilterSet):
     /?ordering=id asc or /?ordering=-id desc
     """
 
-    id = filters.CharFilter(lookup_expr="icontains")
+    id = filters.NumberFilter(lookup_expr="contains")
     surname = filters.CharFilter(lookup_expr="icontains")
     email = filters.CharFilter(lookup_expr="icontains")
-    is_active = filters.CharFilter(lookup_expr="icontains")
-    is_staff = filters.CharFilter(lookup_expr="icontains")
-    is_superuser = filters.CharFilter(lookup_expr="icontains")
-    is_deleted = filters.BooleanFilter(method="filter_is_deleted")
+    is_active = filters.BooleanFilter()
+    is_staff = filters.BooleanFilter()
+    is_superuser = filters.BooleanFilter()
+    is_deleted = filters.BooleanFilter(method="is_deleted_filter")
     company_name = filters.CharFilter(
         field_name="profile__name", lookup_expr="icontains"
     )
@@ -25,7 +25,7 @@ class UsersFilter(FilterSet):
         field_name="profile__created_at",
     )
 
-    def filter_is_deleted(self, queryset, name, value):
+    def is_deleted_filter(self, queryset, name, value):
         if value:
             queryset = queryset.filter(email__startswith="is_deleted_")
         return queryset
@@ -74,5 +74,16 @@ class ProfilesFilter(FilterSet):
             ("status", "status"),
             ("created_at", "created_at"),
             ("updated_at", "updated_at"),
+        )
+    )
+
+
+class CategoriesFilter(FilterSet):
+    id = filters.NumberFilter(lookup_expr="contains")
+    name = filters.CharFilter(lookup_expr="icontains")
+    ordering = filters.OrderingFilter(
+        fields=(
+            ("id", "id"),
+            ("name", "name"),
         )
     )
