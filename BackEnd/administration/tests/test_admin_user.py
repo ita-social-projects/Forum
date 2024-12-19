@@ -43,7 +43,7 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
                     "is_staff": True,
                     "is_superuser": False,
                     "is_deleted": False,
-                    "is_inactive": False
+                    "is_inactive": False,
                 },
                 "company_name": None,
                 "registration_date": None,
@@ -58,7 +58,7 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
                     "is_staff": True,
                     "is_superuser": False,
                     "is_deleted": False,
-                    "is_inactive": False
+                    "is_inactive": False,
                 },
                 "company_name": None,
                 "registration_date": None,
@@ -81,7 +81,7 @@ class TestAdminUsersOrderingFilterAPITests(APITestCase):
                     "is_staff": True,
                     "is_superuser": False,
                     "is_deleted": False,
-                    "is_inactive": False
+                    "is_inactive": False,
                 },
                 "company_name": None,
                 "registration_date": None,
@@ -113,7 +113,7 @@ class TestAdminUsersStatusAPITests(APITestCase):
                     "is_staff": True,
                     "is_superuser": False,
                     "is_deleted": False,
-                    "is_inactive": False
+                    "is_inactive": False,
                 },
                 "company_name": None,
                 "registration_date": None,
@@ -128,7 +128,7 @@ class TestAdminUsersStatusAPITests(APITestCase):
                     "is_staff": True,
                     "is_superuser": False,
                     "is_deleted": False,
-                    "is_inactive": False
+                    "is_inactive": False,
                 },
                 "company_name": None,
                 "registration_date": None,
@@ -174,7 +174,7 @@ class TestAdminUsersAPITests(APITestCase):
                     "is_staff": True,
                     "is_superuser": False,
                     "is_deleted": False,
-                    "is_inactive": False
+                    "is_inactive": False,
                 },
                 "company_name": None,
                 "registration_date": None,
@@ -197,7 +197,7 @@ class TestAdminUsersAPITests(APITestCase):
                     "is_staff": True,
                     "is_superuser": False,
                     "is_deleted": False,
-                    "is_inactive": False
+                    "is_inactive": False,
                 },
                 "company_name": None,
                 "registration_date": None,
