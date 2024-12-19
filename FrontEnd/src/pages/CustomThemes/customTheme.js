@@ -50,6 +50,7 @@ const customTheme = {
       },
       List: {
         fontFamily: 'Geologica',
+        emptyTextPadding: 0,
       }
     },
     token: {
