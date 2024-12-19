@@ -250,8 +250,7 @@ function UserTable() {
             key: 'registration_date',
             sorter: true,
             sortOrder: sortInfo.field === 'registration_date' ? sortInfo.order : null,
-            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
-            ...getColumnSearchProps('registration_date'),
+            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder)
         },
         {
             title: 'Дії',
