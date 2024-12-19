@@ -131,7 +131,7 @@
 
 .title-block__button--text {
   display: flex;
-  color: var(--profile-detail-title-color-company-button);
+  color: var(--light-button-text-color);
   text-align: center;
   font-feature-settings: 'calt' off;
   font-family: var(--font-main);
@@ -144,7 +144,7 @@
 }
 
 .added_to_saved__button--text {
-  color: var(--profile-detail-title-color-company-button-saved);
+  color: var(--main-button-text-color);
 }
 
 @media only screen and (min-width: 768px) {

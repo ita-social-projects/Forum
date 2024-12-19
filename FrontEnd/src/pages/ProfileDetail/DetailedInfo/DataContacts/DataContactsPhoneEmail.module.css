@@ -54,7 +54,7 @@
 
 .data-block__field--show--contacts {
     flex: 1 0 0;
-    color: var(--profile-detail-data-contacts-color-text);
+    color: var(--light-button-text-color);
 }
 
 .contact-container {
