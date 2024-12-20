@@ -122,7 +122,7 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
     regions = AdminRegionSerializer(many=True, read_only=True)
     company_type = serializers.SerializerMethodField(read_only=True)
     activities = ActivitiesSerializer(many=True, read_only=True)
-    representative = serializers.SerializerMethodField(read_only=True)
+    representative = serializers.CharField(read_only=True)
     business_entity = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -149,9 +149,6 @@ class AdminCompanyListSerializer(serializers.ModelSerializer):
 
     def get_company_type(self, obj) -> str:
         return format_company_type(obj)
-
-    def get_representative(self, obj) -> str:
-        return format_representative(obj)
 
     def get_business_entity(self, obj) -> str:
         return format_business_entity(obj)
