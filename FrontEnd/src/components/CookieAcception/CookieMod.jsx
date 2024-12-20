@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
@@ -7,11 +7,7 @@ import styles from './CookieMod.module.css';
 const CookieMod = ({ active, setActive }) => {
   const [cookies, setCookie] = useCookies(['cookies']);
 
-  useEffect(() => {
-    if (cookies.cookies !== undefined) {
-      setActive(false);
-    }
-  }, [cookies, setActive]);
+  const shouldShowModal = cookies.cookies === undefined;
 
   const allowCookies = () => {
     const expirationDate = new Date();
@@ -26,8 +22,7 @@ const CookieMod = ({ active, setActive }) => {
     setCookie('cookies', false, { expires: expirationDate, sameSite: 'lax' });
     setActive(false);
   };
-
-  return active ? (
+  return shouldShowModal && active ? (
     <div className={styles['cookie-banner']} data-testid="cookiemodal">
       <div className={styles['cookie-content']}>
         <div className={styles['cookie-header']}>
@@ -43,11 +38,11 @@ const CookieMod = ({ active, setActive }) => {
         </p>
         <p className={styles['cookie-text']}>
           Дізнатися більше
-          <Link to="privacy-policy/" className={styles['cookie-link']}>
+          <Link to="/privacy-policy" className={styles['cookie-link']}>
             про файли cookie.
           </Link>
         </p>
-        <div className={styles['cookie-buttons']} >
+        <div className={styles['cookie-buttons']}>
           <button className={styles['allow-all-btn']} onClick={allowCookies}>
             Дозволити
           </button>
