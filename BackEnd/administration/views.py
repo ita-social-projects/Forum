@@ -1,3 +1,5 @@
+from django.db.models.functions import Concat
+from django.db.models import F, Value, CharField
 from django.http import JsonResponse
 from django.views import View
 from django.db.models import Count, Q
@@ -39,7 +41,7 @@ from .serializers import FeedbackSerializer
 from utils.administration.send_email_feedback import send_email_feedback
 
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import UsersFilter, CategoriesFilter
+from .filters import UsersFilter, ProfilesFilter, CategoriesFilter
 from utils.administration.send_email_notification import send_email_to_user
 from .filters import UsersFilter
 
@@ -88,17 +90,28 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
 
 class ProfilesListView(ListAPIView):
     """
-    List of profiles.
+    View to list profiles with optional filtering and ordering.
     """
-
     permission_classes = [IsStaffUser]
     pagination_class = ListPagination
     serializer_class = AdminCompanyListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ProfilesFilter
     queryset = (
         Profile.objects.select_related("person")
         .prefetch_related("regions", "categories", "activities")
         .order_by("id")
+        .annotate(
+            representative=Concat(
+                F("person__name"),
+                Value(" "),
+                F("person__surname"),
+                output_field=CharField(),
+            )
+        )
     )
+
+
 
 
 class ProfileDetailView(RetrieveUpdateDestroyAPIView):
