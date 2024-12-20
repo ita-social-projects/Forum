@@ -79,6 +79,10 @@
   --login-button-text-color: #000000;
   --login-button-underline-color: #000000;
 
+  --list-button-border-color: #231C09;
+  --list-button-active-color: #231C09;
+  --list-button-active-text-color: #FFFFFF;
+
   --disabled-link: #8D959C;
 
 
