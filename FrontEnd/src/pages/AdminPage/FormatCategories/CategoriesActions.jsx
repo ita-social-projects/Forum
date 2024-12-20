@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
-import { Dropdown, Modal, Button, Select, Input, Tooltip } from 'antd';
+import { useState } from 'react';
+import {Modal, Button, Input} from 'antd';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styles from './CategoriesActions.module.css';
-import { useNavigate } from 'react-router-dom';
 
-function CategoriesActions({ user, onActionComplete }) {
-    const [selectedCategory, setSelectedCategory] = useState('Інше');
+
+function CategoriesActions({ category, onActionComplete }) {
     const [messageContent, setMessageContent] = useState('');
     const [isSending, setIsSending] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [error, setError] = useState('');
-    const navigate = useNavigate();
 
     const validateMessage = (message) => {
-        if (message.trim().length >= 10) {
+        if (message.trim().length >= 2) {
             setError('');
             return true;
         } else {
-            setError('Повідомлення має бути не менше 10 символів.');
+            setError('Назва категорії має бути не менше 2 символів.');
             return false;
         }
     };
@@ -30,61 +28,28 @@ function CategoriesActions({ user, onActionComplete }) {
 
         setIsSending(true);
         try {
-            await axios.post(
-                `${process.env.REACT_APP_BASE_API_URL}/api/admin/users/${user.id}/send_message/`,
+            await axios.patch(
+                `${process.env.REACT_APP_BASE_API_URL}/api/admin/categories/${category.id}/`,
                 {
-                    email: user.email,
-                    category: selectedCategory,
-                    message: messageContent.trim(),
+                    name: messageContent.trim(),
                 }
             );
-            toast.success('Повідомлення успішно надіслано');
+            toast.success('Успішно змінено');
             setMessageContent('');
             setIsModalVisible(false);
             if (onActionComplete) onActionComplete();
         } catch {
-            toast.error('Не вдалося надіслати повідомлення. Спробуйте ще раз.');
+            toast.error('Не вдалося змінити. Спробуйте ще раз.');
         } finally {
             setIsSending(false);
         }
     };
 
-    const viewProfile = () => {
-        try {
-            navigate(`/customadmin/users/${user.id}`);
-        } catch (error) {
-            toast.error('Не вдалося переглянути профіль. Спробуйте оновити сторінку.');
-        }
-    };
-
-    const menuItems = [
-        {
-            key: 'sendMessage',
-            label: (
-                <Tooltip title="PUT повністю замінити категорію , або створити нову">
-                    Створити / замінити
-                </Tooltip>
-            ),
-            onClick: () => setIsModalVisible(true),
-        },
-        {
-            key: 'viewProfile',
-            label: (
-                <Tooltip title="PATCH Редагувати назву категорії">
-                    Змінити назву
-                </Tooltip>
-            ),
-            onClick: viewProfile,
-        },
-    ];
-
     return (
         <>
-            <Dropdown menu={{ items: menuItems }} trigger={['click']}>
-                <Button>Обрати</Button>
-            </Dropdown>
+            <Button key="cancel" onClick={() => setIsModalVisible(true)}>Змінити</Button>
             <Modal
-                title={`Надіслати листа користувачу ${user.name} ${user.surname}`}
+                title={`Змінити назву ${category.name}`}
                 open={isModalVisible}
                 onCancel={() => {
                     setIsModalVisible(false);
@@ -101,32 +66,15 @@ function CategoriesActions({ user, onActionComplete }) {
                         loading={isSending}
                         onClick={handleSendMessage}
                     >
-                        Відправити
+                        Змінити
                     </Button>,
                 ]}
                 width={600}
             >
                 <div className={styles.CategoriesActionsModalContent}>
-                    <Input
-                        value={user.email}
-                        readOnly
-                        className={styles.CategoriesActionsInput}
-                        addonBefore="Email"
-                    />
-                    <Select
-                        defaultValue="Інше"
-                        className={styles.CategoriesActionsSelect}
-                        onChange={(value) => setSelectedCategory(value)}
-                        options={[
-                            { value: 'Технічне питання', label: 'Технічне питання' },
-                            { value: 'Рекомендації', label: 'Рекомендації' },
-                            { value: 'Питання', label: 'Питання' },
-                            { value: 'Інше', label: 'Інше' },
-                        ]}
-                    />
                     <Input.TextArea
-                        rows={6}
-                        placeholder="Введіть ваше повідомлення..."
+                        rows={1}
+                        placeholder={`${category.name}`}
                         value={messageContent}
                         onChange={(e) => {
                             const input = e.target.value;
@@ -143,11 +91,9 @@ function CategoriesActions({ user, onActionComplete }) {
 }
 
 CategoriesActions.propTypes = {
-    user: PropTypes.shape({
+    category: PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
-        surname: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired,
     }).isRequired,
     onActionComplete: PropTypes.func,
 };

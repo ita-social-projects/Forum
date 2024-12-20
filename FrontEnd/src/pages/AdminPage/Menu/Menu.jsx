@@ -25,7 +25,7 @@ const MENU = [
     },
     {
         id: 'am7',
-        title: 'Категорії',
+        title: 'Керування категоріями діяльності',
         link: '/customadmin/categories/'
     },
 ];

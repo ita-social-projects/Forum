@@ -1,0 +1,24 @@
+.CategoryAddModalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.CategoryAddInput {
+    width: 100%;
+}
+
+.CategoryAddSelect {
+    width: 100%;
+}
+
+.CategoryAddTextarea {
+    width: 100%;
+}
+
+.CategoryAddError {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+}

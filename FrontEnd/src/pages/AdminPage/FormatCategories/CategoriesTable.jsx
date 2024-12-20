@@ -6,6 +6,7 @@ import useSWR, {mutate}from 'swr';
 import { Table, Pagination, Input, Button, Space } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined, SearchOutlined } from '@ant-design/icons';
 import CategoriesActions from './CategoriesActions';
+import CategoryAdd from './CategoryAdd';
 import css from './CategoriesTable.module.scss';
 
 
@@ -38,7 +39,7 @@ function FormatCategories() {
         return response.data;
     }
     const { data, isValidating: loading } = useSWR(url, fetcher);
-    const users = data ? data.results : [];
+    const categories = data ? data.results : [];
     const totalItems = data ? data.total_items : 0;
 
     const updateQueryParams = (newPage) => {
@@ -95,7 +96,8 @@ function FormatCategories() {
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
                     onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
                     className={css['antInput']}
-                ></Input>
+                >
+                </Input>
                 <Space>
                     <Button
                         type="primary"
@@ -134,16 +136,6 @@ function FormatCategories() {
 
     const columns = [
         {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-            sorter: true,
-            sortOrder: sortInfo.field === 'id' ? sortInfo.order : null,
-            sortIcon: ({ sortOrder }) => getSortIcon(sortOrder),
-            render: (_, record) => `${record.id}`,
-            ...getColumnSearchProps('id'),
-        },
-        {
             title: 'Категорія',
             dataIndex: 'name',
             key: 'name',
@@ -154,12 +146,12 @@ function FormatCategories() {
             ...getColumnSearchProps('name'),
         },
         {
-            title: 'Дії',
+            title: '',
             dataIndex: 'actions',
             key: 'actions',
-            render: (_, user) => (
+            render: (_, category) => (
                 <CategoriesActions
-                    user={user}
+                    category={category}
                     onActionComplete={() => {
                         mutate(url);
                     }}
@@ -182,7 +174,7 @@ function FormatCategories() {
             />
             <Table
                 columns={columns}
-                dataSource={users}
+                dataSource={categories}
                 onChange={handleTableChange}
                 pagination={false}
                 loading={loading}
@@ -193,11 +185,6 @@ function FormatCategories() {
                     cancelSort: 'Відмінити сортування',
                 }}
             />
-            <Button
-                size="small"
-                className={css['ant-btn']}>
-                Створити категорію
-            </Button>
             <Pagination
                 showSizeChanger
                 current={currentPage}
@@ -208,6 +195,7 @@ function FormatCategories() {
                 showTitle={false}
                 className={css['pagination']}
             />
+            <CategoryAdd/>
         </div>
     );
 }
