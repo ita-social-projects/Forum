@@ -161,7 +161,7 @@ function ClientRouter() {
               </PageWrapper>
             </>
           )}
-         <Footer />
+          <Footer />
           <ToastContainer
             position="top-right"
             autoClose={3000}
