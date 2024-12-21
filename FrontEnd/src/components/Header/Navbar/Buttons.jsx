@@ -1,7 +1,8 @@
-import css from './Buttons.module.css';
 import { Link } from 'react-router-dom';
+import {PropTypes} from 'prop-types';
+import css from './Buttons.module.css';
 
-function Buttons({adminPage}) {
+function Buttons({ adminPage }) {
     return (
         <div className={css['header-buttons-section']}>
             <div className={css['header-login-element']}>
@@ -11,5 +12,9 @@ function Buttons({adminPage}) {
         </div>
     );
 }
+
+Buttons.propTypes = {
+    adminPage: PropTypes.bool.isRequired,
+  };
 
 export default Buttons;
